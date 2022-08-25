@@ -1,0 +1,291 @@
+\chapter{Tablo metoda v predikátové logice}
+
+V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z výrokové na predikátovou logiku.\footnote{Na tomto místě je dobré připomenout si tablo metodu ve výrokové logice, viz Kapitola \ref{chapter:tableau-method-propositional}.} Metoda funguje velmi podobně, musíme si ale poradit \emph{kvantifikátory}.
+
+\section{Neformální úvod}
+
+V této sekci tablo metodu neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
+
+\begin{example} Na Obrázku \ref{figure:predicate-tableau-examples} jsou znázorněna dvě tabla. Jsou to tablo důkazy (v logice, tj. z prázdné teorie) \emph{sentencí} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (vpravo) a $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (vlevo) jazyka $L=\langle P\rangle$ (bez rovnosti), kde $P$ je unární relační symbol. Symbol $c_0$ je \emph{pomocný konstantní symbol}, který do jazyka při konstrukci tabla přidáváme.
+
+\begin{figure}[htbp]
+\begin{minipage}{.49\textwidth}
+\centering
+\begin{forest}
+    for tree={math content}
+    [\F(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)
+        [\textcolor{red}{\T(\exists x)\neg P(x)}
+            [\F\neg(\forall x)P(x)
+                [\textcolor{blue}{\T(\forall x)P(x)}
+                    [\T\neg P(c_0)
+                        [\F P(c_0)
+                            [\textcolor{blue}{\T(\forall x)P(x)}
+                                [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                    ]                
+                ]
+            ]
+        ]
+    ]
+\end{forest}
+\end{minipage}
+\begin{minipage}{.49\textwidth}
+\centering
+\begin{forest}
+    for tree={math content}
+    [\F\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)
+        [\T\neg(\forall x) P(x)
+            [\textcolor{blue}{\F(\exists x)\neg P(x)}
+                [\textcolor{red}{\F(\forall x)P(x)}
+                    [\F P(c_0)
+                        [\textcolor{blue}{\F (\exists x)\neg P(x)}
+                            [\F\neg P(c_0)
+                                [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                    ]                
+                ]
+            ]
+        ]
+    ]
+\end{forest}
+\end{minipage}
+\label{figure:predicate-tableau-examples}
+\caption{Příklady tabel. Položky typu `svědek' jsou znázorněny červeně, položky typu `všichni' modře.}
+\end{figure}
+\end{example}
+
+
+\subsubsection{Položky}
+Formule v položkách musí být vždy \emph{sentence}, neboť potřebujeme, aby měly v daném modelu \emph{pravdivostní hodnotu} (nezávisle na ohodnocení proměnných). To ale není zásadní omezení, chceme-li dokázat, že formule $\varphi$ platí v teorii $T$, můžeme nejprve nahradit formuli $\varphi$ a všechny axiomy $T$ jejich \emph{generálními uzávěry} (tj. univerzálně kvantifikujeme všechny volné proměnné). Získáme tak \emph{uzavřenou} teorii $T'$ a sentenci $\varphi'$ a platí: $T'\models\varphi'$ právě když $T\models\varphi$.
+
+\subsubsection{Kvantifikátory}
+Redukce položek funguje stejně, použijeme tatáž atomická tabla pro logické spojky (viz Tabulka \ref{table:atomic-tableaux}, kde místo výroků jsou $\varphi,\psi$ sentence). Musíme ale přidat 4 nová atomická tabla pro $\mathrm T/\mathrm F$ a univerzální/existenční kvantifikátor. Tyto položky dělíme na dva typy:
+\begin{itemize}
+    \item typ ``\emph{svědek}'': položky tvaru $\mathrm{T}(\exists x)\varphi(x)$ a $\mathrm{F}(\forall x)\varphi(x)$
+    \item typ ``\emph{všichni}'': položky tvaru $\mathrm{T}(\forall x)\varphi(x)$ a $\mathrm{F}(\exists x)\varphi(x)$    
+\end{itemize}
+Příklady vidíme v tablech na Obrázku \ref{figure:predicate-tableau-examples} (`svědci' jsou červeně, `všichni' modře).
+
+Kvantifikátor nemůžeme pouze odstranit, neboť výsledná formule $\varphi(x)$ by nebyla sentencí. Místo toho současně s odstraněním kvantifikátoru \emph{substituujeme} za $x$ nějaký \emph{konstantní term}, v nové položce tedy bude \emph{sentence} $\varphi(x/t)$. Jaký konstantní term $t$ substituujeme záleží na tom, zda jde o položku typu ``svědek'' nebo ``všichni''. 
+
+\subsubsection{Pomocné konstantní symboly}
+Jazyk $L$ teorie $T$, ve které dokazujeme, rozšíříme o spočetně mnoho \emph{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$ (ale budeme psát i $c,d,\dots$), výsledný rozšířený jazyk označíme $L_C$. Konstantní termy v jazyce $L_C$ tedy existují, i pokud původní jazyk $L$ nemá žádné konstanty. A vždy při konstrukci tabla máme k dispozici nějaký \emph{nový}, dosud \emph{nepoužitý} (ani v teorii, ani v konstruovaném tablu) pomocný konstantní symbol $c\in C$.
+
+\subsubsection{Svědci}
+Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Zde používáme větu o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
+
+Na Obrázku \ref{figure:predicate-tableau-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
+
+\subsubsection{Všichni}
+Při redukci položky typu ``všichni'' substituujeme za proměnnou $x$ libovolný \emph{konstantní term} $t$ rozšířeného jazyka $L_C$. Z položky tvaru $\T(\forall x)\varphi(x)$ tedy získáme položku $\T\varphi(x/t)$. 
+
+Aby byla bezesporná větev \emph{dokončená}, budou na ní ale muset být položky $\T\varphi(x/t)$ pro \emph{všechny} konstantní $L_C$-termy $t$. (Musíme `použít' vše, co položka $\T(\forall x)\varphi(x)$ `říká'.) A stejně pro položku tvary $\mathrm{F}(\exists x)\varphi(x)$.
+
+Ve výrokové logice jsme používali konvenci, že při připojování atomických tabel vynecháváme jejich kořeny (jinak bychom opakovali na větvi tutéž položku dvakrát). V predikátové logice použijeme stejnou konvenci, ale \emph{s výjimkou položek typu `svědek'}. U těch zapíšeme i kořen připojovaného atomického tabla. Proč to děláme? Abychom si připomněli, že s touto položkou ještě nejsme hotovi, že musíme připojit atomická tabla s jinými konstantními termy.
+
+Na Obrázku \ref{figure:predicate-tableau-examples} v levém tablu \emph{není} položka $\T(\forall x)P(x)$ \emph{redukovaná}. Její \emph{první výskyt} (4. vrchol shora) jsme zredukovali, substituujeme term $t=c_0$, máme tedy $\varphi(x/t)=P(c_0)$. Připojili jsme atomické tablo v sestávající z téže položky v kořeni $\T(\forall x)P(x)$, kterou do tabla \emph{zapíšeme}, a z položky $\T P(c_0)$ pod ní. Zatímco \emph{první výskyt} položky $\T(\forall x)P(x)$ je tímto redukovaný, \emph{druhý výskyt} (7. vrchol shora) redukovaný není. Podobně pro položku $\F(\exists x)\neg P(x)$ v pravém tablu.
+
+Tento poněkud technický přístup k definici \emph{redukovanosti} (výskytů) položek typu `všichni' se nám bude hodit v definici \emph{systematického tabla}.
+
+\subsubsection{Jazyk}
+
+Nadále budeme předpokládat, že jazyk $L$ je \emph{spočetný}.\footnote{Z hlediska výpočetní logiky to není velké omezení.} Z toho plyne, že každá $L$-teorie $T$ má jen spočetně mnoho axiomů, a také že konstantních termů v jazyce $L_C$ je jen spočetně mnoho. Toto omezení potřebujeme, neboť každé, i nekonečné tablo má jen spočetně mnoho položek, a musíme být schopni použít všechny axiomy dané teorie, a substituovat všechny konstantní termy jazyka $L_C$.
+
+Nejprve také budeme předpokládat, že jde o jazyk \emph{bez rovnosti}, což je jednodušší. Problémem je, že \emph{tablo} je čistě syntaktický objekt, ale \emph{rovnost} má speciální sémantický význam, totiž musí být v každém modelu interpretována relací identity. Jak adaptovat metodu pro jazyky s rovností si ukážeme později. 
+
+\section{Formální definice}
+
+V této sekci definujeme všechny pojmy potřebné pro tablo metodu pro jazyky bez rovnosti. K jazykům s rovností se vrátíme v Sekci \ref{subsection:tableaux-equality}. 
+
+Buď $L$ \emph{spočetný} jazyk bez rovnosti. Označme jako $L_C$ rozšíření jazyka $L$ o spočetně mnoho nových \emph{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$. Zvolme nějaké očíslování konstantních termů jazyka $L_C$, označme tyto termy $\{t_i\mid i\in\mathbb N\}$.
+
+Mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$
+
+\subsection{Atomická tabla}
+
+\emph{Položka} je nápis $\T\varphi$ nebo $\F\varphi$, kde $\varphi$ je nějaká $L_C$-sentence. Položky tvaru $\T(\exists x)\varphi(x)$ a $\F(\forall x)\varphi(x)$ jsou \emph{typu `svědek'}, položky tvaru $\T(\forall x)\varphi(x)$ a $\F(\exists x)\varphi(x)$ jsou \emph{typu `všichni'}
+
+\emph{Atomická tabla} jsou položkami označkované stromy znázorněné v Tabulkách \ref{table:predicate-atomic-tableaux-logical} a \ref{table:predicate-atomic-tableaux-quantifiers}.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}c||c|c|c|c|c@{}}
+ & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
+True
+&  
+\begin{forest}
+[$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
+\end{forest}
+&  
+\begin{forest}
+[$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
+\end{forest}
+& 
+\begin{forest}
+[$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
+\end{forest}
+&
+\begin{forest}
+[$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
+\end{forest}
+&  
+\begin{forest}
+[$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+\end{forest}
+\\ \midrule
+False 
+& 
+\begin{forest}
+[$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
+\end{forest}
+&
+\begin{forest}
+[$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
+\end{forest}
+&
+\begin{forest}
+[$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+\end{forest}
+&
+\begin{forest}
+[$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
+\end{forest}
+&
+\begin{forest}
+[$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
+\end{forest}
+\end{tabular}
+\caption{Atomická tabla pro logické spojky; $\varphi$ a $\psi$ jsou libovolné $L_C$-sentence.}
+\label{table:predicate-atomic-tableaux-logical}
+\end{table}
+
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{@{}c||c|c@{}}
+     & $\forall$ & $\exists$ \\ \midrule \midrule
+    True
+    &  
+    \begin{forest}
+        [$\T(\forall x)\varphi(x)$ [$\T\varphi(x/t_i)$]]
+    \end{forest}
+    &  
+    \begin{forest}
+        [$\T(\exists x)\varphi(x)$ [$\T\varphi(x/c_i)$]]
+    \end{forest}
+    \\ \midrule
+    False 
+    &  
+    \begin{forest}
+        [$\F(\forall x)\varphi(x)$ [$\F\varphi(x/c_i)$]]
+    \end{forest}
+    &  
+    \begin{forest}
+        [$\F(\exists x)\varphi(x)$ [$\F\varphi(x/t_i)$]]
+    \end{forest} 
+    \end{tabular}
+    \caption{Atomická tabla pro kvantifikátory; $\varphi$ je $L_C$-sentence, $x$ proměnná, $t_i$ libovolný konstantní $L_C$-term, $c_i\in C$ je nový pomocný konstantní symbol (který se dosud nevyskytuje na dané větvi konstruovaného tabla).}
+    \label{table:predicate-atomic-tableaux-quantifiers}
+\end{table}
+
+\subsection{Tablo důkaz}
+
+Definice v této části jsou téměř identické odpovídajícím definicím z výrokové logiky. Hlavní technický problém je jak definovat redukovanost položek typu `všichni' na větvi tabla: chceme aby za proměnnou byly substituovány \emph{všechny} možné konstantní $L_C$-termy $t_i$. 
+
+\begin{definition}[Tablo]
+    \emph{Konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+    \begin{itemize}
+        \item jednoprvkový strom označkovaný libovolnou položkou je tablo z teorie $T$,
+        \item pro libovolnou položkou $P$ na libovolné větvi $V$, můžeme na konec větve $V$ připojit atomické tablo pro položku $P$, přičemž je-li $P$ typu `svědek', můžeme použít jen pomocný konstantní symbol $c_i\in C$, který se na větvi $V$ dosud nevyskytuje (pro položky typu `všichni' můžeme použít libovolný konstantní $L_C$-term $t_i$),
+        \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom teorie $\alpha\in T$.
+    \end{itemize}
+    \emph{Tablo z teorie $T$} je buď konečné, nebo i \emph{nekonečné}: v tom případě vzniklo ve spočetně mnoha krocích. Můžeme ho formálně vyjádřit jako sjednocení $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_i$ jsou konečná tabla z $T$, $\tau_0$ je jednoprvkové tablo, a $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku.\footnote{Sjednocení proto, že v jednotlivých krocích přidáváme do tabla nové vrcholy, $\tau_i$ je tedy podstromem $\tau_{i+1}$.}
+    
+    Tablo \emph{pro položku $P$} je tablo, které má položku $P$ v kořeni.
+    \end{definition}
+    
+    Připomeňme konvenci, že pokud $P$ \emph{není} typu `všichni', potom kořen atomického tabla nebudeme zapisovat (neboť vrchol s položkou $P$ už v tablu je).
+
+\begin{exercise}
+    Ukažte v jednotlivých krocích jak byla tabla z Obrázku \ref{figure:predicate-tableau-examples} zkonstruována.
+\end{exercise}
+
+
+\begin{definition}[Tablo důkaz]
+    \emph{Tablo důkaz} sentence $\varphi$ z teorie $T$ je \emph{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) dokazatelná} z $T$, píšeme $T\proves\varphi$. (Definujme také \emph{tablo zamítnutí} jako sporné tablo s $\mathrm{T}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) zamítnutelná} z $T$, tj. platí $T\proves\neg\varphi$.)  
+    \begin{itemize}
+        \item Tablo je \emph{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \emph{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \emph{bezesporná}.
+        \item Tablo je \emph{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \emph{dokončená}, pokud 
+        \begin{itemize}
+            \item je sporná, nebo
+            \item je každá položka na této větvi \emph{redukovaná} a zároveň větev obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \emph{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+        \begin{itemize}
+            \item není typu `všichni' a při konstrukci tabla již došlo k jejímu rozvoji na $V$, tj. vyskytuje se na $V$ jako kořen atomického tabla.\footnote{Byť podle konvence tento kořen nezapisujeme.}
+            \item je typu `všichni' a všechny její \emph{výskyty} na $V$ jsou na větvi $V$ \emph{redukované}.
+        \end{itemize}
+        \item Výskyt položky $P$ typu `všichni' na větvi $V$ je \emph{$i$-tý}, pokud má na $V$ právě $i-1$ předků označených touto položkou, a $i$-tý výskyt je \emph{redukovaný} na $V$, pokud
+        \begin{itemize}
+            \item položka $P$ má $(i+1)$-ní výskyt na $V$, a zároveň
+            \item na $V$ se vyskytuje položka $\T\varphi(x/t_i)$ (je-li $P=\T(\forall x)\varphi(x)$) resp. $\F\varphi(x/t_i)$ (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term. (Tj. už jsme za $x$ substituovali term $t_i$.)
+        \end{itemize} 
+    \end{itemize}
+\end{definition}
+Všimněte si, že je-li položka typu `všichni' na nějaké větvi redukovaná, musí mít na této větvi nekonečně mnoho výskytů, a museli jsme v nich použít při substituci všechny možnosti, tj. všechny konstantní $L_C$-termy.
+    
+\begin{exercise}
+        %\todo{convert into a worked-out example}        
+        Sestrojte tablo důkazy \emph{v logice} (z prázdné teorie) následujících sentencí: 
+        \begin{enumerate}[(a)]
+            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$
+            \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, kde $\varphi(x),\psi(x)$ jsou libovolné formule s jedinou volnou proměnnou $x$.
+        \end{enumerate}
+\end{exercise}
+    
+\subsection{Systematické tablo}
+
+
+
+
+
+\section{Jazyky s rovností}
+
+
+\subsection{Axiomy rovnosti}\label{subsection:tableaux-equality}
+
+
+\subsection{Kongruence a faktorstruktura}
+
+
+\section{Korektnost a úplnost}
+
+
+\subsection{Věta o korektnosti}
+
+
+\subsection{Kanonický model}
+
+
+\subsection{Věta o úplnosti}
+
+
+\section{Důsledky korektnosti a úplnosti}
+
+
+\subsection{Löwenheim-Skolemova věta}
+
+
+\subsection{Věta o kompaktnosti}
+
+\subsection{Aplikace}
+
+
+\section{Hilbertovský kalkulus v predikátové logice}
+
+\todo

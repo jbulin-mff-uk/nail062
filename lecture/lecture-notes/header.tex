@@ -1,0 +1,59 @@
+%% packages
+\usepackage{a4wide}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[czech]{babel}
+\usepackage{enumerate}
+\usepackage{forest}
+\usepackage{multicol}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+    \usetikzlibrary{arrows.meta}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{xfrac}
+
+%% theorems
+\theoremstyle{plain}
+    \newtheorem{theorem}{Věta}[section]
+    \newtheorem{proposition}[theorem]{Tvrzení}
+    \newtheorem{corollary}[theorem]{Důsledek}
+    \newtheorem{lemma}[theorem]{Lemma}
+    \newtheorem{observation}[theorem]{Pozorování}
+\theoremstyle{definition}
+    \newtheorem{definition}[theorem]{Definice}
+    \newtheorem*{algorithm}{Algoritmus}
+\theoremstyle{remark}
+    \newtheorem{remark}[theorem]{Poznámka}
+    \newtheorem{example}[theorem]{Příklad}
+    \newtheorem{exercise}{Cvičení}[chapter]
+    \newtheorem*{solution}{Řešení}
+
+%% macros and definitions
+% \DeclareMathOperator{\AFm}{AFm}
+\DeclareMathOperator{\Conseq}{Csq}
+\DeclareMathOperator{\Fm}{Fm}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\Term}{Term}
+\DeclareMathOperator{\Tree}{Tree}
+\DeclareMathOperator{\Thm}{Thm}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\VF}{VF}
+
+\newcommand{\A}{\structure{A}}
+\newcommand{\B}{\structure{B}}
+\newcommand{\disjointunion}{\mathbin{\dot{\sqcup}}}
+\newcommand{\F}{\ensuremath{\mathrm{F}}}
+\newcommand{\landsymb}{{\land}}
+\newcommand{\lbin}{\mathbin{\square}}
+\newcommand{\lbinsymb}{{\lbin}}
+\newcommand{\liff}{\mathbin{\leftrightarrow}}
+\newcommand{\liffsymb}{{\liff}}
+\newcommand{\limplies}{\mathbin{\rightarrow}}
+\newcommand{\limpliessymb}{{\limplies}}
+\newcommand{\lorsymb}{{\lor}}
+\newcommand{\proves}{\vdash}
+\newcommand{\structure}[1]{\mathcal{#1}}
+\newcommand{\todo}{[TODO]}
+\newcommand{\T}{\ensuremath{\mathrm{T}}}
+\newcommand{\union}{\mathbin{\cup}}

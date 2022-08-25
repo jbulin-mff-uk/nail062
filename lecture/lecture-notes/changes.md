@@ -39,7 +39,7 @@
 
 ### Kapitola 8: Rezoluce
 
-- Napřed úvod, příklady rezoluce, vysvětlit smysl Skolemizace a Groundingu
+- Napřed úvod, příklady rezoluce, vysvětlit smysl skolemizace a groundingu
 
 ## Pokročilé partie
 

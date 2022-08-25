@@ -753,7 +753,7 @@ Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také
 
 \emph{Věta o konstantách} říká (neformálně), že splnit formuli s volnou proměnnou je totéž, co splnit sentenci, ve které je tato volná proměnná nahrazena (substituována) \emph{novým} konstantním symbolem (který není nijak svázaný žádnými axiomy). Klíčem je fakt, že tento nový symbol může být v modelech interpretován jako libovolný (tj. každý) prvek. Tento trik později využijeme v tablo metodě.
 
-\begin{theorem}[O konstantách]\ref{theorem:on-constants}
+\begin{theorem}[O konstantách]\label{theorem:on-constants}
     Mějme formuli $\varphi$ v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$. Označme $L'$ rozšíření jazyka o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$ ale v jazyce $L'$. Potom platí:
     $$
     T\models\varphi\text{ právě když }T'\models\varphi(x_1/c_1,\dots,x_n/c_n)

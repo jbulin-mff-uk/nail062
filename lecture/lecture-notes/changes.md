@@ -35,6 +35,7 @@
 
 ### Kapitola 7: Tablo metoda
 
+- Vynechán příklad systematického tabla
 - Hilbertovský kalkulus v predikátové logice přesunut sem na konec
 
 ### Kapitola 8: Rezoluce

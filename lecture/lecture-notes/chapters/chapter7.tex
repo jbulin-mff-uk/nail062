@@ -101,7 +101,7 @@ V této sekci definujeme všechny pojmy potřebné pro tablo metodu pro jazyky b
 
 Buď $L$ \emph{spočetný} jazyk bez rovnosti. Označme jako $L_C$ rozšíření jazyka $L$ o spočetně mnoho nových \emph{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$. Zvolme nějaké očíslování konstantních termů jazyka $L_C$, označme tyto termy $\{t_i\mid i\in\mathbb N\}$.
 
-Mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$
+Mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$.
 
 \subsection{Atomická tabla}
 
@@ -239,17 +239,135 @@ Definice v této části jsou téměř identické odpovídajícím definicím z 
 \end{definition}
 Všimněte si, že je-li položka typu `všichni' na nějaké větvi redukovaná, musí mít na této větvi nekonečně mnoho výskytů, a museli jsme v nich použít při substituci všechny možnosti, tj. všechny konstantní $L_C$-termy.
     
-\begin{exercise}
-        %\todo{convert into a worked-out example}        
-        Sestrojte tablo důkazy \emph{v logice} (z prázdné teorie) následujících sentencí: 
+\begin{example}\label{example:tableau-proofs}
+Jako příklad sestrojme tablo důkazy \emph{v logice} (z prázdné teorie) následujících sentencí: 
         \begin{enumerate}[(a)]
-            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$
+            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, kde $P,Q$ jsou unární relační symboly.
             \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, kde $\varphi(x),\psi(x)$ jsou libovolné formule s jedinou volnou proměnnou $x$.
         \end{enumerate}
-\end{exercise}
- 
+Výsledná tabla jsou na Obrázcích \ref{figure:predicate-tableau-more-examples-a} a \ref{figure:predicate-tableau-more-examples-b}. Dvojice sporných položek jsou znázorněny červeně. Rozmyslete si, jak byla tabla po krocích zkonstruována.
+\begin{figure}[htbp]
+\centering
+\begin{forest}
+    for tree={math content}
+    [\F(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))
+        [\T(\forall x)(P(x) \limplies Q(x))
+            [\F(\forall x)P(x) \limplies (\forall x)Q(x)
+                [\T(\forall x)P(x)
+                    [\F(\forall x)Q(x)
+                        [\textcolor{red}{\F Q(c_0)}
+                            [\T(\forall x)P(x)
+                                [\textcolor{red}{\T P(c_0)}
+                                    [\T(\forall x)(P(x) \limplies Q(x))
+                                        [\T P(c_0)\limplies Q(c_0)
+                                            [\textcolor{red}{\F P(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                            [\textcolor{red}{\T Q(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]            
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]                
+                ]
+            ]
+        ]
+    ]
+\end{forest}
+\caption{Tablo důkaz z Příkladu \ref{example:tableau-proofs} (a).}
+\label{figure:predicate-tableau-more-examples-a}
+\end{figure} 
 
-\subsection{Systematické tablo}
+\begin{figure}[htbp]
+\centering
+\begin{forest}
+for tree={math content}
+[\F(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))
+    [\T(\forall x)(\varphi(x) \land \psi(x))
+        [\F(\forall x)\varphi (x) \land (\forall x)\psi(x)
+            [\F(\forall x)\varphi (x)
+                [\textcolor{red}{\F\varphi(c_0)}
+                    [\T(\forall x)(\varphi(x) \land \psi(x))
+                        [\T\varphi(c_0) \land \psi(c_0)
+                            [\textcolor{red}{\T(\varphi(c_0)}
+                                [\T(\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            [\F(\forall x)\psi(x)
+                [\textcolor{red}{\F\psi(c_0)}
+                    [\T(\forall x)(\varphi(x) \land \psi(x))
+                        [\T\varphi(c_0) \land \psi(c_0)
+                            [\T(\varphi(c_0)
+                                [\textcolor{red}{\T(\psi(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+    [\F(\forall x)(\varphi(x) \land \psi(x))
+        [\T(\forall x)\varphi (x) \land (\forall x)\psi(x)
+            [\T(\forall x)\varphi (x)
+                [\T(\forall x)\psi(x)
+                    [\F(\varphi(c_0) \land \psi(c_0))
+                        [\textcolor{red}{\F\varphi(c_0)}
+                            [\T(\forall x)\varphi (x)
+                                [\textcolor{red}{\T\varphi(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                        [\textcolor{red}{\F\psi(c_0)}
+                            [\T(\forall x)\psi (x)
+                                [\textcolor{red}{\T\psi(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            ]
+                        ]
+                    ]                
+                ]
+            ]
+        ]
+    ]
+]
+\end{forest}
+\caption{Tablo důkaz z Příkladu \ref{example:tableau-proofs} (b). Konstantu $c_0$ můžeme použít jako \emph{novou} ve všech třech případech. Stačí, že se zatím nevyskytuje \emph{na dané větvi}.}
+\label{figure:predicate-tableau-more-examples-b}
+\end{figure} 
+\end{example}
+
+
+\subsection{Systematické tablo a konečnost důkazů}
+
+V Sekci \ref{section:finiteness-and-systematicity-of-proofs} jsme ukázali, že neprodlužujeme-li sporné větve (což nemusíme dělat), potom sporné tablo, speciálně tablo důkaz, bude vždy konečný. Stejný důkaz funguje i v logice predikátové.
+
+\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness-of-proofs-predicate}
+    Pokud $T\proves\varphi$, potom existuje i \emph{konečný} tablo důkaz $\varphi$ z $T$.
+\end{corollary}
+\begin{proof}
+Stejný jako ve ve výrokové logice, viz důkaz Důsledku \ref{corollary:finiteness-of-proofs}.
+\end{proof}
+
+Ve stejné sekci jsme si ukázali konstrukci \emph{systematického tabla}. Tu lze také snadno adaptovat na predikátovou logiku. Musíme zajistit, abychom někdy zredukovali každou položku, použili každý axiom, a nově v predikátové logice také substituovali každý $L_C$ term $t_i$ za proměnnou v položkách typu `všichni'.
+
+\begin{definition}
+Mějme položku $R$ a teorii $T=\{\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+
+Je-li $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položky typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný)  definujeme:
+\begin{itemize}
+    \item $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$, a
+    \item $\tau_{i+1}$ je tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_i$ na každou bezespornou větev $\tau_i'$, pokud $i\leq |T|$. Jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$.
+\end{itemize}    
+\end{definition}
+
+\todo
+% \begin{lemma}\label{lemma:systematic-is-finished-predicate}
+%     Systematické tablo je dokončené.
+% \end{lemma}
+% \begin{proof}
+%     Ukážeme, že každá větev je dokončená. Sporné větve jsou dokončené. Bezesporné větve obsahují položky $\mathrm{T}\alpha_i$ (ty jsme připojili v $i$-tém kroku) a každá položka na nich je redukovaná. Vskutku, kdyby $P$ byla neredukovaná na bezesporné větvi $V$, přišla by na ni v nějakém kroku řada, neboť v úrovních nad $P$ a vlevo od $P$ existuje jen konečně mnoho položek. (Používáme zjevného faktu, že každý prefix bezesporné větve je také bezesporná větev, tedy během konstrukce $V$ nikdy není sporná.)
+% \end{proof}
+
+
 
 
 

@@ -312,7 +312,7 @@ Abychom získali důkazový systém, zbývá definovat pojem \emph{tablo důkazu
     Vraťme se k tablům z Cvičení \ref{exercise:construct-tableaux}. Jde o tablo důkazy nebo zamítnutí (z teorie $T=\emptyset$)? Které položky na kterých větvích jsou redukované? Které větve jsou sporné, které jsou dokončené?
 \end{exercise}
 
-\section{Konečnost a systematičnost důkazů}
+\section{Konečnost a systematičnost důkazů}\label{section:finiteness-and-systematicity-of-proofs}
 
 V této sekci dokážeme, že pokud existuje tablo důkaz, existuje vždy také \emph{konečný} tablo důkaz. Představíme také algoritmus, kterým nějaký tablo důkaz můžeme vždy najít, pro důkaz tohoto faktu ale budeme potřebovat Věty o korektnosti a úplnosti z následující sekce. Prozatím ukážeme, že tento algoritmus nám umožní vždy sestrojit dokončené tablo.
 
@@ -357,7 +357,7 @@ Nyní se vraťme k otázce konečnosti důkazů:
 Použijeme Větu \ref{theorem:finiteness-of-contradiction}, máme $\tau=\tau_n$ neboť sporné tablo už neměníme.    
 \end{proof}
 
-\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness--of-proofs}
+\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness-of-proofs}
     Pokud $T\proves\varphi$, potom existuje i \emph{konečný} tablo důkaz $\varphi$ z $T$.
 \end{corollary}
 \begin{proof}

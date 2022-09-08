@@ -97,7 +97,7 @@ Nejprve také budeme předpokládat, že jde o jazyk \emph{bez rovnosti}, což j
 
 \section{Formální definice}
 
-V této sekci definujeme všechny pojmy potřebné pro tablo metodu pro jazyky bez rovnosti. K jazykům s rovností se vrátíme v Sekci \ref{subsection:tableaux-equality}. 
+V této sekci definujeme všechny pojmy potřebné pro tablo metodu pro jazyky bez rovnosti. K jazykům s rovností se vrátíme v Sekci \ref{section:tableaux-equality}. 
 
 Buď $L$ \emph{spočetný} jazyk bez rovnosti. Označme jako $L_C$ rozšíření jazyka $L$ o spočetně mnoho nových \emph{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$. Zvolme nějaké očíslování konstantních termů jazyka $L_C$, označme tyto termy $\{t_i\mid i\in\mathbb N\}$.
 
@@ -352,35 +352,91 @@ Ve stejné sekci jsme si ukázali konstrukci \emph{systematického tabla}. Tu lz
 \begin{definition}
 Mějme položku $R$ a teorii $T=\{\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
 
-Je-li $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položky typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný)  definujeme:
+Buď $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položu typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný). Potom $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $v$, kde
 \begin{itemize}
-    \item $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$, a
-    \item $\tau_{i+1}$ je tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_i$ na každou bezespornou větev $\tau_i'$, pokud $i\leq |T|$. Jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$.
-\end{itemize}    
+    \item je-li $P$ typu `všichni' a má-li ve vrcholu $v$ $k$-tý výskyt, potom za proměnnou substituujeme $k$-tý $L_C$-term $t_k$,
+    \item je-li $P$ typu `svědek', potom na dané větvi $V$ za proměnnou substituujeme $c_i\in C$ s nejmenším možným $i$ (takovým, že na $V$ se $c_i$ dosud nevyskytuje).
+\end{itemize}
+Jinak, pokud taková položka $P$ a vrchol $v$ neexistují, tj. všechny položky jsou redukované, definujeme $\tau_i'=\tau_i$.
+
+Tablo $\tau_{i+1}$ je potom tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_i$ na každou bezespornou větev $\tau_i'$, pokud $i\leq |T|$. Jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$. 
 \end{definition}
 
-\todo
-% \begin{lemma}\label{lemma:systematic-is-finished-predicate}
-%     Systematické tablo je dokončené.
-% \end{lemma}
-% \begin{proof}
-%     Ukážeme, že každá větev je dokončená. Sporné větve jsou dokončené. Bezesporné větve obsahují položky $\mathrm{T}\alpha_i$ (ty jsme připojili v $i$-tém kroku) a každá položka na nich je redukovaná. Vskutku, kdyby $P$ byla neredukovaná na bezesporné větvi $V$, přišla by na ni v nějakém kroku řada, neboť v úrovních nad $P$ a vlevo od $P$ existuje jen konečně mnoho položek. (Používáme zjevného faktu, že každý prefix bezesporné větve je také bezesporná větev, tedy během konstrukce $V$ nikdy není sporná.)
-% \end{proof}
+Stejně jako ve výrokové logice platí, že systematické tablo je vždy dokončené, a poskytuje konečný důkaz:
+
+\begin{lemma}\label{lemma:systematic-is-finished-predicate}
+    Systematické tablo je dokončené.
+\end{lemma}
+\begin{proof}
+    Obdobný jako důkaz ve výrokové logice (Lemma \ref{lemma:systematic-is-finished}). Pro položky typu `všichni' si všimněte, že $k$-tý výskyt redukujeme v momentě, kdy na něj při konstrukci narazíme: připojením vrcholu s $(k+1)$-ním výskytem a substitucí $k$-tého $L_C$-termu $t_k$.
+\end{proof}
+
+\begin{corollary}[Systematičnost důkazů]\label{corollary:systematicity-of-proofs}
+    Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+\end{corollary}
+\begin{proof}
+    Stejný jako důkaz ve výrokové logice (Důsledek \ref{corollary:systematicity-of-proofs}).
+\end{proof}
 
 
+\section{Jazyky s rovností} \label{section:tableaux-equality}
+
+Nyní si ukážeme, jak aplikovat tablo metodu na jazyky s rovností. Co je to rovnost? V matematice může v různém kontextu znamenat různé relace. Platí $1+0=0+1$? Mluvíme-li o celých číslech, pak ano, ale máme-li na mysli aritmetické výrazy (nebo např. termy v jazyce těles), potom si levá a pravá strana nejsou rovny: jde o jiné výrazy. \footnote{Podobně např. $t_1=t_2$ v Prologu neznamená, že jde o tentýž term, ale že termy $t_1$ a $t_2$ jsou \emph{unifikovatelné}, viz kapitola o rezoluci v predikátové logice.}
+
+Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstantní symboly $c_1,c_2$, unární funkční symbol $f$ a unární relační symbol $P$. Mějme nějaké dokončené tablo z této teorie, a v něm bezespornou větev, na kterém najdeme položku $\T c_1=c_2$. Budeme chtít sestrojit \emph{kanonický model} $\A$ pro tuto větev, podobně jako ve výrokové logice. Položka bude znamenat, že v kanonickém modelu platí $c_1^\A =^\A c_2^\A$, tj. $(c_1^\A,c_2^\A)\in =^\A$. To nám ale nestačí, chceme také, aby platilo také např.:
+\begin{itemize}
+    \item $c_2^\A =^\A c_1^\A$,
+    \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$,
+    \item $c_1^\A\in P^\A$, právě když $c_2^\A\in P^\A$.
+\end{itemize}
+Obecně tedy chceme, aby relace $=^\A$ byla tzv. \emph{kongruencí},\footnote{Název pochází z kongruence modulo $n$, která je kongruencí v tomto smyslu na množině všech celých čísel, např. splňuje: $a+b\equiv c+d\pmod n$ kdykoliv $a\equiv c\pmod n$ a $b\equiv d\pmod n$.} tj. ekvivalencí, která se chová `dobře' vůči funkcím a relacím struktury $\A$. Toho docílíme tak, že k teorii $T$ přidáme tzv. \emph{axiomy rovnosti}, které tyto vlastnosti vynutí, a tablo sestrojíme z výsledné teorie $T^*$.
+
+V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chceme, aby rovnost byla \emph{identita}, tj. aby $(a,b)\in=^\A$ platilo jedině když $a$ a $b$ jsou týmž prvkem univerza. Toho docílíme identifikací všech $=^\A$-ekvivalentních prvků do jediného prvku. Této konstrukci se říká \emph{faktorstruktura} podle kongruence $=^\A$.\footnote{Stejně jako grupa $\mathbb Z_n$ je faktorstrukturou grupy $\mathbb Z$ podle $\equiv\pmod n$; např. prvek $2\in\mathbb Z_n$ představuje množinu všech celých čísel, jejichž zbytek po dělení $n$ je roven 2.} Nyní tyto pojmy formalizujeme.
+
+\begin{definition}[Kongruence]
+    Mějme ekvivalenci $\sim$ na množině $A$, funkci $f\colon A^n\to A$, a relaci $R\subseteq A^n$. Říkáme, že $\sim$ je
+    \begin{itemize}
+        \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$,
+        \item \emph{kongruencí pro relaci $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$.
+    \end{itemize}    
+    \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. 
+\end{definition}
+
+\begin{definition}[Faktorstruktura]
+    Mějme strukturu $\A$ a její kongruenci $\sim$. \emph{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura $\A/_\sim$ v témž jazyce, jejíž univerzum $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, a jejíž funkce a relace jsou definované \emph{pomocí reprezentantů}, tj:
+    \begin{itemize}
+        \item $f^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)=[f^\A(x_1,\dots,x_n)]_\sim$, pro každý ($n$-ární) funkční symbol $f$, a
+        \item $R^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)$ právě když $R^\A(x_1,\dots,x_n)$, pro každý ($n$-ární) relační symbol~$R$.
+    \end{itemize} 
+    
+\end{definition}
 
 
+\begin{definition}[Axiomy rovnosti]
+    \emph{Axiomy rovnosti} pro jazyk $L$ s rovností jsou následující:
+    \begin{enumerate}[(i)]
+        \item $x=x$,
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ pro každý $n$-ární funkční symbol $f$ jazyka $L$,
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ pro každý $n$-ární relační symbol $R$ jazyka $L$ \emph{včetně rovnosti}.
+    \end{enumerate}
+\end{definition}
 
+\begin{exercise}
+    První z axiomů rovnosti znamená reflexivitu relace $=^\A$. Kam se poděly symetrie a tranzitivita? Ukažte, že plynou z axiomu (iii) pro symbol rovnosti $=$.
+\end{exercise}
 
+Z axiomů $(i)$ a $(iii)$ tedy plyne, že relace $=^\A$ je ekvivalence na $A$, a axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruencí $\A$. V tablo metodě v případě jazyka s rovností implicitně přidáme všechny axiomy rovnosti:
 
-\section{Jazyky s rovností}
+\begin{definition}[Tablo důkaz s rovností]
+    Je-li $T$ teorie v jazyce $L$ s rovností, potom označme jako $T^*$ rozšíření teorie $T$ o generální uzávěry\footnote{Neboť v tablo metodě potřebujeme \emph{sentence}.} axiomů rovnosti pro jazyk $L$. \emph{Tablo důkaz} z teorie $T$ je \emph{tablo důkaz} z $T^*$, podobně pro tablo zamítnutí (a obecně jakékoliv tablo).    
+\end{definition}
 
+Platí následující jednoduché pozorování:
+\begin{observation}
+    Jestliže $\A\models T^*$, potom platí i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita. Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
+\end{observation}
 
-\subsection{Axiomy rovnosti}\label{subsection:tableaux-equality}
-
-
-\subsection{Kongruence a faktorstruktura}
-
+Toto pozorování využijeme při konstrukci \emph{kanonického modelu}, který budeme potřebovat v důkazu Věty o úplnosti. Nejprve ale dokážeme Větu o korektnosti.
 
 \section{Korektnost a úplnost}
 

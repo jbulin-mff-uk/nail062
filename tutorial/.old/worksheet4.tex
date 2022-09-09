@@ -1,0 +1,165 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Exercise}
+
+\title{\sc Logic Tutorial: Worksheet 4}
+
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+
+\subsection*{Topics:} More on the Tableau method. Deduction Theorem. Compactness Theorem and its applications. Resolution method, set representation of CNF formulas, resolution closure, tree of reductions. Hilbert's calculus.
+
+\medskip \hrule
+
+\begin{problem} Propose suitable atomic tableaux for the Peirce arrow $\downarrow$ (NOR), the Sheffer stroke $\uparrow$ (NAND), and the ternary operator ``if p then q else r'' (IFTE).
+\end{problem}\medskip
+
+\begin{problem}
+Prove directly (by tableau transformations) the deduction theorem, i.e. for every theory $T$ and propositions $\varphi$, $\psi$,
+$$T \vdash \varphi\to \psi\text{\ \ if and only if\ \ }T,\varphi \vdash \psi.$$
+\end{problem}\medskip
+
+% \begin{problem}
+% In the proof of the lemma on completeness, we verified that if an assignment $v$ agrees with every entry on a finished branch $B$ up to the depth $i$ of formation trees, then it also agrees with every entry of the form $T(\varphi \wedge \psi)$ or $F(\varphi \wedge \psi)$ on $B$ where $\varphi \wedge \psi$ has depth $i+1$. Verify the same fact for other logical connectives.
+% \end{problem}\medskip
+
+\hrule
+
+\begin{problem}
+Show that every countable planar graph is colourable by four colours.
+\end{problem}\medskip
+
+\begin{problem}
+Show that every countable partial order can be extended to a total (linear) order.
+\end{problem}\medskip
+
+% \begin{problem}
+% Let $\mathcal S$ be a countable nonempty family (a set) of nonempty finite sets. An \emph{injective selector} on $\mathcal S$ is an injective function $f\colon \mathcal{S} \to \bigcup \mathcal{S}$ such that $f(S)\in S$ for every $S\in \mathcal{S}$. Prove that $\mathcal{S}$ has an injective selector if and only if every nonempty finite part of $\mathcal{S}$ has an injective selector.
+% \end{problem}\medskip
+
+\hrule
+
+\begin{problem}
+Let $\varphi$ be the proposition $\neg (p \vee q) \to (\neg p \wedge \neg q)$.
+\begin{enumerate}[(a)]
+\item Transform $\neg \varphi$ into CNF and into set representation (clausal form).
+\item Find a resolution refutation of $\neg \varphi$, i.e., a proof of $\varphi$.
+\end{enumerate}
+\end{problem}\medskip
+
+
+\begin{problem}
+Find resolution closures $\mathcal{R}(S)$ of the following formulas $S$.
+\begin{enumerate}
+\item $\{\{p,q\},\{\neg p, \neg q\},\{\neg p, q\}\}$
+\item $\{\{p,q\},\{p,\neg q\},\{\neg p,\neg q\}\}$
+\item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$
+\end{enumerate}
+\end{problem}\medskip
+
+\begin{problem}
+Find resolution refutations of the following propositions.
+\begin{enumerate}
+\item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$
+\item $\neg(((p\to q)\to \neg q)\to \neg q)$
+\end{enumerate}
+\end{problem}\medskip
+
+
+\begin{problem}
+Prove by resolution that $s$ is valid in $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$.
+\end{problem}\medskip
+
+
+\hrule
+
+
+\begin{problem}
+Show that if $S=\{C_1,C_2\}$ is satisfiable and $C$ is a resolvent of $C_1$ and $C_2$, then $C$ is satisfiable as well.
+\end{problem}\medskip
+
+\begin{problem}
+Find the \emph{tree of reductions} of the formula $S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$.
+\end{problem}\medskip
+
+
+\begin{problem}Assume that the chemical substances MgO, H$_2$, O$_2$, and C are available to us and we can perform the following chemical reactions:
+\begin{align*}&(1)\quad\text{MgO\ +\ H$_2$\ \ $\to$\ \ Mg\ +\ H$_2$O}\\
+&(2)\quad\text{C\ +\ O$_2$\ \ $\to$\ \ CO$_2$}\\
+&(3)\quad\text{CO$_2$\ +\ H$_2$O\ \ $\to$\ \ H$_2$CO$_3$}
+\end{align*}
+\begin{enumerate}
+\item Represent the state of affairs as a proposition in a suitable language and transform it into a set representation.
+\item Prove by (linear input) resolution that we can produce H$_2$CO$_3$.
+\end{enumerate}
+\end{problem}\medskip
+
+
+\bigskip \hrule
+
+\subsection*{Hilbert's calculus}
+The \emph{Hilbert's propositional calculus} is a proof system for propositional logic where 
+\begin{itemize}
+    \item we only use the logical connectives $\neg,\to$
+    \item we have the following (schemes of) \emph{logical axioms}:
+    \begin{enumerate}[(i)]
+        \item $\varphi \to (\psi \to \varphi)$
+        \item $(\varphi\to (\psi \to \chi)) \to ((\varphi \to \psi)\to(\varphi \to \chi))$
+        \item $(\neg \varphi \to \neg \psi)\to(\psi \to \varphi)$
+    \end{enumerate}
+    \item and the following \emph{rule of inference}:
+    $$\frac{\varphi,\ \varphi \to \psi}{\psi}$$
+    i.e. ``from $\varphi$ and $\varphi\to\psi$ infer $\psi$'' (called ``modus ponens'')
+\end{itemize}
+In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $T$ is a finite sequence $\varphi_0,\dots,\varphi_n=\varphi$ of formulas such that for every $i\leq n$,
+\begin{itemize}
+\item $\varphi_i$ is a logical axiom, or 
+\item $\varphi_i \in T$ (an axiom of the theory), or
+\item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
+\end{itemize}
+If such a proof exists, we write $T\ \vdash_H\ \varphi$.
+
+\bigskip
+
+\begin{problem}
+Find proofs for the following:
+\begin{enumerate}[(a)]
+\item $\vdash_H\ p\to p$
+\item $\{\neg p\}\ \vdash_H\ p\to q$
+\item $\{\neg(\neg p)\}\ \vdash_H\ p$
+\item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
+\item $\{p, q \to (p\to r)\}\ \vdash_H\ q\to r$
+
+\end{enumerate}
+\end{problem}\medskip
+
+
+\begin{problem}
+Prove soundness of Hilbert's calculus:
+\begin{itemize}
+    \item Show that the logical axioms are tautologies.
+    \item Show that modus ponens is sound, i.e., if $T\models\varphi$ and $T\models\varphi\to\psi$, then $T\models\psi$.
+    \item Show that $T\ \vdash_H\ \varphi$ implies $T\models\varphi$.
+\end{itemize}
+\end{problem}\medskip
+
+\begin{problem}
+State and prove a deduction theorem for Hilbert's calculus.
+\end{problem}\medskip
+
+%\begin{problem}
+%**How could we prove completeness of Hilbert's calculus?
+%\end{problem}
+
+\end{document}

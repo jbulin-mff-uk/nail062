@@ -1,0 +1,167 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Exercise}
+
+\title{\sc Logic Tutorial: Worksheet 5}
+
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\vspace{-24pt}
+
+\subsection*{Topics:} Basic syntax and semantics of predicate logic.
+
+\medskip
+\hrule
+
+
+\bigskip\begin{problem}
+Which of the variable occurrences are free/bound in the following formulas? Find variants of these formulas without variables that have both free and bound occurrence.
+\begin{enumerate}[(a)]
+   \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
+   \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
+   \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Let $\varphi$ denote the formula $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Which of the following terms are substitutable into $\varphi$?
+\begin{enumerate}[(a)]
+   \item the term $z$ for the variable $x$, the term $y$ for the variable $x$,
+   \item the term $z$ for the variable $y$, the term $2*y$ for the variable $y$,
+   \item the term $x$ for the variable $z$, the term $y$ for the variable $z$,
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Are the following formulas variants of the formula $\varphi$? $$\varphi=(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$$
+\begin{enumerate}[(a)]
+\item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
+\item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
+\item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
+\end{enumerate}
+\end{problem}
+
+\hrule
+
+\bigskip\begin{problem}
+Let $\mathcal{A}=(\{a,b,c,d\},\vartriangleright^{A})$ be a structure for the language with a single binary relation symbol $\vartriangleright$, where $\vartriangleright^{A}=\{(a,c), (b,c), (c,c), (c,d)\}$. Which of the following formulas are valid in $\mathcal A$?
+\begin{enumerate}[(a)]
+   \item $x \vartriangleright y$
+   \item $(\exists x)(\forall y)(y \vartriangleright x)$
+%   \item $(\exists x)(\forall y)(x \ntriangleright y)$, kde podformule $x \ntriangleright y$ je zkratkou za $\neg(x \vartriangleright y)$
+   \item $(\exists x)(\forall y)((y \vartriangleright x) \to (x \vartriangleright x))$
+%   \item $(\forall x)(\exists y)((y \ntriangleright x)\to(x \vartriangleright y))$
+   \item $(\forall x)(\forall y)(\exists z)((x \vartriangleright z)\wedge(z \vartriangleright y))$
+   \item $(\forall x)(\exists y)((x \vartriangleright z)\vee(z \vartriangleright y))$
+%   \item $(x \ntriangleright z) \vee (\exists y)(y \ntriangleright z)$
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+For every formula $\varphi$ from the previous exercise find a structure $\mathcal{B}$ (if it exists ) such that $\mathcal{B}\models \varphi$ if and only if $\mathcal{A}\not\models \varphi$.
+\end{problem}
+
+
+
+\bigskip\begin{problem}
+Are the following sentences valid / contradictory / independent (in logic)?
+\begin{enumerate}[(a)]
+ \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
+\item $(\forall x)(P(x)\to Q(f(x))) \wedge (\forall x)P(x) \wedge (\exists x)\neg Q(x)$
+  \item $(\forall x)(P(x) \vee Q(x)) \to ((\forall x)P(x) \vee (\forall x)Q(x))$
+   \item $(\forall x)(P(x)\to Q(x)) \to ((\exists x)P(x)\to(\exists x)Q(x))$
+\item $(\exists x)(\forall y)P(x,y) \to (\forall y)(\exists x)P(x,y)$
+%\item $(\forall x)(P(x,z) \to Q(x,y)) \to ((\forall x)(P(x,z) \to (\forall x)Q(x,y))$
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+Prove (semantically) the following claims. For every structure $\mathcal{A}$, formula $\varphi$, and sentence $\psi$,
+\begin{multicols}{2}
+\begin{enumerate}[(a)]
+\item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
+\item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
+\item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
+\item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
+\end{enumerate}
+\end{multicols}
+
+Does this hold also for every formula $\psi$ with a free variable $x$? And for every formula $\psi$ in which $x$ is not free?
+\end{problem}
+
+\smallskip\begin{problem}
+Determine whether the following holds for every formula $\varphi$.
+\begin{multicols}{2}
+\begin{enumerate}[(a)]
+   \item $\varphi \models (\forall x)\varphi$
+   \item $\models \varphi \to (\forall x)\varphi$
+   \item $\varphi \models (\exists x)\varphi$
+   \item $\models \varphi \to (\exists x)\varphi$
+\end{enumerate}
+\end{multicols}
+\end{problem}
+
+\hrule
+
+\begin{problem}
+Let $L=\langle +, -, 0\rangle$ be the language of group theory (with equality). The theory of groups $T$ consists of the following axioms:
+\begin{align*}
+x+(y+z)&=(x+y)+z\\
+0+x&=x=x+0\\
+x+(-x)&=0=(-x)+x
+\end{align*}
+Are the following formulas valid / contradictory / independent in $T$?
+\begin{enumerate}[(a)]
+    \item $x+y=y+x$
+    \item $x+y=x\ \rightarrow\ y=0$
+    \item $x+y=0\ \rightarrow\ y=-x$
+    \item $-(x+y)=(-y)+(-x)$
+\end{enumerate}
+\end{problem}
+
+\smallskip\begin{problem}
+Let $\underline{\mathbb{Z}}_4=\langle\{0,1,2,3\},+,-,0 \rangle$ where $+$ is the binary addition modulo $4$ and $-$ is the unary function for the \emph{inverse} element of $+$ with respect to the \emph{neutral} element $0$.
+    \begin{enumerate}[(a)]
+    \item Is $\underline{\mathbb{Z}}_4$ a model of the theory $T$ from the previous example (i.e. is it a \emph{group})?
+    \item Determine all substructures $\underline{\mathbb{Z}}_4\langle a\rangle$ generated by some $a\in \mathbb{Z}_4$.
+    \item Does $\underline{\mathbb{Z}}_4$ contain also other substructures?
+    \item Is every substructure of $\underline{\mathbb{Z}}_4$ a model of $T$?
+    \item Is every substructure of $\underline{\mathbb{Z}}_4$ elementary equivalent to $\underline{\mathbb{Z}}_4$?
+    \item Is every substructure of a \emph{commutative} group (i.e. a group that  satisfies also 9(a)) again a commutative group?
+    \end{enumerate}
+\end{problem}  
+    
+\smallskip\begin{problem}Let $\underline{\mathbb{Q}}=\langle\mathbb{Q},+,-,\cdot,0,1 \rangle$ be the field of rationals with standard operations.
+\begin{enumerate}[(a)]
+\item Is there a reduct of $\underline{\mathbb{Q}}$ that is a model of $T$ from the previous exercises?
+\item Can we expand the reduct $\langle\mathbb{Q},\cdot,1\rangle$  to a model of $T$?
+\item Does $\underline{\mathbb{Q}}$ contain a substructure that is not elementary equivalent to $\underline{\mathbb{Q}}$?
+\item Let $Th(\underline{\mathbb{Q}})$ denote the set of all sentences that are valid in $\underline{\mathbb{Q}}$. Is $Th(\underline{\mathbb{Q}})$ a complete theory?
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let $T=\{x=c_1 \vee x=c_2 \vee x=c_3\}$ be a theory of $L=\langle c_1,c_2,c_3\rangle$ with equality.
+\begin{enumerate}[(a)]
+\item Is $T$ (semantically) consistent?
+\item Are all models of $T$ elementary equivalent? That is, is $T$ (semantically) complete?
+\item Find all simple complete extensions of $T$.
+\item Is a theory $T'=T\cup\{x=c_1 \vee x=c_4\}$ of the language $L=\langle c_1,c_2,c_3,c_4\rangle$ an extension of $T$? Is $T'$ a simple extension of $T$? Is $T'$ a conservative extension of $T$?
+\end{enumerate}
+\end{problem}
+
+
+
+\end{document}

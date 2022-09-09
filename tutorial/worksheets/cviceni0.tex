@@ -1,119 +1,123 @@
-\documentclass{amsart}
-\usepackage[utf8]{inputenc}
+\documentclass[a4paper]{article}
+
+\usepackage{a4wide}
+\usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{enumerate}
+\usepackage[utf8]{inputenc}
+
 
 \theoremstyle{definition}
 \newtheorem{problem}{Příklad}
-
+\newtheorem*{ukol}{Domácí úkol}
 
 
 \begin{document}
 
-\section*{Cvičení z logiky: 0. sada příkladů}
-
-\bigskip\bigskip
-
-\subsection*{Témata:} 
-Predikátová logika (jazyk, teorie, logika prvního řádu, vyšších řádů). Vyjadřování různých vlastností ve výrokové a predikátové logice.
-
-\bigskip
-
-\medskip\hrule\medskip
+\section*{NAIL062 V\&P Logika: 0. cvičení}
 
 
-\begin{problem}
+\textbf{Témata:} Úvod. Vyjadřování různých vlastností ve výrokové a predikátové logice. Připomenutí matematických pojmů.
+
+
+\medskip\begin{problem}
 Ztratili jsme se v labyrintu a před námi jsou troje dveře - červené, zelené a modré. Víme, že za právě jedněmi dveřmi je cesta ven, za ostatními je drak. Na dveřích jsou nápisy:
 \begin{itemize}
     \item Červené dveře: ``Cesta ven je za těmito dveřmi.''
     \item Modré dveře: ``Cesta ven není za těmito dveřmi.''
     \item Zelené dveře: ``Cesta ven není za modrými dveřmi.'' 
 \end{itemize}
-Víme, že alespoň jeden z nápisů je pravdivý a alespoň jeden je lživý. Formalizujte naše znalosti.
-\end{problem}
-
-\begin{problem} Víme, že:
-\begin{enumerate}
-\item[$(i)$] Každý zná sám sebe.
-\item[$(ii)$] Když člověk studuje na škole, musel se na ni hlásit a ta škola ho přijala.
-\item[$(iii)$] Alfons se nehlásil na školu, která přijala někoho, kdo Alfonse zná.
-\end{enumerate}
-Formalizujte naše znalosti. Umíte ukázat, že ``Alfons nestuduje na žádné škole.''?
-\end{problem}
-\smallskip
-
-
-\begin{problem}
-Najděte vhodný jazyk a teorii prvního řádu pro
-\begin{enumerate}[a)]
-    \item orientované grafy (bez násobných hran)
-    \item grafy (neorientované, bez smyček),
-  %  \item grafovou souvislost (tj. s predikátem pro fakt, že $u$ a $v$ jsou spojeny cestou), %nelze, preformulovat zadani
-    \item relace ekvivalence,
-    \item částečná uspořádání.
-\end{enumerate}
+Víme, že alespoň jeden z nápisů je pravdivý a alespoň jeden je lživý. Formalizujte naše znalosti. Určete, za kterými dveřmi je cesta ven.
 \end{problem}
 
 
-\smallskip
-\begin{problem}
-Mějme graf $G$ (neorientovaný, bez smyček). Najděte formule (v jazyce grafů), které vyjadřují následující vlastnosti. Kdy to lze v logice prvního řádu, a kdy je třeba logika druhého řádu?
+\medskip\begin{problem} Víme, že:
+\begin{itemize}
+\item Každý zná sám sebe.
+\item Když člověk studuje na škole, musel se na ni hlásit a ta škola ho přijala.
+\item Alfons se nehlásil na školu, která přijala někoho, kdo Alfonse zná.
+\end{itemize}
+Formalizujte naše znalosti. (Uměli byste ukázat, že ``Alfons nestuduje na žádné škole.''?)
+\end{problem}
+
+
+\medskip\begin{problem}
+Mějme daný graf $G$ (neorientovaný, bez smyček) a dva jeho vrcholy $u,v$. Formalizujte následující vlastnosti ve výrokové logice:
 \begin{enumerate}[(a)]
-    \item $G$ obsahuje vrchol stupně 1
-   \item existuje cesta délky $k$ z $u$ do $v$ v $G$ (pro nějaké fixní $k$)
-    \item $G$ je regulární stupně 3,
-    \item $G$ obsahuje a $k$-kliku (pro nějaké fixní $k$),
-    \item $G$ má vrcholové 3-obarvení.
     \item $G$ je bipartitní,
     \item $G$ má perfektní párování,
-    \item existuje cesta z $u$ do $v$ v $G$
+    \item $u$ a $v$ leží v jedné komponentě souvislosti,
+    \item $G$ je souvislý.
 \end{enumerate}
 \end{problem}
 
 
-\smallskip
-\begin{problem} Najděte FO-formule (v jazyce $\le$) vyjadřující následující vlastnosti uspořádaných množin:
+\medskip\begin{problem}
+Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii grafů} (neorientovaných, bez smyček) vyjadřují následující vlastnosti. Kdy to lze v logice prvního řádu, a kdy je třeba logika druhého řádu?
 \begin{enumerate}[(a)]
-\item ``$x$ je nejmenší prvek'', ``$x$ je minimální prvek'',
-\item ``$x$ má bezprostředního následníka'',
-\item ``každé dva prvky mají největšího společného předchůdce''.
+    \item graf obsahuje vrchol stupně 1
+    \item graf je regulární stupně 3,
+    \item graf obsahuje $k$-kliku (pro nějaké fixní $k$),
+    \item existuje cesta délky $k$ z vrcholu $u$ do vrcholu $v$ (pro nějaké fixní $k$),
+    \item vrcholy $u$ a $v$ mají alespoň jednoho společného souseda,
+    \item graf je bipartitní,
+    \item graf má perfektní párování,
+    \item vrcholy $u$ a $v$ leží v jedné komponentě souvislosti,
+    \item graf je souvislý.    
 \end{enumerate}
 \end{problem}
 
 
-\smallskip
-\begin{problem} Najděte formule prvního řádu (v jazyce rovnosti), které vyjadřují pro dané $n>0$, že
+\medskip\begin{problem} Najděte formule prvního řádu vyjadřující následující vlastnosti v jazyce uspořádaných množin:
 \begin{enumerate}[(a)]
-\item ``existuje alespoň $n$ prvků'',
-\item ``existuje nejvíce $n$ prvků'',
-\item ``existuje právě  $n$ prvků''
+    \item $x$ je nejmenší prvek,
+    \item $x$ je minimální prvek,
+    \item $x$ má bezprostředního následníka,
+    \item každé dva prvky mají největšího společného předchůdce.
 \end{enumerate}
-Je možné vyjádřit, za pomoci (možná nekonečné) množiny formulí, že ``existuje nekonečně mnoho prvků''?
 \end{problem}
 
-\smallskip
-\begin{problem}
-Lze $\mathbb N$, $\mathbb Z$, $\mathbb R$ a $\mathbb C$ rozlišit pomocí vlastností prvího řádu
+
+\medskip\begin{problem} Najděte formule prvního řádu (v jazyce rovnosti), které vyjadřují pro dané $k>0$, že
 \begin{enumerate}[(a)]
-\item v jazyce uspořádaných množin?
-\item v jazyce aritmetiky?
+    \item existuje alespoň $k$ prvků,
+    \item existuje nejvýše $k$ prvků,
+    \item existuje právě $k$ prvků.
 \end{enumerate}
 \end{problem}
 
 
-
-\smallskip
-\begin{problem}
-Uvažte konečnou hru dvou střídajících se hráčů, Alice a Boba. Hra končí po $n$ kolech výhrou jednoho z hráčů. První tah má Alice. Hra je daná formulí
-$\varphi(x_1, y_1, x_2, y_2,\dots,x_n, y_n)$ vyjadřující, že hra z tahy $x_1, y_1, x_2, y_2,\dots,x_n, y_n$ končí výhrou Alice. Najděte formule (v logice prvního řádu), které vyjadřují
+\medskip\begin{problem} Vyjádřete v logice prvního řádu v jazyce s jedním unárním funkčním symbolem $f$, že funkce je
 \begin{enumerate}[(a)]
-    \item ``Alice nemůže prohrát'',
-    \item ``Bob nemůže prohrát'',
-    \item ``Alice má vyhrávající strategii'',
-    \item ``Bob má vyhrávající strategii''.
+    \item prostá,
+    \item na,
+    \item bijekce.
 \end{enumerate}
 \end{problem}
 
 
+\medskip\begin{problem} Vyjádřete v logice druhého řádu, že daná binární relace je 
+\begin{enumerate}[(a)]
+    \item (unární) funkce,
+    \item prostá funkce,
+    \item funkce na,
+    \item bijekce (vyjádřete tak, že k ní existuje inverzní funkce).
+\end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem}
+Lze $\mathbb N$, $\mathbb Z$, $\mathbb R$ a $\mathbb C$ rozlišit pomocí vlastností prvního řádu
+\begin{enumerate}[(a)]
+    \item v jazyce uspořádaných množin?
+    \item v jazyce těles?
+\end{enumerate}
+\end{problem}
+
+
+\medskip\begin{ukol}
+Zatím žádný není.
+\end{ukol}
 
 
 \end{document}

@@ -1,0 +1,158 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+
+
+
+\begin{document}
+
+\section*{Cvičení z logiky: 5. sada příkladů}
+
+\bigskip\bigskip\bigskip
+
+\subsection*{Témata:} Základní syntaxe a sémantika predikátové logiky.
+
+\bigskip\hrule
+
+\bigskip\begin{problem}
+Určete volné a vázané výskyty proměnných v náledujících formulích. Poté je převeďte na varianty, ve kterých nebudou proměnné s volným i vázaným výskytem zároveň.
+\begin{enumerate}[(a)]
+   \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
+   \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
+   \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Označme $\varphi$ formuli $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Které z náledujících termů jsou substituovatelné do $\varphi$?
+\begin{enumerate}[(a)]
+   \item term $z$ za proměnnou $x$, term $y$ za proměnnou $x$,
+   \item term $z$ za proměnnou $y$, term $2*y$ za proměnnou $y$,
+   \item term $x$ za proměnnou $z$, term $y$ za proměnnou $z$,
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Jsou následující formule variantami formule $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
+\begin{enumerate}[(a)]
+\item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
+\item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
+\item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
+\end{enumerate}
+\end{problem}
+
+\smallskip\hrule
+
+\bigskip\begin{problem}
+Mějme strukturu $\mathcal{A}=(\{a,b,c,d\},\vartriangleright^{A})$ v jazyce s jediným binárním relačním symbolem $\vartriangleright$, kde $\vartriangleright^{A}=\{(a,c), (b,c), (c,c), (c,d)\}$. Které z následujících formulí jsou pravdivé v $\mathcal A$?
+\begin{enumerate}[(a)]
+   \item $x \vartriangleright y$
+   \item $(\exists x)(\forall y)(y \vartriangleright x)$
+%   \item $(\exists x)(\forall y)(x \ntriangleright y)$, kde podformule $x \ntriangleright y$ je zkratkou za $\neg(x \vartriangleright y)$
+   \item $(\exists x)(\forall y)((y \vartriangleright x) \to (x \vartriangleright x))$
+%   \item $(\forall x)(\exists y)((y \ntriangleright x)\to(x \vartriangleright y))$
+   \item $(\forall x)(\forall y)(\exists z)((x \vartriangleright z)\wedge(z \vartriangleright y))$
+   \item $(\forall x)(\exists y)((x \vartriangleright z)\vee(z \vartriangleright y))$
+%   \item $(x \ntriangleright z) \vee (\exists y)(y \ntriangleright z)$
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Pro každou formuli $\varphi$ z předchozího příkladu najděte strukturu $\mathcal{B}$ (pokud existuje) takovou, že $\mathcal{B}\models \varphi$ právě když $\mathcal{A}\not\models \varphi$.
+\end{problem}
+
+
+
+\bigskip\begin{problem}
+Jsou následující sentence pravdivé / lživé / nezávislé (v logice)?
+\begin{enumerate}[(a)]
+ \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
+\item $(\forall x)(P(x)\to Q(f(x))) \wedge (\forall x)P(x) \wedge (\exists x)\neg Q(x)$
+  \item $(\forall x)(P(x) \vee Q(x)) \to ((\forall x)P(x) \vee (\forall x)Q(x))$
+   \item $(\forall x)(P(x)\to Q(x)) \to ((\exists x)P(x)\to(\exists x)Q(x))$
+\item $(\exists x)(\forall y)P(x,y) \to (\forall y)(\exists x)P(x,y)$
+%\item $(\forall x)(P(x,z) \to Q(x,y)) \to ((\forall x)(P(x,z) \to (\forall x)Q(x,y))$
+\end{enumerate}
+\end{problem}
+
+
+\bigskip\begin{problem}
+Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
+\begin{enumerate}[(a)]
+\item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
+\item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
+\item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
+\item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
+\end{enumerate}
+Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
+\end{problem}
+
+\newpage
+\begin{problem}
+Rozhodněte, zda následující platí pro každou formuli $\varphi$. Dokažte (sémanticky, z definic) nebo najděte protipříklad.
+\begin{enumerate}[(a)]
+   \item $\varphi \models (\forall x)\varphi$
+   \item $\models \varphi \to (\forall x)\varphi$
+   \item $\varphi \models (\exists x)\varphi$
+   \item $\models \varphi \to (\exists x)\varphi$
+\end{enumerate}
+\end{problem}
+
+\medskip\hrule
+
+\bigskip\begin{problem}
+Buď $L=\langle +, -, 0\rangle$ jazyk teorie grup (s rovností). Teorie grup $T$ sestává z těchto axiomů:
+\begin{align*}
+x+(y+z)&=(x+y)+z\\
+0+x&=x=x+0\\
+x+(-x)&=0=(-x)+x
+\end{align*}
+Rozhodněte, zda jsou následující formule pravdivé / lživé / nezávíslé v $T$.
+\begin{enumerate}[(a)]
+    \item $x+y=y+x$
+    \item $x+y=x\ \rightarrow\ y=0$
+    \item $x+y=0\ \rightarrow\ y=-x$
+    \item $-(x+y)=(-y)+(-x)$
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Uvažme $\underline{\mathbb{Z}}_4=\langle\{0,1,2,3\},+,-,0 \rangle$ kde $+$ je binární sčítání modulo $4$ a $-$ je unární funkce, která vrací \emph{inverzní} prvek $+$ vzhledem k \emph{neutrálnímu} prvku $0$.
+    \begin{enumerate}[(a)]
+    \item Je $\underline{\mathbb{Z}}_4$ model teorie $T$ z předchozího příkladu (tj. je to \emph{grupa})?
+    \item Určete všechny podstruktury $\underline{\mathbb{Z}}_4\langle a\rangle$ generované nějakým $a\in \mathbb{Z}_4$.
+    \item Obsahuje $\underline{\mathbb{Z}}_4$ ještě nějaké další podstruktury?
+    \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ modelem $T$?
+    \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ elementárně ekvivalentní $\underline{\mathbb{Z}}_4$?
+    \item Je každá podstruktura \emph{komutativní} grupy (tj. grupy, která splňuje $x+y=y+x$) také komutativní grupa?
+    \end{enumerate}
+\end{problem}  
+    
+\bigskip\begin{problem}Buď $\underline{\mathbb{Q}}=\langle\mathbb{Q},+,-,\cdot,0,1 \rangle$ těleso racionálních čísel se standardními operacemi.
+\begin{enumerate}[(a)]
+\item Existuje redukt $\underline{\mathbb{Q}}$, který je modelem $T$ z předchozích příkladů?
+\item Lze redukt $\langle\mathbb{Q},\cdot,1\rangle$ rozšířit na model $T$?
+\item Obsahuje $\underline{\mathbb{Q}}$ podstrukturu, která není elementárně ekvivalentní $\underline{\mathbb{Q}}$?
+\item Označmě $Th(\underline{\mathbb{Q}})$ množinu všech sentencí pravdivých v $\underline{\mathbb{Q}}$. Je $Th(\underline{\mathbb{Q}})$ úplná teorie?
+\end{enumerate}
+\end{problem}
+
+\bigskip\begin{problem}
+Mějme teorii $T=\{x=c_1 \vee x=c_2 \vee x=c_3\}$ v jazyce $L=\langle c_1,c_2,c_3\rangle$ s rovností.
+\begin{enumerate}[(a)]
+\item Je $T$ (sémanticky) konzistentní?
+\item Jsou všechny modely $T$ elementárně ekvivalentní? Tj. je $T$ (sémanticky) úplná?
+\item Najděte všechny jednoduché úplné extenze $T$.
+\item Je teorie $T'=T\cup\{x=c_1 \vee x=c_4\}$ v jazyce $L=\langle c_1,c_2,c_3,c_4\rangle$ extenzí $T$? Je $T'$ jednoduchá extenze $T$? Je $T'$ konzervativní extenze $T$?
+\end{enumerate}
+\end{problem}
+
+
+
+\end{document}

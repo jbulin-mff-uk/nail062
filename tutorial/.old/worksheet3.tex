@@ -1,0 +1,130 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Exercise}
+
+\title{\sc Logic Tutorial: Worksheet 3}
+
+\date{}
+
+
+\begin{document}
+
+
+
+\maketitle
+\vspace{-0.5cm}
+
+\subsection*{Topics:}  Propositional theories and their properties. Lindenbaum--Tarski algebra. Tableau method.
+\thispagestyle{empty}
+
+\smallskip
+
+
+
+\begin{problem}
+\begin{enumerate}[(a)]
+\item Decide if the theory $T$ is [consistent/satisfiable/complete].
+\item Give an example of a proposition $\varphi$ which is [valid/unsatisfiable/independent] in $T$
+\item Give an example of a [simple/conservative/complete/conservative simple/complete simple/complete conservative] extension of $T$ (if possible, not equivalent with $T$), if it exists.
+\end{enumerate}
+\begin{enumerate}
+    \item[A)] $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ over $\mathbb P=\{p,q,r\}$,
+    \item[B)] $T=\{p\wedge q,p\to\neg q,q\}$ over $\mathbb P=\{p,q\}$.
+\end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}
+Consider the infinite propositional theories
+\begin{enumerate}
+    \item[A)] $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ over $\mathrm{var}(T)$,
+    \item[B)] $S=\{p_i \to (p_{i+1} \vee q_{i+1}), q_i \to (p_{i+1} \vee q_{i+1}) \mid i\in \mathbb{N}\}$ over $\mathrm{var}(S)$.
+\end{enumerate}
+Determine the following:
+\begin{enumerate}[(a)]
+\item Which propositions of the form  $p_i \to p_j$ are consequences of $T$, of $S$?
+\item Which propositions of the form  $p_i \to (p_j \vee q_j)$ are consequences of $S$?
+\item Determine all models of the theories $T$ and $S$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Prove or disprove (or find the correct relationship) that for every theory $T$ and propositions $\varphi$, $\psi$ over $\mathbb{P}$,
+\begin{enumerate}[(a)]
+\item $T \models \varphi$,\ \  if and only if\ \ $T \not\models \neg \varphi$
+\item $T \models \varphi$ and $T \models \psi$,\ \ if and only if\ \ $T \models \varphi \wedge \psi$
+\item $T \models \varphi$ or $T \models \psi$,\ \ if and only if\ \ $T \models \varphi \vee \psi$
+\item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$,\ \ if and only if\ \ $T \models \varphi \to \chi$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Prove or disprove (or find the correct relationship). For every theories $T$, $S$ over $\mathbb{P}$,
+\begin{enumerate}[(a)]
+\item $S\subseteq T \Rightarrow \theta^{\mathbb{P}}(T) \subseteq \theta^{\mathbb{P}}(S)$
+\item $\theta^{\mathbb{P}}(S\cup T)=\theta^{\mathbb{P}}(S) \cup \theta^{\mathbb{P}}(T)$
+\item $\theta^{\mathbb{P}}(S\cap T)=\theta^{\mathbb{P}}(S) \cap \theta^{\mathbb{P}}(T)$
+\end{enumerate}
+\end{problem}
+
+\hrule
+
+\begin{problem}
+ Let $|\mathbb{P}|=n$ and $\varphi\in\mathrm{VF}_{\mathbb{P}}$ with $|M(\varphi)|=m$. Count the following up to equivalence:
+\begin{enumerate}[(a)]
+\item propositions $\psi$ such that $\varphi \models \psi$ or $\psi \models \varphi$,
+\item theories over $\mathbb{P}$ in which $\varphi$ is valid,
+\item complete theories over $\mathbb{P}$ in which $\varphi$ is valid,
+\item theories $T$ over $\mathbb{P}$ such that $T \cup \{\varphi\}$ is satisfiable.
+\end{enumerate}
+Let, moreover, $\{\varphi,\psi\}$ be an unsatisfiable theory with $|M(\psi)|=p$. Count up to equivalence:
+\begin{enumerate}[(a)]
+\item[(e)] propositions $\chi$ such that $\varphi \vee \psi \models \chi$, 
+\item[(f)] theories in which $\varphi \vee \psi$ is valid.
+\end{enumerate}
+\end{problem}
+
+\hrule
+\vspace{-1cm}
+\begin{multicols}{2}
+\begin{problem}
+Find tableau proofs of the following tautologies.
+
+\begin{enumerate}[(a)]
+\item $(p\to (q \to q))$
+\item $p \leftrightarrow \neg \neg  p$
+\item $\neg (p \vee q) \leftrightarrow (\neg p \wedge \neg q)$
+\item $(p \to q) \leftrightarrow (\neg q \to \neg p)$
+\item $(p \to (q \to r)) \to ((p\to q)\to (p \to r))$
+\end{enumerate}
+
+\end{problem} 
+
+\begin{problem}
+Use the tableau method to prove the following propositions, or find counterexamples:
+\begin{enumerate}[(a)]
+\item $\{ \neg q,\ p \vee q\} \models p$,
+\item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$,
+\item $\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Use the tableau method to determine all models of the following theories:
+\begin{enumerate}[(a)]
+\item $\{(\neg p \vee q) \to (\neg q \wedge r)\}$
+\item $\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$
+\item $\{ q \to p,\ r \to q,\ (r \to p) \to s\}$
+\end{enumerate}
+\end{problem}
+\end{multicols}
+
+\end{document}

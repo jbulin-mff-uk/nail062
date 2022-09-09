@@ -1,0 +1,74 @@
+\documentclass[a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{a4wide}
+\theoremstyle{definition}
+\newtheorem{task}{Task}
+
+\title{\sc Logic Tutorial: Homework Assignment 3}
+%\author{Due at 12:20pm on Monday, December 21}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+Submit your solution in Moodle. The deadline is strict; late submissions will not be graded except under special circumstances. Allow for an abundance of time for the submission process so that momentary technical issues with Moodle will not prevent you from submitting on time. The submitted solution must be entirely your own, it is strictly forbidden to look up hints or consult with anyone but me. Give a \textbf{detailed justification} of all your answers, include all steps in \textbf{all computations}, etc. It is your responsibility to make your solution clearly and \textbf{easily readable}; any parts which are not easy to read will be ignored. If you submit a handwritten solution, use a print font. \textbf{Handwritten cursive font is not allowed}. Use a pen on white paper, not a pencil. Photograph the pages with enough light or use software to achieve white background.
+
+\medskip
+\begin{task}
+Let $T=\{A(x)\leftrightarrow \neg B(x),A(x)\wedge A(y)\to x=y,B(x)\wedge B(y)\to x=y\}$ be a theory in the language $L=\langle A,B\rangle$ with equality, where $A$ and $B$ are unary relation symbols. Let $T'$ denote the universal closure of $T$. Let $\varphi$ denote the following sentence:
+$$
+(\forall x)(\forall y)(\forall z)(x=y\vee y=z\vee x=z)
+$$
+
+Find a tableau proof of the sentence $\varphi$ from the theory $T'$.
+\end{task}
+
+
+\medskip\begin{task}
+Let $T$ denote the theory of fields in the language $L=\langle +,-,\cdot,0,1 \rangle$ and let  $\mathcal{A}=\langle\mathbb{R},+,-,\cdot,0,1 \rangle$ be the (standard) field of real numbers.
+\begin{enumerate}[(a)]
+\item Give an $L$-formula which defines (without parameters) the set $\{\sqrt{2}\}$ in the structure~$\mathcal{A}$.
+\item Is the theory $T'=T \cup \{f(x)=y \leftrightarrow y\cdot y=x\}$ a (correct) extension of the theory $T$ by definition of a function symbol $f$? Justify.
+\item Is the theory $T'$ a conservative extension of $T$?
+\end{enumerate}
+\end{task}
+
+
+\medskip
+\begin{task}
+Consider the following facts about rabbits:
+\begin{enumerate}[(i)]
+    \item Flopsy and Mopsy are rabbits.
+    \item Rabbits sleep or eat carrots.
+    \item If a rabbit is hungry, it cannot sleep.
+    \item Hungry rabbits eat carrots.
+\end{enumerate}
+\begin{enumerate}[(a)]
+\item Formalize the statements (i)--(iv), respectively, as \underline{sentences} $\varphi_1,\varphi_2,\varphi_3,\varphi_4$ in predicate logic in the language $L=\langle H, C, R, S, f, m \rangle$ without equality, where $H,C,R,S$ are unary relation symbols (meaning ``is hungry'', ``eats carrots'', ``is a rabbit'', ``sleeps'') a $f,m$ are constant symbols denoting Flopsy and Mopsy. 
+\item Construct a finished tableau from the theory $T=\{\varphi_1,\varphi_2,\varphi_3\}$ with root entry $F\varphi_4$. 
+\item Is the sentence $\varphi_4$ valid/contradictory/independent in the theory $T$? Justify. 
+\item Does the theory $T$ have a complete conservative extension? Justify.
+\item Consider the theory $T'=T\cup \{(\forall x)R(x),(\forall x)S(x)\}$. How many two-element models (up to elementary equivalence) does the theory $T'$ have? Justify.
+\end{enumerate}
+\end{task}
+
+
+\medskip\begin{task}
+Let $T=\{(\exists x)P(x,x), (\forall x)(\exists y)R(x,y),  (\forall u)(\forall v)((\forall x)(\exists y)R(x,y) \to \neg P(u,v))\}$ be a theory in the language $L=\langle P,R\rangle$ without equality, where $P,R$ are binary relation symbols.
+\begin{enumerate}[(a)]
+\item Using Skolemization, find an open theory $T'$ (over a suitable extension of the language $L$) which is equisatisfiable with $T$. 
+\item Convert $T'$ to an equivalent theory $S$ in CNF. Write $S$ in set representation. 
+\item Find a resolution refutation of the theory $S$. Draw it in the form of a resolution tree. At every step, write down the unification used. 
+\item Find an unsatisfiable conjunction of ground instances of axioms of $S$. {\it Hint: use the unifications from (c).}
+\end{enumerate}
+\end{task}
+
+
+\end{document}

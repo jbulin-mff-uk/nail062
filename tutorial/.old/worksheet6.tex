@@ -1,0 +1,181 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Exercise}
+    \theoremstyle{remark}
+\newtheorem*{theorem*}{Theorem}
+
+\begin{document}
+
+\section*{ Logic Tutorial: Worksheet 6}
+
+
+\subsection*{Topics:} Definable sets, tableau method, equality, theorem on constants, deduction theorem, extension by definitions, prenex form, Skolem variant.
+
+\smallskip
+\hrule
+
+\begin{problem}
+Let $L=\langle F \rangle$ be a language with equality where $F$ is a binary function symbol. Give formulas defining the following sets (without parameters):
+\begin{enumerate}[(a)]
+\itemsep6pt
+    \item the interval $(0,\infty)$ in $\mathcal A=\langle\mathbb R, \cdot\rangle$ where $\cdot$ is the usual multiplication,
+    \item the set $\{(x, 1/x)\mid x\neq 0\}$ in the same structure $\mathcal A$,
+    \item the set of all at most one-element subsets of $\mathbb N$ in $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$,
+    \item the set of all prime numbers in $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$.
+\end{enumerate}
+
+\end{problem}
+
+
+
+\smallskip
+\hrule
+
+\begin{problem}
+Assume that
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item all guilty persons are liars,
+\item at least one of the accused is also a witness,
+\item no witness lies.
+\end{enumerate}
+Prove by tableau method that not all accused are guilty.
+\end{problem} 
+
+\smallskip
+
+\begin{problem} Let $L(x,y)$ represent that \emph{``there is a flight from $x$ to $y$''} and let $S(x,y)$ represent that \emph{``there is a connection from $x$ to $y$''}. Assume that
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item From Prague you can flight to Bratislava, London and New York, and from New York to Paris,
+\item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
+\item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
+\item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
+\end{enumerate}
+Prove by tableau method that there is a connection from Bratislava to Paris.
+\end{problem} 
+
+\smallskip
+
+\begin{problem} Let $\varphi$, $\psi$ be sentences or formulas in a free variable $x$, denoted by $\varphi(x)$, $\psi(x)$. Find tableau proofs of the following formulas.
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $(\exists x)(\varphi(x)\vee \psi(x))\leftrightarrow (\exists x)\varphi(x)\vee (\exists x)\psi(x)$,
+\item $(\forall x)(\varphi(x)\wedge\psi(x))\leftrightarrow (\forall x)\varphi(x)\wedge(\forall x)\psi(x)$,
+\item $(\varphi \vee (\forall x)\psi(x))\to (\forall x)(\varphi \vee \psi(x))$ where $x$ is not free in $\varphi$,
+\item $(\varphi \wedge (\exists x)\psi(x))\to (\exists x)(\varphi \wedge \psi(x))$ where $x$ is not free in $\varphi$.
+\item $(\exists x)(\varphi \to \psi(x))\to(\varphi \to (\exists x)\psi(x))$ where $x$ is not free in $\varphi$,
+\item $(\exists x)(\varphi \wedge \psi(x))\to(\varphi \wedge (\exists x)\psi(x))$ where $x$ is not free in $\varphi$,
+%\item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$,
+%\item $(\forall x)\neg \varphi(x)\to \neg(\exists x)\varphi(x)$,
+\item $(\exists x)(\varphi(x)\to\psi)\to((\forall x)\varphi(x)\to \psi)$ where $x$ is not free in $\psi$,
+\item $((\exists x)\varphi(x)\to\psi)\to(\forall x)(\varphi(x)\to \psi)$ where $x$ is not free in $\psi$.
+\end{enumerate}
+\end{problem} 
+
+\smallskip
+\hrule
+
+\begin{problem} Let $T^*$ be a theory with axioms of equality. Use the tableau method to prove
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $T^*\models x=y\ \to\ y=x$\hfill(symmetry of $=$)
+\item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(transitivity of $=$)
+\end{enumerate}
+
+\smallskip
+{\it Hint:} To show (a) apply the axiom of equality $(iii)$ for $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
+to show (b) apply $(iii)$ for $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
+\end{problem} 
+
+\smallskip
+
+\begin{problem} Prove the theorem on constants syntactically by transformations of tableaux.
+
+\smallskip
+
+\begin{theorem*} Let $\varphi$ be a formula of a language $L$ with free variables $x_1,\dots,x_n$ and let $T$ be a theory in $L$. Let $L'$ denote the extension of $L$ with new constant symbols $c_1,\dots,c_n$ and let $T'$ denote the theory $T$ in $L'$. Then
+$$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{if and only if}\quad T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n).$$
+\end{theorem*}
+\end{problem} 
+
+\smallskip
+
+
+\begin{problem} Prove the deduction theorem syntactically by transformations of tableaux.
+
+\smallskip
+
+\begin{theorem*} For every theory $T$ (in a closed form) and sentences $\varphi$, $\psi$,
+$$T\vdash \varphi\to\psi\quad\text{if and only if}\quad T,\varphi\vdash\psi.$$
+\end{theorem*}
+\end{problem} 
+
+\smallskip
+\hrule
+
+
+
+\begin{problem} Let $L$ be a language with equality containing a binary relation symbol $\le$ and let $T$ be a theory of $L$ such that $T$ has an infinite model and the axioms of linear ordering are valid in $T$. Applying the compactness theorem show that $T$ has a model $\mathcal{A}$ with an \emph{infinite decreasing chain}; that is, there are elements $c_i$ for every $i\in \mathbb{N}$ in $A$ such that
+    $$\dots < c_{n+1} < c_n< \dots <c_0.$$
+    (This shows that the notion of \emph{well-ordering} is not definable in first-order logic.)
+\end{problem}
+
+
+\smallskip
+\hrule
+
+\begin{problem}
+Let $T'$ be the extension of $T=\{(\exists y)(x+y=0),(x+y=0)\wedge (x+z=0)\rightarrow y=z\}$ in $L=\langle +,0,\le\rangle$ with equality by definitions of $<$ and unary $-$ with axioms
+\begin{align*}
+-x=y\ \ &\leftrightarrow\ \ x+y=0\\
+x<y\ \ &\leftrightarrow\ \ x\le y\ \wedge\ \neg(x=y)
+\end{align*}
+Find formulas of $L$ that are equivalent in $T'$ to the following formulas.
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $x+(-x)=0$
+\item $x+(-y)<x$
+\item $-(x+y)<-x$
+\end{enumerate}
+\end{problem}
+
+
+%\smallskip
+
+\begin{problem} Convert the following formulas into the prenex normal form.
+\begin{enumerate}
+\itemsep6pt
+\item $(\forall y)((\exists x)P(x,y)\to Q(y,z))\wedge (\exists y)((\forall x)R(x,y)\vee Q(x,y))$
+\item $(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)$
+\item $\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)$
+\end{enumerate}
+\end{problem}
+
+%\smallskip
+
+\begin{problem} Find Skolem variants of the formulas in PNF from the previous problem.
+\end{problem}
+
+%\smallskip
+
+\begin{problem}Verify the following claims.
+\begin{enumerate}
+\itemsep6pt
+\item $\models (\forall x)P(x,f(x)) \to (\forall x)(\exists y)P(x,y)$
+\item $\not\models (\forall x)(\exists y)P(x,y)\to (\forall x)P(x,f(x))$
+\end{enumerate}
+(Therefore, a Skolem variant does not have to be equivalent to the original formula.)
+\end{problem}
+
+
+
+
+
+\end{document}

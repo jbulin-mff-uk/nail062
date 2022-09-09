@@ -1,0 +1,136 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{\sc Logic Tutorial: Worksheet 0}
+
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+
+\subsection*{Topics:} Predicate logic (language, theory, first order, higher order). Expressing various properties in propositional and predicate logic.
+
+\smallskip
+\begin{problem}
+\item We are lost in a labyrinth. In front of us are three doors: a red door, a green door, and a blue door. We know that exactly one of the doors leads out of the labyrinth while the two other doors lead to a hungry dragon. We read the following inscriptions on the doors:
+\begin{itemize}
+    \item Red door: ``The way out is behind this door.''
+    \item Green door: ``The way out is not behind the blue door.''
+    \item Blue door: ``The way out is not behind this door.''
+\end{itemize}
+We know that at least one of the inscriptions is true and at least one is false. Formalize our knowledge.
+\end{problem}
+
+\smallskip
+\begin{problem} We know the following:
+\begin{enumerate}
+    \item[$(i)$] Everyone knows themselves.
+\item[$(ii)$] If a person studies at a school, they had to apply to the school and the school had to accept them.
+\item[$(iii)$] Alfonso did not apply to any school that accepted someone who knows Alfonso.
+\end{enumerate}
+Formalize our knowledge. Can you show that ``Alfonso does not study at any school''?
+\end{problem}
+
+
+
+
+\smallskip
+\begin{problem}
+Find a suitable first-order language and theory for
+\begin{enumerate}[a)]
+    \item oriented graphs (without multiple edges)
+    \item graphs (undirected, loopless),
+%    \item connectivity in graphs (i.e., with a predicate for $u$ and $v$ being connected),
+    \item equivalence relations,
+    \item partial orders.
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+We are given an (undirected, loopless) graph $G$. Find formul{\ae} (in the language of graphs) which express the following properties. When is it possible in FO logic and when do we need second order?
+\begin{enumerate}[(a)]
+    \item $G$ contains a vertex of degree 1
+    \item there is a path of length $k$ between $u$ and $v$ in $G$ (for some fixed $k$)
+    \item $G$ is regular of degree 3,
+    \item $G$ contains a $k$-clique (for some fixed $k$),
+    \item $G$ is vertex 3-colorable.
+    \item $G$ is bipartite,
+    \item $G$ has a perfect matching,
+    \item there is a path between $u$ and $v$ in $G$
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem} Find first-order formul{\ae} (in the language of $\le$) expressing the following properties in a partially ordered set:
+\begin{enumerate}[(a)]
+\item ``$x$ is the smallest element'', ``$x$ is a minimal element'',
+\item ``$x$ has an immediate successor'',
+\item ``every two elements have the greatest common predecessor''.
+\end{enumerate}
+\end{problem}
+
+\smallskip
+\begin{problem} Find first-order formul{\ae} (in the language of equality) expressing for a fixed $n>0$ that
+\begin{enumerate}[(a)]
+\item ``there exist at least $n$ elements'',
+\item ``there exist at most $n$ elements'',
+\item ``there exist exactly  $n$ elements''
+\end{enumerate}
+Is it possible to express using a (possibly infinite) set of formul{\ae} that  ``there are infinitely many elements''?
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Can $\mathbb N$, $\mathbb Z$, $\mathbb R$, and $\mathbb C$ be distinguished by first-order properties
+\begin{enumerate}[(a)]
+\item in the language of ordered sets?
+\item in the language of arithmetic?
+\end{enumerate}
+\end{problem}
+
+
+% \smallskip
+% \begin{problem} Find a SO formula expressing ``there exist finitely many elements'':
+% \begin{enumerate}[(a)]
+%   \item Find first-order formul{\ae} (with a symbol $f$ for a function) expressing ``$f$ is injective'', ``$f$ is surjective''.
+%   \item Find a second-order formula expressing ``every surjective function is injective''.
+% \end{enumerate}
+% \end{problem}
+
+
+% \smallskip
+% \begin{problem} Recall the definition of (rooted) trees.
+% \begin{enumerate}[(a)]
+% \item Show that for every rooted tree $T$ and for every two nodes $x$, $y$ with $x<_T y$ there exists an \emph{immediate successor} (a child) of $x$ between $x$ and $y$.
+% \item Give an example of a tree in which some node (except the root) has no immediate predecessor (parent).
+% \item Show that every finitely branching tree in which every node (except the root) has a parent is countable.
+% \end{enumerate}
+% \end{problem}
+
+\smallskip
+\begin{problem}
+Consider a finite game of two alternating players, Alice and Bob. Assume that the game ends after $n$ rounds by
+a win of one of the players and that Alice goes first. The game is given by the formula
+$\varphi(x_1, y_1, x_2, y_2,\dots,x_n, y_n)$ expressing that the game with moves $x_1, y_1, x_2, y_2,\dots,x_n, y_n$ ends
+by a win of Alice. Find formul{\ae} (in first-order logic) which express
+\begin{enumerate}[(a)]
+    \item ``Alice cannot lose'',
+    \item ``Bob cannot lose'',
+    \item ``Alice has a winning strategy'',
+    \item ``Bob has a winning strategy''.
+\end{enumerate}
+\end{problem}
+
+
+\end{document}

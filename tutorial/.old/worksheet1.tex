@@ -1,0 +1,113 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{\sc Logic Tutorial: Worksheet 1}
+
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+
+\subsection*{Topics:} Introduction, math background, syntax of propositional logic (expression and formation tree, prefix, infix, postfix notation), semantics of propositional logic (Boolean operators, truth table, Venn diagram, tautologies), 
+
+\smallskip
+\begin{problem}
+Construct the expression (and formation) tree, write out the expression in prefix, infix, and postfix format:
+\begin{enumerate}[(a)]
+    \item $(3+5)*(-2)+(2*3)$
+    \item $p \to q \leftrightarrow \neg (p \wedge \neg q)$
+    \item $(p \leftrightarrow q) \leftrightarrow (p \vee q) \to (p \wedge q)$
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Construct truth tables and Venn diagrams for the following propositional formul\ae:
+\begin{enumerate}[(a)]
+\item $p \to q \leftrightarrow \neg (p \wedge \neg q)$
+\item $((p\to q)\to p)\to p$
+\item $\neg (p\vee q)\leftrightarrow \neg p\wedge \neg q$
+%\item $(p\to q \to r)\to(p\to q)\to (p\to r)$
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Show that the following propositional formul{\ae} are tautologies:
+\begin{enumerate}[(a)]
+    \item $p \to q \leftrightarrow \neg p \vee q$
+    \item $p \to q \leftrightarrow \neg (p \wedge \neg q)$,
+    \item $p \to q \leftrightarrow (p \leftrightarrow (p\wedge q))$,
+    \item $p \to q \leftrightarrow (q \leftrightarrow (p\vee q))$,
+    \item $p \wedge q \leftrightarrow ((p \leftrightarrow q) \leftrightarrow (p \vee q))$,
+    \item $(p \leftrightarrow q) \leftrightarrow (p \vee q) \to (p \wedge q)$.
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Show that $\wedge$ and $\vee$ are not enough to define all Boolean operators.
+\end{problem}
+
+\begin{problem} Are the following sets of logical connectives adequate? 
+\begin{enumerate}[(a)]
+    \item $\{\downarrow\}$ where $\downarrow$ is the Peirce arrow (NOR),
+    \item $\{\uparrow\}$ where $\uparrow$ is the Sheffer stroke (NAND),
+    \item $\{\vee, \rightarrow, \leftrightarrow\}$,
+    \item $\{\vee, \wedge, \rightarrow\}$.
+\end{enumerate}
+\end{problem}
+
+\smallskip
+\begin{problem}
+Consider the ternary Boolean operator $\mathrm{IFTE}(p, q, r)$ meaning ``if $p$ then $q$ else $r$''. 
+\begin{enumerate}[(a)]
+    \item Construct its truth table.
+    \item Show that all basic Boolean operators ($\neg, \to, \wedge,\vee,\dots$) can be expressed using IFTE and the constants TRUE and FALSE.
+\end{enumerate}  
+\end{problem}
+
+
+
+\begin{problem}
+Give an example of a proposition in the language $\mathbb P=\{p,q,r\}$ which
+\begin{enumerate}[(a)]
+\item is true,
+\item is contradictory,
+\item is independent,
+\item is equivalent to, but different from, the proposition $(p\wedge q)\to\neg r$,
+\item has exactly the following models: $\{(1,0,0),(1,0,1),(0,0,1)\}$.
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+Find the set of all models of the given proposition in the language $\mathbb P=\{p,q,r\}$.
+\begin{enumerate}[(a)]
+    \item $p\leftrightarrow \neg r$
+    \item $((p\wedge q)\to\neg r)\to r$
+    \item $(p\wedge q\wedge \neg r)\vee (\neg p\wedge \neg q\wedge \neg r)$
+    \item $(p\vee q\vee \neg r)\wedge (\neg p\vee \neg q\vee \neg r)$
+    
+\end{enumerate}
+
+
+\end{problem}
+
+\medskip\hrule\medskip
+
+
+
+
+
+\end{document}

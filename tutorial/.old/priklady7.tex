@@ -1,0 +1,134 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+\theoremstyle{remark}
+\newtheorem*{theorem*}{Věta}
+
+
+\begin{document}
+
+
+\section*{Cvičení z logiky: 7. sada příkladů}
+
+\bigskip\bigskip
+
+\subsection*{Témata:}  Skolemizace, extenze o definice, Herbrandův model, ekvisplnitelnost, množinová reprezentace, rezoluce, unifikace.
+
+\bigskip\bigskip
+
+\begin{problem} Teorie těles $T$ jazyka $L=\langle +,-,\cdot,0,1\rangle$ obsahuje jeden axiom $\varphi$, který není otevřený:
+$$x\ne 0\ \to\ (\exists y)(x\cdot y=1).$$
+\medskip
+
+Víme, že $T\models 0\cdot y=0$ a $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Najděte Skolemovu variantu $\varphi_S$ formule $\varphi$ s novým funkčním symbolem $f$.
+\item Uvažme teorii $T'$ vzniklou z $T$ nahrazením $\varphi$ za $\varphi_S$. Platí $\varphi$ v $T'$?
+\item Lze každý model $T$ \emph{jednoznačně} rozšířit na model $T'$?
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Nechť $T$ je teorie těles z předchozího příkladu a mějme následující formuli $\psi$: $$x\cdot y=1\vee  (x=0 \wedge y=0)$$
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Platí v $T$ axiomy existence a jednoznačnosti pro $\psi(x,y)$ a proměnnou $y$?
+\item Sestrojte extenzi $T^*$ teorie $T$ o definovaný symbol $f$ formulí $\psi$.
+\item Je $T^*$ ekvivalentní teorii $T'$ z předchozího příkladu?
+\item Najděte formuli v původním jazyce $L$, která je v $T^*$ ekvivalentní s formulí
+$$f(x\cdot y)=f(x)\cdot f(y)$$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Sestrojte Herbrandovo univerzum a příklad Herbrandovy struktury pro následující jazyky:
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $L=\langle P,Q,f,a,b \rangle$ kde  $P,Q$ jsou relační symboly, $P$ unární a $Q$ binární, $f$ je unární funkční symbol, a $a,b$ jsou konstantní symboly.
+\item $L=\langle P,f,g,a \rangle$ kde $P$ je binární relační symbol, $f,g$ jsou unární funkční symboly, a symbol $a$ je konstantní.
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+
+
+\begin{problem} Sestrojte Herbrandův model, nebo najděte nesplnitelnou konjunkci základních instancí jejich axiomů ($a,b$ jsou konstantní symboly v daném jazyce).
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,b), P(a)\}$
+\item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,b), P(a)\}$
+\item $T=\{P(x,f(x)),\neg P(x,g(x))\}$
+\item $T=\{P(x,f(x)),\neg P(x,g(x)), P(g(x),f(y)) \to P(x,y)\}$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Převeďte následující formule na ekvisplnitelné formule v množinové reprezentaci.
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $(\forall y)(\exists x)P(x,y)$
+\item $\neg (\forall y)(\exists x)P(x,y)$
+\item $\neg (\exists x)((P(x)\to P(a))\wedge (P(x)\to P(b)))$
+\item $(\exists x)(\forall y)(\exists z)(P(x,z)\wedge P(z,y) \to R(x,y))$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Víme, že platí následující:
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Je-li cihla na (jiné) cihle, potom není na zemi.
+\item Každá cihla je na (jiné) cihle nebo na zemi.
+\item Žádná cihla není na cihle, která by byla na (jiné) cihle.
+\end{enumerate}
+\medskip
+Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí následující tvrzení: ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''
+\end{problem}
+
+\bigskip
+
+\begin{problem} Víme, že platí následující:
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Každý holič holí všechny, kdo neholí sami sebe
+\item Žádný holič neholí nikoho, kdo holí sám sebe.
+\end{enumerate}
+\medskip
+Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí, že neexistují žádní holiči.
+\end{problem}
+
+\bigskip
+
+\begin{problem}
+Ukažte, že daná množina klauzulí je zamítnutelná (rezolucí). Popište zamítnutí pomocí rezolučního stromu. V každém kroku rezoluce napište použitou unifikaci a podtrhněte rezolvované literály.
+
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $\{P(a,x,f(y)),P(a,z,f(h(b))),\neg Q(y,z)\}$
+\item $\{\neg Q(h(b),w),H(w,a)\}$
+\item $\{\neg P(a,w,f(h(b))),H(x,a)\}$
+\item $\{P(a,u,f(h(u))),H(u,a),Q(h(b),b)\}$
+\item $\{\neg H(v,a)\}$
+\end{enumerate}
+\end{problem}
+
+
+\end{document}

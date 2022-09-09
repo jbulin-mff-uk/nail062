@@ -1,0 +1,164 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+
+
+
+\begin{document}
+
+\section*{Cvičení z logiky: 4. sada příkladů}
+
+\bigskip\bigskip\bigskip
+
+\subsection*{Témata:} Více o Tablo metodě. Věta o dedukci. Věta o kompaktnosti a aplikace. Rezoluční metoda, množinová reprezentace formulí v CNF, rezoluční uzávěr, strom dosazení. Hilbertovský kalkul.
+
+\medskip\hrule
+
+\begin{problem} Navrhněte vhodná atomická tabla pro Peirceovu spojku $\downarrow$ (NOR), pro Shefferovu spojku $\uparrow$ (NAND), a pro ternárí operátor ``if p then q else r'' (IFTE).
+\end{problem}\medskip
+
+\begin{problem}
+Dokažte přímo (transformací tabel) větu o dedukci, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí
+$$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
+\end{problem}\medskip
+
+% \begin{problem}
+% V důkazu lemmatu o úplnosti v přednášce jsme ověřili, že shoduje-li se ohodnocení $v$ s každou položkou dokončené větve $V$ do dané hloubky $i$ vytvořujícího stromu, shoduje se i s položkou tvaru $T(\varphi \wedge \psi)$ nebo $F(\varphi \wedge \psi)$ na $V$, kde $\varphi \wedge \psi$ má hloubku  $i+1$. Dokažte obdobné tvrzení pro ostatní logické spojky.
+% \end{problem}\medskip
+
+\hrule
+
+\begin{problem}
+Ukažte, že každý spočetný rovinný graf je obarvitelný čtyřmi barvami.
+\end{problem}\medskip
+
+\begin{problem}
+Ukažte, že každé spočetné částečné uspořádání lze rozšířit na úplné (lineární) uspořádání.
+\end{problem}\medskip
+
+% \begin{problem}
+% Nechť $\mathcal S$ je spočetný neprázdný systém (množina) neprázdných konečných množin. \emph{Prostý selektor} na $\mathcal S$ je prostá funkce $f\colon \mathcal{S} \to \bigcup \mathcal{S}$ taková, že $f(S)\in S$ pro každou $S\in \mathcal{S}$. Ukažte, že $\mathcal{S}$ má prostý selektor, právě když ho má každá neprázdná konečná část $\mathcal{S}$.
+% \end{problem}\medskip
+
+\hrule
+
+\begin{problem}
+Označme jako $\varphi$ výrok $\neg (p \vee q) \to (\neg p \wedge \neg q)$.
+\begin{enumerate}[(a)]
+\item Převeďte $\neg \varphi$ do CNF a množinové reprezentace.
+\item Najděte rezoluční zamítnutí $\neg \varphi$, tj. důkaz $\varphi$.
+\end{enumerate}
+\end{problem}\medskip
+
+
+\begin{problem}
+Najděte rezoluční uzávěry $\mathcal{R}(S)$ pro následující výroky $S$:
+\begin{enumerate}
+\item $\{\{p,q\},\{\neg p, \neg q\},\{\neg p, q\}\}$
+\item $\{\{p,q\},\{p,\neg q\},\{\neg p,\neg q\}\}$
+\item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$
+\end{enumerate}
+\end{problem}\medskip
+
+\begin{problem}
+Najděte rezoluční zamítnutí následujících výroků:
+\begin{enumerate}
+\item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$
+\item $\neg(((p\to q)\to \neg q)\to \neg q)$
+\end{enumerate}
+\end{problem}\medskip
+
+
+\begin{problem}
+Dokažte rezolucí, že v teorii $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
+\end{problem}\medskip
+
+\hrule
+
+
+\begin{problem}
+Dokažte, že je-li $S=\{C_1,C_2\}$ splnitelná a $C$ je rezolventa $C_1$ a $C_2$, potom je i $C$ splnitelná.
+\end{problem}\medskip
+
+\begin{problem}
+Zkonstruujte \emph{strom dosazení} pro formuli $S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$.
+\end{problem}\medskip
+
+
+\begin{problem}Předpokládejme, že máme k dispozici MgO, H$_2$, O$_2$, a C a můžeme provádět následující reakce:
+\begin{align*}&(1)\quad\text{MgO\ +\ H$_2$\ \ $\to$\ \ Mg\ +\ H$_2$O}\\
+&(2)\quad\text{C\ +\ O$_2$\ \ $\to$\ \ CO$_2$}\\
+&(3)\quad\text{CO$_2$\ +\ H$_2$O\ \ $\to$\ \ H$_2$CO$_3$}
+\end{align*}
+\begin{enumerate}
+\item Reprezentujte naše možnosti výrokem (nad vhodně zvoleným jazykem) a převeďte ho do množinové reprezentace
+\item Pomocí LI-rezoluce dokažte, že můžeme získat H$_2$CO$_3$.
+\end{enumerate}
+\end{problem}\medskip
+
+\hrule
+
+\begin{problem}
+V Hilbertově kalkulu dokažte pro libovolné formule následující vztahy:
+\begin{enumerate}[(a)]
+\item $\vdash_H\ p\to p$
+\item $\{\neg p\}\ \vdash_H\ p\to q$
+\item $\{\neg(\neg p)\}\ \vdash_H\ p$
+\item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
+\item $\{p, q \to (p\to r)\}\ \vdash_H\ q\to r$
+
+\end{enumerate}
+\end{problem}\medskip
+
+\begin{problem}
+Dokažte korektnost Hilbertova kalkulu:
+\begin{itemize}
+    \item Dokažte, že logické axiomy jsou tautologie.
+    \item Dokažte, že modus ponens je korektní, tj. když $T\models\varphi$ a $T\models\varphi\to\psi$, tak $T\models\psi$.
+    \item Ukažte, že $T\ \vdash_H\ \varphi$ implikuje $T\models\varphi$.
+\end{itemize}
+\end{problem}\medskip
+
+\begin{problem}
+Vyslovte a dokažte větu o dedukci pro Hilbertův kalkul.
+\end{problem}\medskip
+
+\bigskip
+
+\hrule
+
+\bigskip
+
+
+\subsection*{Hilbert's calculus}
+The \emph{Hilbert's propositional calculus} is a proof system for propositional logic where 
+\begin{itemize}
+    \item we only use the logical connectives $\neg,\to$
+    \item we have the following (schemes of) \emph{logical axioms}:
+    \begin{enumerate}[(i)]
+        \item $\varphi \to (\psi \to \varphi)$
+        \item $(\varphi\to (\psi \to \chi)) \to ((\varphi \to \psi)\to(\varphi \to \chi))$
+        \item $(\neg \varphi \to \neg \psi)\to(\psi \to \varphi)$
+    \end{enumerate}
+    \item and the following \emph{rule of inference}:
+    $$\frac{\varphi,\ \varphi \to \psi}{\psi}$$
+    i.e. ``from $\varphi$ and $\varphi\to\psi$ infer $\psi$'' (called ``modus ponens'')
+\end{itemize}
+In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $T$ is a finite sequence $\varphi_0,\dots,\varphi_n=\varphi$ of formulas such that for every $i\leq n$,
+\begin{itemize}
+\item $\varphi_i$ is a logical axiom, or 
+\item $\varphi_i \in T$ (an axiom of the theory), or
+\item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
+\end{itemize}
+If such a proof exists, we write $T\ \vdash_H\ \varphi$.
+
+
+
+
+\end{document}

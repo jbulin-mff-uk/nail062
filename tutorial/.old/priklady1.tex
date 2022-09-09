@@ -1,0 +1,111 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+
+
+
+\begin{document}
+
+\section*{Cvičení z logiky: 1. sada příkladů}
+
+\bigskip\bigskip
+
+\subsection*{Témata:} 
+Úvod, matematické základy, syntax výrokové logiky (strom výrazu, vytvořující strom, prefixový, infixový a postfixový zápis), sémantika výrokové logiky (Booleovské operátory, pravdivostní tabulka, Vennův diagram, tautologie, modely).
+
+\bigskip
+
+\medskip\hrule\medskip
+
+\begin{problem}
+Sestrojte strom výrazu resp. formule, zapište je v prefixovém, infixovém a postfixovém formátu:
+\begin{enumerate}[(a)]
+    \item $(3+5)*(-2)+(2*3)$
+    \item $p \to q \leftrightarrow \neg (p \wedge \neg q)$
+    \item $(p \leftrightarrow q) \leftrightarrow ((p \vee q) \to (p \wedge q))$
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Sestrojte pravdivostní tabulky a Vennův diagram pro následující výrokové formule:
+\begin{enumerate}[(a)]
+\item $p \to q \leftrightarrow \neg (p \wedge \neg q)$
+\item $((p\to q)\to p)\to p$
+\item $\neg (p\vee q)\leftrightarrow \neg p\wedge \neg q$
+%\item $(p\to q \to r)\to(p\to q)\to (p\to r)$
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Ukažte, že následující výrokové formule jsou tautologie:
+\begin{enumerate}[(a)]
+    \item $p \to q \leftrightarrow \neg p \vee q$
+    \item $p \to q \leftrightarrow \neg (p \wedge \neg q)$,
+    \item $p \to q \leftrightarrow (p \leftrightarrow (p\wedge q))$,
+    \item $p \to q \leftrightarrow (q \leftrightarrow (p\vee q))$,
+    \item $p \wedge q \leftrightarrow ((p \leftrightarrow q) \leftrightarrow (p \vee q))$,
+    \item $(p \leftrightarrow q) \leftrightarrow (p \vee q) \to (p \wedge q)$.
+\end{enumerate}
+\end{problem}
+
+
+\smallskip
+\begin{problem}
+Ukažte, že $\wedge$ a $\vee$ nestačí k definování všech Booleovských operátorů.
+\end{problem}
+
+\smallskip
+\begin{problem} Jsou následující množiny logických spojek univerzální? Zdůvodněte.
+\begin{enumerate}[(a)]
+    \item $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR),
+    \item $\{\uparrow\}$ kde $\uparrow$ je Sheffer stroke (NAND),
+    \item $\{\vee, \rightarrow, \leftrightarrow\}$,
+    \item $\{\vee, \wedge, \rightarrow\}$.
+\end{enumerate}
+\end{problem}
+
+\smallskip
+\begin{problem}
+Uvažte ternární Booleovský operátor $\mathrm{IFTE}(p, q, r)$ definovaný jako ``if $p$ then $q$ else $r$''. 
+\begin{enumerate}[(a)]
+    \item Zkonstruujte pravdivostní tabulku.
+    \item Ukažte, že všechny základní Booleovské operátory ($\neg, \to, \wedge,\vee,\dots$) lze vyjádřit pomocí IFTE a konstant TRUE a FALSE.
+\end{enumerate}  
+\end{problem}
+
+
+\begin{problem}
+Uveďte příklad výroku v jazyce $\mathbb P=\{p,q,r\}$, který
+\begin{enumerate}[(a)]
+\item je pravdivý,
+\item je sporný,
+\item je nezávislý,
+\item je ekvivalentní s, ale různý od, výroku $(p\wedge q)\to\neg r$,
+\item má za modely právě $\{(1,0,0),(1,0,1),(0,0,1)\}$.
+\end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+Najděte množinu modelů daného výroku v jazyce $\mathbb P=\{p,q,r\}$.
+\begin{enumerate}[(a)]
+    \item $p\leftrightarrow \neg r$
+    \item $((p\wedge q)\to\neg r)\to r$
+    \item $(p\wedge q\wedge \neg r)\vee (\neg p\wedge \neg q\wedge \neg r)$
+    \item $(p\vee q\vee \neg r)\wedge (\neg p\vee \neg q\vee \neg r)$
+    
+\end{enumerate}
+
+
+\end{problem}
+
+
+
+\end{document}

@@ -1,0 +1,179 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+\usepackage[shortlabels]{enumitem}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+\theoremstyle{remark}
+\newtheorem*{theorem*}{Věta}
+
+
+\begin{document}
+
+
+\section*{Cvičení z logiky: 6. sada příkladů}
+
+\medskip
+
+\subsection*{Témata:}  Definovatelné množiny, tablo metoda, rovnost, věta o konstantách, věta o dedukci, prenexní forma, Skolemova varianta.
+
+\medskip
+\hrule
+
+\begin{problem}
+Mějme jazyk $L=\langle F \rangle$ s rovností, kde $F$ je binární funkční symbol. Najděte formule definující následující množiny (bez parametrů):
+\begin{enumerate}[(a)]
+\itemsep6pt
+    \item interval $(0,\infty)$ v $\mathcal A=\langle\mathbb R, \cdot\rangle$ kde $\cdot$ je násobení reálných čísel,
+    \item množina $\{(x, 1/x)\mid x\neq 0\}$ ve stejné struktuře $\mathcal A$,
+    \item množina všech nejvýše jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$,
+    \item množina všech prvočísel v $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$.
+\end{enumerate}
+
+\end{problem}
+
+\medskip
+\hrule
+
+\begin{problem}
+Předpokládejme, že
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item všichni viníci jsou lháři,
+\item aspoň jeden z obviněných je také svědkem,
+\item žádný svědek nelže.
+\end{enumerate}
+Dokažte tablo metodou, že ne všichni obvinění jsou viníci.
+\end{problem} 
+
+
+
+\begin{problem} Nechť $L(x,y)$ reprezentuje \emph{``existuje let z $x$ do $y$''} a $S(x,y)$ reprezentuje \emph{``existuje spojení z $x$ do $y$''}. Předpokládejme, že
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item Z Prahy lze letět do Bratislavy, Londýna a New Yorku, a z New Yorku do Paříže,
+\item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
+\item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
+\item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
+\end{enumerate}
+Dokažte tablo metodou, že existuje spojení z Bratislavy do Paříže.
+\end{problem} 
+
+\medskip
+
+\begin{problem} V následujících příkladech jsou $\varphi$ a $\psi$ sentence nebo formule s volnou proměnnou $x$ (což značíme $\varphi(x)$, $\psi(x)$). Najděte tablo důkazy dané formule:
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $(\exists x)(\varphi(x)\vee \psi(x))\leftrightarrow (\exists x)\varphi(x)\vee (\exists x)\psi(x)$,
+\item $(\forall x)(\varphi(x)\wedge\psi(x))\leftrightarrow (\forall x)\varphi(x)\wedge(\forall x)\psi(x)$,
+\item $(\varphi \vee (\forall x)\psi(x))\to (\forall x)(\varphi \vee \psi(x))$ kde $x$ není volná v $\varphi$,
+\item $(\varphi \wedge (\exists x)\psi(x))\to (\exists x)(\varphi \wedge \psi(x))$ kde $x$ není volná v $\varphi$.
+\item $(\exists x)(\varphi \to \psi(x))\to(\varphi \to (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+\item $(\exists x)(\varphi \wedge \psi(x))\to(\varphi \wedge (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+%\item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$,
+%\item $(\forall x)\neg \varphi(x)\to \neg(\exists x)\varphi(x)$,
+\item $(\exists x)(\varphi(x)\to\psi)\to((\forall x)\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$,
+\item $((\exists x)\varphi(x)\to\psi)\to(\forall x)(\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$.
+\end{enumerate}
+\end{problem} 
+
+\medskip
+\hrule
+
+\begin{problem} Mějme teorii $T^*$ s axiomy rovnosti. Pomocí tablo metody ukažte, že 
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $T^*\models x=y\ \to\ y=x$\hfill(symetrie)
+\item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(tranzitivita)
+\end{enumerate}
+
+\medskip
+{\it Hint:} Pro (a) použijte axiom rovnosti $(iii)$ pro $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
+na (b) použijte $(iii)$ pro $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
+\end{problem} 
+
+\medskip
+
+\begin{problem} Dokažte větu o konstantách syntakticky, pomocí transformací tabel.
+
+\smallskip
+
+\begin{theorem*} Buď $\varphi$ formula v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$ a $T$ teorie v $L$. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí
+$$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{právě když}\quad T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n).$$
+\end{theorem*}
+\end{problem} 
+
+\medskip
+
+
+\begin{problem} Dokažte větu o dedukci syntakticky, pomocí transformací tabel.
+
+\smallskip
+
+\begin{theorem*} Pro každou teorii $T$ (v uzavřené formě) a sentence $\varphi$, $\psi$,
+$$T\vdash \varphi\to\psi\quad\text{právě když}\quad T,\varphi\vdash\psi.$$
+\end{theorem*}
+\end{problem} 
+
+\medskip
+\hrule
+
+\begin{problem} Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ teorie v tomto jazyce taková, že $T$ má nekončený model a platí v ní axiomy lineárního uspořádání $T$. Pomocí věty o kompaktnosti ukažte, že $T$ má model $\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že existují prvky $c_i$ pro každé $i\in \mathbb{N}$ v $A$ takové, že 
+    $$\dots < c_{n+1} < c_n< \dots <c_0.$$
+    (Z toho plyne, že pojem \emph{dobrého uspořádání} není definovatelný v logice prvního řádu.)
+\end{problem}
+
+\medskip
+\hrule
+
+\begin{problem}
+Buď $T'$ extenze teorie $T=\{(\exists y)(x+y=0),(x+y=0)\wedge (x+z=0)\rightarrow y=z\}$ v jazyce $L=\langle +,0,\le\rangle$ s rovností o definice $<$ a unárního $-$ s axiomy
+\begin{align*}
+-x=y\ \ &\leftrightarrow\ \ x+y=0\\
+x<y\ \ &\leftrightarrow\ \ x\le y\ \wedge\ \neg(x=y)
+\end{align*}
+Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následujícími formulemi.
+\begin{enumerate}[(a)]
+\itemsep6pt
+\item $x+(-x)=0$
+\item $x+(-y)<x$
+\item $-(x+y)<-x$
+\end{enumerate}
+\end{problem}
+
+\medskip
+
+
+\begin{problem} Převeďte následující formule do prenexní normální formy.
+\begin{enumerate}
+\itemsep6pt
+\item $(\forall y)((\exists x)P(x,y)\to Q(y,z))\wedge (\exists y)((\forall x)R(x,y)\vee Q(x,y))$
+\item $(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)$
+\item $\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)$
+\end{enumerate}
+\end{problem}
+
+\medskip
+
+\begin{problem} Najděte Skolemovy varianty formulí v PNF z předchozího příkladu.
+\end{problem}
+
+\medskip
+
+\begin{problem} Ověřte, že platí následující:
+\begin{enumerate}
+\itemsep6pt
+\item $\models (\forall x)P(x,f(x)) \to (\forall x)(\exists y)P(x,y)$
+\item $\not\models (\forall x)(\exists y)P(x,y)\to (\forall x)P(x,f(x))$
+\end{enumerate}
+(Z toho plyne, že Skolemova varianta nemusí být ekvivalentní původní formuli.)
+\end{problem}
+
+
+
+
+\end{document}

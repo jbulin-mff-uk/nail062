@@ -1,0 +1,84 @@
+\documentclass[a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{a4wide}
+\theoremstyle{definition}
+\newtheorem{task}{Task}
+
+\title{\sc Logic Tutorial: Homework Assignment 2}
+%\author{Due at 12:20pm on Monday, December 7}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+\vspace{-0.5cm}
+
+Submit your solution in Moodle. The deadline is strict; late submissions will not be graded except under special circumstances. Allow for an abundance of time for the submission process so that momentary technical issues with Moodle will not prevent you from submitting on time. The submitted solution must be entirely your own, it is strictly forbidden to look up hints or consult with anyone but me. Give a \textbf{detailed justification} of all your answers, include all steps in \textbf{all computations}, etc. It is your responsibility to make your solution clearly and \textbf{easily readable}; any parts which are not easy to read will be ignored. If you submit a handwritten solution, use a print font. \textbf{Handwritten cursive font is not allowed}. Use a pen on white paper, not a pencil. Photograph the pages with enough light or use software to achieve white background.
+
+\bigskip
+
+\begin{task}
+Use the tableau method to prove or find a counterexample to $T\models\varphi$ where
+\begin{align*}
+T&=\{ p \vee q \vee r, r \to (p \vee q), (q \wedge r) \to p, \neg p \vee q \vee r \}\\
+\varphi&=(q \to p) \vee \neg (q \to (p\vee r))
+\end{align*}
+\end{task}
+
+\bigskip
+
+\begin{task}
+Use the tableau method to find all models of the theory $T$ over the language $\mathbb P=\{p,q,r,s\}$.
+$$T=\{p \to q, q \to r, (\neg p \leftrightarrow s), r\vee\neg s\}$$ 
+\end{task}
+
+\bigskip
+
+
+\begin{task}
+Show that the following CNF formula $S$ (in set representation) is unsatisfiable by finding a resolution refutation. Draw the resolution tree.
+$$
+S=\{\{p,q, \neg r,s\}, \{\neg p,r,s\}, \{\neg q, \neg r\}, \{p, \neg s\}, \{\neg p, \neg r\}, \{r\}\}
+$$
+\end{task}
+
+
+\bigskip
+
+\begin{task}
+Consider the following two claims about coloring prime numbers of size at most $n$ with \underline{two} colors, where $n\ge 1$ is given.
+\begin{enumerate}
+\item[$(i)$] {\it There is no monochromatic (i.e., colored with the same color) triple of \underline{distinct} primes $a,b,c \le n$ such that $a+b=2c$.}
+\item[$(ii)$] {\it If $3$ and $7$ are colored with the same color, then $5$ and $11$ must be colored with the same color (but possibly different from the color of $3$ and $7$) as well.}
+\end{enumerate}
+
+\bigskip
+
+
+\begin{enumerate}[(a)]
+\item Show how to write, for a given $n\ge 1$, the claim $(i)$ as a proposition $\varphi_n$ over the language $\mathbb{P}=\{p_i \mid i\in \mathbb{N}\text{ is a prime}\}$, where $p_i$ means that ``$i$ is colored by the first color''. Then express the claim $(ii)$ as a proposition $\psi$ over $\mathbb{P}$. 
+\item In the following, let $n=13$. Using the propositions $\varphi_{13}$ and $\psi$, write a theory $T$ which is unsatisfiable, if an only if any coloring satisfying $(i)$ satisfies $(ii)$ as well.
+\item Convert the axioms of $T$ to CNF and write the resulting CNF theory in set representation. 
+\item Use the resolution method to show that $T \cup \{p_3\}$ is not satisfiable, that is, we additionally assume that the number 3 is colored with the first color. Draw the refutation in the form of a resolution tree.
+\end{enumerate}
+\end{task}
+
+\bigskip
+\begin{task}
+Let $T = \{\neg E(x, x), E(x, y) \to E(y, x), P(x) \leftrightarrow (\exists y)( E(x,y)),\varphi\}$ be a theory over the language $L =\langle E, P\rangle$ with equality, where $E$ is a binary relation symbol, $P$ is a unary relation symbol, and the axiom $\varphi$ expresses that ``there are exactly three elements''.
+\begin{enumerate}[(a)]
+\item Find all models of the theory $T$ (up to elementary equivalence). 
+\item Let $\psi=P(x)\wedge E(x,y)\to P(y)$. Is the sentence $(\forall x)(\forall y)\psi$ valid/contradictory/independent in $T$? (Don't forget to fully justify your answers!)
+\end{enumerate}
+\end{task}
+
+
+
+
+\end{document}

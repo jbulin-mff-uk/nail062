@@ -1,0 +1,124 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+
+
+
+\begin{document}
+
+\section*{Cvičení z logiky: 3. sada příkladů}
+
+\bigskip\bigskip\bigskip
+
+\subsection*{Témata:} 
+
+Výrokové teorie a jejich vlastnosti. Lindenbaum-Tarski algebra výroků. Tablo metoda.
+
+\thispagestyle{empty}
+
+
+\begin{problem}
+\begin{enumerate}[(a)]
+\item Rozhodněte, zda je teorie $T$ [konzistentní/splnitelná/kompletní]. (konzistentní=bezesporná, kompletní=úplná)
+\item Uveďte příklad výroku $\varphi$, který je [platný/nesplnitelný/nezávislý] v $T$
+\item Uveďte příklad rozšíření $T'$ teorie $T$ (pokud existuje, a pokud možno, neekvivalentního s $T$), které je [jednoduché/konzervativní/kompletní/konz. jedn./kompl. jedn./kompl. konz.].
+\end{enumerate}
+\begin{enumerate}
+    \item[A)] $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ v jazyce $\mathbb P=\{p,q,r\}$,
+    \item[B)] $T=\{p\wedge q,p\to\neg q,q\}$ v jazyce $\mathbb P=\{p,q\}$.
+\end{enumerate}
+\end{problem}
+
+
+
+\begin{problem}
+Uvažme nekonečné výrokové teorie 
+\begin{enumerate}
+\item[A)] $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$, 
+\item[B)] $S=\{p_i \to (p_{i+1} \vee q_{i+1}), q_i \to (p_{i+1} \vee q_{i+1}) \mid i\in \mathbb{N}\}$ nad $\mathrm{var}(S)$.
+\end{enumerate}
+Odpovězte na následující otázky:
+\begin{enumerate}[(a)]
+\item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$, resp. $S$?
+\item Které výroky ve tvaru  $p_i \to (p_j \vee q_j)$ jsou důsledky $S$?
+\item Určete všechny modely $T$ a $S$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro každou teorii $T$ a výroky $\varphi$, $\psi$ v jazyce $\mathbb{P}$ platí:
+\begin{enumerate}[(a)]
+\item $T \models \varphi$,\ \  právě když \ \ $T \not\models \neg \varphi$
+\item $T \models \varphi$ a $T \models \psi$,\ \ právě když \ \ $T \models \varphi \wedge \psi$
+\item $T \models \varphi$ nebo $T \models \psi$,\ \ právě když \ \ $T \models \varphi \vee \psi$
+\item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro libovolné teorie $T$, $S$ nad~$\mathbb{P}$ platí:
+\begin{enumerate}[(a)]
+\item $S\subseteq T \Rightarrow \theta^{\mathbb{P}}(T) \subseteq \theta^{\mathbb{P}}(S)$
+\item $\theta^{\mathbb{P}}(S\cup T)=\theta^{\mathbb{P}}(S) \cup \theta^{\mathbb{P}}(T)$
+\item $\theta^{\mathbb{P}}(S\cap T)=\theta^{\mathbb{P}}(S) \cap \theta^{\mathbb{P}}(T)$
+\end{enumerate}
+\end{problem}
+
+\hrule
+
+\begin{problem}
+Nechť $|\mathbb{P}|=n$ a mějme výrok $\varphi\in\mathrm{VF}_{\mathbb{P}}$ takový, že $|M(\varphi)|=m$. Určete počet až na ekvivalenci:
+\begin{enumerate}[(a)]
+\item výroků $\psi$ takových, že $\varphi \models \psi$ nebo $\psi \models \varphi$,
+\item teorií nad $\mathbb{P}$, ve kterých platí $\varphi$,
+\item úplných teorií nad $\mathbb{P}$ ve kterých platí $\varphi$,
+\item teorií $T$ nad $\mathbb{P}$ takových, že $T \cup \{\varphi\}$ je bezesporná.
+\end{enumerate}
+Uvažme navíc spornou teorii $\{\varphi,\psi\}$ kde $|M(\psi)|=p$. Spočtěte až na ekvivalenci:
+\begin{enumerate}[(a)]
+\item[(e)] výroky $\chi$ takové, že $\varphi \vee \psi \models \chi$, 
+\item[(f)] teorie, ve kterých platí $\varphi \vee \psi$.
+\end{enumerate}
+\end{problem}
+
+\hrule
+\begin{multicols}{2}
+\begin{problem}
+Pomocí tablo metody dokažte následující výroky:
+\begin{enumerate}[(a)]
+\item $(p\to (q \to q))$
+\item $p \leftrightarrow \neg \neg  p$
+\item $\neg (p \vee q) \leftrightarrow (\neg p \wedge \neg q)$
+\item $(p \to q) \leftrightarrow (\neg q \to \neg p)$
+\item $(p \to (q \to r)) \to ((p\to q)\to (p \to r))$
+\end{enumerate}
+\end{problem} 
+
+\begin{problem}
+Pomocí tablo metody dokažte nebo najděte protipříklad:
+\begin{enumerate}[(a)]
+\item $\{ \neg q,\ p \vee q\} \models p$,
+\item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$,
+\item $\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Pomocí tablo metody určete všechny modely následujících teorií:
+\begin{enumerate}[(a)]
+\item $\{(\neg p \vee q) \to (\neg q \wedge r)\}$
+\item $\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$
+\item $\{ q \to p,\ r \to q,\ (r \to p) \to s\}$
+\end{enumerate}
+\end{problem}
+
+\end{multicols}
+
+\end{document}.

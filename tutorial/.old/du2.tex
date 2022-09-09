@@ -1,0 +1,80 @@
+\documentclass{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{a4wide}
+\theoremstyle{definition}
+\newtheorem{task}{Úkol}
+
+
+\title{\sc Cvičení z logiky: Domácí úkol č. 2}
+%\author{Termín odevzdání: úterý 8. prosince v 10:40}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+Úkol odevzdávejte v Moodle. Ponechte si dostatečný čas pro odevzdání, tak aby vám krátkodobé technické potíže s Moodle nezabránily úkol odevzdat. Pozdě odevzdané úkoly nebudou hodnoceny, kromě případů hodných zvláštního zřetele. Odevzdané řešení musí být vaše vlastní, není dovoleno hledat nápovědy ani řešení konzultovat s kýmkoliv kromě mne. Své odpovědi dostatečně podrobně zdůvodněte, uveďte všechny pomocné výpočty apod.
+
+
+\begin{task}
+Pomocí tablo metody dokažte nebo najděte protipříklad k $T\models\varphi$, kde
+\begin{align*}
+T&=\{ p \vee q \vee r, r \to (p \vee q), (q \wedge r) \to p, \neg p \vee q \vee r \}\\
+\varphi&=(q \to p) \vee \neg (q \to (p\vee r))
+\end{align*}
+\end{task}
+
+\bigskip
+
+\begin{task}
+Pomocí tablo metody najděte všechny modely teorie $T$ v jazyce $\mathbb P=\{p,q,r,s\}$.
+$$T=\{p \to q, q \to r, (\neg p \leftrightarrow s), r\vee\neg s\}$$ 
+\end{task}
+
+\bigskip
+
+\begin{task}
+Ukažte, že následující CNF výrok $S$ (v množinové reprezentaci) je nesplnitelný: najděte rezoluční zamítnutí. Nakreslete příslušný rezoluční strom.
+$$
+S=\{\{p,q, \neg r,s\}, \{\neg p,r,s\}, \{\neg q, \neg r\}, \{p, \neg s\}, \{\neg p, \neg r\}, \{r\}\}
+$$
+\end{task}
+
+
+\bigskip
+
+\begin{task}
+Uvažme následující dvě tvrzení o barvení přirozených čísel velikosti nejvýše $n$ \underline{dvěma} barvami, kde $n\ge 1$ je dané.
+\begin{enumerate}
+\item[$(i)$] {\it Neexistuje monochromatická (tj. stejně obarvená) trojice různých prvočísel  $a,b,c \le n$ taková, že $a+b=2c$.}
+\item[$(ii)$] {\it Pokud $3$ a $7$ jsou obarvena stejně, musí být obarvena stejně i $5$ a $11$. ($5$ a $11$ ale mohou mít jinou barvu než $3$ a $7$).}
+\end{enumerate}
+
+
+\bigskip
+
+\begin{enumerate}[(a)]
+\item Ukažte, jak pro dané $n\ge 1$ napsat tvrzení $(i)$ jako výrok $\varphi_n$ v jazyce $\mathbb{P}=\{p_i \mid i\in \mathbb{N}\text{ je prvočíslo}\}$, kde $p_i$ vyjadřuje, že ``$i$ je obarveno první barvou''. Dále vyjádřete tvrzení $(ii)$ jako výrok $\psi$ v témž jazyce $\mathbb{P}$.
+\item Nechť dále $n=13$. Pomocí výroků $\varphi_{13}$ a $\psi$ napiště teorii $T$, která je nesplnitelná, právě když v každém obarvení splňujícím $(i)$ platí také $(ii)$.
+\item Převeďte axiomy $T$ do CNF a napište výslednou teorii v množinové reprezentaci.
+\item Rezolucí dokažte, že $T \cup \{p_3\}$ není splnitená, tj. navíc předpokládáme, že číslo 3 je obarveno první barvou. Zamítnutí znázorněte rezolučním stromem.
+
+\end{enumerate}
+\end{task}
+
+\bigskip
+
+\begin{task}
+Nechť $T = \{\neg E(x, x), E(x, y) \to E(y, x), P(x) \leftrightarrow (\exists y)( E(x,y)),\varphi\}$ je teorie jazyka $L =\langle E, P\rangle$ s rovností, kde $E$ je binární relační symbol, $P$ je unární relační symbol, a axiom $\varphi$ vyjadřuje, že ``existují právě tři prvky''.
+\begin{enumerate}[(a)]
+\item Určete všechny modely teorie $T$ (až na elementární ekvivalenci).
+\item Nechť $\psi=P(x)\wedge E(x,y)\to P(y)$. Je sentence $(\forall x)(\forall y)\psi$ pravdivá/lživá/nezávislá v $T$? Zdůvodněte.
+\end{enumerate}
+\end{task}
+
+\end{document}

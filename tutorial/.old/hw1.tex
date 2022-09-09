@@ -1,0 +1,83 @@
+\documentclass[a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{a4wide}
+\theoremstyle{definition}
+\newtheorem{task}{Task}
+
+\title{\sc Logic Tutorial: Homework Assignment 1}
+%\author{Due at 12:20pm on Monday, November 9}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+Submit your solution in Moodle. The deadline is strict; late submissions will not be graded except under special circumstances. Allow for an abundance of time for the submission process so that momentary technical issues with Moodle will not prevent you from submitting on time. The submitted solution must be entirely your own, it is strictly forbidden to look up hints or consult with anyone but me. Give a detailed justification of all your answers, include all steps in all computations, etc.
+
+
+\begin{task}
+Transform the following proposition into CNF and DNF. 
+$$
+((p\to \neg q) \to \neg r) \vee \neg p.
+$$
+\end{task}
+
+\begin{task}
+Decide if the following 2-CNF proposition is satisfiable. If it is, find a satisfying assignment. Draw the corresponding implication graph, and the graph of strongly connected components in a topological ordering.
+\begin{align*}
+&(a \vee  c) \wedge  (a \vee  \neg d) \wedge  (b \vee  \neg d) 
+\wedge  (b \vee  \neg e) \wedge  (\neg c \vee  \neg e) 
+\wedge  (\neg a \vee  \neg f)
+\wedge \\ &\wedge (b\vee\neg c)\wedge
+(\neg b \vee  f) \wedge  (c \vee  \neg f) \wedge \neg f
+\end{align*}
+\end{task}
+
+\begin{task}
+Decide if the following Horn proposition is satisfiable. If it is, find a satisfying assignment. Show your work.
+\begin{align*}
+&(\neg a \vee \neg b \vee c \vee \neg d)\wedge(\neg b \vee c)\wedge d \wedge (\neg a \vee \neg c \vee e)\wedge \\
+&\wedge(\neg c \vee \neg d)\wedge(\neg a \vee \neg d \vee \neg e)\wedge(a\vee \neg b \vee\neg e)
+\end{align*}
+\end{task}
+
+\begin{task}
+Let $\varphi$ and $\psi$ be the following propositions over $\mathbb P=\{p, q, r, s\}$:
+\begin{align*}
+    \varphi &= (\neg p \vee  q)\to(p\wedge r)\\
+    \psi &= s\to q
+\end{align*}
+\begin{enumerate}[(a)]
+    \item Determine the number of propositions (up to equivalence) $\chi$ over $\mathbb P$ such that $\varphi\wedge\psi\models\chi$.
+    \item Determine the number of complete theories (up to equivalence) $T$ over $\mathbb P$ such that $T\models\varphi\wedge\psi$.
+    \item Give an axiomatization for every complete theory (up to equivalence) $T$ over $\mathbb P$ such that $T\models\varphi\wedge\psi$.
+\end{enumerate}
+\end{task}
+
+
+\begin{task}
+Consider the following statements:
+\begin{enumerate}
+\item[$(i)$] {\it If you are a good runner and you are fit, you will finish the marathon.}
+\item[$(ii)$] {\it If you are not lucky and you are not fit, you will not finish the marathon.}
+\item[$(iii)$]{\it If you finish the marathon, you are a good runner.}
+\item[$(iv)$] {\it If you are lucky, you will finish the marathon.}
+\item[$(v)$] {\it You are fit.}
+\end{enumerate}
+
+
+\begin{enumerate}[(a)]
+\item Express the statements (i) to (v) as propositions $\varphi_1$ to $\varphi_5$ over the propositional language $L=\langle r, f, m, l\rangle$ where the propositional variables mean respectively ``be a good \textbf{r}unner'', ``be \textbf{f}it'', ``finish the \textbf{m}arathon'', and ``be \textbf{l}ucky''.
+\item Construct a finished tableau from the theory $T=\{\varphi_1,\dots,\varphi_5\}$ with the entry $F (k \wedge \neg k)$ in its root. Then construct the canonical model for the leftmost non-contradictory branch of this tableau.
+\item Find an example of propositions in the language $L$ which are $T$-equivalent but not logically equivalent. {\it (2p)}
+\item Determine the number of mutually inequivalent simple complete extensions of the theory $T$. 
+\end{enumerate}
+\end{task}
+
+\end{document}

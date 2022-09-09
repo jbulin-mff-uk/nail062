@@ -1,0 +1,133 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx}
+
+\usepackage{a4wide}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Exercise}
+    \theoremstyle{remark}
+\newtheorem*{theorem*}{Theorem}
+
+\begin{document}
+
+\section*{ Logic Tutorial: Worksheet 7}
+
+\bigskip
+\subsection*{Topics:} Skolemization, extension by definition, Herbrand models, equisatisfiability, clausal form, resolution, unification.
+
+\bigskip
+
+
+\begin{problem} The theory $T$ of \emph{fields} in $L=\langle +,-,\cdot,0,1\rangle$ contains one axiom $\varphi$ that is not open:
+$$x\ne 0\ \to\ (\exists y)(x\cdot y=1).$$
+\medskip
+
+We know that $T\models 0\cdot y=0$ and $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Find a Skolem variant $\varphi_S$ of $\varphi$ with a new function symbol $f$.
+\item Let $T'$ be the theory obtained from $T$ by replacing $\varphi$ with $\varphi_S$. Is $T' \models \varphi$?
+\item Can every model of $T$ be \emph{uniquely} expanded to a model of $T'$?
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Let $T$ denote the (previous) theory of fields. Let $\psi$ be the following formula: $$x\cdot y=1\vee  (x=0 \wedge y=0)$$
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Do the conditions of existence and uniqueness hold in $T$ for $\psi(x,y)$ and the variable $y$?
+\item Find an extension $T^*$ of $T$ by definition of a function symbol $f$ with the formula $\psi$.
+\item Is $T^*$ equivalent to the theory $T'$ from the previous problem?
+\item Find a formula of the original language $L$ that is equivalent in $T^*$ to the formula
+$$f(x\cdot y)=f(x)\cdot f(y)$$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Find Herbrand universe and an example of a Herbrand structure for the following languages.
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $L=\langle P,Q,f,a,b \rangle$ where $P,Q$ are unary resp. binary relation symbols, $f$ is a unary function symbol, $a,b$ are constant symbols.
+\item $L=\langle P,f,g,a \rangle$ where $P$ is a binary relation s., $f,g$ unary function s., $a$ constant symbol.
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+
+
+\begin{problem} Find Herbrand models for the following theories or find unsatisfiable conjunctions of ground instances of their axioms ($a,b$ are constant symbols in the language).
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,b), P(a)\}$
+\item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,b), P(a)\}$
+\item $T=\{P(x,f(x)),\neg P(x,g(x))\}$
+\item $T=\{P(x,f(x)),\neg P(x,g(x)), P(g(x),f(y)) \to P(x,y)\}$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} Transform the following formulas to equisatisfiable formulas in clausal form.
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $(\forall y)(\exists x)P(x,y)$
+\item $\neg (\forall y)(\exists x)P(x,y)$
+\item $\neg (\exists x)((P(x)\to P(a))\wedge (P(x)\to P(b)))$
+\item $(\exists x)(\forall y)(\exists z)(P(x,z)\wedge P(z,y) \to R(x,y))$
+\end{enumerate}
+\end{problem}
+
+\bigskip
+
+\begin{problem} We know that
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item If a brick is on (another) brick, then it is not on the ground.
+\item Every brick is on (another) brick or on the ground.
+\item No brick is on a brick that is on (another) brick.
+\end{enumerate}
+\medskip
+Express these facts in a first-order language and prove by resolution that if a brick is on another brick, the lower brick is on the ground.
+\end{problem}
+
+\bigskip
+
+\begin{problem} We know that
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item Every barber shaves all who do not shave themselves.
+\item No barber shaves someone who shaves himself.
+\end{enumerate}
+\medskip
+Express these facts in a first-order language and prove by resolution that no barber exists.
+\end{problem}
+
+\bigskip
+
+\begin{problem}
+Show that the following set of clauses is resolution refutable. Describe the resolution refutation by a resolution tree. In each resolution step write down the unification used and underline resolved literals.
+
+\medskip
+\begin{enumerate}[(a)]
+\itemsep12pt
+\item $\{P(a,x,f(y)),P(a,z,f(h(b))),\neg Q(y,z)\}$
+\item $\{\neg Q(h(b),w),H(w,a)\}$
+\item $\{\neg P(a,w,f(h(b))),H(x,a)\}$
+\item $\{P(a,u,f(h(u))),H(u,a),Q(h(b),b)\}$
+\item $\{\neg H(v,a)\}$
+\end{enumerate}
+\end{problem}
+
+
+\end{document}

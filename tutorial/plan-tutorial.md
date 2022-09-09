@@ -52,7 +52,7 @@ Celkem 12 cvičení (0.-13., 4. a 12. odpadá). Tj. číslo cvičení neznamená
 - co se nestihlo
 
 ## Cvičení 7
-- první písemka: výroková logika (40 minut)
+- první písemka: výroková logika (45 minut)
 - syntaxe predikátové logiky
 - sémantika predikátové logiky
 
@@ -79,5 +79,5 @@ Celkem 12 cvičení (0.-13., 4. a 12. odpadá). Tj. číslo cvičení neznamená
 
 ## Cvičení 13
 
-- druhá písemka: predikátová logika (40 minut)
+- druhá písemka: predikátová logika (45 minut)
 - něco málo z pokročilých partií, např. definovatelnost a automorfismy, kategoričnost, otevřená axiomatizovatelnost

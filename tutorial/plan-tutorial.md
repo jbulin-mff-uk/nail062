@@ -1,8 +1,6 @@
 # Plán cvičení
 
-[TODO]
-
-12 cvičení (0.-13., 4. a 12. odpadá):
+Celkem 12 cvičení (0.-13., 4. a 12. odpadá). Tj. číslo cvičení neznamená o kolikáté cvičení jde, ale *po kolikáté přednášce* je.
 
 - 0. cvičení je před 1. přednáškou,
 - 4. cvičení (po 4. přednášce) odpadá
@@ -40,7 +38,6 @@
 
 ## Cvičení 5
 
-- (první písemka?)
 - tablo metoda:
   - dokazování,
   - hledání modelů
@@ -49,14 +46,13 @@
 
 ## Cvičení 6
 
-- (co se nestihlo, ještě tablo metoda)
 - Aplikace kompaktnosti
 - (Hilbertův kalkulus)
 - Rezoluce ve výrokové logice
+- co se nestihlo
 
 ## Cvičení 7
-
-- ještě rezoluce ve výrokové logice
+- první písemka: výroková logika (40 minut)
 - syntaxe predikátové logiky
 - sémantika predikátové logiky
 
@@ -68,7 +64,6 @@
 
 ## Cvičení 9
 
-- (druhá písemka?)
 - tablo metoda v predikátové logice, včetně rovnosti
 
 ## Cvičení 10
@@ -84,5 +79,5 @@
 
 ## Cvičení 13
 
-- (třetí písemka?)
-- vše, co se nestihlo
+- druhá písemka: predikátová logika (40 minut)
+- něco málo z pokročilých partií, např. definovatelnost a automorfismy, kategoričnost, otevřená axiomatizovatelnost

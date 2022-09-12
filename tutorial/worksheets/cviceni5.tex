@@ -1,0 +1,91 @@
+\documentclass[a4paper]{article}
+
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+\newtheorem*{ukol}{Domácí úkol}
+
+
+\begin{document}
+
+\section*{NAIL062 V\&P Logika: 5. cvičení}
+
+
+\textbf{Témata:} 
+Tablo metoda ve výrokové logice. 
+
+
+\medskip\begin{problem}
+    Pomocí tablo metody dokažte následující výroky:
+    \begin{enumerate}[(a)]
+    \item $(p\to (q \to q))$
+    \item $p \leftrightarrow \neg \neg  p$
+    \item $\neg (p \vee q) \leftrightarrow (\neg p \wedge \neg q)$
+    \item $(p \to q) \leftrightarrow (\neg q \to \neg p)$    
+    \end{enumerate}
+\end{problem} 
+   
+
+\medskip\begin{problem}
+    Pomocí tablo metody dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev.
+    \begin{enumerate}[(a)]
+    \item $\{ \neg q,\ p \vee q\} \models p$
+    \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$
+    \item $\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$
+    \end{enumerate}
+\end{problem}
+  
+
+\medskip\begin{problem}
+    Pomocí tablo metody určete všechny modely následujících teorií:
+    \begin{enumerate}[(a)]
+    \item $\{(\neg p \vee q) \to (\neg q \wedge r)\}$
+    \item $\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$
+    \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\}$
+    \end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem}
+    Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Pomocí tablo metody najděte všechny modely $T$, a to tak, že sestrojíte \emph{systematické} tablo z $T$ s položkou $\mathrm{T}p_0\to p_1$ v kořeni. Je každý model $T$ kanonickým modelem pro některou z větví tohoto tabla?
+\end{problem}
+
+
+
+
+\medskip\begin{problem} 
+    Navrhněte vhodná atomická tabla pro Peirceovu spojku $\downarrow$ (NOR), pro Shefferovu spojku $\uparrow$ (NAND), a pro $\oplus$ (XOR).
+\end{problem}
+
+
+\medskip\begin{problem}
+Dokažte přímo (transformací tabel) větu o dedukci, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí
+$$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
+\end{problem}\medskip
+
+
+\medskip\begin{ukol}[3 body]
+\begin{enumerate}[1.]
+\item Pomocí tablo metody:
+\begin{enumerate}[(a)]
+    \item dokažte, že následující výrok je tautologie: 
+    $$(p \to (q \to r)) \to ((p\to q)\to (p \to r))$$
+    \item dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev:
+    $$\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$$
+    \item určete všechny modely:
+    $$\{ q \to p,\ r \to q,\ (r \to p) \to s\}$$
+\end{enumerate}
+\item Navrhněte vhodná atomická tabla pro ternární operátor ``if p then q else r'' (IFTE). Ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví.
+\end{enumerate} 
+\end{ukol}
+
+\end{document}

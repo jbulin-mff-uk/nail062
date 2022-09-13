@@ -557,3 +557,25 @@ Základem této techniky je popis požadované vlastnosti nekonečného objektu 
 Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovací systém, tzv. \emph{Hilbertovský deduktivní systém} neboli \emph{Hilbertovský kalkulus}. Jde o nejstarší dokazovací systém, modelovaný podle matematických důkazů. Jak uvidíme na příkladě, dokazování je v něm poměrně pracné, hodí se tedy spíše pro teoretické účely. Jde také o korektní a úplný dokazovací systém (to ale necháme bez důkazu).
 
 \todo
+
+% \subsection*{Hilbert's calculus}
+%     The \emph{Hilbert's propositional calculus} is a proof system for propositional logic where 
+%     \begin{itemize}
+%         \item we only use the logical connectives $\neg,\to$
+%         \item we have the following (schemes of) \emph{logical axioms}:
+%         \begin{enumerate}[(i)]
+%             \item $\varphi \to (\psi \to \varphi)$
+%             \item $(\varphi\to (\psi \to \chi)) \to ((\varphi \to \psi)\to(\varphi \to \chi))$
+%             \item $(\neg \varphi \to \neg \psi)\to(\psi \to \varphi)$
+%         \end{enumerate}
+%         \item and the following \emph{rule of inference}:
+%         $$\frac{\varphi,\ \varphi \to \psi}{\psi}$$
+%         i.e. ``from $\varphi$ and $\varphi\to\psi$ infer $\psi$'' (called ``modus ponens'')
+%     \end{itemize}
+%     In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $T$ is a finite sequence $\varphi_0,\dots,\varphi_n=\varphi$ of formulas such that for every $i\leq n$,
+%     \begin{itemize}
+%     \item $\varphi_i$ is a logical axiom, or 
+%     \item $\varphi_i \in T$ (an axiom of the theory), or
+%     \item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
+%     \end{itemize}
+%     If such a proof exists, we write $T\ \vdash_H\ \varphi$.

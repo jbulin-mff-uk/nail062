@@ -8,7 +8,8 @@
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
 
-
+\theoremstyle{plain}
+\newtheorem*{theorem*}{Věta}
 \theoremstyle{definition}
 \newtheorem{problem}{Příklad}
 \newtheorem*{ukol}{Domácí úkol}
@@ -20,12 +21,75 @@
 
 
 \textbf{Témata:}
-
+Tablo metoda v predikátové logice, jazyky s rovností.
 
 
 \medskip\begin{problem}
- 
+    Předpokládejme, že
+    \begin{enumerate}[(a)]
+    \item všichni viníci jsou lháři,
+    \item aspoň jeden z obviněných je také svědkem,
+    \item žádný svědek nelže.
+    \end{enumerate}
+    Dokažte tablo metodou, že ne všichni obvinění jsou viníci.
+\end{problem} 
+    
+    
+    
+\medskip\begin{problem} Nechť $L(x,y)$ reprezentuje \emph{``existuje let z $x$ do $y$''} a $S(x,y)$ reprezentuje \emph{``existuje spojení z $x$ do $y$''}. Předpokládejme, že
+    \begin{enumerate}[(a)]
+    \itemsep6pt
+    \item Z Prahy lze letět do Bratislavy, Londýna a New Yorku, a z New Yorku do Paříže,
+    \item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
+    \item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
+    \item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
+    \end{enumerate}
+    Dokažte tablo metodou, že existuje spojení z Bratislavy do Paříže.
+\end{problem} 
+
+
+\medskip\begin{problem} Mějme teorii $T^*$ s axiomy rovnosti. Pomocí tablo metody ukažte, že 
+\begin{enumerate}[(a)]
+    \itemsep6pt
+    \item $T^*\models x=y\ \to\ y=x$\hfill(symetrie)
+    \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(tranzitivita)
+\end{enumerate}
+{\it Hint:} Pro (a) použijte axiom rovnosti $(iii)$ pro $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
+    na (b) použijte $(iii)$ pro $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
+\end{problem} 
+
+
+\medskip\begin{problem} % could be moved to tutorial 10
+    Ukažme, že platí následující pravidla `vytýkání' kvantifikátorů. Používáme je při převodu do tzv. \emph{Prenexní normální formy}. V následujících příkladech jsou $\varphi$ a $\psi$ sentence nebo formule s volnou proměnnou $x$ (což značíme $\varphi(x)$, $\psi(x)$). Najděte tablo důkazy dané formule:
+\begin{enumerate}[(a)]
+    \item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$,
+    \item $(\forall x)\neg \varphi(x)\to \neg(\exists x)\varphi(x)$,
+    \item $(\exists x)(\varphi(x)\vee \psi(x))\leftrightarrow (\exists x)\varphi(x)\vee (\exists x)\psi(x)$,
+    \item $(\forall x)(\varphi(x)\wedge\psi(x))\leftrightarrow (\forall x)\varphi(x)\wedge(\forall x)\psi(x)$,
+    \item $(\varphi \vee (\forall x)\psi(x))\to (\forall x)(\varphi \vee \psi(x))$ kde $x$ není volná v $\varphi$,
+    \item $(\varphi \wedge (\exists x)\psi(x))\to (\exists x)(\varphi \wedge \psi(x))$ kde $x$ není volná v $\varphi$.
+    \item $(\exists x)(\varphi \to \psi(x))\to(\varphi \to (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+    \item $(\exists x)(\varphi \wedge \psi(x))\to(\varphi \wedge (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+    \item $(\exists x)(\varphi(x)\to\psi)\to((\forall x)\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$,
+    \item $((\exists x)\varphi(x)\to\psi)\to(\forall x)(\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$.
+\end{enumerate}
 \end{problem}
+
+
+\medskip\begin{problem} Dokažte větu o konstantách syntakticky, pomocí transformací tabel.
+\begin{theorem*} Buď $\varphi$ formula v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$ a $T$ teorie v $L$. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí
+    $$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{právě když}\quad T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n).$$
+\end{theorem*}
+\end{problem} 
+  
+
+\medskip\begin{problem} Dokažte větu o dedukci syntakticky, pomocí transformací tabel.
+\begin{theorem*} Pro každou teorii $T$ (v uzavřené formě) a sentence $\varphi$, $\psi$,
+    $$T\vdash \varphi\to\psi\quad\text{právě když}\quad T,\varphi\vdash\psi.$$
+\end{theorem*}
+\end{problem} 
+    
+
 
 
 \medskip\begin{ukol}[3 body]

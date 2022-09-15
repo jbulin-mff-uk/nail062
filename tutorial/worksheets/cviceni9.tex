@@ -56,7 +56,31 @@ Tablo metoda v predikátové logice, jazyky s rovností.
 \end{enumerate}
 {\it Hint:} Pro (a) použijte axiom rovnosti $(iii)$ pro $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
     na (b) použijte $(iii)$ pro $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
-\end{problem} 
+\end{problem}
+
+
+\medskip\begin{problem} 
+Buď $T$ následující teorie v jazyce $L=\langle R,f,c,d\rangle$ s rovností, kde $R$ je binární relační symbol,  $f$ unární funkční symbol, a $c,d$ konstantní symboly:
+\begin{align*}
+    T=\{&R(x,x),\\
+        &R(x,y)\wedge R(y,z)\to R(x,z),\\
+        &R(x,y)\wedge R(y,x)\to x=y,\\
+        &R(f(x),x)\}
+\end{align*}
+Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou následující formule:
+\begin{align*}
+    \varphi &= R(c,d) \wedge (\forall x)(x=c\vee x=d),\\
+    \psi &= (\exists x)R(x,f(x)).
+\end{align*}
+\begin{enumerate}[(a)]
+    \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je důsledek axiomů rovnosti.)
+    \item Ukažte, že $\psi$ není důsledek teorie $T$, tím že najdete model $T$, ve kterém $\psi$ neplatí.
+    \item Kolik jednoduchých úplných extenzí (až na ekvivalenci) má teorie $T\cup \{\varphi\}$? Napište dvě z nich.
+    \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností:
+     $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$
+     Je $T$ konzervativní extenzí $S$? Zdůvodněte.
+\end{enumerate}
+\end{problem}
 
 
 \medskip\begin{problem} % could be moved to tutorial 10

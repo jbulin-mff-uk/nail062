@@ -4,7 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
@@ -21,27 +23,28 @@
 
 
 \textbf{Témata:} 
-Počítání výroků až na ekvivalenci (Lindenbaum-Tarského algebra výroků). 2-SAT a implikační graf. Horn-SAT a jednotková propagace. Algoritmus DPLL. Kódování problémů do SAT.
+Počítání výroků až na ekvivalenci (Lindenbaum-Tarského algebra). 2-SAT a implikační graf. Horn-SAT a jednotková propagace. Algoritmus DPLL. Kódování problémů do SAT.
 
 
 \medskip\begin{problem}
     Nechť $|\mathbb{P}|=n$ a mějme výrok $\varphi\in\mathrm{VF}_{\mathbb{P}}$ takový, že $|M(\varphi)|=m$. Určete počet až na ekvivalenci:
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item výroků $\psi$ takových, že $\varphi \models \psi$ nebo $\psi \models \varphi$,
     \item teorií nad $\mathbb{P}$, ve kterých platí $\varphi$,
     \item úplných teorií nad $\mathbb{P}$ ve kterých platí $\varphi$,
     \item teorií $T$ nad $\mathbb{P}$ takových, že $T \cup \{\varphi\}$ je bezesporná.
     \end{enumerate}
     Uvažme navíc spornou teorii $\{\varphi,\psi\}$ kde $|M(\psi)|=p$. Spočtěte až na ekvivalenci:
-    \begin{enumerate}[(a)]
-    \item[(e)] výroky $\chi$ takové, že $\varphi \vee \psi \models \chi$, 
-    \item[(f)] teorie, ve kterých platí $\varphi \vee \psi$.
+    \begin{enumerate}
+    \setcounter{enumi}{4}
+    \item výroky $\chi$ takové, že $\varphi \vee \psi \models \chi$, 
+    \item teorie, ve kterých platí $\varphi \vee \psi$.
     \end{enumerate}
 \end{problem}
 
     
 \medskip\begin{problem} Sestrojte implikační graf daného 2-CNF výroku. Je splnitelný? Pokud ano, najděte nějaké řešení.
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item $(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee \neg p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee \neg p_1)$,
     \item $(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee p_1)$,
     \item $(p_0 \vee  p_2) \wedge  (p_0 \vee  \neg p_3) \wedge  (p_1 \vee  \neg p_3) 
@@ -64,7 +67,7 @@ Pomocí jednotkové propagace zjistěte, zda je následující Hornův výrok sp
 
 \medskip\begin{problem}
     Pomocí algoritmu DPLL rozhodněte, zda je následující CNF formule splnitelná.
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
         \item $$ (\neg p_1 \wedge \neg p_2)\land( \neg p_1 \wedge p_2)\land( p_1 \wedge \neg p_2)\land( p_2 \wedge \neg p_3)\land( p_1 \wedge p_3)$$
         \item \begin{align*}
             &(\neg p_1 \wedge p_3 \wedge p_4)\vee( \neg p_2 \wedge p_6 \wedge p_4)\vee( \neg p_2 \wedge \neg p_6 \wedge \neg p_3)\vee(
@@ -98,7 +101,7 @@ Lze šachovnici $4\times 4$ bez dvou protilehlých rohů perfektně pokrýt kost
 \medskip\begin{problem}
 Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvami tak, že žádné dva sousedící regiony nemají stejnou barvu. Najděte takové obarvení pomocí SAT solveru.
 \begin{multicols}{2}
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item Mapa krajů Česka  
     
     \vfill \includegraphics[width=0.45\textwidth]{files/map-coloring-czechia.png} \vfill
@@ -112,8 +115,8 @@ Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvam
 
 
 
-\medskip\begin{ukol}[3 body]
-\begin{enumerate}[1.]
+\medskip\begin{ukol}[3 body]{\,}
+\begin{enumerate}[label=\arabic*.]
 \item Pomocí algoritmu implikačního grafu najděte všechny modely následující teorie:
 $$
 T=\{p,\neg q \to \neg r,\neg q \to \neg s,r \to p,\neg s \to \neg p\}
@@ -130,7 +133,7 @@ $$
     \varphi &= (\neg p \vee  q)\to(p\wedge r)\\
     \psi &= s\to q
 \end{align*}
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item Určete počet (až na ekvivalenci) výroků $\chi$ nad $\mathbb P$ takových, že $\varphi\wedge\psi\models\chi$.
     \item Určete počet (až na ekvivalenci) úplných teorií $T$ nad $\mathbb P$ takových, že $T\models\varphi\wedge\psi$.
     \item Najděte nějakou axiomatizaci pro každou (až na ekvivalenci) úplnou teorii $T$ nad $\mathbb P$ takovou, že $T\models\varphi\wedge\psi$.

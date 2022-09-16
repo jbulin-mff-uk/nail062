@@ -4,7 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage{multicol}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
@@ -26,7 +28,7 @@ Tablo metoda ve výrokové logice.
 
 \medskip\begin{problem}
     Pomocí tablo metody dokažte následující výroky:
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item $(p\to (q \to q))$
     \item $p \leftrightarrow \neg \neg  p$
     \item $\neg (p \vee q) \leftrightarrow (\neg p \wedge \neg q)$
@@ -37,7 +39,7 @@ Tablo metoda ve výrokové logice.
 
 \medskip\begin{problem}
     Pomocí tablo metody dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev.
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item $\{ \neg q,\ p \vee q\} \models p$
     \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$
     \item $\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$
@@ -47,7 +49,7 @@ Tablo metoda ve výrokové logice.
 
 \medskip\begin{problem}
     Pomocí tablo metody určete všechny modely následujících teorií:
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item $\{(\neg p \vee q) \to (\neg q \wedge r)\}$
     \item $\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$
     \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\}$
@@ -57,11 +59,11 @@ Tablo metoda ve výrokové logice.
 \medskip\begin{problem}
 Aladin našel v jeskyni dvě truhly, A a B. Ví, že každá truhla obsahuje buď poklad, nebo smrtonosnou past.
 \begin{itemize}
-\item Na truhle A je nápis: ``Alespoň jedna z těchto dvou truhel obsahuje poklad.''
-\item Na truhle B je nápis: ``V truhle A je smrtonosná past.''
+\item Na truhle A je nápis: {\it ``Alespoň jedna z těchto dvou truhel obsahuje poklad.''}
+\item Na truhle B je nápis: {\it ``V truhle A je smrtonosná past.''}
 \end{itemize}
 Aladin ví, že buď jsou oba nápisy pravdivé, nebo jsou oba lživé.
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item Vyjádřete Aladinovy informace jako teorii $T$ nad vhodně zvolenou množinou výrokových proměnných $\mathbb P$. (Vysvětlete význam jednotlivých výrokových proměnných v $\mathbb P$.)
     \item Pomocí tablo metody najděte všechny modely teorie $T$.
     \item Může Aladin zvolit truhlu tak, aby si byl jistý, že bude obsahovat poklad? Pokud ano, kterou?
@@ -72,10 +74,10 @@ Aladin ví, že buď jsou oba nápisy pravdivé, nebo jsou oba lživé.
 \medskip\begin{problem}
 V prezidentských volbách kandidují pan A a pan B.
 \begin{itemize}
-\item \emph{Pan A říká: ``Budu zvolen nebo pan B lže.''}
-\item \emph{Pan B říká: ``Pan A nebude zvolen nebo lžu.''}
+\item Pan A říká: {\it ``Budu zvolen nebo pan B lže.''}
+\item {Pan B říká: {\it ``Pan A nebude zvolen nebo lžu.''}
 \end{itemize}
-\begin{enumerate}[(a)]
+\begin{enumerate}
 \item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P=\{a,b\}$, kde $a$ resp. $b$ znamená, že zvolen bude pan A resp. pan B.
 \item Sestrojte dokončená tabla z teorie $T$ s položkami $\mathrm{F}a$ resp. $\mathrm{F}b$ v kořeni. Jaký z těchto tabel můžeme učinit závěr?
 \item Uveďte příklad výroku nad $\mathbb{P}$, který je v teorii $T$ nezávislý, anebo zdůvodněte, proč takový výrok neexistuje.
@@ -102,10 +104,11 @@ $$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
 \end{problem}\medskip
 
 
-\medskip\begin{ukol}[3 body]
-\begin{enumerate}[1.]
+\medskip\begin{ukol}[3 body]{\,}
+
+\begin{enumerate}[label=\arabic*.]
 \item Pomocí tablo metody:
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item dokažte, že následující výrok je tautologie: 
     $$(p \to (q \to r)) \to ((p\to q)\to (p \to r))$$
     \item dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev:

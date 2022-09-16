@@ -3,7 +3,9 @@
 \usepackage{a4wide}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage[utf8]{inputenc}
 
 
@@ -23,27 +25,27 @@
 \medskip\begin{problem}
 Ztratili jsme se v labyrintu a před námi jsou troje dveře - červené, zelené a modré. Víme, že za právě jedněmi dveřmi je cesta ven, za ostatními je drak. Na dveřích jsou nápisy:
 \begin{itemize}
-    \item Červené dveře: ``Cesta ven je za těmito dveřmi.''
-    \item Modré dveře: ``Cesta ven není za těmito dveřmi.''
-    \item Zelené dveře: ``Cesta ven není za modrými dveřmi.'' 
+    \item Červené dveře: {\it ``Cesta ven je za těmito dveřmi.''}
+    \item Modré dveře: {\it ``Cesta ven není za těmito dveřmi.''}
+    \item Zelené dveře: {\it ``Cesta ven není za modrými dveřmi.''}
 \end{itemize}
 Víme, že alespoň jeden z nápisů je pravdivý a alespoň jeden je lživý. Formalizujte naše znalosti. Určete, za kterými dveřmi je cesta ven.
 \end{problem}
 
 
 \medskip\begin{problem} Víme, že:
-\begin{itemize}
+\begin{itemize}\it
 \item Každý zná sám sebe.
 \item Když člověk studuje na škole, musel se na ni hlásit a ta škola ho přijala.
 \item Alfons se nehlásil na školu, která přijala někoho, kdo Alfonse zná.
 \end{itemize}
-Formalizujte naše znalosti. (Uměli byste ukázat, že ``Alfons nestuduje na žádné škole.''?)
+Formalizujte naše znalosti. (Uměli byste ukázat, že {\it ``Alfons nestuduje na žádné škole.''}?)
 \end{problem}
 
 
 \medskip\begin{problem}
 Mějme daný graf $G$ (neorientovaný, bez smyček) a dva jeho vrcholy $u,v$. Formalizujte následující vlastnosti ve výrokové logice:
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item $G$ je bipartitní,
     \item $G$ má perfektní párování,
     \item $u$ a $v$ leží v jedné komponentě souvislosti,
@@ -54,7 +56,7 @@ Mějme daný graf $G$ (neorientovaný, bez smyček) a dva jeho vrcholy $u,v$. Fo
 
 \medskip\begin{problem}
 Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii grafů} (neorientovaných, bez smyček) vyjadřují následující vlastnosti. Kdy to lze v logice prvního řádu, a kdy je třeba logika druhého řádu?
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item graf obsahuje vrchol stupně 1
     \item graf je regulární stupně 3,
     \item graf obsahuje $k$-kliku (pro nějaké fixní $k$),
@@ -69,7 +71,7 @@ Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii g
 
 
 \medskip\begin{problem} Najděte formule prvního řádu vyjadřující následující vlastnosti v jazyce uspořádaných množin:
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item $x$ je nejmenší prvek,
     \item $x$ je minimální prvek,
     \item $x$ má bezprostředního následníka,
@@ -79,7 +81,7 @@ Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii g
 
 
 \medskip\begin{problem} Najděte formule prvního řádu (v jazyce rovnosti), které vyjadřují pro dané $k>0$, že
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item existuje alespoň $k$ prvků,
     \item existuje nejvýše $k$ prvků,
     \item existuje právě $k$ prvků.
@@ -88,7 +90,7 @@ Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii g
 
 
 \medskip\begin{problem} Vyjádřete v logice prvního řádu v jazyce s jedním unárním funkčním symbolem $f$, že funkce je
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item prostá,
     \item na,
     \item bijekce.
@@ -97,7 +99,7 @@ Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii g
 
 
 \medskip\begin{problem} Vyjádřete v logice druhého řádu, že daná binární relace je 
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item (unární) funkce,
     \item prostá funkce,
     \item funkce na,
@@ -108,7 +110,7 @@ Najděte formule v predikátové logice v jazyce grafů, které v \emph{teorii g
 
 \medskip\begin{problem}
 Lze $\mathbb N$, $\mathbb Z$, $\mathbb R$ a $\mathbb C$ rozlišit pomocí vlastností prvního řádu
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item v jazyce uspořádaných množin?
     \item v jazyce těles?
 \end{enumerate}

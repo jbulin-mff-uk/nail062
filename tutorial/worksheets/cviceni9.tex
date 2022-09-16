@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
 
@@ -26,7 +26,7 @@ Tablo metoda v predikátové logice, jazyky s rovností.
 
 \medskip\begin{problem}
     Předpokládejme, že
-    \begin{enumerate}[(a)]
+    \begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]
     \item všichni viníci jsou lháři,
     \item aspoň jeden z obviněných je také svědkem,
     \item žádný svědek nelže.
@@ -34,11 +34,31 @@ Tablo metoda v predikátové logice, jazyky s rovností.
     Dokažte tablo metodou, že ne všichni obvinění jsou viníci.
 \end{problem} 
     
-    
+
+\medskip\begin{problem}
+Uvažte následující tvrzení:
+\begin{enumerate}[label=(\roman*),itemsep=3pt,topsep=6pt] \it 
+    \item Nula je malé číslo.
+    \item Číslo je malé, právě když je blízko nuly.
+    \item Součet dvou malých čísel je malé číslo.
+    \item Je-li $x$ blízko $y$, potom $f(x)$ je blízko $f(y)$.
+\end{enumerate}
+Chceme dokázat, že platí: {\it (v) Jsou-li $x$ a $y$ malá čísla, potom $f(x+y)$ je blízko $f(0)$.}
+
+\begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]
+\item Formalizujte tvrzení po řadě jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ s rovností.
+%, kde $M$ je unární relační symbol ($M(x)$ značí, že ``$x$ je malé''), $B$ je binární relační symbol ($B(x,y)$ značí, že ``$x$ je blízko $y$''), $f$ je unární funkční symbol, $+$ je binární funkční symbol (označující součet) a $0$ je konstantní symbol.
+\item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.
+% {\it (Nápověda: Axiomy rovnosti nejsou v tablu nezbytné.)}
+\item Rozhodněte, zda platí $T\models \varphi_5$ a zda platí $T\models M(f(0))$.
+
+\item Pokud existují, uveďte alespoň dvě kompletní jednoduché extenze teorie $T$.
+\end{enumerate}
+\end{problem}
+
     
 \medskip\begin{problem} Nechť $L(x,y)$ reprezentuje \emph{``existuje let z $x$ do $y$''} a $S(x,y)$ reprezentuje \emph{``existuje spojení z $x$ do $y$''}. Předpokládejme, že
-    \begin{enumerate}[(a)]
-    \itemsep6pt
+    \begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]    
     \item Z Prahy lze letět do Bratislavy, Londýna a New Yorku, a z New Yorku do Paříže,
     \item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
     \item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
@@ -49,8 +69,7 @@ Tablo metoda v predikátové logice, jazyky s rovností.
 
 
 \medskip\begin{problem} Mějme teorii $T^*$ s axiomy rovnosti. Pomocí tablo metody ukažte, že 
-\begin{enumerate}[(a)]
-    \itemsep6pt
+\begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]    
     \item $T^*\models x=y\ \to\ y=x$\hfill(symetrie)
     \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(tranzitivita)
 \end{enumerate}
@@ -61,31 +80,27 @@ Tablo metoda v predikátové logice, jazyky s rovností.
 
 \medskip\begin{problem} 
 Buď $T$ následující teorie v jazyce $L=\langle R,f,c,d\rangle$ s rovností, kde $R$ je binární relační symbol,  $f$ unární funkční symbol, a $c,d$ konstantní symboly:
-\begin{align*}
-    T=\{&R(x,x),\\
-        &R(x,y)\wedge R(y,z)\to R(x,z),\\
-        &R(x,y)\wedge R(y,x)\to x=y,\\
-        &R(f(x),x)\}
-\end{align*}
+$$
+T=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y,R(f(x),x)\}
+$$
 Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou následující formule:
 \begin{align*}
-    \varphi &= R(c,d) \wedge (\forall x)(x=c\vee x=d),\\
-    \psi &= (\exists x)R(x,f(x)).
+    \varphi &= R(c,d) \wedge (\forall x)(x=c\vee x=d)\\
+    \psi &= (\exists x)R(x,f(x))
 \end{align*}
-\begin{enumerate}[(a)]
-    \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je důsledek axiomů rovnosti.)
+\begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]
+    \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je jejich důsledek.)
     \item Ukažte, že $\psi$ není důsledek teorie $T$, tím že najdete model $T$, ve kterém $\psi$ neplatí.
-    \item Kolik jednoduchých úplných extenzí (až na ekvivalenci) má teorie $T\cup \{\varphi\}$? Napište dvě z nich.
-    \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností:
-     $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$
-     Je $T$ konzervativní extenzí $S$? Zdůvodněte.
+    \item Kolik kompletních jednoduchých extenzí (až na ekvivalenci) má teorie $T\cup \{\varphi\}$? Uveďte dvě.
+    \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností. Je $T$ konzervativní extenzí $S$?
+     $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$     
 \end{enumerate}
 \end{problem}
 
 
 \medskip\begin{problem} % could be moved to tutorial 10
-    Ukažme, že platí následující pravidla `vytýkání' kvantifikátorů. Používáme je při převodu do tzv. \emph{Prenexní normální formy}. V následujících příkladech jsou $\varphi$ a $\psi$ sentence nebo formule s volnou proměnnou $x$ (což značíme $\varphi(x)$, $\psi(x)$). Najděte tablo důkazy dané formule:
-\begin{enumerate}[(a)]
+    Ukažme, že platí následující pravidla `vytýkání' kvantifikátorů. Používáme je při převodu do tzv. \emph{Prenexní normální formy}. V následujících příkladech jsou $\varphi$ a $\psi$ sentence nebo formule s volnou proměnnou $x$ (což značíme $\varphi(x)$, $\psi(x)$). Najděte tablo důkazy dané formule. Vyzkoušejte několik z nich, zejména poslední dva.
+\begin{enumerate}[label=(\alph*),noitemsep,topsep=6pt]
     \item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$,
     \item $(\forall x)\neg \varphi(x)\to \neg(\exists x)\varphi(x)$,
     \item $(\exists x)(\varphi(x)\vee \psi(x))\leftrightarrow (\exists x)\varphi(x)\vee (\exists x)\psi(x)$,
@@ -100,24 +115,31 @@ Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou nás
 \end{problem}
 
 
-\medskip\begin{problem} Dokažte větu o konstantách syntakticky, pomocí transformací tabel.
-\begin{theorem*} Buď $\varphi$ formula v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$ a $T$ teorie v $L$. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí
-    $$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{právě když}\quad T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n).$$
-\end{theorem*}
+\medskip\begin{problem} Dokažte syntakticky, pomocí transformací tabel:
+\begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]
+    \item Větu o konstantách: Buď $\varphi$ formule v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$ a $T$ teorie v $L$. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí:
+    $T \vdash (\forall x_1)\dots(\forall x_n)\varphi$ právě když $T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n)$
+    \item Větu o dedukci: Pro každou teorii $T$ (v uzavřené formě) a sentence $\varphi$, $\psi$ platí: $T\vdash \varphi\to\psi$ právě když $T,\varphi\vdash\psi$
+\end{enumerate}
 \end{problem} 
   
 
-\medskip\begin{problem} Dokažte větu o dedukci syntakticky, pomocí transformací tabel.
-\begin{theorem*} Pro každou teorii $T$ (v uzavřené formě) a sentence $\varphi$, $\psi$,
-    $$T\vdash \varphi\to\psi\quad\text{právě když}\quad T,\varphi\vdash\psi.$$
-\end{theorem*}
-\end{problem} 
-    
-
-
-
 \medskip\begin{ukol}[3 body]
-
+    Uvažte následující tvrzení:
+    \begin{enumerate}[label=(\roman*),itemsep=3pt,topsep=6pt]\it
+        \item Každý docent napsal alespoň jednu učebnici.
+        \item Každou učebnici napsal nějaký docent.
+        \item U každého docenta někdo studuje.
+        \item Každý, kdo studuje u nějakého docenta, přečetl všechny učebnice od tohoto docenta.
+        \item Každou učebnici někdo přečetl.
+    \end{enumerate}    
+    \begin{enumerate}[label=(\alph*),itemsep=3pt,topsep=6pt]
+    \item Formalizujte tvrzení (i)--(v) po řadě jako \underline{sentence} $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ v predikátové logice v jazyce $L=\langle N, S, P, D, U\rangle$ bez rovnosti, kde $N,S,P$ jsou binární relační symboly ($N(x,y)$ znamená ``$x$ napsal $y$'', $S(x,y)$ znamená ``$x$ studuje u $y$'', $P(x,y)$ znamená ``$x$ přečetl $y$'') a $D,U$ jsou unární relační symboly (``být docentem'', ``být učebnicí''). {\it (2b)}
+    \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni. {\it (3b)}
+    \item Je sentence $\varphi_5$ pravdivá v teorii $T$? Je lživá v $T$? Je nezávislá v $T$? Zdůvodněte. {\it (1b)}
+    \item Má teorie $T$ kompletní konzervativní extenzi? Zdůvodněte. {\it (2b)}
+    \item Uvažme teorii $T'=T\cup \{D(x),S(x,y),P(x,y)\}$. Kolik má teorie $T'$ dvouprvkových modelů (až na izomorfismus)? Zdůvodněte. {\it (2b)}
+    \end{enumerate}
 \end{ukol}
 
 \end{document}

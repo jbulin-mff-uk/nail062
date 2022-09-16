@@ -4,7 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
 
@@ -25,7 +27,7 @@
 
 \medskip\begin{problem}
     Nechť $T = \{U(x) \to U(f(x)), (\exists x)U(x), \neg (f(x) = x), \varphi\}$ je teorie v jazyce $L = \langle U, f \rangle$ s rovností, kde $U$ je unární relační symbol, $f$ je unární funkční symbol a $\varphi$ vyjadřuje, že ``existují maximálně 4 prvky''.
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item Je teorie $T$ extenzí teorie $S = \{ (\exists x)(\exists y)(\neg x = y \land U(x) \land U(y)), \varphi \}$ v jazyce $L' = \langle U \rangle$? Je konzervativní extenzí? Zdůvodněte.
     \item Je teorie $T$ otevřeně axiomatizovatelná? Zdůvodněte.
     \end{enumerate} 
@@ -33,7 +35,7 @@
 
 \medskip\begin{problem}
 Nechť $T=\{\varphi\}$ je teorie jazyka $L=\langle U, c \rangle$ s rovností, kde $U$ je unární relační symbol, $c$ je konstantní symbol a axiom $\varphi$ vyjadřuje \emph{``Existuje alespoň $5$ prvků, pro které platí U(x).''}
-\begin{enumerate}[(a)]
+\begin{enumerate}
 \item Nalezněte dvě neekvivalentní jednoduché kompletní extenze teorie $T$ nebo zdůvodněte, proč neexistují.
 \item Je teorie $T$ otevřeně axiomatizovatelná? Uveďte zdůvodnění.
 \end{enumerate}
@@ -42,7 +44,7 @@ Nechť $T=\{\varphi\}$ je teorie jazyka $L=\langle U, c \rangle$ s rovností, kd
 
 \medskip\begin{problem}
     Nechť $T$ je extenze teorie $DeLO^-$ (tj. hustých lineárních uspořádání s minimálním prvkem a bez maximálního prvku) o nový axiom $c \le d$ v jazyce $L=\langle \le,c,d\rangle$ s rovností, kde $c$, $d$ jsou nové konstantní symboly.
-    \begin{enumerate}[(a)]
+    \begin{enumerate}
     \item Jsou sentence $(\exists x)(x\le d \wedge x \ne d)$ a $(\forall x)(x \le d)$ pravdivé / lživé / nezávislé v $T$? Uveďte zdůvodnění.
     \item Napište dvě neekvivalentní jednoduché kompletní extenze teorie $T$.
     \end{enumerate} 

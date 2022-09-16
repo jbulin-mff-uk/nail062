@@ -4,7 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
 
@@ -29,17 +31,17 @@ Unifikace. Rezoluce v predikátové logice.
 
 
 \medskip\begin{problem} Víme, že platí následující:
-    \begin{itemize}
+    \begin{itemize}\it
         \item Je-li cihla na (jiné) cihle, potom není na zemi.
         \item Každá cihla je na (jiné) cihle nebo na zemi.
         \item Žádná cihla není na cihle, která by byla na (jiné) cihle.
     \end{itemize}
-    Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí následující tvrzení: ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''
+    Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí následující tvrzení: {\it ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''}
 \end{problem}
         
     
 \medskip\begin{problem} Víme, že platí následující:
-    \begin{enumerate}[(a)]
+    \begin{enumerate}\it
         \item Každý holič holí všechny, kdo neholí sami sebe
         \item Žádný holič neholí nikoho, kdo holí sám sebe.
     \end{enumerate}
@@ -49,16 +51,17 @@ Unifikace. Rezoluce v predikátové logice.
 
 \medskip\begin{problem}
 Jsou dána následující tvrzení o~proběhlém genetickém experimentu:
-\begin{enumerate}[(i)]
+\begin{enumerate}[label=(\roman*)]\it
     \item Každá ovce byla buď porozena jinou ovcí, nebo byla naklonována (avšak nikoli oboje zároveň).
     \item Žádná naklonovaná ovce neporodila.
 \end{enumerate}
 Chceme ukázat rezolucí, že pak:
-\begin{enumerate}[(iii)]
+\begin{enumerate}[label=(\roman*)]\it
+    \setcounter{enumi}{2}
     \item Pokud ovce porodila, byla sama porozena.
 \end{enumerate}
 Konkrétně:
-\begin{enumerate}[(a)]
+\begin{enumerate}
     \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti, kde $P$ je binární relační symbol, $K$ je unární relační symbol a $P(x,y)$, $K(x)$ značí, že \emph{``ovce $x$ porodila ovci $y$''} a \emph{``ovce $x$ byla naklonována''}. {\it (15b)}    
     \item S využitím Skolemizace těchto formulí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. Zapište ji v množinové reprezentaci. {\it (15b)}
     \item Najděte rezoluční zamítnutí $S$, znázorněte je rezolučním stromem. U každého kroku uveďte použitou unifikaci. {\it (30b)}

@@ -233,7 +233,7 @@ Definice v této části jsou téměř identické odpovídajícím definicím z 
         \item Výskyt položky $P$ typu `všichni' na větvi $V$ je \emph{$i$-tý}, pokud má na $V$ právě $i-1$ předků označených touto položkou, a $i$-tý výskyt je \emph{redukovaný} na $V$, pokud
         \begin{itemize}
             \item položka $P$ má $(i+1)$-ní výskyt na $V$, a zároveň
-            \item na $V$ se vyskytuje položka $\T\varphi(x/t_i)$ (je-li $P=\T(\forall x)\varphi(x)$) resp. $\F\varphi(x/t_i)$ (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term. (Tj. už jsme za $x$ substituovali term $t_i$.)
+            \item na $V$ se vyskytuje položka $\T\varphi(x/t_i)$ (je-li $P=\T(\forall x)\varphi(x)$) resp. $\F\varphi(x/t_i)$ (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term.\footnote{Tj. (typicky) už jsme za $x$ substituovali term $t_i$.}
         \end{itemize} 
     \end{itemize}
 \end{definition}
@@ -464,39 +464,61 @@ Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^A$ vyskytující
         \begin{itemize}
             \item Pokud jsme připojili atomické tablo pro logickou spojku, položíme $\A_{i+1}=\A_i$ (nepřidali jsme nový pomocný symbol). Protože $\A_{i+1}$ se shoduje s kořenem atomického tabla, shoduje se i s některou z jeho větví (stejně jako ve výrokové logice); definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev.
             \item Je-li položka $P$ typu `svědek': Pokud je $P=\T(\exists x)\varphi(x)$, potom $\A_i\models(\exists x)\varphi(x)$, tedy existuje $a\in A$ takové, že $\A_i\models\varphi(x)[e(x/a)]$. Větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o nově přidanou položku $\T\varphi(x/c)$ a model $\A_{i+1}$ jako expanzi $\A_i$ o konstantu $c^A=a$. Případ $P=\F(\forall x)\varphi(x)$ je obdobný.
-            \item Je-li položka $P$ typu `všichni', větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o atomické tablo. Nově přidaná položka je $\T\varphi(x/t)$ nebo $\F\varphi(x/t)$ pro nějaký $L_C$-term $t$; model $\A_{i+1}$ definujeme jako \emph{libovolnou} expanzi $\A_i$ o nové konstanty vyskytující se v $t$.
+            \item Je-li položka $P$ typu `všichni', větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o atomické tablo. Nově přidaná položka je $\T\varphi(x/t)$ nebo $\F\varphi(x/t)$ pro nějaký $L_C$-term $t$. Předpokládejme, že jde o první z těchto dvou možností, pro druhou je důkaz analogický. 
+            Model $\A_{i+1}$ definujeme jako \emph{libovolnou} expanzi $\A_i$ o nové konstanty vyskytující se v $t$.    
+            Protože $\A_i\models(\forall x)\varphi(x)$, platí i $\A_{i+1}\models(\forall x)\varphi(x)$ a tedy i $\A_{i+1}\models\varphi(x/t)$; model $\A_{i+1}$ se tedy shoduje s větví $V_i$.
         \end{itemize}       
-        \todo
-  
     \end{itemize}
 \end{proof}
 
-Připomeňme stručně myšlenku důkazu Věty o korektnosti: Pokud by existoval důkaz a zároveň protipříklad, protipříklad by se musel shodovat s některou větví důkazu, ty jsou ale všechny sporné.
+Připomeňme stručně myšlenku důkazu Věty o korektnosti: Pokud by existoval důkaz a zároveň protipříklad, protipříklad by se musel shodovat s některou větví důkazu, ty jsou ale všechny sporné. Důkaz je tedy téměř stejný jako ve výrokové logice.
 
 \begin{theorem}[O korektnosti]
 Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravdivý v $T$, tj. $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
 \end{theorem}
 
-% \begin{proof}
-% Dokážeme sporem. Předpokládejme, že $\varphi$ v $T$ neplatí, tj. existuje protipříklad: model $v\in\M(T)$, ve kterém $\varphi$ neplatí.
+\begin{proof}
+Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
+\end{proof}
 
-% Protože je $\varphi$ dokazatelná z $T$, existuje tablo důkaz $\varphi$ z T, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Model $v$ se shoduje s položkou $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné, včetně $V$. Takže $V$ obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme tedy $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.
+\subsection{Věta o úplnosti}
 
-% \end{proof}
+Stejně jako ve výrokové logice ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto opět jeden konkrétní, \emph{kanonický}.
 
-% \subsection{Věta o úplnosti}
+Model musí mít nějakou doménu. Jak ji získat z tabla, což je čistě sémantický objekt? Využijeme standardní (v matematice) trik: ze syntaktických objektů uděláme sémantické. Konkrétně, za doménu zvolíme množinu všech \emph{konstantních termů} jazyka $L_C$.\footnote{Tj. termů zbudovaných aplikací funkčních symbolů jazyka $L$ na konstantní symboly jazyka $L$ (má-li nějaké) a pomocné konstantní symboly z $C$.} Ty chápeme jako konečné řetězce. V následujícím budeme někdy (neformálně) místo termu $t$ psát ``$t$'', abychom zdůraznili, že v daném místě chápeme $t$ jako řetězec znaků, a ne např. jako termovou funkci, kterou je třeba vyhodnotit.\footnote{Srovnejte aritmetický výraz ``1+1'' a 1+1=2.}
 
-% Ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto jeden konkrétní:
+\begin{definition}[Kanonický model]\label{definition:canonical-model-predicate}
+Mějme teorii $T$ v jazyce $L=\langle\mathcal F,\mathcal R\rangle$ a nechť $V$ je bezesporná větev nějakého dokončeného tabla z teorie $T$. Potom \emph{kanonický model} pro $V$ je $L_C$-struktura $\A=\langle A,\mathcal F^\mathcal A,\mathcal R^\mathcal A$ definovaná následovně:
 
-% \begin{definition}[Kanonický model]\label{definition:canonical-model}
-% Je-li $V$ bezesporná větev dokončeného tabla, potom \emph{kanonický model} pro $V$ je model definovaný předpisem (pro $p\in\mathbb P$):
-% $$
-% v(p)=\begin{cases}
-%     1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$,}\\
-%     0 \text{ jinak.}
-% \end{cases}
-% $$  
-% \end{definition}
+Je-li jazyk $L$ bez rovnosti, potom:
+\begin{itemize}
+    \item Doména $A$ je množina všech konstantních $L_C$-termů.
+    \item Pro každý $n$-ární relační symbol $R\in\mathcal R$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:
+    $$
+    (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\text{ právě když na větvi $V$ je položka $\T R(s_1,\dots,s_n)$}
+    $$
+    \item Pro každý $n$-ární funkční symbol $f\in\mathcal F$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:
+    $$
+    f^\mathcal A(\text{``$s_1$''},\dots,\text{``$s_n$''})=\text{``$f(s_1,\dots,s_n)$''}
+    $$
+    Speciálně, pro konstantní symbol $c$ máme $c^\mathcal A=\text{``$c$''}$.
+\end{itemize}
+Funkci $f^\mathcal A$ tedy interpretujeme jako `vytvoření' nového termu ze symbolu $f$ a vstupních termů (řetězců). 
+
+Nechť je $L$ jazyk s rovností. Připomeňme, že naše tablo je nyní z teorie $T^*$, tj. z rozšíření~$T$ o axiomy rovnosti pro $L$. Nejprve vytvoříme kanonický model $\mathcal B$ pro $V$ jakoby byl $L$ bez rovnosti (jeho doména $B$ je tedy množina všech konstantních $L_C$-termů). Dále definujeme relaci $=^B$ stejně jako pro ostatní relační symboly:
+$$
+\text{``$s_1$''}=^B\text{``$s_2$''}\text{ právě když na větvi $V$ je položka $\T s_1=s_2$}
+$$
+\emph{Kanonický model} pro $V$ je potom faktorstruktura $\A=\B/_{=^B}$.
+\end{definition}
+
+Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opravdu kongruence struktury $\B$, definice je tedy korektní, a relace $=^\A$ je identita na $A$. Všimněte si, že v jazyce bez rovnosti je kanonický model vždy spočetně nekonečný. V jazyce s rovností může ale být konečný, jak uvidíme v následujících příkladech.
+
+\todo Příklady
+
+\todo Cvičení $x=y\lor y=z\lor x=z$
+
+
 % \begin{lemma}\label{lemma:canonical-model-agrees}
 %     Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
 % \end{lemma}
@@ -538,7 +560,7 @@ Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravd
 % \end{exercise}
 
 
-\subsection{Kanonický model}
+
 
 
 \subsection{Věta o úplnosti}

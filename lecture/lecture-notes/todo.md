@@ -21,6 +21,7 @@ sémantické kritérium konzervativní extenze: dokázat i druhou implikaci?
 
 - in progress
 - convert exercise to construct tableaux into a worked-out example
+- canonical model is an $L_C$-structure
 
 ## Chapter 8
 

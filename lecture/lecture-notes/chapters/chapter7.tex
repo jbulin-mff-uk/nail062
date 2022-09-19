@@ -481,7 +481,7 @@ Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravd
 Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
 \end{proof}
 
-\subsection{Věta o úplnosti}
+\subsection{(draft) Věta o úplnosti}\todo
 
 Stejně jako ve výrokové logice ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto opět jeden konkrétní, \emph{kanonický}.
 
@@ -518,6 +518,52 @@ Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opr
 
 \todo Cvičení $x=y\lor y=z\lor x=z$
 
+% from slides:
+\subsubsection*{Kanonický model - příklad}
+    
+    Nechť teorie \myblue{$T=\{(\forall x)R(f(x))\}$} je jazyka \myblue{$L=\langle R,f,d \rangle$}. Systematické tablo
+    \smallskip
+    
+     pro \myblue{$F\neg R(d)$} z $T$ obsahuje jedinou větev $V$ a ta je bezesporná.
+    \bigskip
+    
+    Kanonický model \myblue{$\mathcal{A}=\langle A, R^A, f^A, d^A, c_i^A\rangle_{i\in \mathbb{N}}$} z $V$ je pro jazyk $L_C$ a platí
+    \vspace{-1mm}
+    \mygreen{\begin{align*}
+    A&=\{d,f(d),f(f(d)),\dots,c_0,f(c_0),f(f(c_0)),\dots,c_1,f(c_1),f(f(c_1)),\dots\},\\
+    d^A&=d,\quad c^A_i=c_i\ \ \text{pro}\ \ i\in \mathbb{N},\\
+    f^A(d)&=\text{``}f(d)\text{''},\ \ f^A(f(d))=\text{``}f(f(d))\text{''},\ \ f^A(f(f(d)))=\text{``}f(f(f(d)))\text{''},\ \dots\\
+    R^A&=\{d,f(d),f(f(d)),\dots,f(c_0),f(f(c_0)),\dots,f(c_1),f(f(c_1)),\dots\}.
+    \end{align*}}
+    Redukt $\mathcal{A}$ na jazyk $L$ je \myblue{$\mathcal{A}'=\langle A, R^A, f^A, d^A\rangle$}.
+    
+    \subsubsection*{Kanonický model s rovností - příklad}
+        
+        Nechť \myblue{$T=\{(\forall x)R(f(x)),\ (\forall x)(x=f(f(x)))\}$} je nad \myblue{$L=\langle R,f,d \rangle$} s rovností.
+        \smallskip
+        
+        Systematické tablo pro \myblue{$F\neg R(d)$} z $T^*$ obsahuje bezespornou větev $V$.
+        \bigskip
+        
+        V kanonickém modelu \myblue{$\mathcal{A}=\langle A, R^A, =^A,f^A, d^A, c_i^A\rangle_{i\in \mathbb{N}}$} z $V$ pro relaci $=^A$ platí
+        \vspace{-2mm}
+        \mygreen{$$s_1=^A s_2\quad\Leftrightarrow\quad s_1=f(\cdots (f(s_2)\cdots)\ \ \text{nebo}\ \ s_2=f(\cdots (f(s_1)\cdots),$$}
+        
+        \vspace{-6mm}
+        kde $f$ je aplikováno \mdef{$2i$}-krát pro nějaké $i\in \mathbb{N}$.
+        \bigskip
+        
+        Kanonický model s rovností z $V$ je \myblue{$\mathcal{B}=(\mathcal{A}/\!=^A)=\langle A/\!=^A, R^B,f^B, d^B, c_i^B\rangle_{i\in \mathbb{N}}$}
+        \vspace{-1mm}
+        \mygreen{\begin{align*}
+        (A/\!=^A)&=\{[d]_{=^A},[f(d)]_{=^A},[c_0]_{=^A},[f(c_0)]_{=^A},[c_1]_{=^A},[f(c_1)]_{=^A},\dots\},\\
+        d^{B}&=[d]_{=^A},\quad c^{B}_i=[c_i]_{=^A}\ \ \text{pro}\ \ i\in \mathbb{N},\\
+        f^{B}([d]_{=^A})&=[f(d)]_{=^A},\ \ f^{B}([f(d)]_{=^A})=[f(f(d))]_{=^A}= [d]_{=^A},\ \ \dots\\
+        R^{B}&=(A/\!=^A).
+        \end{align*}}
+        Redukt $\mathcal{B}$ na jazyk $L$ je \myblue{$\mathcal{B}'=\langle A/\!=^A, R^B, f^B, d^B\rangle$}.
+        
+% :from slides
 
 % \begin{lemma}\label{lemma:canonical-model-agrees}
 %     Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
@@ -560,23 +606,324 @@ Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opr
 % \end{exercise}
 
 
+% from slides:
+\subsubsection*{Úplnost}
+    {\bf \myblue{Lemma}}\ \ {\it Kanonický model $\mathcal{A}$ z bezesporné dok. větve $V$ se \myblue{shoduje} s $V$.}
+    \smallskip
+    
+    {\it \myblue{Důkaz}}\ \ Indukcí dle struktury sentence vyskytující se v položce na $V$.
+    \begin{itemize}
+    \item Pro $\varphi$ \myblue{atomickou}, je-li \mygreen{$T\varphi$} na $V$, je \mygreen{$\mathcal{A} \models \varphi$} dle $(3)$. Je-li \mygreen{$F\varphi$} na $V$, není
+    \vspace{0.4mm}
+    
+    \mygreen{$T\varphi$} na $V$, neboť $V$ je bezesporná, a tedy \mygreen{$\mathcal{A}\models \neg \varphi$} dle $(3)$.
+    %\smallskip
+    \vspace{0.4mm}
+    
+    \item Je-li \mygreen{$T(\varphi \mand \psi)$} na $V$, je \mygreen{$T\varphi$} a \mygreen{$T\psi$} na $V$, neboť $V$ je dokončená. Dle
+    \vspace{0.4mm}
+    
+    indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi$} a \mygreen{$\mathcal{A}\models \psi$}, tedy \mygreen{$\mathcal{A}\models \varphi \mand \psi$}.
+    %\smallskip
+    \vspace{0.4mm}
+    
+    \item Je-li \mygreen{$F(\varphi \mand \psi)$} na $V$, je \mygreen{$F\varphi$} nebo \mygreen{$F\psi$} na $V$, neboť $V$ je dokončená. Dle
+    \vspace{0.4mm}
+    
+    indukčního předpokladu je \mygreen{$\mathcal{A}\models \neg\varphi$} nebo \mygreen{$\mathcal{A}\models \neg\psi$}, tedy \mygreen{$\mathcal{A}\models \neg(\varphi \mand \psi)$}.
+    %\smallskip
+    \vspace{0.4mm}
+    
+    \item Pro ostatní spojky obdobně jako v předchozích dvou případech.
+    %\smallskip
+    \vspace{0.4mm}
+    
+    \item Je-li \mygreen{$T(\forall x)\varphi(x)$} na $V$, je \mygreen{$T\varphi(x/t)$} na $V$ pro každé $t\in A$, neboť $V$ je
+    \vspace{0.4mm}
+    
+    dokončená. Dle indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi(x/t)$} pro každé $t\in A$,
+    \vspace{0.4mm}
+    
+    tedy \mygreen{$\mathcal{A}\models (\forall x)\varphi(x)$}. Obdobně pro \mygreen{$F(\exists x)\varphi(x)$} na $V$.
+    %\smallskip
+    \vspace{0.4mm}
+    
+    \item Je-li \mygreen{$T(\exists x)\varphi(x)$} na $V$, je \mygreen{$T\varphi(x/c)$} na $V$ pro nějaké $c\in A$, neboť $V$ je
+    \vspace{0.4mm}
+    
+    dokončená. Dle indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi(x/c)$}, tedy
+    \vspace{0.4mm}
+    
+    \mygreen{$\mathcal{A}\models (\exists x)\varphi(x)$}. Obdobně pro \mygreen{$F(\forall x)\varphi(x)$} na $V$. $\qed$
+    \end{itemize}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    
+    \subsubsection*{Věta o úplnosti}
+    {\it Ukážeme, že tablo metoda ve predikátové logice je \myblue{úplná}.}
+    \medskip
+    
+    {\bf \myblue{Věta}}\ \ {\it Pro každou teorii $T$ a sentenci $\varphi$, je-li $\varphi$ pravdivá v $T$, je $\varphi$ tablo
+    \vspace{0.4mm}
+    %\smallskip
+    
+    dokazatelná z $T$, tj. $T \models \varphi\ \Rightarrow\ T \vdash \varphi$.}
+    \medskip
+    
+    {\it \myblue{Důkaz}}\ \ Nechť $\varphi$ je pravdivá v $T$. Ukážeme, že libovolné \myblue{dokončené} tablo
+    \vspace{0.4mm}
+    %\smallskip
+    
+    (např. \myblue{systematické}) $\tau$ z teorie $T$ s položkou \myblue{$F\varphi$} v kořeni je \myblue{sporné}.
+    %\vspace{0.4mm}
+    %\smallskip
+    
+    \begin{itemize}
+    \item Kdyby ne, v tablu $\tau$ je nějaká bezesporná větev $V$.
+    \vspace{0.4mm}
+    %\smallskip
+    
+    \item Dle předchozího lemmatu existuje struktura $\mathcal{A}$ pro jazyk $L_C$ shodující se
+    \vspace{0.4mm}
+    %\smallskip
+    
+    s větví $V$, speciálně s položkou $F\varphi$ v kořeni, tj. $\mathcal{A}\models \neg \varphi$.
+    \vspace{0.4mm}
+    %\smallskip
+    
+    \item Nechť $\mathcal{A}'$ je redukt struktury $\mathcal{A}$ na původní jazyk $L$. Platí $\mathcal{A}'\models \neg \varphi$.
+    \vspace{0.4mm}
+    
+    \item Jelikož větev $V$ je dokončená, obsahuje $T\psi$ pro každé $\psi \in T$.
+    \vspace{0.4mm}
+    %\smallskip
+    
+    \item Tedy $\mathcal{A}'$ je modelem $T$ (neboť $\mathcal{A'}$ se shoduje s $T\psi$ pro každé $\psi \in T$).
+    \vspace{0.4mm}
+    %\smallskip
+    
+    \item To je ale ve sporu s tím, že $\varphi$ platí v každém modelu teorie $T$.
+    \end{itemize}
+    \vspace{0.4mm}
+    %\smallskip
+    
+    Tedy tablo $\tau$ je důkazem $\varphi$ z $T$. $\qed$
+    
+% :from slides
 
 
+\section{(draft) Důsledky korektnosti a úplnosti}\todo
 
-\subsection{Věta o úplnosti}
+% from slides:
+{\it Zavedeme syntaktické varianty již definovaných sémantických pojmů.}
+\medskip
+
+Nechť $T$ je teorie jazyka $L$. Je-li sentence $\varphi$ dokazatelná z $T$, řekneme, že
+\smallskip
+
+$\varphi$ je \mdef{věta} (\mdef{teorém}) teorie $T$. Množinu vět teorie $T$ označme
+\vspace{-2mm}
+\mygreen{$$\mathrm{Thm}^{L}(T)=\{\varphi \in \mathrm{Fm}_L \mid T \vdash \varphi\}.$$}
+
+\vspace{-4mm}
+Řekneme, že teorie $T$ je
+\begin{itemize}
+\item \mdef{sporná}, jestliže je v $T$ dokazatelný $\bot$ (spor), jinak je \mdef{bezesporná},
+\smallskip
+
+\item \mdef{kompletní}, jestliže není sporná a každá \myblue{sentence} je v ní dokazatelná či
+\smallskip
+
+zamítnutelná, tj. $T \vdash \varphi$ či $T \vdash \neg \varphi$.
+\smallskip
+
+\item \mdef{extenze} teorie $T'$ jazyka $L'$, jestliže $L' \subseteq L$ a $\mathrm{Thm}^{L'}\!(T')\subseteq \mathrm{Thm}^{L}\!(T)$,
+\smallskip
+
+o extenzi $T$ teorie $T'$ řekneme, že je \mdef{jednoduchá}, pokud $L=L'$, a
+\smallskip
+
+\mdef{konzervativní}, pokud $\mathrm{Thm}^{L'}\!(T')=\mathrm{Thm}^{L}\!(T)\cap \mathrm{\mathrm{Fm}_{L'}}$,
+\smallskip
+
+\item \mdef{ekvivalentní} s teorií $T'$, jestliže $T$ je extenzí $T'$ a $T'$ je extenzí $T$.
+\end{itemize}
+
+{\it Z korektnosti a úplnosti tablo metody vyplývá, že předchozí pojmy se
+\smallskip
+
+shodují se svými sémantickými variantami.}
+\bigskip
+
+{\bf \myblue{Důsledek}}\ \ {\it Pro každou teorii $T$ a sentence $\varphi$, $\psi$ jazyka $L$,
+\smallskip
+
+\begin{itemize}%[\hspace{2mm}$(1)$]
+\item $T \vdash \varphi$ právě když $T \models \varphi$,
+\smallskip
+
+\item $\mathrm{Thm}^{L}\!(T)=\theta^{L}(T)$,
+\smallskip
+
+\item $T$ je sporná, právě když je sémanticky sporná, tj. nemá model,
+\smallskip
+
+\item $T$ je kompletní, právě když je sémanticky kompletní, tj. má až na
+\smallskip
+
+\myblue{elementární ekvivalenci} jediný model,
+\smallskip
+
+\item $T,\varphi \vdash \psi$ právě když $T \vdash \varphi \to \psi$ (\myblue{Věta o dedukci}).
+\end{itemize}}
+\medskip
+
+%{\it \myblue{Důkaz $(5)$}}\ \ Plyne z $(1)$ a $T\models \varphi \to \psi\ \Leftrightarrow M(T,\varphi) \subseteq M(T,\psi) \subseteq M(\psi) \Leftrightarrow T,\varphi \models \psi$.
+
+{\it \myblue{Poznámka}}\ \ Větu o dedukci lze dokázat přímo, transformací příslušných tabel.
+% :from slides
+
+\subsection{Löwenheim-Skolemova věta}\todo
+
+% from slides:
+{\bf \myblue{Věta}}\ \ {\it Každá bezesporná teorie $T$ spočetného jazyka $L$ bez rovnosti má
+\smallskip
+
+\myblue{spočetně nekonečný} model.}
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Nechť $\tau$ je systematické tablo z $T$ s $F\bot$ v kořeni. Jelikož je dokončené
+\smallskip
+
+ a obsahuje bezespornou větev $V$, neboť $\bot$ není dokazatelný z $T$, existuje
+\smallskip
+
+\myblue{kanonický model} $\mathcal{A}$ z $V$. Jelikož se $\mathcal{A}$ shoduje s $V$, jeho redukt na jazyk $L$
+\smallskip
+
+je hledaným spočetně nekonečným modelem $T$. $\qed$
+\medskip
+
+{\it \myblue{Poznámka}\ \ Jde o slabou verzi tzv. \myblue{Löwenheim-Skolemovy věty}. Ve
+\smallskip
+
+spočetném jazyce s rovností je kanonický model s rovností \myblue{spočetný}.}
+\bigskip
+
+{\bf \myblue{Věta}}\ \ {\it Teorie má model, právě když každá její \myblue{konečná} část má model.}
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Implikace zleva doprava je zřejmá. Pokud teorie $T$ nemá model,
+\smallskip
+
+je sporná, tj. je z ní dokazatelný $\bot$ systematickým tablem $\tau$. Jelikož je  $\tau$
+\smallskip
+
+konečné, je $\bot$ dokazatelný z nějaké konečné $T'\subseteq T$, tj. $T'$ nemá model. $\qed$
+% :from slides
+
+\subsection{Věta o kompaktnosti}\todo
 
 
-\section{Důsledky korektnosti a úplnosti}
+\subsection{Aplikace}\todo
+
+% from slides:
+
+\subsubsection*{Nestandardní model přirozených čísel}
+    
+    Nechť \mygreen{$\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$} je standardní model přirozených čísel.
+    \bigskip
+    
+    Označme \mdef{$\mathrm{Th}(\underline{\mathbb{N}})$} množinu všech pravdivých \myblue{sentencí} v $\underline{\mathbb{N}}$. Pro $n\in \mathbb{N}$ označme
+    \smallskip
+    
+    \mdef{$\underline{n}$} term \mygreen{$S(S(\cdots (S(0)\cdots)$}, tzv. \mdef{$n$-tý numerál}, kde $S$ je aplikováno $n$-krát.
+    \bigskip
+    
+    Uvažme následující teorii $T$, kde $c$ je nový konstantní symbol.
+    \vspace{-2mm}
+    \mygreen{$$T=\mathrm{Th}(\underline{\mathbb{N}})\cup\{\underline{n}<c\mid n\in \mathbb{N}\}$$}
+    
+    \vspace{-4mm}
+    {\it \myblue{Pozorování}\ \ Každá konečná část teorie $T$ má model.}
+    \bigskip
+    
+    {\it Tedy dle věty o kompaktnosti má $T$ model $\mathcal{A}$, jde o \mdef{nestandardní model}
+    \smallskip
+    
+    \mdef{přirozených čísel}. Každá sentence z $\mathrm{Th}(\underline{\mathbb{N}})$ v něm platí, ale zároveň obsahuje
+    \smallskip
+    
+    prvek $c^A$ větší než každé $n\in \mathbb{N}$ (tj. hodnota termu $\underline{n}$ v $\mathcal{A}$).}
+    
+
+% :from slides
 
 
-\subsection{Löwenheim-Skolemova věta}
+\section{(draft) Hilbertovský kalkulus v predikátové logice}\todo
 
-
-\subsection{Věta o kompaktnosti}
-
-\subsection{Aplikace}
-
-
-\section{Hilbertovský kalkulus v predikátové logice}
-
-\todo
+% from slides:
+\subsubsection*{Hilbertovský kalkul}
+    \begin{itemize}
+    \item základní logické spojky a kvantifikátory:\ \ $\neg$, $\to$, $(\forall x)$ (ostatní odvozené)
+    
+    \item dokazují se libovolné formule (nejen sentence)
+    
+    \item \mdef{logické axiomy} (\myblue{schémata} logických axiomů)
+    \vspace{-2mm}\begin{align*}(i)& &\varphi &\to (\psi \to \varphi) \\
+    (ii)& &(\varphi\to (\psi \to \chi))&\to ((\varphi \to \psi)\to(\varphi \to \chi))\qquad\qquad\qquad\qquad\phantom{\ } \\
+    (iii)& &(\neg \varphi \to \neg \psi)&\to(\psi \to \varphi)\\
+    (iv)& &(\forall x)\varphi &\to\varphi(x/t)\quad\quad\quad\ \ \!\text{ je-li $t$ substituovatelný za $x$ do $\varphi$}\\
+    (v)& &(\forall x)(\varphi \to \psi)&\to(\varphi \to (\forall x)\psi)\quad\text{není-li $x$ volná proměnná ve $\varphi$}\\
+    \end{align*}
+    
+    \vspace{-6mm}
+    kde $\varphi$, $\psi$, $\chi$ jsou libovolné formule (daného jazyka), $t$ je libovolný term a
+    \vspace{0.5mm}
+    
+    $x$ je libovolná proměnná.
+    \smallskip
+    
+    \item je-li jazyk s rovností, mezi logické axiomy patří navíc \myblue{axiomy rovnosti}
+    
+    \item \mdef{odvozovací (deduktivní) pravidla}
+    \vspace{-2mm}
+    $$\frac{\varphi,\ \varphi \to \psi}{\psi}\quad\text{\myblue{(modus ponens)},}\qquad\frac{\varphi}{(\forall x)\varphi}\quad\text{\myblue{(generalizace)}}$$
+    \end{itemize}
+    
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    \subsubsection*{Pojem důkazu}
+    \mdef{Důkaz} (\emph{Hilbertova stylu}) formule $\varphi$ z teorie $T$ je \myblue{konečná} posloupnost
+    \smallskip
+    
+    $\varphi_0, \dots, \varphi_n=\varphi$ formulí taková, že pro každé $i\le n$
+    \smallskip
+    
+    \begin{itemize}
+    \item $\varphi_i$ je logický axiom nebo $\varphi_i \in T$ (axiom teorie), nebo
+    \smallskip
+    
+    \item $\varphi_i$ lze odvodit z předchozích formulí pomocí odvozovacích pravidel.
+    \end{itemize}
+    \smallskip
+    
+    Formule $\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$, značíme $T \vdash_{H} \varphi$.
+    \bigskip
+    
+    {\bf \myblue{Věta}}\ \ {\it  Pro každou teorii $T$ a formuli $\varphi$,\ \ $T\vdash_H \varphi\ \Rightarrow\ T\models \varphi$.}
+    \medskip
+    
+    {\it \myblue{Důkaz}}
+    \begin{itemize}
+    \item Je-li $\varphi\in T$ nebo logický axiom, je $T \models \varphi$ (logické axiomy jsou tautologie),
+    \item jestliže $T \models \varphi$ a $T \models \varphi \to \psi$, pak $T \models \psi$, \emph{tj. modus ponens je korektní},
+    \item jestliže $T \models \varphi$, pak $T \models (\forall x)\varphi$, \emph{tj. pravidlo generalizace je korektní},
+    \item tedy každá formule vyskytující se v důkazu z $T$ platí v $T$. $\qed$
+    \end{itemize}
+    \medskip
+    
+    {\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. $T\models \varphi \Rightarrow T\vdash_H \varphi$ pro každou teorii $T$ a formuli $\varphi$.}
+% :from slides

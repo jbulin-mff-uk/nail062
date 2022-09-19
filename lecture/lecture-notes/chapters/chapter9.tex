@@ -5,70 +5,618 @@
 % :from slides
 
 
-\section{(draft) Elementární ekvivalence}\todo
+\section{Elementární ekvivalence}\todo
 
 % from slides:
 
+\subsubsection*{Teorie struktury}
+
+{\it Mnohdy nás zajímá, co platí v jedné konkrétní struktuře.}
+\bigskip
+
+%Nechť $\mathcal{A}$ je struktura pro jazyk $L$.
+%\smallskip
+
+\mdef{Teorie struktury} $\mathcal{A}$ je množina \mdef{$\mathrm{Th}(\mathcal{A})$} \myblue{sentencí} (stejného jazyka) platných v $\mathcal{A}$.
+\medskip
+
+{\it \myblue{Pozorování}\ \ Pro každou strukturu $\mathcal{A}$ a teorii $T$ jazyka $L$,
+\smallskip
+
+\begin{enumerate}
+\item[$(i)$] $\mathrm{Th}(\mathcal{A})$ je \myblue{kompletní} teorie,
+\smallskip
+
+\item[$(ii)$] je-li $\mathcal{A}\models T$, je $\mathrm{Th}(\mathcal{A})$ jednoduchá (kompletní) \myblue{extenze} teorie $T$,
+\smallskip
+
+\item[$(iii)$] je-li $\mathcal{A}\models T$ a $T$ je kompletní, je $\mathrm{Th}(\mathcal{A})$ \myblue{ekvivalentní} s $T$,
+\smallskip
+
+tj. $\theta^L(T)=\mathrm{Th}(\mathcal{A})$.
+\end{enumerate}}
+\medskip
+
+\mygreen{\it Např. pro $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$ je $\mathrm{Th}(\underline{\mathbb{N}})$ aritmetika přirozených čísel.}
+\bigskip
+
+{\it \myblue{Poznámka}\ \ Později uvidíme, že ačkoliv je $\mathrm{Th}(\underline{\mathbb{N}})$ kompletní teorie, je
+\smallskip
+
+(algoritmicky) \myblue{nerozhodnutelná.}}
+
+
+
+\begin{itemize}
+    \item Struktury $\mathcal{A}$ a $\mathcal{B}$ jazyka $L$ jsou \mdef{elementárně ekvivalentní}, psáno \mdef{$\mathcal{A}\equiv \mathcal{B}$},
+    \smallskip
+    
+    pokud v nich platí stejné formule (jazyka $L$), tj. $\mathrm{Th}(\mathcal{A})=\mathrm{Th}(\mathcal{B})$.
+    \medskip
+    
+    \mygreen{\it Např. $\langle\mathbb{R},\le\rangle\equiv\langle\mathbb{Q},\le\rangle$, ale $\langle\mathbb{Q},\le\rangle\not\equiv \langle\mathbb{Z},\le \rangle$, neboť v $\langle \mathbb{Z},\le \rangle$ má každý}
+    \smallskip
+    
+    \mygreen{\it prvek bezprostředního následníka, zatímco v $\langle \mathbb{Q},\le \rangle$ ne.}
+    %\mygreen{\it neexistuje nejmenší prvek, zatímco v druhé struktuře ano.}
+    %\models \varphi$ a $\mathcal{A}\models \varphi$ pro sentenci $\varphi$ tvaru $(\exists x)(\forall y)(x\le y)$ (tj. v $\mathcal{A}$ existuje nejmenší prvek, zatímco v $\langle \mathbb{Q},\le \rangle$ ne).}
+    \medskip
+    
+    \item $T$ je kompletní, právě když má až na el. ekvivalenci právě jeden model.
+    \medskip
+    
+    \mygreen{\it Např. teorie $DeLO$ hustých lineárních uspořádání bez konců je kompletní.}
+    \end{itemize}
+    \medskip
+    
+    {\it Zajímá nás, jak vypadají modely dané teorie (až na elementární ekvivalenci).}
+    \medskip
+    
+    {\it \myblue{Pozorování}\ \ Pro modely $\mathcal{A}, \mathcal{B}$ teorie $T$ platí $\mathcal{A}\equiv \mathcal{B}$, právě když $\mathrm{Th}(\mathcal{A})$, $\mathrm{Th}(\mathcal{B})$
+    \smallskip
+    
+    jsou \myblue{ekvivalentní} (jednoduché kompletní extenze teorie $T$).}
+    \bigskip
+    
+    {\it \myblue{Poznámka}\ \ Lze-li \myblue{efektivně} (\myblue{algoritmicky}) popsat pro efektivně danou teorii $T$,
+    \smallskip
+    
+    jak vypadají všechny její kompletní extenze, je $T$ (algoritmicky) \myblue{rozhodnutelná}.}
+    
 % :from slides
 
-\subsection{(draft) Příklad: DeLO*}\todo
+\subsection{Příklad: DeLO*}\todo
+
+% from slides:
+Teorie \mdef{$DeLO^*$} \myblue{hustého lineárního uspořádání} jazyka $L=\langle \le \rangle$ s rovností je
+\vspace{-1mm}
+\begin{align*} &\mygreen{x\le x} &\text{(\myblue{reflexivita})} \\
+&\mygreen{x\le y\ \ \mand\ \ y\le x\ \ \to\ \ x=y}&\text{(\myblue{antisymetrie})}\\
+&\mygreen{x\le y\ \ \mand\ \ y \le z\ \ \to\ \ x\le z} &\text{(\myblue{tranzitivita})}\\
+&\mygreen{x\le y \ \ \mor\ \ y \le x} \qquad\qquad\quad\ \ &\text{(\myblue{dichotomie})}\\
+&\mygreen{x<y \ \ \to\ \ (\exists z)\ (x < z\ \mand\ z < y)} \ \ &\text{(\myblue{hustota})}\\
+&\mygreen{(\exists x)(\exists y)(x \ne y)} \ \ &\text{(\myblue{netrivialita})}
+\end{align*}
+
+\vspace{-1mm}
+kde `$x < y$' je zkratka za `$\mygreen{x \le y\ \mand\ x\ne y}$'.
+\bigskip
+
+Označme $\varphi$, $\psi$ sentence \mygreen{$(\exists x)(\forall y)(x\le y)$}, resp. \mygreen{$(\exists x)(\forall y)(y\le x)$}. Uvidíme, že
+\vspace{-1mm}
+\mygreen{\begin{align*}
+\quad DeLO\phantom{^+}&=DeLO^* \cup \{\neg \varphi, \neg \psi\},& DeLO^\pm&= DeLO^* \cup \{\varphi, \psi\},\qquad\\
+DeLO^+&= DeLO^* \cup \{\neg \varphi, \psi\},& DeLO^-&= DeLO^* \cup \{\varphi, \neg \psi\}
+\end{align*}}
+
+\vspace{-5mm}
+jsou všechny (neekvivalentní) jednoduché kompletní extenze teorie $DeLO^*$.
+
+% :from slides
+
+
+\subsection{Důsledky Löwenheim-Skolemovy věty}\todo
+
+% from slides:
+{\it Pomocí kanonického modelu (s rovností) jsme dříve dokázali následující větu.}
+\medskip
+
+{\bf \myblue{Věta}}\ \ {\it Nechť $T$ je bezesporná teorie spočetného jazyka $L$. Je-li $L$ bez rovnosti,
+\smallskip
+
+má $T$ model, který je \myblue{spočetně nekonečný}. Je-li $L$ s rovností, má $T$ model,
+\smallskip
+
+který je \myblue{spočetný}.}
+\bigskip
+
+{\bf \myblue{Důsledek}}\ \ {\it Ke každé struktuře $\mathcal{A}$ spočetného jazyka \myblue{bez rovnosti} existuje
+\smallskip
+
+\myblue{spočetně nekonečná} elementárně ekvivalentní struktura $\mathcal{B}$}.
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Teorie $\mathrm{Th}(\mathcal{A})$ je bezesporná, neboť má model $\mathcal{A}$. Dle předchozí věty
+\smallskip
+
+má spočetně nek. model $\mathcal{B}$. Jelikož je teorie $\mathrm{Th}(\mathcal{A})$ kompletní, je $\mathcal{A}\equiv \mathcal{B}$. $\qed$
+\bigskip
+
+{\bf \myblue{Důsledek}}\ \ {\it Ke každé \myblue{nekonečné} struktuře $\mathcal{A}$ spočetného jazyka \myblue{s rovností}
+\smallskip
+
+existuje \myblue{spočetně nekonečná} elementárně ekvivalentní struktura $\mathcal{B}$}.
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Obdobně jako výše. Jelikož v $\mathcal{A}$ neplatí sentence \emph{``existuje právě $n$
+prvků''} pro žádné $n \in \mathbb{N}$ a $\mathcal{A}\equiv \mathcal{B}$, není $B$ konečná, tedy je nekonečná. \qed
+% :from slides
+
+\subsection{Příklad: Spočetné algebraicky uzavřené těleso}\todo
+
+% from slides:
+Řekneme, že \myblue{těleso} $\mathcal{A}$ je \mdef{algebraicky uzavřené}, pokud v něm každý \myblue{polynom}
+\smallskip
+
+(nenulového stupně) má \myblue{kořen}, tj. pro každé $n\ge 1$ platí
+\vspace{-1mm}
+\mygreen{$$\mathcal{A}\models (\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0 = 0)$$}
+
+\vspace{-5mm}
+kde $y^k$ je zkratka za term $y\cdot y \cdot\ \dotsb\ \cdot y$ ( $\cdot$ aplikováno ($k-1$)-krát).
+\bigskip
+
+\mygreen{\it Např. těleso $\underline{\mathbb{C}}=\langle\mathbb{C},+,-,\cdot,0,1\rangle$ je algebraicky uzavřené, zatímco tělesa}
+\smallskip
+
+\mygreen{\it $\underline{\mathbb{R}}$ a $\underline{\mathbb{Q}}$ nejsou (neboť polynom $x^2 + 1$ v nich nemá kořen).}
+\bigskip
+
+{\bf \myblue{Důsledek}}\ \ {\it Existuje \myblue{spočetné} algebraicky uzavřené těleso}.
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Dle předchozího důsledku existuje spočetná struktura (nekonečná),
+\smallskip
+
+která je elementárně ekvivalentní s tělesem $\underline{\mathbb{C}}$, tedy je to rovněž algebraicky
+\smallskip
+
+uzavřené těleso. $\qed$
+% :from slides
+
+
+\section{Izomorfismus struktur}\label{section:isomorphism-of-structures}\todo
+
+% from slides:
+\subsubsection*{Izomorfismus struktur}
+    %{\it Následující pojem vyjadřuje ``stejnost'' až na přejmenování prvků.}
+    %\medskip
+    
+    Nechť $\mathcal{A}$, $\mathcal{B}$ jsou struktury jazyka $L=\langle\mathcal{F},\mathcal{R}\rangle$.
+    \smallskip
+    
+    \begin{itemize}
+    \item \myblue{Bijekce} $h\colon A\to B$ je \mdef{izomorfismus} struktur $\mathcal{A}$ a $\mathcal{B}$, pokud platí zároveň
+    \vspace{-2mm}
+    \begin{align*}\myblue{(i)}\quad&\mygreen{h(f^A(a_1,\dots,a_n))=f^B(h(a_1),\dots,h(a_n))}\\
+    &\text{pro každý $n$-ární funkční symbol $f\in \mathcal{F}$ a každé $a_1,\dots,a_n\in A$,\qquad}\\
+    \myblue{(ii)}\quad&\mygreen{R^A(a_1,\dots,a_n)\ \ \Leftrightarrow\ \ R^B(h(a_1),\dots,h(a_n))}\\
+    &\text{pro každý $n$-ární relační symbol $R\in \mathcal{R}$ a každé $a_1,\dots,a_n\in A$.}
+    \end{align*}
+    
+    \vspace{-1mm}
+    \item $\mathcal{A}$ a $\mathcal{B}$ jsou \mdef{izomorfní} (via $h$), psáno \mdef{$\mathcal{A}\simeq\mathcal{B}$} ($\mathcal{A}\simeq_h\mathcal{B}$), pokud existuje
+        \smallskip
+    
+        izomorfismus $h$ struktur $\mathcal{A}$ a $\mathcal{B}$. Říkáme rovněž, že $\mathcal{A}$ je \mdef{izomorfní s} $\mathcal{B}$.
+    \smallskip
+    
+    \item \mdef{Automorfismus} struktury $\mathcal{A}$ je izomorfismus $\mathcal{A}$ s $\mathcal{A}$.
+    \end{itemize}
+    \medskip
+    
+    \mygreen{\it Např. potenční algebra $\underline{\mathcal{P}(X)}=\langle \mathcal{P}(X),-,\cap,\cup,\emptyset,X\rangle$ s $X=n$ je izomorfní}
+    \smallskip
+    
+    \mygreen{\it s Booleovou algebrou $\underline{^{n}2}=\langle ^{n}2,-_n,\mand_n,\mor_n,0_n,1_n \rangle$ via $h: A \mapsto \chi_A$, kde $\chi_A$}
+    \smallskip
+    
+    \mygreen{\it je charakteristická funkce množiny $A\subseteq X$.} % NeplatíDále $g: A \mapsto \overline{A}$ je automorfismus $\underline{\mathcal{P}(X)}$.}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    
+    \subsubsection*{Izomorfismus a sémantika}
+    {\it Uvidíme, že izomorfismus zachovává sémantiku.}
+    \medskip
+    
+    {\bf \myblue{Tvrzení}}\ \ {\it Nechť $\mathcal{A}$, $\mathcal{B}$ jsou struktury jazyka $L=\langle\mathcal{F},\mathcal{R}\rangle$.
+    \smallskip
+    Bijekce $h\colon A\to B$ je \myblue{izomorfismus} $\mathcal{A}$ a $\mathcal{B}$, právě když platí zároveň
+    \vspace{-1mm}
+    \begin{align*}\myblue{(i)}\quad&\mygreen{h(t^A[e])=t^B[e\circ h]}& &\text{pro každý term $t$ a $e\colon \mathrm{Var} \to A$, }\\
+    %&\text{pro každý $n$-ární funkční symbol $f\in \mathcal{F}$ a každé $a_1,\dots,a_n\in A$,\qquad}\\
+    \myblue{(ii)}\quad&\mygreen{\mathcal{A}\models \varphi[e]\ \ \Leftrightarrow\ \ \mathcal{B}\models \varphi[e\circ h]}&\quad &\text{pro každou formuli $\varphi$ a $e\colon \mathrm{Var} \to A$.}\qquad
+    \end{align*}}
+    
+    {\it \myblue{Důkaz}}\ \ ($\Rightarrow$)\ \ Indukcí dle struktury termu $t$, respektive formule $\varphi$.
+    \smallskip
+    
+    ($\Leftarrow$)\ \ Dosazením termu $f(x_1,\dots,x_n)$ do $(i)$ či atomické formule $R(x_1,\dots,x_n)$
+    \smallskip
+    
+    do $(ii)$ pro ohodnocení $e(x_i)=a_i$ máme, že $h$ vyhovuje def. izomorfismu.$\qed$
+    \bigskip
+    
+    {\bf \myblue{Důsledek}}\ \ {\it Pro každé struktury $\mathcal{A}$, $\mathcal{B}$ stejného jazyka,}
+    \vspace{-2mm}
+    \mygreen{$$\mathcal{A}\simeq\mathcal{B}\ \ \Rightarrow\ \ \mathcal{A}\equiv\mathcal{B}.$$}
+    
+    \vspace{-6mm}
+    {\it \myblue{Poznámka}}\ \ {\it Obrácená implikace \myblue{obecně} neplatí, např. \mygreen{$\langle \mathbb{Q},\le \rangle\equiv \langle \mathbb{R},\le\rangle$}, ale
+    \smallskip
+    
+    \mygreen{$\langle \mathbb{Q},\le \rangle\not\simeq \langle \mathbb{R},\le\rangle$}, neboť $|\mathbb{Q}|=\omega$ a $|\mathbb{R}|=2^\omega$.}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    
+    \subsubsection*{Konečné modely s rovností}
+    
+    {\bf \myblue{Tvrzení}}\ \ {\it Pro každé \myblue{konečné} struktury $\mathcal{A}$, $\mathcal{B}$ stejného jazyka s \myblue{rovností},}
+    \vspace{-2mm}
+    \mygreen{$$\mathcal{A}\equiv\mathcal{B}\ \ \Rightarrow\ \ \mathcal{A}\simeq\mathcal{B}.$$}
+    
+    \vspace{-6mm}
+    {\it \myblue{Důkaz}}\ \ Je $|A|=|B|$, neboť lze vyjádřit \emph{``existuje právě $n$ prvků''}.
+    \begin{itemize}
+    \item Nechť $\mathcal{A}'$ je expanze $\mathcal{A}$ do jazyka $L'=L\cup\{c_a\}_{a\in A}$ o \myblue{jména prvků} z $A$.
+    \item Ukážeme, že $\mathcal{B}$ lze expandovat na $\mathcal{B}'$ do jazyka $L'$ tak, že $\mathcal{A}'\equiv \mathcal{B}'$. Pak
+    \vspace{0.5mm}
+    
+    zřejmě $h\colon a \mapsto c_a^{B'}$ je izomorfismus $\mathcal{A}'$ s $\mathcal{B}'$ a tedy i izomorfismus $\mathcal{A}$ s $\mathcal{B}$.
+    \item Stačí ukázat, že pro každé $c^{A'}_a=a\in A$ existuje $b\in B$\ \ t.ž. \myblue{$\langle  \mathcal{A},a\rangle\equiv\langle\mathcal{B},b\rangle$}.
+    \item Označme $\Omega$ množinu formulí $\varphi(x)$ t.ž. $\langle \mathcal{A},a\rangle \models \varphi(x/c_a)$, tj. $\mathcal{A}\models \varphi[e(x/a)]$.
+    \item Jelikož je $A$ konečné, existuje konečně formulí $\varphi_0(x),\dots,\varphi_m(x)$ tak, že
+    \vspace{0.5mm}
+    
+    pro každé $\varphi \in \Omega$ je $\mathcal{A}\models \varphi \leftrightarrow \varphi_i$ pro nějaké $i$.
+    \item Jelikož $\mathcal{B}\equiv\mathcal{A}\models (\exists x)\bigwedge_{i\le m}\varphi_i$, existuje $b\in B$ t.ž. $\mathcal{B}\models \bigwedge_{i\le m}\varphi_i[e(x/b)]$.
+    \item Tedy pro každou $\varphi\in \Omega$ je $\mathcal{B}\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$. $\qed$
+    \end{itemize}
+    \smallskip
+    
+    {\bf \myblue{Důsledek}}\ \ {\it Má-li \myblue{kompletní} teorie jazyka s rovností konečný model, jsou
+    \vspace{0.5mm}
+    
+    všechny její modely \myblue{izomorfní}.}
+    
+% :from slides
+
+\subsection{Definovatelnost a automorfismy}\todo
+
+Připomeňme si pojem definovatelné množiny, viz Sekce \ref{section:definability}.
 
 % from slides:
 
+\subsubsection*{Definovatelnost a automorfismy}
+    
+    {\it Ukážeme, že definovatelné množiny jsou invariantní na automorfismy.}
+    \medskip
+    
+    {\bf \myblue{Tvrzení}}\ \ {\it Nechť $D\subseteq A^n$ je množina definovatelná ve struktuře $\mathcal{A}$ z parametrů
+    \smallskip
+    
+    $\overline{b}$ a $h$ je \myblue{automorfismus} $\mathcal{A}$, který je \myblue{identický} na $\overline{b}$. Pak $h[D]=D$.}
+    \medskip
+    
+    {\it \myblue{Důkaz}}\ \ Nechť $D=\varphi^{\mathcal{A},\overline{b}}(\overline{x},\overline{y})$. Pak pro každé $\overline{a}\in A^{|\overline{x}|}$
+    \vspace{-1mm}
+    \begin{align*}\overline{a}\in D\ &\Leftrightarrow\ \mathcal{A}\models \varphi[e(\overline{x}/\overline{a},\overline{y}/\overline{b})]\ \Leftrightarrow\  \mathcal{A}\models \varphi[(e\circ h)(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\ \mathcal{A}\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/h(\overline{b}))]\ \Leftrightarrow\ \mathcal{A}\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/\overline{b})]\ \Leftrightarrow\ h(\overline{a})\in D. \qed
+    \end{align*}
+    \vspace{-4mm}
+    
+    \mygreen{\it Např. graf $\mathcal{G}$ má právě jeden netriv. automorfismus $h$ zachovávající vrchol $0$.}
+    \medskip
+    
+    \centerline{\includegraphics[scale=0.75]{files/5cyklus}}
+    \smallskip
+    
+    \mygreen{\it Navíc množiny $\{0\}$, $\{1,4\}$, $\{2,3\}$ jsou definovatelné z parametru $0$. Tedy
+    \vspace{-2mm}
+    $$\mathrm{Df}^1(\mathcal{G},\{0\})=\{\emptyset, \{0\}, \{1,4\}, \{2,3\}, \{0,1,4\}, \{0,2,3\}, \{1,4,2,3\}, \{0,1,2,3,4\}\}.$$}
+    
+    \vspace{-6mm}
+    
+    
 % :from slides
 
+\section{Kategorické teorie}\todo
 
-\subsection{(draft) Důsledky Löwenheim-Skolemovy věty}\todo
+% from slides:
+\begin{itemize}
+    \item \mdef{Izomorfní spektrum} teorie $T$ je počet \mdef{$I(\kappa,T)$} navzájem neizomorfních
+    \smallskip
+    
+    modelů teorie $T$ pro každou \myblue{kardinalitu} $\kappa$.
+        \smallskip
+    
+    \item Teorie $T$ je \mdef{$\kappa$-kategorická}, pokud má až na izomorfismus právě jeden
+    \smallskip
+    
+    model kardinality $\kappa$, tj. $I(\kappa,T)=1$.
+    \end{itemize}
+    \medskip
+    
+    {\bf \myblue{Tvrzení}}\ \ {\it Teorie $DeLO$ \emph{(tj. ``bez konců'')} je $\omega$-kategorická.}
+    \medskip
+    
+    {\it \myblue{Důkaz}}\ \ Nechť $\mathcal{A}$, $\mathcal{B} \models DeLO$ s $A=\{a_i\}_{i\in \mathbb{N}}$, $B=\{b_i\}_{i\in \mathbb{N}}$. Indukcí dle $n$ lze
+    \smallskip
+    
+    nalézt prosté \myblue{parciální} funkce $h_n\subseteq h_{n+1}\subset A\times B$ \myblue{zachovávající uspořádání}
+    \smallskip
+    
+    tak, že $\{a_i\}_{i< n}\subseteq \mathrm{dom}(h_n)$ a $\{b_i\}_{i< n}\subseteq \mathrm{rng}(h_n)$. Pak $\mathcal{A}\simeq \mathcal{B}$ via $h=\cup h_n$. $\qed$
+    \bigskip
+    
+    \mygreen{\it Obdobně dostaneme, že např. $\mathcal{A}=\langle \mathbb{Q},\le\rangle$, $\mathcal{A} \upharpoonright (0,1]$, $\mathcal{A} \upharpoonright [0,1)$, $\mathcal{A} \upharpoonright [0,1]$}
+    \smallskip
+    
+    \mygreen{\it jsou až na izomorfismus všechny spočetné modely teorie $DeLO^*$. Pak}
+    \vspace{-2mm}
+    \mygreen{$$I(\kappa,DeLO^*)=\begin{cases}0 &\text{pro }\kappa\in\mathbb{N},\\
+    4 &\text{pro }\kappa=\omega.\end{cases}$$}
+    
+    \vspace{-6mm}
+% :from slides
+
+\subsection{$\omega$-kategoricita a úplnost}\todo
 
 % from slides:
 
+{\bf \myblue{Věta}}\ \ {\it Nechť jazyk $L$ je spočetný.
+\vspace{0.5mm}
+
+\begin{enumerate}
+\item[$(i)$] Je-li teorie $T$ jazyka $L$ bez rovnosti $\omega$-kategorická, je kompletní.
+\smallskip
+
+\item[$(ii)$] Je-li teorie $T$ jazyka $L$ s rovností $\omega$-kategorická a bez konečného
+\smallskip
+
+ modelu, je kompletní.
+\end{enumerate}}
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Každý model teorie $T$ je elementárně ekvivalentní s nějakým
+\smallskip
+
+spočetně nekonečným modelem $T$, ale ten je až na izomorfismus jediný.
+\smallskip
+
+Tedy všechny modely $T$ jsou elementárně ekvivalentní, tj. $T$ je kompletní. $\qed$
+\bigskip
+
+\mygreen{\it Např. teorie $DeLO$, $DeLO^+$, $DeLO^-$, $DeLO^\pm$ jsou kompletní a jsou to všechny}
+\smallskip
+
+\mygreen{\it (navzájem neekvivalentní) jednoduché kompletní extenze teorie $DeLO^*$.}
+\bigskip
+
+{\it \myblue{Poznámka}\ \ Obdobné kritérium platí i pro vyšší kardinality než $\omega$.}
+
 % :from slides
 
-\subsection{(draft) Příklad: Spočetné algebraicky uzavřené těleso}\todo
+\section{Axiomatizovatelnost}\todo
 
 % from slides:
 
+\subsection{Axiomatizovatelnost}
+\subsubsection*{Axiomatizovatelnost}
+
+{\it Zajímá nás, zda se daná část světa dá ``dobře'' popsat.}
+\medskip
+
+Nechť $K\subseteq M(L)$ je třída struktur jazyka $L$. Řekneme, že $K$ je
+\vspace{0.5mm}
+
+\begin{itemize}
+\item \mdef{axiomatizovatelná}, pokud existuje teorie $T$ jazyka $L$ s $M(T)=K$, %Říkáme, že $T$ \mdef{axiomatizuje} třídu $K$.
+\smallskip
+
+\item \mdef{konečně axiomatizovatelná}, pokud je axiomatizovatelná \myblue{konečnou} teorií,
+\smallskip
+
+\item \mdef{otevřeně axiomatizovatelná}, pokud je axiomatizovatelná \myblue{otevřenou} teorií,
+\smallskip
+
+%\item Nutná podmínka axiomatizovatelnosti je uzavřenost na elementární ekvivalenci.
+%\smallskip
+
+\item \myblue{teorie} $T$ je \myblue{konečně (otevřeně) axiomatizovatelná}, pokud $M(T)$ je
+\smallskip
+
+konečně (respektive otevřeně) axiomatizovatelná.
+\end{itemize}
+\medskip
+
+{\bf \myblue{Pozorování}}\ \ {\it Je-li $K$ axiomatizovatelná, je uzavřená na elem. ekvivalenci.}
+\medskip
+
+\mygreen{\it Například}
+\begin{enumerate}
+\item[$a)$] \mygreen{\it lineární uspořádání jsou konečně i otevřeně axiomatizovatelná,}
+\smallskip
+
+\item[$b)$] \mygreen{\it tělesa jsou konečně axiomatizovatelná, ale ne otevřeně,}
+\smallskip
+
+\item[$c)$] \mygreen{\it nekonečné grupy jsou axiomatizovatelné, ale ne konečně.}
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\subsubsection*{Důsledek kompaktnosti}
+
+{\bf \myblue{Věta}}\ \ {\it Má-li teorie $T$ pro každé $n\in \mathbb{N}$ alespoň $n$-prvkový model, má i
+\smallskip
+
+nekonečný model.}
+\medskip
+
+{\it \myblue{Důkaz}}\ \ V jazyce bez rovnosti je to zřejmé, uvažme jazyk s rovností.
+%\vspace{0.5mm}
+
+\begin{itemize}
+\item Označme $T'=T \cup \{c_i \ne c_j \mid \text{pro }i\ne j\}$ extenzi teorie $T$ v rozšířeném
+\smallskip
+
+jazyce o spočetně nekonečně mnoho nových konstantních symbolů $c_i$.
+\smallskip
+
+\item Dle předpokladu má každá konečná část teorie $T'$ model.
+\smallskip
+
+\item Tedy dle věty o \myblue{kompaktnosti} má $T'$ model, ten je nutně nekonečný.
+\smallskip
+
+\item Jeho redukt na původní jazyk je hledaný nekonečný model teorie $T$. $\qed$
+\end{itemize}
+\medskip
+
+{\bf \myblue{Důsledek}}\ \ {\it Má-li teorie $T$ pro každé $n\in \mathbb{N}$ alespoň $n$-prvkový model, není
+\smallskip
+
+třída všech jejích konečných modelů axiomatizovatelná.}
+\bigskip
+
+\mygreen{\it Např. nelze axiomatizovat konečné grupy, konečná tělesa, atd.}
+\smallskip
+\mygreen{\it Avšak třída nekonečných modelů teorie $T$ jazyka s rovností je axiomatizovatelná.}
+
 % :from slides
 
-
-\section{(draft) Izomorfismus struktur}\label{section:isomorphism-of-structures}\todo
+\subsection{Konečná axiomatizovatelnost}\todo
 
 % from slides:
-
+\subsubsection*{Konečná axiomatizovatelnost}
+    
+    {\bf \myblue{Věta}}\ \ {\it Nechť $K\subseteq M(L)$ a $\overline{K}=M(L)\setminus K$, kde $L$ je jazyk. Pak $K$ je \myblue{konečně}
+    \smallskip
+    
+    axiomatizovatelná, právě když $K$ i $\overline{K}$ jsou axiomatizovatelné.}
+    \smallskip
+    \medskip
+    
+    {\it \myblue{Důkaz}}\ \ ($\Rightarrow$)\ \ Je-li $T$ konečná axiomatizace $K$ v \myblue{uzavřeném} tvaru, pak teorie
+    \smallskip
+    
+    s jediným axiomem $\bigvee_{\varphi\in T}\neg\varphi$ axiomatizuje $\overline{K}$. Nyní dokažme ($\Leftarrow$).
+    \vspace{0.5mm}
+    
+    \begin{itemize}
+    \item Nechť $T$, $S$ jsou teorie jazyka $L$ takové, že $M(T)=K$, $M(S)=\overline{K}$.
+    \smallskip
+    
+    \item Pak \mygreen{$M(T\cup S)=M(T)\cap M(S)=\emptyset$}\ \ a dle věty o \myblue{kompaktnosti} existují
+    \smallskip
+    
+    konečné $T'\subseteq T$ a $S'\subseteq S$ takové, že\ \ \mygreen{$\emptyset = M(T'\cup S')=M(T')\cap M(S')$}.
+    \smallskip
+    
+    \item Jelikož
+    %\vspace{-1mm}
+    \mygreen{$$M(T)\subseteq M(T')\subseteq \overline{M(S')}\subseteq \overline{M(S)}= M(T),$$}
+    
+    \vspace{-4mm}
+    je $M(T)=M(T')$, tj. konečná $T'$ axiomatizuje $K$. $\qed$
+    \end{itemize}
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    
+    \subsubsection*{Konečná axiomatizovatelnost - příklad}
+    
+    Nechť $T$ je teorie těles. Řekneme, že těleso $\mathcal{A}=\langle A,+,-,\cdot,0,1 \rangle$ je
+    %\vspace{0.5mm}
+    
+    \begin{itemize}
+    \item \mdef{charakteristiky $0$}, neexistuje-li žádné $p\in \mathbb{N}^+$ takové, že \mygreen{$\mathcal{A}\models p1=0$},
+    \smallskip
+    
+    kde $p1$ značí term $1+1+\dots+1$ ( $+$ aplikováno ($p-1$)-krát).
+    \smallskip
+    
+    \item \mdef{charakteristiky $p$}, kde $p$ je prvočíslo, je-li $p$ je nejmenší t.ž. \mygreen{$\mathcal{A}\models p1=0$}.
+    \smallskip
+    
+    \item Třída těles charakteristiky $p$ pro $p$ prvočíslo je \myblue{konečně} axiomatizována
+    \smallskip
+    
+    teorií \mygreen{$T\cup \{p1=0\}$}.
+    \smallskip
+    
+    \item Třída těles charakteristiky $0$ je axiomatizována (\myblue{nekonečnou}) teorií
+    \smallskip
+    
+    \mygreen{$T'=T\cup \{p1\ne 0\mid p\in \mathbb{N}^+\}$}.
+    \end{itemize}
+    \medskip
+    
+    {\bf \myblue{Tvrzení}}\ \ {\it Třída $K$ těles charakteristiky $0$ není \myblue{konečně} axiomatizovatelná.}
+    \medskip
+    
+    {\it \myblue{Důkaz}}\ \ Stačí dokázat, že $\overline{K}$ není axiomatizovatelná. Kdyby $M(S)=\overline{K}$, tak
+    \smallskip
+    
+    $S'=S\cup T'$ má model $\mathcal{B}$, neboť každá konečná $S^*\subseteq S'$ má model (těleso
+    \smallskip
+    
+    prvočíselné charakteristiky větší než jakékoliv $p$ vyskytující se v axiomech
+    \smallskip
+    
+    $S^*$). Pak ale $\mathcal{B}\in M(S)=\overline{K}$ a zároveň $\mathcal{B}\in M(T')=K$, což není možné. $\qed$
+    
+    
 % :from slides
 
-\subsection{(draft) Definovatelnost a automorfismy}\todo
+\subsection{Otevřená axiomatizovatelnost}\todo
 
 % from slides:
+{\bf \myblue{Věta}}\ \ {\it Je-li teorie $T$ otevřeně axiomatizovatelná, pak každá podstruktura
+\smallskip
 
+modelu $T$ je rovněž modelem $T$.}
+\medskip
+
+{\it \myblue{Důkaz}}\ \ Nechť $T'$ je otevřená axiomatika $M(T)$, $\mathcal{A}\models T'$ a $\mathcal{B}\subseteq \mathcal{A}$. Víme, že
+\smallskip
+
+pro každé $\varphi\in T'$ je $\mathcal{B}\models \varphi$, neboť $\varphi$ je otevřená. Tedy $\mathcal{B}$ je modelem $T'$. $\qed$
+\bigskip
+
+{\it \myblue{Poznámka}}\ \ {\it Platí i obrácená implikace, tj. je-li každá podstruktura modelu
+\smallskip
+
+teorie $T$ rovněž modelem $T$, pak $T$ je otevřeně axiomatizovatelná.}
+\bigskip
+
+\mygreen{\it Např. teorie $DeLO$ není otevřeně axiomatizovatelná, neboť např. konečná}
+\smallskip
+
+\mygreen{\it podstruktura modelu $DeLO$ není modelem $DeLO$.}
+\medskip
+
+\mygreen{\it Např. nejvýše $n$-prvkové grupy pro pevné $n>1$ jsou otevřeně axiomatizovány}
+\vspace{-2mm}
+\mygreen{$$T\cup \{\bigvee_{\substack{i,j\le n\\ i\ne j}}x_i=x_j\},$$}
+
+\vspace{-4mm}
+\mygreen{\it kde $T$ je (otevřená) teorie grup.}
 % :from slides
 
-\section{(draft) Kategorické teorie}\todo
 
-% from slides:
 
-% :from slides
-
-\subsection{(draft) $\omega$-kategoricita a úplnost}\todo
-
-% from slides:
-
-% :from slides
-
-\section{(draft) Axiomatizovatelnost}\todo
-
-% from slides:
-
-% :from slides
-
-\subsection{(draft) Konečná axiomatizovatelnost}\todo
-
-% from slides:
-
-% :from slides
-
-\subsection{(draft) Otevřená axiomatizovatelnost}\todo
-
-% from slides:
-
-% :from slides

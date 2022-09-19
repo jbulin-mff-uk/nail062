@@ -9,10 +9,37 @@ Známá Cook-Levinova věta říká, že problém SAT je \emph{NP-úplný}, tedy
 Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho, dokonce až miliony, výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř?) všech SAT solverů. (V pozdější kapitole uvidíme také souvislost s \emph{rezoluční metodou}.)
 
 
-\section{SAT solvery}
+\section{(draft) SAT solvery}\todo
 
 Praktická ukázka použití řešiče SAT na konkrétní problém.
-\todo
+
+% from slides:
+
+\begin{itemize}
+    \item Problém {SAT}: Je daná výroková formule splnitelná?
+    
+    \item {Příklad}\ \ \mygreen{{\it Lze šachovnici bez dvou protilehlých rohů} perfektně}
+    \mygreen{{\it pokrýt kostkami domina?}}
+    Snadno vytvoříme výrokovou formuli, která je \myblue{splnitelná}, právě když
+    to lze. Pak ji můžeme zkusit ověřit pomocí nějakého SAT řešiče.
+
+    \item Nejlepší řešiče pro SAT: \href{http://www.satcompetition.org}{\myblue{\texttt{www.satcompetition.org}}}.
+    
+    \item Řešič v ukázce: \href{http://www.labri.fr/perso/lsimon/glucose/}{\myblue{\texttt{Glucose}}}, formát pro CNF soubory: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\myblue{\texttt{DIMACS}}}.
+    
+    \item Obecnější otázka: \emph{Lze celou matematiku převést do logických formulí?}
+    
+    AI, strojové dokazování, \myblue{Peano: \emph{Formulario}} (1895-1908), \myblue{Mizar system}
+    
+    \item \emph{Proč to lidé (většinou) nedělají?}
+    
+    Jak vyřešíme uvedený příklad \emph{elegantněji}? V čem náš postup spočívá?
+\end{itemize}
+
+% :from slides
+
+
+
 
 \section{2-SAT a implikační graf}
 

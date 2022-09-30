@@ -299,7 +299,7 @@ Predikátová logika používá tytéž logické spojky jako výroková logika, 
 Nyní můžeme formalizovat tvrzení, která dávají smysl pro libovolný graf. Například: 
 \begin{itemize}
     \item ``V grafu nejsou smyčky'': \[ (\forall x)(\neg E(x,x)) \] 
-    \item ``Existuje vrchol výstupního stupně 1'': \[ (\exists x)(\exists y)(E(x,y) \land (\forall z)((E(x,y) \land E(x,z)) \limplies y=z) \] 
+    \item ``Existuje vrchol výstupního stupně 1'': \[ (\exists x)(\exists y)(E(x,y) \land (\forall z)(E(x,z) \limplies y=z)) \] 
 \end{itemize}
 V daném grafu \(\structure{G}\) a při dosazení vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) vyhodnotíme \( E(x,y) \) jako True, právě když \( (u,v)\in E^{\structure{G}} \).
 

@@ -12,6 +12,8 @@ Celkem 12 cvičení (0.-13., 4. a 12. odpadá). Tj. číslo cvičení neznamená
 - (ukázka formulí 2. řádu)
 - připomenutí matematických pojmů (uspořádání, ekvivalence, strom...)
 
+% 2022: příklady 1-4
+
 ## Cvičení 1
 
 - syntaxe a sémantika výrokové logiky neformálně

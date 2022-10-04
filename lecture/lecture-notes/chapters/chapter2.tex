@@ -397,7 +397,7 @@ Všimněte si, že pro prázdnou teorii $T=\emptyset$ platí $\M_\mathbb P(T)=\M
 
 \begin{example} Mějme teorii $T=\{p\lor q,\neg r\}$. Platí následující:
     \begin{itemize}
-        \item výroky $q\lor p$, $\neg p\lor\neg q\lor \neg r$ jsou v $T$ jsou pravdivé,
+        \item výroky $q\lor p$, $\neg p\lor\neg q\lor \neg r$ jsou pravdivé v $T$,
         \item výrok $\neg p\lor\neg q\lor r$ je v $T$ lživý,
         \item výroky $p\liff q, p\land q$ jsou v $T$ nezávislé, a také splnitelné, a
         \item platí $p\lor r\sim_T q\lor r$ (ale $p\lor r\not\sim q\lor r$).
@@ -703,7 +703,7 @@ Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejpr
 \end{observation}
 
 \begin{example}
-Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
+Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
 
 Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:
 \begin{align*}

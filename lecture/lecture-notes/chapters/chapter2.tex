@@ -310,7 +310,7 @@ $$
 
 
 \begin{definition}[Platnost teorie, model teorie]\label{definition:validity-of-theory}
-    Je-li $T$ teorie v jazyce  $\mathbb P$, potom $T$ \emph{platí} v modelu $v$, pokud každý axiom $\varphi\in T$ platí ve $v$. V tom případě říkáme také, že $v$ je \emph{modelem} $T$, a píšeme $T\models\varphi$. Množinu všech modelů teorie $T$ v jazyce $\mathbb P$ označíme $\M_\mathbb P(T)$.    
+    Je-li $T$ teorie v jazyce  $\mathbb P$, potom $T$ \emph{platí} v modelu $v$, pokud každý axiom $\varphi\in T$ platí ve $v$. V tom případě říkáme také, že $v$ je \emph{modelem} $T$, a píšeme $v\models T$. Množinu všech modelů teorie $T$ v jazyce $\mathbb P$ označíme $\M_\mathbb P(T)$.    
 \end{definition}
 
 Pracujeme-li s konečnou teorií, nebo přidáváme-li k nějaké teorii konečně mnoho nových axiomů, budeme používat následující zjednodušený zápis:
@@ -466,7 +466,7 @@ Používá se následující terminologie a značení:
     \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
     \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
     \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární klauzule} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
+    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
     \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
 \end{itemize}
 
@@ -582,13 +582,13 @@ Nyní vypíšeme všechny potřebné ekvivalentní úpravy. Důkaz, že každý 
     \end{itemize}
     \item Konjunkce (převod do DNF):
     \begin{itemize}
-        \item[] $\varphi \land (\psi\land\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
-        \item[] $(\varphi \land \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
+        \item[] $\varphi \land (\psi\lor\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
+        \item[] $(\varphi \lor \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
     \end{itemize}
     \item Disjunkce (převod do CNF):
     \begin{itemize}
-        \item[] $\varphi \lor (\psi\lor\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
-        \item[] $(\varphi \lor \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
+        \item[] $\varphi \lor (\psi\land\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
+        \item[] $(\varphi \land \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
     \end{itemize}
 \end{itemize}
 \end{multicols}
@@ -705,7 +705,7 @@ Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejpr
 \begin{example}
 Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
 
-Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:
+Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:lls
 \begin{align*}
     \M_{\mathbb P'}(T')&=\{(0,0,0),(0,0,1),(0,1,0),(1,1,1)\}\\ 
     &\subseteq\{(0,0,0),(0,0,1),(0,1,0),(0,1,0),(1,1,0),(1,1,1)\}=\M_{\mathbb P'}(T)     

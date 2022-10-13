@@ -730,7 +730,7 @@ V logice nás většinou\footnote{Pokud např. neprovádíme konkrétní algorit
 \begin{example}
     Mějme teorii $T$ v jazyce $\mathbb P=\{p,q,r\}$ mající právě pět modelů. Kolik existuje (až na ekvivalenci) výroků nad $\mathbb P$, které jsou nezávislé v teorii $T$? Označme $|\mathbb P|=n=3$ a $|\M_\mathbb P(T)|=k=5$.
 
-    Počítáme množiny $M=\M_\mathbb P(\varphi)$ a požadujeme, aby $\emptyset\neq M\cap \M_\mathbb P(T)\neq\M_\mathbb P(T)$. Máme tedy celkem $2^m-2=6$ možností, jak může vypadat množina $M\cap \M_\mathbb P(T)$. A pro každý model jazyka, který není modelem $T$ (těch je $2^n-m=3$) můžeme zvolit libovolně, zda bude či nebude v $M$. Celkově tedy dostáváme $(2^m-2)\cdot2^{2^n-m}=6\cdot 2^{8-5}=48$ možných množin $M$, tolik je tedy výroků nezávislých v $T$, až na ekvivalenci.
+    Počítáme množiny $M=\M_\mathbb P(\varphi)$ a požadujeme, aby $\emptyset\neq M\cap \M_\mathbb P(T)\neq\M_\mathbb P(T)$. Máme tedy celkem $2^k-2=30$ možností, jak může vypadat množina $M\cap \M_\mathbb P(T)$. A pro každý model jazyka, který není modelem $T$ (těch je $2^n-k=3$) můžeme zvolit libovolně, zda bude či nebude v $M$. Celkově tedy dostáváme $(2^k-2)\cdot 2^{2^n-k}=30\cdot 2^{8-5}=240$ možných množin $M$, tolik je tedy výroků nezávislých v $T$, až na ekvivalenci.
 \end{example}
 
 Podívejme se na věc abstraktněji. Formálně, uvažujeme množinu ekvivalenčních tříd $\sim$ na množině všech výroků $\VF_\mathbb P$, kterou označíme $\sfrac{\VF_\mathbb P}{\sim}$. Prvky této množiny jsou množiny ekvivalentních výroků, např. $[p\limplies q]_\sim=\{p\limplies q,\neg p \lor q,\neg(p\land \neg q), \neg p\lor q\lor q,\dots\}$. A máme zobrazení $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ (kde $\mathcal P(X)$ je množina všech podmnožin $X$) definované předpisem:

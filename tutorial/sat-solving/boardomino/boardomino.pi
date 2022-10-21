@@ -1,0 +1,67 @@
+import sat.
+
+
+boardomino(Board, N, Missing) =>
+    Board = [Horizontal, Vertical],
+    Horizontal = new_array(N, N),
+    Horizontal :: 0..1,
+    Vertical = new_array(N, N),
+    Vertical :: 0..1, 
+
+    foreach(I in 1..N, J in 1..N)        
+        if member({I, J}, Missing) then
+            sum([Horizontal[X, Y]: {X, Y} in h_covering(I, J), valid(X, Y, N)]) + sum([Vertical[X, Y]: {X, Y} in v_covering(I, J), valid(X, Y, N)]) #= 0
+        else
+            sum([Horizontal[X, Y]: {X, Y} in h_covering(I, J), valid(X, Y, N)]) + sum([Vertical[X, Y]: {X, Y} in v_covering(I, J), valid(X, Y, N)]) #= 1
+        end           
+    end,
+
+    foreach(I in 1..N)
+        Horizontal[I, N] #= 0
+    end,
+    foreach(J in 1..N)
+        Vertical[N, J] #= 0
+    end.
+
+
+h_covering(I, J) = L =>
+    L = [{I, J-1}, {I, J}].
+
+v_covering(I, J) = L =>
+    L = [{I-1, J}, {I, J}].
+
+valid(X, Y, N) =>
+    X >= 1,
+    Y >= 1,
+    X <= N,
+    Y <= N.
+
+output(Board, Missing) =>
+    Board = [Horizontal, Vertical],
+    N = Board[1].length,
+
+    foreach(I in 1..N)
+        foreach(J in 1..N)
+            if Horizontal[I, J] = 1 then
+                print("h")
+            end,
+            if Vertical[I, J] = 1 then
+                print("v")
+            end,
+            if member({I,J}, Missing) then
+                print("x")
+            end,
+            if Horizontal[I, J] = 0, Vertical[I, J] = 0, not member({I,J}, Missing) then
+                print(".")
+            end
+        end,
+        print("\n")
+    end.
+
+main(Args) =>
+    N = to_int(Args[1]),
+    Missing = parse_term(Args[2]),
+    boardomino(Board, N, Missing),
+    solve([dump],Board),
+    println("yes"),
+    output(Board, Missing).

@@ -310,7 +310,7 @@ $$
 
 
 \begin{definition}[Platnost teorie, model teorie]\label{definition:validity-of-theory}
-    Je-li $T$ teorie v jazyce  $\mathbb P$, potom $T$ \emph{platí} v modelu $v$, pokud každý axiom $\varphi\in T$ platí ve $v$. V tom případě říkáme také, že $v$ je \emph{modelem} $T$, a píšeme $T\models\varphi$. Množinu všech modelů teorie $T$ v jazyce $\mathbb P$ označíme $\M_\mathbb P(T)$.    
+    Je-li $T$ teorie v jazyce  $\mathbb P$, potom $T$ \emph{platí} v modelu $v$, pokud každý axiom $\varphi\in T$ platí ve $v$. V tom případě říkáme také, že $v$ je \emph{modelem} $T$, a píšeme $v\models T$. Množinu všech modelů teorie $T$ v jazyce $\mathbb P$ označíme $\M_\mathbb P(T)$.    
 \end{definition}
 
 Pracujeme-li s konečnou teorií, nebo přidáváme-li k nějaké teorii konečně mnoho nových axiomů, budeme používat následující zjednodušený zápis:
@@ -466,7 +466,7 @@ Používá se následující terminologie a značení:
     \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
     \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
     \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární klauzule} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
+    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
     \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
 \end{itemize}
 
@@ -582,13 +582,13 @@ Nyní vypíšeme všechny potřebné ekvivalentní úpravy. Důkaz, že každý 
     \end{itemize}
     \item Konjunkce (převod do DNF):
     \begin{itemize}
-        \item[] $\varphi \land (\psi\land\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
-        \item[] $(\varphi \land \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
+        \item[] $\varphi \land (\psi\lor\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
+        \item[] $(\varphi \lor \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
     \end{itemize}
     \item Disjunkce (převod do CNF):
     \begin{itemize}
-        \item[] $\varphi \lor (\psi\lor\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
-        \item[] $(\varphi \lor \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
+        \item[] $\varphi \lor (\psi\land\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
+        \item[] $(\varphi \land \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
     \end{itemize}
 \end{itemize}
 \end{multicols}
@@ -705,7 +705,7 @@ Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejpr
 \begin{example}
 Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
 
-Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:
+Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:lls
 \begin{align*}
     \M_{\mathbb P'}(T')&=\{(0,0,0),(0,0,1),(0,1,0),(1,1,1)\}\\ 
     &\subseteq\{(0,0,0),(0,0,1),(0,1,0),(0,1,0),(1,1,0),(1,1,1)\}=\M_{\mathbb P'}(T)     
@@ -730,7 +730,7 @@ V logice nás většinou\footnote{Pokud např. neprovádíme konkrétní algorit
 \begin{example}
     Mějme teorii $T$ v jazyce $\mathbb P=\{p,q,r\}$ mající právě pět modelů. Kolik existuje (až na ekvivalenci) výroků nad $\mathbb P$, které jsou nezávislé v teorii $T$? Označme $|\mathbb P|=n=3$ a $|\M_\mathbb P(T)|=k=5$.
 
-    Počítáme množiny $M=\M_\mathbb P(\varphi)$ a požadujeme, aby $\emptyset\neq M\cap \M_\mathbb P(T)\neq\M_\mathbb P(T)$. Máme tedy celkem $2^m-2=6$ možností, jak může vypadat množina $M\cap \M_\mathbb P(T)$. A pro každý model jazyka, který není modelem $T$ (těch je $2^n-m=3$) můžeme zvolit libovolně, zda bude či nebude v $M$. Celkově tedy dostáváme $(2^m-2)\cdot2^{2^n-m}=6\cdot 2^{8-5}=48$ možných množin $M$, tolik je tedy výroků nezávislých v $T$, až na ekvivalenci.
+    Počítáme množiny $M=\M_\mathbb P(\varphi)$ a požadujeme, aby $\emptyset\neq M\cap \M_\mathbb P(T)\neq\M_\mathbb P(T)$. Máme tedy celkem $2^k-2=30$ možností, jak může vypadat množina $M\cap \M_\mathbb P(T)$. A pro každý model jazyka, který není modelem $T$ (těch je $2^n-k=3$) můžeme zvolit libovolně, zda bude či nebude v $M$. Celkově tedy dostáváme $(2^k-2)\cdot 2^{2^n-k}=30\cdot 2^{8-5}=240$ možných množin $M$, tolik je tedy výroků nezávislých v $T$, až na ekvivalenci.
 \end{example}
 
 Podívejme se na věc abstraktněji. Formálně, uvažujeme množinu ekvivalenčních tříd $\sim$ na množině všech výroků $\VF_\mathbb P$, kterou označíme $\sfrac{\VF_\mathbb P}{\sim}$. Prvky této množiny jsou množiny ekvivalentních výroků, např. $[p\limplies q]_\sim=\{p\limplies q,\neg p \lor q,\neg(p\land \neg q), \neg p\lor q\lor q,\dots\}$. A máme zobrazení $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ (kde $\mathcal P(X)$ je množina všech podmnožin $X$) definované předpisem:
@@ -782,9 +782,10 @@ Všechny předchozí úvahy můžeme také relativizovat vzhledem k dané teorii
     h([\varphi]_{\sim_T}\land[\psi]_{\sim_T})&=\M(T,\varphi)\cap\M(T,\psi)\\
     h([\varphi]_{\sim_T}\lor[\psi]_{\sim_T})&=\M(T,\varphi)\cup\M(T,\psi)
 \end{align*}
-Algebra výroků jazyka je tedy totéž co algebra výroků vzhledem k prázdné teorii. Z technických důvodů potřebujeme, aby $\M(T)$ byla neprázdná, tj. $T$ musí být bezesporná. Shrňme naše úvahy:
-\begin{corollary}
-Je-li $T$ bezesporná teorie nad \emph{konečným} jazykem $\mathbb P$, potom je algebra výroků   $\mathbf{AV}_\mathbb P$ izomorfní potenční algebře $\mathbf{\mathcal P(\M_\mathbb P(T)}$ prostřednictvím zobrazení $h([\varphi]_{\sim_T})=M(T,\varphi)$.
+Výslednou \emph{algebru výroků vzhledem k teorii $T$} označíme $\mathbf{AV}_\mathbb P(T)$. Algebra výroků jazyka je tedy totéž co algebra výroků vzhledem k prázdné teorii. Z technických důvodů potřebujeme, aby $\M(T)$ byla neprázdná, tj. $T$ musí být bezesporná. Shrňme naše úvahy:
+
+\begin{corollary}\label{corollary:lt-algebra}
+Je-li $T$ bezesporná teorie nad \emph{konečným} jazykem $\mathbb P$, potom je algebra výroků   $\mathbf{AV}_\mathbb P(T)$ izomorfní potenční algebře $\mathbf{\mathcal P(\M_\mathbb P(T))}$ prostřednictvím zobrazení $h([\varphi]_{\sim_T})=M(T,\varphi)$.
 \end{corollary}
 
 Víme tedy, že negace, konjunkce, a disjunkce odpovídají doplňku, průniku a sjednocení množin modelů, a že chceme-li najít počet výroků až na ekvivalenci resp. $T$-ekvivalenci, stačí určit počet příslušných množin modelů. Shrňme si několik takových výpočtů ve formě tvrzení, jeho důkaz necháme jako cvičení.
@@ -811,5 +812,12 @@ Dále \emph{až na $T$-ekvivalenci} existuje:
 \end{exercise}
 
 \begin{exercise}
-    Dokažte podrobně Tvrzení \ref{proposition:counting-up-to-equivalence}. (Nakreslete si Vennův diagram.)
+    Dokažte podrobně Tvrzení \ref{proposition:counting-up-to-equivalence}. (Nakreslete si Vennův diagram.)    
 \end{exercise}
+
+\begin{exercise}
+    Dokažte podrobně, že zobrazení $h$ z Důsledku \ref{corollary:lt-algebra} je korektně definované, prosté, a je-li jazyk konečný, potom i na.
+\end{exercise}
+
+
+

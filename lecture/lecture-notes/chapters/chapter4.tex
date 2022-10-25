@@ -211,7 +211,7 @@ Než se pustíme do formální definice a důkazů, specifikujme, co myslíme po
 
 \begin{definition}[Strom]
 \begin{itemize}
-\item \emph{Strom} je neprázdná množina $T$ s částečným uspořádáním $<_T$, které má (jediný) minimální prvek (\emph{kořen}) a ve kterém je množina předků libovolného vrcholu \emph{dobře uspořádaná}.\footnote{Tj. každá její neprázdná podmnožina má nejmenší prvek.}
+\item \emph{Strom} je neprázdná množina $T$ s částečným uspořádáním $<_T$, které má (jediný) minimální prvek (\emph{kořen}) a ve kterém je množina předků libovolného vrcholu \emph{dobře uspořádaná}.\footnote{Tj. každá její neprázdná podmnožina má nejmenší prvek. (Tím zakážeme nekonečné klesající řetězce předků.)}
 \item \emph{Větev} stromu $T$ je maximální\footnote{Tj. nelze do ní přidat další vrcholy stromu.} lineárně uspořádaná podmnožina $T$.
 \item \emph{Uspořádaný strom} je strom $T$ spolu s lineárním uspořádáním $<_L$ množiny synů každého vrcholu. Uspořádání synů budeme říkat \emph{pravolevé} zatímco uspořádání $<_T$ je \emph{stromové}.
 \item \emph{Označkovaný strom} je strom spolu se značkovací funkcí $\mathrm{label}\colon V(T)\to\mathrm{Labels}$.

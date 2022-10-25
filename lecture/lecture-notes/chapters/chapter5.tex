@@ -424,7 +424,9 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
 \end{proof}
 
 \begin{example}\label{example:linear-input-resolution}
-Mějme (splnitelnou, hornovskou) teorii $T$, kterou zapíšeme v množinové reprezentaci jako formuli $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$. Představte si, že chceme dokázat, že v teorii $T$ platí $p\land q$.\footnote{Tj. v Prologu bychom položili `dotaz' (`query'): \texttt{?-p,q.}} V rezoluční metodě uvážíme cíl $G=\{\neg p,\neg q\}$ a ukážeme, že $T\cup\{G\}\proves_{LI}\square$. Nejprve provedeme jednotkovou propagaci:
+Mějme (splnitelnou, hornovskou) teorii $T$, kterou zapíšeme v množinové reprezentaci jako formuli $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$. Představte si, že chceme dokázat, že v teorii $T$ platí $p\land q$.\footnote{Tj. v Prologu bychom položili `dotaz' (`query'): \texttt{?-p,q.}} V rezoluční metodě uvážíme cíl $G=\{\neg p,\neg q\}$ a ukážeme, že $T\cup\{G\}\proves_{LI}\square$. 
+
+Dle návodu z důkazu najdeme ve formuli $T$ fakt, a provedeme pomocí něho jednotkovou propagaci v $T$ i v cíli $G$. Postup opakujeme, dokud není formule prázdná:
 \begin{itemize}
     \item $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, $G=\{\neg p,\neg q\}$
     \item $T^s=\{\{p,\neg r\},\{\neg q,r\},\{q\}\}$, $G^s=\{\neg p,\neg q\}$
@@ -432,7 +434,7 @@ Mějme (splnitelnou, hornovskou) teorii $T$, kterou zapíšeme v množinové rep
     \item $T^{sqr}=\{\{p\}\}$, $G^{sqr}=\{\neg p\}$
     \item $T^{sqrp}=\emptyset$, $G^{sqrp}=\square$
 \end{itemize}
-Zpětným postupem sestrojíme rezoluční zamítnutí:
+Nyní zpětným postupem sestrojíme rezoluční zamítnutí:
 \begin{itemize}
     \item $T^{sqrp},G^{sqrp}\proves_{LI}\square$:
     \begin{center}

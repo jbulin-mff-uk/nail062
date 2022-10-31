@@ -481,7 +481,7 @@ Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravd
 Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
 \end{proof}
 
-\subsection{(draft) Věta o úplnosti}\todo
+\subsection{Věta o úplnosti}
 
 Stejně jako ve výrokové logice ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto opět jeden konkrétní, \emph{kanonický}.
 
@@ -602,7 +602,7 @@ Důkaz Věty o úplnosti je také analogický její verzi pro výrokovou logiku:
 
 \begin{theorem}[O úplnosti]\label{theorem:completeness-theorem-predicate}
     Je-li sentence $\varphi$ pravdivá v teorii $T$, potom je tablo dokazatelná z $T$, tj. $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
-\end{theorem}
+\end{theorem} 
 
 \begin{proof}
 Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $\A$ pro tuto větev, a označme jako $\A'$ jeho redukt na jazyk $L$. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $\A$ se podle Lemmatu \ref{lemma:canonical-model-agrees-predicate} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme i $\A'\models T$. Protože se ale $\A$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, platí i $\A'\not\models\psi$, což znamená, že $\A'\in \M_L(T)\setminus\M_L(\varphi)$, tedy $T\not\models\psi$, a to je spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
@@ -611,122 +611,100 @@ Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}
 
 \section{(draft) Důsledky korektnosti a úplnosti}\todo
 
-% from slides:
-{\it Zavedeme syntaktické varianty již definovaných sémantických pojmů.}
-\medskip
+Stejně jako ve výrokové logice, Věty o korektnosti a úplnosti dohromady říkají, že \emph{dokazatelnost} je totéž, co \emph{platnost}. To nám umožňuje obdobně zformulovat syntaktické analogie sémantických pojmů a vlastností.
 
-Nechť $T$ je teorie jazyka $L$. Je-li sentence $\varphi$ dokazatelná z $T$, řekneme, že
-\smallskip
+Analogií \emph{důsledků} jsou \emph{teorémy} teorie $T$:
+$$
+\Thm_\mathbb L(T)=\{\varphi\mid \varphi\text{ je $L$-sentence a } T\proves\varphi\}
+$$
 
-$\varphi$ je \mdef{věta} (\mdef{teorém}) teorie $T$. Množinu vět teorie $T$ označme
-\vspace{-2mm}
-\mygreen{$$\mathrm{Thm}^{L}(T)=\{\varphi \in \mathrm{Fm}_L \mid T \vdash \varphi\}.$$}
+\begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness}
+    Pro libovolnou teorii $T$ a sentence $\varphi,\psi$ platí:
+    \begin{itemize}
+        \item $T\proves\varphi$ právě když $T\models\varphi$
+        \item $\Thm_L(T)=\Conseq_L(T)$
+    \end{itemize}
+\end{corollary}
 
-\vspace{-4mm}
-Řekneme, že teorie $T$ je
+Platí například:
 \begin{itemize}
-\item \mdef{sporná}, jestliže je v $T$ dokazatelný $\bot$ (spor), jinak je \mdef{bezesporná},
-\smallskip
-
-\item \mdef{kompletní}, jestliže není sporná a každá \myblue{sentence} je v ní dokazatelná či
-\smallskip
-
-zamítnutelná, tj. $T \vdash \varphi$ či $T \vdash \neg \varphi$.
-\smallskip
-
-\item \mdef{extenze} teorie $T'$ jazyka $L'$, jestliže $L' \subseteq L$ a $\mathrm{Thm}^{L'}\!(T')\subseteq \mathrm{Thm}^{L}\!(T)$,
-\smallskip
-
-o extenzi $T$ teorie $T'$ řekneme, že je \mdef{jednoduchá}, pokud $L=L'$, a
-\smallskip
-
-\mdef{konzervativní}, pokud $\mathrm{Thm}^{L'}\!(T')=\mathrm{Thm}^{L}\!(T)\cap \mathrm{\mathrm{Fm}_{L'}}$,
-\smallskip
-
-\item \mdef{ekvivalentní} s teorií $T'$, jestliže $T$ je extenzí $T'$ a $T'$ je extenzí $T$.
+    \item Teorie je \emph{sporná}, jestliže je v ní dokazatelný spor (tj. $T\proves\bot$).
+    \item Teorie je \emph{kompletní}, jestliže pro každou sentenci $\varphi$ je buď $T\proves\varphi$ nebo $T\not\proves\varphi$ (ale ne obojí, jinak by byla sporná).
+    \item Věta o dedukci: Pro teorii $T$ a sentence $\varphi,\psi$ platí:
+    $T,\varphi\proves\psi$ právě když $T\proves\varphi\to\psi$.
 \end{itemize}
 
-{\it Z korektnosti a úplnosti tablo metody vyplývá, že předchozí pojmy se
-\smallskip
+Na závěr této sekce si ukážeme několik aplikací Vět o úplnosti a korektnosti.
 
-shodují se svými sémantickými variantami.}
-\bigskip
+\begin{theorem}[Löwenheim-Skolemova]
+    Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
+\end{theorem}
 
-{\bf \myblue{Důsledek}}\ \ {\it Pro každou teorii $T$ a sentence $\varphi$, $\psi$ jazyka $L$,
-\smallskip
+\begin{proof}
+\todo
+\end{proof}
 
-\begin{itemize}%[\hspace{2mm}$(1)$]
-\item $T \vdash \varphi$ právě když $T \models \varphi$,
-\smallskip
 
-\item $\mathrm{Thm}^{L}\!(T)=\theta^{L}(T)$,
-\smallskip
+K této větě se ještě vrátíme v Kapitole \ref{chapter:model-theory}, kde si ukážeme silnější verzi zahrnující i jazyky s rovností (v nich je \emph{kanonický model }). 
 
-\item $T$ je sporná, právě když je sémanticky sporná, tj. nemá model,
-\smallskip
+Stejně jako ve výrokové logice platí Věta o kompaktnosti:
 
-\item $T$ je kompletní, právě když je sémanticky kompletní, tj. má až na
-\smallskip
+\begin{theorem}[O kompaktnosti]\label{theorem:compactness-theorem-predicate}
+    Teorie má model, právě když každá její konečná část má model.    
+\end{theorem}
+\begin{proof}
+Každý model teorie $T$ je zjevně modelem každé její části. Druhou implikaci dokážeme nepřímým důkazem: Předpokládejme, že $T$ nemá model, tj. je sporná, a najděme konečnou část $T'\subseteq T$, která je také sporná.
+        
+Protože je $T$ sporná, platí $T\proves\bot$ (zde potřebujeme Větu o úplnosti). Podle Důsledku \ref{corollary:finiteness-of-proofs} potom existuje \emph{konečný} tablo důkaz $\tau$ výroku $\bot$ z $T$. Konstrukce tohoto důkazu má jen konečně mnoho kroků, použili jsme tedy jen konečně mnoho axiomů z $T$. Definujeme-li $T'=\{\alpha\in T\mid \mathrm{T}\alpha\text{ je položka v tablu $\tau$}\}$, potom $\tau$ je také tablo důkaz sporu z teorie $T'$. Teorie $T'$ je tedy sporná konečná část $T$.
+\end{proof}
+\end{theorem}
 
-\myblue{elementární ekvivalenci} jediný model,
-\smallskip
 
-\item $T,\varphi \vdash \psi$ právě když $T \vdash \varphi \to \psi$ (\myblue{Věta o dedukci}).
-\end{itemize}}
-\medskip
+% % from slides:
+% {\bf \myblue{Věta}}\ \ {\it Každá bezesporná teorie $T$ spočetného jazyka $L$ bez rovnosti má
+% \smallskip
 
-%{\it \myblue{Důkaz $(5)$}}\ \ Plyne z $(1)$ a $T\models \varphi \to \psi\ \Leftrightarrow M(T,\varphi) \subseteq M(T,\psi) \subseteq M(\psi) \Leftrightarrow T,\varphi \models \psi$.
+% \myblue{spočetně nekonečný} model.}
+% \medskip
 
-{\it \myblue{Poznámka}}\ \ Větu o dedukci lze dokázat přímo, transformací příslušných tabel.
-% :from slides
+% {\it \myblue{Důkaz}}\ \ Nechť $\tau$ je systematické tablo z $T$ s $F\bot$ v kořeni. Jelikož je dokončené
+% \smallskip
 
-\subsection{Löwenheim-Skolemova věta}\todo
+%  a obsahuje bezespornou větev $V$, neboť $\bot$ není dokazatelný z $T$, existuje
+% \smallskip
 
-% from slides:
-{\bf \myblue{Věta}}\ \ {\it Každá bezesporná teorie $T$ spočetného jazyka $L$ bez rovnosti má
-\smallskip
+% \myblue{kanonický model} $\mathcal{A}$ z $V$. Jelikož se $\mathcal{A}$ shoduje s $V$, jeho redukt na jazyk $L$
+% \smallskip
 
-\myblue{spočetně nekonečný} model.}
-\medskip
+% je hledaným spočetně nekonečným modelem $T$. $\qed$
+% \medskip
 
-{\it \myblue{Důkaz}}\ \ Nechť $\tau$ je systematické tablo z $T$ s $F\bot$ v kořeni. Jelikož je dokončené
-\smallskip
+% {\it \myblue{Poznámka}\ \ Jde o slabou verzi tzv. \myblue{Löwenheim-Skolemovy věty}. Ve
+% \smallskip
 
- a obsahuje bezespornou větev $V$, neboť $\bot$ není dokazatelný z $T$, existuje
-\smallskip
+% spočetném jazyce s rovností je kanonický model s rovností \myblue{spočetný}.}
+% \bigskip
 
-\myblue{kanonický model} $\mathcal{A}$ z $V$. Jelikož se $\mathcal{A}$ shoduje s $V$, jeho redukt na jazyk $L$
-\smallskip
+% {\bf \myblue{Věta}}\ \ {\it Teorie má model, právě když každá její \myblue{konečná} část má model.}
+% \medskip
 
-je hledaným spočetně nekonečným modelem $T$. $\qed$
-\medskip
+% {\it \myblue{Důkaz}}\ \ Implikace zleva doprava je zřejmá. Pokud teorie $T$ nemá model,
+% \smallskip
 
-{\it \myblue{Poznámka}\ \ Jde o slabou verzi tzv. \myblue{Löwenheim-Skolemovy věty}. Ve
-\smallskip
+% je sporná, tj. je z ní dokazatelný $\bot$ systematickým tablem $\tau$. Jelikož je  $\tau$
+% \smallskip
 
-spočetném jazyce s rovností je kanonický model s rovností \myblue{spočetný}.}
-\bigskip
+% konečné, je $\bot$ dokazatelný z nějaké konečné $T'\subseteq T$, tj. $T'$ nemá model. $\qed$
+% % :from slides
 
-{\bf \myblue{Věta}}\ \ {\it Teorie má model, právě když každá její \myblue{konečná} část má model.}
-\medskip
-
-{\it \myblue{Důkaz}}\ \ Implikace zleva doprava je zřejmá. Pokud teorie $T$ nemá model,
-\smallskip
-
-je sporná, tj. je z ní dokazatelný $\bot$ systematickým tablem $\tau$. Jelikož je  $\tau$
-\smallskip
-
-konečné, je $\bot$ dokazatelný z nějaké konečné $T'\subseteq T$, tj. $T'$ nemá model. $\qed$
-% :from slides
-
-\subsection{Věta o kompaktnosti}\todo
+% \subsection{Věta o kompaktnosti}\todo
 
 
 \subsection{Aplikace}\todo
 
 % from slides:
 
-\subsubsection*{Nestandardní model přirozených čísel}
+\subsection*{Nestandardní model přirozených čísel}
     
     Nechť \mygreen{$\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$} je standardní model přirozených čísel.
     \bigskip

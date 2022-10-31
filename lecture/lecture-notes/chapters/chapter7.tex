@@ -383,7 +383,7 @@ Stejně jako ve výrokové logice platí, že systematické tablo je vždy dokon
 
 Nyní si ukážeme, jak aplikovat tablo metodu na jazyky s rovností. Co je to rovnost? V matematice může v různém kontextu znamenat různé relace. Platí $1+0=0+1$? Mluvíme-li o celých číslech, pak ano, ale máme-li na mysli aritmetické výrazy (nebo např. termy v jazyce těles), potom si levá a pravá strana nejsou rovny: jde o jiné výrazy. \footnote{Podobně např. $t_1=t_2$ v Prologu neznamená, že jde o tentýž term, ale že termy $t_1$ a $t_2$ jsou \emph{unifikovatelné}, viz kapitola o rezoluci v predikátové logice.}
 
-Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstantní symboly $c_1,c_2$, unární funkční symbol $f$ a unární relační symbol $P$. Mějme nějaké dokončené tablo z této teorie, a v něm bezespornou větev, na kterém najdeme položku $\T c_1=c_2$. Budeme chtít sestrojit \emph{kanonický model} $\A$ pro tuto větev, podobně jako ve výrokové logice. Položka bude znamenat, že v kanonickém modelu platí $c_1^\A =^\A c_2^\A$, tj. $(c_1^\A,c_2^\A)\in =^\A$. To nám ale nestačí, chceme také, aby platilo také např.:
+Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstantní symboly $c_1,c_2$, unární funkční symbol $f$ a unární relační symbol $P$. Mějme nějaké dokončené tablo z této teorie, a v něm bezespornou větev, na kterém najdeme položku $\T c_1=c_2$. Budeme chtít sestrojit \emph{kanonický model} $\A$ pro tuto větev, podobně jako ve výrokové logice. Položka bude znamenat, že v kanonickém modelu platí $c_1^\A =^\A c_2^\A$, tj. $(c_1^\A,c_2^\A)\in {=^\A}$. To nám ale nestačí, chceme také, aby platilo také např.:
 \begin{itemize}
     \item $c_2^\A =^\A c_1^\A$,
     \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$,
@@ -451,12 +451,12 @@ Ukážeme nejprve pomocné lemma analogické Lemmatu \ref{lemma:agrees-with-bran
 \begin{lemma}\label{lemma:agrees-with-branch}
     Shoduje-li se model $\A$ teorie $T$ s položkou v kořeni tabla z teorie $T$ (v jazyce $L$), potom lze $\A$ expandovat do jazyka $L_C$ tak, že se shoduje s některou větví v tablu.
 \end{lemma}
-Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^A$ vyskytující se na větvi $V$. Ostatní konstantní symboly lze interpretovat libovolně.
+Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytující se na větvi $V$. Ostatní konstantní symboly lze interpretovat libovolně.
 
 \begin{proof}
     Mějme tablo $\tau=\bigcup_{i\geq 0}\tau_i$ z teorie $T$ a model $\A\in\M_L(T)$ shodující se s kořenem $\tau$, tedy s (jednoprvkovou) větví $V_0$ v (jednoprvkovém) $\tau_0$.
     
-    Indukcí podle $i$ najdeme posloupnost větví $V_i$ a expanzí $\A_i$ modelu $\A$ o konstanty $c^A\in C$ vyskytující se na $V_i$ takových, že $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $\A_i$, $V_{i+1}$ je prodloužením $V_i$, a $\A_{i+1}$ je expanzí $\A_i$ (mohou si být i rovny). Požadovaná větev tabla $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$. Expanzi modelu $\A$ do jazyka $L_C$ získáme jako `limitu' expanzí $\A_i$, tj. vyskytuje-li se symbol $c\in C$ na $V$, vyskytuje se na nějaké z větví $V_i$ a interpretujeme ho stejně jako v $\A_i$ (ostatní pomocné symboly interpretujeme libovolně).
+    Indukcí podle $i$ najdeme posloupnost větví $V_i$ a expanzí $\A_i$ modelu $\A$ o konstanty $c^\A\in C$ vyskytující se na $V_i$ takových, že $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $\A_i$, $V_{i+1}$ je prodloužením $V_i$, a $\A_{i+1}$ je expanzí $\A_i$ (mohou si být i rovny). Požadovaná větev tabla $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$. Expanzi modelu $\A$ do jazyka $L_C$ získáme jako `limitu' expanzí $\A_i$, tj. vyskytuje-li se symbol $c\in C$ na $V$, vyskytuje se na nějaké z větví $V_i$ a interpretujeme ho stejně jako v $\A_i$ (ostatní pomocné symboly interpretujeme libovolně).
     \begin{itemize}
         \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení větve $V_i$, definujeme $V_{i+1}=V_i$ a $\A_{i+1}=\A_{i}$.
         \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ připojením položky $\mathrm{T}\alpha$ (pro nějaký axiom $\alpha\in T$) na konec větve  $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev a $\A_{i+1}=\A_i$ (nepřidali jsme žádný nový pomocný konstantní symbol). Protože $\A_{i+1}$ je modelem $T$, platí v něm axiom $\alpha$, tedy shoduje se i s novou položkou $\mathrm{T}\alpha$.
@@ -512,205 +512,101 @@ $$
 \emph{Kanonický model} pro $V$ je potom faktorstruktura $\A=\B/_{=^B}$.
 \end{definition}
 
-Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opravdu kongruence struktury $\B$, definice je tedy korektní, a relace $=^\A$ je identita na $A$. Všimněte si, že v jazyce bez rovnosti je kanonický model vždy spočetně nekonečný. V jazyce s rovností může ale být konečný, jak uvidíme v následujících příkladech.
+Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opravdu kongruence struktury $\B$, definice je tedy korektní, a relace $=^\A$ je identita na $A$. Platí následující jednoduché pozorování:
 
-\todo Příklady
 
-\todo Cvičení $x=y\lor y=z\lor x=z$
+\begin{observation}\label{canonical-with-equality-satisfies-the-same}
+    Pro každou formuli $\varphi$ máme $\B\models\varphi$ (kde symbol $=$ je interpretován jako binární relace $=^B$), právě když $\A=\B/_{=^B}\models\varphi$ (kde $=$ je interpretován jako identita).    
+\end{observation}
 
-% from slides:
-\subsubsection*{Kanonický model - příklad}
+
+Všimněte si, že v jazyce bez rovnosti je kanonický model vždy spočetně nekonečný. V jazyce s rovností může ale být konečný, jak uvidíme v následujících příkladech.
+
+\begin{example}
+    Nejprve si ukažme příklad kanonického modelu v jazyce bez rovnosti. Mějme teorii $T=\{(\forall x)R(f(x))\}$ v jazyce $L=\langle R,f,d \rangle$ bez rovnosti, kde $R$ je unární relační, $f$ unární funkční, a $d$ konstantní symbol. Najděme protipříklad ukazující, že $T\not\models\neg R(d)$. 
     
-    Nechť teorie \myblue{$T=\{(\forall x)R(f(x))\}$} je jazyka \myblue{$L=\langle R,f,d \rangle$}. Systematické tablo
-    \smallskip
-    
-     pro \myblue{$F\neg R(d)$} z $T$ obsahuje jedinou větev $V$ a ta je bezesporná.
-    \bigskip
-    
-    Kanonický model \myblue{$\mathcal{A}=\langle A, R^A, f^A, d^A, c_i^A\rangle_{i\in \mathbb{N}}$} z $V$ je pro jazyk $L_C$ a platí
-    \vspace{-1mm}
-    \mygreen{\begin{align*}
-    A&=\{d,f(d),f(f(d)),\dots,c_0,f(c_0),f(f(c_0)),\dots,c_1,f(c_1),f(f(c_1)),\dots\},\\
-    d^A&=d,\quad c^A_i=c_i\ \ \text{pro}\ \ i\in \mathbb{N},\\
-    f^A(d)&=\text{``}f(d)\text{''},\ \ f^A(f(d))=\text{``}f(f(d))\text{''},\ \ f^A(f(f(d)))=\text{``}f(f(f(d)))\text{''},\ \dots\\
-    R^A&=\{d,f(d),f(f(d)),\dots,f(c_0),f(f(c_0)),\dots,f(c_1),f(f(c_1)),\dots\}.
-    \end{align*}}
-    Redukt $\mathcal{A}$ na jazyk $L$ je \myblue{$\mathcal{A}'=\langle A, R^A, f^A, d^A\rangle$}.
-    
-    \subsubsection*{Kanonický model s rovností - příklad}
-        
-        Nechť \myblue{$T=\{(\forall x)R(f(x)),\ (\forall x)(x=f(f(x)))\}$} je nad \myblue{$L=\langle R,f,d \rangle$} s rovností.
-        \smallskip
-        
-        Systematické tablo pro \myblue{$F\neg R(d)$} z $T^*$ obsahuje bezespornou větev $V$.
-        \bigskip
-        
-        V kanonickém modelu \myblue{$\mathcal{A}=\langle A, R^A, =^A,f^A, d^A, c_i^A\rangle_{i\in \mathbb{N}}$} z $V$ pro relaci $=^A$ platí
-        \vspace{-2mm}
-        \mygreen{$$s_1=^A s_2\quad\Leftrightarrow\quad s_1=f(\cdots (f(s_2)\cdots)\ \ \text{nebo}\ \ s_2=f(\cdots (f(s_1)\cdots),$$}
-        
-        \vspace{-6mm}
-        kde $f$ je aplikováno \mdef{$2i$}-krát pro nějaké $i\in \mathbb{N}$.
-        \bigskip
-        
-        Kanonický model s rovností z $V$ je \myblue{$\mathcal{B}=(\mathcal{A}/\!=^A)=\langle A/\!=^A, R^B,f^B, d^B, c_i^B\rangle_{i\in \mathbb{N}}$}
-        \vspace{-1mm}
-        \mygreen{\begin{align*}
-        (A/\!=^A)&=\{[d]_{=^A},[f(d)]_{=^A},[c_0]_{=^A},[f(c_0)]_{=^A},[c_1]_{=^A},[f(c_1)]_{=^A},\dots\},\\
-        d^{B}&=[d]_{=^A},\quad c^{B}_i=[c_i]_{=^A}\ \ \text{pro}\ \ i\in \mathbb{N},\\
-        f^{B}([d]_{=^A})&=[f(d)]_{=^A},\ \ f^{B}([f(d)]_{=^A})=[f(f(d))]_{=^A}= [d]_{=^A},\ \ \dots\\
-        R^{B}&=(A/\!=^A).
-        \end{align*}}
-        Redukt $\mathcal{B}$ na jazyk $L$ je \myblue{$\mathcal{B}'=\langle A/\!=^A, R^B, f^B, d^B\rangle$}.
-        
-% :from slides
-
-% \begin{lemma}\label{lemma:canonical-model-agrees}
-%     Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
-% \end{lemma}
-% \begin{proof}
-% Ukážeme, že kanonický model $v$ se shoduje se všemi položkami $P$ na větvi $V$, a to indukcí podle struktury výroku v položce.\footnote{Připomeňme, že to znamená indukci podle hloubky stromu výroku.} Nejprve základ indukce:
-% \begin{itemize}
-%     \item Je-li $P=\mathrm{T}p$ pro nějaký prvovýrok $p\in\mathbb P$, máme podle definice $v(p)=1$; $v$ se s $P$ shoduje.
-%     \item Je-li $P=\mathrm{F}p$, potom se na větvi $V$ nemůže vyskytovat položka $\mathrm{T}p$, jinak by $V$ byla sporná. Podle definice máme $v(p)=0$ a $v$ se s $P$ opět shoduje.
-% \end{itemize}
-% Nyní indukční krok. Rozebereme dva případy, ostatní se dokáží obdobně.
-% \begin{itemize}
-%     \item Nechť $P=\mathrm{T}\varphi\land\psi$. Protože je $V$ dokončená větev, je na ní položka $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi model $v$ shoduje, tedy $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
-%     \item Nechť $P=\mathrm{F}\varphi\land\psi$. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.
-% \end{itemize}
-% \end{proof}
-
-% \begin{theorem}[O úplnosti]
-%     Je-li výrok $\varphi$ pravdivý v teorii $T$, potom je tablo dokazatelný z $T$, tj. $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
-% \end{theorem}
-
-% \begin{proof}
-% Ukážeme, že libovolné \emph{dokončené} (tedy např. i \emph{systematické}) tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $v$ pro tuto větev. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $v$ se podle Lemmatu \ref{lemma:canonical-model-agrees} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme $v\models T$. Protože se ale $v$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, máme $v\not\models\psi$, což znamenám, že $T\not\models\psi$, spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
-% \end{proof}
-
-% \begin{proof}[Důkaz Důsledku \ref{corollary:systematicity-of-proofs}]
-% Z předchozího důkazu také dostáváme `systematičnost důkazů', tj. že důkaz můžeme vždy hledat konstrukcí systematického tabla: Pokud $T\models\varphi$, tak je i systematické tablo pro položku $\mathrm{F}\varphi$ nutně sporné, a je tedy tablo důkazem $\varphi$ z $T$.
-% \end{proof}
-
-% \begin{exercise}
-%     Ověřte zbývající případy v důkazu Lemmatu \ref{lemma:canonical-model-agrees}.
-% \end{exercise}
-
-% \begin{exercise}
-%     Popište, jak vypadají \emph{všechny} modely shodující se s danou bezespornou dokončenou větví.
-% \end{exercise}
-
-% \begin{exercise}
-%     Navrhněte postup, kterým můžeme za použití tablo metody najít všechny modely dané teorie $T$.
-% \end{exercise}
-
-
-% from slides:
-\subsubsection*{Úplnost}
-    {\bf \myblue{Lemma}}\ \ {\it Kanonický model $\mathcal{A}$ z bezesporné dok. větve $V$ se \myblue{shoduje} s $V$.}
-    \smallskip
-    
-    {\it \myblue{Důkaz}}\ \ Indukcí dle struktury sentence vyskytující se v položce na $V$.
+    Systematické tablo z $T$ s položkou $\F\neg R(d)$ v kořeni není sporné, obsahuje jedinou větev $V$, která je bezesporná. (Sestrojte si tablo sami!) Kanonický model pro $V$ je $L_C$-struktura $\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$, jejíž doména je
+    $$
+    A=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$c_0$''},\text{``$f(c_0)$''},\text{``$f(f(c_0))$''},\dots,\text{``$c_1$''},\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}
+    $$
+    a interpretace symbolů jsou následující:
     \begin{itemize}
-    \item Pro $\varphi$ \myblue{atomickou}, je-li \mygreen{$T\varphi$} na $V$, je \mygreen{$\mathcal{A} \models \varphi$} dle $(3)$. Je-li \mygreen{$F\varphi$} na $V$, není
-    \vspace{0.4mm}
-    
-    \mygreen{$T\varphi$} na $V$, neboť $V$ je bezesporná, a tedy \mygreen{$\mathcal{A}\models \neg \varphi$} dle $(3)$.
-    %\smallskip
-    \vspace{0.4mm}
-    
-    \item Je-li \mygreen{$T(\varphi \mand \psi)$} na $V$, je \mygreen{$T\varphi$} a \mygreen{$T\psi$} na $V$, neboť $V$ je dokončená. Dle
-    \vspace{0.4mm}
-    
-    indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi$} a \mygreen{$\mathcal{A}\models \psi$}, tedy \mygreen{$\mathcal{A}\models \varphi \mand \psi$}.
-    %\smallskip
-    \vspace{0.4mm}
-    
-    \item Je-li \mygreen{$F(\varphi \mand \psi)$} na $V$, je \mygreen{$F\varphi$} nebo \mygreen{$F\psi$} na $V$, neboť $V$ je dokončená. Dle
-    \vspace{0.4mm}
-    
-    indukčního předpokladu je \mygreen{$\mathcal{A}\models \neg\varphi$} nebo \mygreen{$\mathcal{A}\models \neg\psi$}, tedy \mygreen{$\mathcal{A}\models \neg(\varphi \mand \psi)$}.
-    %\smallskip
-    \vspace{0.4mm}
-    
-    \item Pro ostatní spojky obdobně jako v předchozích dvou případech.
-    %\smallskip
-    \vspace{0.4mm}
-    
-    \item Je-li \mygreen{$T(\forall x)\varphi(x)$} na $V$, je \mygreen{$T\varphi(x/t)$} na $V$ pro každé $t\in A$, neboť $V$ je
-    \vspace{0.4mm}
-    
-    dokončená. Dle indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi(x/t)$} pro každé $t\in A$,
-    \vspace{0.4mm}
-    
-    tedy \mygreen{$\mathcal{A}\models (\forall x)\varphi(x)$}. Obdobně pro \mygreen{$F(\exists x)\varphi(x)$} na $V$.
-    %\smallskip
-    \vspace{0.4mm}
-    
-    \item Je-li \mygreen{$T(\exists x)\varphi(x)$} na $V$, je \mygreen{$T\varphi(x/c)$} na $V$ pro nějaké $c\in A$, neboť $V$ je
-    \vspace{0.4mm}
-    
-    dokončená. Dle indukčního předpokladu je \mygreen{$\mathcal{A}\models \varphi(x/c)$}, tedy
-    \vspace{0.4mm}
-    
-    \mygreen{$\mathcal{A}\models (\exists x)\varphi(x)$}. Obdobně pro \mygreen{$F(\forall x)\varphi(x)$} na $V$. $\qed$
+        \item $d^\A=\text{``$d$''}$,
+        \item $c^\A_i=\text{``$c_i$''}$ pro všechna $i\in \mathbb N$,
+        \item $f^\A(\text{``$d$''})=\text{``$f(d)$''}$, $f^\A(\text{``$f(d)$''})=\text{``$f(f(d))$''}$, \dots
+        \item $R^\A=A\setminus C=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$f(c_0)$''},\text{``$f(f(c_0))$''},\dots,\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}$.
     \end{itemize}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Věta o úplnosti}
-    {\it Ukážeme, že tablo metoda ve predikátové logice je \myblue{úplná}.}
-    \medskip
-    
-    {\bf \myblue{Věta}}\ \ {\it Pro každou teorii $T$ a sentenci $\varphi$, je-li $\varphi$ pravdivá v $T$, je $\varphi$ tablo
-    \vspace{0.4mm}
-    %\smallskip
-    
-    dokazatelná z $T$, tj. $T \models \varphi\ \Rightarrow\ T \vdash \varphi$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Nechť $\varphi$ je pravdivá v $T$. Ukážeme, že libovolné \myblue{dokončené} tablo
-    \vspace{0.4mm}
-    %\smallskip
-    
-    (např. \myblue{systematické}) $\tau$ z teorie $T$ s položkou \myblue{$F\varphi$} v kořeni je \myblue{sporné}.
-    %\vspace{0.4mm}
-    %\smallskip
-    
+    Redukt kanonického modelu $\A$ na původní jazyk $L$ je potom $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
+\end{example}
+
+\begin{example}
+    Nyní příklad v jazyce s rovností: Mějme teorii $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$ v jazyce $L=\langle R,f,d \rangle$ s rovností. Opět najděme protipříklad ukazující, že $T\not\models\neg R(d)$. 
+
+    Systematické tablo z teorie $T^*$ (tj. z $T$ rozšířené o axiomy rovnosti pro $L$) s položkou $\F\neg R(d)$ v kořeni obsahuje bezespornou větev $V$. (Sestrojte si tablo sami!) Nejprve sestrojíme kanonický model $\B$ pro tuto větev, jako by byl jazyk bez rovnosti:
+    $$
+    \B=\langle B,R^\B,f^\B,d^\B,c_0^\B,c_1^\B,c_2^\B,\dots\rangle
+    $$
+    kde $B$ je množina všech konstantních $L_C$-termů. Relace $=^B$ je definovaná, jako by symbol `$=$' byl `obyčejným' relačním symbolem v $L$. Je to kongruence struktury $\B$, a platí pro ni, že $s_1=^B s_2$ právě když $s_1=f(\cdots (f(s_2))\cdots)$ nebo $s_2=f(\cdots (f(s_1))\cdots)$ pro sudý počet aplikací $f$. Jako reprezentanty jednotlivých tříd tedy můžeme vybrat termy s žádným nebo jedním výskytem symbolu $f$:
+    $$
+        B/_{=^B} = \{[\text{``$d$''}]_{=^B},[\text{``$f(d)$''}]_{=^B},[\text{``$c_0$''}]_{=^B},[\text{``$f(c_0)$''}]_{=^B},[\text{``$c_1$''}]_{=^B},[\text{``$f(c_1)$''}]_{=^B},\dots\}
+    $$
+    Kanonický model pro větev $V$ je potom $L_C$-struktura 
+    $$
+    \A=\B/_{=^B}=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle
+    $$
+    kde $A=B/_{=^B}$ a interpretace symbolů jsou následující:
     \begin{itemize}
-    \item Kdyby ne, v tablu $\tau$ je nějaká bezesporná větev $V$.
-    \vspace{0.4mm}
-    %\smallskip
-    
-    \item Dle předchozího lemmatu existuje struktura $\mathcal{A}$ pro jazyk $L_C$ shodující se
-    \vspace{0.4mm}
-    %\smallskip
-    
-    s větví $V$, speciálně s položkou $F\varphi$ v kořeni, tj. $\mathcal{A}\models \neg \varphi$.
-    \vspace{0.4mm}
-    %\smallskip
-    
-    \item Nechť $\mathcal{A}'$ je redukt struktury $\mathcal{A}$ na původní jazyk $L$. Platí $\mathcal{A}'\models \neg \varphi$.
-    \vspace{0.4mm}
-    
-    \item Jelikož větev $V$ je dokončená, obsahuje $T\psi$ pro každé $\psi \in T$.
-    \vspace{0.4mm}
-    %\smallskip
-    
-    \item Tedy $\mathcal{A}'$ je modelem $T$ (neboť $\mathcal{A'}$ se shoduje s $T\psi$ pro každé $\psi \in T$).
-    \vspace{0.4mm}
-    %\smallskip
-    
-    \item To je ale ve sporu s tím, že $\varphi$ platí v každém modelu teorie $T$.
+        \item $d^\A=[\text{``$d$''}]_{=^B}$,
+        \item $c^\A_i=[\text{``$c_i$''}]_{=^B}$ pro všechna $i\in \mathbb N$,
+        \item $f^\A([\text{``$d$''}]_{=^B})=[\text{``$f(d)$''}]_{=^B}$, $f^\A([\text{``$f(d)$''}]_{=^B})=[\text{``$f(f(d))$''}]_{=^B}=[\text{``$d$''}]_{=^B}$, \dots
+        \item $R^\A=A=B/_{=^B}$.
     \end{itemize}
-    \vspace{0.4mm}
-    %\smallskip
-    
-    Tedy tablo $\tau$ je důkazem $\varphi$ z $T$. $\qed$
-    
-% :from slides
+    Redukt kanonického modelu $\A$ na původní jazyk $L$ je opět $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
+\end{example}
+
+\begin{exercise}
+    \begin{enumerate}[(a)]
+        \item Sestrojte dokončené tablo s položkou $\T (\forall x)(\forall y)(x=y)$ v kořeni. Sestrojte kanonický model pro (jedinou, bezespornou) větev tohoto tabla.
+        \item Sestrojte dokončené tablo s položkou $\T (\forall x)(\forall y)(\forall z)(x=y\lor x=z \lor y=z)$ v kořeni. Sestrojte kanonické modely pro několik bezesporných větví a porovnejte je.
+    \end{enumerate}
+\end{exercise} 
+
+Nyní jsme připraveni dokázat Větu o úplnosti. Použijeme opět následující pomocné lemma, jehož znění je zcela stejné, jako znění Lemmatu \ref{lemma:canonical-model-agrees} a důkaz se liší jen v technických detailech.
+
+\begin{lemma}\label{lemma:canonical-model-agrees-predicate}
+    Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
+\end{lemma}
+\begin{proof}
+Nejprve uvažme jazyky bez rovnosti. Ukážeme indukcí podle struktury sentencí v položkách, že kanonický model $\A$ se shoduje se všemi položkami $P$ na větvi $V$. 
+
+Základ indukce, tj. případ, kdy $\varphi=R(s_1,\dots,s_n)$ je atomická sentence, je jednoduchý: Je-li na $V$ položka $\T\varphi$, potom $(s_1,\dots,s_n)\in R^\A$ plyne přímo z definice kanonického modelu, máme tedy $\A\models\varphi$.  Je-li na $V$ položka $\F\varphi$, potom na $V$ není položka $\T\varphi$ ($V$ je bezesporná), $(s_1,\dots,s_n)\not\in R^\A$, a $\A\not\models\varphi$
+
+Nyní indukční krok. Rozebereme jen několik případů, ostatní se dokáží obdobně. 
+
+Pro logické spojky je důkaz zcela stejný jako ve výrokové logice, například je-li $P=\mathrm{F}\varphi\land\psi$, potom protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $\A\not\models\varphi$ nebo $\A\not\models\psi$, z čehož plyne $\A\not\models\varphi\land\psi$ a $\A$ se shoduje s $P$.
+
+Máme-li položku typu ``všichni'', například $P=\T(\forall x)\varphi(x)$ 
+(případ $P=\F(\exists x)\varphi(x)$ je obdobný), potom jsou na $V$ i položky $T\varphi(x/t)$ pro každý konstantní $L_C$-term, tj. pro každý prvek $``t''\in A$. Dle indukčního předpokladu je $\A\models\varphi(x/t)$ pro každé $\text{``$t$''}\in A$, tedy $\A\models(\forall x)\varphi(x)$.
+
+Máme-li položku typu ``svědek'', například $P=\T(\exists x)\varphi(x)$ 
+(případ $P=\F(\forall x)\varphi(x)$ je obdobný), potom je na $V$ i položka $T\varphi(x/c)$ pro nějaké $\text{``$c$''}\in A$. Dle indukčního předpokladu je $\A\models\varphi(x/c)$, tedy i $\A\models(\exists x)\varphi(x)$.
+
+Je-li jazyk s rovností, máme kanonický model $\A=\B/_{=^B}$, důkaz výše platí pro $\B$, a zbytek plyne z Pozorování \ref{canonical-with-equality-satisfies-the-same}.
+\end{proof}
+
+\begin{exercise}
+    Ověřte zbývající případy v důkazu Lemmatu \ref{lemma:canonical-model-agrees-predicate}.
+\end{exercise}
+
+Důkaz Věty o úplnosti je také analogický její verzi pro výrokovou logiku:
+
+\begin{theorem}[O úplnosti]\label{theorem:completeness-theorem-predicate}
+    Je-li sentence $\varphi$ pravdivá v teorii $T$, potom je tablo dokazatelná z $T$, tj. $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
+\end{theorem}
+
+\begin{proof}
+Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $\A$ pro tuto větev, a označme jako $\A'$ jeho redukt na jazyk $L$. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $\A$ se podle Lemmatu \ref{lemma:canonical-model-agrees-predicate} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme i $\A'\models T$. Protože se ale $\A$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, platí i $\A'\not\models\psi$, což znamená, že $\A'\in \M_L(T)\setminus\M_L(\varphi)$, tedy $T\not\models\psi$, a to je spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
+\end{proof}
 
 
 \section{(draft) Důsledky korektnosti a úplnosti}\todo

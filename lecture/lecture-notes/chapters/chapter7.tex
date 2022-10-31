@@ -615,7 +615,7 @@ Stejně jako ve výrokové logice, Věty o korektnosti a úplnosti dohromady ř�
 
 Analogií \emph{důsledků} jsou \emph{teorémy} teorie $T$:
 $$
-\Thm_\mathbb L(T)=\{\varphi\mid \varphi\text{ je $L$-sentence a } T\proves\varphi\}
+\Thm_L(T)=\{\varphi\mid \varphi\text{ je $L$-sentence a } T\proves\varphi\}
 $$
 
 \begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness}
@@ -629,111 +629,48 @@ $$
 Platí například:
 \begin{itemize}
     \item Teorie je \emph{sporná}, jestliže je v ní dokazatelný spor (tj. $T\proves\bot$).
-    \item Teorie je \emph{kompletní}, jestliže pro každou sentenci $\varphi$ je buď $T\proves\varphi$ nebo $T\not\proves\varphi$ (ale ne obojí, jinak by byla sporná).
-    \item Věta o dedukci: Pro teorii $T$ a sentence $\varphi,\psi$ platí:
-    $T,\varphi\proves\psi$ právě když $T\proves\varphi\to\psi$.
+    \item Teorie je \emph{kompletní}, jestliže pro každou sentenci $\varphi$ je buď $T\proves\varphi$ nebo $T\proves\neg\varphi$ (ale ne obojí, jinak by byla sporná).
+    \item Věta o dedukci: Pro teorii $T$ a sentence $\varphi,\psi$ platí $T,\varphi\proves\psi$, právě když $T\proves\varphi\to\psi$.
 \end{itemize}
 
 Na závěr této sekce si ukážeme několik aplikací Vět o úplnosti a korektnosti.
+
+\subsection{Löwenheim-Skolemova věta}
 
 \begin{theorem}[Löwenheim-Skolemova]
     Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
 \end{theorem}
 
 \begin{proof}
-\todo
+Vezměme nějaké dokončené (např. systematické) tablo z teorie $T$ s položkou $\F\bot$ v kořeni. Protože $T$ je bezesporná, není v ní dokazatelný spor, tedy tablo musí obsahovat bezespornou větev. Hledaný spočetně nekonečný model je $L$-redukt kanonického modelu pro tuto větev.
 \end{proof}
 
+K této větě se ještě vrátíme v Kapitole \ref{chapter:model-theory}, kde si ukážeme silnější verzi zahrnující i jazyky s rovností (v nich je kanonický model spočetný, ale může být i konečný).
 
-K této větě se ještě vrátíme v Kapitole \ref{chapter:model-theory}, kde si ukážeme silnější verzi zahrnující i jazyky s rovností (v nich je \emph{kanonický model }). 
+\subsection{Věta o kompaktnosti}
 
-Stejně jako ve výrokové logice platí Věta o kompaktnosti:
+Stejně jako ve výrokové logice platí Věta o kompaktnosti, stejný je i její důkaz:
 
 \begin{theorem}[O kompaktnosti]\label{theorem:compactness-theorem-predicate}
     Teorie má model, právě když každá její konečná část má model.    
 \end{theorem}
 \begin{proof}
-Každý model teorie $T$ je zjevně modelem každé její části. Druhou implikaci dokážeme nepřímým důkazem: Předpokládejme, že $T$ nemá model, tj. je sporná, a najděme konečnou část $T'\subseteq T$, která je také sporná.
-        
-Protože je $T$ sporná, platí $T\proves\bot$ (zde potřebujeme Větu o úplnosti). Podle Důsledku \ref{corollary:finiteness-of-proofs} potom existuje \emph{konečný} tablo důkaz $\tau$ výroku $\bot$ z $T$. Konstrukce tohoto důkazu má jen konečně mnoho kroků, použili jsme tedy jen konečně mnoho axiomů z $T$. Definujeme-li $T'=\{\alpha\in T\mid \mathrm{T}\alpha\text{ je položka v tablu $\tau$}\}$, potom $\tau$ je také tablo důkaz sporu z teorie $T'$. Teorie $T'$ je tedy sporná konečná část $T$.
+Model teorie je zřejmě modelem každé její části. Naopak, pokud $T$ nemá model, je sporná, tedy $T\proves\bot$. Vezměme nějaký \emph{konečný} tablo důkaz $\bot$ z $T$. K jeho konstrukci stačí konečně mnoho axiomů $T$, ty tvoří konečnou podteorii $T'\subseteq T$, která nemá model.
 \end{proof}
-\end{theorem}
 
 
-% % from slides:
-% {\bf \myblue{Věta}}\ \ {\it Každá bezesporná teorie $T$ spočetného jazyka $L$ bez rovnosti má
-% \smallskip
+\subsection{Nestandardní model přirozených čísel}
 
-% \myblue{spočetně nekonečný} model.}
-% \medskip
-
-% {\it \myblue{Důkaz}}\ \ Nechť $\tau$ je systematické tablo z $T$ s $F\bot$ v kořeni. Jelikož je dokončené
-% \smallskip
-
-%  a obsahuje bezespornou větev $V$, neboť $\bot$ není dokazatelný z $T$, existuje
-% \smallskip
-
-% \myblue{kanonický model} $\mathcal{A}$ z $V$. Jelikož se $\mathcal{A}$ shoduje s $V$, jeho redukt na jazyk $L$
-% \smallskip
-
-% je hledaným spočetně nekonečným modelem $T$. $\qed$
-% \medskip
-
-% {\it \myblue{Poznámka}\ \ Jde o slabou verzi tzv. \myblue{Löwenheim-Skolemovy věty}. Ve
-% \smallskip
-
-% spočetném jazyce s rovností je kanonický model s rovností \myblue{spočetný}.}
-% \bigskip
-
-% {\bf \myblue{Věta}}\ \ {\it Teorie má model, právě když každá její \myblue{konečná} část má model.}
-% \medskip
-
-% {\it \myblue{Důkaz}}\ \ Implikace zleva doprava je zřejmá. Pokud teorie $T$ nemá model,
-% \smallskip
-
-% je sporná, tj. je z ní dokazatelný $\bot$ systematickým tablem $\tau$. Jelikož je  $\tau$
-% \smallskip
-
-% konečné, je $\bot$ dokazatelný z nějaké konečné $T'\subseteq T$, tj. $T'$ nemá model. $\qed$
-% % :from slides
-
-% \subsection{Věta o kompaktnosti}\todo
-
-
-\subsection{Aplikace}\todo
-
-% from slides:
-
-\subsection*{Nestandardní model přirozených čísel}
+Na závěr této sekce si ukážeme, že existuje tzv. \emph{nestandardní model} přirozených čísel. Klíčem je Věta o kompaktnosti.
     
-    Nechť \mygreen{$\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$} je standardní model přirozených čísel.
-    \bigskip
-    
-    Označme \mdef{$\mathrm{Th}(\underline{\mathbb{N}})$} množinu všech pravdivých \myblue{sentencí} v $\underline{\mathbb{N}}$. Pro $n\in \mathbb{N}$ označme
-    \smallskip
-    
-    \mdef{$\underline{n}$} term \mygreen{$S(S(\cdots (S(0)\cdots)$}, tzv. \mdef{$n$-tý numerál}, kde $S$ je aplikováno $n$-krát.
-    \bigskip
-    
-    Uvažme následující teorii $T$, kde $c$ je nový konstantní symbol.
-    \vspace{-2mm}
-    \mygreen{$$T=\mathrm{Th}(\underline{\mathbb{N}})\cup\{\underline{n}<c\mid n\in \mathbb{N}\}$$}
-    
-    \vspace{-4mm}
-    {\it \myblue{Pozorování}\ \ Každá konečná část teorie $T$ má model.}
-    \bigskip
-    
-    {\it Tedy dle věty o kompaktnosti má $T$ model $\mathcal{A}$, jde o \mdef{nestandardní model}
-    \smallskip
-    
-    \mdef{přirozených čísel}. Každá sentence z $\mathrm{Th}(\underline{\mathbb{N}})$ v něm platí, ale zároveň obsahuje
-    \smallskip
-    
-    prvek $c^A$ větší než každé $n\in \mathbb{N}$ (tj. hodnota termu $\underline{n}$ v $\mathcal{A}$).}
-    
+Nechť $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ je standardní model přirozených čísel. Označme $\Th(\underline{\mathbb N})$ množinu všech sentencí \emph{pravdivých} ve struktuře $\underline{\mathbb N}$ (tzv. \emph{teorii struktury} $\underline{\mathbb N}$). Pro $n\in \mathbb N$ definujme \emph{$n$-tý numerál} jako term $\underline n=S(S(\cdots (S(0)\cdots))$, kde $S$ je aplikováno $n$-krát.
 
-% :from slides
-
+Vezměme nový konstantní symbol $c$ a vyjádřeme, že je ostře větší než každý $n$-tý numerál:
+$$
+T=\Th(\underline{\mathbb N})\cup\{\underline n<c\mid n\in \mathbb N\}
+$$
+Všimněte si, že každá konečná část teorie $T$ má model. Z věty o kompaktnosti tedy plyne, že i teorie $T$ má model. Říkáme mu \emph{nestandardní model} (označme ho $\A$). Platí v něm tytéž sentence, které platí ve standardním modelu, ale zároveň obsahuje prvek $c^\A$, který je větší než každé $n\in \mathbb N$ (čímž zde myslíme hodnotu termu $\underline n$ v nestandardním modelu $\A$).
+    
 
 \section{(draft) Hilbertovský kalkulus v predikátové logice}\todo
 

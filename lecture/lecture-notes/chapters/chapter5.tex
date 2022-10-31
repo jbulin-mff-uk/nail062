@@ -86,7 +86,7 @@ Rezoluční důkaz definujeme podobně jako v Hilbertově kalkulu jako konečnou
 \end{definition}
 
 \begin{example}\label{example:resolution-proof}
-    Formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}\}$ je zamítnutelná, jedno z možných zamítnutí je:
+    Formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$ je zamítnutelná, jedno z možných zamítnutí je:
     $$
     \{p,\neg q,r\},\{q,r\},\{p,r\},\{\neg p,r\},\{r\},\{p,\neg r\},\{\neg p,\neg r\},\{\neg r\},\square
     $$
@@ -143,7 +143,7 @@ Zaveďme ještě jeden pojem, tzv. \emph{rezoluční uzávěr}, který obsahuje 
 \end{definition}
 
 \begin{example}
-    Spočtěme rezoluční uzávěr formule $S$ z Příkladu \ref{example:resolution-proof}. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
+    Spočtěme rezoluční uzávěr formule $S==\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
     \begin{align*}
         \mathcal R(S)=\{&\textcolor{blue}{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}},\\&\{p,\neg q\},\{\neg q,r\},\{r,\neg r\},\{p,\neg p\},\{r,s\},\{p,r\},\{p,q\},\{r\},\{p\}\}
     \end{align*}
@@ -201,6 +201,7 @@ Mějme ohodnocení $\mathcal V\models S$, to  nemůže obsahovat $\ell$ i $\bar\
 
 Naopak, předpokládejme že existuje ohodnocení $\mathcal V$ splňující $S^\ell$ (opět bez újmy na obecnosti). Protože se $\bar\ell$ (ani $\ell$) nevyskytuje v $S^\ell$, platí také $\mathcal V\setminus\{\bar\ell\}\models S^\ell$. Ohodnocení $\mathcal V'=(\mathcal V\setminus\{\bar\ell\})\union\{\ell\}$ potom splňuje každou klauzuli $C\in S$: pokud $\ell\in C$, potom $\ell\in C\cap\mathcal V'$ a $C\cap\mathcal V'\neq\emptyset$, jinak $C\cap\mathcal V'=(C\setminus\{\bar\ell\})\cap\mathcal V'\neq\emptyset$ neboť $\mathcal V\setminus\{\bar\ell\}\models C\setminus\{\bar\ell\}\in S^\ell$. Ověřili jsme, že $\mathcal V'\models S$, tedy $S$ je splnitelná.
 \end{proof}
+%todo frozen bucket lemma
 
 Zda je daná \emph{konečná} formule splnitelná bychom tedy mohli zjišťovat rekurzivně (metodou \emph{rozděl a panuj}), dosazením obou možných literálů pro (nějakou, třeba první) výrokovou proměnnou vyskytující se ve formuli, a rozvětvením výpočtu. V zásadě jde o podobný princip jako v algoritmu DPLL (viz Sekce \ref{section:DPLL}). Výslednému stromu říkáme \emph{strom dosazení}. 
 

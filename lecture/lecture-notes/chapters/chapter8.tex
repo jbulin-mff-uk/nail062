@@ -1,12 +1,27 @@
-\chapter{(draft) Rezoluce v predikátové logice} 
-\label{chapter:predicate-resolution}\todo
+\chapter{Rezoluce v predikátové logice} 
+\label{chapter:predicate-resolution}
 
-% from slides:
+V této kapitole si ukážeme, jak lze adaptovat rezoluční metodu, kterou jsme představili v Kapitole \ref{chapter:propositional-resolution}, na predikátovou logiku. Tato kapitola, poslední v části o predikátové logice, je poměrně rozsáhlá, proto uveďme přehled její struktury: 
 
-% :from slides
+\begin{itemize}
+    \item Začneme neformálním úvodem (Sekce \ref{section:predicate-resolution-intro}).
+\end{itemize}
+V následujících třech sekcích představíme nástroje, které nám umožní vypořádat se se specifiky predikátové logiky: s kvantifikátory, proměnnými a termy.
+\begin{itemize}
+    \item V Sekci \ref{section:skolemization} si ukážeme si, jak pomocí \emph{Skolemizace} odstranit kvantifikátory, abychom získali otevřené formule, které už lze převést do CNF.
+    \item V Sekci \ref{section:grounding} vysvětlíme, že rezoluční zamítnutí bychom mohli hledat `na úrovni výrokové logiky' (tzv. \emph{grounding}), pokud bychom nejprve za proměnné substituovali `vhodné' konstantní termy.
+    \item V Sekci \ref{section:unification} ukážeme, jak takové `vhodné' substituce hledat pomocí \emph{unifikačního algoritmu}.
+\end{itemize}
+Tím budeme mít všechny potřebné nástroje k představení vlastní rezoluční metody. Zbytek kapitoly má podobnou strukturu jako Kapitola \ref{chapter:propositional-resolution}.
+\begin{itemize}
+    \item Rezoluční pravidlo, rezoluční důkaz a související pojmy jsou popsány v Sekci \ref{section:predicate-resolution-method}.
+    \item Sekce \ref{section:predicate-resolution-soundness-completeness} je věnována důkazu korektnosti a úplnosti.
+    \item Na závěr, v Sekci \ref{section:predicate-LI-resolution}, se budeme věnovat LI-rezoluci a její aplikaci v Prologu.
+\end{itemize}
 
 
-\section{Úvod}\todo
+\section{Úvod}\label{section:predicate-resolution-intro}
+\todo
 
 % from slides:
 
@@ -86,7 +101,8 @@
 % :from slides
 
 
-\section{Skolemizace}\todo
+\section{Skolemizace}\label{section:skolemization}
+\todo
 
 % from slides:
 
@@ -348,7 +364,8 @@ pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \mybl
 % :from slides
 
 
-\section{Grounding}\todo
+\section{Grounding}\label{section:grounding}
+\todo
 
 % from slides:
 \subsubsection*{Redukce nesplnitelnosti na úroveň VL}
@@ -571,7 +588,8 @@ pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \mybl
 % :from slides
 
 
-\section{Unifikace}\todo
+\section{Unifikace}\label{section:unification}
+\todo
 
 \subsection{Substituce}\todo
 
@@ -899,7 +917,8 @@ pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \mybl
     
 % :from slides
 
-\section{Rezoluční metoda}\todo
+\section{Rezoluční metoda}\label{section:predicate-resolution-method}
+\todo
 
 \subsection{Rezoluční pravidlo}\todo
 
@@ -997,7 +1016,8 @@ lze po přejmenování získat\ \ $\square$, ale \mygreen{$\{P(x),P(f(x))\}$} ne
 % :from slides
 
 
-\section{Korektnost a úplnost}\todo
+\section{Korektnost a úplnost}\label{section:predicate-resolution-soundness-completeness}
+\todo
 
 % from slides:
 
@@ -1133,7 +1153,8 @@ rezolučního pravidla by platilo i $\mathcal{A} \models \Box$, což není možn
 % :from slides
 
 
-\section{LI-rezoluce}\todo
+\section{LI-rezoluce}\label{section:predicate-LI-resolution}
+\todo
 
 % from slides:
 \subsubsection*{Lineární rezoluce}

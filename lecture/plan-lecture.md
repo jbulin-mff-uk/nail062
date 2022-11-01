@@ -63,7 +63,7 @@ Materiály: Sekce 4.7-5.3 [8 stran]
 * Syntaxe
 * Sémantika
 
-Materiály: Sekce 5.4-6.3
+Materiály: Sekce 5.4-6.4
 
 ## Přednáška 7
 
@@ -75,7 +75,7 @@ Materiály: Sekce 5.4-6.3
 * Definovatelnost, databáze
 * Vztah výrokové a predikátové logiky
 
-Materiály: 6.4-6.8
+Materiály: 6.5-6.9
 
 ## Přednáška 8
 
@@ -85,7 +85,7 @@ Materiály: 6.4-6.8
 * Kanonický model
 * Věta o úplnosti
 
-Materiály: 7.1-7.3
+Materiály: 7.1-7.4
 
 ## Přednáška 9
 
@@ -94,7 +94,7 @@ Materiály: 7.1-7.3
 * Hilbertovský kalkulus
 * Úvod do rezoluce v predikátové logice
 
-Materiály: 7.4-8.1
+Materiály: 7.5-8.1
 
 ## Přednáška 10
 
@@ -116,7 +116,7 @@ Materiály: 8.5-8.7
 ## Přednáška 12
 
 * Elementární ekvivalence
-* Důsledky Löwenheim-Skolemovy varianty
+* Důsledky Löwenheim-Skolemovy věty
 * Izomorfismus a konečné modely
 * Definovatelnost a automorfismy
 * Omega-kategoricita a úplnost

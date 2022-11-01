@@ -423,6 +423,7 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
 
     Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce) přidáním literálu $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (tedy vznikly odebráním $\neg p$), a do všech vrcholů nad nimi. Tím získáme $T\cup\{G\}\proves_{LI}\neg p$, na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.
 \end{proof}
+%todo: another potential frozen bucket, restructure the induction proof?
 
 \begin{example}\label{example:linear-input-resolution}
 Mějme (splnitelnou, hornovskou) teorii $T$, kterou zapíšeme v množinové reprezentaci jako formuli $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$. Představte si, že chceme dokázat, že v teorii $T$ platí $p\land q$.\footnote{Tj. v Prologu bychom položili `dotaz' (`query'): \texttt{?-p,q.}} V rezoluční metodě uvážíme cíl $G=\{\neg p,\neg q\}$ a ukážeme, že $T\cup\{G\}\proves_{LI}\square$. 

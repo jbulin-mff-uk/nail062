@@ -16,108 +16,105 @@ Tím budeme mít všechny potřebné nástroje k představení vlastní rezoluč
 \begin{itemize}
     \item Rezoluční pravidlo, rezoluční důkaz a související pojmy jsou popsány v Sekci \ref{section:predicate-resolution-method}.
     \item Sekce \ref{section:predicate-resolution-soundness-completeness} je věnována důkazu korektnosti a úplnosti.
-    \item Na závěr, v Sekci \ref{section:predicate-LI-resolution}, se budeme věnovat LI-rezoluci a její aplikaci v Prologu.
+    \item Na závěr, v Sekci \ref{section:predicate-LI-resolution}, popíšeme LI-rezoluci a její aplikaci v Prologu.
 \end{itemize}
 
 
 \section{Úvod}\label{section:predicate-resolution-intro}
-\todo
 
-% from slides:
+Stejně jako ve výrokové logice, i v predikátové logice je rezoluční metoda založena na důkazu sporem. Chceme-li dokázat, že v teorii $T$ platí sentence $\varphi$ (tj. $T\models\varphi$), začneme s teorií $T\cup\{\neg \varphi\}$. Tuto teorii `převedeme' do CNF, a výslednou množinu klauzulí $S$ \emph{zamítneme} rezolucí (tj. ukážeme, že $S\proves_R\square$) čímž ukážeme, že je nesplnitelná.
 
-\subsubsection*{Rezoluční metoda v PL - úvod}
+Co myslíme konjunktivní normální formou? Roli \emph{literálu} hraje \emph{atomická formule}\footnote{Tj. $R(t_1,\dots,t_n)$ resp. $t_1=t_2$, kde $t_i$ jsou $L$-termy a $R$ je $n$-ární relační symbol z $L$.} nebo její negace. \emph{Klauzule} je (v množinové reprezentaci) konečná množina literálů, a \emph{formule} je množina klauzulí.\footnote{Jako ve výrokové logice připouštíme i nekonečné množiny klauzulí.} Jinak používáme stejnou terminologii, např. mluvíme o \emph{pozitivních}, \emph{negativních}, \emph{opačných} literálech, $\square$ značí prázdnou klauzuli (která je nesplnitelná), apod.
+
+Nejprve si neformálně ukážeme specifika rezoluce v predikátové logice na několika velmi jednoduchých příkladech.
+
+Všimněme si nejprve, že jsou-li teorie $T$ a sentence $\varphi$ \emph{otevřené} (neobsahují-li kvantifikátory), můžeme snadno sestrojit CNF formuli $S$ \emph{ekvivalentní} teorii $T\cup\{\neg \varphi\}$ (tj. mající stejnou množinu modelů). Nevadí ani univerzální kvantifikátory na začátku formule, ty můžeme odstranit beze změny významu.\footnote{Libovolná formule je ekvivalentní svému \emph{generálnímu uzávěru}, a ekvivalence platí oběma směry.}
+
+\begin{example}
+    Nechť $T=\{(\forall x)P(x),(\forall x)(P(x)\limplies Q(x))\}$ a $\varphi=(\exists x)Q(x)$. Je snadno vidět, že platí
+    $$
+    T\sim \{P(x),P(x)\limplies Q(x)\}\sim\{P(x),\neg P(x)\lor Q(x)\}
+    $$ 
+    a také:
+    $$\neg\varphi=\neg(\exists x)Q(x)\sim(\forall x)\neg Q(x)\sim\neg Q(x)$$ 
+    Teorii $T\cup\{\neg \varphi\}$ tedy můžeme převést na \emph{ekvivalentní} CNF formuli
+    $$
+    S = \{\{P(x)\},\{\neg P(x),Q(x)\},\{\neg Q(x)\}\}
+    $$
+    kterou snadno zamítneme rezolucí ve dvou krocích. (Představte si místo $P(x)$ výrokovou proměnnou $p$ a místo $Q(x)$ výrokovou proměnnou $q$.)
+\end{example}
+
+Obecně se nám to ale nepodaří, problémy dělá zejména existenční kvantifikátor. Na rozdíl od výrokové logiky \emph{není} každá teorie ekvivalentní CNF formuli. Ukážeme si ale postup, kterým lze vždy najít \emph{ekvisplnitelnou} CNF formuli, tj. takovou, která je nesplnitelná, \emph{právě když} $T\cup\{\neg \varphi\}$ je nesplnitelná, což nám k důkazu sporem stačí. Této konstrukci se říká \emph{Skolemizace} a spočívá v nahrazení existenčně kvantifikovaných proměnných nově přidanými konstantními resp. funkčními symboly. 
+
+Například, formuli $(\exists x)\psi(x)$ nahradíme formulí $\psi(x/c)$, kde $c$ je nový konstantní symbol, který reprezentuje \emph{svědka}, tj. prvek, díky kterému je existenční kvantifikátor splněn. Protože takových prvků může být mnoho, ztrácíme \emph{ekvivalenci} teorií, platí ale, že je-li splnitelná původní formule, je splnitelná, i nová formule, a naopak.
+
+\begin{example}
+  Máme-li $T=\{(\exists x)P(x),P(x)\liff Q(x)\}$ a $\varphi=(\exists x)Q(x)$, potom 
+  $$
+  \neg\varphi\sim(\forall x)\neg Q(x)\sim\neg Q(x)
+  $$
+  a ekvivalenci můžeme převést do CNF jako obvykle, dostáváme:
+  $$
+  T\cup\{\neg \varphi\}\sim\{(\exists x)P(x),\neg P(x)\lor Q(x),\neg Q(x)\lor P(x),\neg Q(x)\}
+  $$
+  Formuli $(\exists x)P(x)$ nyní nahradíme $P(c)$, kde $c$ je nový konstantní symbol. Tím dostáváme CNF formuli:
+  $$
+  S = \{\{P(c)\},\{\neg P(x),Q(x)\},\{\neg Q(x),P(x)\},\{\neg Q(x)\}\}
+  $$
+  Ta není ekvivalentní teorii $T\cup\{\neg \varphi\}$, ale je s ní \emph{ekvisplnitelná} (v tomto případě jsou obě nesplnitelné).
+\end{example}
+
+Skolemizace může být i složitější, ne vždy stačí konstantní symbol. Pokud máme formuli tvaru $(\forall x)(\exists y)\psi(x,y)$, závisí zvolený svědek pro $y$ na zvolené hodnotě pro $x$, tedy `$y$ je funkcí $x$'. V tomto případě musíme $y$ nahradit $f(x)$, kde $f$ je nový unární funkční symbol. Tím dostáváme formuli $(\forall x)\psi(x,y/f(x))$ a univerzální kvantifikátor nyní můžeme odstarnit a psát jen $\psi(x,y/f(x))$, což už je otevřená formule, byť v jiném jazyce (rozšířeném o symbol $f$). Skolemizaci formálně popíšeme, a potřebné vlastnosti dokážeme, v Sekci \ref{section:skolemization}. 
+
+Nyní se podívejme na \emph{rezoluční pravidlo}. To je v predikátové logice složitější. Ukážeme si opět jen několik příkladů, formální definici necháme na později (Sekce \ref{section:predicate-resolution-method}).
+
+\begin{example}
+    V předchozím příkladu jsme dospěli k následující CNF formuli $S$, která je nesplnitelná, a chtěli bychom ji tedy rezolucí zamítnout:    
+    $$
+    S = \{\{P(c)\},\{\neg P(x),Q(x)\},\{\neg Q(x),P(x)\},\{\neg Q(x)\}\}
+    $$
+    Pokud bychom se na ni podívali `na úrovni výrokové logiky' (`ground level') a nahradili každou atomickou formuli novou výrokovou proměnnou, dostali bychom $\{\{r\},\{\neg p,q\},\{\neg q,p\},\{\neg q\}\}$, což není nesplnitelné. Potřebujeme využít toho, že $P(c)$ a $P(x)$ mají `podobnou strukturu' (jsou \emph{unifikovatelné}).
+
+    Protože platí klauzule $\{\neg P(x),Q(x)\}$, platí i po provedení \emph{libovolné substituce}, tj. klauzule $\{\neg P(x/t),Q(x/t)\}$ je důsledkem $S$ pro libovolný term $t$. Mohli bychom si představit, že do  $S$ `přidáváme' všechny takto získané klauzule.\footnote{Těch je nekonečně mnoho, nekonečně mnoho je už jen \emph{variant} jedné klauzule, tj. klauzulí vzniklých pouhým přejmenováním proměnných. To nám ale nevadí, CNF formule může být dle definice nekonečná.} Výsledná CNF formule by po převedení na `úroveň výrokové logiky' už byla nesplnitelná. 
     
-    \begin{itemize}
-    \item \myblue{Zamítací} procedura - cílem je ukázat, že daná formule (či teorie)
-    \smallskip
+    \emph{Unifikační algoritmus} nám ale rovnou řekne, že správná substituce je $x/c$, a toto zahrneme už do \emph{rezolučního pravidla}, tedy \emph{rezolventou} klauzulí $\{P(c)\}$ a $\{\neg P(x),Q(x)\}$ bude klauzule $\{Q(c)\}$.
+\end{example}
+
+Unifikace může být i složitější, a upozorněme ještě na jeden rozdíl oproti výrokové logice: dovolíme si udělat rezoluci přes více literálů najednou, a to v případě, že jsou všechny dohromady \emph{unifikovatelné}:
+
+\begin{example}
+    Z klauzulí $\{R(x,f(x)),R(g(y),z)\}$ a $\{\neg R(g(c),u),P(u)\}$ (kde $R$ je binární relační, $f$ a $g$ jsou unární funkční, a $c$ konstantní symbol) bude možné odvodit rezolventu $\{P(f(g(c))\}$ za použití \emph{substituce} (\emph{unifikace}) $\{x/g(c),y/c,z/f(g(c)),u/f(g(c))\}$, kde z první klauzule vybíráme \emph{oba} literály najednou.
+\end{example}
+
+\begin{remark}
+    To, že proměnné mají `lokální význam' v jednotlivých klauzulích (tj. můžeme za ně substituovat v jedné kauzuli aniž by to ovlivnilo ostatní klauzule), plyne z následující jednoduché tautologie, která platí pro libovolné formule $\psi,\chi$ (i pokud je v obou proměnná $x$ volná):
+    $$
+    \models(\forall x)(\psi \land \chi) \leftrightarrow (\forall x)\psi \land (\forall x)\chi
+    $$
     
-    je nesplnitelná.
-    \smallskip
-    
-    \item Předpokládá \myblue{otevřené} formule v \myblue{CNF} (v množinové reprezentaci).
-    \medskip
-    
-    \mdef{Literál} je \emph{(tentokrát)} atomická formule nebo její negace.
-    \medskip
-    
-    \mdef{Klauzule} je konečná množina literálů, $\square$ značí \myblue{prázdnou klauzuli}.
-    \medskip
-    
-    \mdef{Formule (v množinové reprezentaci)} je množina (i nekonečná) klauzulí.
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \ Každou formuli (teorii) umíme převést na ekvisplnitelnou
-    \smallskip
-    
-    otevřenou formuli (teorii) v CNF, tj. na formuli v množinové reprezentaci.}
-    \smallskip
-    
-    \item \myblue{Rezoluční pravidlo} je obecnější - umožňuje rezolvovat přes literály,
-    \smallskip
-    
-    které jsou \myblue{unifikovatelné}.
-    \smallskip
-    
-    \item Rezoluce v PL je založená na \myblue{rezoluci ve VL} a \myblue{unifikaci}.
-    \end{itemize}
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Lokální význam proměnných}
-    {\it Proměnné v rámci \myblue{klauzule} můžeme přejmenovat.}
-    \medskip
-    
-    Nechť $\varphi$ je \emph{(vstupní)} otevřená formule v CNF.
-    %\smallskip
-    
-    \begin{itemize}
-    \item Formule $\varphi$ je splnitelná, právě když její generální uzávěr $\varphi'$ je splnitelný.
-    \smallskip
-    
-    \item Pro každé formule $\psi$, $\chi$ a proměnnou $x$
-    \vspace{-2mm}
-    \mygreen{$$\models\quad(\forall x)(\psi \mand \chi)\ \leftrightarrow\ (\forall x)\psi \mand (\forall x)\chi\qquad$$}
-    
-    \vspace{-6mm}
-    (i když $x$ je volná v $\psi$ a $\chi$ zároveň).
-    \smallskip
-    
-    \item Každou klauzuli ve $\varphi$ lze tedy nahradit jejím generálním uzávěrem.
-    \smallskip
-    
-    \item Uzávěry klauzulí lze \myblue{variovat} (přejmenovat proměnné).
-    \end{itemize}
-    \medskip
-    
-    \mygreen{\it Např. variovaním druhé klauzule v $(1)$ získáme ekvisplnitelnou formuli $(2)$.}
-    \begin{enumerate}
-    \item[$(1)$] \mygreen{$\{\{P(x),Q(x,y)\},\{\neg P(x),\neg Q(y,x)\}\}$}
-    \item[$(2)$] \mygreen{$\{\{P(x),Q(x,y)\},\{\neg P(v),\neg Q(u,v)\}\}$}
-    \end{enumerate}
-    
-    
-% :from slides
+    Jak je vidět v předchozím příkladě, budeme také vyžadovat, aby klauzule v rezolučním pravidle měly disjunktní množiny proměnných; toho lze dosáhnout přejmenováním proměnných, což je speciální případ substituce.  
+\end{remark}
 
 
 \section{Skolemizace}\label{section:skolemization}
 \todo
 
+V této sekci ukážeme postup, jak redukovat otázku splnitelnosti dané teorie $T$ na otázku splnitelnosti \emph{otevřené} teorie $T'$. Připomeňme, že $T$ a $T'$ obecně nebudou ekvivalentní, budou ale \emph{ekvisplnitelné}:
+
+\begin{definition}[Ekvisplnitelnost]
+Mějme teorii $T$ v jazyce $L$ a teorii $T'$ v ne nutně stejném jazyce $L'$. Říkáme, že $T$ a $T'$ jsou \emph{ekvisplnitelné}, 
+pokud platí: 
+$$
+\text{$T$ má model}\ \Leftrightarrow\ \text{$T'$ má model}
+$$
+\end{definition}
+
+
+
 % from slides:
 
-% :from slides
-
-\subsection{Ekvisplnitelnost}\todo
-
-% from slides:
-\subsubsection*{Ekvisplnitelnost}
-    {\it Ukážeme, že problém splnitelnosti lze \myblue{redukovat} na otevřené teorie.}
-    \vspace{0.5mm}
-    
     \begin{itemize}
-    \item Teorie $T$, $T'$ jsou \mdef{ekvisplnitelné}, jestliže $T$ má model $\Leftrightarrow$ $T'$ má model.
-    \smallskip
+
     
     \item Formule $\varphi$ je v \mdef{prenexním (normálním) tvaru (PNF)}, má-li tvar
     \vspace{-2mm}

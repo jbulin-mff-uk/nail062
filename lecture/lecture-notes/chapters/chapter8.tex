@@ -64,7 +64,7 @@ Například, formuli $(\exists x)\psi(x)$ nahradíme formulí $\psi(x/c)$, kde $
   Ta není ekvivalentní teorii $T\cup\{\neg \varphi\}$, ale je s ní \emph{ekvisplnitelná} (v tomto případě jsou obě nesplnitelné).
 \end{example}
 
-Skolemizace může být i složitější, ne vždy stačí konstantní symbol. Pokud máme formuli tvaru $(\forall x)(\exists y)\psi(x,y)$, závisí zvolený svědek pro $y$ na zvolené hodnotě pro $x$, tedy `$y$ je funkcí $x$'. V tomto případě musíme $y$ nahradit $f(x)$, kde $f$ je nový unární funkční symbol. Tím dostáváme formuli $(\forall x)\psi(x,y/f(x))$ a univerzální kvantifikátor nyní můžeme odstarnit a psát jen $\psi(x,y/f(x))$, což už je otevřená formule, byť v jiném jazyce (rozšířeném o symbol $f$). Skolemizaci formálně popíšeme, a potřebné vlastnosti dokážeme, v Sekci \ref{section:skolemization}. 
+Skolemizace může být i složitější, ne vždy stačí konstantní symbol. Pokud máme formuli tvaru $(\forall x)(\exists y)\psi(x,y)$, závisí zvolený svědek pro $y$ na zvolené hodnotě pro $x$, tedy `$y$ je funkcí $x$'. V tomto případě musíme $y$ nahradit $f(x)$, kde $f$ je nový unární funkční symbol. Tím dostáváme formuli $(\forall x)\psi(x,y/f(x))$ a univerzální kvantifikátor nyní můžeme odstranit a psát jen $\psi(x,y/f(x))$, což už je otevřená formule, byť v jiném jazyce (rozšířeném o symbol $f$). Skolemizaci formálně popíšeme, a potřebné vlastnosti dokážeme, v Sekci \ref{section:skolemization}. 
 
 Nyní se podívejme na \emph{rezoluční pravidlo}. To je v predikátové logice složitější. Ukážeme si opět jen několik příkladů, formální definici necháme na později (Sekce \ref{section:predicate-resolution-method}).
 
@@ -87,7 +87,7 @@ Unifikace může být i složitější, a upozorněme ještě na jeden rozdíl o
 \end{example}
 
 \begin{remark}
-    To, že proměnné mají `lokální význam' v jednotlivých klauzulích (tj. můžeme za ně substituovat v jedné kauzuli aniž by to ovlivnilo ostatní klauzule), plyne z následující jednoduché tautologie, která platí pro libovolné formule $\psi,\chi$ (i pokud je v obou proměnná $x$ volná):
+    To, že proměnné mají `lokální význam' v jednotlivých klauzulích (tj. můžeme za ně substituovat v jedné klauzuli aniž by to ovlivnilo ostatní klauzule), plyne z následující jednoduché tautologie, která platí pro libovolné formule $\psi,\chi$ (i pokud je v obou proměnná $x$ volná):
     $$
     \models(\forall x)(\psi \land \chi) \leftrightarrow (\forall x)\psi \land (\forall x)\chi
     $$
@@ -97,7 +97,6 @@ Unifikace může být i složitější, a upozorněme ještě na jeden rozdíl o
 
 
 \section{Skolemizace}\label{section:skolemization}
-\todo
 
 V této sekci ukážeme postup, jak redukovat otázku splnitelnosti dané teorie $T$ na otázku splnitelnosti \emph{otevřené} teorie $T'$. Připomeňme, že $T$ a $T'$ obecně nebudou ekvivalentní, budou ale \emph{ekvisplnitelné}:
 
@@ -109,121 +108,90 @@ $$
 $$
 \end{definition}
 
+Celá konstrukce sestává z následujících kroků, které vysvětlíme níže:
+\begin{enumerate}
+    \item Převod do \emph{prenexní normální formy} (vytýkání kvantifikátorů).
+    \item Nahrazení formulí jejich generálními uzávěry (abychom získali sentence).
+    \item Odstranění existenčních kvantifikátorů (nahrazení sentencí \emph{Skolemovými variantami}).
+    \item Odstranění zbývajících univerzálních kvantifikátorů (výsledkem jsou otevřené formule).
+\end{enumerate}
 
+\subsection{Prenexní normální forma}
 
-% from slides:
+Nejprve ukážeme postup, jakým můžeme z libovolné formule `vytknout' kvantifikátory, tj. převést do tzv. \emph{prenexní normální formy}, která začíná posloupností kvantifikátorů, a pokračuje už jen volnou formulí.
 
-    \begin{itemize}
+\begin{definition}[PNF]
+    Formule $\varphi$ je v \emph{prenexní normální formě (PNF)}, je-li tvaru
+    $$
+    (Q_1x_1)\dots(Q_nx_n)\varphi'
+    $$
+    kde $Q_i$ je kvantifikátor ($\forall$ nebo $\exists$) a formule $\varphi'$ je otevřená. Formuli $\varphi'$ potom říkáme \emph{otevřené jádro} $\varphi$ a $(Q_1x_1)\dots(Q_nx_n)$ je \emph{kvantifikátorový prefix}. 
+    
+    Je-li $\varphi$ formule v PNF a jsou-li všechny kvantifikátory univerzální, potom říkáme, že $\varphi$ je \emph{univerzální} formule.
+\end{definition}
 
-    
-    \item Formule $\varphi$ je v \mdef{prenexním (normálním) tvaru (PNF)}, má-li tvar
-    \vspace{-2mm}
-    \mygreen{$$(Q_1x_1)\dots(Q_nx_n)\varphi',$$}
-    
-    \vspace{-6mm}
-    kde $Q_i$ značí $\forall$ nebo $\exists$, proměnné $x_1,\dots,x_n$ jsou navzájem různé a $\varphi'$
-    \smallskip
-    
-    je otevřená formule, zvaná \mdef{otevřené jádro}. $(Q_1x_1)\dots(Q_nx_n)$ je tzv. \mdef{prefix}.
-    \smallskip
-    
-    \item Speciálně, jsou-li všechny kvantifikátory $\forall$, je $\varphi$ \mdef{univerzální} formule.
-    \end{itemize}
-    \medskip
-    
-    {\it K teorii $T$ nalezneme ekvisplnitelnou otevřenou teorii následujícím postupem.}
-    \vspace{0.5mm}
-    
-    \begin{enumerate}
-    \item[$(1)$] Axiomy teorie $T$ nahradíme za ekvivalentní formule v \myblue{prenexním} tvaru.
-    \smallskip
-    
-    \item[$(2)$] Pomocí nových funkčních symbolů je převedeme na univerzální formule,
-    \smallskip
-    
-    tzv. \myblue{Skolemovy varianty}, čímž dostaneme ekvisplnitelnou teorii.
-    \smallskip
-    
-    \item[$(3)$] Jejich \myblue{otevřená jádra} budou tvořit hledanou teorii.
-    \end{enumerate}
-    
-% :from slides
+Cílem této podsekce je ukázat následující tvrzení:
 
-\subsection{Prenexní normální forma}\todo
+\begin{proposition}[Převod do PNF]\label{proposition:convert-to-pnf}
+    Ke každé formuli $\varphi$ existuje ekvivalentní formule v prenexním normálním tvaru.    
+\end{proposition}
 
-% from slides:
-\subsubsection*{Vytýkání kvantifikátorů}
-    Nechť $Q$ značí kvantifikátor $\forall$ nebo $\exists$ a $\overline{Q}$ značí opačný kvantifikátor.
-    \smallskip
-    
-    Pro každé formule $\varphi$, $\psi$ takové, že $x$ \myblue{není volná} ve formuli $\psi$,
-    \vspace{-1mm}
-    \mygreen{
+Algoritmus bude podobně jako převod do CNF založen na nahrazování podformulí \emph{ekvivalentními} podformulemi, s cílem posunout kvantifikátory blíže ke kořeni stromu formule. Co myslíme ekvivalencí formulí $\varphi\sim\varphi'$? To, že mají stejný význam, tj. v každém modelu a při každém ohodnocení proměnných mají touž pravdivostní hodnotu. Ekvivalentně, že platí $\models\varphi\liff\varphi'$. Budeme potřebovat následující jednoduché pozorování:
+
+\begin{observation}\label{observation:pnf-one-step}
+    Nahradíme-li ve formuli $\varphi$ nějakou podformuli $\psi$ ekvivalentní formulí $\psi'$, potom je i výsledná formule $\varphi'$ ekvivalentní formuli $\varphi$.
+\end{observation}
+
+Převod je založen na opakovaném použití následujících syntaktických pravidel:
+
+\begin{lemma}\label{lemma:pnf-conversion-rules}
+    Označme jako $\overline{Q}$ kvantifikátor opačný ke $Q$. Nechť $\varphi$ a $\psi$ jsou formule, a proměnná $x$ nechť není volná ve formuli $\psi$. Potom platí:
     \begin{align*}
-    &\models& \neg (Qx)\varphi\ &\leftrightarrow\ (\overline{Q}x)\neg\varphi&\\
-    &\models& ((Qx)\varphi \mand \psi)\ &\leftrightarrow\ (Qx)(\varphi \mand \psi)&\\
-    &\models& ((Qx)\varphi \mor \psi)\ &\leftrightarrow\ (Qx)(\varphi \mor \psi)&\\
-    &\models& ((Qx)\varphi \to \psi)\ &\leftrightarrow\ (\overline{Q}x)(\varphi \to \psi)&\\
-    \qquad\qquad&\models& (\psi \to (Qx)\varphi)\ &\leftrightarrow\ (Qx)(\psi \to \varphi)&\qquad\qquad\qquad\qquad
-    \end{align*}}
-    
-    \vspace{-4mm}
-    Uvedené ekvivalence lze ověřit sémanticky nebo dokázat tablo metodou
-    \smallskip
-    
-    (\emph{přes generální uzávěr, není-li to sentence}).
-    \bigskip
-    
-    
-    {\it \myblue{Poznámka}\ \ Předpoklad, že $x$ není volná ve formuli $\psi$ je v každé ekvivalenci
-    \smallskip
-    
-    (kromě té první) nutný pro nějaký kvantifikátor $Q$. Např.}
-    \vspace{-1mm}
-    \mygreen{$$\not\models\ ((\exists x)P(x)\mand P(x))\ \leftrightarrow\ (\exists x)(P(x)\mand P(x))\qquad\qquad$$}
-    
-    \vspace{-6mm}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Převod na prenexní tvar}
-    
-    \myblue{\bf Tvrzení}\ \ {\it Nechť $\varphi'$ je formule vzniklá z formule $\varphi$ nahrazením některých
-    \smallskip
-    
-    výskytů podformule $\psi$ za formuli $\psi'$. Jestliže \mygreen{$T \models \psi \leftrightarrow \psi'$}, pak \mygreen{$T \models \varphi \leftrightarrow \varphi'$}.}
-    \medskip
-    
-    \myblue{\it Důkaz}\ \ Snadno indukcí dle struktury formule $\varphi$. $\qed$
-    \bigskip
-    
-    \myblue{\bf Tvrzení}\ \ {\it Ke každé formuli $\varphi$ existuje ekvivalentní formule $\varphi'$ v \myblue{prenexním}
-    \smallskip
-    
-    \myblue{normálním tvaru}, tj.\ \mygreen{$\models \varphi\leftrightarrow \varphi'$}.}
-    \medskip
-    
-    \myblue{\it Důkaz}\ \ Indukcí dle struktury $\varphi$ pomocí \myblue{vytýkání kvantifikátorů}, náhradou
-    \smallskip
-    
-    podformulí za jejich \myblue{varianty} a využitím předchozího tvrzení o ekvivalenci. $\qed$
-    \vspace{-1mm}
-    
-    \mygreen{{\it Např.}
-    \vspace{-7.5mm}
-    \begin{align*}
-    ((\forall z)&P(x,z)\mand P(y,z))\ \to\ \neg(\exists x)P(x,y)\\
-    ((\forall u) &P(x,u)\mand P(y,z))\ \to\ (\forall x)\neg P(x,y)\\
-    (\forall u)(&P(x,u)\mand P(y,z))\ \to\ (\forall v)\neg P(v,y)\\
-    (\exists u)(( &P(x,u)\mand P(y,z))\ \to\ (\forall v)\neg P(v,y))\\
-    (\exists u)(\forall v)(( &P(x,u)\mand P(y,z))\ \to\ \neg P(v,y))\\
+        \neg (Qx)\varphi\ &\sim\ (\overline{Q}x)\neg\varphi\\
+        (Qx)\varphi \land \psi\ &\sim\ (Qx)(\varphi \land \psi)\\
+        (Qx)\varphi \lor \psi\ &\sim\ (Qx)(\varphi \lor \psi)\\
+        (Qx)\varphi \limplies \psi\ &\sim\ (\overline{Q}x)(\varphi \limplies \psi)\\
+        \psi \limplies (Qx)\varphi\ &\sim\ (Qx)(\psi \limplies \varphi)
     \end{align*}
-    }
-    
-    \vspace{-10mm}
-    
-% :from slides
+\end{lemma}
+\begin{proof}
+    Pravidla lze snadno ověřit sémanticky, nebo dokázat tablo metodou (v tom případě nejde-li o sentence, musíme je nahradit jejich generálními uzávěry).   
+\end{proof}
+
+Všimněte si, že v pravidle $(Qx)\varphi \limplies \psi\sim(\overline{Q}x)(\varphi \limplies \psi)$ pro vytýkání z \emph{antecendentu} implikace musíme změnit kvantifikátor (z $\forall$ na $\exists$ a naopak) zatímco při vytýkání z \emph{konsekventu} zůstává kvantifikátor stejný. Proč tomu tak je vidíme nejlépe pokud přepíšeme implikaci pomocí disjunkce a negace:
+$$
+(Qx)\varphi \limplies \psi\sim\neg(Qx)\varphi \lor\psi\sim(\overline{Q}x)(\neg\varphi)\lor\psi\sim(\overline{Q}x)(\neg\varphi\lor\psi)\sim (\overline{Q}x)(\varphi \limplies \psi)
+$$
+Všimněte si také předpokladu, že $x$ není volná v $\psi$. Bez něj by pravidla nefungovala, viz např:
+$$
+(\exists x)P(x)\land Q(x)\ \not\sim\ (\exists x)(P(x)\land Q(x))
+$$
+V takové situaci nahradíme formuli variantou, ve které přejmenujeme vázanou proměnnou $x$ na nějakou novou proměnnou: 
+$$
+(\exists x)P(x)\land Q(x)\ \sim\ (\exists y)P(y)\land Q(x) \sim (\exists y)(P(y)\land Q(x))
+$$
+\begin{exercise}
+    Dokažte Pozorování \ref{observation:pnf-one-step} a všechna pravidla z Lemmatu \ref{lemma:pnf-conversion-rules}.
+\end{exercise}
+
+Ukažme si postup na jednom příkladě:
+
+\begin{example}
+    Převeďme formuli $((\forall z)P(x,z)\land P(y,z))\ \limplies\ \neg(\exists x)P(x,y)$ do PNF. Zapíšeme jen jednotlivé mezikroky. Všimněte si, jaké pravidlo na jakou podformuli bylo použito (a také přejmenování proměnné v prvním kroku), a sledujte postup na stromu formule.
+    \begin{align*}
+        &\ (\forall z)P(x,z)\land P(y,z)\ \limplies\ \neg(\exists x)P(x,y)\\ \sim &\ 
+        (\forall u) P(x,u)\land P(y,z)\ \limplies\ (\forall x)\neg P(x,y)\\ \sim &\ 
+        (\forall u)(P(x,u)\land P(y,z))\ \limplies\ (\forall v)\neg P(v,y)\\ \sim &\ 
+        (\exists u)( P(x,u)\land P(y,z)\ \limplies\ (\forall v)\neg P(v,y))\\ \sim &\ 
+        (\exists u)(\forall v)( P(x,u)\land P(y,z)\ \limplies\ \neg P(v,y))
+        \end{align*}    
+\end{example}
+
+Nyní nám již nic nebrání dokázat Tvrzení \ref{proposition:convert-to-pnf}:
+
+\begin{proof}[Důkaz Tvrzení \ref{proposition:convert-to-pnf}]
+    Indukcí podle struktury formule $\varphi$ s využitím Lemmatu \ref{lemma:pnf-conversion-rules} a Pozorování \ref{observation:pnf-one-step}.
+\end{proof}
 
 \subsection{Skolemova varianta}\todo
 
@@ -308,6 +276,28 @@ expanze $\mathcal{A'}$ struktury $\mathcal{A}$ o funkci $f^{A}$ je modelem $\var
 \smallskip
 
 pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \myblue{ekvisplnitelné}.}
+
+
+% from slides:
+
+    
+    % {\it K teorii $T$ nalezneme ekvisplnitelnou otevřenou teorii následujícím postupem.}
+    % \vspace{0.5mm}
+    
+    % \begin{enumerate}
+    % \item[$(1)$] Axiomy teorie $T$ nahradíme za ekvivalentní formule v \myblue{prenexním} tvaru.
+    % \smallskip
+    
+    % \item[$(2)$] Pomocí nových funkčních symbolů je převedeme na univerzální formule,
+    % \smallskip
+    
+    % tzv. \myblue{Skolemovy varianty}, čímž dostaneme ekvisplnitelnou teorii.
+    % \smallskip
+    
+    % \item[$(3)$] Jejich \myblue{otevřená jádra} budou tvořit hledanou teorii.
+    % \end{enumerate}
+    
+% :from slides
 
 
 % :from slides
@@ -511,7 +501,7 @@ pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \mybl
     
     %{\it \myblue{Poznámka}\ \ $(b')$ ekvivalentně k $(b)$, existuje konečně mnoho základních instancí negací axiomů z $T$,0
     %\vspace{0.5mm}
-    %jejichž disjukce je tautologie.}
+    %jejichž disjunkce je tautologie.}
     \smallskip
     
     {\it \myblue{Důkaz}}\ \ Nechť $T'$ je množina všech základních instancí axiomů z $T$. Uvažme
@@ -655,7 +645,7 @@ pro $\varphi$, $\varphi'$ rovněž platí. Tedy $\varphi$, $\varphi'$ jsou \mybl
     vzniklý z $E$ \myblue{současným} nahrazením \myblue{všech} výskytů proměnných $x_i$ za $t_i$.
     \smallskip
     
-    \item Pro množinu výrazů $S$ označmě \mdef{$S\sigma$} množinu instancí $E\sigma$ výrazů $E$ z $S$.
+    \item Pro množinu výrazů $S$ označme \mdef{$S\sigma$} množinu instancí $E\sigma$ výrazů $E$ z $S$.
     \end{itemize}
     \smallskip
     
@@ -1266,7 +1256,7 @@ rezolučního pravidla by platilo i $\mathcal{A} \models \Box$, což není možn
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
     
     \subsubsection*{LI-rezoluce nad programem}
-    {\it Je-li odpoveď na dotaz kladná, chceme navíc znát výstupní substituci.}
+    {\it Je-li odpověď na dotaz kladná, chceme navíc znát výstupní substituci.}
     \medskip
     
     \mdef{Výstupní substituce} $\sigma$ LI-rezoluce $\square$ z $P\cup\{G\}$ začínající $G=\{\neg A_1,\dots,\neg A_n\}$

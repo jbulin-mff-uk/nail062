@@ -133,7 +133,7 @@ Nejprve ukážeme postup, jakým můžeme z libovolné formule `vytknout' kvanti
 Cílem této podsekce je ukázat následující tvrzení:
 
 \begin{proposition}[Převod do PNF]\label{proposition:convert-to-pnf}
-    Ke každé formuli $\varphi$ existuje ekvivalentní formule v prenexním normálním tvaru.    
+    Ke každé formuli $\varphi$ existuje ekvivalentní formule v prenexní normální formě.    
 \end{proposition}
 
 Algoritmus bude podobně jako převod do CNF založen na nahrazování podformulí \emph{ekvivalentními} podformulemi, s cílem posunout kvantifikátory blíže ke kořeni stromu formule. Co myslíme ekvivalencí formulí $\varphi\sim\varphi'$? To, že mají stejný význam, tj. v každém modelu a při každém ohodnocení proměnných mají touž pravdivostní hodnotu. Ekvivalentně, že platí $\models\varphi\liff\varphi'$. Budeme potřebovat následující jednoduché pozorování:
@@ -176,7 +176,7 @@ $$
 
 Ukažme si postup na jednom příkladě:
 
-\begin{example}
+\begin{example}\label{example:convert-to-pnf}
     Převeďme formuli $((\forall z)P(x,z)\land P(y,z))\ \limplies\ \neg(\exists x)P(x,y)$ do PNF. Zapíšeme jen jednotlivé mezikroky. Všimněte si, jaké pravidlo na jakou podformuli bylo použito (a také přejmenování proměnné v prvním kroku), a sledujte postup na stromu formule.
     \begin{align*}
         &\ (\forall z)P(x,z)\land P(y,z)\ \limplies\ \neg(\exists x)P(x,y)\\ \sim &\ 
@@ -193,47 +193,72 @@ Nyní nám již nic nebrání dokázat Tvrzení \ref{proposition:convert-to-pnf}
     Indukcí podle struktury formule $\varphi$ s využitím Lemmatu \ref{lemma:pnf-conversion-rules} a Pozorování \ref{observation:pnf-one-step}.
 \end{proof}
 
-\subsection{Skolemova varianta}\todo
+Protože je každá formule $\varphi(x_1,\dots,x_n)$ ekvivalentní svému \emph{generálnímu uzávěru} $$(\forall x_1)\dots(\forall x_n)\varphi(x_1,\dots,x_n)$$ můžeme Tvrzení \ref{proposition:convert-to-pnf} vyslovit také takto:
+
+\begin{corollary}
+    Ke každé formuli $\varphi$ existuje ekvivalentní \emph{sentence} v PNF.
+\end{corollary} 
+
+Například v Příkladu \ref{example:convert-to-pnf} je výsledná sentence $(\forall x)(\forall y)(\forall z)(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))$.
+
+\begin{remark}
+    Prenexní forma není jednoznačná, pravidla pro převod můžeme aplikovat v různém pořadí. Jak uvidíme v následující podsekci, je výhodné vytýkat přednostně kvantifikátory [ze kterých se stanou] existenční: Máme-li na výběr mezi $(\forall x)(\exists y)\varphi(x,y)$ a $(\exists y)(\forall x)\varphi(x,y)$, volíme druhou variantu, neboť v první je `$y$ závislé na $x$'.
+\end{remark}
+
+
+
+\subsection{Skolemova varianta}
+
+Nyní jsme převedli naše axiomy na ekvivalentní sentence v prenexním tvaru. Pokud by některá sentence obsahovala pouze univerzální kvantifikátory, tj. byla tvaru 
+$$(\forall x_1)\dots(\forall x_n)\varphi(x_1,\dots,x_n)$$ 
+kde $\varphi$ je otevřená, mohli bychom ji prostě nahradit jejím otevřeným jádrem $\varphi$, které je jí v tomto případě ekvivalentní. Jak si ale poradit s existenčními kvantifikátory, např. $(\exists x)\varphi(x)$, $(\forall x)(\exists y)\varphi(x,y)$, apod? Ty nejprve nahradíme jejich \emph{Skolemovou variantou}.
+
+\begin{definition}[Skolemova varianta]
+Mějme $L$-sentenci $\varphi$ v PNF, a nechť všechny její vázané proměnné jsou různé. Nechť existenční kvantifikátory z prefixu $\varphi$ jsou $(\exists y_1),\dots,(\exists y_n)$ (v tomto pořadí), a nechť pro každé $i$ jsou $(\forall x_1),\dots,(\forall x_{n_i})$ právě všechny univerzální kvantifikátory předcházející kvantifikátor $(\exists y_i)$ v prefixu $\varphi$. 
+
+Označme $L'$ rozšíření $L$ o \emph{nové} $n_i$-ární funkční symboly $f_1,\dots,f_n$, kde symbol $f_i$ je arity $n_i$, pro každé $i$. \emph{Skolemova varianta} sentence $\varphi$ je $L'$-sentence $\varphi_S$ vzniklá z $\varphi$ tak, že pro každé $i=1,\dots,n$:
+\begin{itemize}
+    \item odstraníme z prefixu kvantifikátor $(\exists y_i)$, a
+    \item substituujeme za proměnnou $y_i$ term $f_i(x_1,\dots,x_{n_i})$.
+\end{itemize}
+Tomuto procesu říkáme také \emph{skolemizace}.
+\end{definition}
+
+\begin{example}
+    Skolemova varianta sentence 
+    $$\varphi=(\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1,x_1,x_2,y_2,x_3)$$
+    je sentence
+    $$
+    \varphi_S=(\forall x_1)(\forall x_2)(\forall x_3)R(f_1,x_1,x_2,f_2(x_1,x_2),x_3)
+    $$
+    kde $f_1$ je nový konstantní symbol a $f_2$ je nový binární funkční symbol.
+\end{example}
+
+\begin{remark}
+    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta! Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
+
+    Je také důležité, aby každý symbol použitý při skolemizaci byl opravdu nový, jeho jedinou `rolí' v celé teorii musí být reprezentovat `existující' prvky v této formuli.
+\end{remark} 
+
+V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
+
+\todo
+
+\begin{lemma}
+    
+\end{lemma}
+\begin{proof}
+    
+\end{proof}
+
+\begin{corollary}
+    
+\end{corollary}
+
+
 
 % from slides:
 
-Nechť $\varphi$ je \myblue{sentence} jazyka $L$ v \myblue{prenexním normálním tvaru}, $y_1,\dots,y_n$
-\smallskip
-
-jsou \myblue{existenčně} kvantifikované proměnné ve $\varphi$ (v tomto pořadí) a pro každé
-\smallskip
-
-$i\le n$ nechť $x_1,\dots,x_{n_i}$ jsou \myblue{univerzálně} kvantifikované proměnné před $y_i$.
-\smallskip
-
-Označme $L'$ rozšíření $L$ o nové $n_i$-ární funkční symboly $f_i$ pro každé $i\le n$.
-\bigskip
-
-Nechť $\varphi_S$ je formule jazyka $L'$, jež vznikne z formule $\varphi$ odstraněním $(\exists y_i)$
-\smallskip
-
- z jejího prefixu a nahrazením každého výskytu proměnné $y_i$ za term
-\smallskip
-
-\myblue{$f_i(x_1,\dots,x_{n_i})$}. Pak formule $\varphi_S$ se nazývá \mdef{Skolemova varianta} formule $\varphi$.
-\bigskip
-
-{\it \mygreen{Např. pro formuli $\varphi$}
-\vspace{-2mm}
-\mygreen{$$(\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1,x_1,x_2,y_2,x_3)$$}
-
-\vspace{-6mm}
-\mygreen{je následují formule $\varphi_S$ její Skolemovou variantou}
-\vspace{-2mm}
-\mygreen{$$(\forall x_1)(\forall x_2)(\forall x_3)R(f_1,x_1,x_2,f_2(x_1,x_2),x_3),$$}
-
-\vspace{-6mm}
-\mygreen{kde $f_1$ je nový konstantní symbol a $f_2$ je nový binární funkční symbol.}}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 \subsubsection*{Vlastnosti Skolemovy varianty}
 

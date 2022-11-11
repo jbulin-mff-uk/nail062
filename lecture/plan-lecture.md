@@ -55,6 +55,8 @@ Materiály: Sekce 4.1-4.6 [10 stran]
 
 Materiály: Sekce 4.7-5.3 [8 stran]
 
+Domácí úkol: přečíst úvod Kapitoly 6
+
 ## Přednáška 6
 
 * LI-rezoluce
@@ -77,6 +79,8 @@ Materiály: Sekce 5.4-6.4
 
 Materiály: 6.5-6.9
 
+Domácí úkol: přečíst úvod Kapitoly 7
+
 ## Přednáška 8
 
 * Tablo metoda - úvod, tablo, systematické tablo
@@ -86,6 +90,8 @@ Materiály: 6.5-6.9
 * Věta o úplnosti
 
 Materiály: 7.1-7.4
+
+Domácí úkol: přečíst úvod Kapitoly 8
 
 ## Přednáška 9
 

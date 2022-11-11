@@ -532,7 +532,7 @@ A jak je tomu s pojmem pravdivosti (platnosti) ve struktuře?
 
 \section{Vlastnosti teorií}
 
-Na základě pojmu \emph{platnosti} vybudujeme syntaktickou terminologii obdobně jako v predikátové logice. \emph{Teorie} jazyka $L$ je libovolná množina $T$ $L$-formulí, prvkům teorie říkáme \emph{axiomy}. \emph{Model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, což značíme $\A\models T$. \emph{Třída modelů}\footnote{Připomeňme, že nemůžeme říkat `množina'.} teorie $T$ je:
+Na základě pojmu \emph{platnosti} vybudujeme syntaktickou terminologii obdobně jako ve výrokové logice. \emph{Teorie} jazyka $L$ je libovolná množina $T$ $L$-formulí, prvkům teorie říkáme \emph{axiomy}. \emph{Model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, což značíme $\A\models T$. \emph{Třída modelů}\footnote{Připomeňme, že nemůžeme říkat `množina'.} teorie $T$ je:
 $$
 \M_L(T)=\{\A\in\M_L\mid\A\models T\}
 $$
@@ -548,7 +548,7 @@ Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom říkáme, že $\va
 \end{itemize}
 Máme-li prázdnou teorii $T=\emptyset$ (tj. $\M(T)=\M_L$), potom teorii $T$ vynecháváme, píšeme $\models\varphi$, a říkáme, že $\varphi$ \emph{je pravdivá (v logice), (logicky) platí, je tautologie}; podobně pro ostatní pojmy.
 
-Teorie je \emph{sporná}, jestliže v ní platí \emph{spor} $\bot$, který v predikátové logice můžeme definovat jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,R_n)$, kde $R$ je libovolný (třeba první) relační symbol z jazyka nebo rovnost (nemá-li jazyk relační symbol, musí být s rovností). Teorie je sporná, právě když v ní platí každá formule, nebo, ekvivalentně, právě když nemá žádný model. Jinak říkáme, že je teorie \emph{bezesporná} (neplatí-li v ní spor, ekvivalentně má-li alespoň jeden model).
+Teorie je \emph{sporná}, jestliže v ní platí \emph{spor} $\bot$, který v predikátové logice můžeme definovat jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,R_n)$, kde $R$ je libovolný (třeba první) relační symbol z jazyka nebo rovnost (nemá-li jazyk relační symbol, musí být s rovností). Teorie je \emph{sporná}, právě když v ní platí každá formule, nebo, ekvivalentně, právě když nemá žádný model. Jinak říkáme, že je teorie \emph{bezesporná} (neplatí-li v ní spor, ekvivalentně má-li alespoň jeden model).
 
 \emph{Sentencím} pravdivým v $T$ říkáme \emph{důsledky} $T$; \emph{množina všech důsledků} $T$ v jazyce $L$ je:
 $$
@@ -803,12 +803,13 @@ Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Př
     \begin{enumerate}[(i)]
         \item $T'$ je extenzí teorie $T$, právě když redukt každého modelu $T'$ na jazyk $L$ je modelem $T$.
         \item Pokud je $T'$ extenzí teorie $T$, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$, potom je $T'$ je konzervativní extenzí teorie $T$.
-        
-        %todo ukázat i opačnou implikaci?
-
-        %$T'$ je konzervativní extenzí teorie $T$, právě když je extenzí, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$.
     \end{enumerate}
 \end{proposition}
+\begin{remark}
+    V části (ii) platí i opačná implikace, důkaz ale není tak jednoduchý, jako ve výrokové logice, a proto ho neuvedeme. (Problémem je jak získat z modelu $T$ který nelze expandovat na model $T'$ $L$-sentenci, která platí v $T$ ale ne v $T'$.)
+\end{remark} 
+%\todo ukázat i opačnou implikaci?
+%$T'$ je konzervativní extenzí teorie $T$, právě když je extenzí, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$.
 \begin{proof}
     Nejprve dokažme (i): Mějme model $\A'$ teorie $T'$ a označme jako $\A$ jeho redukt na jazyk $L$. Protože $T'$ je extenzí teorie $T$, platí v $T'$, a tedy i v $\A'$, každý axiom $\varphi\in T$. Potom ale i $\A\models\varphi$ ($\varphi$ obsahuje jen symboly z jazyka $L$), tedy $\A$ je modelem $T$.
 
@@ -994,7 +995,7 @@ Zkráceně totéž zapíšeme také jako $\varphi^\A(\bar x)=\{\bar a\in A^n\mid
 
 
 \begin{example}
-    Pro  $\varphi(x,y)=E(x,y)$ je $\varphi^{\mathcal G,v}(x,y)$ množina všech sousedů vrcholu 
+    Pro  $\varphi(x,y)=E(x,y)$ je $\varphi^{\mathcal G,v}(x,y)$ množina všech sousedů vrcholu $v$.
 \end{example}
 
 \begin{observation}

@@ -401,160 +401,105 @@ V modelu teorie $T$ platí všechny axiomy, tedy i všechny základní instance 
 
 
 \section{Unifikace}\label{section:unification}
-\todo
 
-\subsection{Substituce}\todo
+Místo substitucí \emph{všech} základních termů a práce s touto novou, obrovskou a typicky nekonečnou množinou klauzulí, je lepší najít v konkrétním rezolučním kroku `vhodnou' substituci a pracovat jen s ní. V této sekci vysvětlíme, co znamená `vhodná' (tzv. \emph{unifikace}) a jak ji lze hledat (pomocí \emph{unifikačního 
+algoritmu}).
 
-% from slides:
-\subsubsection*{Substituce - příklady}
+\subsection{Substituce}
+
+Nejprve uveďme několik příkladů `vhodných' substitucí:
+
+\begin{example}
+\begin{itemize}
+    \item Z klauzulí $\{P(x),Q(x,a)\}$ a $\{\neg P(y),\neg Q(b,y)\}$ získáme pomocí substituce $\{x/b,y/a\}$ klauzule $\{P(b),Q(b,a)\}$ a $\{P(b),\neg P(a)\}$, \mygreen{$y/a$}, a z nich potom rezolucí klauzuli $\{P(b),\neg P(a)\}$. Mohli bychom také použít substituci $\{x/y\}$ a rezolucí přes $P(y)$ získat rezolventu $\{Q(y,a),\neg Q(b,y)$.
+    \item Máme-li klauzule $\{P(x),Q(x,a),Q(b,y)\}$ a $\{\neg P(v),\neg Q(u,v)\}$, vhodnou substitucí je $\{x/b,y/a,u/b,v/a\}$; dostáváme $\{P(b),Q(b,a)\}$ a $\{\neg P(a),\neg Q(b,a)\}$, jejichž rezolventou je $\{P(b),\neg P(a)\}$.
+    \item Podívejme se ještě na klauzule $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$. Mohli bychom použít substituci $\{x/f(a),y/a,z/a\}$ a získat tak dvojici klauzulí $\{P(f(a)),Q(f(a),a)\}$ a $\{\neg P(a),\neg Q(f(a),a)\}$, rezolucí potom $\{P(f(a)),\neg P(a)\}$.
     
-    {\it Efektivnější je využívat vhodných substitucí. Např. pro}
-    \smallskip
-    
-    \begin{enumerate}
-    \item[$a)$] \mygreen{$\{P(x),Q(x,a)\}$}, \mygreen{$\{\neg P(y),\neg Q(b,y)\}$} substitucí \mygreen{$x/b$}, \mygreen{$y/a$} dostaneme
-    \smallskip
-    
-    \mygreen{$\{P(b),Q(b,a)\}$}, \mygreen{$\{\neg P(a),\neg Q(b,a)\}$} a z nich rezolucí \mygreen{$\{P(b),\neg P(a)\}$}.
-    \medskip
-    
-    Nebo substitucí \mygreen{$x/y$} a rezolucí dle \mygreen{$P(y)$} dostaneme \mygreen{$\{Q(y,a),\neg Q(b,y)\}$}.
-    \medskip
-    
-    \item[$b)$] \mygreen{$\{P(x),Q(x,a),Q(b,y)\}$}, \mygreen{$\{\neg P(v),\neg Q(u,v)\}$} substituce \mygreen{$x/b$}, \mygreen{$y/a$}, \mygreen{$u/b$}, \mygreen{$v/a$}
-    \smallskip
-    
-    dává \mygreen{$\{P(b),Q(b,a)\}$}, \mygreen{$\{\neg P(a),\neg Q(b,a)\}$} a z nich rezolucí \mygreen{$\{P(b),\neg P(a)\}$}.
-    \medskip
-    
-    \item[$c)$] \mygreen{$\{P(x),Q(x,z)\}$}, \mygreen{$\{\neg P(y),\neg Q(f(y),y)\}$} substitucí \mygreen{$x/f(z)$}, \mygreen{$y/z$} dostaneme
-    \smallskip
-    
-    \mygreen{$\{P(f(z)),Q(f(z),z)\}$}, \mygreen{$\{\neg P(z),\neg Q(f(z),z)\}$} a z nich \mygreen{$\{P(f(z)),\neg P(z)\}$}.
-    \medskip
-    
-    Při substituci \mygreen{$x/f(a)$}, \mygreen{$y/a$}, \mygreen{$z/a$} dostaneme \mygreen{$\{P(f(a)),Q(f(a),a)\}$},
-    \smallskip
-    
-    \mygreen{$\{\neg P(a),\neg Q(f(a),a)\}$} a z nich rezolucí \mygreen{$\{P(f(a)),\neg P(a)\}$}. Předchozí
-    \smallskip
-    
-    substituce je ale \myblue{obecnější}.
-    \end{enumerate}
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Substituce}
-    
+    Lepší ale bude využít substituce $\{x/f(z),y/z\}$, po které máme $\{P(f(z)),Q(f(z),z)\}$ a $\{\neg P(z),\neg Q(f(z),z)\}$, a rezolventu $\{P(f(z)),\neg P(z)\}$. Tato substituce je \emph{obecnejší}, a výsledná rezolventa `říká více' než $\{P(f(a)),\neg P(a)\}$ (ta je jejím důsledkem, ale naopak to neplatí).
+\end{itemize}
+\end{example}
+
+Nyní zavedeme potřebnou terminologii týkající se substitucí. Substituce budeme aplikovat na termy nebo na literály (atomické formule nebo jejich negace), označme tyto dohromady jako \emph{výrazy}. 
+
+\begin{definition}[Substituce]
+    \emph{Substituce} je konečná množina $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, kde $x_i$ jsou navzájem různé proměnné a $t_i$ jsou termy, přičemž vyžadujeme, aby term $t_i$ nebyl roven proměnné $x_i$. Substituce $\sigma$ je 
     \begin{itemize}
-    \item \mdef{Substituce} je (konečná) množina \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$}, kde $x_i$ jsou
-    \smallskip
-    
-    \myblue{navzájem  různé} proměnné a $t_i$ jsou termy, přičemž $t_i$ \myblue{není} $x_i$.
-    \smallskip
-    
-    \item Jsou-li všechny termy $t_i$ konstantní, je $\sigma$ \mdef{základní substituce}.
-    \smallskip
-    
-    \item Jsou-li $t_i$ navzájem různé proměnné, je $\sigma$ \mdef{přejmenování proměnných}.
-    \smallskip
-    
-    \item \mdef{Výraz} je literál nebo term. \emph{(Substituci lze aplikovat na výrazy.)}
-    \smallskip
-    
-    \item \mdef{Instance} výrazu $E$ \mdef{při substituci} \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz \mdef{$E\sigma$}
-    \smallskip
-    
-    vzniklý z $E$ \myblue{současným} nahrazením \myblue{všech} výskytů proměnných $x_i$ za $t_i$.
-    \smallskip
-    
-    \item Pro množinu výrazů $S$ označme \mdef{$S\sigma$} množinu instancí $E\sigma$ výrazů $E$ z $S$.
+        \item \emph{základní}, jsou-li všechny termy $t_i$ konstantní,
+        \item \emph{přejmenování proměnných}, jsou-li všechny termy $t_i$ navzájem různé proměnné.
     \end{itemize}
-    \smallskip
-    
-    {\it \myblue{Poznámka}\ \ Jelikož substituce je současná pro všechny proměnné zároveň,
-    \smallskip
-    
-    případný výskyt proměnné $x_i$ v termu $t_j$ nevede k zřetězení substitucí.}
-    \medskip
-    
-    \mygreen{\it Např. pro $S=\{P(x),R(y,z)\}$ a substituci $\sigma=\{x/f(y,z),y/x,z/c\}$ je
-    \vspace{-2mm}
-    $$S\sigma=\{P(f(y,z)),R(x,c)\}.$$}
-    
-    \vspace{-6mm}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Skládání substitucí}
-    {\it Zadefinujeme $\sigma\tau$ tak, aby $E(\sigma\tau)=(E\sigma)\tau$ pro každý výraz $E$.}
-    \medskip
-    
-    \mygreen{\it Např. pro $E=P(x,w,u)$, $\sigma=\{x/f(y),w/v\}$, $\tau=\{x/a,y/g(x),v/w,u/c\}$ je}
-    \vspace{-2mm}
-    \mygreen{$$E\sigma=P(f(y),v,u),\quad(E\sigma)\tau=P(f(g(x)),w,c).$$}
-    
-    \vspace{-6mm}
-    \mygreen{\it Pak by mělo být $\sigma\tau=\{x/f(g(x)),y/g(x),v/w,u/c\}$.}
-    \bigskip
-    
-    Pro substituce \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} a \mygreen{$\tau=\{y_1/s_1,\dots,y_n/s_n\}$} definujeme
-    \vspace{-1mm}
-  $$\\sigma\tau=\{x_i/t_i\tau\mid x_i\in X,\text{ $x_i$ není $t_i\tau$}\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}$$
-    
-    \vspace{-5mm}
-    \mdef{složenou substituci} $\sigma$ a $\tau$, kde $X=\{x_1,\dots,x_n\}$ a $Y=\{y_1,\dots,y_m\}$.
-    \bigskip
-    
-    {\it \myblue{Poznámka}\ \ Skládání substitucí není komutativní, např. pro uvedené $\sigma$ a $\tau$ je}
-    \vspace{-2mm}
-    \mygreen{$$\tau\sigma=\{x/a,y/g(f(y)),u/c,w/v\}\ne \sigma\tau.$$}
-    
-    \vspace{-6mm}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Skládání substitucí - vlastnosti}
-    {\it Ukážeme, že definice vyhovuje našemu požadavku a skládání je asociativní.}
-    \medskip
-    
-    {\bf \myblue{Tvrzení}}\ \ {\it Pro každý výraz $E$ a substituce $\sigma$, $\tau$, $\varrho$ platí}
-    \begin{enumerate}
-    \item[$(i)$] \mygreen{$(E\sigma)\tau=E(\sigma\tau)$},
-    \item[$(ii)$] \mygreen{$(\sigma\tau)\varrho=\sigma(\tau\varrho)$}.
-    \end{enumerate}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Nechť \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} a \mygreen{$\tau=\{y_1/s_1,\dots,y_m/s_m\}$}. Stačí uvážit
-    \smallskip
-    
-    případ, kdy $E$ je proměnná, řekněme $v$.
-    \smallskip
-    
-    \begin{enumerate}
-    \item[$(i)$] Je-li $v$ proměnná $x_i$ pro nějaké $i$, je \mygreen{$v\sigma=t_i$} a \mygreen{$(v\sigma)\tau=t_i\tau$}, což je $v(\sigma\tau)$
-    \smallskip
-    
-    dle definice $\sigma\tau$. Jinak \mygreen{$v\sigma=v$} a \mygreen{$(v\sigma)\tau=v\tau$}.
-    \smallskip
-    
-    \item[] Je-li $v$ proměnná $y_j$ pro nějaké $j$, je dále \mygreen{$(v\sigma)\tau=v\tau=s_j$}, což je $v(\sigma\tau)$
-    \smallskip
-    
-    dle definice $\sigma\tau$. Jinak \mygreen{$(v\sigma)\tau=v\tau=v$} a zároveň \mygreen{$v(\sigma\tau)=v$}.
-    \smallskip
-    
-    \item[$(ii)$] Opakovaným užitím $(i)$ dostaneme pro každý výraz $E$,
-    \vspace{-2mm}
-    \mygreen{$$E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho)).\quad\qed$$}
-    
-    \vspace{-6mm}
-    \end{enumerate}
-    
+    \emph{Instance} výrazu (termu nebo literálu) $E$\emph{při substituci $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz vzniklý z $E$ simultánním nahrazením všech výskytů proměnných $x_i$ termy $t_i$, označme jej $E\sigma$. Je-li $S$ množina výrazů, potom značíme $S\sigma=\{E\sigma\mid E\in S\}$.
+\end{definition}
+
+Protože proměnné nahrazujeme \emph{simultánně} pro všechny proměnné zároveň, případný výskyt proměnné $x_i$ v termu $t_j$ nepovede ke zřetězení substitucí.
+
+\begin{example}
+Například pro $S=\{P(x),R(y,z)\}$ a substituci $\sigma=\{x/f(y,z),y/x,z/c\}$ máme:
+$$
+S\sigma=\{P(f(y,z)),R(x,c)\}
+$$
+\end{example}
+
+Substituce můžeme přirozeně \emph{skládat}. Složení substitucí $\sigma$ a $\tau$, kde nejprve aplikujeme $\sigma$ a potom~$\tau$, budeme zapisovat jako $\sigma\tau$. Bude tedy platit $E(\sigma\tau)=(E\sigma)\tau$, pro libovolný výraz~$E$.
+
+\begin{example}\label{example:compose-substitutions}
+    Začněme opět příkladem. Máme-li výraz $E=P(x,w,u)$, a substituce \begin{align*}
+        \sigma&=\{x/f(y),w/v\}\\
+        \tau&=\{x/a,y/g(x),v/w,u/c\}
+    \end{align*}
+    potom je $E\sigma=P(f(y),v,u)$ a $(E\sigma)\tau=P(f(g(x)),w,c)$.
+    Musí tedy platit: 
+    $$
+    \sigma\tau=\{x/f(g(x)),y/g(x),v/w,u/c\}
+    $$
+\end{example}
+
+Nyní formální definice:
+
+\begin{definition}[Skládání substitucí]
+Mějme substituce $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_n/s_n\}$. \emph{Složení substitucí $\sigma$ a $\tau$} je substituce
+$$
+\sigma\tau=\{x_i/t_i\tau\mid x_i\in X,x_i\neq t_i\tau\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}
+$$
+kde $X=\{x_1,\dots,x_n\}$ a $Y=\{y_1,\dots,y_m\}$.
+\end{definition}
+
+Všimněte si, že skládání substitucí není komutativní, $\sigma\tau$ je typicky zcela jiná substituce než $\tau\sigma$.
+
+\begin{example}
+    Jsou-li $\sigma$ a $\tau$ jako v Příkladu \ref{example:compose-substitutions}, potom: 
+    $$
+    \tau\sigma=\{x/a,y/g(f(y)),u/c,w/v\}\neq \sigma\tau
+    $$
+\end{example}
+
+Nyní ukážeme, že takto definované skládání substitucí splňuje požadovanou vlastnosti, a také že je \emph{asociativní}. Z asociativity plyne, že nemusíme (a také nebudeme) psát závorky ve složení $\sigma\tau\varrho$, $\sigma_1\sigma_2\cdots\sigma_n$ apod.
+
+\begin{proposition}
+Mějme substituce $\sigma$, $\tau$, $\varrho$, a libovolný výraz $E$. Potom platí:
+\begin{enumerate}[(i)]
+    \item $(E\sigma)\tau=E(\sigma\tau)$
+    \item $(\sigma\tau)\varrho=\sigma(\tau\varrho)$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Nechť $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. Stačí dokázat v případě, kdy výraz $E$ je jediná proměnná, zbytek snadno plyne indukcí. (Substituce nijak nemění ostatní symboly.)
+
+Je-li $E=x_i$ pro nějaké $i$, potom $E\sigma=t_i$ a $(E\sigma)\tau=t_i\tau=E(\sigma\tau)$.
+
+\todo
+% Je-li $v$ proměnná $x_i$ pro nějaké $i$, je \mygreen{$v\sigma=t_i$} a \mygreen{$(v\sigma)\tau=t_i\tau$}, což je $v(\sigma\tau)$
+% dle definice $\sigma\tau$. Jinak \mygreen{$v\sigma=v$} a \mygreen{$(v\sigma)\tau=v\tau$}.
+% \item[] Je-li $v$ proměnná $y_j$ pro nějaké $j$, je dále \mygreen{$(v\sigma)\tau=v\tau=s_j$}, což je $v(\sigma\tau)$
+% dle definice $\sigma\tau$. Jinak \mygreen{$(v\sigma)\tau=v\tau=v$} a zároveň \mygreen{$v(\sigma\tau)=v$}.
+
+Tím jsme dokázali (i). Asociativitu (ii) nyní snadno dokážeme opakovaným užitím (i). Následující platí pro každý výraz $E$, tedy i pro $E\in\{x_1,\dots,x_n\}$:
+$$
+E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho)).
+$$
+Z toho plyne, že $(\sigma\tau)\varrho$ a $\sigma(\tau\varrho)$ jsou touž substitucí. (Podrobněji: používáme zřejmou vlastnost, že pro substituci $\pi=\{x_1/v_1,\dots,x_n/v_n\}$ a $E=x_i$ platí $E\pi=v_i$.)
+\end{proof}    
+
 % :from slides
 
 \subsection{Unifikační algoritmus}\todo

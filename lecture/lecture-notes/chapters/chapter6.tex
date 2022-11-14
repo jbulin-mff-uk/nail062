@@ -454,7 +454,7 @@ $$
 Zbývá definovat pravdivostní hodnotu pro kvantifikátory, tj. formule tvaru $(Qx)\varphi$. Budeme potřebovat následující značení: Změníme-li v ohodnocení $e:\Var\to A$ hodnotu pro proměnnou $x$ na $a$, výsledné ohodnocení zapíšeme jako $e(x/a)$. Platí tedy $e(x/a)(x)=a$. Pravdivostní hodnotu pro $(Qx)\varphi$ definujeme takto:
 \begin{align*}
     \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
-    \mathrm{PH}^\A((\forall x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
+    \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
 \end{align*}
 Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
 \end{definition}
@@ -499,7 +499,7 @@ Shrňme několik jednoduchých vlastností, nejprve týkajících se platnosti p
     \item $\A\models(\exists x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro nějaké $a\in A$.
     \item Je-li term $t$ substituovatelný za proměnnou $x$ do formule $\varphi$, potom
     $$
-    A\models\varphi(x/t)[e]\text{ právě když }A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e].
+    \A\models\varphi(x/t)[e]\text{ právě když }\A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e].
     $$
     \item Je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$.
 \end{itemize}

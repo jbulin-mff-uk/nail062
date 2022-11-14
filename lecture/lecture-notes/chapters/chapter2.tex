@@ -558,7 +558,7 @@ Využijeme následujícího pozorování: Nahradíme-li nějaký podvýrok $\psi
     $$
     (\neg p\lor q\lor \neg r) \land (p\lor \neg q) \land (p \lor r) 
     $$
-    Při převodu do DNF bychom postupovali obdobně, opakovanou aplikací distributivity. Zde vyjdeme v CNF formy a zkombinujeme každý literál z první klauzule s každým literálem z druhé a s každým literálem z třetí klauzule. Všimneme si, že stejný literál nemusíme v elementární konjunkci opakovat dvakrát, a že obsahuje-li elementární klauzule dvojici opačných literálů, je sporná, a můžeme ji tedy v DNF vynechat. Také můžeme vynechat elementární konjunkci $E'$, pokud máme jinou elementární konjunkci $E$ takovou, že $E'$ obsahuje všechny literály obsažené v $E$, např. $E=p\land \neg r$ a $E'=(p\land q \land \neg r)$. (Rozmyslete si proč, a zformulujte duální zjednodušení při převodu do CNF.) Výsledný výrok v DNF je:
+    Při převodu do DNF bychom postupovali obdobně, opakovanou aplikací distributivity. Zde vyjdeme v CNF formy a zkombinujeme každý literál z první klauzule s každým literálem z druhé a s každým literálem z třetí klauzule. Všimneme si, že stejný literál nemusíme v elementární konjunkci opakovat dvakrát, a že obsahuje-li elementární klauzule dvojici opačných literálů, je sporná, a můžeme ji tedy v DNF vynechat. Také můžeme vynechat elementární konjunkci $E$, pokud máme jinou elementární konjunkci $E'$ takovou, že $E'$ obsahuje všechny literály obsažené v $E$, např. $E=p\land \neg r$ a $E'=(p\land q \land \neg r)$. (Rozmyslete si proč, a zformulujte duální zjednodušení při převodu do CNF.) Výsledný výrok v DNF je:
     $$
     (\neg p \land \neg q\land r) \lor (p\land q \land r) \lor (p\land \neg r)
     $$

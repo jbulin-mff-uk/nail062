@@ -252,7 +252,7 @@ Tento výrok je nesplnitelný, neboť obsahuje dvojici opačných jednotkových 
 Shrňme si nyní algoritmus pro řešení problému Horn-SAT: 
 
 \begin{algorithm}[Horn-SAT]
-\textbf{vstup}: Vstup: výrok $\varphi$ v Hornově tvaru, výstup: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
+\textbf{vstup}: výrok $\varphi$ v Hornově tvaru, \textbf{výstup}: model $\varphi$ nebo informace, že $\varphi$ není splnitelný
 \begin{enumerate}
     \item Pokud $\varphi$ obsahuje dvojici opačných jednotkových klauzulí $\ell,\overline{\ell}$, není splnitelný.
     \item Pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnoť všechny zbývající proměnné 0.
@@ -292,7 +292,7 @@ Na závěr kapitoly o problému splnitelnosti si představíme zdaleka nejpouž�
 Algoritmus používá jednotkovou propagaci spolu s následujícím pozorováním: Řekneme, že literál $\ell$ má \emph{čistý výskyt} v $\varphi$, pokud se vyskytuje ve $\varphi$, ale opačný literál $\overline{\ell}$ se ve $\varphi$ nevyskytuje. Máme-li literál s čistým výskytem, můžeme jeho hodnotu nastavit na 1, a splnit (a odstranit) tak všechny klauzule, které ho obsahují. Pokud výrok neumíme takto zjednodušit, rozvětvíme výpočet dosazením obou možných hodnot pro vybranou výrokovou proměnnou.
 
 \begin{algorithm}[DPLL]
-    \textbf{vstup}: Vstup: výrok $\varphi$ v CNF, výstup: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
+    \textbf{vstup}: výrok $\varphi$ v CNF, \textbf{výstup}: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
     \begin{enumerate}                
         \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, a nahraď $\varphi$ výrokem $\varphi^\ell$.
          \item Dokud existuje literál $\ell$, který má ve $\varphi$ čistý výskyt, ohodnoť $\ell$ hodnotou 1, a odstraň klauzule obsahující $\ell$.

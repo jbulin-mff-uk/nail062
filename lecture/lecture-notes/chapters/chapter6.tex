@@ -83,7 +83,7 @@ Kromě běžných symbolů relací, funkcí a konstant (známých např. z logik
     \item Struktura v prázdné signatuře $\langle\ \rangle$ je libovolná neprázdná množina.\footnote{Jak uvidíme v definici níže, formálně vzato je to trojice $\langle A,\emptyset,\emptyset\rangle$, ale tento rozdíl budeme zanedbávat.} (Nemusí být konečná, dokonce ani spočetná!)
     \item Struktura v signatuře grafů je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \emph{orientovaný graf}. 
     \begin{itemize}
-        \item Je-li $E$ irreflexivní a symetrická, jde o \emph{jednoduchý} graf (tj. neorientovaný, bez smyček).
+        \item Je-li $E$ ireflexivní a symetrická, jde o \emph{jednoduchý} graf (tj. neorientovaný, bez smyček).
         \item Je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \emph{částečné uspořádání}.
         \item Je-li $E$ reflexivní, tranzitivní, a symetrická, mluvíme o \emph{ekvivalenci}.
     \end{itemize}
@@ -171,7 +171,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
 \emph{Strom termu $t$}, označme $\Tree(t)$, je definován podobně jako strom výroku, v listech jsou proměnné nebo konstantní symboly, ve vnitřních vrcholech jsou funkční symboly, jejichž arita je rovna počtu synů.
 
 \begin{example}\label{example:terms}
-    Nakresleme stormy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
+    Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
     Na obrázku~\ref{figure:terms} jsou nakresleny stromy těchto termů.
     
     \begin{figure}\label{figure:terms}
@@ -358,7 +358,7 @@ Všimněte si, že požadavek na proměnnou $y$ z definice varianty je vždy spl
     Mějme formuli $\varphi=(\exists x)(\forall y)(x\leq y)$. Potom:
 \begin{itemize}
     \item $(\exists y)(\forall y)(y\leq y)$ není varianta $\varphi$, neboť $y$ není substituovatelná za $x$ do $\varphi$,
-    \item $(\exists x)(\forall x)(x\leq x)$ není varianta $\varphi$, neboť $x$ má volný výskyt $\psi=(x\leq y)$,
+    \item $(\exists x)(\forall x)(x\leq x)$ není varianta $\varphi$, neboť $x$ má volný výskyt v podformuli $\psi=(x\leq y)$,
     \item $(\exists u)(\forall v)(u\leq v)$ je varianta $\varphi$.
 \end{itemize}   
 \end{example}
@@ -604,7 +604,7 @@ Uveďme několik příkladů důležitých teorií.
 $$
 T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
 $$
-Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická irreflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
+Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
 \begin{itemize}
     \item Formule $\neg x=y\limplies E(x,y)$ platí v grafu, právě když je \emph{úplný}. Je tedy nezávislá v $T_\text{graph}$.
     \item Formule $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$ vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
@@ -621,7 +621,7 @@ Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle
 \end{align*}
 Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzitivita}. Modely $T$ jsou $L$-struktury $\langle S,\leq^S\rangle$, ve kterých platí axiomy $T$, tzv. \emph{(částečně) uspořádané množiny}. Např: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ pro $X=\{0,1,2\}$.
 \begin{itemize}
-    \item Formule $x\leq y\lor y\leq x$ (\emph{linearita}) platí v $\A$, ale neplatí v $\B$, neboť neplatí např. při ohodnocení kde $e(x)=\emptyset$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
+    \item Formule $x\leq y\lor y\leq x$ (\emph{linearita}) platí v $\A$, ale neplatí v $\B$, neboť neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
     \item Sentence $(\exists x)(\forall y)(y\leq x)$ (označme ji $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je tedy také nezávislá v $T$.
     \item Formule $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (označme ji $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \emph{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
 \end{itemize}
@@ -654,7 +654,7 @@ Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzit
     $$
     \item \emph{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \emph{existence inverzního prvku k $\cdot$} a \emph{netriviality}:
     $$
-    T_5 = T_4 \cup \{\neg (x=y) \limplies (\exists y)(x\cdot y = 1, \neg (0=1)\}
+    T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1), \neg\,0=1\}
     $$
     \item \emph{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \emph{kompatibility uspořádání}: $x\leq y\limplies (x+z\leq y+z)$ a $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$. (Modely jsou tedy tělesa s \emph{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi v tomto smyslu.)
 \end{itemize}

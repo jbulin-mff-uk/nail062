@@ -217,7 +217,7 @@ Definice v této části jsou téměř identické odpovídajícím definicím z 
     \emph{Tablo důkaz} sentence $\varphi$ z teorie $T$ je \emph{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) dokazatelná} z $T$, píšeme $T\proves\varphi$. (Definujme také \emph{tablo zamítnutí} jako sporné tablo s $\mathrm{T}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) zamítnutelná} z $T$, tj. platí $T\proves\neg\varphi$.)  
     \begin{itemize}
         \item Tablo je \emph{sporné}, pokud je každá jeho větev sporná.
-        \item Větev je \emph{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \emph{bezesporná}.
+        \item Větev je \emph{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějakou sentenci $\psi$, jinak je \emph{bezesporná}.
         \item Tablo je \emph{dokončené}, pokud je každá jeho větev dokončená.
         \item Větev je \emph{dokončená}, pokud 
         \begin{itemize}
@@ -350,7 +350,7 @@ Stejný jako ve ve výrokové logice, viz důkaz Důsledku \ref{corollary:finite
 Ve stejné sekci jsme si ukázali konstrukci \emph{systematického tabla}. Tu lze také snadno adaptovat na predikátovou logiku. Musíme zajistit, abychom někdy zredukovali každou položku, použili každý axiom, a nově v predikátové logice také substituovali každý $L_C$ term $t_i$ za proměnnou v položkách typu `všichni'.
 
 \begin{definition}
-Mějme položku $R$ a teorii $T=\{\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+Mějme položku $R$ a teorii $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
 
 Buď $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položu typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný). Potom $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $v$, kde
 \begin{itemize}
@@ -474,7 +474,7 @@ Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytujíc�
 Připomeňme stručně myšlenku důkazu Věty o korektnosti: Pokud by existoval důkaz a zároveň protipříklad, protipříklad by se musel shodovat s některou větví důkazu, ty jsou ale všechny sporné. Důkaz je tedy téměř stejný jako ve výrokové logice.
 
 \begin{theorem}[O korektnosti]
-Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravdivý v $T$, tj. $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
+Je-li sentence $\varphi$ tablo dokazatelná z teorie $T$, potom je $\varphi$ pravdivá v $T$, tj. $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
 \end{theorem}
 
 \begin{proof}

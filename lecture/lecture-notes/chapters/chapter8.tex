@@ -392,7 +392,7 @@ Na závěr této sekce vyslovíme dva důsledky Herbrandovy věty.
 Sentence $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$ je pravdivá, právě když $(\forall x_1)\dots(\forall x_n)\neg\varphi$ je nesplnitelná, neboli když $\neg\varphi$ je nesplnitelná. Tvrzení plyne z Herbrandovy věty aplikované na formuli $\neg\varphi$.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{corollary:herbrands-theorem-corollary-ground}
     Mějme otevřenou teorii $T$ v jazyce s alespoň jedním konstantním symbolem. Teorie $T$ má model, právě když má model teorie $T_\text{ground}$ sestávající ze všech základních instancí axiomů teorie $T$.
 \end{corollary}
 \begin{proof}
@@ -566,7 +566,7 @@ $$
 \end{itemize}     
 \end{example}
 
-\begin{proposition}
+\begin{proposition}\label{proposition:unification-algorithm}
 Unifikační algoritmus je korektní. Pro každý vstup $S$ skončí v konečně mnoha krocích, a je-li $S$ unifikovatelná, odpoví nejobecnější unifikaci $\sigma$, jinak odpoví, že $S$ není unifikovatelná.
 
 Je-li $S$ unifikovatelná, potom pro sestrojenou nejobecnější unifikaci $\sigma$ navíc platí, že je-li $\tau$ libovolná unifikace, potom $\tau=\sigma\tau$.
@@ -600,7 +600,7 @@ Chceme-li dokázat, že $T\models\varphi$, umíme díky Skolemizaci najít CNF f
 V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzení bude velmi podobná výrokové logice. Jediným podstatným rozdílem bude \emph{rezoluční pravidlo}.
 
 
-\subsection{Rezoluční pravidlo}\todo
+\subsection{Rezoluční pravidlo}
 
 Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
@@ -611,215 +611,151 @@ Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u
 \begin{definition}[Rezoluční pravidlo]
     Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných a nechť jsou tvaru
     $$
-    C_1=C'_1\sqcup \{A_1,\dots,A_n\},\quad C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\}
+    C_1=C_1'\sqcup \{A_1,\dots,A_n\},\quad C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}
     $$
-    kde $n,m\ge 1$ a množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ lze unifikovat.\footnote{Symbol $\sqcup$ označuje \emph{disjunktní sjednocení}.} Buď $\sigma$ nejobecnější unifikace $S$.\footnote{Připomeňme, že unifikace znamená, že $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} \emph{Rezolventa} klauzulí $C_1$ a $C_2$ je potom klauzule
+    kde $n,m\ge 1$ a množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ lze unifikovat.\footnote{Symbol $\sqcup$ označuje \emph{disjunktní sjednocení}.} Buď $\sigma$ nejobecnější unifikace $S$.\footnote{Připomeňme, že unifikace znamená, že $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} \emph{Rezolventa} klauzulí $C_1$ a $C_2$ je následující klauzule:
     $$
-    C=C'_1\sigma \cup C'_2\sigma
+    C=C_1'\sigma \cup C_2'\sigma
     $$
-    Jsou-li $C_1,C_2$ klauzule obsahující stejnou proměnnou, dovolíme si nejprve přejmenovat jejich proměnné: Označme $C_1^*$, $C_2^*$ varianty těchto klauzulí, které už mají disjunktní množiny proměnných. Potom libovolné rezolventě $C_1^*$, $C_2^*$ říkáme i rezoventa $C_1$ a $C_2$.
 \end{definition}
 
-\begin{remark}
-    Proč potřebujeme disjunktní množiny proměnných? Z klauzulí $\{\{P(x)\},\{\neg P(f(x))\}\}$ můžeme získat prázdnou klauzuli $\square$, pokud nahradíme např. klauzuli $\{\{P(x)\}$ klauzulí $\{\{P(y)\}$. Množina výrazů $\{P(x),\neg P(f(x))\}$ ale není unifikovatelná.
+\begin{remark}\label{remark:resolution-step-rename}
+    Podmínku o disjunktních množinách proměnných můžeme vždy splnit, pokud přejmenujeme proměnné v jedné z klauzulí. Proč je to potřeba? Například, z klauzulí $\{\{P(x)\},\{\neg P(f(x))\}\}$ můžeme získat prázdnou klauzuli $\square$, pokud nahradíme klauzuli $\{P(x)\}$ klauzulí $\{\{P(y)\}$. Množina výrazů $\{P(x),\neg P(f(x))\}$ ale není unifikovatelná, bez přejmenování proměnných by to tedy nešlo.
 \end{remark}
 
 
-\subsection{Rezoluční důkaz}\todo
+\subsection{Rezoluční důkaz}
 
-% from slides:
+Jakmile máme definované rezoluční pravidlo, můžeme zavést \emph{rezoluční důkaz} a související pojmy. Definice budou stejné jako ve výrokové logice, s jedním rozdílem: dovolíme si přejmenovat proměnné v klauzulích, viz Poznámka \ref{remark:resolution-step-rename}.
 
-\subsubsection*{Rezoluční důkaz}
-    {\it Pojmy zavedeme jako ve VL, jen navíc dovolíme přejmenování proměnných.}
-    \smallskip
-    
+
+\begin{definition}[Rezoluční důkaz]
+    \emph{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
+    taková, že pro každé $i$ je 
     \begin{itemize}
-    \item \mdef{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \myblue{konečná}
-    \smallskip
-    
-    posloupnost $C_0,\dots,C_n=C$ taková, že pro každé $i\le n$ je $C_i=C'_i\sigma$,
-    \smallskip
-    
-    kde $C'_i\in S$ a $\sigma$ je přejmenování proměnných, nebo je $C_i$ rezolventou
-    \smallskip
-    
-    nějakých dvou předchozích klauzulí (i stejných).
-    \smallskip
-    
-    \item Klauzule $C$ je (rezolucí)  \mdef{dokazatelná} z $S$, psáno $S \vdash_R C$, pokud má
-    \smallskip
-    
-    rezoluční důkaz z $S$.
-    \smallskip
-    
-    \item \mdef{Zamítnutí} formule $S$ je rezoluční důkaz $\Box$ z $S$.
-    \smallskip
-    
-    \item $S$ je (rezolucí) \mdef{zamítnutelná}, pokud $S \vdash_R \Box$.
+        \item buď $C_i=C_i'\sigma$ pro nějakou klauzuli $C_i\in S$ a přejmenování proměnných $\sigma$, nebo
+        \item $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
     \end{itemize}
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \  Eliminace více literálů najednou je někdy nezbytná, např.
-    \smallskip
-    
-    \mygreen{$S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$} je rezolucí zamítnutelná, ale nemá
-    \smallskip
-    
-    zamítnutí, při kterém by se v každém kroku eliminoval pouze jeden literál.}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Příklad rezoluce}
-    Mějme teorii \mygreen{$T=\{\neg P(x,x),\ P(x,y) \to P(y,x),\ P(x,y)\mand P(y,z)\to P(x,z)\}$}.
-    \medskip
-    
-    Je \mygreen{$T\models (\exists x)\neg P(x,f(x))$}? Tedy, je následující formule $T'$ nesplnitelná?
-    \vspace{-1mm}
-    \mygreen{$$T'=\{\{\neg P(x,x)\},\{\neg P(x,y),P(y,x)\},\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{P(x,f(x))\}\}$$}
-    
-    \vspace{-2mm}
+    Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.
+\end{definition}
+
+\begin{remark}
+    Proč potřebujeme v rezolučním kroku odstranit více literálů z jedné klauzule najednou? Uvažte formuli $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$. Ta je rezolucí zamítnutelná, ale neexistuje zamítnutí, které by v každém kroku eliminovalo jen jeden literál.
+\end{remark}
+
+Nyní si ukážeme příklad použití rezoluční metody k důkazu platnosti sentence.
+
+\begin{example}\label{example:resolution-proof-predicate}
+Nechť $T=\{\neg P(x,x),P(x,y) \limplies P(y,x), P(x,y)\land P(y,z)\to P(x,z)\}$ a nechť $\varphi$ je sentence $(\exists x)\neg P(x,f(x))$. Chceme ukázat, že $T\models\varphi$. Teorie $T\cup\{\neg\varphi\}$ je ekvisplnitelná (v tomto případě dokonce ekvivalentní) s následující CNF formulí:
+$$S=\{\{\neg P(x,x)\},\{\neg P(x,y),P(y,x)\},\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{P(x,f(x))\}\}$$
+Ukážeme, že $S\proves_R\square$. Rezolučním důkazem je například následující posloupnost:
+\begin{align*}
+    &\{\neg P(x,y),\neg P(y,z), P(x,z)\},
+    \{P(x',f(x'))\},
+    \{\neg P(f(x),z),P(x,z)\},
+    \{\neg P(x,y),P(y,x)\},\\
+    &\{P(x',f(x'))\},
+    \{P(f(x'),x')\},
+    \{P(x,x)\},
+    \{P(x',x')\},
+    \square   
+\end{align*}
+Názornější je ale rezoluční strom, který je znázorněný na Obrázku \ref{figure:resolution-tree-example}.
+\end{example}
+
+\begin{figure}
+\label{figure:resolution-tree-example}
     \centerline{\includegraphics[scale=0.8]{files/rezolucePLpriklad}}
-    
-    
-% :from slides
+    \todo
+    % \begin{forest}
+    % for tree={grow=north}
+    % [$ \square $
+    %     [$ \{\neg r\} $
+    %         [{$ \{p, \neg r\} $}]
+    %         [{$ \{\neg p, \neg r\} $}]
+    %     ]
+    %     [$ \{r\} $
+    %         [{$ \{\neg p, r\} $}]
+    %         [{$ \{p,r\} $}
+    %             [{$ \{p,\neg q, r\} $}]
+    %             [{$ \{q, r\} $}]                
+    %         ]
+    %     ]
+    % ]
+    % \end{forest}
+\caption{Rezoluční zamítnutí formule $S$ z Příkladu \ref{example:resolution-proof-predicate}. U každého rezolučního kroku je zapsána použitá unifikace.}
+\end{figure}
+
 
 
 \section{Korektnost a úplnost}\label{section:predicate-resolution-soundness-completeness}
-\todo
 
-% from slides:
-
-% :from slides
+V této sekci dokážeme, že rezoluční metoda je i v predikátové logice korektní a úplná.
 
 \subsection{Věta o korektnosti}\todo
 
-% from slides:
-{\it Nejprve ukážeme, že obecné rezoluční pravidlo je korektní.}
-\medskip
+Začneme důkazem korektnosti rezolučního pravidla. Princip je stejný jako u analogického pozorování ve výrokové logice. Důkaz je o trochu techničtější:
 
-{\bf \myblue{Tvrzení}}\ \ {Nechť $C$ je rezolventa klauzulí $C_1$, $C_2$. Pro každou $L$-strukturu $\mathcal{A}$,}
-\vspace{-2mm}
-$$\mathcal{A}\models C_1\ \ \text{a}\ \ \mathcal{A}\models C_2\quad \Rightarrow \quad \mathcal{A}\models C.$$
+\begin{proposition}[Korektnost rezolučního kroku]
+Mějme klauzule $C_1$, $C_2$ a nechť $C$ je jejich rezolventou. Platí-li v nějaké struktuře $\A$ klauzule $C_1$ a $C_2$, potom v ní platí i $C$.
+\end{proposition}
+\begin{proof}
+Z definice rezolučního pravidla víme, že klauzule a jejich rezolventu lze vyjádřit jako $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, a $C=C_1'\sigma \cup C_2'\sigma$, kde $\sigma$ je
+nejobecnější unifikace množiny výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$, neboli $S\sigma=\{A_1\sigma\}$.
 
-\vspace{-1mm}
-{\it \myblue{Důkaz}}\ \ Nechť \mygreen{$C_1=C'_1\sqcup \{A_1,\dots,A_n\}$}, \mygreen{$C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\}$}, $\sigma$ je
-\smallskip
+Protože klauzule $C_1$ a $C_2$ jsou otevřené formule platné v $\A$, platí v $\A$ i jejich instance po substituci $\sigma$ tj. máme $\A\models C_1\sigma$ a $\A\models C_2\sigma$. Víme také, že $C_1\sigma=C_1'\sigma \cup \{A_1\sigma\}$ a podobně $C_2\sigma=C_2'\sigma \cup \{\neg A_1\sigma\}$.
 
-nejobecnější unifikace pro \mygreen{$S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$} a \mygreen{$C=C'_1\sigma \cup C'_2\sigma$}.
-\smallskip
+Naším cílem je ukázat, že $\A\models C[e]$ pro libovolné ohodnocení proměnných $e$. Pokud $\A\models A_1\sigma[e]$, potom $\A\not\models\neg A_1\sigma[e]$ a musí být $\A\models C_2'\sigma$. Tedy i $\A\models C$. V opačném případě $\A\not\models A_1\sigma[e]$, musí tedy platit $\A\models C_1'\sigma$, a opět $\A\models C$.
+\end{proof}
 
-\begin{itemize}
-\item Jelikož $C_1$, $C_2$ jsou otevřené, platí i $\mathcal{A}\models C_1\sigma$ a $\mathcal{A}\models C_2\sigma$.
-\smallskip
+Znění i důkaz Věty o korektnosti jsou nyní stejné jako ve výrokové logice:
 
-\item Máme \mygreen{$C_1\sigma=C'_1\sigma \cup \{S\sigma$\}} a \mygreen{$C_2\sigma=C'_2\sigma \cup \{\neg(S\sigma)\}$}.
-\smallskip
+\begin{theorem}[O korektnosti rezoluce]\label{theorem:soundness-of-predicate-resolution}
+    Pokud je CNF formule $S$ rezolucí zamítnutelná, potom je nesplnitelná.
+\end{theorem}
+\begin{proof}
+    Víme, že $S\proves_R\square$, vezměme tedy nějaký rezoluční důkaz $\square$ z $S$. Kdyby existoval model $\A\models S$, díky korektnosti rezolučního pravidla bychom mohli dokázat indukcí podle délky důkazu, že i $\A\models\square$, což ale není možné.
+\end{proof}
 
-\item Ukážeme, že $\mathcal{A}\models C[e]$ pro každé $e$.
-\smallskip
-Je-li $\mathcal{A}\models S\sigma[e]$, pak $\mathcal{A}\models C'_2\sigma[e]$ a tedy $\mathcal{A}\models C[e]$.
-\smallskip
-Jinak $\mathcal{A}\not\models S\sigma[e]$, pak $\mathcal{A}\models C'_1\sigma[e]$ a tedy $\mathcal{A}\models C[e]$. $\qed$
-\end{itemize}
-\medskip
 
-{\bf \myblue{Věta (korektnost)}}\ \ {\it Je-li formule $S$ rezolucí zamítnutelná, je $S$ nesplnitelná.}
-\medskip
+\subsection{Věta o úplnosti}
 
-{\it \myblue{Důkaz}}\ \ Nechť $S \vdash_R \Box$. Kdyby $\mathcal{A}\models S$ pro nějakou strukturu $\mathcal{A}$, z korektnosti
-\smallskip
+Větu o úplnosti rezoluce v predikátové logice, totiž že nesplnitelné formule lze zamítnout rezolucí, dokážeme převedením na případ výrokové logiky. Ukážeme, že rezoluční důkaz `na úrovni výrokové logiky' je možné `zvednout' (`lift') na úroveň predikátové logiky.
 
-rezolučního pravidla by platilo i $\mathcal{A} \models \Box$, což není možné. $\quad\mqed$
-% :from slides
+Klíčem je následující lemma, které zaručuje takové `zvednutí' v jednom rezolučním kroku. Jeho důkaz je poněkud technický. 
 
-\subsection{Lifting lemma}\todo
+\begin{lemma}\label{lemma:lifting-lemma}
+Mějme klauzule $C_1$ a $C_2$ (s disjunktní množinou proměnných). Nechť $C^*_1=C_1\tau_1$ a $C^*_2=C_2\tau_2$ jsou jejich základní instance.
 
-% from slides:
-\subsubsection*{Lifting lemma}
-    {\it Rezoluční důkaz na úrovni VL lze ``zdvihnout'' na úroveň PL.}
-    \medskip
-    
-    {\bf \myblue{Lemma}}\ \ {\it Nechť $C^*_1=C_1\tau_1$, $C^*_2=C_2\tau_2$ jsou \myblue{základní instance} klauzulí $C_1$, $C_2$
-    \smallskip
-    
-    \myblue{neobsahující stejnou proměnnou} a $C^*$ je rezolventa $C^*_1$ a $C^*_2$. Pak existuje
-    \smallskip
-    
-    rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*=C\tau_1\tau_2$ je základní instance $C$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Předpokládejme, že $C^*$ je rezolventa $C_1^*$, $C_2^*$ přes \myblue{literál}  $P(t_1,\dots,t_k)$.
-    \vspace{0.5mm}
-    
-    \begin{itemize}
-    \item Pak lze psát \mygreen{$C_1=C'_1 \sqcup \{A_1,\dots,A_n\}$} a \mygreen{$C_2=C'_2 \sqcup \{\neg B_1,\dots,\neg B_m\}$}, kde
-    \smallskip
-    
-    \mygreen{$\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$} a \mygreen{$\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$}.
-    \smallskip
-    
-    \item Tedy $(\tau_1\tau_2)$ unifikuje $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ a je-li $\sigma$ \myblue{mgu} pro $S$
-    \smallskip
-    
-    z unifikačního algoritmu, pak \mygreen{$C=C'_1\sigma \cup C'_2\sigma$} je rezolventa $C_1$ a $C_2$.
-    \smallskip
-    
-    \item Navíc $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$ z vlastnosti $(*)$ pro $\sigma$ a tedy
-    \vspace{-2mm}
-    \mygreen{\begin{align*}
-    C\tau_1\tau_2&= (C'_1\sigma \cup C'_2\sigma)\tau_1\tau_2=C'_1\sigma\tau_1\tau_2 \cup C'_2\sigma\tau_1\tau_2=C'_1\tau_1 \cup C'_2\tau_2\\
+Je-li $C^*$ je rezolventou $C^*_1$ a $C^*_2$, potom existuje rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*=C\tau_1\tau_2$ je základní instancí $C$.
+\end{lemma}
+\begin{proof}
+Nechť $C^*$ je rezolventou $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že klauzule $C_1$ a $C_2$ můžeme vyjádřit jako $C_1=C_1' \sqcup \{A_1,\dots,A_n\}$ a $C_2=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\}$, kde $\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$ a $\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$.
+
+To znamená, že $(\tau_1\tau_2)$ je unifikuje množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Nyní vezměme nejobecnější unifikaci $\sigma$ pro $S$ získanou pomocí Unifikačního algoritmu. Jako $C$ zvolme rezolventu $C=C_1'\sigma \cup C_2'\sigma$.
+
+Zbývá ukázat, že $C^*=C\tau_1\tau_2$. Díky vlastnosti `navíc' z Tvrzení \ref{proposition:unification-algorithm} o korektnosti Unifikačního algoritmu víme, že $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, což využíváme ve třetí rovnosti z následujícího výpočtu:
+\begin{align*}
+    C\tau_1\tau_2&= (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2=C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2=C_1'\tau_1 \cup C_2'\tau_2\\
     &=(C_1\setminus\{A_1,\dots,A_n\})\tau_1\cup (C_2\setminus\{\neg B_1,\dots,\neg B_m\})\tau_2\\
-    &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})=C^*. \qed
-    \end{align*}}
-    \end{itemize}
-    
-    
-    \vspace{-8mm}
-    
-% :from slides
+    &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})=C^*
+\end{align*}
+\end{proof}
 
-\subsection{Věta o úplnosti}\todo
+Indukcí podle délky rezolučního důkazu snadno získáme následující důsledek:
 
-% from slides:
-\subsubsection*{Úplnost}
-    {\bf \myblue{Důsledek}}\ \ {\it Nechť $S'$ je množina všech základních instancí klauzulí formule $S$.
-    \smallskip
-    
-    Je-li $S'\vdash_R C'$ (na úrovni VL), kde $C'$ je základní klauzule, pak existuje
-    \smallskip
-    
-    klauzule $C$ a základní substituce $\sigma$ t.ž. $C'=C\sigma$ a $S\vdash_R C$ (na úrovni PL).}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Indukcí dle délky rezolučního odvození pomocí lifting lemmatu. $\qed$
-    \bigskip
-    
-    {\bf \myblue{Věta (úplnost)}}\ \ {\it Je-li formule $S$ nesplnitelná, je $S\vdash_R \square$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Je-li $S$ nesplnitelná, dle (důsledku) Herbrandovy věty je nesplnitelná i
-    \smallskip
-    
-    množina $S'$ všech základních instancí klauzulí z $S$.
-    \vspace{0.5mm}
-    
-    \begin{itemize}
-    \item Dle úplnosti rezoluční metody ve VL je $S' \vdash_R \square$ (na úrovni VL).
-    \smallskip
-    
-    \item Dle předchozího důsledku existuje klauzule $C$ a substituce $\sigma$ taková, že
-    \smallskip
-    
-    $\square = C\sigma$ a $S\vdash_R C$ (na úrovni PL).
-    \smallskip
-    
-    \item Jediná klauzule, jejíž instance je $\square$, je klauzule $C=\square$. \qed
-    \end{itemize}
-    
-    
-   
-% :from slides
+\begin{corollary}\label{corollary:lifting}
+Mějme CNF formuli $S$ a označme jako $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ (`na úrovni výrokové logiky') pro nějakou základní klauzuli $C^*$, potom existuje základní klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni predikátové logiky').
+\end{corollary}
+
+Nyní už je snadné dokázat úplnost:
+
+\begin{theorem}[O úplnosti rezoluce]\label{theorem:completeness-of-predicate-resolution}
+    Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
+\end{theorem}
+\begin{proof}
+Označme jako $S^*$ množinu všech základních instancí klauzulí z $S$. Protože je $S$ nesplnitelná, je díky Herbrandově větě (konkrétně Důsledek \ref{corollary:herbrands-theorem-corollary-ground}) nesplnitelná i $S^*$. Z věty o úplnosti \emph{výrokové} rezoluce víme, že $S^*\proves_R\square$ (`na úrovni výrokové logiky'). Z lifting lemmatu (resp. z Důsledku \ref{corollary:lifting}) dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni predikátové logiky'). Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.
+\end{proof}
 
 
 \section{LI-rezoluce}\label{section:predicate-LI-resolution}

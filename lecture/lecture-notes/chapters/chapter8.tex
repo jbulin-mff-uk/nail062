@@ -594,43 +594,36 @@ Je-li $u\neq x$, potom $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. V p�
 
 
 \section{Rezoluční metoda}\label{section:predicate-resolution-method}
-\todo
+
+Chceme-li dokázat, že $T\models\varphi$, umíme díky Skolemizaci najít CNF formuli $S$, která je nesplnitelná, právě když je nesplnitelná teorie $T\cup\{\neg\varphi\}$, neboli právě když $T\models\varphi$. Stačí tedy najít rezoluční zamítnutí $S$.
+
+V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzení bude velmi podobná výrokové logice. Jediným podstatným rozdílem bude \emph{rezoluční pravidlo}.
+
 
 \subsection{Rezoluční pravidlo}\todo
 
-% from slides:
-Nechť klauzule $C_1$, $C_2$ neobsahují stejnou proměnnou  a jsou ve tvaru
-\vspace{-2mm}
-\mygreen{$$C_1=C'_1\sqcup \{A_1,\dots,A_n\},\quad C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\},$$}
+Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
-\vspace{-6mm}
-kde \mygreen{$S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$} lze unifikovat a $n,m\ge 1$. Pak klauzule
-\vspace{-2mm}
-\mdef{$$C=C'_1\sigma \cup C'_2\sigma,$$}
+\begin{example}
+Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
+\end{example}
 
-\vspace{-6mm}
-kde $\sigma$ je \myblue{nejobecnější unifikace} pro $S$, je \mdef{rezolventa} klauzulí $C_1$ a $C_2$.
-\bigskip
+\begin{definition}[Rezoluční pravidlo]
+    Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných a nechť jsou tvaru
+    $$
+    C_1=C'_1\sqcup \{A_1,\dots,A_n\},\quad C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\}
+    $$
+    kde $n,m\ge 1$ a množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ lze unifikovat.\footnote{Symbol $\sqcup$ označuje \emph{disjunktní sjednocení}.} Buď $\sigma$ nejobecnější unifikace $S$.\footnote{Připomeňme, že unifikace znamená, že $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} \emph{Rezolventa} klauzulí $C_1$ a $C_2$ je potom klauzule
+    $$
+    C=C'_1\sigma \cup C'_2\sigma
+    $$
+    Jsou-li $C_1,C_2$ klauzule obsahující stejnou proměnnou, dovolíme si nejprve přejmenovat jejich proměnné: Označme $C_1^*$, $C_2^*$ varianty těchto klauzulí, které už mají disjunktní množiny proměnných. Potom libovolné rezolventě $C_1^*$, $C_2^*$ říkáme i rezoventa $C_1$ a $C_2$.
+\end{definition}
 
-\mygreen{\it Např. v klauzulích $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$ lze unifikovat}
-\smallskip
+\begin{remark}
+    Proč potřebujeme disjunktní množiny proměnných? Z klauzulí $\{\{P(x)\},\{\neg P(f(x))\}\}$ můžeme získat prázdnou klauzuli $\square$, pokud nahradíme např. klauzuli $\{\{P(x)\}$ klauzulí $\{\{P(y)\}$. Množina výrazů $\{P(x),\neg P(f(x))\}$ ale není unifikovatelná.
+\end{remark}
 
-\mygreen{$S=\{Q(x,z),Q(f(y),y)\}$ pomocí nejobecnější unifikace $\sigma=\{x/f(y),z/y\}$}
-\smallskip
-
-\mygreen{a získat z nich rezolventu $\{P(f(y)),\neg P(y)\}$.}
-\bigskip
-
-{\it \myblue{Poznámka}\ \ Podmínce o různých proměnných lze vyhovět přejmenováním
-\smallskip
-
-proměnných v rámci klauzule. Je to nutné, např. z \mygreen{$\{\{P(x)\},\{\neg P(f(x))\}\}$}
-\smallskip
-
-lze po přejmenování získat\ \ $\square$, ale \mygreen{$\{P(x),P(f(x))\}$} nelze unifikovat.}
-
-
-% :from slides
 
 \subsection{Rezoluční důkaz}\todo
 

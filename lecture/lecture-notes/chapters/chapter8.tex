@@ -571,9 +571,6 @@ Unifikační algoritmus je korektní. Pro každý vstup $S$ skončí v konečně
 
 Je-li $S$ unifikovatelná, potom pro sestrojenou nejobecnější unifikaci $\sigma$ navíc platí, že je-li $\tau$ libovolná unifikace, potom $\tau=\sigma\tau$.
 \end{proposition}
-% \begin{remark}
-%     
-% \end{remark}\todo explain?
 \begin{proof}
 V každém kroku $k$ eliminujeme nějakou proměnnou, algoritmus tedy musí skončit. Pokud algoritmus skončí neúspěchem v kroku $k$, potom nelze unifikovat množinu $S_k$. Lze snadno nahlédnout, že v tom případě nelze unifikovat ani $S$.
 
@@ -665,24 +662,22 @@ Názornější je ale rezoluční strom, který je znázorněný na Obrázku \re
 
 \begin{figure}
 \label{figure:resolution-tree-example}
-    \centerline{\includegraphics[scale=0.8]{files/rezolucePLpriklad}}
-    \todo
-    % \begin{forest}
-    % for tree={grow=north}
-    % [$ \square $
-    %     [$ \{\neg r\} $
-    %         [{$ \{p, \neg r\} $}]
-    %         [{$ \{\neg p, \neg r\} $}]
-    %     ]
-    %     [$ \{r\} $
-    %         [{$ \{\neg p, r\} $}]
-    %         [{$ \{p,r\} $}
-    %             [{$ \{p,\neg q, r\} $}]
-    %             [{$ \{q, r\} $}]                
-    %         ]
-    %     ]
-    % ]
-    % \end{forest}
+\begin{forest}
+    for tree={l=1.5cm, grow=north}
+    [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$x'/x$}}
+        [{$ \{\neg P(x',x')\} $}]
+        [{$ \{P(x,x)\} $}, label=left:{\footnotesize\textcolor{blue}{$z/x,x'/x$}}
+            [{$ \{P(f(x'),x')\} $}, label=right:{\footnotesize\textcolor{blue}{$x/x',y/f(x')$}}
+                [{$ \{P(x',f(x'))\} $}]
+                [{$ \{\neg P(x,y),P(y,x)\} $}]            
+            ]
+            [{$ \{\neg P(f(x),z),P(x,z)\} $}, label=left:{\footnotesize\textcolor{blue}{$y/f(x'),x'/x$}}
+                [{$ \{P(x',f(x'))\} $}]
+                [{$ \{\neg P(x,y),\neg P(y,z), P(x,z) \} $}]                
+            ]
+        ]
+    ]
+    \end{forest}
 \caption{Rezoluční zamítnutí formule $S$ z Příkladu \ref{example:resolution-proof-predicate}. U každého rezolučního kroku je zapsána použitá unifikace.}
 \end{figure}
 
@@ -754,95 +749,64 @@ Nyní už je snadné dokázat úplnost:
     Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
 \end{theorem}
 \begin{proof}
-Označme jako $S^*$ množinu všech základních instancí klauzulí z $S$. Protože je $S$ nesplnitelná, je díky Herbrandově větě (konkrétně Důsledek \ref{corollary:herbrands-theorem-corollary-ground}) nesplnitelná i $S^*$. Z věty o úplnosti \emph{výrokové} rezoluce víme, že $S^*\proves_R\square$ (`na úrovni výrokové logiky'). Z lifting lemmatu (resp. z Důsledku \ref{corollary:lifting}) dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni predikátové logiky'). Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.
+Označme jako $S^*$ množinu všech základních instancí klauzulí z $S$. Protože je $S$ nesplnitelná, je díky Herbrandově větě (konkrétně Důsledek \ref{corollary:herbrands-theorem-corollary-ground}) nesplnitelná i $S^*$. Z věty o úplnosti \emph{výrokové} rezoluce víme, že $S^*\proves_R\square$ (`na úrovni výrokové logiky'). Z Lifting lemmatu (resp. z Důsledku \ref{corollary:lifting}) dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni predikátové logiky'). Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.
 \end{proof}
 
 
 \section{LI-rezoluce}\label{section:predicate-LI-resolution}
-\todo
 
-% from slides:
-\subsubsection*{Lineární rezoluce}
-    {\it Stejně jako ve VL, rezoluční metodu lze značně omezit (bez ztráty úplnosti).}
-    %\medskip
-    
+V této sekci připomeneme pojmy \emph{lineárního a linear-input důkazu}, \emph{LI-rezoluci} a její úplnost pro Hornovské formule. Definice i znění vět jsou stejné jako ve výrokové logice, důkaz lze provést převedením na výrokovou logiku opět pomocí Herbrandovy věty a Lifting lemmatu.
+
+\begin{definition}[Lineární a LI důkaz]
+    \emph{Lineární důkaz} (rezolucí) klauzule $C$ z formule $S$ je konečná posloupnost
+    $$
+    \begin{bmatrix}
+        C_0 \\
+        B_0
+    \end{bmatrix},
+    \begin{bmatrix}
+        C_1 \\
+        B_1
+    \end{bmatrix},\dots,
+    \begin{bmatrix}
+        C_n \\
+        B_n
+    \end{bmatrix},
+    C_{n+1}
+    $$
+    kde $C_i$ říkáme \emph{centrální} klauzule, $C_0$ je \emph{počáteční}, $C_{n+1}=C$ je \emph{koncová}, $B_i$ jsou \emph{boční} klauzule, a platí:
     \begin{itemize}
-    \item \mdef{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost dvojic
-    \smallskip
-    
-     $(C_0,B_0),\dots,(C_n,B_n)$ t.ž. $C_0$ je \myblue{varianta} klauzule v $S$ a pro každé $i\le n$
-    \smallskip
-    
-    \begin{enumerate}
-    \item[{\normalsize $i)$}] {\normalsize $B_i$ je varianta klauzule v $S$ nebo $B_i=C_j$ pro nějaké $j<i$, a}
-    \medskip
-    
-    \item[{\normalsize $ii)$}] {\normalsize $C_{i+1}$ je rezolventa $C_i$ a $B_i$, kde $C_{n+1}=C$.}
-    \smallskip
-    
-    \end{enumerate}
-    
-    \item $C$ je \mdef{lineárně dokazatelná} z $S$, psáno $S \vdash_L C$, má-li lineární důkaz z $S$.
-    \smallskip
-    
-    \item \mdef{Lineární zamítnutí} $S$ je lineární důkaz $\Box$ z $S$.
-    \smallskip
-    
-    \item $S$ je \mdef{lineárně zamítnutelná}, pokud $S \vdash_L \Box$.
+        \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
+        \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
     \end{itemize}
-    \medskip
+    \emph{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$.
     
-    {\bf \myblue{Věta}}\ \ {\it $S$ je lineárně zamítnutelná, právě když $S$ je nesplnitelná.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ $(\Rightarrow)$ Každý lineární důkaz lze transformovat na rezoluční důkaz.
-    \smallskip
-    
-    $(\Leftarrow)$ Plyne z úplnosti lineární rezoluce ve VL (nedokazováno), neboť lifting
-    \smallskip
-    
-    lemma zachovává \myblue{linearitu} odvození. $\qed$
-    %\medskip
-    
-    %{\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. je-li $S$ nesplnitelná, je $S$ lineárně zamítnutelná.}
-    %Důkaz v dodatku.
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{LI-rezoluce}
-    {\it Stejně jako ve VL, pro Hornovy formule můžeme lineární rezoluci dál omezit.}
-    
-    \begin{itemize}
-    \item \mdef{LI-rezoluce} \emph{(``linear input'')} z formule $S$ je lineární rezoluce z $S$, ve které
-    \vspace{0.5mm}
-    
-    je každá boční klauzule $B_i$ variantou klauzule ze (vstupní) formule $S$.
-    \item Je-li klauzule $C$ dokazatelná LI-rezolucí z $S$, píšeme \mdef{$S\vdash_{LI} C$}.
-    \smallskip
-    
-    \item \mdef{Hornova formule} je množina (i nekonečná) Hornových klauzulí.
-    \item \mdef{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál.
-    \item \mdef{Fakt} je (Hornova) klauzule $\{p\}$, kde $p$ je pozitivní literál.
-    \item \mdef{Pravidlo} je (Hornova) klauzule s právě jedním pozitivním a aspoň jedním
-    \vspace{0.5mm}
-    
-    negativním literálem. Pravidla a fakta jsou \mdef{programové klauzule}.
-    \item \mdef{Cíl} je neprázdná (Hornova) klauzule bez pozitivního literálu.
-    \end{itemize}
-    \smallskip
-    
-    {\bf \myblue{Věta}}\ \ {\it Je-li Hornova $T$ splnitelná a $T\cup \{G\}$ nesplnitelná pro cíl $G$, lze $\Box$
-    \smallskip
-    
-    odvodit LI-rezolucí z $T\cup\{G\}$ začínající $G$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Plyne z Herbrandovy věty, stejné věty ve VL a lifting lemmatu. $\qed$
-    
-    
-% :from slides
+    \emph{LI-důkaz} je lineární důkaz, ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud existuje LI-důkaz, říkáme, že je $C$ \emph{LI-dokazatelná} z $S$, a píšeme $S\proves_{LI}C$. Pokud $S\proves_{LI}\square$, je $S$ \emph{LI-zamítnutelná}.
+\end{definition}
+
+V Poznámce \ref{remark:linear-resolution} jsme poznamenali, že `lineární' rezoluce (založená na lineárních důkazech) je úplná. Důkaz byl ponechán jako cvičení. Stejné tvrzení platí i v predikátové rezoluci:
+
+\begin{theorem}[O úplnosti lineární rezoluce]
+Klauzule $C$ má lineární důkaz z CNF formule $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
+\end{theorem}
+\begin{proof}
+Z lineárního důkazu snadno vyrobíme rezoluční strom. Opačná implikace plyne z Poznámky \ref{remark:linear-resolution} a z Lifting lemmatu (jehož použití zachovává linearitu rezolučního důkazu).
+\end{proof}
+
+\subsection{Úplnost LI-rezoluce pro Hornovy formule}
+
+Připomeňme terminologii týkající se hornovskosti a programů: \emph{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál. \emph{Hornova formule} je (konečná, nebo i nekonečná) množina Hornových klauzulí.
+\emph{Fakt} je pozitivní jednotková (Hornova) klauzule, \emph{pravidlo} je (Hornova) klauzule s právě jedním pozitivním a alespoň jedním negativním literálem, a \emph{cíl} je neprázdná (Hornova) klauzule bez pozitivního literálu. Pravidlům a faktům říkáme \emph{programové klauzule}.
+
+Stejně jako ve výrokové logice, LI-rezoluce je úplná pro Hornovské formule:
+
+\begin{theorem}[O úplnosti LI-rezoluce pro Hornovy formule]\label{theorem:completeness-of-li-resolution-for-horn-predicate}
+Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.   
+\end{theorem}
+\begin{proof}
+    Plyne z analogické věty ve výrokové logice, z Herbrandovy věty, a z Lifting lemmatu
+\end{proof}
+
 
 \subsection{(draft) Rezoluce v Prologu}\todo
 

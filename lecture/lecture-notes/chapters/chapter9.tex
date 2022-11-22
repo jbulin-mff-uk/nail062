@@ -101,7 +101,7 @@ Z Tvrzení \ref{propositon:efficient-complete-simple} potom plyne rozhodnutelnos
 \end{corollary}
 
 
-\subsection{Důsledky Löwenheim-Skolemovy věty}\todo
+\subsection{Důsledky Löwenheim-Skolemovy věty}
 
 V Sekci \ref{subsection:loewenheim-skolem-theorem} jsme dokázali tzv. Löwenheim-Skolemovu větu, konkrétně její variantu pro jazyky bez rovnosti:
 
@@ -109,75 +109,49 @@ V Sekci \ref{subsection:loewenheim-skolem-theorem} jsme dokázali tzv. Löwenhei
     Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
 \end{theorem-unnumbered}
 
+Tato věta má následující jednoduchý důsledek:
 
+\begin{corollary}\label{corollary:loewenheim-skolem-without-equality}
+    Je-li $L$ spočetný jazyk bez rovnosti, potom ke každé $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
+\end{corollary}
+\begin{proof}
+    Mějme $L$-strukturu $\A$. Teorie $\Th(\A)$ je bezesporná (má model $\A$), tedy dle Löwenheim-Skolemovy má spočetně nekonečný model $\B\models\Th(\A)$. To ale znamená, že $\B\equiv\A$.
+\end{proof}
+V jazyce bez rovnosti tedy nemůžeme vyjádřit například `model má právě 42 prvků'.
 
+V důkazu Löwenheim-Skolemovy věty jsme sestrojený model získali jako kanonický model pro bezespornou větev tabla z $T$ pro položku $\F\bot$. Stejným způsobem se dokáže následující verze pro jazyky s rovností, stačí faktorizovat dle relace $=^A$:
 
-% from slides:
-{\it Pomocí kanonického modelu (s rovností) jsme dříve dokázali následující větu.}
-\medskip
+\begin{theorem-unnumbered}[Löwenheim-Skolemova s rovností]
+    Je-li $L$ spočetný jazyk s rovností, potom každá bezesporná $L$-teorie má spočetný model (tj. konečný, nebo spočetně nekonečný).
+\end{theorem-unnumbered}
 
-{\bf \myblue{Věta}}\ \ {\it Nechť $T$ je bezesporná teorie spočetného jazyka $L$. Je-li $L$ bez rovnosti,
-\smallskip
+I tato verze má snadný důsledek pro konkrétní struktury:
 
-má $T$ model, který je \myblue{spočetně nekonečný}. Je-li $L$ s rovností, má $T$ model,
-\smallskip
+\begin{corollary}\label{corollary:loewenheim-skolem-with-equality}
+    Je-li $L$ spočetný jazyk s rovností, potom ke každé \emph{nekonečné} $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
+\end{corollary}
+\begin{proof}
+    Mějme nekonečnou $L$-strukturu $\A$. Stejně jako v důkazu Důsledku \ref{corollary:loewenheim-skolem-without-equality} najdeme spočetně nekonečnou strukturu $\B\equiv\A$. Protože v $\A$ neplatí pro žádné $n\in\mathbb N$ sentence vyjadřující `existuje nejvýše $n$ prvků' (což lze pomocí rovnosti snadno zapsat), neplatí tato sentence ani v $\B$, $\B$ tedy nemůže být konečná struktura.
+\end{proof}
 
-který je \myblue{spočetný}.}
-\bigskip
+Tento důsledek použijeme, abychom ukázali, že existuje spočetné těleso, které je algebraicky uzavřené:  
 
-{\bf \myblue{Důsledek}}\ \ {\it Ke každé struktuře $\mathcal{A}$ spočetného jazyka \myblue{bez rovnosti} existuje
-\smallskip
+\subsubsection*{Spočetné algebraicky uzavřené těleso}
 
-\myblue{spočetně nekonečná} elementárně ekvivalentní struktura $\mathcal{B}$}.
-\medskip
+Těleso $\A$ je \emph{algebraicky uzavřené}, pokud každý polynom nenulového stupně v něm má kořen. Těleso reálných čísel $\mathbb R$ není algebraicky uzavřené, neboť $x^2+1$ nemá v $\mathbb R$ kořen, stejně tak těleso $\mathbb Q$ (v něm nemá kořen ani $x^2-2$). Těleso komplexních čísel $\mathbb C$ algebraicky uzavřené je, je ale nespočetné.
 
-{\it \myblue{Důkaz}}\ \ Teorie $\mathrm{Th}(\mathcal{A})$ je bezesporná, neboť má model $\mathcal{A}$. Dle předchozí věty
-\smallskip
+Algebraickou uzavřenost lze vyjádřit pomocí následujících sentencí $\psi_n$, pro každé $n>0$:
+$$
+(\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0 = 0
+$$
+kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$ (kde  $\cdot$ je aplikováno ($k-1$)-krát).
 
-má spočetně nek. model $\mathcal{B}$. Jelikož je teorie $\mathrm{Th}(\mathcal{A})$ kompletní, je $\mathcal{A}\equiv \mathcal{B}$. $\qed$
-\bigskip
-
-{\bf \myblue{Důsledek}}\ \ {\it Ke každé \myblue{nekonečné} struktuře $\mathcal{A}$ spočetného jazyka \myblue{s rovností}
-\smallskip
-
-existuje \myblue{spočetně nekonečná} elementárně ekvivalentní struktura $\mathcal{B}$}.
-\medskip
-
-{\it \myblue{Důkaz}}\ \ Obdobně jako výše. Jelikož v $\mathcal{A}$ neplatí sentence \emph{``existuje právě $n$
-prvků''} pro žádné $n \in \mathbb{N}$ a $\mathcal{A}\equiv \mathcal{B}$, není $B$ konečná, tedy je nekonečná. \qed
-% :from slides
-
-\subsection{Příklad: Spočetné algebraicky uzavřené těleso}\todo
-
-% from slides:
-Řekneme, že \myblue{těleso} $\mathcal{A}$ je \mdef{algebraicky uzavřené}, pokud v něm každý \myblue{polynom}
-\smallskip
-
-(nenulového stupně) má \myblue{kořen}, tj. pro každé $n\ge 1$ platí
-\vspace{-1mm}
-\mygreen{$$\mathcal{A}\models (\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0 = 0)$$}
-
-\vspace{-5mm}
-kde $y^k$ je zkratka za term $y\cdot y \cdot\ \dotsb\ \cdot y$ ( $\cdot$ aplikováno ($k-1$)-krát).
-\bigskip
-
-\mygreen{\it Např. těleso $\underline{\mathbb{C}}=\langle\mathbb{C},+,-,\cdot,0,1\rangle$ je algebraicky uzavřené, zatímco tělesa}
-\smallskip
-
-\mygreen{\it $\underline{\mathbb{R}}$ a $\underline{\mathbb{Q}}$ nejsou (neboť polynom $x^2 + 1$ v nich nemá kořen).}
-\bigskip
-
-{\bf \myblue{Důsledek}}\ \ {\it Existuje \myblue{spočetné} algebraicky uzavřené těleso}.
-\medskip
-
-{\it \myblue{Důkaz}}\ \ Dle předchozího důsledku existuje spočetná struktura (nekonečná),
-\smallskip
-
-která je elementárně ekvivalentní s tělesem $\underline{\mathbb{C}}$, tedy je to rovněž algebraicky
-\smallskip
-
-uzavřené těleso. $\qed$
-% :from slides
+\begin{corollary}
+    Existuje spočetné algebraicky uzavřené těleso.
+\end{corollary}
+\begin{proof}
+    Dle Důsledku \ref{corollary:loewenheim-skolem-with-equality} existuje spočetně nekonečná struktura $\A$ elementárně ekvivalentní tělesu $\mathbb C$. Protože $\mathbb C$ je těleso a splňuje sentence $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.
+\end{proof}
 
 
 \section{Izomorfismus struktur}\label{section:isomorphism-of-structures}\todo

@@ -1,122 +1,116 @@
-\chapter{(draft) Teorie modelů}\label{chapter:model-theory}
-\todo
+\chapter{Teorie modelů}\label{chapter:model-theory}
 
-% from slides:
-
-% :from slides
+V této kapitole se trochu vzdálíme typickým aplikacím logiky v informatice\footnote{Například použití rezoluce k řešení otázky, zda v dané konečné teorii $T$ platí daná sentence $\varphi$.} a nahlédneme o úroveň abstrakce výše, do oblasti \emph{matematické} logiky. \emph{Teorie modelů} se snaží popsat vztah mezi obecnými vlastnostmi teorií (predikátové logiky) a tříd jejich modelů. Nevyhneme se práci s nekonečnými teoriemi a s nekonečnými strukturami. Jde jen o ukázku několika vybraných výsledků, které jsou pro nás dostupné. Ani se nepokusíme obsáhnout všechny hlavní oblasti teorie modelů, která je velmi bohatá a hluboká. Do této kapitoly jsme také přidali materiál týkající se vlastností modelů, který se nehodil jinam.
 
 
-\section{Elementární ekvivalence}\todo
+\section{Elementární ekvivalence}
 
-% from slides:
+Nejprve se podíváme na několik vlastností souvisejících s pojmem \emph{elementární ekvivalence}. Připomeňme, že $L$-struktury $\A$ a $\B$ jsou \emph{elementárně ekvivalentní} ($\A\equiv \B$), pokud v nich platí tytéž $L$-sentence.
 
-\subsubsection*{Teorie struktury}
+V teorii modelů nás často zajímá, jaké vlastnosti (sentence) platí v dané, konkrétní struktuře:
 
-{\it Mnohdy nás zajímá, co platí v jedné konkrétní struktuře.}
-\bigskip
+\begin{definition}[Teorie struktury]
+Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$ je množina všech $L$-sentencí platných v $\A$:
+$$
+\Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
+$$
+\end{definition}
 
-%Nechť $\mathcal{A}$ je struktura pro jazyk $L$.
-%\smallskip
+\begin{example}
+Jako důležitý příklad vezměme \emph{standardní model aritmetiky}, strukturu $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$. Teorii $\Th(\underline{\mathbb{N}})$ říkáme \emph{aritmetika přirozených čísel}. V následující kapitole si ukážeme, že je \emph{(algoritmicky) nerozhodnutelná}.\footnote{Teorie $T$ je \emph{(algoritmicky) rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní sentenci $\varphi$ doběhne a odpoví, zda $T\models\varphi$.}
+\end{example}
 
-\mdef{Teorie struktury} $\mathcal{A}$ je množina \mdef{$\mathrm{Th}(\mathcal{A})$} \myblue{sentencí} (stejného jazyka) platných v $\mathcal{A}$.
-\medskip
+Několik jednoduchých vlastností teorie struktury shrneme v následujícím pozorování:
 
-{\it \myblue{Pozorování}\ \ Pro každou strukturu $\mathcal{A}$ a teorii $T$ jazyka $L$,
-\smallskip
+\begin{observation}
+    Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.
+    \begin{enumerate}[(i)]
+        \item Teorie $\Th(\A)$ je kompletní.
+        \item Je-li $\A\in\M_L(T)$, potom $\Th(\A)$ je (kompletní) jednoduchá extenze teorie $T$.
+        \item Pokud $\A\in\M_L(T)$ a $T$ je kompletní, potom je $\Th(\A)$ ekvivalentní s $T$, v tom případě $\Th(\A)=\Conseq_L(T)$.
+        
+    \end{enumerate}    
+\end{observation}
 
-\begin{enumerate}
-\item[$(i)$] $\mathrm{Th}(\mathcal{A})$ je \myblue{kompletní} teorie,
-\smallskip
+Pomocí pojmu \emph{teorie struktury} můžeme také vyjádřit elementární ekvivalenci, pro $L$-struktury $\A,\B$ platí:
+$$
+\A\equiv\B \text{ právě když }\Th(\A)=\Th(\B).
+$$
 
-\item[$(ii)$] je-li $\mathcal{A}\models T$, je $\mathrm{Th}(\mathcal{A})$ jednoduchá (kompletní) \myblue{extenze} teorie $T$,
-\smallskip
-
-\item[$(iii)$] je-li $\mathcal{A}\models T$ a $T$ je kompletní, je $\mathrm{Th}(\mathcal{A})$ \myblue{ekvivalentní} s $T$,
-\smallskip
-
-tj. $\theta^L(T)=\mathrm{Th}(\mathcal{A})$.
-\end{enumerate}}
-\medskip
-
-\mygreen{\it Např. pro $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$ je $\mathrm{Th}(\underline{\mathbb{N}})$ aritmetika přirozených čísel.}
-\bigskip
-
-{\it \myblue{Poznámka}\ \ Později uvidíme, že ačkoliv je $\mathrm{Th}(\underline{\mathbb{N}})$ kompletní teorie, je
-\smallskip
-
-(algoritmicky) \myblue{nerozhodnutelná.}}
+\begin{example}
+   Podívejme se standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
+   $$
+   \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z)
+   $$
+\end{example}
 
 
+\subsection{Kompletní jednoduché extenze}
 
+Máme-li teorii $T$, zajímá nás, jak vypadají její modely. Připomeňme, že:
 \begin{itemize}
-    \item Struktury $\mathcal{A}$ a $\mathcal{B}$ jazyka $L$ jsou \mdef{elementárně ekvivalentní}, psáno \mdef{$\mathcal{A}\equiv \mathcal{B}$},
-    \smallskip
-    
-    pokud v nich platí stejné formule (jazyka $L$), tj. $\mathrm{Th}(\mathcal{A})=\mathrm{Th}(\mathcal{B})$.
-    \medskip
-    
-    \mygreen{\it Např. $\langle\mathbb{R},\le\rangle\equiv\langle\mathbb{Q},\le\rangle$, ale $\langle\mathbb{Q},\le\rangle\not\equiv \langle\mathbb{Z},\le \rangle$, neboť v $\langle \mathbb{Z},\le \rangle$ má každý}
-    \smallskip
-    
-    \mygreen{\it prvek bezprostředního následníka, zatímco v $\langle \mathbb{Q},\le \rangle$ ne.}
-    %\mygreen{\it neexistuje nejmenší prvek, zatímco v druhé struktuře ano.}
-    %\models \varphi$ a $\mathcal{A}\models \varphi$ pro sentenci $\varphi$ tvaru $(\exists x)(\forall y)(x\le y)$ (tj. v $\mathcal{A}$ existuje nejmenší prvek, zatímco v $\langle \mathbb{Q},\le \rangle$ ne).}
-    \medskip
-    
-    \item $T$ je kompletní, právě když má až na el. ekvivalenci právě jeden model.
-    \medskip
-    
-    \mygreen{\it Např. teorie $DeLO$ hustých lineárních uspořádání bez konců je kompletní.}
-    \end{itemize}
-    \medskip
-    
-    {\it Zajímá nás, jak vypadají modely dané teorie (až na elementární ekvivalenci).}
-    \medskip
-    
-    {\it \myblue{Pozorování}\ \ Pro modely $\mathcal{A}, \mathcal{B}$ teorie $T$ platí $\mathcal{A}\equiv \mathcal{B}$, právě když $\mathrm{Th}(\mathcal{A})$, $\mathrm{Th}(\mathcal{B})$
-    \smallskip
-    
-    jsou \myblue{ekvivalentní} (jednoduché kompletní extenze teorie $T$).}
-    \bigskip
-    
-    {\it \myblue{Poznámka}\ \ Lze-li \myblue{efektivně} (\myblue{algoritmicky}) popsat pro efektivně danou teorii $T$,
-    \smallskip
-    
-    jak vypadají všechny její kompletní extenze, je $T$ (algoritmicky) \myblue{rozhodnutelná}.}
-    
-% :from slides
+    \item Teorie je \emph{kompletní}, právě když má jediný model až na elementární ekvivalenci.\footnote{Tedy všechny její modely jsou elementárně ekvivalentní.}
+    \item Modely teorie $T$ až na elementární ekvivalenci jednoznačně odpovídají kompletním jednoduchým extenzím $T$.
+\end{itemize}
+Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
 
-\subsection{Příklad: DeLO*}\todo
+\begin{proposition}\label{propositon:efficient-complete-simple}    
+    Pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který generuje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
+\end{proposition}
+\begin{proof}
+Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a tablo důkaz $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
+\end{proof}
 
-% from slides:
-Teorie \mdef{$DeLO^*$} \myblue{hustého lineárního uspořádání} jazyka $L=\langle \le \rangle$ s rovností je
-\vspace{-1mm}
-\begin{align*} &\mygreen{x\le x} &\text{(\myblue{reflexivita})} \\
-&\mygreen{x\le y\ \ \mand\ \ y\le x\ \ \to\ \ x=y}&\text{(\myblue{antisymetrie})}\\
-&\mygreen{x\le y\ \ \mand\ \ y \le z\ \ \to\ \ x\le z} &\text{(\myblue{tranzitivita})}\\
-&\mygreen{x\le y \ \ \mor\ \ y \le x} \qquad\qquad\quad\ \ &\text{(\myblue{dichotomie})}\\
-&\mygreen{x<y \ \ \to\ \ (\exists z)\ (x < z\ \mand\ z < y)} \ \ &\text{(\myblue{hustota})}\\
-&\mygreen{(\exists x)(\exists y)(x \ne y)} \ \ &\text{(\myblue{netrivialita})}
-\end{align*}
+Schopnost efektivně popsat všechny kompletní jednoduché extenze je poměrně vzácná, a vyžaduje silné předpoklady. Přesto to lze provést u mnoha důležitých teorií. Uveďme jeden příklad: \emph{teorii hustého lineárního uspořádání (dense linear order)}.
 
-\vspace{-1mm}
-kde `$x < y$' je zkratka za `$\mygreen{x \le y\ \mand\ x\ne y}$'.
-\bigskip
+\subsubsection{Příklad: DeLO*}
 
-Označme $\varphi$, $\psi$ sentence \mygreen{$(\exists x)(\forall y)(x\le y)$}, resp. \mygreen{$(\exists x)(\forall y)(y\le x)$}. Uvidíme, že
-\vspace{-1mm}
-\mygreen{\begin{align*}
-\quad DeLO\phantom{^+}&=DeLO^* \cup \{\neg \varphi, \neg \psi\},& DeLO^\pm&= DeLO^* \cup \{\varphi, \psi\},\qquad\\
-DeLO^+&= DeLO^* \cup \{\neg \varphi, \psi\},& DeLO^-&= DeLO^* \cup \{\varphi, \neg \psi\}
-\end{align*}}
+Teorie \emph{hustého lineárního uspořádání (DeLO*)}  je extenze teorie uspořádání o následující axiomy: 
+\begin{itemize}
+    \item axiom \emph{linearity} (někdy se mu říká také \emph{dichotomie}):
+    $$
+    x\leq y\lor y\leq x
+    $$
+    \item axiom \emph{hustoty}
+    $$
+    {x\leq y}\land{\neg\,x=y}\limplies(\exists z)(x\leq z\land z\leq y\land\neg\,z=x\land\neg\,z=y)
+    $$
+\end{itemize}
+Někdy se přidává i axiom \emph{netriviality} $(\exists x)(\exists y)(\neg\,x=y)$ zakazující jednoprvkový model. Tato teorie není kompletní, umíme ale popsat všechny její kompletní jednoduché extenze:
 
-\vspace{-5mm}
-jsou všechny (neekvivalentní) jednoduché kompletní extenze teorie $DeLO^*$.
+\begin{proposition}
+Mějme sentence $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$ vyjadřující existenci minimálního resp. maximálního prvku. Následující čtyři teorie jsou právě všechny kompletní jednoduché extenze teorie DeLO*:
+\begin{itemize}
+    \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
+    ,\neg\psi\}$
+    \item $\DeLO^+ = \DeLO^*\ \cup \ \{\neg\varphi
+    ,\psi\}$
+    \item $\DeLO^- = \DeLO^*\ \cup \ \{\varphi
+    ,\neg\psi\}$
+    \item $\DeLO^\pm = \DeLO^*\ \cup \ \{\varphi
+    ,\psi\}$        
+\end{itemize}
+\end{proposition}
 
-% :from slides
+Stačí ukázat, že tyto čtyři teorie jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat. Jak vysvětlíme v Sekci \ref{section:categoricity}, jejich kompletnost plyne z faktu, že jsou \emph{$\omega$-kategorické}, tj. mají jediný spočetný model až na elementární ekvivalenci. 
+
+Z Tvrzení \ref{propositon:efficient-complete-simple} potom plyne rozhodnutelnost:
+
+\begin{corollary}
+    Teorie DeLO* je (algoritmicky) rozhodnutelná.
+\end{corollary}
 
 
 \subsection{Důsledky Löwenheim-Skolemovy věty}\todo
+
+V Sekci \ref{subsection:loewenheim-skolem-theorem} jsme dokázali tzv. Löwenheim-Skolemovu větu, konkrétně její variantu pro jazyky bez rovnosti:
+
+\begin{theorem-unnumbered}[Löwenheim-Skolemova]
+    Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
+\end{theorem-unnumbered}
+
+
+
 
 % from slides:
 {\it Pomocí kanonického modelu (s rovností) jsme dříve dokázali následující větu.}
@@ -333,7 +327,8 @@ Připomeňme si pojem definovatelné množiny, viz Sekce \ref{section:definabili
     
 % :from slides
 
-\section{Kategorické teorie}\todo
+\section{Kategorické teorie}\label{section:categoricity}
+\todo
 
 % from slides:
 \begin{itemize}

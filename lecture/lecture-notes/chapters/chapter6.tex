@@ -569,7 +569,7 @@ Nemůžeme ale říci, že je teorie kompletní, právě když má jediný model
     Struktury $\A,\B$ (v témž jazyce) jsou \emph{elementárně ekvivalentní}, pokud v nich platí tytéž sentence. Značíme $\A\equiv\B$.
 \end{definition}
 
-\begin{example}
+\begin{example}\label{example:elementary-equivalence-of-orders-R-Q}
     Příkladem struktur, které jsou elementárně ekvivalentní, ale ne izomorfní, jsou uspořádané množiny $\A=\langle\mathbb Q,\leq\rangle$ a $\B=\langle\mathbb R,\leq\rangle$. Izomorfní nejsou proto, že $\mathbb Q$ je spočetná zatímco $\mathbb R$ nespočetná množina, neexistuje tedy dokonce žádná \emph{bijekce} mezi jejich univerzy. Není těžké ukázat, že pro každou sentenci $\varphi$ platí $\A\models\varphi\Leftrightarrow\B\models\varphi$: indukcí podle struktury formule $\varphi$, jediný netriviální případ je existenční kvantifikátor, a klíčovou vlastností je \emph{hustota} obou uspořádání, tj. následující vlastnost:
     $$
     (x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)

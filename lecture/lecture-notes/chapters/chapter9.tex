@@ -54,14 +54,12 @@ Máme-li teorii $T$, zajímá nás, jak vypadají její modely. Připomeňme, ž
 \end{itemize}
 Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
 
-\begin{proposition}\label{propositon:efficient-complete-simple}    
-    Pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který generuje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
-\end{proposition}
-\begin{proof}
-Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a tablo důkaz $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
-\end{proof}
+\begin{remark}
+    Jednu z motivací, proč se zabývat kompletními jednoduchými extenzemi, je Tvrzení \ref{propositon:efficient-complete-simple} z následující kapitoly, které říká, že pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který postupně vygeneruje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
+\end{remark}
 
-Schopnost efektivně popsat všechny kompletní jednoduché extenze je poměrně vzácná, a vyžaduje silné předpoklady. Přesto to lze provést u mnoha důležitých teorií. Uveďme jeden příklad: \emph{teorii hustého lineárního uspořádání (dense linear order)}.
+
+Schopnost (efektivně) popsat všechny kompletní jednoduché extenze je poměrně vzácná, a vyžaduje silné předpoklady. Přesto to lze provést u mnoha důležitých teorií. Uveďme jeden příklad: \emph{teorii hustého lineárního uspořádání (dense linear order)}.
 
 \subsubsection{Příklad: DeLO*}
 
@@ -93,12 +91,6 @@ Mějme sentence $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\f
 \end{proposition}
 
 Stačí ukázat, že tyto čtyři teorie jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat. Jak vysvětlíme v Sekci \ref{section:categoricity}, jejich kompletnost plyne z faktu, že jsou \emph{$\omega$-kategorické}, tj. mají jediný spočetný model až na \emph{izomorfismus}. Viz Důsledek \ref{corollary:complete-simple-extensions-of-delo}.
-
-Z Tvrzení \ref{propositon:efficient-complete-simple} potom plyne rozhodnutelnost:
-
-\begin{corollary}
-    Teorie DeLO* je (algoritmicky) rozhodnutelná.
-\end{corollary}
 
 
 \subsection{Důsledky Löwenheim-Skolemovy věty}
@@ -425,12 +417,12 @@ Je-li $K$ konečně axiomatizovatelná, potom je axiomatizovatelná i konečně 
 
 Naopak, nechť $T$ a $S$ jsou teorie takové, že $\M(T)=K$ a $\M(S)=\overline{K}$. Uvažme teorii $T\cup S$. Tato teorie je sporná, neboť:
 $$
-\M(T\cup S)=\M(T)\cap \M(S)=K\cap\overline{K}\emptyset
+\M(T\cup S)=\M(T)\cap \M(S)=K\cap\overline{K}=\emptyset
 $$
-Podle věty o kompaktnosti\footnote{Vidíte, jak je užitečná!} existují konečné podteorie $T'\subseteq T$ a $S'\subseteq S$ takové, že 
+Podle věty o kompaktnosti\footnote{Vidíte, jak je užitečná!} existují konečné podteorie $T'\subseteq T$ a $S'\subseteq S$ takové, že:
 $$
 \emptyset = \M(T'\cup S')=\M(T')\cap \M(S')
-$$.
+$$
 Nyní si všimněme, že platí
 $$
 \M(T)\subseteq \M(T')\subseteq \overline{\M(S')}\subseteq \overline{\M(S)}=\M(T)

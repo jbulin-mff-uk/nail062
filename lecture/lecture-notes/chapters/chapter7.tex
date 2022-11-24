@@ -66,7 +66,7 @@ Redukce položek funguje stejně, použijeme tatáž atomická tabla pro logick�
     \item typ ``\emph{svědek}'': položky tvaru $\mathrm{T}(\exists x)\varphi(x)$ a $\mathrm{F}(\forall x)\varphi(x)$
     \item typ ``\emph{všichni}'': položky tvaru $\mathrm{T}(\forall x)\varphi(x)$ a $\mathrm{F}(\exists x)\varphi(x)$    
 \end{itemize}
-Příklady vidíme v tablech na Obrázku \ref{figure:predicate-tableau-examples} (`svědci' jsou červeně, `všichni' modře).
+Příklady vidíme v tablech na Obrázku \ref{figure:predicate-tableau-intro-examples} (`svědci' jsou červeně, `všichni' modře).
 
 Kvantifikátor nemůžeme pouze odstranit, neboť výsledná formule $\varphi(x)$ by nebyla sentencí. Místo toho současně s odstraněním kvantifikátoru \emph{substituujeme} za $x$ nějaký \emph{konstantní term}, v nové položce tedy bude \emph{sentence} $\varphi(x/t)$. Jaký konstantní term $t$ substituujeme záleží na tom, zda jde o položku typu ``svědek'' nebo ``všichni''. 
 
@@ -76,7 +76,7 @@ Jazyk $L$ teorie $T$, ve které dokazujeme, rozšíříme o spočetně mnoho \em
 \subsubsection{Svědci}
 Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Zde používáme větu o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
 
-Na Obrázku \ref{figure:predicate-tableau-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
+Na Obrázku \ref{figure:predicate-tableau-intro-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
 
 \subsubsection{Všichni}
 Při redukci položky typu ``všichni'' substituujeme za proměnnou $x$ libovolný \emph{konstantní term} $t$ rozšířeného jazyka $L_C$. Z položky tvaru $\T(\forall x)\varphi(x)$ tedy získáme položku $\T\varphi(x/t)$. 
@@ -85,7 +85,7 @@ Aby byla bezesporná větev \emph{dokončená}, budou na ní ale muset být polo
 
 Ve výrokové logice jsme používali konvenci, že při připojování atomických tabel vynecháváme jejich kořeny (jinak bychom opakovali na větvi tutéž položku dvakrát). V predikátové logice použijeme stejnou konvenci, ale \emph{s výjimkou položek typu `svědek'}. U těch zapíšeme i kořen připojovaného atomického tabla. Proč to děláme? Abychom si připomněli, že s touto položkou ještě nejsme hotovi, že musíme připojit atomická tabla s jinými konstantními termy.
 
-Na Obrázku \ref{figure:predicate-tableau-examples} v levém tablu \emph{není} položka $\T(\forall x)P(x)$ \emph{redukovaná}. Její \emph{první výskyt} (4. vrchol shora) jsme zredukovali, substituujeme term $t=c_0$, máme tedy $\varphi(x/t)=P(c_0)$. Připojili jsme atomické tablo v sestávající z téže položky v kořeni $\T(\forall x)P(x)$, kterou do tabla \emph{zapíšeme}, a z položky $\T P(c_0)$ pod ní. Zatímco \emph{první výskyt} položky $\T(\forall x)P(x)$ je tímto redukovaný, \emph{druhý výskyt} (7. vrchol shora) redukovaný není. Podobně pro položku $\F(\exists x)\neg P(x)$ v pravém tablu.
+Na Obrázku \ref{figure:predicate-tableau-intro-examples} v levém tablu \emph{není} položka $\T(\forall x)P(x)$ \emph{redukovaná}. Její \emph{první výskyt} (4. vrchol shora) jsme zredukovali, substituujeme term $t=c_0$, máme tedy $\varphi(x/t)=P(c_0)$. Připojili jsme atomické tablo v sestávající z téže položky v kořeni $\T(\forall x)P(x)$, kterou do tabla \emph{zapíšeme}, a z položky $\T P(c_0)$ pod ní. Zatímco \emph{první výskyt} položky $\T(\forall x)P(x)$ je tímto redukovaný, \emph{druhý výskyt} (7. vrchol shora) redukovaný není. Podobně pro položku $\F(\exists x)\neg P(x)$ v pravém tablu.
 
 Tento poněkud technický přístup k definici \emph{redukovanosti} (výskytů) položek typu `všichni' se nám bude hodit v definici \emph{systematického tabla}.
 
@@ -209,7 +209,7 @@ Definice v této části jsou téměř identické odpovídajícím definicím z 
     Připomeňme konvenci, že pokud $P$ \emph{není} typu `všichni', potom kořen atomického tabla nebudeme zapisovat (neboť vrchol s položkou $P$ už v tablu je).
 
 \begin{exercise}
-    Ukažte v jednotlivých krocích jak byla tabla z Obrázku \ref{figure:predicate-tableau-examples} zkonstruována.
+    Ukažte v jednotlivých krocích jak byla tabla z Obrázku \ref{figure:predicate-tableau-intro-examples} zkonstruována.
 \end{exercise}
 
 
@@ -448,7 +448,7 @@ Model (struktura) $\A$ se \emph{shoduje} s položkou $P$, pokud
 $P=\mathrm{T}\varphi$ a $\A\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $\A\not\models\varphi$. Dále $\A$ se shoduje s větví $V$, pokud se shoduje s každou položkou na této větvi.
 
 Ukážeme nejprve pomocné lemma analogické Lemmatu \ref{lemma:agrees-with-branch}:
-\begin{lemma}\label{lemma:agrees-with-branch}
+\begin{lemma}\label{lemma:agrees-with-branch-predicate}
     Shoduje-li se model $\A$ teorie $T$ s položkou v kořeni tabla z teorie $T$ (v jazyce $L$), potom lze $\A$ expandovat do jazyka $L_C$ tak, že se shoduje s některou větví v tablu.
 \end{lemma}
 Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytující se na větvi $V$. Ostatní konstantní symboly lze interpretovat libovolně.
@@ -478,7 +478,7 @@ Je-li sentence $\varphi$ tablo dokazatelná z teorie $T$, potom je $\varphi$ pra
 \end{theorem}
 
 \begin{proof}
-Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
+Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch-predicate} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
 \end{proof}
 
 \subsection{Věta o úplnosti}
@@ -618,7 +618,7 @@ $$
 \Thm_L(T)=\{\varphi\mid \varphi\text{ je $L$-sentence a } T\proves\varphi\}
 $$
 
-\begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness}
+\begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness-predicate}
     Pro libovolnou teorii $T$ a sentence $\varphi,\psi$ platí:
     \begin{itemize}
         \item $T\proves\varphi$ právě když $T\models\varphi$

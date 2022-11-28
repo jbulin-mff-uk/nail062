@@ -352,7 +352,7 @@ Ve stejné sekci jsme si ukázali konstrukci \emph{systematického tabla}. Tu lz
 \begin{definition}
 Mějme položku $R$ a teorii $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
 
-Buď $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položu typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný). Potom $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $v$, kde
+Buď $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položku typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný). Potom $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $v$, kde
 \begin{itemize}
     \item je-li $P$ typu `všichni' a má-li ve vrcholu $v$ $k$-tý výskyt, potom za proměnnou substituujeme $k$-tý $L_C$-term $t_k$,
     \item je-li $P$ typu `svědek', potom na dané větvi $V$ za proměnnou substituujeme $c_i\in C$ s nejmenším možným $i$ (takovým, že na $V$ se $c_i$ dosud nevyskytuje).
@@ -397,7 +397,7 @@ V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chcem
     Mějme ekvivalenci $\sim$ na množině $A$, funkci $f\colon A^n\to A$, a relaci $R\subseteq A^n$. Říkáme, že $\sim$ je
     \begin{itemize}
         \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$,
-        \item \emph{kongruencí pro relaci $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$.
+        \item \emph{kongruencí pro relaci $R$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $R(x_1,\dots,x_n)$ právě když $R(y_1,\dots,y_n)$.
     \end{itemize}    
     \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. 
 \end{definition}
@@ -605,7 +605,7 @@ Důkaz Věty o úplnosti je také analogický její verzi pro výrokovou logiku:
 \end{theorem} 
 
 \begin{proof}
-Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $\A$ pro tuto větev, a označme jako $\A'$ jeho redukt na jazyk $L$. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $\A$ se podle Lemmatu \ref{lemma:canonical-model-agrees-predicate} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme i $\A'\models T$. Protože se ale $\A$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, platí i $\A'\not\models\psi$, což znamená, že $\A'\in \M_L(T)\setminus\M_L(\varphi)$, tedy $T\not\models\psi$, a to je spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
+Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $\A$ pro tuto větev, a označme jako $\A'$ jeho redukt na jazyk $L$. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $\A$ se podle Lemmatu \ref{lemma:canonical-model-agrees-predicate} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme i $\A'\models T$. Protože se ale $\A$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, platí i $\A'\not\models\varphi$, což znamená, že $\A'\in \M_L(T)\setminus\M_L(\varphi)$, tedy $T\not\models\varphi$, a to je spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
 \end{proof}
 
 
@@ -688,7 +688,7 @@ Na závěr kapitoly si ukážeme, jak lze adaptovat Hilbertův kalkulus, předst
     \vspace{-2mm}\begin{align*}(i)& &\varphi &\to (\psi \to \varphi) \\
     (ii)& &(\varphi\to (\psi \to \chi))&\to ((\varphi \to \psi)\to(\varphi \to \chi))\qquad\qquad\qquad\qquad\phantom{\ } \\
     (iii)& &(\neg \varphi \to \neg \psi)&\to(\psi \to \varphi)\\
-    (iv)& &(\forall x)\varphi &\to\varphi(x/t)\quad\quad\quad\ \ \!\text{ je-li $t$ substituovatelný za $x$ do $\varphi$}\\
+    (iv)& &(\forall x)\varphi &\to\varphi(x/t)\quad\quad\quad\ \ \ \text{ je-li $t$ substituovatelný za $x$ do $\varphi$}\\
     (v)& &(\forall x)(\varphi \to \psi)&\to(\varphi \to (\forall x)\psi)\quad\text{není-li $x$ volná proměnná ve $\varphi$}\\
     \end{align*}
     

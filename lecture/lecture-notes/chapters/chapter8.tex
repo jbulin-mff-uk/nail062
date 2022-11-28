@@ -235,7 +235,7 @@ Tomuto procesu říkáme také \emph{skolemizace}.
 \end{example}
 
 \begin{remark}
-    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Napříkla máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
+    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Například, máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
 
     Je také důležité, aby každý symbol použitý při skolemizaci byl opravdu nový, jeho jedinou `rolí' v celé teorii musí být reprezentovat `existující' prvky v této formuli.
 \end{remark} 
@@ -243,7 +243,7 @@ Tomuto procesu říkáme také \emph{skolemizace}.
 V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
 
 \begin{lemma}\label{lemma:skolem-variant-conservative-extension}
-Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence $\varphi=(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$, kde $f$ je nový funkční symbol. Potom:
+Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence $(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$, kde $f$ je nový funkční symbol. Potom:
 \begin{enumerate}[(i)]
     \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
     \item každý model $\varphi$ lze expandovat na model $\varphi'$.
@@ -368,7 +368,7 @@ Nyní jsme připraveni vyslovit Herbrandovu větu. Neformálně řečeno, je-li 
 Mějme otevřenou teorii $T$ v jazyce $L$ bez rovnosti a s alespoň jedním konstantním symbolem. Potom buď má $T$ \emph{Herbrandův model}, nebo existuje konečně mnoho základních instancí axiomů $T$, jejichž konjunkce je nesplnitelná.
 \end{theorem}
 \begin{proof}
-Označme jako $T_\text{ground}$ množinu všech základních instancí axiomů teorie $T$. Zkonstruujeme systematické\footnote{Nebo libovolné dokončené tablo, ale tak, abychom sporné větve už neprodlužovali.} tablo z teorie $T_\text{ground}$ s položkou $\F\bot$ v kořeni, ale z jazyka $L$, bez rozšíření o pomocné konstantní symboly na jazyk $L_C$. 
+Označme jako $T_\text{ground}$ množinu všech základních instancí axiomů teorie $T$. Zkonstruujeme systematické\footnote{Nebo libovolné dokončené tablo, ale tak, abychom sporné větve už neprodlužovali.} tablo z teorie $T_\text{ground}$ s položkou $\F\bot$ v kořeni, ale z jazyka $L$, bez rozšíření o pomocné konstantní symboly na jazyk $L_C$.\footnote{Protože v $T_\text{ground}$ nejsou žádné kvantifikátory, pomocné symboly nikde v tablu nejsou použity.}
 
 Pokud tablo obsahuje bezespornou větev, potom je kanonický model pro tuto větev (opět bez přidání pomocných konstantních symbolů) Herbrandovým modelem $T$. V opačném případě máme tablo důkaz sporu, tedy teorie $T_\text{ground}$, a tím pádem i $T$, je nesplnitelná. Protože je tablo důkaz konečný, použili jsme v něm jen konečně mnoho základních instancí axiomů $\alpha_\text{ground}\in T_\text{ground}$. Jejich konjunkce je tedy nesplnitelná.
 \end{proof}
@@ -415,7 +415,7 @@ Nejprve uveďme několik příkladů `vhodných' substitucí:
     \item Máme-li klauzule $\{P(x),Q(x,a),Q(b,y)\}$ a $\{\neg P(v),\neg Q(u,v)\}$, vhodnou substitucí je $\{x/b,y/a,u/b,v/a\}$; dostáváme $\{P(b),Q(b,a)\}$ a $\{\neg P(a),\neg Q(b,a)\}$, jejichž rezolventou je $\{P(b),\neg P(a)\}$.
     \item Podívejme se ještě na klauzule $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$. Mohli bychom použít substituci $\{x/f(a),y/a,z/a\}$ a získat tak dvojici klauzulí $\{P(f(a)),Q(f(a),a)\}$ a $\{\neg P(a),\neg Q(f(a),a)\}$, rezolucí potom $\{P(f(a)),\neg P(a)\}$.
     
-    Lepší ale bude využít substituce $\{x/f(z),y/z\}$, po které máme $\{P(f(z)),Q(f(z),z)\}$ a $\{\neg P(z),\neg Q(f(z),z)\}$, a rezolventu $\{P(f(z)),\neg P(z)\}$. Tato substituce je \emph{obecnejší}, a výsledná rezolventa `říká více' než $\{P(f(a)),\neg P(a)\}$ (ta je jejím důsledkem, ale naopak to neplatí).
+    Lepší ale bude využít substituce $\{x/f(z),y/z\}$, po které máme $\{P(f(z)),Q(f(z),z)\}$ a $\{\neg P(z),\neg Q(f(z),z)\}$, a rezolventu $\{P(f(z)),\neg P(z)\}$. Tato substituce je \emph{obecnější}, a výsledná rezolventa `říká více' než $\{P(f(a)),\neg P(a)\}$ (ta je jejím důsledkem, ale naopak to neplatí).
 \end{itemize}
 \end{example}
 
@@ -427,7 +427,7 @@ Nyní zavedeme potřebnou terminologii týkající se substitucí. Substituce bu
         \item \emph{základní}, jsou-li všechny termy $t_i$ konstantní,
         \item \emph{přejmenování proměnných}, jsou-li všechny termy $t_i$ navzájem různé proměnné.
     \end{itemize}
-    \emph{Instance} výrazu (termu nebo literálu) $E$\emph{při substituci $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz vzniklý z $E$ simultánním nahrazením všech výskytů proměnných $x_i$ termy $t_i$, označme jej $E\sigma$. Je-li $S$ množina výrazů, potom značíme $S\sigma=\{E\sigma\mid E\in S\}$.
+    \emph{Instance} výrazu (termu nebo literálu) $E$ \emph{při substituci $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz vzniklý z $E$ simultánním nahrazením všech výskytů proměnných $x_i$ termy $t_i$, označme jej $E\sigma$. Je-li $S$ množina výrazů, potom značíme $S\sigma=\{E\sigma\mid E\in S\}$.
 \end{definition}
 
 Protože proměnné nahrazujeme \emph{simultánně} pro všechny proměnné zároveň, případný výskyt proměnné $x_i$ v termu $t_j$ nepovede ke zřetězení substitucí.
@@ -562,7 +562,9 @@ $$
 
     \item[($k=4$)] $S_4$ je jednoprvková, nejobecnější unifikace pro $S$ je následující:
     
-    $$\sigma=\sigma_1\sigma_2\sigma_3\sigma_4\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=\{y/h(b),w/b,z/a,t/h(b)\}$$
+    $$
+    \sigma=\sigma_1\sigma_2\sigma_3\sigma_4=\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=\{y/h(b),w/b,z/a,t/h(b)\}
+    $$
 \end{itemize}     
 \end{example}
 
@@ -586,7 +588,7 @@ u\sigma_{i+1}\tau=u\tau
 $$
 Z toho už okamžitě plyne i $\tau=\sigma_0\sigma_1\cdots\sigma_i\sigma_{i+1}\tau$.
 
-Je-li $u\neq x$, potom $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. V případě $u=x$ označme $u\sigma_{i+1}=x\sigma_{i+1}=t$. Protože $\tau$ unifikuje množinu $S_i=S\sigma_0\sigma_1\cdots\sigma_i$, a proměnná $x$ i term $t$ jsou v neshodě $D(S_i)$, musí $\tau$ unifikovat $x$ a $t$. Jinými slovy, $t\tau=x\tau$, neboli $u\sigma_{i+1}\tau=u\tau$, což jsme chtěli dokázat.
+Je-li $u\neq x$, potom $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. V případě $u=x$ máme $u\sigma_{i+1}=x\sigma_{i+1}=t$. Protože $\tau$ unifikuje množinu $S_i=S\sigma_0\sigma_1\cdots\sigma_i$, a proměnná $x$ i term $t$ jsou v neshodě $D(S_i)$, musí $\tau$ unifikovat $x$ a $t$. Jinými slovy, $t\tau=x\tau$, neboli $u\sigma_{i+1}\tau=u\tau$, což jsme chtěli dokázat.
 \end{proof}
 
 
@@ -602,7 +604,7 @@ V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzen�
 Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
 \begin{example}
-Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
+Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
 \end{example}
 
 \begin{definition}[Rezoluční pravidlo]
@@ -687,7 +689,7 @@ Názornější je ale rezoluční strom, který je znázorněný na Obrázku \re
 
 V této sekci dokážeme, že rezoluční metoda je i v predikátové logice korektní a úplná.
 
-\subsection{Věta o korektnosti}\todo
+\subsection{Věta o korektnosti}
 
 Začneme důkazem korektnosti rezolučního pravidla. Princip je stejný jako u analogického pozorování ve výrokové logice. Důkaz je o trochu techničtější:
 
@@ -719,15 +721,15 @@ Větu o úplnosti rezoluce v predikátové logice, totiž že nesplnitelné form
 
 Klíčem je následující lemma, které zaručuje takové `zvednutí' v jednom rezolučním kroku. Jeho důkaz je poněkud technický. 
 
-\begin{lemma}\label{lemma:lifting-lemma}
-Mějme klauzule $C_1$ a $C_2$ (s disjunktní množinou proměnných). Nechť $C^*_1=C_1\tau_1$ a $C^*_2=C_2\tau_2$ jsou jejich základní instance.
+\begin{lemma}[Lifting lemma]\label{lemma:lifting-lemma}
+Mějme klauzule $C_1$ a $C_2$ s disjunktní množinou proměnných. Nechť $C^*_1=C_1\tau_1$ a $C^*_2=C_2\tau_2$ jsou jejich základní instance.
 
 Je-li $C^*$ je rezolventou $C^*_1$ a $C^*_2$, potom existuje rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*=C\tau_1\tau_2$ je základní instancí $C$.
 \end{lemma}
 \begin{proof}
 Nechť $C^*$ je rezolventou $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že klauzule $C_1$ a $C_2$ můžeme vyjádřit jako $C_1=C_1' \sqcup \{A_1,\dots,A_n\}$ a $C_2=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\}$, kde $\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$ a $\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$.
 
-To znamená, že $(\tau_1\tau_2)$ je unifikuje množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Nyní vezměme nejobecnější unifikaci $\sigma$ pro $S$ získanou pomocí Unifikačního algoritmu. Jako $C$ zvolme rezolventu $C=C_1'\sigma \cup C_2'\sigma$.
+To znamená, že $(\tau_1\tau_2)$ unifikuje množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Nyní vezměme nejobecnější unifikaci $\sigma$ pro $S$ získanou pomocí Unifikačního algoritmu. Jako $C$ zvolme rezolventu $C=C_1'\sigma \cup C_2'\sigma$.
 
 Zbývá ukázat, že $C^*=C\tau_1\tau_2$. Díky vlastnosti `navíc' z Tvrzení \ref{proposition:unification-algorithm} o korektnosti Unifikačního algoritmu víme, že $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, což využíváme ve třetí rovnosti z následujícího výpočtu:
 \begin{align*}
@@ -740,7 +742,7 @@ Zbývá ukázat, že $C^*=C\tau_1\tau_2$. Díky vlastnosti `navíc' z Tvrzení \
 Indukcí podle délky rezolučního důkazu snadno získáme následující důsledek:
 
 \begin{corollary}\label{corollary:lifting}
-Mějme CNF formuli $S$ a označme jako $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ (`na úrovni výrokové logiky') pro nějakou základní klauzuli $C^*$, potom existuje základní klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni predikátové logiky').
+Mějme CNF formuli $S$ a označme jako $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ (`na úrovni výrokové logiky') pro nějakou základní klauzuli $C^*$, potom existuje klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni predikátové logiky').
 \end{corollary}
 
 Nyní už je snadné dokázat úplnost:

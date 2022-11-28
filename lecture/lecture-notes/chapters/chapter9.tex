@@ -23,12 +23,11 @@ Jako důležitý příklad vezměme \emph{standardní model aritmetiky}, struktu
 Několik jednoduchých vlastností teorie struktury shrneme v následujícím pozorování:
 
 \begin{observation}
-    Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.
+    Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie. Potom:
     \begin{enumerate}[(i)]
         \item Teorie $\Th(\A)$ je kompletní.
         \item Je-li $\A\in\M_L(T)$, potom $\Th(\A)$ je (kompletní) jednoduchá extenze teorie $T$.
         \item Pokud $\A\in\M_L(T)$ a $T$ je kompletní, potom je $\Th(\A)$ ekvivalentní s $T$, v tom případě $\Th(\A)=\Conseq_L(T)$.
-        
     \end{enumerate}    
 \end{observation}
 
@@ -146,7 +145,7 @@ kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$ (kde  $\cdot$ je 
 \end{proof}
 
 
-\section{Izomorfismus struktur}\label{section:isomorphism-of-structures}\todo
+\section{Izomorfismus struktur}\label{section:isomorphism-of-structures}
 
 Podívejme se blíže na pojem \emph{izomorfismu struktur}, který zobecňuje izomorfismus grafů, vektorových prostorů, apod. Neformálně řečeno, struktury jsou \emph{izomorfní}, pokud se liší jen pojmenováním konkrétních prvků.
 
@@ -188,7 +187,7 @@ Mějme struktury $\A,\B$ jazyka $L=\langle\mathcal R,\mathcal F\rangle$. Bijekce
 \end{enumerate}
 \end{proposition}
 \begin{proof}
-    Je-li $h$ izomorfismus, vlastnosti snadno dokážeme indukcí podle struktur termu resp. formule. Naopak, je-li $h$ bijekce splňující (i) a (ii), dosazením $t=f(x_1,\dots,x_n)$ resp. $\varphi=R(x_1,\dots,x_n)$ dostáváme vlastnosti z definice izomorfismu.
+    Je-li $h$ izomorfismus, vlastnosti snadno dokážeme indukcí podle struktury termu resp. formule. Naopak, je-li $h$ bijekce splňující (i) a (ii), dosazením $t=f(x_1,\dots,x_n)$ resp. $\varphi=R(x_1,\dots,x_n)$ dostáváme vlastnosti z definice izomorfismu.
 \end{proof}
 
 Jako okamžitý důsledek dostáváme fakt, že izomorfní struktury jsou elementárně ekvivalentní:
@@ -246,8 +245,6 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
 &\Leftrightarrow\ h(\overline{a})\in D.
 \end{align*}
 \end{proof}
-
-%\todo example computing Aut(G) for a graph G
 
 \begin{example}
     Uvažme následující graf $\mathcal G$. Najděme všechny množiny definovatelné z $\mathcal G$ s parametrem $0$, tj. množinu 
@@ -317,7 +314,7 @@ I(\kappa,DeLO^*)=\begin{cases}
     4 &\text{pro }\kappa=\omega.
 \end{cases}
 $$
-Spočetné modely až na izormofismus jsou například:
+Spočetné modely až na izomorfismus jsou například:
 $$ 
 \mathbb Q=\langle \mathbb Q,\leq\rangle\simeq\mathbb Q\upharpoonright(0,1), \ \mathbb Q\upharpoonright(0,1], \ \mathbb Q \upharpoonright [0,1), \ \mathbb Q \upharpoonright [0,1]
 $$
@@ -383,7 +380,7 @@ Začněme jednoduchým faktem:
     Je-li $K$ axiomatizovatelná, musí být uzavřená na elementární ekvivalenci.  
 \end{observation}
 
-Z věty o kompaktnosti snadno získáme následující tvrzení, pomocí kterého lze ukázat neaxiomatizovalnost např. konečných grafů, konečných grup, konečných těles.
+Z věty o kompaktnosti snadno získáme následující tvrzení, pomocí kterého lze ukázat neaxiomatizovatelnost např. konečných grafů, konečných grup, konečných těles.
 
 \begin{theorem}
     Pokud má teorie libovolně velké konečné modely, potom má i nekonečný model. V tom případě není třída všech jejích konečných modelů axiomatizovatelná.
@@ -409,7 +406,7 @@ Z věty o kompaktnosti snadno získáme následující tvrzení, pomocí kteréh
 
 Ukážeme následující kritérium konečné axiomatizovatelnosti: jak třída struktur $K$ tak i $\overline{K}$ musí být axiomatizovatelné.
 
-\begin{theorem}\label{theorem:finite-axiomatizability}[O konečné axiomatizovatelnosti]
+\begin{theorem}[O konečné axiomatizovatelnosti]\label{theorem:finite-axiomatizability}
     Mějme třídu struktur $K\subseteq \M_L$ a uvažme také její doplněk $\overline{K}=\M_L\setminus K$. Potom $K$ je konečně axiomatizovatelná, právě když $K$ i $\overline{K}$ jsou axiomatizovatelné.   
 \end{theorem}
 \begin{proof}

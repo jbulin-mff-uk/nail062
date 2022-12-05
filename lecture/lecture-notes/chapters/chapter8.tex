@@ -243,7 +243,10 @@ Tomuto procesu říkáme také \emph{skolemizace}.
 V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
 
 \begin{lemma}\label{lemma:skolem-variant-conservative-extension}
-Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence $(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$, kde $f$ je nový funkční symbol. Potom:
+Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence 
+$$
+(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$$
+kde $f$ je nový funkční symbol. Potom:
 \begin{enumerate}[(i)]
     \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
     \item každý model $\varphi$ lze expandovat na model $\varphi'$.
@@ -406,6 +409,7 @@ Místo substitucí \emph{všech} základních termů a práce s touto novou, obr
 algoritmu}).
 
 \subsection{Substituce}
+%\todo change terms of sigma to s and tau to t?
 
 Nejprve uveďme několik příkladů `vhodných' substitucí:
 
@@ -456,7 +460,7 @@ Substituce můžeme přirozeně \emph{skládat}. Složení substitucí $\sigma$ 
 Nyní formální definice:
 
 \begin{definition}[Skládání substitucí]
-Mějme substituce $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_n/s_n\}$. \emph{Složení substitucí $\sigma$ a $\tau$} je substituce
+Mějme substituce $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. \emph{Složení substitucí $\sigma$ a $\tau$} je substituce
 $$
 \sigma\tau=\{x_i/t_i\tau\mid x_i\in X,x_i\neq t_i\tau\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}
 $$
@@ -489,11 +493,11 @@ Nechť $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. St
     \item Je-li $E=y_j$ pro nějaké $j$, potom $E\sigma=E$ a $(E\sigma)\tau=E\tau=s_j=E(\sigma\tau)$ opět z definice $\sigma\tau$.
     \item Je-li $E$ jiná proměnná, potom $(E\sigma)\tau=E=E(\sigma\tau)$.
 \end{itemize}
-Tím jsme dokázali (i). Asociativitu (ii) snadno dokážeme opakovaným užitím (i). Následující platí pro každý výraz $E$, tedy i pro $E\in\{x_1,\dots,x_n\}$:
+Tím jsme dokázali (i). Asociativitu (ii) snadno dokážeme opakovaným užitím (i). Následující platí pro každý výraz $E$, tedy i pro každou proměnnou:
 $$
 E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho)).
 $$
-Z toho plyne, že $(\sigma\tau)\varrho$ a $\sigma(\tau\varrho)$ jsou touž substitucí. (Podrobněji: používáme zřejmou vlastnost, že pro substituci $\pi=\{x_1/v_1,\dots,x_n/v_n\}$ a $E=x_i$ platí $E\pi=v_i$.)
+Z toho plyne, že $(\sigma\tau)\varrho$ a $\sigma(\tau\varrho)$ jsou touž substitucí.\footnote{Podrobněji: používáme zřejmou vlastnost, že pro substituci $\pi$ platí $\pi=\{z_1/v_1,\dots,z_k/v_k\}$, právě když $E\pi=v_i$ pro $E=z_i$  a $E\pi=E$ je-li $E$ proměnná různá od všech $z_i$.}
 \end{proof}    
 
 \subsection{Unifikační algoritmus}

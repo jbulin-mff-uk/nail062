@@ -52,255 +52,119 @@ Je-li $T$ kompletní, víme, že $T\proves\varphi$ právě když $T\not\proves\v
 Požadavek kompletnosti je příliš silný, ukážeme, že stačí pokud jsme schopni efektivně popsat všechny kompletní jednoduché extenze.\footnote{Tj. `všechny modely až na elementární ekvivalenci'.}
 
 \begin{definition}[Rekurzivně spočetná kompletace]
-Řekneme, že teorie $T$ má \emph{rekurzivně spočetnou kompletaci}, pokud (nějaká) množina až na ekvivalenci všech jednoduchých kompletních extenzí teorie $T$ je \emph{rekurzivně spočetná}, tj. existuje algoritmus, který pro danou dvojici přirozených čísel $(i,j)$ vypíše $i$-tý axiom $j$-té 
+Řekneme, že teorie $T$ má \emph{rekurzivně spočetnou kompletaci}, pokud (nějaká) množina až na ekvivalenci všech jednoduchých kompletních extenzí teorie $T$ je \emph{rekurzivně spočetná}, tj. existuje algoritmus, který pro danou vstupní dvojici přirozených čísel $(i,j)$ vypíše na výstup $i$-tý axiom $j$-té extenze (v nějakém pevně daném uspořádání\footnote{Zde potřebujeme, aby byl jazyk spočetný.}), nebo odpoví, že takový axiom už neexistuje.\footnote{Jeli extenzí méně než $j$, nebo má-li $j$-tá extenze méně než $i$ axiomů.}
 \end{definition}
 
-\todo
-
-\begin{proposition}\label{propositon:efficient-complete-simple}    
-    Pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který generuje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
+\begin{proposition}\label{propositon:recursively-enumerable-completion}    
+    Pokud je teorie $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je $T$ rozhodnutelná.
 \end{proposition}
 \begin{proof}
-Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a tablo důkaz $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
+Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a (postupně) tablo důkazy $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
 \end{proof}
 
-\begin{corollary}
-Následující teorie mají rekurzivně spočetné, jsou tedy rozhodnutelné:
-\begin{itemize}    
-    \item teorie hustých lineárních uspořádání DeLO* (kompletní jednoduché extenze jsou popsané v Důsledku \ref{corollary:complete-simple-extensions-of-delo})
+\begin{exercise}
+Ukažte, že následující teorie mají rekurzivně spočetnou kompletaci:
+\begin{itemize}
+\item Teorie čisté rovnosti (prázdná teorie v jazyce $L=\langle \rangle$ s rovností),
+\item Teorie unárního predikátu (prázdná teorie v jazyce $L=\langle U \rangle$ s rovností, kde $U$ je unární relační symbol),
+\item Teorie hustých lineárních uspořádání DeLO* (kompletní jednoduché extenze jsou popsané v Důsledku \ref{corollary:complete-simple-extensions-of-delo}),
 \end{itemize}
+Jde o rekurzivně axiomatizované teorie (neboť jsou konečné), jsou tedy rozhodnutelné.
+\end{exercise}
+
+\begin{example}
+    Na závěr uveďme bez důkazu několik dalších příkladů rozhodnutelných teorií:
+    \begin{itemize}  
+        \item Teorie Booleových algeber (Alfred Tarski 1940),
+        \item Teorie algebraicky uzavřených těles (Tarski 1949),
+        \item Teorie komutativních grup (Wanda Szmielew 1955).
+    \end{itemize}
+    Tyto teorie jsou také nekompletní, ale rekurzivně axiomatizované a mají rekurzivně spočetnou kompletaci.    
+\end{example}
+
+ 
+\subsection{Rekurzivní axiomatizovatelnost}
+
+V předchozí kapitole, konkrétně v Sekci \ref{section:axiomatizability}, jsme se zabývali otázkou, kdy lze popsat nějakou třídu struktur [resp. teorii] pomocí axiomů [určitého tvaru]. Nyní se zaměřme na otázku, kdy to lze udělat \emph{algoritmicky}.
+
+\begin{definition}[Rekurzivní axiomatizovatelnost]
+Třída $L$-struktur $K\subseteq\M_L$ je \emph{rekurzivně axiomatizovatelná}, pokud existuje rekurzivně axiomatizovaná $L$-teorie $T$ taková, že $K=M_L(T)$. Teorie $T'$ je \emph{rekurzivně axiomatizovatelná}, pokud je rekurzivně axiomatizovatelná třída jejích modelů, neboli pokud je $T'$ ekvivalentní nějaké rekurzivně axiomatizované teorii.
+\end{definition}
+\begin{remark}
+    Podobně bychom mohli definovat \emph{rekurzivně spočetnou axiomatizovatelnost}.
+\end{remark}
+
+Ukažme si následující jednoduché tvrzení:
+
+\begin{proposition}
+    Je-li $\A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\Th(\A)$ rekurzivně axiomatizovatelná.
+\end{proposition}
+\begin{remark}
+    Z toho plyne i že $\Th(\A)$ je rozhodnutelná, což ale není překvapivé: platnost sentence $\varphi$ v konečné struktuře $\A$ můžeme snadno ověřit.
+\end{remark}
+\begin{proof}
+    Očíslujme prvky domény jako $A=\{a_1,\dots,a_n\}$. Teorii $\Th(\A)$ lze axiomatizovat jedinou sentencí, která je tvaru `existuje právě $n$ prvků $a_1,\dots,a_n$ splňujících právě ty \emph{základní vztahy} o funkčních hodnotách a relacích, které platí ve struktuře $\A$'.\footnote{Například, pokud $f^\A(a_4, a_2)=a_{17}$, přidáme do konjunkce atomickou formuli $f(x_{a_4},x_{a_2})=x_{a_{17}}$ (kde $x_{a_i}$ jsou proměnné odpovídající jednotlivým prvkům). A pokud $(a_3,a_3,a_1)\in R^\A$, přidáme $R(x_{a_3},x_{a_3},x_{a_1})$.}    
+\end{proof}
+ 
+Uveďme několik standardních příkladů struktur, které lze `algoritmicky popsat':
+
+\begin{example}\label{example:structures-recursively-axiomatizable}
+Pro následující struktury je $\Th(\A)$ rekurzivně axiomatizovatelná, a tedy i rozhodnutelná:
+
+\begin{itemize}
+    \item $\langle\mathbb Z,\leq\rangle$, jde o tzv.teorii \emph{diskrétních lineárních uspořádání},        
+    \item $\langle\mathbb Q,\leq\rangle$, jde o teorii DeLO,
+    \item $\langle\mathbb N,S,0\rangle$, teorie \emph{následníka s nulou},
+    \item $\langle\mathbb N,S,+,0\rangle$, \emph{Presburgerova aritmetika},
+    \item $\langle\mathbb R,+,-,\cdot,0,1\rangle$, teorie \emph{reálně uzavřených těles},\footnote{Tento významný výsledek A. Tarského (1949) také znamená, že lze algoritmicky rozhodovat, které vlastnosti platí v Euklidovské geometrii.}
+    \item $\langle \mathbb C,+,-,\cdot,0,1 \rangle$, teorie \emph{algebraicky uzavřených těles charakteristiky 0}.
+\end{itemize}
+\end{example}
+   
+\begin{corollary}
+    Pro struktury uvedené v Příkladu \ref{example:structures-recursively-axiomatizable} platí, že $\Th(\A)$ je rozhodnutelná.
 \end{corollary}
 
 
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Rekurzivně spočetná kompletace}
-    {\it Co když efektivně popíšeme všechny jednoduché kompletní extenze?}
-    \medskip
-    
-    \smallskip
-    
-    Řekneme, že množina všech (až na ekvivalenci) \myblue{jednoduchých kompletních}
-    \smallskip
-    
-    \myblue{extenzí} teorie $T$ je \mdef{rekurzivně spočetná}, existuje-li algoritmus $\alpha(i,j)$, který
-    \smallskip
-    
-    generuje $i$-tý axiom $j$-té extenze (při nějakém očíslování), případně oznámí,
-    \smallskip
-    
-    že (takový axiom či extenze) neexistuje.
-    \medskip
-    
-    \smallskip
-    
-    {\bf \myblue{Tvrzení}}\ \ {\it Je-li teorie $T$ rekurzivně axiomatizovaná a množina všech
-    \smallskip
-    
-    (až na ekvivalenci) jejích jednoduchých kompletních extenzí je rekurzivně
-    \smallskip
-    
-    spočetná, je $T$ \myblue{rozhodnutelná}.}
-    \medskip
-    
-    \smallskip
-    
-    {\it \myblue{Důkaz}}\ \ Díky rek. axiomatizaci poskytuje konstrukce systematického tabla z $T$
-    \smallskip
-    
-    s $F\varphi$ v kořeni algoritmus pro rozpoznání $T\vdash \varphi$. Pokud ale $T \not \vdash \varphi$, pak $T'\vdash \neg\varphi$
-    \smallskip
-    
-    v nějaké jednoduché kompletní extenzi $T'$ teorie $T$. To lze rozpoznat \myblue{paralelní}
-    \smallskip
-    
-    \myblue{postupnou} konstrukcí systematických tabel pro $T\varphi$ z jednotlivých extenzí.
-    \smallskip
-    
-    V $i$-tém stupni se sestrojí tabla do $i$ kroků pro prvních $i$ extenzí. $\qed$
-    
-% :from slides
-
-\subsection{Rozhodnutelné teorie}\todo
-
-% from slides:
-\subsubsection*{Příklady rozhodnutelných teorií}
-Následující teorie jsou rozhodnutelné, ačkoliv jsou nekompletní.
-\smallskip
-
-\begin{itemize}
-\item teorie \myblue{čisté rovnosti}; bez axiomů v jazyce $L=\langle \rangle$ s rovností,
-\smallskip
-
-\item teorie \myblue{unárního predikátu}; bez axiomů v jazyce $L=\langle U \rangle$ s rovností,
-\smallskip
-
-kde $U$ je unární relační symbol,
-\smallskip
-
-\item teorie \myblue{hustých lineárních uspořádání} $DeLO^*$,
-\smallskip
-
-\item teorie \myblue{algebraicky uzavřených těles} v jazyce $L=\langle +,-,\cdot,0,1\rangle$ s rovností,
-\smallskip
-
-s axiomy teorie těles a navíc axiomy pro každé $n\ge 1$,
-
-\mygreen{$$(\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0 = 0),$$}
+\begin{remark}\label{remark:std-arithmetic-not-recursively-axiomatizable}
+    Jak ale vyplývá z První Gödelovy věty o neúplnosti (viz níže), teorie \emph{standardního modelu aritmetiky}, tj. struktury $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ \emph{nemá} rekurzivně axiomatizovatelnou teorii.
+\end{remark}
 
 
-kde $y^k$ je zkratka za term $y\cdot y \cdot\ \dotsb\ \cdot y$ ( $\cdot$ aplikováno ($k-1$)-krát).
-\smallskip
+\section{Aritmetika}
 
-\item teorie \myblue{komutativních grup},
-\smallskip
+Vlastnosti přirozených čísel hrají důležitou roli nejen v matematice, ale například také v kryptografii. Připomeňme, že jazyk aritmetiky je jazyk $L=\langle S,+,\cdot,0,\leq\rangle$ s rovností. Jak jsme zmínili v Poznámce \ref{remark:std-arithmetic-not-recursively-axiomatizable}, tzv. \emph{standardní model aritmetiky} $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ nemá rekurzivně axiomatizovatelnou teorii. Proto používáme rekurzivně axiomatizované teorie, které se snaží vlastnosti $\underline{\mathbb N}$ popsat částečně; těmto teoriím říkáme \emph{aritmetiky}.
 
-\item teorie \myblue{Booleových algeber}.
-\end{itemize}
+\subsection{Robinsonova a Peanova aritmetika}
 
-% :from slides
+Uvedeme jen dva nejdůležitější příklady aritmetik: \emph{Robinsonovu} a \emph{Peanovu}.
 
-\subsection{Rekurzivní axiomatizovatelnost}\todo
-
-% from slides:
-\subsubsection*{Rekurzivní axiomatizovatelnost}
-    {\it Dají se matematické struktury ``efektivně'' popsat?}
-    \smallskip
-    
-    \begin{itemize}
-    \item Třída $K\subseteq M(L)$ je \mdef{rekurzivně axiomatizovatelná}, pokud existuje
-    \smallskip
-    
-    rekurzivně axiomatizovaná teorie $T$ jazyka $L$ s $M(T)=K$.
-    \smallskip
-    
-    \item \myblue{Teorie} $T$ je \myblue{rekurzivně axiomatizovatelná}, pokud $M(T)$ je
-    rekurzivně
-    \smallskip
-    
-    axiomatizovatelná.
-    \end{itemize}
-    %\smallskip
-    
-    %{\it \myblue{Poznámka}\ \ Obdobně lze zadefinovat r. s. axiomatizovatelnost.}
-    \medskip
-    
-    \smallskip
-    
-    {\bf \myblue{Tvrzení}}\ \ {\it Pro každou \myblue{konečnou} strukturu $\mathcal{A}$ v konečném jazyce s rovností
-    \smallskip
-    
-    je $\mathrm{Th}(\mathcal{A})$ rekurzivně axiomatizovatelná. Tedy, $\mathrm{Th}(\mathcal{A})$ je \myblue{rozhodnutelná}.}
-    \medskip
-    
-    \smallskip
-    
-    {\it \myblue{Důkaz}}\ \ Nechť $A=\{a_1,\dots,a_n\}$. Teorii $\mathrm{Th}(\mathcal{A})$ axiomatizujeme jednou sentencí
-    \smallskip
-    
-    (tedy rekurzivně) kompletně popisující $\mathcal{A}$. Bude tvaru \emph{``existuje právě $n$ prvků   
-    $a_1,\dots,a_n$ splňujících právě ty \myblue{základní vztahy} o funkčních hodnotách a relacích, které platí ve struktuře $\mathcal{A}$.''} $\qed$
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Příklady rekurzivní axiomatizovatelnosti}
-    Následující struktury $\mathcal{A}$ mají \myblue{rekurzivně} axiomatizovatelnou teorii $\mathrm{Th}(\mathcal{A})$.
-    \medskip
-    
-    \begin{itemize}
-    \item \mygreen{$\langle \mathbb{Z},\le \rangle$}, teorií \myblue{diskrétních lineárních uspořádání},
-    \smallskip
-    
-    \item \mygreen{$\langle \mathbb{Q},\le \rangle$}, teorií \myblue{hustých lineárních uspořádání bez konců} ($DeLO$),
-    \smallskip
-    
-    \item \mygreen{$\langle \mathbb{N},S,0 \rangle$}, teorií \myblue{následníka s nulou},
-    \smallskip
-    
-    \item \mygreen{$\langle \mathbb{N},S,+,0\rangle$}, tzv. \myblue{Presburgerovou aritmetikou},
-    \smallskip
-    
-    \item \mygreen{$\langle \mathbb{R},+,-,\cdot,0,1 \rangle$}, teorií \myblue{reálně uzavřených těles},
-    \smallskip
-    
-    \item \mygreen{$\langle \mathbb{C},+,-,\cdot,0,1 \rangle$}, teorií \myblue{algebraicky uzavřených těles charakteristiky 0}.
-    \end{itemize}
-    \medskip
-    
-    {\bf \myblue{Důsledek}}\ \ {\it Pro uvedené struktury je $\mathrm{Th}(\mathcal{A})$ \myblue{rozhodnutelná}.}
-    \medskip
-    
-    \smallskip
-    
-    {\it \myblue{Poznámka}\ \ Uvidíme, že ale \mygreen{$\underline{\mathbb{N}}=\langle \mathbb{N},S,+,\cdot,0,\le \rangle$} rekurzivně axiomatizovat
-    \smallskip
-    
-    \mdef{nelze}. (Vyplývá to z první Gödelovy věty o neúplnosti).}
-    
-% :from slides
-
-
-
-\section{Aritmetika}\todo
-
-% from slides:
-
-% :from slides
-
-\subsection{Robinsonova a Peanova aritmetika}\todo
-
-% from slides:
-\subsubsection*{Robinsonova aritmetika}
-    {\it Jak \myblue{efektivně} a přitom co nejúplněji axiomatizovat $\underline{\mathbb{N}}=\langle \mathbb{N},S,+,\cdot,0,\le\rangle$?}
-    \medskip
-    
-    Jazyk aritmetiky je $L=\langle S,+,\cdot,0,\le \rangle$ s rovností.
-    \medskip
-    
-    \mdef{Robinsonova aritmetika} $Q$ má axiomy (konečně mnoho)
-
-    \mygreen{\begin{align*}
-    &S(x)\ne 0& &x\cdot 0=0\\
+\begin{definition}[Robinsonova aritmetika]
+\emph{Robinsonova aritmetika} je teorie $Q$ v jazyce aritmetiky sestávající z následujících (konečně mnoha) axiomů:
+\begin{align*}
+    &\neg S(x) = 0& &x\cdot 0=0\\
     &S(x)=S(y)\rightarrow x=y& &x\cdot S(y)=x\cdot y+x\\
-    &x+0=x& &x\ne 0 \rightarrow (\exists y)(x=S(y))\\
+    &x+0=x& &\neg x=0 \rightarrow (\exists y)(x=S(y))\\
     &x+S(y)=S(x+y)& &x\le y \leftrightarrow (\exists z)(z+x=y)\qquad
-    \end{align*}}
-    
+\end{align*}
+\end{definition}
 
-    {\it \myblue{Poznámka}\ \ $Q$ je velmi slabá, např. nedokazuje komutativitu či asociativitu
-    \smallskip
+Robinsonova aritmetika je velmi slabá, nelze v ní dokázat například komutativitu ani asociativitu sčítání či násobení, nebo tranzitivitu uspořádání.
+
+Na druhou stranu v ní lze dokázat všechna \emph{existenční tvrzení o numerálech}, která jsou pravdivá v $\underline{\mathbb N}$. Tím myslíme formule, které v prenexním tvaru mají pouze existenční kvantifikátory, a do kterých jsme za volné proměnné substituovali \emph{numerály} $\underline{n}=S(\dots S(0)\dots)$. Například, pro formuli $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je $Q\proves\varphi(\underline{1},\underline{2})$, kde $\underline{1}=S(0)$ a $\underline{2}=S(S(0))$.
     
-    operací $+$, $\cdot$ ani tranzitivitu $\le$. Nicméně postačuje například k důkazu
-    \smallskip
-    
-    \myblue{existenčních} tvrzení o numerálech, která jsou pravdivá v $\underline{\mathbb{N}}$.}
-    \medskip
-    
-    \mygreen{\it Např. pro $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je
-    
-    $$Q\vdash \varphi(\underline{1},\underline{2}),\quad\text{kde $\underline{1}=S(0)$ a\ \ $\underline{2}=S(S(0))$}.$$}
-    
-    
+\begin{definition}[Peanova aritmetika]
+    \emph{Peanova aritmetika} $PA$ je extenze Robinsonovy  aritmetiky $Q$ o
+ \myblue{schéma indukce}, tj. pro každou formuli $\varphi(x,\overline{y})$ jazyka $L$ axiom
+        
+        \mygreen{$$(\varphi(0,\overline{y}) \mand (\forall x)(\varphi(x,\overline{y})\to \varphi(S(x),\overline{y}))) \to (\forall x)\varphi(x,\overline{y}).\quad$$}
+\end{definition}
+\todo   
     
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Peanova aritmetika}
-    
-    \mdef{Peanova aritmetika} $PA$ má axiomy
-    
-    \begin{enumerate}
-    \item[$(a)$] Robinsonovy aritmetiky $Q$,
-    \smallskip
-    
-    \item[$(b)$] \myblue{schéma indukce}, tj. pro každou formuli $\varphi(x,\overline{y})$ jazyka $L$ axiom
-    
-    \mygreen{$$(\varphi(0,\overline{y}) \mand (\forall x)(\varphi(x,\overline{y})\to \varphi(S(x),\overline{y}))) \to (\forall x)\varphi(x,\overline{y}).\quad$$}
-    
-    
-    \end{enumerate}
+
+
     
     {\it \myblue{Poznámka}\ \ $PA$ je poměrně dobrou aproximací $\mathrm{Th}(\underline{\mathbb{N}})$, dokazuje všechny
     \smallskip

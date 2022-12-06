@@ -83,7 +83,7 @@ Kromě běžných symbolů relací, funkcí a konstant (známých např. z logik
     \item Struktura v prázdné signatuře $\langle\ \rangle$ je libovolná neprázdná množina.\footnote{Jak uvidíme v definici níže, formálně vzato je to trojice $\langle A,\emptyset,\emptyset\rangle$, ale tento rozdíl budeme zanedbávat.} (Nemusí být konečná, dokonce ani spočetná!)
     \item Struktura v signatuře grafů je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \emph{orientovaný graf}. 
     \begin{itemize}
-        \item Je-li $E$ irreflexivní a symetrická, jde o \emph{jednoduchý} graf (tj. neorientovaný, bez smyček).
+        \item Je-li $E$ ireflexivní a symetrická, jde o \emph{jednoduchý} graf (tj. neorientovaný, bez smyček).
         \item Je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \emph{částečné uspořádání}.
         \item Je-li $E$ reflexivní, tranzitivní, a symetrická, mluvíme o \emph{ekvivalenci}.
     \end{itemize}
@@ -171,7 +171,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
 \emph{Strom termu $t$}, označme $\Tree(t)$, je definován podobně jako strom výroku, v listech jsou proměnné nebo konstantní symboly, ve vnitřních vrcholech jsou funkční symboly, jejichž arita je rovna počtu synů.
 
 \begin{example}\label{example:terms}
-    Nakresleme stormy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
+    Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
     Na obrázku~\ref{figure:terms} jsou nakresleny stromy těchto termů.
     
     \begin{figure}\label{figure:terms}
@@ -357,9 +357,9 @@ Všimněte si, že požadavek na proměnnou $y$ z definice varianty je vždy spl
 \begin{example}
     Mějme formuli $\varphi=(\exists x)(\forall y)(x\leq y)$. Potom:
 \begin{itemize}
-    \item $(\exists u)(\forall v)(u\leq v)$ je varianta $\varphi$,
-    \item $(\exists u)(\forall u)(u\leq u)$ není varianta $\varphi$, neboť $y$ není substituovatelná za $x$ do $\varphi$,
-    \item $(\exists x)(\forall x)(x\leq x)$ není varianta $\varphi$, neboť $x$ má volný výskyt $\psi=(x\leq y)$.
+    \item $(\exists y)(\forall y)(y\leq y)$ není varianta $\varphi$, neboť $y$ není substituovatelná za $x$ do $\varphi$,
+    \item $(\exists x)(\forall x)(x\leq x)$ není varianta $\varphi$, neboť $x$ má volný výskyt v podformuli $\psi=(x\leq y)$,
+    \item $(\exists u)(\forall v)(u\leq v)$ je varianta $\varphi$.
 \end{itemize}   
 \end{example}
 
@@ -454,7 +454,7 @@ $$
 Zbývá definovat pravdivostní hodnotu pro kvantifikátory, tj. formule tvaru $(Qx)\varphi$. Budeme potřebovat následující značení: Změníme-li v ohodnocení $e:\Var\to A$ hodnotu pro proměnnou $x$ na $a$, výsledné ohodnocení zapíšeme jako $e(x/a)$. Platí tedy $e(x/a)(x)=a$. Pravdivostní hodnotu pro $(Qx)\varphi$ definujeme takto:
 \begin{align*}
     \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
-    \mathrm{PH}^\A((\forall x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
+    \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
 \end{align*}
 Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
 \end{definition}
@@ -499,7 +499,7 @@ Shrňme několik jednoduchých vlastností, nejprve týkajících se platnosti p
     \item $\A\models(\exists x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro nějaké $a\in A$.
     \item Je-li term $t$ substituovatelný za proměnnou $x$ do formule $\varphi$, potom
     $$
-    A\models\varphi(x/t)[e]\text{ právě když }A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e].
+    \A\models\varphi(x/t)[e]\text{ právě když }\A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e].
     $$
     \item Je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$.
 \end{itemize}
@@ -542,7 +542,7 @@ Stejně jako ve výrokové logice budeme často vynechávat jazyk $L$, bude-li z
 
 Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom říkáme, že $\varphi$ je: 
 \begin{itemize}
-    \item \emph{pravdivá (platí) v $T$}, značíme $T\models\varphi$, pokud $\A\models\varphi$ pro všechna $\varphi\in T$ (neboli: $\M(T)\subseteq\M(\varphi)$),
+    \item \emph{pravdivá (platí) v $T$}, značíme $T\models\varphi$, pokud $\A\models\varphi$ pro všechna $\A\in\M(T)$ (neboli: $\M(T)\subseteq\M(\varphi)$),
     \item \emph{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: $\M(T)\cap\M(\varphi)=\emptyset$),
     \item \emph{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$.
 \end{itemize}
@@ -569,7 +569,7 @@ Nemůžeme ale říci, že je teorie kompletní, právě když má jediný model
     Struktury $\A,\B$ (v témž jazyce) jsou \emph{elementárně ekvivalentní}, pokud v nich platí tytéž sentence. Značíme $\A\equiv\B$.
 \end{definition}
 
-\begin{example}
+\begin{example}\label{example:elementary-equivalence-of-orders-R-Q}
     Příkladem struktur, které jsou elementárně ekvivalentní, ale ne izomorfní, jsou uspořádané množiny $\A=\langle\mathbb Q,\leq\rangle$ a $\B=\langle\mathbb R,\leq\rangle$. Izomorfní nejsou proto, že $\mathbb Q$ je spočetná zatímco $\mathbb R$ nespočetná množina, neexistuje tedy dokonce žádná \emph{bijekce} mezi jejich univerzy. Není těžké ukázat, že pro každou sentenci $\varphi$ platí $\A\models\varphi\Leftrightarrow\B\models\varphi$: indukcí podle struktury formule $\varphi$, jediný netriviální případ je existenční kvantifikátor, a klíčovou vlastností je \emph{hustota} obou uspořádání, tj. následující vlastnost:
     $$
     (x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)
@@ -604,7 +604,7 @@ Uveďme několik příkladů důležitých teorií.
 $$
 T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
 $$
-Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická irreflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
+Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
 \begin{itemize}
     \item Formule $\neg x=y\limplies E(x,y)$ platí v grafu, právě když je \emph{úplný}. Je tedy nezávislá v $T_\text{graph}$.
     \item Formule $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$ vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
@@ -617,11 +617,11 @@ Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle
 \begin{align*}
     T=\{& x\leq x,\\
         & x\leq y\land y\leq x\limplies x=y,\\
-        & x\leq y\land y\leq z\limplies x=z\}\\
+        & x\leq y\land y\leq z\limplies x\leq z\}\\
 \end{align*}
 Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzitivita}. Modely $T$ jsou $L$-struktury $\langle S,\leq^S\rangle$, ve kterých platí axiomy $T$, tzv. \emph{(částečně) uspořádané množiny}. Např: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ pro $X=\{0,1,2\}$.
 \begin{itemize}
-    \item Formule $x\leq y\lor y\leq x$ (\emph{linearita}) platí v $\A$, ale neplatí v $\B$, neboť neplatí např. při ohodnocení kde $e(x)=\emptyset$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
+    \item Formule $x\leq y\lor y\leq x$ (\emph{linearita}) platí v $\A$, ale neplatí v $\B$, neboť neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
     \item Sentence $(\exists x)(\forall y)(y\leq x)$ (označme ji $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je tedy také nezávislá v $T$.
     \item Formule $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (označme ji $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \emph{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
 \end{itemize}
@@ -654,7 +654,7 @@ Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzit
     $$
     \item \emph{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \emph{existence inverzního prvku k $\cdot$} a \emph{netriviality}:
     $$
-    T_5 = T_4 \cup \{\neg (x=y) \limplies (\exists y)(x\cdot y = 1, \neg (0=1)\}
+    T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1), \neg\,0=1\}
     $$
     \item \emph{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \emph{kompatibility uspořádání}: $x\leq y\limplies (x+z\leq y+z)$ a $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$. (Modely jsou tedy tělesa s \emph{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi v tomto smyslu.)
 \end{itemize}

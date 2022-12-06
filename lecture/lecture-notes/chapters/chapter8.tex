@@ -199,7 +199,7 @@ Protože je každá formule $\varphi(x_1,\dots,x_n)$ ekvivalentní svému \emph{
     Ke každé formuli $\varphi$ existuje ekvivalentní \emph{sentence} v PNF.
 \end{corollary} 
 
-Například v Příkladu \ref{example:convert-to-pnf} je výsledná sentence $(\forall x)(\forall y)(\forall z)(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))$.
+Například v Příkladě \ref{example:convert-to-pnf} je výsledná sentence $(\forall x)(\forall y)(\forall z)(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))$.
 
 \begin{remark}
     Prenexní forma není jednoznačná, pravidla pro převod můžeme aplikovat v různém pořadí. Jak uvidíme v následující podsekci, je výhodné vytýkat přednostně kvantifikátory [ze kterých se stanou] existenční: Máme-li na výběr mezi $(\forall x)(\exists y)\varphi(x,y)$ a $(\exists y)(\forall x)\varphi(x,y)$, volíme druhou variantu, neboť v první je `$y$ závislé na $x$'.
@@ -235,7 +235,7 @@ Tomuto procesu říkáme také \emph{skolemizace}.
 \end{example}
 
 \begin{remark}
-    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Napříkla máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
+    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Například, máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
 
     Je také důležité, aby každý symbol použitý při skolemizaci byl opravdu nový, jeho jedinou `rolí' v celé teorii musí být reprezentovat `existující' prvky v této formuli.
 \end{remark} 
@@ -243,7 +243,10 @@ Tomuto procesu říkáme také \emph{skolemizace}.
 V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
 
 \begin{lemma}\label{lemma:skolem-variant-conservative-extension}
-Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence $\varphi=(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$, kde $f$ je nový funkční symbol. Potom:
+Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence 
+$$
+(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$$
+kde $f$ je nový funkční symbol. Potom:
 \begin{enumerate}[(i)]
     \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
     \item každý model $\varphi$ lze expandovat na model $\varphi'$.
@@ -368,7 +371,7 @@ Nyní jsme připraveni vyslovit Herbrandovu větu. Neformálně řečeno, je-li 
 Mějme otevřenou teorii $T$ v jazyce $L$ bez rovnosti a s alespoň jedním konstantním symbolem. Potom buď má $T$ \emph{Herbrandův model}, nebo existuje konečně mnoho základních instancí axiomů $T$, jejichž konjunkce je nesplnitelná.
 \end{theorem}
 \begin{proof}
-Označme jako $T_\text{ground}$ množinu všech základních instancí axiomů teorie $T$. Zkonstruujeme systematické\footnote{Nebo libovolné dokončené tablo, ale tak, abychom sporné větve už neprodlužovali.} tablo z teorie $T_\text{ground}$ s položkou $\F\bot$ v kořeni, ale z jazyka $L$, bez rozšíření o pomocné konstantní symboly na jazyk $L_C$. 
+Označme jako $T_\text{ground}$ množinu všech základních instancí axiomů teorie $T$. Zkonstruujeme systematické\footnote{Nebo libovolné dokončené tablo, ale tak, abychom sporné větve už neprodlužovali.} tablo z teorie $T_\text{ground}$ s položkou $\F\bot$ v kořeni, ale z jazyka $L$, bez rozšíření o pomocné konstantní symboly na jazyk $L_C$.\footnote{Protože v $T_\text{ground}$ nejsou žádné kvantifikátory, pomocné symboly nikde v tablu nejsou použity.}
 
 Pokud tablo obsahuje bezespornou větev, potom je kanonický model pro tuto větev (opět bez přidání pomocných konstantních symbolů) Herbrandovým modelem $T$. V opačném případě máme tablo důkaz sporu, tedy teorie $T_\text{ground}$, a tím pádem i $T$, je nesplnitelná. Protože je tablo důkaz konečný, použili jsme v něm jen konečně mnoho základních instancí axiomů $\alpha_\text{ground}\in T_\text{ground}$. Jejich konjunkce je tedy nesplnitelná.
 \end{proof}
@@ -392,7 +395,7 @@ Na závěr této sekce vyslovíme dva důsledky Herbrandovy věty.
 Sentence $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$ je pravdivá, právě když $(\forall x_1)\dots(\forall x_n)\neg\varphi$ je nesplnitelná, neboli když $\neg\varphi$ je nesplnitelná. Tvrzení plyne z Herbrandovy věty aplikované na formuli $\neg\varphi$.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{corollary:herbrands-theorem-corollary-ground}
     Mějme otevřenou teorii $T$ v jazyce s alespoň jedním konstantním symbolem. Teorie $T$ má model, právě když má model teorie $T_\text{ground}$ sestávající ze všech základních instancí axiomů teorie $T$.
 \end{corollary}
 \begin{proof}
@@ -401,655 +404,415 @@ V modelu teorie $T$ platí všechny axiomy, tedy i všechny základní instance 
 
 
 \section{Unifikace}\label{section:unification}
-\todo
 
-\subsection{Substituce}\todo
+Místo substitucí \emph{všech} základních termů a práce s touto novou, obrovskou a typicky nekonečnou množinou klauzulí, je lepší najít v konkrétním rezolučním kroku `vhodnou' substituci a pracovat jen s ní. V této sekci vysvětlíme, co znamená `vhodná' (tzv. \emph{unifikace}) a jak ji lze hledat (pomocí \emph{unifikačního 
+algoritmu}).
 
-% from slides:
-\subsubsection*{Substituce - příklady}
+\subsection{Substituce}
+%\todo change terms of sigma to s and tau to t?
+
+Nejprve uveďme několik příkladů `vhodných' substitucí:
+
+\begin{example}\label{example:substitutions}
+\begin{itemize}
+    \item Z klauzulí $\{P(x),Q(x,a)\}$ a $\{\neg P(y),\neg Q(b,y)\}$ získáme pomocí substituce $\{x/b,y/a\}$ klauzule $\{P(b),Q(b,a)\}$ a $\{P(b),\neg P(a)\}$, \mygreen{$y/a$}, a z nich potom rezolucí klauzuli $\{P(b),\neg P(a)\}$. Mohli bychom také použít substituci $\{x/y\}$ a rezolucí přes $P(y)$ získat rezolventu $\{Q(y,a),\neg Q(b,y)$.
+    \item Máme-li klauzule $\{P(x),Q(x,a),Q(b,y)\}$ a $\{\neg P(v),\neg Q(u,v)\}$, vhodnou substitucí je $\{x/b,y/a,u/b,v/a\}$; dostáváme $\{P(b),Q(b,a)\}$ a $\{\neg P(a),\neg Q(b,a)\}$, jejichž rezolventou je $\{P(b),\neg P(a)\}$.
+    \item Podívejme se ještě na klauzule $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$. Mohli bychom použít substituci $\{x/f(a),y/a,z/a\}$ a získat tak dvojici klauzulí $\{P(f(a)),Q(f(a),a)\}$ a $\{\neg P(a),\neg Q(f(a),a)\}$, rezolucí potom $\{P(f(a)),\neg P(a)\}$.
     
-    {\it Efektivnější je využívat vhodných substitucí. Např. pro}
-    \smallskip
-    
-    \begin{enumerate}
-    \item[$a)$] \mygreen{$\{P(x),Q(x,a)\}$}, \mygreen{$\{\neg P(y),\neg Q(b,y)\}$} substitucí \mygreen{$x/b$}, \mygreen{$y/a$} dostaneme
-    \smallskip
-    
-    \mygreen{$\{P(b),Q(b,a)\}$}, \mygreen{$\{\neg P(a),\neg Q(b,a)\}$} a z nich rezolucí \mygreen{$\{P(b),\neg P(a)\}$}.
-    \medskip
-    
-    Nebo substitucí \mygreen{$x/y$} a rezolucí dle \mygreen{$P(y)$} dostaneme \mygreen{$\{Q(y,a),\neg Q(b,y)\}$}.
-    \medskip
-    
-    \item[$b)$] \mygreen{$\{P(x),Q(x,a),Q(b,y)\}$}, \mygreen{$\{\neg P(v),\neg Q(u,v)\}$} substituce \mygreen{$x/b$}, \mygreen{$y/a$}, \mygreen{$u/b$}, \mygreen{$v/a$}
-    \smallskip
-    
-    dává \mygreen{$\{P(b),Q(b,a)\}$}, \mygreen{$\{\neg P(a),\neg Q(b,a)\}$} a z nich rezolucí \mygreen{$\{P(b),\neg P(a)\}$}.
-    \medskip
-    
-    \item[$c)$] \mygreen{$\{P(x),Q(x,z)\}$}, \mygreen{$\{\neg P(y),\neg Q(f(y),y)\}$} substitucí \mygreen{$x/f(z)$}, \mygreen{$y/z$} dostaneme
-    \smallskip
-    
-    \mygreen{$\{P(f(z)),Q(f(z),z)\}$}, \mygreen{$\{\neg P(z),\neg Q(f(z),z)\}$} a z nich \mygreen{$\{P(f(z)),\neg P(z)\}$}.
-    \medskip
-    
-    Při substituci \mygreen{$x/f(a)$}, \mygreen{$y/a$}, \mygreen{$z/a$} dostaneme \mygreen{$\{P(f(a)),Q(f(a),a)\}$},
-    \smallskip
-    
-    \mygreen{$\{\neg P(a),\neg Q(f(a),a)\}$} a z nich rezolucí \mygreen{$\{P(f(a)),\neg P(a)\}$}. Předchozí
-    \smallskip
-    
-    substituce je ale \myblue{obecnější}.
-    \end{enumerate}
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Substituce}
-    
+    Lepší ale bude využít substituce $\{x/f(z),y/z\}$, po které máme $\{P(f(z)),Q(f(z),z)\}$ a $\{\neg P(z),\neg Q(f(z),z)\}$, a rezolventu $\{P(f(z)),\neg P(z)\}$. Tato substituce je \emph{obecnější}, a výsledná rezolventa `říká více' než $\{P(f(a)),\neg P(a)\}$ (ta je jejím důsledkem, ale naopak to neplatí).
+\end{itemize}
+\end{example}
+
+Nyní zavedeme potřebnou terminologii týkající se substitucí. Substituce budeme aplikovat na termy nebo na literály (atomické formule nebo jejich negace), označme tyto dohromady jako \emph{výrazy}. 
+
+\begin{definition}[Substituce]
+    \emph{Substituce} je konečná množina $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, kde $x_i$ jsou navzájem různé proměnné a $t_i$ jsou termy, přičemž vyžadujeme, aby term $t_i$ nebyl roven proměnné $x_i$. Substituce $\sigma$ je 
     \begin{itemize}
-    \item \mdef{Substituce} je (konečná) množina \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$}, kde $x_i$ jsou
-    \smallskip
-    
-    \myblue{navzájem  různé} proměnné a $t_i$ jsou termy, přičemž $t_i$ \myblue{není} $x_i$.
-    \smallskip
-    
-    \item Jsou-li všechny termy $t_i$ konstantní, je $\sigma$ \mdef{základní substituce}.
-    \smallskip
-    
-    \item Jsou-li $t_i$ navzájem různé proměnné, je $\sigma$ \mdef{přejmenování proměnných}.
-    \smallskip
-    
-    \item \mdef{Výraz} je literál nebo term. \emph{(Substituci lze aplikovat na výrazy.)}
-    \smallskip
-    
-    \item \mdef{Instance} výrazu $E$ \mdef{při substituci} \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz \mdef{$E\sigma$}
-    \smallskip
-    
-    vzniklý z $E$ \myblue{současným} nahrazením \myblue{všech} výskytů proměnných $x_i$ za $t_i$.
-    \smallskip
-    
-    \item Pro množinu výrazů $S$ označme \mdef{$S\sigma$} množinu instancí $E\sigma$ výrazů $E$ z $S$.
+        \item \emph{základní}, jsou-li všechny termy $t_i$ konstantní,
+        \item \emph{přejmenování proměnných}, jsou-li všechny termy $t_i$ navzájem různé proměnné.
     \end{itemize}
-    \smallskip
-    
-    {\it \myblue{Poznámka}\ \ Jelikož substituce je současná pro všechny proměnné zároveň,
-    \smallskip
-    
-    případný výskyt proměnné $x_i$ v termu $t_j$ nevede k zřetězení substitucí.}
-    \medskip
-    
-    \mygreen{\it Např. pro $S=\{P(x),R(y,z)\}$ a substituci $\sigma=\{x/f(y,z),y/x,z/c\}$ je
-    \vspace{-2mm}
-    $$S\sigma=\{P(f(y,z)),R(x,c)\}.$$}
-    
-    \vspace{-6mm}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Skládání substitucí}
-    {\it Zadefinujeme $\sigma\tau$ tak, aby $E(\sigma\tau)=(E\sigma)\tau$ pro každý výraz $E$.}
-    \medskip
-    
-    \mygreen{\it Např. pro $E=P(x,w,u)$, $\sigma=\{x/f(y),w/v\}$, $\tau=\{x/a,y/g(x),v/w,u/c\}$ je}
-    \vspace{-2mm}
-    \mygreen{$$E\sigma=P(f(y),v,u),\quad(E\sigma)\tau=P(f(g(x)),w,c).$$}
-    
-    \vspace{-6mm}
-    \mygreen{\it Pak by mělo být $\sigma\tau=\{x/f(g(x)),y/g(x),v/w,u/c\}$.}
-    \bigskip
-    
-    Pro substituce \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} a \mygreen{$\tau=\{y_1/s_1,\dots,y_n/s_n\}$} definujeme
-    \vspace{-1mm}
-  $$\\sigma\tau=\{x_i/t_i\tau\mid x_i\in X,\text{ $x_i$ není $t_i\tau$}\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}$$
-    
-    \vspace{-5mm}
-    \mdef{složenou substituci} $\sigma$ a $\tau$, kde $X=\{x_1,\dots,x_n\}$ a $Y=\{y_1,\dots,y_m\}$.
-    \bigskip
-    
-    {\it \myblue{Poznámka}\ \ Skládání substitucí není komutativní, např. pro uvedené $\sigma$ a $\tau$ je}
-    \vspace{-2mm}
-    \mygreen{$$\tau\sigma=\{x/a,y/g(f(y)),u/c,w/v\}\ne \sigma\tau.$$}
-    
-    \vspace{-6mm}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Skládání substitucí - vlastnosti}
-    {\it Ukážeme, že definice vyhovuje našemu požadavku a skládání je asociativní.}
-    \medskip
-    
-    {\bf \myblue{Tvrzení}}\ \ {\it Pro každý výraz $E$ a substituce $\sigma$, $\tau$, $\varrho$ platí}
-    \begin{enumerate}
-    \item[$(i)$] \mygreen{$(E\sigma)\tau=E(\sigma\tau)$},
-    \item[$(ii)$] \mygreen{$(\sigma\tau)\varrho=\sigma(\tau\varrho)$}.
-    \end{enumerate}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Nechť \mygreen{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} a \mygreen{$\tau=\{y_1/s_1,\dots,y_m/s_m\}$}. Stačí uvážit
-    \smallskip
-    
-    případ, kdy $E$ je proměnná, řekněme $v$.
-    \smallskip
-    
-    \begin{enumerate}
-    \item[$(i)$] Je-li $v$ proměnná $x_i$ pro nějaké $i$, je \mygreen{$v\sigma=t_i$} a \mygreen{$(v\sigma)\tau=t_i\tau$}, což je $v(\sigma\tau)$
-    \smallskip
-    
-    dle definice $\sigma\tau$. Jinak \mygreen{$v\sigma=v$} a \mygreen{$(v\sigma)\tau=v\tau$}.
-    \smallskip
-    
-    \item[] Je-li $v$ proměnná $y_j$ pro nějaké $j$, je dále \mygreen{$(v\sigma)\tau=v\tau=s_j$}, což je $v(\sigma\tau)$
-    \smallskip
-    
-    dle definice $\sigma\tau$. Jinak \mygreen{$(v\sigma)\tau=v\tau=v$} a zároveň \mygreen{$v(\sigma\tau)=v$}.
-    \smallskip
-    
-    \item[$(ii)$] Opakovaným užitím $(i)$ dostaneme pro každý výraz $E$,
-    \vspace{-2mm}
-    \mygreen{$$E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho)).\quad\qed$$}
-    
-    \vspace{-6mm}
-    \end{enumerate}
-    
-% :from slides
+    \emph{Instance} výrazu (termu nebo literálu) $E$ \emph{při substituci $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} je výraz vzniklý z $E$ simultánním nahrazením všech výskytů proměnných $x_i$ termy $t_i$, označme jej $E\sigma$. Je-li $S$ množina výrazů, potom značíme $S\sigma=\{E\sigma\mid E\in S\}$.
+\end{definition}
 
-\subsection{Unifikační algoritmus}\todo
+Protože proměnné nahrazujeme \emph{simultánně} pro všechny proměnné zároveň, případný výskyt proměnné $x_i$ v termu $t_j$ nepovede ke zřetězení substitucí.
 
-% from slides:
-\subsubsection*{Unifikace}
-    Nechť \mygreen{$S=\{E_1,\dots,E_n\}$} je (konečná) množina výrazů.
-    \smallskip
+\begin{example}
+Například pro $S=\{P(x),R(y,z)\}$ a substituci $\sigma=\{x/f(y,z),y/x,z/c\}$ máme:
+$$
+S\sigma=\{P(f(y,z)),R(x,c)\}
+$$
+\end{example}
+
+Substituce můžeme přirozeně \emph{skládat}. Složení substitucí $\sigma$ a $\tau$, kde nejprve aplikujeme $\sigma$ a potom~$\tau$, budeme zapisovat jako $\sigma\tau$. Bude tedy platit $E(\sigma\tau)=(E\sigma)\tau$, pro libovolný výraz~$E$.
+
+\begin{example}\label{example:compose-substitutions}
+    Začněme opět příkladem. Máme-li výraz $E=P(x,w,u)$, a substituce \begin{align*}
+        \sigma&=\{x/f(y),w/v\}\\
+        \tau&=\{x/a,y/g(x),v/w,u/c\}
+    \end{align*}
+    potom je $E\sigma=P(f(y),v,u)$ a $(E\sigma)\tau=P(f(g(x)),w,c)$.
+    Musí tedy platit: 
+    $$
+    \sigma\tau=\{x/f(g(x)),y/g(x),v/w,u/c\}
+    $$
+\end{example}
+
+Nyní formální definice:
+
+\begin{definition}[Skládání substitucí]
+Mějme substituce $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. \emph{Složení substitucí $\sigma$ a $\tau$} je substituce
+$$
+\sigma\tau=\{x_i/t_i\tau\mid x_i\in X,x_i\neq t_i\tau\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}
+$$
+kde $X=\{x_1,\dots,x_n\}$ a $Y=\{y_1,\dots,y_m\}$.
+\end{definition}
+
+Všimněte si, že skládání substitucí není komutativní, $\sigma\tau$ je typicky zcela jiná substituce než $\tau\sigma$.
+
+\begin{example}
+    Jsou-li $\sigma$ a $\tau$ jako v Příkladu \ref{example:compose-substitutions}, potom: 
+    $$
+    \tau\sigma=\{x/a,y/g(f(y)),u/c,w/v\}\neq \sigma\tau
+    $$
+\end{example}
+
+Nyní ukážeme, že takto definované skládání substitucí splňuje požadovanou vlastnosti, a také že je \emph{asociativní}. Z asociativity plyne, že nemusíme (a také nebudeme) psát závorky ve složení $\sigma\tau\varrho$, $\sigma_1\sigma_2\cdots\sigma_n$ apod.
+
+\begin{proposition}
+Mějme substituce $\sigma$, $\tau$, $\varrho$, a libovolný výraz $E$. Potom platí:
+\begin{enumerate}[(i)]
+    \item $(E\sigma)\tau=E(\sigma\tau)$
+    \item $(\sigma\tau)\varrho=\sigma(\tau\varrho)$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Nechť $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. Stačí dokázat v případě, kdy výraz $E$ je jediná proměnná, zbytek snadno plyne indukcí. (Substituce nijak nemění ostatní symboly.) Rozdělíme na tři případy:
+\begin{itemize}
+    \item Je-li $E=x_i$ pro nějaké $i$, potom $E\sigma=t_i$ a $(E\sigma)\tau=t_i\tau=E(\sigma\tau)$, kde druhá rovnost je z definice $\sigma\tau$.
+    \item Je-li $E=y_j$ pro nějaké $j$, potom $E\sigma=E$ a $(E\sigma)\tau=E\tau=s_j=E(\sigma\tau)$ opět z definice $\sigma\tau$.
+    \item Je-li $E$ jiná proměnná, potom $(E\sigma)\tau=E=E(\sigma\tau)$.
+\end{itemize}
+Tím jsme dokázali (i). Asociativitu (ii) snadno dokážeme opakovaným užitím (i). Následující platí pro každý výraz $E$, tedy i pro každou proměnnou:
+$$
+E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho)).
+$$
+Z toho plyne, že $(\sigma\tau)\varrho$ a $\sigma(\tau\varrho)$ jsou touž substitucí.\footnote{Podrobněji: používáme zřejmou vlastnost, že pro substituci $\pi$ platí $\pi=\{z_1/v_1,\dots,z_k/v_k\}$, právě když $E\pi=v_i$ pro $E=z_i$  a $E\pi=E$ je-li $E$ proměnná různá od všech $z_i$.}
+\end{proof}    
+
+\subsection{Unifikační algoritmus}
+
+Které substituce jsou tedy `vhodné'? Takové, po jejichž provedení se dané výrazy `stanou stejnými', tj. \emph{unifikovanými} (viz Příklad \ref{example:substitutions}).
+
+\begin{definition}[Unifikace]
+    Mějme konečnou množinu výrazů $S=\{E_1,\dots,E_n\}$. Substituce $\sigma$ je \emph{unifikace pro $S$}, pokud $E_1\sigma=E_2\sigma=\cdots =E_n\sigma$, neboli $S\sigma$ obsahuje jediný výraz. Pokud existuje, potom říkáme také, že $S$ je \emph{unifikovatelná}. 
     
-    \begin{itemize}
-    \item \mdef{Unifikace} pro $S$ je substituce $\sigma$ taková, že \mygreen{$E_1\sigma=E_2\sigma=\cdots =E_n\sigma$},
-    \smallskip
+    Unifikace pro $S$ je \emph{nejobecnější}, pokud pro každou unifikaci $\tau$ pro $S$ existuje substituce $\lambda$ taková, že $\tau=\sigma\lambda$. Všimněte si, že nejobecnějších unifikací pro $S$ může být více, ale liší se jen přejmenováním proměnných.
+\end{definition}
+
+\begin{example}
+   Uvažme množinu výrazů $S=\{P(f(x),y),P(f(a),w)\}$. Nejobecnější unifikací pro $S$ je $\sigma=\{x/a,y/w\}$. Jinou unifikací je např. $\tau=\{x/a,y/b,w/b\}$, není ale nejobecnější, nelze z ní získat např. unifikaci $\varrho=\{x/a, y/c, w/c\}$. Unifikaci $\tau$ naopak lze získat z nejobecnější unifikace $\sigma$, a to pomocí substituce $\lambda=\{w/b\}$: $\tau=\sigma\lambda$
+\end{example}
+
+Nyní představíme \emph{unifikační algoritmus}. Jeho vstupem je neprázdná, konečná množina výrazů $S$, a výstupem je buď nejobecnější unifikace pro $S$, nebo informace, že $S$ není unifikovatelná. Algoritmus postupuje od začátku výrazů a postupně aplikuje substituce tak, aby se výrazy stávaly více podobnými. Potřebujeme následující definici:
+
+Nechť $p$ je první (nejlevější) pozice, na které se nějaké dva výrazy z $S$ liší. Potom \emph{neshoda v $S$}, označme $D(S)$, je množina všech podvýrazů začínajících na pozici $p$ výrazů z $S$.
+
+\begin{example}
+Pro $S=\{P(x,y),P(f(x),z),P(z,f(x))\}$ je $p=3$ a $D(S)=\{x,f(x),z\}$.  
+\end{example}
+
+\begin{algorithm}[Unifikační algoritmus]{\,}
+\begin{itemize}
+    \item \textbf{vstup}: konečná množina výrazů $S\neq\emptyset$,
+    \item \textbf{výstup:} nejobecnější unifikace $\sigma$ pro $S$ nebo informace, že $S$ není unifikovatelná
+\end{itemize}
+\begin{enumerate}[(1)]\setcounter{enumi}{-1}
+    \item nastav $S_0:=S$, $\sigma_0:=\emptyset$, $k:=0$
+    \item pokud $|S_k|=1$, vrať $\sigma=\sigma_0\sigma_1\cdots \sigma_k$
+    \item zjisti, zda v $D(S_k)$ existuje proměnná $x$ a term $t$ \emph{neobsahující} $x$
+    \item pokud ano, nastav $\sigma_{k+1}:=\{x/t\}$, $S_{k+1}:=S_k\sigma_{k+1}$, $k:=k+1$, a jdi na (1)
+    \item pokud ne, odpověz, že $S$ není unifikovatelná
+\end{enumerate}
+\end{algorithm}
+
+\begin{remark}
+    Hledání proměnné $x$ a termu $t$ v kroku (2) může být relativně výpočetně náročné.
+\end{remark}
+
+Než se pustíme do důkazu korektnosti, ukážeme si běh algoritmu na příkladě
+
+\begin{example}
+Aplikujme unifikační algoritmus na následující množinu: 
+$$
+S=\{P(f(y,g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),y)\}
+$$
+\begin{itemize}
+    \item[($k=0$)] Množina $S_0=S$ není jednoprvková, $D(S_0)=\{y,h(w),h(b)\}$ obsahuje term $h(w)$ a proměnnou $y$ nevyskytující se v $h(w)$. Nastavíme $\sigma_1=\{y/h(w)\}$ a $S_1=S_0\sigma_1$, tj. máme:
     
-    tj. $S\sigma$ je singleton.
-    \smallskip
+    $$S_1=\{P(f(h(w),g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),h(w))\}$$
+
+    \item[($k=1$)] $D(S_1)=\{w,b\}$, $\sigma_2=\{w/b\}$, $S_2=S_1\sigma_2$, tj.
     
-    \item $S$ je \mdef{unifikovatelná}, pokud má unifikaci.
-    \smallskip
+    $$S_2=\{P(f(h(b),g(z)),h(b)),\ P(f(h(b),g(a)),t)\}$$
+        
+    \item[($k=2$)] $D(S_2)=\{z,a\}$, $\sigma_3=\{z/a\}$, $S_3=S_2\sigma_3$, tj.
     
-    \item Unifikace $\sigma$ pro $S$ je \mdef{nejobecnější unifikace (mgu)}, pokud pro každou
-    \smallskip
+    $$S_3=\{P(f(h(b),g(a)),h(b)),\ P(f(h(b),g(a)),t)\}$$
+
+    \item[($k=3$)] $D(S_3)=\{h(b),t\}$, $\sigma_4=\{t/h(b)\}$, $S_4=S_3\sigma_4$, tj.
     
-    unifikaci $\tau$ pro $S$ existuje substituce $\lambda$ taková, že \mygreen{$\tau=\sigma\lambda$}.
-    \end{itemize}
-    \medskip
+    $$S_4=\{P(f(h(b),g(a)),h(b))\}$$
+
+    \item[($k=4$)] $S_4$ je jednoprvková, nejobecnější unifikace pro $S$ je následující:
     
-    \mygreen{\it Např. $S=\{P(f(x),y),P(f(a),w)\}$ je unifikovatelná pomocí nejobecnější}
-    \smallskip
-    
-    \mygreen{unifikace $\sigma=\{x/a,y/w\}$. Unifikaci $\tau=\{x/a,y/b,w/b\}$ dostaneme jako $\sigma\lambda$}
-    \smallskip
-    
-    \mygreen{pro $\lambda=\{w/b\}$. $\tau$ není mgu, nelze z ní získat unifikaci $\varrho=\{x/a, y/c, w/c\}$.}
-    \bigskip
-    
-    {\it \myblue{Pozorování}\ \ Jsou-li $\sigma$, $\tau$ různé nejobecnější unifikace pro $S$, liší se pouze
-    \smallskip
-    
-    \myblue{přejmenováním proměnných}.}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Unifikační algoritmus}
-    Nechť $S$ je (konečná) neprázdná množina výrazů a $p$ je \myblue{nejlevější} pozice,
-    \smallskip
-    
-    na které se nějaké dva výrazy z $S$ liší. Pak \mdef{neshoda} v $S$ je množina \mdef{$D(S)$}
-    \smallskip
-    
-    podvýrazů začínajících na pozici $p$ ze \myblue{všech} výrazů v $S$ .
-    \medskip
-    
-    \mygreen{\it Např. pro $S=\{P(x,y),P(f(x),z),P(z,f(x))\}$ je $D(S)=\{x,f(x),z\}.$}
-    \bigskip
-    
-    {\it \myblue{Vstup}}\ \ Neprázdná (konečná) množina výrazů $S$.
-    \smallskip
-    
-    {\it \myblue{Výstup}}\ \ Nejobecnější unifikace $\sigma$ pro $S$ nebo \emph{``$S$ není unifikovatelná''}.
-    %\smallskip
-    
-    \begin{enumerate}
-    \item[$(0)$] Nechť $S_0:=S$, $\sigma_0:=\emptyset$, $k:=0$. \hfill\emph{(inicializace)}
-    \smallskip
-    
-    \item[$(1)$] Je-li $S_k$ singleton, vydej substituci $\sigma=\sigma_0\sigma_1\cdots \sigma_k$. \hfill\emph{(mgu pro $S$)}
-    \smallskip
-    
-    \item[$(2)$] Zjisti, zda v $D(S_k)$ existuje proměnná $x$ a term $t$ \myblue{neobsahující} $x$.
-    \smallskip
-    
-    \item[$(3)$] Pokud ne, vydej \emph{``$S$ není unifikovatelná''}.
-    \smallskip
-    
-    \item[$(4)$] Jinak $\sigma_{k+1}:=\{x/t\}$, $S_{k+1}:=S_k\sigma_{k+1}$, $k:=k+1$ a jdi na $(1)$.
-    \end{enumerate}
-    \smallskip
-    
-    {\it \myblue{Poznámka}\ \ Test výskytu proměnné $x$ v termu $t$ v kroku $(2)$ může být \emph{``drahý''}.}% Např. implementace Prologu od něj upouštějí.}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Unifikační algoritmus - příklad}
-     \vspace{-2mm}
-    \mygreen{$$S=\{P(f(y,g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),y)\}$$}
-    
-    \vspace{-5mm}
-    \begin{enumerate}
-    \item[$1)$] $S_0=S$ není singleton a $D(S_0)=\{y,h(w),h(b)\}$ obsahuje term $h(w)$ a
-    \smallskip
-    
-    proměnnou $y$ nevyskytující se v $h(w)$. Pak $\sigma_1=\{y/h(w)\}$,  $S_1=S_0\sigma_1$, tj.
-        \vspace{-2mm}
-        \mygreen{$$S_1=\{P(f(h(w),g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),h(w))\}.$$}
-    
-        \vspace{-6mm}
-    \item[$2)$] $D(S_1)=\{w,b\}$, $\sigma_2=\{w/b\}$, $S_2=S_1\sigma_2$, tj.
-    \vspace{-2mm}
-        \mygreen{$$S_2=\{P(f(h(b),g(z)),h(b)),\ P(f(h(b),g(a)),t)\}.$$}
-    
-        \vspace{-6mm}
-    \item[$3)$] $D(S_2)=\{z,a\}$, $\sigma_3=\{z/a\}$, $S_3=S_2\sigma_3$, tj.
-    \vspace{-2mm}
-        \mygreen{$$S_3=\{P(f(h(b),g(a)),h(b)),\ P(f(h(b),g(a)),t)\}.$$}
-    
-        \vspace{-6mm}
-    \item[$4)$] $D(S_3)=\{h(b),t\}$, $\sigma_4=\{t/h(b)\}$, $S_4=S_3\sigma_4$, tj.
-    \vspace{-2mm}
-        \mygreen{$$S_4=\{P(f(h(b),g(a)),h(b))\}.$$}
-    
-        \vspace{-6mm}
-    \item[$5)$] $S_4$ je singleton a nejobecnější unifikace pro $S$ je
-    \vspace{-2mm}
-        \mygreen{$$\sigma=\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=\{y/h(b),w/b,z/a,t/h(b)\}.$$}
-    
-        \vspace{-6mm}
-    \end{enumerate}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Unifikační algoritmus - korektnost}
-    {\bf \myblue{Tvrzení}}\ \ {\it Pro každé $S$ unifikační algoritmus vydá po konečně mnoha krocích
-    \smallskip
-    
-    korektní výsledek, tj. nejobecnější unifikaci $\sigma$ pro $S$ nebo pozná, že $S$ není
-    \smallskip
-    
-    unifikovatelná. $(*)$ Navíc, pro každou unifikaci $\tau$ pro $S$ platí, že \myblue{$\tau=\sigma\tau$}.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ V každém kroku eliminuje jednu proměnnou, někdy tedy skončí.
-    %\vspace{0.5mm}
-    
-    \begin{itemize}
-    \item Skončí-li neúspěchem po $k$ krocích, nelze unifikovat $D(S_k)$, tedy ani $S$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item Vydá-li $\sigma=\sigma_0\sigma_1\cdots\sigma_k$, je $\sigma$ evidentně \myblue{unifikace} pro $S$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item Dokážeme-li, že $\sigma$ má vlastnost $(*)$, je $\sigma$ \myblue{nejobecnější} unifikace pro $S$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item[$(1)$] Nechť $\tau$ je unifikace pro $S$. Ukážeme, že $\tau=\sigma_0\sigma_1\cdots\sigma_i\tau$ pro každé $i\le k$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item[$(2)$] Pro $i=0$ platí $(1)$. Nechť $\sigma_{i+1}=\{x/t\}$, předpokládejme $\tau=\sigma_0\sigma_1\cdots\sigma_i\tau$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item[$(3)$] Stačí dokázat, že $v\sigma_{i+1}\tau=v\tau$ pro každou proměnnou $v$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item[$(4)$] Pro $v\ne x$ je $v\sigma_{i+1}=v$, tedy platí $(3)$. Nyní $v=x$ a $v\sigma_{i+1}=x\sigma_{i+1}=t$.
-    %\smallskip
-    \vspace{0.5mm}
-    
-    \item[$(5)$] Jelikož $\tau$ unifikuje $S_{i}=S\sigma_0\sigma_1\cdots\sigma_i$ a proměnná $x$ i term $t$ jsou v $D(S_{i})$,
-    \vspace{0.5mm}
-    
-    musí $\tau$ unifikovat $x$ a $t$, tj. $t\tau=x\tau$, jak bylo požadováno pro $(3)$. \qed
-    \end{itemize}
-    
-    
-% :from slides
+    $$
+    \sigma=\sigma_1\sigma_2\sigma_3\sigma_4=\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=\{y/h(b),w/b,z/a,t/h(b)\}
+    $$
+\end{itemize}     
+\end{example}
+
+\begin{proposition}\label{proposition:unification-algorithm}
+Unifikační algoritmus je korektní. Pro každý vstup $S$ skončí v konečně mnoha krocích, a je-li $S$ unifikovatelná, odpoví nejobecnější unifikaci $\sigma$, jinak odpoví, že $S$ není unifikovatelná.
+
+Je-li $S$ unifikovatelná, potom pro sestrojenou nejobecnější unifikaci $\sigma$ navíc platí, že je-li $\tau$ libovolná unifikace, potom $\tau=\sigma\tau$.
+\end{proposition}
+\begin{proof}
+V každém kroku $k$ eliminujeme nějakou proměnnou, algoritmus tedy musí skončit. Pokud algoritmus skončí neúspěchem v kroku $k$, potom nelze unifikovat množinu $S_k$. Lze snadno nahlédnout, že v tom případě nelze unifikovat ani $S$.
+
+Pokud algoritmus odpoví $\sigma=\sigma_0\sigma_1\cdots\sigma_k$, zjevně jde o unifikaci. Zbývá dokázat, že je nejobecnější, k tomu stačí dokázat silnější vlastnost (`navíc') popsanou v tvrzení.
+
+Mějme libovolnou unifikaci $\tau$ pro $S$. Ukážeme indukcí, že pro každé $0\leq i\leq k$ platí:
+$$
+\tau=\sigma_0\sigma_1\cdots\sigma_i\tau
+$$
+Pro $i=0$ je $\sigma_0=\emptyset$ a $\tau=\sigma_0\tau$ tedy platí triviálně. Předpokládejme, že to platí pro nějaké $i$, a dokažme pro $i+1$. Nechť $\sigma_{i+1}=\{x/t\}$. Stačí dokázat, že pro libovolnou proměnnou $u$ platí: 
+$$
+u\sigma_{i+1}\tau=u\tau
+$$
+Z toho už okamžitě plyne i $\tau=\sigma_0\sigma_1\cdots\sigma_i\sigma_{i+1}\tau$.
+
+Je-li $u\neq x$, potom $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. V případě $u=x$ máme $u\sigma_{i+1}=x\sigma_{i+1}=t$. Protože $\tau$ unifikuje množinu $S_i=S\sigma_0\sigma_1\cdots\sigma_i$, a proměnná $x$ i term $t$ jsou v neshodě $D(S_i)$, musí $\tau$ unifikovat $x$ a $t$. Jinými slovy, $t\tau=x\tau$, neboli $u\sigma_{i+1}\tau=u\tau$, což jsme chtěli dokázat.
+\end{proof}
+
 
 \section{Rezoluční metoda}\label{section:predicate-resolution-method}
-\todo
 
-\subsection{Rezoluční pravidlo}\todo
+Chceme-li dokázat, že $T\models\varphi$, umíme díky Skolemizaci najít CNF formuli $S$, která je nesplnitelná, právě když je nesplnitelná teorie $T\cup\{\neg\varphi\}$, neboli právě když $T\models\varphi$. Stačí tedy najít rezoluční zamítnutí $S$.
 
-% from slides:
-Nechť klauzule $C_1$, $C_2$ neobsahují stejnou proměnnou  a jsou ve tvaru
-\vspace{-2mm}
-\mygreen{$$C_1=C'_1\sqcup \{A_1,\dots,A_n\},\quad C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\},$$}
-
-\vspace{-6mm}
-kde \mygreen{$S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$} lze unifikovat a $n,m\ge 1$. Pak klauzule
-\vspace{-2mm}
-\mdef{$$C=C'_1\sigma \cup C'_2\sigma,$$}
-
-\vspace{-6mm}
-kde $\sigma$ je \myblue{nejobecnější unifikace} pro $S$, je \mdef{rezolventa} klauzulí $C_1$ a $C_2$.
-\bigskip
-
-\mygreen{\it Např. v klauzulích $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$ lze unifikovat}
-\smallskip
-
-\mygreen{$S=\{Q(x,z),Q(f(y),y)\}$ pomocí nejobecnější unifikace $\sigma=\{x/f(y),z/y\}$}
-\smallskip
-
-\mygreen{a získat z nich rezolventu $\{P(f(y)),\neg P(y)\}$.}
-\bigskip
-
-{\it \myblue{Poznámka}\ \ Podmínce o různých proměnných lze vyhovět přejmenováním
-\smallskip
-
-proměnných v rámci klauzule. Je to nutné, např. z \mygreen{$\{\{P(x)\},\{\neg P(f(x))\}\}$}
-\smallskip
-
-lze po přejmenování získat\ \ $\square$, ale \mygreen{$\{P(x),P(f(x))\}$} nelze unifikovat.}
+V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzení bude velmi podobná výrokové logice. Jediným podstatným rozdílem bude \emph{rezoluční pravidlo}.
 
 
-% :from slides
+\subsection{Rezoluční pravidlo}
 
-\subsection{Rezoluční důkaz}\todo
+Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
-% from slides:
+\begin{example}
+Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
+\end{example}
 
-\subsubsection*{Rezoluční důkaz}
-    {\it Pojmy zavedeme jako ve VL, jen navíc dovolíme přejmenování proměnných.}
-    \smallskip
-    
+\begin{definition}[Rezoluční pravidlo]
+    Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných a nechť jsou tvaru
+    $$
+    C_1=C_1'\sqcup \{A_1,\dots,A_n\},\quad C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}
+    $$
+    kde $n,m\ge 1$ a množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ lze unifikovat.\footnote{Symbol $\sqcup$ označuje \emph{disjunktní sjednocení}.} Buď $\sigma$ nejobecnější unifikace $S$.\footnote{Připomeňme, že unifikace znamená, že $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} \emph{Rezolventa} klauzulí $C_1$ a $C_2$ je následující klauzule:
+    $$
+    C=C_1'\sigma \cup C_2'\sigma
+    $$
+\end{definition}
+
+\begin{remark}\label{remark:resolution-step-rename}
+    Podmínku o disjunktních množinách proměnných můžeme vždy splnit, pokud přejmenujeme proměnné v jedné z klauzulí. Proč je to potřeba? Například, z klauzulí $\{\{P(x)\},\{\neg P(f(x))\}\}$ můžeme získat prázdnou klauzuli $\square$, pokud nahradíme klauzuli $\{P(x)\}$ klauzulí $\{\{P(y)\}$. Množina výrazů $\{P(x),\neg P(f(x))\}$ ale není unifikovatelná, bez přejmenování proměnných by to tedy nešlo.
+\end{remark}
+
+
+\subsection{Rezoluční důkaz}
+
+Jakmile máme definované rezoluční pravidlo, můžeme zavést \emph{rezoluční důkaz} a související pojmy. Definice budou stejné jako ve výrokové logice, s jedním rozdílem: dovolíme si přejmenovat proměnné v klauzulích, viz Poznámka \ref{remark:resolution-step-rename}.
+
+
+\begin{definition}[Rezoluční důkaz]
+    \emph{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
+    taková, že pro každé $i$ je 
     \begin{itemize}
-    \item \mdef{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \myblue{konečná}
-    \smallskip
-    
-    posloupnost $C_0,\dots,C_n=C$ taková, že pro každé $i\le n$ je $C_i=C'_i\sigma$,
-    \smallskip
-    
-    kde $C'_i\in S$ a $\sigma$ je přejmenování proměnných, nebo je $C_i$ rezolventou
-    \smallskip
-    
-    nějakých dvou předchozích klauzulí (i stejných).
-    \smallskip
-    
-    \item Klauzule $C$ je (rezolucí)  \mdef{dokazatelná} z $S$, psáno $S \vdash_R C$, pokud má
-    \smallskip
-    
-    rezoluční důkaz z $S$.
-    \smallskip
-    
-    \item \mdef{Zamítnutí} formule $S$ je rezoluční důkaz $\Box$ z $S$.
-    \smallskip
-    
-    \item $S$ je (rezolucí) \mdef{zamítnutelná}, pokud $S \vdash_R \Box$.
+        \item buď $C_i=C_i'\sigma$ pro nějakou klauzuli $C_i\in S$ a přejmenování proměnných $\sigma$, nebo
+        \item $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
     \end{itemize}
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \  Eliminace více literálů najednou je někdy nezbytná, např.
-    \smallskip
-    
-    \mygreen{$S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$} je rezolucí zamítnutelná, ale nemá
-    \smallskip
-    
-    zamítnutí, při kterém by se v každém kroku eliminoval pouze jeden literál.}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{Příklad rezoluce}
-    Mějme teorii \mygreen{$T=\{\neg P(x,x),\ P(x,y) \to P(y,x),\ P(x,y)\mand P(y,z)\to P(x,z)\}$}.
-    \medskip
-    
-    Je \mygreen{$T\models (\exists x)\neg P(x,f(x))$}? Tedy, je následující formule $T'$ nesplnitelná?
-    \vspace{-1mm}
-    \mygreen{$$T'=\{\{\neg P(x,x)\},\{\neg P(x,y),P(y,x)\},\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{P(x,f(x))\}\}$$}
-    
-    \vspace{-2mm}
-    \centerline{\includegraphics[scale=0.8]{files/rezolucePLpriklad}}
-    
-    
-% :from slides
+    Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.
+\end{definition}
+
+\begin{remark}
+    Proč potřebujeme v rezolučním kroku odstranit více literálů z jedné klauzule najednou? Uvažte formuli $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$. Ta je rezolucí zamítnutelná, ale neexistuje zamítnutí, které by v každém kroku eliminovalo jen jeden literál.
+\end{remark}
+
+Nyní si ukážeme příklad použití rezoluční metody k důkazu platnosti sentence.
+
+\begin{example}\label{example:resolution-proof-predicate}
+Nechť $T=\{\neg P(x,x),P(x,y) \limplies P(y,x), P(x,y)\land P(y,z)\to P(x,z)\}$ a nechť $\varphi$ je sentence $(\exists x)\neg P(x,f(x))$. Chceme ukázat, že $T\models\varphi$. Teorie $T\cup\{\neg\varphi\}$ je ekvisplnitelná (v tomto případě dokonce ekvivalentní) s následující CNF formulí:
+$$S=\{\{\neg P(x,x)\},\{\neg P(x,y),P(y,x)\},\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{P(x,f(x))\}\}$$
+Ukážeme, že $S\proves_R\square$. Rezolučním důkazem je například následující posloupnost:
+\begin{align*}
+    &\{\neg P(x,y),\neg P(y,z), P(x,z)\},
+    \{P(x',f(x'))\},
+    \{\neg P(f(x),z),P(x,z)\},
+    \{\neg P(x,y),P(y,x)\},\\
+    &\{P(x',f(x'))\},
+    \{P(f(x'),x')\},
+    \{P(x,x)\},
+    \{P(x',x')\},
+    \square   
+\end{align*}
+Názornější je ale rezoluční strom, který je znázorněný na Obrázku \ref{figure:resolution-tree-example}.
+\end{example}
+
+\begin{figure}
+\label{figure:resolution-tree-example}
+\begin{forest}
+    for tree={l=1.5cm, grow=north}
+    [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$x'/x$}}
+        [{$ \{\neg P(x',x')\} $}]
+        [{$ \{P(x,x)\} $}, label=left:{\footnotesize\textcolor{blue}{$z/x,x'/x$}}
+            [{$ \{P(f(x'),x')\} $}, label=right:{\footnotesize\textcolor{blue}{$x/x',y/f(x')$}}
+                [{$ \{P(x',f(x'))\} $}]
+                [{$ \{\neg P(x,y),P(y,x)\} $}]            
+            ]
+            [{$ \{\neg P(f(x),z),P(x,z)\} $}, label=left:{\footnotesize\textcolor{blue}{$y/f(x'),x'/x$}}
+                [{$ \{P(x',f(x'))\} $}]
+                [{$ \{\neg P(x,y),\neg P(y,z), P(x,z) \} $}]                
+            ]
+        ]
+    ]
+    \end{forest}
+\caption{Rezoluční zamítnutí formule $S$ z Příkladu \ref{example:resolution-proof-predicate}. U každého rezolučního kroku je zapsána použitá unifikace.}
+\end{figure}
+
 
 
 \section{Korektnost a úplnost}\label{section:predicate-resolution-soundness-completeness}
-\todo
 
-% from slides:
+V této sekci dokážeme, že rezoluční metoda je i v predikátové logice korektní a úplná.
 
-% :from slides
+\subsection{Věta o korektnosti}
 
-\subsection{Věta o korektnosti}\todo
+Začneme důkazem korektnosti rezolučního pravidla. Princip je stejný jako u analogického pozorování ve výrokové logice. Důkaz je o trochu techničtější:
 
-% from slides:
-{\it Nejprve ukážeme, že obecné rezoluční pravidlo je korektní.}
-\medskip
+\begin{proposition}[Korektnost rezolučního kroku]
+Mějme klauzule $C_1$, $C_2$ a nechť $C$ je jejich rezolventou. Platí-li v nějaké struktuře $\A$ klauzule $C_1$ a $C_2$, potom v ní platí i $C$.
+\end{proposition}
+\begin{proof}
+Z definice rezolučního pravidla víme, že klauzule a jejich rezolventu lze vyjádřit jako $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, a $C=C_1'\sigma \cup C_2'\sigma$, kde $\sigma$ je
+nejobecnější unifikace množiny výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$, neboli $S\sigma=\{A_1\sigma\}$.
 
-{\bf \myblue{Tvrzení}}\ \ {Nechť $C$ je rezolventa klauzulí $C_1$, $C_2$. Pro každou $L$-strukturu $\mathcal{A}$,}
-\vspace{-2mm}
-$$\mathcal{A}\models C_1\ \ \text{a}\ \ \mathcal{A}\models C_2\quad \Rightarrow \quad \mathcal{A}\models C.$$
+Protože klauzule $C_1$ a $C_2$ jsou otevřené formule platné v $\A$, platí v $\A$ i jejich instance po substituci $\sigma$ tj. máme $\A\models C_1\sigma$ a $\A\models C_2\sigma$. Víme také, že $C_1\sigma=C_1'\sigma \cup \{A_1\sigma\}$ a podobně $C_2\sigma=C_2'\sigma \cup \{\neg A_1\sigma\}$.
 
-\vspace{-1mm}
-{\it \myblue{Důkaz}}\ \ Nechť \mygreen{$C_1=C'_1\sqcup \{A_1,\dots,A_n\}$}, \mygreen{$C_2=C'_2\sqcup \{\neg B_1,\dots,\neg B_m\}$}, $\sigma$ je
-\smallskip
+Naším cílem je ukázat, že $\A\models C[e]$ pro libovolné ohodnocení proměnných $e$. Pokud $\A\models A_1\sigma[e]$, potom $\A\not\models\neg A_1\sigma[e]$ a musí být $\A\models C_2'\sigma$. Tedy i $\A\models C$. V opačném případě $\A\not\models A_1\sigma[e]$, musí tedy platit $\A\models C_1'\sigma$, a opět $\A\models C$.
+\end{proof}
 
-nejobecnější unifikace pro \mygreen{$S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$} a \mygreen{$C=C'_1\sigma \cup C'_2\sigma$}.
-\smallskip
+Znění i důkaz Věty o korektnosti jsou nyní stejné jako ve výrokové logice:
 
-\begin{itemize}
-\item Jelikož $C_1$, $C_2$ jsou otevřené, platí i $\mathcal{A}\models C_1\sigma$ a $\mathcal{A}\models C_2\sigma$.
-\smallskip
+\begin{theorem}[O korektnosti rezoluce]\label{theorem:soundness-of-predicate-resolution}
+    Pokud je CNF formule $S$ rezolucí zamítnutelná, potom je nesplnitelná.
+\end{theorem}
+\begin{proof}
+    Víme, že $S\proves_R\square$, vezměme tedy nějaký rezoluční důkaz $\square$ z $S$. Kdyby existoval model $\A\models S$, díky korektnosti rezolučního pravidla bychom mohli dokázat indukcí podle délky důkazu, že i $\A\models\square$, což ale není možné.
+\end{proof}
 
-\item Máme \mygreen{$C_1\sigma=C'_1\sigma \cup \{S\sigma$\}} a \mygreen{$C_2\sigma=C'_2\sigma \cup \{\neg(S\sigma)\}$}.
-\smallskip
 
-\item Ukážeme, že $\mathcal{A}\models C[e]$ pro každé $e$.
-\smallskip
-Je-li $\mathcal{A}\models S\sigma[e]$, pak $\mathcal{A}\models C'_2\sigma[e]$ a tedy $\mathcal{A}\models C[e]$.
-\smallskip
-Jinak $\mathcal{A}\not\models S\sigma[e]$, pak $\mathcal{A}\models C'_1\sigma[e]$ a tedy $\mathcal{A}\models C[e]$. $\qed$
-\end{itemize}
-\medskip
+\subsection{Věta o úplnosti}
 
-{\bf \myblue{Věta (korektnost)}}\ \ {\it Je-li formule $S$ rezolucí zamítnutelná, je $S$ nesplnitelná.}
-\medskip
+Větu o úplnosti rezoluce v predikátové logice, totiž že nesplnitelné formule lze zamítnout rezolucí, dokážeme převedením na případ výrokové logiky. Ukážeme, že rezoluční důkaz `na úrovni výrokové logiky' je možné `zvednout' (`lift') na úroveň predikátové logiky.
 
-{\it \myblue{Důkaz}}\ \ Nechť $S \vdash_R \Box$. Kdyby $\mathcal{A}\models S$ pro nějakou strukturu $\mathcal{A}$, z korektnosti
-\smallskip
+Klíčem je následující lemma, které zaručuje takové `zvednutí' v jednom rezolučním kroku. Jeho důkaz je poněkud technický. 
 
-rezolučního pravidla by platilo i $\mathcal{A} \models \Box$, což není možné. $\quad\mqed$
-% :from slides
+\begin{lemma}[Lifting lemma]\label{lemma:lifting-lemma}
+Mějme klauzule $C_1$ a $C_2$ s disjunktní množinou proměnných. Nechť $C^*_1=C_1\tau_1$ a $C^*_2=C_2\tau_2$ jsou jejich základní instance.
 
-\subsection{Lifting lemma}\todo
+Je-li $C^*$ je rezolventou $C^*_1$ a $C^*_2$, potom existuje rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*=C\tau_1\tau_2$ je základní instancí $C$.
+\end{lemma}
+\begin{proof}
+Nechť $C^*$ je rezolventou $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že klauzule $C_1$ a $C_2$ můžeme vyjádřit jako $C_1=C_1' \sqcup \{A_1,\dots,A_n\}$ a $C_2=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\}$, kde $\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$ a $\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$.
 
-% from slides:
-\subsubsection*{Lifting lemma}
-    {\it Rezoluční důkaz na úrovni VL lze ``zdvihnout'' na úroveň PL.}
-    \medskip
-    
-    {\bf \myblue{Lemma}}\ \ {\it Nechť $C^*_1=C_1\tau_1$, $C^*_2=C_2\tau_2$ jsou \myblue{základní instance} klauzulí $C_1$, $C_2$
-    \smallskip
-    
-    \myblue{neobsahující stejnou proměnnou} a $C^*$ je rezolventa $C^*_1$ a $C^*_2$. Pak existuje
-    \smallskip
-    
-    rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*=C\tau_1\tau_2$ je základní instance $C$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Předpokládejme, že $C^*$ je rezolventa $C_1^*$, $C_2^*$ přes \myblue{literál}  $P(t_1,\dots,t_k)$.
-    \vspace{0.5mm}
-    
-    \begin{itemize}
-    \item Pak lze psát \mygreen{$C_1=C'_1 \sqcup \{A_1,\dots,A_n\}$} a \mygreen{$C_2=C'_2 \sqcup \{\neg B_1,\dots,\neg B_m\}$}, kde
-    \smallskip
-    
-    \mygreen{$\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$} a \mygreen{$\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$}.
-    \smallskip
-    
-    \item Tedy $(\tau_1\tau_2)$ unifikuje $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ a je-li $\sigma$ \myblue{mgu} pro $S$
-    \smallskip
-    
-    z unifikačního algoritmu, pak \mygreen{$C=C'_1\sigma \cup C'_2\sigma$} je rezolventa $C_1$ a $C_2$.
-    \smallskip
-    
-    \item Navíc $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$ z vlastnosti $(*)$ pro $\sigma$ a tedy
-    \vspace{-2mm}
-    \mygreen{\begin{align*}
-    C\tau_1\tau_2&= (C'_1\sigma \cup C'_2\sigma)\tau_1\tau_2=C'_1\sigma\tau_1\tau_2 \cup C'_2\sigma\tau_1\tau_2=C'_1\tau_1 \cup C'_2\tau_2\\
+To znamená, že $(\tau_1\tau_2)$ unifikuje množinu výrazů $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Nyní vezměme nejobecnější unifikaci $\sigma$ pro $S$ získanou pomocí Unifikačního algoritmu. Jako $C$ zvolme rezolventu $C=C_1'\sigma \cup C_2'\sigma$.
+
+Zbývá ukázat, že $C^*=C\tau_1\tau_2$. Díky vlastnosti `navíc' z Tvrzení \ref{proposition:unification-algorithm} o korektnosti Unifikačního algoritmu víme, že $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, což využíváme ve třetí rovnosti z následujícího výpočtu:
+\begin{align*}
+    C\tau_1\tau_2&= (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2=C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2=C_1'\tau_1 \cup C_2'\tau_2\\
     &=(C_1\setminus\{A_1,\dots,A_n\})\tau_1\cup (C_2\setminus\{\neg B_1,\dots,\neg B_m\})\tau_2\\
-    &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})=C^*. \qed
-    \end{align*}}
-    \end{itemize}
-    
-    
-    \vspace{-8mm}
-    
-% :from slides
+    &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})=C^*
+\end{align*}
+\end{proof}
 
-\subsection{Věta o úplnosti}\todo
+Indukcí podle délky rezolučního důkazu snadno získáme následující důsledek:
 
-% from slides:
-\subsubsection*{Úplnost}
-    {\bf \myblue{Důsledek}}\ \ {\it Nechť $S'$ je množina všech základních instancí klauzulí formule $S$.
-    \smallskip
-    
-    Je-li $S'\vdash_R C'$ (na úrovni VL), kde $C'$ je základní klauzule, pak existuje
-    \smallskip
-    
-    klauzule $C$ a základní substituce $\sigma$ t.ž. $C'=C\sigma$ a $S\vdash_R C$ (na úrovni PL).}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Indukcí dle délky rezolučního odvození pomocí lifting lemmatu. $\qed$
-    \bigskip
-    
-    {\bf \myblue{Věta (úplnost)}}\ \ {\it Je-li formule $S$ nesplnitelná, je $S\vdash_R \square$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Je-li $S$ nesplnitelná, dle (důsledku) Herbrandovy věty je nesplnitelná i
-    \smallskip
-    
-    množina $S'$ všech základních instancí klauzulí z $S$.
-    \vspace{0.5mm}
-    
-    \begin{itemize}
-    \item Dle úplnosti rezoluční metody ve VL je $S' \vdash_R \square$ (na úrovni VL).
-    \smallskip
-    
-    \item Dle předchozího důsledku existuje klauzule $C$ a substituce $\sigma$ taková, že
-    \smallskip
-    
-    $\square = C\sigma$ a $S\vdash_R C$ (na úrovni PL).
-    \smallskip
-    
-    \item Jediná klauzule, jejíž instance je $\square$, je klauzule $C=\square$. \qed
-    \end{itemize}
-    
-    
-   
-% :from slides
+\begin{corollary}\label{corollary:lifting}
+Mějme CNF formuli $S$ a označme jako $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ (`na úrovni výrokové logiky') pro nějakou základní klauzuli $C^*$, potom existuje klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni predikátové logiky').
+\end{corollary}
+
+Nyní už je snadné dokázat úplnost:
+
+\begin{theorem}[O úplnosti rezoluce]\label{theorem:completeness-of-predicate-resolution}
+    Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
+\end{theorem}
+\begin{proof}
+Označme jako $S^*$ množinu všech základních instancí klauzulí z $S$. Protože je $S$ nesplnitelná, je díky Herbrandově větě (konkrétně Důsledek \ref{corollary:herbrands-theorem-corollary-ground}) nesplnitelná i $S^*$. Z věty o úplnosti \emph{výrokové} rezoluce víme, že $S^*\proves_R\square$ (`na úrovni výrokové logiky'). Z Lifting lemmatu (resp. z Důsledku \ref{corollary:lifting}) dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni predikátové logiky'). Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.
+\end{proof}
 
 
 \section{LI-rezoluce}\label{section:predicate-LI-resolution}
-\todo
 
-% from slides:
-\subsubsection*{Lineární rezoluce}
-    {\it Stejně jako ve VL, rezoluční metodu lze značně omezit (bez ztráty úplnosti).}
-    %\medskip
-    
+V této sekci připomeneme pojmy \emph{lineárního a linear-input důkazu}, \emph{LI-rezoluci} a její úplnost pro Hornovské formule. Definice i znění vět jsou stejné jako ve výrokové logice, důkaz lze provést převedením na výrokovou logiku opět pomocí Herbrandovy věty a Lifting lemmatu.
+
+\begin{definition}[Lineární a LI důkaz]
+    \emph{Lineární důkaz} (rezolucí) klauzule $C$ z formule $S$ je konečná posloupnost
+    $$
+    \begin{bmatrix}
+        C_0 \\
+        B_0
+    \end{bmatrix},
+    \begin{bmatrix}
+        C_1 \\
+        B_1
+    \end{bmatrix},\dots,
+    \begin{bmatrix}
+        C_n \\
+        B_n
+    \end{bmatrix},
+    C_{n+1}
+    $$
+    kde $C_i$ říkáme \emph{centrální} klauzule, $C_0$ je \emph{počáteční}, $C_{n+1}=C$ je \emph{koncová}, $B_i$ jsou \emph{boční} klauzule, a platí:
     \begin{itemize}
-    \item \mdef{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost dvojic
-    \smallskip
-    
-     $(C_0,B_0),\dots,(C_n,B_n)$ t.ž. $C_0$ je \myblue{varianta} klauzule v $S$ a pro každé $i\le n$
-    \smallskip
-    
-    \begin{enumerate}
-    \item[{\normalsize $i)$}] {\normalsize $B_i$ je varianta klauzule v $S$ nebo $B_i=C_j$ pro nějaké $j<i$, a}
-    \medskip
-    
-    \item[{\normalsize $ii)$}] {\normalsize $C_{i+1}$ je rezolventa $C_i$ a $B_i$, kde $C_{n+1}=C$.}
-    \smallskip
-    
-    \end{enumerate}
-    
-    \item $C$ je \mdef{lineárně dokazatelná} z $S$, psáno $S \vdash_L C$, má-li lineární důkaz z $S$.
-    \smallskip
-    
-    \item \mdef{Lineární zamítnutí} $S$ je lineární důkaz $\Box$ z $S$.
-    \smallskip
-    
-    \item $S$ je \mdef{lineárně zamítnutelná}, pokud $S \vdash_L \Box$.
+        \item $C_0$ je varianta klauzule z $S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
+        \item $B_0$ je varianta klauzule z $S$, pro $i\leq n$ je $B_i$ varianta klauzule z $S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
     \end{itemize}
-    \medskip
+    \emph{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$.
     
-    {\bf \myblue{Věta}}\ \ {\it $S$ je lineárně zamítnutelná, právě když $S$ je nesplnitelná.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ $(\Rightarrow)$ Každý lineární důkaz lze transformovat na rezoluční důkaz.
-    \smallskip
-    
-    $(\Leftarrow)$ Plyne z úplnosti lineární rezoluce ve VL (nedokazováno), neboť lifting
-    \smallskip
-    
-    lemma zachovává \myblue{linearitu} odvození. $\qed$
-    %\medskip
-    
-    %{\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. je-li $S$ nesplnitelná, je $S$ lineárně zamítnutelná.}
-    %Důkaz v dodatku.
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{LI-rezoluce}
-    {\it Stejně jako ve VL, pro Hornovy formule můžeme lineární rezoluci dál omezit.}
-    
-    \begin{itemize}
-    \item \mdef{LI-rezoluce} \emph{(``linear input'')} z formule $S$ je lineární rezoluce z $S$, ve které
-    \vspace{0.5mm}
-    
-    je každá boční klauzule $B_i$ variantou klauzule ze (vstupní) formule $S$.
-    \item Je-li klauzule $C$ dokazatelná LI-rezolucí z $S$, píšeme \mdef{$S\vdash_{LI} C$}.
-    \smallskip
-    
-    \item \mdef{Hornova formule} je množina (i nekonečná) Hornových klauzulí.
-    \item \mdef{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál.
-    \item \mdef{Fakt} je (Hornova) klauzule $\{p\}$, kde $p$ je pozitivní literál.
-    \item \mdef{Pravidlo} je (Hornova) klauzule s právě jedním pozitivním a aspoň jedním
-    \vspace{0.5mm}
-    
-    negativním literálem. Pravidla a fakta jsou \mdef{programové klauzule}.
-    \item \mdef{Cíl} je neprázdná (Hornova) klauzule bez pozitivního literálu.
-    \end{itemize}
-    \smallskip
-    
-    {\bf \myblue{Věta}}\ \ {\it Je-li Hornova $T$ splnitelná a $T\cup \{G\}$ nesplnitelná pro cíl $G$, lze $\Box$
-    \smallskip
-    
-    odvodit LI-rezolucí z $T\cup\{G\}$ začínající $G$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}\ \ Plyne z Herbrandovy věty, stejné věty ve VL a lifting lemmatu. $\qed$
-    
-    
-% :from slides
+    \emph{LI-důkaz} je lineární důkaz, ve kterém je každá boční klauzule $B_i$ variantou klauzule z $S$. Pokud existuje LI-důkaz, říkáme, že je $C$ \emph{LI-dokazatelná} z $S$, a píšeme $S\proves_{LI}C$. Pokud $S\proves_{LI}\square$, je $S$ \emph{LI-zamítnutelná}.
+\end{definition}
+
+V Poznámce \ref{remark:linear-resolution} jsme poznamenali, že `lineární' rezoluce (založená na lineárních důkazech) je úplná. Důkaz byl ponechán jako cvičení. Stejné tvrzení platí i v predikátové rezoluci:
+
+\begin{theorem}[O úplnosti lineární rezoluce]
+Klauzule $C$ má lineární důkaz z CNF formule $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
+\end{theorem}
+\begin{proof}
+Z lineárního důkazu snadno vyrobíme rezoluční strom. Opačná implikace plyne z Poznámky \ref{remark:linear-resolution} a z Lifting lemmatu (jehož použití zachovává linearitu rezolučního důkazu).
+\end{proof}
+
+\subsection{Úplnost LI-rezoluce pro Hornovy formule}
+
+Připomeňme terminologii týkající se hornovskosti a programů: \emph{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál. \emph{Hornova formule} je (konečná, nebo i nekonečná) množina Hornových klauzulí.
+\emph{Fakt} je pozitivní jednotková (Hornova) klauzule, \emph{pravidlo} je (Hornova) klauzule s právě jedním pozitivním a alespoň jedním negativním literálem, a \emph{cíl} je neprázdná (Hornova) klauzule bez pozitivního literálu. Pravidlům a faktům říkáme \emph{programové klauzule}.
+
+Stejně jako ve výrokové logice, LI-rezoluce je úplná pro Hornovské formule:
+
+\begin{theorem}[O úplnosti LI-rezoluce pro Hornovy formule]\label{theorem:completeness-of-li-resolution-for-horn-predicate}
+Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.   
+\end{theorem}
+\begin{proof}
+    Plyne z analogické věty ve výrokové logice, z Herbrandovy věty, a z Lifting lemmatu
+\end{proof}
+
 
 \subsection{(draft) Rezoluce v Prologu}\todo
 

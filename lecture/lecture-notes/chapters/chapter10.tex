@@ -1,55 +1,73 @@
-\chapter{(draft) Nerozhodnutelnost a neúplnost}\todo
+\chapter{(draft) Nerozhodnutelnost a neúplnost}
 
-% from slides:
+V této, závěrečné kapitole se budeme zabývat tím, jak lze s teoriemi pracovat algoritmicky. Zlatým hřebem budou \emph{Gödelovy věty o neúplnosti} z roku 1930, které ukazují limity formálního přístupu, a které zastavily desetiletí trvající program formalizace matematiky. Nemáme zde dostatek prostoru k uvedení formálních definic a úplných důkazů, proto se místy budeme pohybovat na poněkud intuitivní úrovni. Zaměříme se na pochopení smyslu tvrzení a myšlenek důkazů.
 
-% :from slides
+Pojem \emph{algoritmu} budeme chápat také jen intuitivně. Pokud bychom ho chtěli formalizovat, potom nejběžnější (ale zdaleka ne jedinou) volbou je koncept \emph{Turingova stroje}.\footnote{Viz přednáška NTIN090 Základy složitosti a vyčíslitelnosti.}
 
+\section{Rekurzivní axiomatizace a rozhodnutelnost}
 
-\section{Rozhodnutelnost}\todo
+V důkazových systémech, kterými jsme se zabývali (tablo metoda, rezoluce, hilbertův kalkulus) jsme povolili, aby teorie $T$, ve které dokazujeme, byla nekonečná. Vůbec jsem se ale zatím nezabývali tím, jak je zadaná. Pokud chceme ověřit, že je daný objekt (tablo, rezoluční strom, posloupnost formulí) korektním důkazem, potřebujeme nějaký algoritmický přístup ke všem axiomům $T$. 
 
-% from slides:
-\subsubsection*{Rekurzivní axiomatizace a rozhodnutelnost}
+Jednou z možností by bylo požadovat \emph{enumerátor} $T$, tj. algoritmus, který vypisuje na výstup axiomy z $T$, a každý axiom někdy vypíše.\footnote{Nutným předpokladem je, aby $T$ byla spočetná. K tomu stačí předpokládat, že jazyk je spočetný.} Potom by bylo snadné potvrdit, že je daný důkaz korektní. Pokud bychom ale dostali důkaz, který použil chybný axiom, který v $T$ není, nikdy bychom se to nedozvěděli: nekonečně dlouho bychom čekali, zda jej enumerátor přeci jen nevypíše. Požadujeme proto silnější vlastnost, která umožňuje rozpoznat i chybné důkazy \emph{rekurzivní axiomatizaci}:\footnote{Slovo \emph{rekurzivní} zde neznamená běžně známou rekurzi, ale odkazuje na formalizaci algoritmu pomocí `rekurzivních funkcí' od Gödela. Rekurzivní funkce zde znamená totéž, co vyčíslitelná nějakým Turingovým strojem, a teorii vyčíslitelnosti (\emph{computability theory}) se někdy také říká \emph{recursion theory}.}
+
+\begin{definition}[Rekurzivní axiomatizace]
+    Teorie $T$ je \emph{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
+\end{definition}
+
+\begin{remark}
+    Ve skutečnosti by nám stačil enumerátor pro $T$, pokud by bylo garantováno, že vypisuje axiomy v lexikografickém uspořádání. To už je ekvivalentní rekurzivní axiomatizaci. (Rozmyslete si proč.)
+\end{remark}
+
+Zaměříme se na otázku, zda můžeme v dané teorii $T$ `algoritmicky rozhodovat pravdu' (tj. platnost vstupní formule). Pokud ano, říkáme, že je teorie \emph{rozhodnutelná}. To je ale poměrně silná vlastnost, definujeme proto také \emph{částečnou rozhodnutelnost}, která znamená, že pokud formule platí, algoritmus nám to řekne, ale pokud neplatí, nikdy se nemusíme dočkat odpovědi.
+
+\begin{definition}[Rozhodnutelnost]
+O teorii $T$ říkáme, že je
+\begin{itemize}
+    \item \emph{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,
+    \item \emph{částečně rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli:
     \begin{itemize}
-    \item Intuitivní pojem \emph{``\myblue{algoritmus}''} lze přesně formalizovat (např. pomocí TS).
-    \smallskip
-    
-    \item Teorie $T$ je \mdef{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který
-    \smallskip
-    
-    pro každou vstupní formuli $\varphi$ \myblue{skončí} a oznámí, zda $\varphi \in T$.
-    \smallskip
-    
-    \item Teorie $T$ je \mdef{rozhodnutelná}, pokud existuje algoritmus, který pro každou
-    \smallskip
-    
-    vstupní formuli $\varphi$ \myblue{skončí} a oznámí, zda $\varphi \in Thm(T)$.
-    \smallskip
-    
-    \item Teorie $T$ je \mdef{částečně rozhodnutelná}, pokud existuje algoritmus, který pro
-    \smallskip
-    
-    každou vstupní formuli $\varphi$ \myblue{skončí}, právě když $\varphi \in Thm(T)$.
+        \item pokud $T\models\varphi$, doběhne a odpoví `ano',
+        \item pokud $T\not\models\varphi$, buď nedoběhne, nebo doběhne a odpoví `ne'.
     \end{itemize}
-    \smallskip
-    
-    {\bf \myblue{Tvrzení}}\ \ {\it Pro každou rekurzivně axiomatizovanou teorii $T$,
+\end{itemize}
+\end{definition}
+Můžeme jako obvykle předpokládat, že $\varphi$ v definici je sentence. Ukážeme si jednoduché tvrzení:
 
-    \begin{enumerate}
-    \item [$(i)$] $T$ je \myblue{částečně rozhodnutelná},
-    \smallskip
-    
-    \item [$(ii)$] je-li navíc $T$ \myblue{kompletní}, je $T$ \myblue{rozhodnutelná}.
-    \end{enumerate}}
-    \smallskip
-    
-    {\it \myblue{Důkaz}}\ \ Konstrukce systematického tabla z $T$ s $F\varphi$ v kořeni poskytuje
-    \smallskip
-    
-    algoritmus, který rozpoznává $T\vdash\varphi$. Je-li navíc $T$ kompletní, \myblue{paralelní}
-    \smallskip
-    
-    konstrukce pro $F\varphi$ resp. $T\varphi$ v kořeni rozhoduje, zda $T \vdash \varphi$ či $T \vdash \neg\varphi$. $\qed$
-    
+\begin{proposition}
+    Nechť $T$ je rekurzivně axiomatizovaná. Potom:
+    \begin{enumerate}[(i)]
+        \item $T$ je částečně rozhodnutelná,
+        \item je-li $T$ navíc kompletní, potom je rozhodnutelná.
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+Algoritmem ukazujícím částečnou rozhodnutelnost je konstrukce systematického tabla pro $\F\varphi$.\footnote{Zde nám stačí enumerátor axiomů $T$, nebo postupně generujeme všechny sentence (např. v lexikografickém pořadí) a pro každou testujeme, zda je axiomem.} Pokud $\varphi$ v $T$ platí, konstrukce skončí v konečně mnoha krocích a snadno ověříme, že je tablo sporné, jinak ale skončit nemusí.
+
+Je-li $T$ kompletní, víme, že $T\proves\varphi$ právě když $T\not\proves\varphi$. Budeme tedy paralelně konstruovat tablo pro $\F\varphi$ a tablo pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$): jedna z konstrukcí po konečně mnoha krocích skončí.
+\end{proof}
+
+
+\subsection{Rekurzivně spočetná kompletace}
+
+Požadavek kompletnosti je příliš silný, ukážeme, že stačí pokud jsme schopni efektivně popsat všechny kompletní jednoduché extenze\footnote{Tj. `všechny modely až na elementární ekvivalenci'.}
+
+\todo
+
+\begin{proposition}\label{propositon:efficient-complete-simple}    
+    Pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který generuje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
+\end{proposition}
+\begin{proof}
+Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a tablo důkaz $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
+\end{proof}
+
+\begin{corollary}
+Následující teorie mají rekurzivně spočetné, jsou tedy rozhodnutelné:
+\begin{itemize}    
+    \item teorie hustých lineárních uspořádání DeLO* (kompletní jednoduché extenze jsou popsané v Důsledku \ref{corollary:complete-simple-extensions-of-delo})
+\end{itemize}
+\end{corollary}
+
+
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5

@@ -152,92 +152,70 @@ Uvedeme jen dva nejdůležitější příklady aritmetik: \emph{Robinsonovu} a \
 Robinsonova aritmetika je velmi slabá, nelze v ní dokázat například komutativitu ani asociativitu sčítání či násobení, nebo tranzitivitu uspořádání.
 
 Na druhou stranu v ní lze dokázat všechna \emph{existenční tvrzení o numerálech}, která jsou pravdivá v $\underline{\mathbb N}$. Tím myslíme formule, které v prenexním tvaru mají pouze existenční kvantifikátory, a do kterých jsme za volné proměnné substituovali \emph{numerály} $\underline{n}=S(\dots S(0)\dots)$. Například, pro formuli $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je $Q\proves\varphi(\underline{1},\underline{2})$, kde $\underline{1}=S(0)$ a $\underline{2}=S(S(0))$.
-    
+
+Užitečným rozšířením Robinsonovy aritmetiky je tzv. Peanova aritmetika, ve které lze \emph{dokazovat indukcí}:
+
 \begin{definition}[Peanova aritmetika]
-    \emph{Peanova aritmetika} $PA$ je extenze Robinsonovy  aritmetiky $Q$ o
- \myblue{schéma indukce}, tj. pro každou formuli $\varphi(x,\overline{y})$ jazyka $L$ axiom
-        
-        \mygreen{$$(\varphi(0,\overline{y}) \mand (\forall x)(\varphi(x,\overline{y})\to \varphi(S(x),\overline{y}))) \to (\forall x)\varphi(x,\overline{y}).\quad$$}
+\emph{Peanova aritmetika} $PA$ je extenze Robinsonovy  aritmetiky $Q$ o \emph{schéma indukce}, tj. pro každou $L$-formuli $\varphi(x,\overline{y})$ přidáme následující axiom:
+$$
+(\varphi(0,\overline{y}) \land (\forall x)(\varphi(x,\overline{y})\limplies \varphi(S(x),\overline{y}))) \limplies (\forall x)\varphi(x,\overline{y})
+$$
 \end{definition}
-\todo   
+
+Peanova aritmetika je mnohem lepší aproximací teorie $\Th(\underline{\mathbb N})$, lze v ní dokázat všechny `základní' vlastnosti platné v $\underline{\mathbb N}$ (například komutativitu a asociativitu sčítání). Stále ale existují sentence v jazyce aritmetiky, které platí v $\underline{\mathbb N}$, ale v Peanově aritmetice jsou nezávislé.\footnote{Jak si ukážeme v Gödelově První větě o neúplnosti.} 
+
+\begin{remark}
+Pokud bychom se přesunuli do logiky \emph{2. řádu}, potom bychom už mohli strukturu $\underline{\mathbb N}$ axiomatizovat (až na izomorfismus), a to extenzí Peanovy aritmetiky o následující formuli 2. řádu, tzv. \emph{axiom indukce}:
+$$
+(\forall X)((X(0) \land (\forall x)(X(x) \limplies X(S(x)))) \limplies (\forall x)X(x))
+$$
+Připomeňme, že $X$ reprezentuje (libovolnou) unární relaci, neboli podmnožinu univerza. Použitím axiomu indukce na množinu následníků 0 získáme, že každý prvek (daného modelu) je následníkem nuly. Tak můžeme sestrojit izomorfismus s $\underline{\mathbb N}$.
+\end{remark}
+
+\section{Nerozhodnutelnost predikátové logiky}
     
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+V této sekci si ukážeme, že nelze (algoritmicky) rozhodovat logickou platnost formulí prvního řádu.
+
+\begin{theorem}[O nerozhodnutelnosti predikátové logiky]\label{theorem:undecidability-of-predicate-logic}
+Neexistuje algoritmus, který by pro danou vstupní formuli $\varphi$ rozhodl, zda je logicky platná.\footnote{Tj. zda je formule $\varphi$ tautologie, neboli zda $\models\varphi$. Zde mluvíme o formulích 1. řádu, v libovolném jazyce.}
+\end{theorem}
+
+Protože zatím neznáme potřebný formalismus týkající se algoritmů, např. pojem Turingova stroje, zvolíme jako výchozí bod jiný \emph{nerozhodnutelný problém}. Nejznámějším je tzv. \emph{Halting problem}, tj. otázka, zda se daný program zastaví na daném vstupu.\footnote{Jeho nerozhodnutelnost si dokážete v předmětech NTIN071 Automaty a gramatiky a poté znovu v NTIN090 Základy složitosti a vyčíslitelnosti.} My si ale usnadníme práci tím, že zvolíme jiný nerozhodnutený problém, tzv. \emph{Hilbertův desátý problém}.\footnote{Hilbert jej vyslovil v roce 1900, a publikoval v roce 1902 spolu s 22 dalšími problémy, které významně ovlivnily matematiku 20., i 21. století. Některé zůstávají nevyřešeny, např. Riemannova hypotéza, \href{https://en.wikipedia.org/wiki/Logic_in_computer_science}{viz Wikipedia}.}
+
+\subsection{Hilbertův desátý problém}
+
+Mějme polynom $p(x_1,\dots,x_n)$ s celočíselnými koeficienty. Hilbertův desátý problém se ptá po algoritmu, který rozhodne, zda má takový vstupní polynom celočíselný kořen, neboli zda má \emph{Diofantická rovnice}  $p(x_1,\dots,x_n)=0$ (celočíselné) řešení:
+\begin{quote}
+    ``Nalezněte algoritmus, který po konečně mnoha krocích určí, zda daná Diofantická rovnice s libovolným počtem proměnných a
+    celočíselnými koeficienty má celočíselné řešení.''
+\end{quote}
+
+Kdyby se Hilbert dožil vyřešení svého desátého problému v roce 1970, byl by překvapen, že žádný takový algoritmus neexistuje.
+
+\begin{theorem}[Davis, Putnam, Robinson, Matiyasevich]
+Problém existence celočíselného řešení dané Diofantické rovnice s celočíselnými koeficienty je (algoritmicky) nerozhodnutelný.
+\end{theorem}
+
+Důkaz zde pro nedostatek místa neuvedeme. K důkazu nerozhodnutelnosti ve skutečnosti použijeme následující důsledek, který mluví o polynomech s přirozenými koeficienty, a o řešení v přirozených číslech. 
+
+\begin{corollary}
+Neexistuje algoritmus, který by pro danou dvojici polynomů $p(x_1,\dots,x_n)$, $q(x_1,\dots,x_n)$ s \emph{přirozenými} koeficienty rozhodl, zda mají přirozené řešení, tj. zda platí:
+$$
+\underline{\mathbb N}\models(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)
+$$
+\end{corollary}
+\begin{proof}[Důkaz důsledku]
+Důkaz je snadný, využívá faktu, že každé celé číslo lze vyjádřit jako rozdíl dvojice přirozených čísel, a naopak, každé přirozené číslo lze vyjádřit jako součet čtyř čtverců (celých čísel).\footnote{Tzv. Lagrangeova věta o čtyřech čtvercích.} Každou Diofantickou rovnici lze tedy transfomovat na rovnici z důsledku, a naopak.
+\end{proof}
 
 
-    
-    {\it \myblue{Poznámka}\ \ $PA$ je poměrně dobrou aproximací $\mathrm{Th}(\underline{\mathbb{N}})$, dokazuje všechny
-    \smallskip
-    
-    základní vlastnosti platné v $\underline{\mathbb{N}}$ (např. komutativitu $+$). Na druhou stranu
-    \smallskip
-    
-    existují sentence pravdivé v $\underline{\mathbb{N}}$ ale nezávislé v $PA$.}
-    \bigskip
-    
-    {\it \myblue{Poznámka}\ \ V jazyce \myblue{2. řádu} lze axiomatizovat $\underline{\mathbb{N}}$ (až na izomorfismus),
-    \smallskip
-    
-    vezmeme-li místo schéma indukce přímo axiom indukce (2. řádu)}
-    
-    \mygreen{$$(\forall X)\ ((X(0) \mand (\forall x)(X(x) \to X(S(x)))) \to (\forall x)\ X(x)).$$}
-    
-    
-    
-% :from slides
 
-\subsection{Hilbertův desátý problém}\todo
+
+\subsection{Důkaz nerozhodnutelnosti}
+
 
 % from slides:
-\subsubsection*{Hilbertův 10. problém}
-    \begin{itemize}
-    \item Nechť $p(x_1,\dots,x_n)$ je polynom s celočíselnými koeficienty.
-    \smallskip
-    
-    Má \mdef{Diofantická rovnice} \mygreen{$p(x_1,\dots,x_n)=0$} \myblue{celočíselné} řešení?
-    \smallskip
-    
-    \item \myblue{Hilbert (1900)}\ \ {\it ``Nalezněte algoritmus, který po konečně mnoha krocích
-    \smallskip
-    
-    určí, zda daná Diofantická rovnice s libovolným počtem proměnných a
-    \smallskip
-    
-    celočíselnými koeficienty má \myblue{celočíselné} řešení.''}
-    \end{itemize}
-    \smallskip
-    
-    {\it \myblue{Poznámka}\ \ Ekvivalentně lze požadovat algoritmus rozhodující, zda existuje
-    \smallskip
-    
-    řešení v \myblue{přirozených} číslech.}
-    \medskip
-    
-    \smallskip
-    
-     \myblue{{\bf Věta} (DPRM, 1970)}\ \ {\it Problém existence celočíselného řešení dané
-    \smallskip
-    
-    Diofantické rovnice s celočíselnými koeficienty je alg. \myblue{nerozhodnutelný}.}
-    \medskip
-    
-    \smallskip
-    
-    {\bf \myblue{Důsledek}}\ \ {\it Neexistuje algoritmus rozhodující pro dané polynomy
-    \smallskip
-    
-    $p(x_1,\dots,x_n)$, $q(x_1,\dots,x_n)$ s \myblue{přirozenými} koeficienty, zda}
-    
-    \mygreen{$$\underline{\mathbb{N}}\models (\exists x_1)\dots(\exists x_n)(p(x_1,\dots,x_n)=q(x_1,\dots,x_n)).$$}
-    
-    
-    
-% :from slides
 
-\section{Nerozhodnutelnost predikátové logiky}\todo
-
-% from slides:
-\subsubsection*{Nerozhodutelnost predikátové logiky}
 {\it Existuje algoritmus, rozhodující o dané sentenci, zda je \myblue{logicky} pravdivá?} %(Tedy ne v dané teorii, nebo v dané struktuře.)}
 \smallskip
 

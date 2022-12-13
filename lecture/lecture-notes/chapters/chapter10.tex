@@ -1,4 +1,4 @@
-\chapter{(draft) Nerozhodnutelnost a neúplnost}
+\chapter{Nerozhodnutelnost a neúplnost}
 
 V této, závěrečné kapitole se budeme zabývat tím, jak lze s teoriemi pracovat algoritmicky. Zlatým hřebem budou \emph{Gödelovy věty o neúplnosti} z roku 1930, které ukazují limity formálního přístupu, a které zastavily desetiletí trvající program formalizace matematiky. Nemáme zde dostatek prostoru k uvedení formálních definic a úplných důkazů, proto se místy budeme pohybovat na poněkud intuitivní úrovni. Zaměříme se na pochopení smyslu tvrzení a myšlenek důkazů.
 
@@ -271,95 +271,89 @@ Je dobré si uvědomit, že speciálně platí i následující tvrzení `o neko
     Předpokládejme pro spor, že $T$ je kompletní. Vezměme sentenci $\varphi$, která je pravdivá v $\underline{\mathbb N}$ ale není dokazatelná v $T$. Díky kompletnosti víme, že $T\proves\neg\varphi$, potom ale Věta o korektnosti říká, že  $T\models\neg\varphi$, tedy $\varphi$ je lživá v $\underline{\mathbb N}$, což je spor.
 \end{proof}
 
-Zajímavé je nejen samotné tvrzení První věty o neúplnosti, ale také její důkaz: Gödel v něm přišel se zcela novou, na svou dobu převratnou důkazovou technikou. Sentence sestrojená v důkazu formalizuje tvrzení `Nejsem dokazatelná v $T$', důkaz je založen na následujících dvou principech, které níže poněkud neformálně popíšeme:
+Zajímavé je nejen samotné tvrzení První věty o neúplnosti, ale také její důkaz: Gödel v něm přišel se zcela novou, na svou dobu převratnou důkazovou technikou. Sentence sestrojená v důkazu formalizuje tvrzení \emph{``Nejsem dokazatelná v $T$''}, důkaz je založen na následujících dvou principech, které níže poněkud neformálně popíšeme:
 \begin{itemize}
     \item \emph{aritmetizace syntaxe}, tedy zakódování sentencí a jejich dokazatelnosti do přirozených čísel,
     \item \emph{self-reference}, tedy schopnost sentence `mluvit sama o sobě' (o svém kódu).
 \end{itemize}
-  
 
 \subsubsection*{Aritmetizace dokazatelnosti}
 
-    \begin{itemize}
-    \item \myblue{Konečné objekty} syntaxe (symboly jazyka, termy, formule, konečná tabla,
-    \smallskip
-    
-    tablo důkazy) lze vhodně \myblue{zakódovat} přirozenými čísly.
-    \smallskip
-    
-    \item Nechť \mdef{$\lceil \varphi \rceil$} značí kód formule $\varphi$ a nechť \mdef{$\underline{\varphi}$} značí \myblue{numerál} (term jazyka
-    \smallskip
-    
-    aritmetiky) reprezentující $\lceil \varphi \rceil$.
-    \smallskip
-    
-    \item Je-li $T$ rekurzivně axiomatizovaná, je relace $\mathrm{Prf}_T\subseteq \mathbb{N}^2$ \myblue{rekurzivní}.
+Konečné syntaktické objekty, jako jsou termy, formule, konečná tabla, a tedy i tablo důkazy, lze zakódovat do přirozených čísel. Konkrétní způsob jak to provést jako technický detail přeskočíme.\footnote{Představte si jakýkoliv rozumný způsob, jak daný objekt zapsat do souboru. Soubor v binárním kódu je posloupnost 0 a 1. Připíšeme na začátek jedničku, abychom nezačínali nulou, a máme binární zápis přirozeného čísla.} Stačí nám, že jsme schopni efektivně provést zakódování, a také poté kód přečíst (dekódovat).
 
-    \mygreen{$$\mathrm{Prf}_T(x,y)\ \ \Leftrightarrow\ \ \text{\it (tablo) $y$ je důkazem (sentence) $x$ v T.}$$}
-    
+Označme kód formule $\varphi$ jako $\lceil\varphi\rceil$, podobně pro jiné syntaktické objekty. Numerál odpovídající kódu $\varphi$, tedy $\lceil\varphi\rceil$-tý numerál, budeme značit $\underline{\varphi}$. Pro danou teorii $T$ definujme následující binární relaci na množině všech přirozených čísel:
+$$
+(n,m)\in\Proof_T\ \text{ právě když \ \ $n=\lceil\varphi\rceil$ a $m=\lceil\tau\rceil$, kde $\tau$ je tablo důkaz sentence $\varphi$ z $T$}
+$$
+Máme-li efektivní přístup k axiomům, umíme také efektivně zkontrolovat zda $\tau$ je opravdu důkazem $\varphi$, tedy platí:
+\begin{observation}
+Je-li $T$ rekurzivně axiomatizovaná, je relace $\Proof_T\subseteq\mathbb N^2$ \emph{rekurzivní}. 
+\end{observation}
 
-    \item Je-li $T$ navíc extenze Robinsonovy aritmetiky $Q$, dá se dokázat, že $\mathrm{Prf}_T$ je    
-    \myblue{reprezentovatelná} nějakou formulí \mdef{$Prf_T(x,y)$} tak, že pro každé $x,y\in \mathbb{N}$
+Klíčovou, ale velmi technickou částí důkazu První věty je následující tvrzení, které ponecháme bez důkazu.
 
-    \mygreen{\begin{align*}
-    Q&\vdash Prf_T(\underline{x},\underline{y}),\ \ \ \ \ \!\text{\it je-li}\ \ \ \ \mathrm{Prf}_T(x,y),\\
-    Q&\vdash \neg Prf_T(\underline{x},\underline{y}),\ \ \text{\it jinak}.
-    \end{align*}}
-    
-    \item $Prf_T(x,y)$ vyjadřuje {\it ``\myblue{$y$ je důkaz $x$ v $T$}''}.
-    \smallskip
-    
-    \item \mdef{$(\exists y)Prf_T(x,y)$} vyjadřuje {\it ``\myblue{$x$ je dokazatelná v $T$}''}.
-    \smallskip
-    
-    \item Je-li \mygreen{$T\vdash \varphi$}, pak \mygreen{$\underline{\mathbb{N}}\models (\exists y)Prf_T(\underline{\varphi},y)$} a navíc \mygreen{$T\vdash (\exists y)Prf_T(\underline{\varphi},y)$}.
-    \end{itemize}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
+\begin{proposition}
+Je-li $T$ navíc extenzí Robinsonovy aritmetiky $Q$, potom existuje formule $\Prf_T(x,y)$ v jazyce aritmetiky, která \emph{reprezentuje} relaci $\Proof_T$, tj. pro každá $n,m\in\mathbb N$ platí:
+\begin{itemize}
+    \item Je-li $(n,m)\in\Proof_T$, potom $Q\proves\Prf(\underline{n},\underline{m})$,
+    \item jinak $Q\proves\neg\Prf(\underline{n},\underline{m})$.
+\end{itemize} 
+\end{proposition}
+
+Formule $\Prf(x,y)$ tedy vyjadřuje \emph{``$y$ je důkaz $x$ v $T$''}.\footnote{Přesněji, tablo jehož kódem je $y$ je důkazem sentence jejíž kódem je $y$.} Potom můžeme vyjádřit, že \emph{``$x$ je dokazatelná v $T$''}, a to formulí $(\exists y)\Prf(x,y)$. Lze dokázat následující, opět velmi technický důsledek:
+
+\begin{corollary}
+    Pokud $T\proves\varphi$, potom platí $\underline{\mathbb N}\models (\exists y)\Prf_T(\underline{\varphi},y)$ a také $T\proves (\exists y)\Prf_T(\underline{\varphi}  ,y)$.
+\end{corollary}
+
+Umíme tedy vyjádřit, že daná sentence je, nebo také není, dokazatelná. Jak ale může sentence říci sama o sobě, že není dokazatelná? K tomu použijeme \emph{princip self-reference}.
+
 \subsubsection*{Self-reference}
-    
-    \begin{itemize}
-    \item \mygreen{\it Tato věta má 16 písmen.}
-    \medskip
-    
-    \myblue{Self-reference} ve formálních systémech většinou není přímo k dispozici.
-    \medskip
-    
-    \item \mygreen{\it Následující věta má 24 písmen ``Následující věta má 24 písmen''.}
-    \medskip
-    
-    \myblue{Přímá reference} obvykle je k dispozici, stačí, když umíme ``mluvit''
-    \smallskip
-    
-    o posloupnostech symbolů. Uvedená věta ale není self-referenční.
-    \medskip
-    
-    \item \mygreen{\it Následující věta zapsaná jednou a ještě jednou v uvozovkách má 116}
-    \smallskip
-    
-    \mygreen{\it písmen ``Následující věta zapsaná jednou a ještě jednou v uvozovkách}
-    \smallskip
-    
-    \mygreen{\it má 116 písmen''.}
-    \medskip
-    
-    Pomocí přímé reference lze dosáhnout self-reference. Namísto
-    \smallskip
-    
-    \emph{``má $x$ písmen''} může být jiná vlastnost.
-    \medskip
-    
-    \item \texttt{main()\{char *c="main()\{char *c=\%c\%s\%c; printf(c,34,}
-    \smallskip
-    
-    \texttt{c,34);\}"; printf(c,34,c,34);\}}
-    \end{itemize}
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+Abychom ilustrovali princip self-reference, pro názornost si místo logické sentence představme větu v češtině, a místo vlastnosti `být dokazatelný' tvrzení o počtu písmen. Podívejme se na následující větu:
+\begin{quote}
+    \texttt{Tato věta má 22 znaků.}
+\end{quote}
+V přirozeném jazyce snadno vyjádříme self-referenci zájmenem `Tato', z kontextu víme, že myslíme větu samou. Ve formálních systémech ale typicky nemáme self-referenci přímo k dispozici. \emph{Přímou referenci} obvykle máme k dispozici, stačí umět `mluvit' o posloupnostech symbolů, jako v následujícím příkladě:
+\begin{quote}
+    \texttt{Následující věta má 29 znaků. "Následující věta má 29 znaků."}
+\end{quote}
+Zde se ale není žádná self-reference. Pomůžeme si trikem, kterému budeme říkat `zdvojení':
+\begin{quote}
+    \texttt{Následující věta zapsaná jednou a ještě jednou v uvozovkách má 149\\ znaků. "Následující věta zapsaná jednou a ještě jednou v uvozovkách\\ má 149 znaků."}
+\end{quote}
+Pomocí přímé reference a zdvojení tedy můžeme získat self-referenci. 
+
+\begin{remark}
+    Stejný princip lze použít k sestrojení programu v C, jehož výstupem je jeho vlastní kód (34 je ASCII kód uvozovek):\footnote{V Pythonu si vystačíme bez principu zdvojení: \texttt{print(open(\_\_file\_\_).read())}}
+\begin{verbatim}
+    main(){char *c="main(){char *c=%c%s%c; printf(c,34,
+    c,34);}"; printf(c,34,c,34);}    
+\end{verbatim}
+\end{remark}
+
+\subsection{Důkaz a důsledky}
+
+\todo
+
+\subsection{Druhá věta o neúplnosti}
+
+Druhá Gödelova věta o neúplnosti říká, neformálně řečeno, že efektivně daná, dostatečně bohatá teorie nemůže sama dokázat svou bezespornost. Bezespornost vyjádříme následující sentencí, kterou označíme jako $\Con_T$:
+$$
+\neg(\exists y)\Prf_T(\underline{0=1},y)
+$$
+Všimněte si, že platí $\underline{\mathbb N}\models\Con_T$, právě když $T\not\proves 0=\underline{1}$. Neboli sentence $\Con_T$ opravdu vyjadřuje, že \emph{``Teorie $T$ je bezesporná''.}
+
+\begin{theorem}[Druhá věta o neúplnosti]
+Pro každou bezespornou rekurzivně axiomatizovanou extenzi $T$ Peanovy aritmetiky platí, že $\Con_T$ není dokazatelná v $T$.    
+\end{theorem}
+
+\todo
+
+
+
+
+
     
     \subsubsection*{Věta o pevném bodě}
     
@@ -487,7 +481,6 @@ Zajímavé je nejen samotné tvrzení První věty o neúplnosti, ale také jej�
 
 % :from slides
 
-\subsection{Důsledky první věty}\todo
 
 % from slides:
 \subsubsection*{Důsledky a zesílení 1. věty}

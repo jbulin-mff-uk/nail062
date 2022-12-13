@@ -151,7 +151,20 @@ Uvedeme jen dva nejdůležitější příklady aritmetik: \emph{Robinsonovu} a \
 
 Robinsonova aritmetika je velmi slabá, nelze v ní dokázat například komutativitu ani asociativitu sčítání či násobení, nebo tranzitivitu uspořádání.
 
-Na druhou stranu v ní lze dokázat všechna \emph{existenční tvrzení o numerálech}, která jsou pravdivá v $\underline{\mathbb N}$. Tím myslíme formule, které v prenexním tvaru mají pouze existenční kvantifikátory, a do kterých jsme za volné proměnné substituovali \emph{numerály} $\underline{n}=S(\dots S(0)\dots)$. Například, pro formuli $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je $Q\proves\varphi(\underline{1},\underline{2})$, kde $\underline{1}=S(0)$ a $\underline{2}=S(S(0))$.
+Na druhou stranu v ní lze dokázat všechna \emph{existenční tvrzení o numerálech}, která jsou pravdivá v $\underline{\mathbb N}$. Tím myslíme formule, které v prenexním tvaru mají pouze existenční kvantifikátory, a do kterých jsme za volné proměnné substituovali \emph{numerály} $\underline{n}=S(\dots S(0)\dots)$. 
+
+\begin{example}
+Například, pro formuli $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je $Q\proves\varphi(\underline{1},\underline{2})$, kde $\underline{1}=S(0)$ a $\underline{2}=S(S(0))$.    
+\end{example}
+
+Platí tedy následující tvrzení, které ponecháme bez důkazu.
+
+\begin{proposition}\label{proposition:robinson-satisfies-existence-about-numerals}
+    Je-li $\varphi(x_1,\dots,x_n)$ existenční formule a $a_1,\dots,a_n\in\mathbb N$, potom platí:
+    $$
+    Q\proves\varphi(x_1/\underline{a_1},\dots,x_n/\underline{a_n})\text{ právě když }\underline{\mathbb{N}}\models \varphi[e(x_1/a_1,\dots,x_n/a_n)]
+    $$
+\end{proposition}
 
 Užitečným rozšířením Robinsonovy aritmetiky je tzv. Peanova aritmetika, ve které lze \emph{dokazovat indukcí}:
 
@@ -174,7 +187,7 @@ Připomeňme, že $X$ reprezentuje (libovolnou) unární relaci, neboli podmnož
 
 \section{Nerozhodnutelnost predikátové logiky}
     
-V této sekci si ukážeme, že nelze (algoritmicky) rozhodovat logickou platnost formulí prvního řádu.
+V této sekci si ukážeme, že nelze (algoritmicky) rozhodovat logickou platnost formulí prvního řádu.\footnote{Jinými slovy, že prázdná teorie $T=\emptyset$ není rozhodnutelná.}
 
 \begin{theorem}[O nerozhodnutelnosti predikátové logiky]\label{theorem:undecidability-of-predicate-logic}
 Neexistuje algoritmus, který by pro danou vstupní formuli $\varphi$ rozhodl, zda je logicky platná.\footnote{Tj. zda je formule $\varphi$ tautologie, neboli zda $\models\varphi$. Zde mluvíme o formulích 1. řádu, v libovolném jazyce.}
@@ -192,7 +205,7 @@ Mějme polynom $p(x_1,\dots,x_n)$ s celočíselnými koeficienty. Hilbertův des
 
 Kdyby se Hilbert dožil vyřešení svého desátého problému v roce 1970, byl by překvapen, že žádný takový algoritmus neexistuje.
 
-\begin{theorem}[Davis, Putnam, Robinson, Matiyasevich]
+\begin{theorem}[Matiyasevich, Davis, Putnam, Robinson]
 Problém existence celočíselného řešení dané Diofantické rovnice s celočíselnými koeficienty je (algoritmicky) nerozhodnutelný.
 \end{theorem}
 
@@ -213,95 +226,60 @@ Důkaz je snadný, využívá faktu, že každé celé číslo lze vyjádřit ja
 
 \subsection{Důkaz nerozhodnutelnosti}
 
+Připomeňme, že Robinsonova aritmetika $Q$ má jen konečně mnoho axiomů, $\underline{\mathbb N}$ je jejím modelem, a lze v ní dokázat všechna \emph{existenční tvrzení o numerálech} platná v $\underline{\mathbb N}$. Nyní jsme připraveni dokázat Větu o nerozhodnutelnosti predikátové logiky.
 
-% from slides:
+\begin{proof}[Důkaz věty o nerozhodnutelnosti predikátové logiky]
+Uvažme formuli $\varphi$ tvaru 
+$$(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)
+$$ 
+kde $p$ a $q$ jsou polynomy s přirozenými koeficienty. Dle Tvrzení \ref{proposition:robinson-satisfies-existence-about-numerals} platí:
+$$
+\underline{\mathbb N}\models \varphi\text{ právě když }Q\proves \varphi
+$$
 
-{\it Existuje algoritmus, rozhodující o dané sentenci, zda je \myblue{logicky} pravdivá?} %(Tedy ne v dané teorii, nebo v dané struktuře.)}
-\smallskip
+Označme jako $\psi_Q$ konjunkci (generálních uzávěrů) všech axiomů $Q$. Zřejmě $Q\proves\varphi$, právě když $\psi_Q\proves\varphi$, což platí právě když $\proves\psi_Q\limplies\varphi$. Dle Věty o úplnosti je to ale ekvivalentní $\models\psi_Q\limplies\varphi$. Dostáváme tedy následující ekvivalenci:
+$$
+\underline{\mathbb N}\models \varphi\text{ právě když }\proves \psi_Q\limplies\varphi
+$$
+To znamená, že pokud existoval algoritmus rozhodující logickou platnost, mohli bychom rozhodovat i existenci přirozeného řešení rovnice $p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$, neboli Hilbertův desátý problém by byl rozhodnutelný.\footnote{Ukazujeme, že existuje \emph{redukce} ``těžkého'' problému (Hilbertova desátého) na náš problém, tedy i náš problém je ``těžký''.} Což by byl spor.   
+\end{proof}
 
+\section{Gödelovy věty}
+
+Na závěr přednášky představíme slavné Gödelovy věty o neúplnosti, jejichž pochopení by mělo být samozřejmou součástí vzdělání každého informatika. Pokusíme se vysvětlit i princip důkazů, ale vynecháme veškeré technické detaily.
+
+\subsection{První věta o neúplnosti}
+
+Nejprve vyslovíme Gödelovu \emph{První větu o neúplnosti}, a vysvětlíme smysl jejích předpokladů.
+
+\begin{theorem}[První věta o neúplnosti]
+Pro každou bezespornou rekurzivně axiomatizovanou extenzi $T$ Robinsonovy aritmetiky existuje sentence, která je pravdivá v $\underline{\mathbb N}$, ale není dokazatelná v $T$.    
+\end{theorem}
+
+Velmi neformálně řečeno, tato věta říká, že vlastnosti aritmetiky přirozených čísel nelze `rozumně', efektivně popsat (v logice 1. řádu), každý takový popis je nutně `neúplný'. 
+
+Je důležité si uvědomit, že mluvíme o \emph{pravdivosti} ve standardním modelu aritmetiky, tj. ve struktuře $\underline{\mathbb N}$, zatímco \emph{dokazatelnost} je v teorii $T$. (Z Věty o úplnosti samozřejmě plyne, že každá sentence \emph{pravdivá v $T$} je v $T$ i dokazatelná.)
+
+Bezespornost je nutným předpokladem, neboť ve sporné teorii je dokazatelná každá sentence. Připomeňme, že rekurzivní axiomatizovanost můžeme chápat jako `efektivní zadání' axiomů (pomocí algoritmu), bez této vlastnosti by taková teorie nebyla užitečná. Požadavek aby teorie byla extenzí Robinsonovy aritmetiky chápejte jako předpoklad, že má alespoň `základní aritmetickou sílu', že v ní lze určitým způsobem `mluvit' o přirozených číslech. Existují různé varianty tohoto předpokladu, s jinými teoriemi než je Robinsonova aritmetika, a není například nutné, aby šlo přímo o extenzi, stačí, když je v teorii Robinsonova aritmetika v jistém smyslu `definovatelná'. Ale teorie, ve které `nelze zakódovat přirozená čísla' (a zde je důležité, že můžeme mluvit nejen o sčítání, ale i o násobení), je `příliš slabá'.
+
+Je dobré si uvědomit, že speciálně platí i následující tvrzení `o nekompletnosti':
+
+\begin{corollary}
+    Splňuje-li teorie $T$ předpoklady První věty o neúplnosti a je-li navíc $\underline{\mathbb N}$ modelem teorie $T$, potom $T$ není kompletní.
+\end{corollary}
+\begin{proof}
+    Předpokládejme pro spor, že $T$ je kompletní. Vezměme sentenci $\varphi$, která je pravdivá v $\underline{\mathbb N}$ ale není dokazatelná v $T$. Díky kompletnosti víme, že $T\proves\neg\varphi$, potom ale Věta o korektnosti říká, že  $T\models\neg\varphi$, tedy $\varphi$ je lživá v $\underline{\mathbb N}$, což je spor.
+\end{proof}
+
+Zajímavé je nejen samotné tvrzení První věty o neúplnosti, ale také její důkaz: Gödel v něm přišel se zcela novou, na svou dobu převratnou důkazovou technikou. Sentence sestrojená v důkazu formalizuje tvrzení `Nejsem dokazatelná v $T$', důkaz je založen na následujících dvou principech, které níže poněkud neformálně popíšeme:
 \begin{itemize}
-\item Víme, že \myblue{Robinsonova aritmetika} $Q$ má konečně axiomů, má za model $\underline{\mathbb{N}}$
-\smallskip
-
-a stačí k důkazu \myblue{existenčních} tvrzení o numerálech, která platí v $\underline{\mathbb{N}}$.
-\smallskip
-
-\item Přesněji, pro každou existenční formuli $\varphi(x_1,\dots,x_n)$ jazyka aritmetiky
-
-\mygreen{$$Q\vdash \varphi(x_1/\underline{a_1},\dots,x_n/\underline{a_n})\ \ \Leftrightarrow\ \ \underline{\mathbb{N}}\models \varphi[e(x_1/a_1,\dots,x_n/a_n)]$$}
-
-
-pro každé $a_1,\dots,a_n \in \mathbb{N}$, kde $\underline{a_i}$ značí $a_i$-tý numerál.
-\smallskip
-
-\item Speciálně, pro $\varphi$ tvaru \mygreen{$(\exists x_1)\dots(\exists x_n)(p(x_1,\dots,x_n)=q(x_1,\dots,x_n))$,}
-\smallskip
-
-kde $p$, $q$ jsou polynomy s přirozenými koeficienty (numerály), platí
-
-\mygreen{$$\underline{\mathbb{N}}\models \varphi\quad\Leftrightarrow\quad Q\vdash \varphi\quad\Leftrightarrow\quad \vdash \psi\to \varphi\quad \Leftrightarrow\quad \models \psi\to \varphi,$$}
-
-
-kde $\psi$ je konjunkce (uzávěrů) všech axiomů $Q$.
-\smallskip
-
-\item Tedy, pokud by existoval algoritmus rozhodující \myblue{logickou pravdivost},
-\smallskip
-
-existoval by i algoritmus rozhodující, zda \mygreen{$\underline{\mathbb{N}}\models \varphi$}, což není možné.
-
-
+    \item \emph{aritmetizace syntaxe}, tedy zakódování sentencí a jejich dokazatelnosti do přirozených čísel,
+    \item \emph{self-reference}, tedy schopnost sentence `mluvit sama o sobě' (o svém kódu).
 \end{itemize}
+  
 
+\subsubsection*{Aritmetizace dokazatelnosti}
 
-% :from slides
-
-\section{Gödelovy věty}\todo
-
-% from slides:
-
-% :from slides
-
-\subsection{První věta o neúplnosti}\todo
-
-% from slides:
-\subsubsection*{Gödelova 1. věta o neúplnosti}
-    \myblue{{\bf Věta} (Gödel)}\ \ {\it Pro každou bezespornou rekurzivně axiomatizovanou extenzi $T$
-
-    
-    Robinsonovy aritmetiky existuje sentence \myblue{pravdivá} v $\underline{\mathbb{N}}$ a \myblue{nedokazatelná} v $T$.}
-    \medskip
-    
-    \smallskip
-    
-    {\it \myblue{Poznámky}
-    
-    \begin{itemize}
-    \item ``Rekurzivně axiomatizovaná'' znamená, že je \emph{``efektivně zadaná''}.
-    \smallskip
-    
-    \item ``Extenze R. aritmetiky'' znamená, že je \emph{``\myblue{základní aritmetické síly}''}.
-    \smallskip
-    
-    \item Je-li navíc $\underline{\mathbb{N}}\models T$, je teorie $T$ \myblue{nekompletní}.
-    \smallskip
-    
-    \item V důkazu sestrojená sentence vyjadřuje \emph{``\myblue{nejsem dokazatelná v $T$}''}.
-    \smallskip
-    
-    \item Důkaz je založen na dvou principech:
-    \medskip
-    
-    \myblue{$(a)$ aritmetizaci syntaxe},
-    \medskip
-    
-    \myblue{$(b)$ self-referenci}.
-    \end{itemize}}
-    
-    
-
-    \subsection*{Aritmetizace dokazatelnosti}
-    \subsubsection*{Aritmetizace - predikát dokazatelnosti}
     \begin{itemize}
     \item \myblue{Konečné objekty} syntaxe (symboly jazyka, termy, formule, konečná tabla,
     \smallskip
@@ -340,8 +318,7 @@ existoval by i algoritmus rozhodující, zda \mygreen{$\underline{\mathbb{N}}\mo
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
     
-    \subsection*{Self-reference}
-    \subsubsection*{Princip self-reference}
+\susubsection*{Self-reference}
     
     \begin{itemize}
     \item \mygreen{\it Tato věta má 16 písmen.}

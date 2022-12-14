@@ -298,10 +298,13 @@ Je-li $T$ navíc extenzí Robinsonovy aritmetiky $Q$, potom existuje formule $\P
 \end{itemize} 
 \end{proposition}
 
-Formule $\Prf_T(x,y)$ tedy vyjadřuje \emph{``$y$ je důkaz $x$ v $T$''}.\footnote{Přesněji, tablo jehož kódem je $y$ je důkazem sentence jejíž kódem je $y$.} Potom můžeme vyjádřit, že \emph{``$x$ je dokazatelná v $T$''}, a to formulí $(\exists y)\Prf_T(x,y)$. Budeme potřebovat následující důsledek:
-
+Formule $\Prf_T(x,y)$ tedy vyjadřuje \emph{``$y$ je důkaz $x$ v $T$''}.\footnote{Přesněji, tablo jehož kódem je $y$ je důkazem sentence jejíž kódem je $y$.} Potom můžeme vyjádřit, že \emph{``$x$ je dokazatelná v $T$''}, a to formulí $(\exists y)\Prf_T(x,y)$. Všimněte si, že platí následující pozorování, neboť svědek poskytuje kód nějakého tablo důkazu, a $\underline{\mathbb N}$ splňuje axiomy $Q$:
+\begin{observation}\label{observation:proof-predicate}
+$T\proves\varphi$ právě když $\underline{\mathbb N}\models (\exists y)\Prf_T(\underline{\varphi},y)$.  
+\end{observation}
+Budeme potřebovat i následující důsledek, který vyslovíme také bez důkazu:
 \begin{corollary}[O predikátu dokazatelnosti]\label{corollary:predicate-of-provability}
-    Je-li $T\proves\varphi$, potom $\underline{\mathbb N}\models (\exists y)\Prf_T(\underline{\varphi},y)$ a také $T\proves (\exists y)\Prf_T(\underline{\varphi},y)$.
+    Je-li $T\proves\varphi$, potom $T\proves (\exists y)\Prf_T(\underline{\varphi},y)$.
 \end{corollary}
 
 Umíme tedy vyjádřit, že daná sentence je, nebo není, dokazatelná. Jak ale může sentence říci `sama o sobě', že není dokazatelná? K tomu použijeme \emph{princip self-reference}.
@@ -383,7 +386,7 @@ $$
 Protože $\tau(x)$ je definice pravdy, platí ale i $T\proves\psi\liff\tau(\underline{\psi})$, tedy i $T\proves\tau(\underline{\psi})\liff\neg\tau(\underline{\psi})$. To by ale znamenalo, že $T$ je sporná.
 \end{proof}
 
-Důkaz Gödelovy věty používá tentýž trik, ale pro větu ``Nejsem dokazatelá v $T$''.
+Důkaz Gödelovy věty používá tentýž trik, ale pro větu ``Nejsem dokazatelná v $T$''.
 
 \begin{proof}[Důkaz První věty o neúplnosti]
 Mějme bezespornou rekurzivně axiomatizovanou extenzi $T$ Robinsonovy aritmetiky. Chceme najít Gödelovu sentenci $\psi_T$, která je pravdivá v $\underline{\mathbb N}$, ale není dokazatelná v $T$.
@@ -392,15 +395,16 @@ Takovou sentenci získáme z Věty o pevném bodě jako sentenci vyjadřující 
 $$
 T\proves\psi_T\liff\neg(\exists y)\Prf_T(\underline{\psi_T},y)
 $$
-a stejná ekvivalence platí i v $\underline{\mathbb N}$.
+Sentence $\psi_T$ je tedy v $T$ ekvivalentní sentenci, která vyjadřuje, že $\psi_T$ není dokazatelná v $T$. Stejná ekvivalence platí i v $\underline{\mathbb N}$. %todo clarify
 
 Nejprve ukážeme, že $\psi_T$ není dokazatelná v $T$. Předpokládejme pro spor, že $T\proves\psi_T$. Ze self-reference tedy víme, že platí
 $T\proves\neg(\exists y)\Prf_T(\underline{\psi_T},y)$.
 Z Důsledku \ref{corollary:predicate-of-provability} o predikátu dokazatelnosti ale dostáváme $T\proves (\exists y)\Prf_T(\underline{\psi_T},y)$, což by znamenalo, že $T$ je sporná.
 
-Zbývá ukázat, že $\psi_T$ je pravdivá v $\underline{\mathbb N}$. Přepokládejme opět pro spor, že $\underline{\mathbb N}\not\models\psi_T$, a protože je to sentence, dostáváme $\underline{\mathbb N}\models\neg\psi_T$. Potom ale $\underline{\mathbb N}\models(\exists y)\Prf_T(\underline{\psi_T},y)$, a z Důsledku \ref{corollary:predicate-of-provability} plyne, že $T\proves\psi_T$. Což neplatí, jak jsme ukázali výše.
+Zbývá ukázat, že $\psi_T$ je pravdivá v $\underline{\mathbb N}$. Předpokládejme opět pro spor, že $\underline{\mathbb N}\not\models\psi_T$, a protože je to sentence, dostáváme $\underline{\mathbb N}\models\neg\psi_T$. Z ekvivalence ale potom platí i 
+$\underline{\mathbb N}\models(\exists y)\Prf_T(\underline{\psi_T},y)$, tedy dle Pozorování \ref{observation:proof-predicate} máme $T\proves\psi_T$, což jsme dokázali že neplatí.
 \end{proof}
-\todo %fix this
+%\todo simplify
 
 
 Na závěr si ukážeme dva důsledky a jedno zesílení. Následující okamžitý důsledek už jsme zmínili dříve:

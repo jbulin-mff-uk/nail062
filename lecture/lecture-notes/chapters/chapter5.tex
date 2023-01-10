@@ -319,7 +319,7 @@ Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve fo
 Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky důkazu: základ indukce je zřejmý, a máme-li boční klauzuli $B_i$ která není axiomem z $S$, potom $B_i=C_j$ pro nějaké $j<i$ a stačí připojit místo $B_i$ rezoluční strom pro důkaz $C_j$ z $S$. Opačnou implikaci si ukážeme jen na příkladě:
 
 \begin{example} \label{example:linear-proof}
-    Zkonstruujme lineární zamítnutí formule $S = \{\{p, \}, \{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (tj. lineární důkaz $\square$ z $S$). Lineární důkaz může vypadat třeba takto:
+    Zkonstruujme lineární zamítnutí formule $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (tj. lineární důkaz $\square$ z $S$). Lineární důkaz může vypadat třeba takto:
 
     \begin{center}
         \begin{forest}
@@ -333,7 +333,7 @@ Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky
                         [{\textcolor{blue}{\{p\}}}
                             [,phantom]
                             [{\{p,q\}}]
-                            [{\{\neg p,\neg q\}}]
+                            [{\{p,\neg q\}}]
                         ]
                         [{\{\neg p,q\}}]
                     ]
@@ -383,7 +383,7 @@ V obecném lineárním důkazu může být každá následující boční klauzu
     LI-důkaz přímo dává rezoluční strom (všechny listy jsou axiomy), a to ve speciálním tvaru, kterému bychom mohli říkat `chlupatá cesta'. A naopak, z rezolučního stromu ve tvaru chlupaté cesty okamžitě získáme LI-důkaz: vrcholy na cestě jsou centrální klauzule, chlupy jsou boční klauzule.
 \end{remark}
 
-Zatímco lineární rezoluce je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
+Zatímco \emph{lineární rezoluce}\footnote{Tj. důkazový systém založený na hledání \emph{lineárních} důkazů resp. zamítnutí.} je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
 
 \subsection{Úplnost LI-rezoluce pro Hornovy formule}
 

@@ -310,7 +310,7 @@ V daném grafu \(\structure{G}\) a při dosazení vrcholu \(u\) za proměnnou \(
 Vraťme se zpět k barvení grafů. Přirozený způsob jak formalizovat náš problém 3-obarvitelnosti je v jazyce \( \mathcal L' =\langle E, R, G, B \rangle \), kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly, tedy \(R(x)\) znamená ``vrchol \(x\) je červený''. Strukturou pro tento jazyk je (orientovaný) graf spolu s trojicí množin vrcholů, např.
 \begin{align*}
 \structure G_C &= \langle V^{\structure G_C}; E^{\structure G_C}, R^{\structure G_C}, G^{\structure G_C}, B^{\structure G_C} \rangle \\
-&= \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\}, \{1\}, \{2,3\}, \{4\} \rangle    
+&= \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\}, \{1\}, \{2,4\}, \{3\} \rangle    
 \end{align*}
 reprezentuje graf \( \structure{G} \) s validním obarvením z obrázku výše. Budeme říkat, že \( \structure{G}_C \) je \emph{expanze} \(\mathcal L\)-struktury \( \structure{G} \) do jazyka \( \mathcal L' \).
 

@@ -214,7 +214,7 @@ Hornovské formule tedy dobře modelují systémy, kde splnění určitých podm
 \begin{example}
     Příkladem výroku, který je v CNF, ale není hornovský, je třeba $(p_1\lor p_2\lor\neg p_3)\land (\neg p_1\lor p_3)$. Jako příklad, na kterém budeme ilustrovat algoritmus, nám poslouží následující hornovský výrok:
     $$
-    \varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_5\lor \neg p_4)\land p_4
+    \varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)\land(\neg p_5\lor \neg p_4)\land p_4
     $$
 \end{example}
 
@@ -227,7 +227,7 @@ Náš výrok $\varphi$ obsahuje jednotkovou klauzuli $p_4$. Víme tedy, že v ka
 \end{itemize}
 Tomu kroku se říká \emph{jednotková propagace}. Výsledkem je následující zjednodušený výrok, který označíme $\varphi^{p_4}$ (obecně $\varphi^\ell$ máme-li jednotkovou klauzuli $\ell$):
 $$
-\varphi^{p_4}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land\neg p_5
+\varphi^{p_4}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land (\neg p_2\lor\neg p_3)\land\neg p_5
 $$
 \begin{observation}
 Všimněte si, že $\varphi^\ell$ už neobsahuje literál $\ell$ ani $\overline{\ell}$, a zřejmě platí, že modely $\varphi$ jsou právě modely $\{\varphi^{\ell},\ell\}$, neboli modely $\varphi^{\ell}$ v původním jazyce $\mathbb P$, ve kterých platí $\ell$.
@@ -235,7 +235,7 @@ Všimněte si, že $\varphi^\ell$ už neobsahuje literál $\ell$ ani $\overline{
 
 Jednotkovou propagací jsme získali ve výroku $\varphi^{p_4}$ novou jednotkovou klauzuli $\neg p_5$, můžeme tedy pokračovat nastavením $v(p_5)=0$ a další jednotkovou propagací:
 $$
-(\varphi^{p_4})^{\neg p_5}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)
+(\varphi^{p_4})^{\neg p_5}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)
 $$
 Výsledný výrok už neobsahuje jednotkovou klauzuli. To ale znamená, že každá klauzule obsahuje alespoň dva literály, a nejvýše jeden z nich může být pozitivní! (Zde potřebujeme hornovskost výroku.) Protože každá klauzule obsahuje negativní literál, stačí ohodnotit všechny zbývající proměnné 0, a výrok bude splněn: $v(p_1)=v(p_2)=v(p_3)=0$. Dostáváme tedy model $v=(0,0,0,1,1)$.
 

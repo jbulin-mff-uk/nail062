@@ -40,7 +40,7 @@ V množinové reprezentaci odpovídají modely množinám literálů, které obs
 \end{itemize}
 
 \begin{example}\label{example:set-representation}
-    Výrok $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg _3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ zapíšeme v množinové reprezentaci takto:
+    Výrok $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ zapíšeme v množinové reprezentaci takto:
     $$
     S=\{\{\neg p_1,p_2\},\{\neg p_1,\neg p_2,p_3\},\{\neg p_3,\neg p_4\},\{\neg p_4,\neg p_5\},\{p_4\}\}
     $$
@@ -130,7 +130,7 @@ Je snadné ukázat následující pozorování, indukcí podle hloubky stromu a 
 \begin{observation} Klauzule $C$ má rezoluční strom z formule $S$, právě když $S\proves_R C$.  
 \end{observation}
 
-Každému rezolučnímu důkazu odpovídá jednoznačný rezoluční strom. Naopak, z jednoho rezolučního stromu můžeme získat více rezolučních důkazů: jsou dané libovolnou procházka po vrcholech stromu, při které navštívíme vnitřní vrchol až poté, co jsme navštívili oba jeho syny.
+Každému rezolučnímu důkazu odpovídá jednoznačný rezoluční strom. Naopak, z jednoho rezolučního stromu můžeme získat více rezolučních důkazů: jsou dané libovolnou procházkou po vrcholech stromu, při které navštívíme vnitřní vrchol až poté, co jsme navštívili oba jeho syny.
 
 Zaveďme ještě jeden pojem, tzv. \emph{rezoluční uzávěr}, který obsahuje všechny klauzule, které se můžeme `naučit' rezolucí z dané formule. Jde spíše o užitečný teoretický pohled na rezoluci, v aplikacích by bylo nepraktické konstruovat celý rezoluční uzávěr
 
@@ -249,7 +249,7 @@ Důkaz provedeme indukcí podle počtu proměnných v $S$. Je-li $|\Var(S)|=0$, 
 
 Ukážeme, jak ze stromu $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. Analogicky vyrobíme $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. v posledním kroku rezolučního důkazu získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
 
-Zbývá ukázat konstrukci stromu $\widehat T$: množina vrcholů i uspořádání jsou stejné, změníme jen některé klauzule ve vrcholech, a to přidáním literálu $\neg p$. Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a buď je $C\in S$, nebo není, ale $C\cup\{\neg p\}\in S$. V prvním případě necháme label stejný. Ve druhém případě přidáme přidáme do $C$ \emph{a do všech klauzulí nad tímto listem} literál $\neg p$. V listech jsou nyní jen klauzule z $S$, v kořeni jsme $\square$ změnili na $\neg p$. A každý vnitřní vrchol je nadále rezolventou svých synů.
+Zbývá ukázat konstrukci stromu $\widehat T$: množina vrcholů i uspořádání jsou stejné, změníme jen některé klauzule ve vrcholech, a to přidáním literálu $\neg p$. Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a buď je $C\in S$, nebo není, ale $C\cup\{\neg p\}\in S$. V prvním případě necháme label stejný. Ve druhém případě přidáme do $C$ \emph{a do všech klauzulí nad tímto listem} literál $\neg p$. V listech jsou nyní jen klauzule z $S$, v kořeni jsme $\square$ změnili na $\neg p$. A každý vnitřní vrchol je nadále rezolventou svých synů.
 \end{proof}
 
 \begin{exercise}

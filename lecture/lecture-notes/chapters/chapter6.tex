@@ -96,7 +96,7 @@ Kromě běžných symbolů relací, funkcí a konstant (známých např. z logik
     \end{itemize}
     Všechny tyto struktury \emph{splňují axiomy teorie grup}, snadno ale najdeme jiné struktury, které tyto axiomy nesplňují, a nejsou tedy grupami. Například změníme-li ve struktuře $\mathbb Z_n$ interpretaci symbolu $+$ na funkci $\cdot$ (modulo $n$).
     \item Struktury $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ a $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$, se standardními operacemi a uspořádáním, jsou v signatuře uspořádaných těles (ale jen první z nich je uspořádaným tělesem).
-    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, tzv. \emph{potenční algebra} nad množinou $X$, je to struktura v signatuře Booleových algeber. (\emph{Booleova algebra} je to pokud $X\neq\emptyset$
+    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, tzv. \emph{potenční algebra} nad množinou $X$, je to struktura v signatuře Booleových algeber. (\emph{Booleova algebra} je to pokud $X\neq\emptyset$.)
     \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, kde $S(x)=x+1$, a ostatní symboly jsou interpretovány standardně, je \emph{standardní model aritmetiky}.
 \end{itemize}
 \end{example}
@@ -172,9 +172,9 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
 
 \begin{example}\label{example:terms}
     Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
-    Na obrázku~\ref{figure:terms} jsou nakresleny stromy těchto termů.
+    Na obrázku~\ref{figure:trees-of-terms} jsou nakresleny stromy těchto termů.
     
-    \begin{figure}\label{figure:terms}
+    \begin{figure}
     \tikzset{every label/.style = {text=red}}
     \begin{minipage}{.49\textwidth}
         \centering
@@ -211,6 +211,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
         (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber
     \end{minipage}
     \caption{Strom termu}
+    \label{figure:trees-of-terms}
     \end{figure}
 \end{example}
 
@@ -225,7 +226,7 @@ Nejjednoduššími \emph{formulemi} jsou \emph{atomické formule}. Z nich potom 
 
 
 \begin{definition}[Atomická formule]
-    \emph{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_m)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$. %Množinu všech \emph{atomických formulí} jazyka $L$ označíme $\AFm_L$. 
+    \emph{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$. %Množinu všech \emph{atomických formulí} jazyka $L$ označíme $\AFm_L$. 
 \end{definition}
 
 U binárních relačních symbolů často používáme infixový zápis, např. atomickou formuli $\leq(x,y)$ zapíšeme jako $x\leq y$, a (je-li jazyk s rovností) místo $=(t_1,t_2)$ budeme psát $t_1=t_2$.
@@ -549,7 +550,7 @@ Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom říkáme, že $\va
 \end{itemize}
 Máme-li prázdnou teorii $T=\emptyset$ (tj. $\M(T)=\M_L$), potom teorii $T$ vynecháváme, píšeme $\models\varphi$, a říkáme, že $\varphi$ \emph{je pravdivá (v logice), (logicky) platí, je tautologie}; podobně pro ostatní pojmy.
 
-Teorie je \emph{sporná}, jestliže v ní platí \emph{spor} $\bot$, který v predikátové logice můžeme definovat jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,R_n)$, kde $R$ je libovolný (třeba první) relační symbol z jazyka nebo rovnost (nemá-li jazyk relační symbol, musí být s rovností). Teorie je \emph{sporná}, právě když v ní platí každá formule, nebo, ekvivalentně, právě když nemá žádný model. Jinak říkáme, že je teorie \emph{bezesporná} (neplatí-li v ní spor, ekvivalentně má-li alespoň jeden model).
+Teorie je \emph{sporná}, jestliže v ní platí \emph{spor} $\bot$, který v predikátové logice můžeme definovat jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je libovolný (třeba první) relační symbol z jazyka nebo rovnost (nemá-li jazyk relační symbol, musí být s rovností). Teorie je \emph{sporná}, právě když v ní platí každá formule, nebo, ekvivalentně, právě když nemá žádný model. Jinak říkáme, že je teorie \emph{bezesporná} (neplatí-li v ní spor, ekvivalentně má-li alespoň jeden model).
 
 \emph{Sentencím} pravdivým v $T$ říkáme \emph{důsledky} $T$; \emph{množina všech důsledků} $T$ v jazyce $L$ je:
 $$
@@ -648,7 +649,7 @@ Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzit
         & x \cdot (y + z) = x \cdot y + x \cdot z,\\
         & (x + y) \cdot z = x \cdot z + y \cdot z\}
     \end{align*}
-    Těmto vlastnostem říkáme \emph{neutralita $0$ vůči $+$}, \emph{asociativita $\cdot$}, a \emph{(levá i pravá) distributivita $\cdot$ vůči $+$}.
+    Těmto vlastnostem říkáme \emph{neutralita $1$ vůči $\cdot$}, \emph{asociativita $\cdot$}, a \emph{(levá i pravá) distributivita $\cdot$ vůči $+$}.
     \item \emph{Teorie komutativních okruhů} má navíc axiom \emph{komutativity $\cdot$}, máme tedy:
     $$
     T_4 = T_3 \cup \{x \cdot y = y \cdot x\}

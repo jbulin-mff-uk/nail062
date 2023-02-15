@@ -188,7 +188,7 @@ Na závěr shrneme naše úvahy do následujícího tvrzení:
 \end{corollary}
 
 \begin{proof}
-Komponenty silné souvislosti lze snadno nalézt v v čase $\mathcal O(|V|+|E|)$, topologické uspořádání můžeme také zkonstruovat v čase $\mathcal O(|V|+|E|)$.
+Komponenty silné souvislosti lze snadno nalézt v čase $\mathcal O(|V|+|E|)$, topologické uspořádání můžeme také zkonstruovat v čase $\mathcal O(|V|+|E|)$.
 \end{proof}
 
 \begin{exercise}
@@ -242,10 +242,10 @@ Výsledný výrok už neobsahuje jednotkovou klauzuli. To ale znamená, že kaž
 \begin{example}
     Co by se stalo, pokud by výrok nebyl splnitelný? Podívejme se na výrok 
     $$
-    \psi=p\land (\neg p\lor q)\land (\neg q\lor r)\lor\neg r
+    \psi=p\land (\neg p\lor q)\land (\neg q\lor r)\land\neg r
     $$ 
     a provádějme jednotkovou propagaci jako v předchozím příkladě: máme $v(p)=1$ a 
-$\psi^p=q\land (\neg q\lor r)\land\neg r$, dále $v(q)=1$ a $(\psi^p)^q=r\lor\neg r$. 
+$\psi^p=q\land (\neg q\lor r)\land\neg r$, dále $v(q)=1$ a $(\psi^p)^q=r\land\neg r$. 
 Tento výrok je nesplnitelný, neboť obsahuje dvojici opačných jednotkových klauzulí. \footnote{Jinými slovy, v dalším kroku bychom provedli jednotkovou propagaci $r$, odstranili jednotkovou klauzuli $r$, a ze zbývající jednotkové klauzule $\neg r$ bychom odstranili literál $\neg r$, čímž by vznikla \emph{prázdná klauzule}, která je nesplnitelná.}
 \end{example}
 

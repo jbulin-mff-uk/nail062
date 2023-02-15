@@ -8,7 +8,7 @@ V této kapitole si ukážeme, jak lze adaptovat rezoluční metodu, kterou jsme
 \end{itemize}
 V následujících třech sekcích představíme nástroje, které nám umožní vypořádat se se specifiky predikátové logiky: s kvantifikátory, proměnnými a termy.
 \begin{itemize}
-    \item V Sekci \ref{section:skolemization} si ukážeme si, jak pomocí \emph{Skolemizace} odstranit kvantifikátory, abychom získali otevřené formule, které už lze převést do CNF.
+    \item V Sekci \ref{section:skolemization} si ukážeme, jak pomocí \emph{Skolemizace} odstranit kvantifikátory, abychom získali otevřené formule, které už lze převést do CNF.
     \item V Sekci \ref{section:grounding} vysvětlíme, že rezoluční zamítnutí bychom mohli hledat `na úrovni výrokové logiky' (tzv. \emph{grounding}), pokud bychom nejprve za proměnné substituovali `vhodné' konstantní termy.
     \item V Sekci \ref{section:unification} ukážeme, jak takové `vhodné' substituce hledat pomocí \emph{unifikačního algoritmu}.
 \end{itemize}
@@ -608,7 +608,7 @@ V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzen�
 Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
 \begin{example}
-Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
+Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))\}$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
 \end{example}
 
 \begin{definition}[Rezoluční pravidlo]
@@ -636,7 +636,7 @@ Jakmile máme definované rezoluční pravidlo, můžeme zavést \emph{rezolučn
     \emph{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
     taková, že pro každé $i$ je 
     \begin{itemize}
-        \item buď $C_i=C_i'\sigma$ pro nějakou klauzuli $C_i\in S$ a přejmenování proměnných $\sigma$, nebo
+        \item buď $C_i=C_i'\sigma$ pro nějakou klauzuli $C'_i\in S$ a přejmenování proměnných $\sigma$, nebo
         \item $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
     \end{itemize}
     Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.

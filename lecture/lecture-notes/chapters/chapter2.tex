@@ -337,7 +337,7 @@ Toho můžeme využít při hledání modelů hrubou silou.
         \item $(1,0,0)\models q\limplies r$,
         \item $(1,1,0)\not\models q\limplies r$,
     \end{itemize}  
-    Tedy $\M_\mathbb P(r,q\limplies r)=\{(0,0,0),(1,0,0)\}$. Výrok  $p\lor q\lor r$ platí jen v prvním z těchto modelů, dostáváme tedy
+    Tedy $\M_\mathbb P(r,q\limplies r)=\{(0,0,0),(1,0,0)\}$. Výrok  $p\lor q\lor r$ platí jen ve druhém z těchto modelů, dostáváme tedy
     $$
     \M_\mathbb P(r,q\limplies r,p\lor q\lor r)=\M_\mathbb P(T)=\{(1,0,0)\}.
     $$
@@ -488,7 +488,7 @@ Všimněte si, že pokud ve výrokové logice zaměníme hodnoty pro pravdu a ne
 
 Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Neboť $p,q$ jsou proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí pokud $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
 
-Pojem DNF je duální k pojmu CNF, `je pravdivý' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ and $\lor$, pravdy a nepravdy.
+Pojem DNF je duální k pojmu CNF, `je pravdivý' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ a $\lor$, pravdy a nepravdy.
 
 
 \subsection{Převod do normální formy}\label{subsection:convert-to-normal-form}
@@ -558,7 +558,7 @@ Využijeme následujícího pozorování: Nahradíme-li nějaký podvýrok $\psi
     $$
     (\neg p\lor q\lor \neg r) \land (p\lor \neg q) \land (p \lor r) 
     $$
-    Při převodu do DNF bychom postupovali obdobně, opakovanou aplikací distributivity. Zde vyjdeme v CNF formy a zkombinujeme každý literál z první klauzule s každým literálem z druhé a s každým literálem z třetí klauzule. Všimneme si, že stejný literál nemusíme v elementární konjunkci opakovat dvakrát, a že obsahuje-li elementární klauzule dvojici opačných literálů, je sporná, a můžeme ji tedy v DNF vynechat. Také můžeme vynechat elementární konjunkci $E$, pokud máme jinou elementární konjunkci $E'$ takovou, že $E'$ obsahuje všechny literály obsažené v $E$, např. $E=p\land \neg r$ a $E'=(p\land q \land \neg r)$. (Rozmyslete si proč, a zformulujte duální zjednodušení při převodu do CNF.) Výsledný výrok v DNF je:
+    Při převodu do DNF bychom postupovali obdobně, opakovanou aplikací distributivity. Zde vyjdeme z CNF formy a zkombinujeme každý literál z první klauzule s každým literálem z druhé a s každým literálem z třetí klauzule. Všimneme si, že stejný literál nemusíme v elementární konjunkci opakovat dvakrát, a že obsahuje-li elementární klauzule dvojici opačných literálů, je sporná, a můžeme ji tedy v DNF vynechat. Také můžeme vynechat elementární konjunkci $E$, pokud máme jinou elementární konjunkci $E'$ takovou, že $E'$ obsahuje všechny literály obsažené v $E$, např. $E=p\land \neg r$ a $E'=(p\land q \land \neg r)$. (Rozmyslete si proč, a zformulujte duální zjednodušení při převodu do CNF.) Výsledný výrok v DNF je:
     $$
     (\neg p \land \neg q\land r) \lor (p\land q \land r) \lor (p\land \neg r)
     $$
@@ -624,7 +624,7 @@ Rozmysleme si, proč platí ekvivalence vlastností v definici. Uvědomme si, ž
 A je-li teorie kompletní, nemůže mít dva různé modely $v\neq v'$. Výrok $\varphi_{v}=\bigwedge_{p\in\mathbb P}p^{v(p)}$ (který jsme potkali v důkazu Tvrzení \ref{proposition:not-and-or-is-universal}) by totiž byl nezávislý v $T$, protože platí v modelu $v$ ale ne v modelu $v'$. Naopak, má-li $T$ jediný model $v$, potom každý výrok buď platí ve $v$, a tedy platí v $T$, nebo neplatí ve $v$ a potom je lživý v $T$.
 
 \begin{example} 
-    Příkladem sporné teorie je třeba $T=\{p,p\limplies q,\neg q\}$. Teorie $T=\{p\lor q,r\}$ je bezesporná, ale není kompletní, například výrok $p\land q$ v ní není pravdivý (neplatí v modelu $(1,0,1)$) ale ani lživý (platí v modelu $(1,1,1)$). Teorie $T\cup\{\neg p\}$ je kompletní, jejím jediným modelem je $(0,1,1)$.
+    Příkladem sporné teorie je třeba $T_1=\{p,p\limplies q,\neg q\}$. Teorie $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní, například výrok $p\land q$ v ní není pravdivý (neplatí v modelu $(1,0,1)$) ale ani lživý (platí v modelu $(1,1,1)$). Teorie $T_2\cup\{\neg p\}$ je kompletní, jejím jediným modelem je $(0,1,1)$.
 \end{example}
 
 \subsection{Důsledky teorií}
@@ -697,7 +697,7 @@ Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejpr
         $$
         \{v{\restriction_\mathbb P}\mid v\in\M_      {\mathbb P'}(T')\}=\M_\mathbb P(T)
         $$
-        \item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $P'=\mathbb P$ a $\M_\mathbb P(T')=\M_\mathbb P(T)$, neboli $T'\sim T$.        
+        \item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')=\M_\mathbb P(T)$, neboli $T'\sim T$.        
         \item Kompletní jednoduché extenze $T$ jednoznačně až na ekvivalenci odpovídají modelům $T$.
     \end{itemize}
 \end{observation}

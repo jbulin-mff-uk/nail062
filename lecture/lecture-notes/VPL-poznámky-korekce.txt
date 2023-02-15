@@ -1,6 +1,0 @@
-str. 124 příklad 8.4.10
-	- možná má být "p = 1" místo "p = 3" (možná to jen chápu špatně já)
-
-str. 136 spočetné algebraicky uzavřené těleso
-	- v rozepsané sentenci na konci chybí uzavírací kulatá závorka
-

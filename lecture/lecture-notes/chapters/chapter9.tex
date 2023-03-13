@@ -259,13 +259,13 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
         \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
         \end{tikzpicture}
         \end{center}
-    Tento graf má jediný netriviální automorfismus zachovávající vrchol $0$: $h(i)=5-i$. Jeho \emph{orbity} jsou $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:
+    Tento graf má jediný netriviální automorfismus zachovávající vrchol $0$: $h(i)=(5-i) \bmod 5$. Jeho \emph{orbity} jsou $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:
     \begin{itemize}
         \item $\{0\}$ je definované formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$,
         \item $\{1,4\}$ lze definovat pomocí formule $E(x,y)$, a
         \item $\{2,3\}$ formulí $\neg E(x,y)\land \neg x=y$.
     \end{itemize}
-    Množina $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra potenční algebry $\underline{\mathcal P(V(\mathcal G))}$, musí tedy být uzavřená na doplněk, sjednocení, průnik, a obsahovat $\emptyset$ a $V(\mathcal G))$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:
+    Množina $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra potenční algebry $\underline{\mathcal P(V(\mathcal G))}$, musí tedy být uzavřená na doplněk, sjednocení, průnik, a obsahovat $\emptyset$ a $V(\mathcal G)$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:
     $$
     \mathrm{Df}^1(\mathcal G,\{0\})=\{\emptyset, \{0\}, \{1,4\}, \{2,3\}, \{0,1,4\}, \{0,2,3\}, \{1,4,2,3\}, \{0,1,2,3,4\}\}
     $$

@@ -1,5 +1,4 @@
 %% packages
-\usepackage{a4wide}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
 \usepackage[czech]{babel}
@@ -9,26 +8,26 @@
 \usepackage{tcolorbox}
 \usepackage{tikz}
     \usetikzlibrary{arrows.meta}
-\usepackage[unicode]{hyperref}
+%\usepackage[unicode]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{xfrac}
 
-%% theorems
-\theoremstyle{plain}
-    \newtheorem{theorem}{Věta}[section]
-    \newtheorem*{theorem-unnumbered}{Věta}
-    \newtheorem{proposition}[theorem]{Tvrzení}
-    \newtheorem{corollary}[theorem]{Důsledek}
-    \newtheorem{lemma}[theorem]{Lemma}
-    \newtheorem{observation}[theorem]{Pozorování}
-\theoremstyle{definition}
-    \newtheorem{definition}[theorem]{Definice}
-    \newtheorem*{algorithm}{Algoritmus}
-\theoremstyle{remark}
-    \newtheorem{remark}[theorem]{Poznámka}
-    \newtheorem{example}[theorem]{Příklad}
-    \newtheorem{exercise}{Cvičení}[chapter]
-    \newtheorem*{solution}{Řešení}
+% %% theorems
+% \theoremstyle{plain}
+%     \newtheorem{theorem}{Věta}[section]
+%     \newtheorem*{theorem-unnumbered}{Věta}
+%     \newtheorem{proposition}[theorem]{Tvrzení}
+%     \newtheorem{corollary}[theorem]{Důsledek}
+%     \newtheorem{lemma}[theorem]{Lemma}
+%     \newtheorem{observation}[theorem]{Pozorování}
+% \theoremstyle{definition}
+%     \newtheorem{definition}[theorem]{Definice}
+%     \newtheorem*{algorithm}{Algoritmus}
+% \theoremstyle{remark}
+%     \newtheorem{remark}[theorem]{Poznámka}
+%     \newtheorem{example}[theorem]{Příklad}
+%     \newtheorem{exercise}{Cvičení}[chapter]
+%     \newtheorem*{solution}{Řešení}
 
 %% macros and definitions
 \DeclareMathOperator{\Aut}{Aut}
@@ -37,7 +36,7 @@
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\Fm}{Fm}
 \DeclareMathOperator{\M}{M}
-\DeclareMathOperator{\Proof}{Proof}
+%\DeclareMathOperator{\Proof}{Proof}
 \DeclareMathOperator{\rng}{rng}
 \DeclareMathOperator{\Term}{Term}
 \DeclareMathOperator{\Th}{Th}
@@ -45,7 +44,6 @@
 \DeclareMathOperator{\Tree}{Tree}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\VF}{VF}
-
 
 \newcommand{\A}{\structure{A}}
 \newcommand{\B}{\structure{B}}
@@ -62,18 +60,7 @@
 \newcommand{\lorsymb}{{\lor}}
 \newcommand{\Prf}{\mathit{Prf}}
 \newcommand{\proves}{\vdash}
-\newcommand{\structure}[1]{\mathcal{#1}}
+%\newcommand{\structure}[1]{\mathcal{#1}}
 \newcommand{\todo}{[TODO]}
 \newcommand{\T}{\ensuremath{\mathrm{T}}}
 \newcommand{\union}{\mathbin{\cup}}
-
-% from old slides:
-\usepackage{graphics}
-\newcommand{\myblue}{}
-\newcommand{\mygreen}{}
-\newcommand{\alert}{\emph}
-\newcommand{\mdef}{\emph}
-\newcommand{\mand}{\land}
-\newcommand{\mor}{\lor}
-\newcommand{\mqed}{\qed}
-% :from old slides

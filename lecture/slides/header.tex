@@ -1,3 +1,31 @@
+%% beamer
+
+\usetheme{awesome}
+%\usetheme[progressbar=frametitle]{metropolis}
+%\usecolortheme{spruce}
+%\metroset{block=fill}
+
+% block indentation workaround
+% map defaulf block to oldblock
+\let\oldblock\block
+\let\endoldblock\endblock
+% change block by adding smallskip
+\renewenvironment{block}[1]
+    {\begin{oldblock}{#1}
+        \smallskip
+    }
+    { 
+    \end{oldblock}
+    }
+
+% define Metropolis colors    
+\definecolor{mAlert}{HTML}{EB811B}
+\definecolor{mExample}{HTML}{14B03D}
+
+% tcolorbox
+\usepackage[most]{tcolorbox}
+
+
 %% packages
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
@@ -5,7 +33,7 @@
 \usepackage{enumerate}
 \usepackage{forest}
 \usepackage{multicol}
-\usepackage{tcolorbox}
+%\usepackage{tcolorbox}
 \usepackage{tikz}
     \usetikzlibrary{arrows.meta}
 %\usepackage[unicode]{hyperref}

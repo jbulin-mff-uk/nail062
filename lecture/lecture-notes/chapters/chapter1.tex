@@ -9,7 +9,7 @@ Slovo \emph{logika} se používá ve dvou významech:
 \end{itemize}
 V informatice se tyto dva významy setkávají: nejprve formálně popíšeme daný systém, a poté o něm \emph{formálně uvažujeme} (v praktických aplikacích automaticky), tj.\ odvozujeme platné \emph{inference} o systému, za použití nějakého \emph{(formálního) dokazovacího systému}.
 
-Mezi praktické aplikace logiky v informatice patří například software verification, logic programming, SAT solving, automated reasoning, nebo knowledge-based representation. Kromě toho je logika (ve větší míře než matematika) základním nástrojem pro popis teoretické informatiky. Více o aplikacích logiky najdete v příloze~\ref{appendix:applications}; v příloze~\ref{appendix:history} je shrnuta historie logiky.
+Mezi praktické aplikace logiky v informatice patří například software verification, logic programming, SAT solving, automated reasoning, nebo knowledge-based representation. Kromě toho je logika (ve větší míře než matematika) základním nástrojem pro popis teoretické informatiky. %Více o aplikacích logiky najdete v příloze~\ref{appendix:applications}; v příloze~\ref{appendix:history} je shrnuta historie logiky.
 
 
 
@@ -38,7 +38,8 @@ Informace o tom, že v chodbě je poklad nebo drak, ale ne obojí, už je zakód
 \[
     (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
 \]
-Označme tento výrok jako \( \varphi \) (od slova ``formule'', výrokům se někdy také říká \emph{výrokové formule}). V našem příkladě lze všechny informace vyjádřit jediným výrokem, v praxi ale často potřebujeme výroků více, někdy i nekonečně mnoho (například pokud chceme popsat výpočet nějakého programu a nevíme apriori kolik kroků bude mít), potom popíšeme situaci pomocí množiny výroků, tzv. \emph{teorie}, zde \( T=\{ \varphi \} \). Výrokům z \( T \) říkáme také \emph{axiomy} teorie~\( T \)\footnote{Terminologie v logice často pochází z jejích aplikace v matematice, viz příloha~\ref{appendix:history} o historii logiky.}.
+Označme tento výrok jako \( \varphi \) (od slova ``formule'', výrokům se někdy také říká \emph{výrokové formule}). V našem příkladě lze všechny informace vyjádřit jediným výrokem, v praxi ale často potřebujeme výroků více, někdy i nekonečně mnoho (například pokud chceme popsat výpočet nějakého programu a nevíme apriori kolik kroků bude mít), potom popíšeme situaci pomocí množiny výroků, tzv. \emph{teorie}, zde \( T=\{ \varphi \} \). Výrokům z \( T \) říkáme také \emph{axiomy} teorie~\( T \)\footnote{Terminologie v logice často pochází z jejích aplikace v matematice.}.
+%\footnote{Terminologie v logice často pochází z jejích aplikace v matematice, viz příloha~\ref{appendix:history} o historii logiky.}.
 
 \subsection{Modely a důsledky}
 
@@ -338,7 +339,8 @@ Predikátové logice, kde proměnné reprezentují jednotlivé vrcholy, říkám
 \end{align*}
 V logice třetího řádu máme i proměnné reprezentující množiny množin (což je užitečné např.\ v topologii), atd.
 
-Kromě výrokové a predikátové logiky existují i další typy logických systémů, například intuicionistická logika (která povoluje jen konstruktivní důkazy), temporální logiky (kde mluvíme o platnosti `vždy', `někdy v budoucnosti', `dokud' apod.), modální logiky (`je možné', `je nutné'), nebo fuzzy logiky (kde máme výroky `0.35 pravdivé'). Tyto logiky mají důležité aplikace v informatice, např.\ v umělé inteligenci (modální logiky pro uvažování autonomních agentů o svém okolí), v paralelním programování (temporální logiky), nebo v automatických pračkách (fuzzy logiky). Více viz Příloha~\ref{appendix:other-logics}. V tomto kurzu se omezíme na výrokovou logiku a predikátovou logiku prvního řádu.
+Kromě výrokové a predikátové logiky existují i další typy logických systémů, například intuicionistická logika (která povoluje jen konstruktivní důkazy), temporální logiky (kde mluvíme o platnosti `vždy', `někdy v budoucnosti', `dokud' apod.), modální logiky (`je možné', `je nutné'), nebo fuzzy logiky (kde máme výroky `0.35 pravdivé'). Tyto logiky mají důležité aplikace v informatice, např.\ v umělé inteligenci (modální logiky pro uvažování autonomních agentů o svém okolí), v paralelním programování (temporální logiky), nebo v automatických pračkách (fuzzy logiky). %Více viz Příloha~\ref{appendix:other-logics}. 
+V tomto kurzu se omezíme na výrokovou logiku a predikátovou logiku prvního řádu.
 
 
 \section{O přednášce}

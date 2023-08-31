@@ -1,7 +1,6 @@
-%% beamer
+%% slide-specific
 
-\usetheme{awesome}
-%\usetheme[progressbar=frametitle]{metropolis}
+\usetheme[progressbar=frametitle]{metropolis}
 %\usecolortheme{spruce}
 %\metroset{block=fill}
 
@@ -22,8 +21,20 @@
 \definecolor{mAlert}{HTML}{EB811B}
 \definecolor{mExample}{HTML}{14B03D}
 
-% tcolorbox
 \usepackage[most]{tcolorbox}
+
+%\newcommand{\myexample}[1]{\leavevmode\textcolor{mExample}{#1}}
+\newcommand{\myexample}[1]{
+\begin{tcolorbox}[colback=mExample!10, enhanced, boxrule=0pt, frame hidden]
+    {#1}  
+\end{tcolorbox}
+}
+
+% \newcommand{\myexamplemath}[1]{
+% \begin{tcolorbox}[colback=mExample!10, enhanced, boxrule=0pt, frame hidden]
+%     \ensuremath{#1}  
+% \end{tcolorbox}
+% }
 
 
 %% packages
@@ -33,7 +44,7 @@
 \usepackage{enumerate}
 \usepackage{forest}
 \usepackage{multicol}
-%\usepackage{tcolorbox}
+% \usepackage{tcolorbox}
 \usepackage{tikz}
     \usetikzlibrary{arrows.meta}
 %\usepackage[unicode]{hyperref}

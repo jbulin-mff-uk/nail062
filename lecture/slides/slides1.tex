@@ -18,7 +18,7 @@
 \begin{frame}{Cesta k jistému úspěchu u zkoušky\footnote{Podrobnosti o zkoušce včas upřesníme. Základní formát i většina otázek ale pravděpodobně zůstanou stejné, viz \href{https://jbulin.github.io/teaching/fall/nail062/files/info-o-zkouskach.pdf}{\alert{\textbf{loňské informace o zkouškách}}}.}}
 
 \begin{itemize}    
-    \item Studujte \alert{průběžně (každý týden)}, a průběžně také \alert{testujte své znalosti}: umíte \alert{napsat}(!) definici, větu, důkaz?
+    \item Studujte \alert{průběžně (každý týden)}, a průběžně také \alert{testujte své znalosti}: umíte sami \alert{napsat}(!) definici, větu, důkaz?
     \item Před každou přednáškou alespoň zběžně projděte příslušné sekce v \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápiscích z přednášky}}}. Ty obsahují vše, co po vás bude vyžadováno. Snažte se pochopit smysl definic a tvrzení.
     \item Po každé přednášce si skripta \alert{podrobně přečtěte}. Pokud něčemu nebudete rozumět, využijte konzultačních hodin.
     \item Snažte se zúčastnit všech přednášek, pokud nemůžete, včas se materiál doučte, případně využijte konzultačních hodin.
@@ -90,76 +90,89 @@
 
 \begin{frame}{Příklad ze života: Hledání pokladu}
 
-    \begin{example}
+    \myexample{
         Při hledání pokladu jsme narazili na rozcestí dvou chodeb. Víme, že na konci každé chodby je buď poklad, nebo drak, ale ne obojí. Trpaslík nám řekl, že: \emph{``Alespoň jedna z těch dvou chodeb vede k pokladu''}, a že \emph{``První chodba vede k drakovi.''} Je známo, že trpaslíci buď vždy mluví pravdu, nebo vždy lžou. Kterou cestou se máme vydat?
-    \end{example} 
+    }
+
+\end{frame}
+
+
+\begin{frame}{Výroky neformálně}
+
+    \alert{Výrok} je tvrzení, kterému lze přiřadit pravdivostní hodnotu: 
+    \begin{center}
+        \alert{pravdivý} (\emph{True}, 1), nebo \alert{lživý} (\emph{False}, 0)
+    \end{center}
+    
+    \alert{Prvovýroky} (\alert{atomické výroky}, \alert{výrokové proměnné}) zkombinované pomocí logických spojek a závorek do \alert{složených výroků}:
+
+    \myexample{
+        ``(Trpaslík lže,) \emph{právě když} (druhá chodba vede k drakovi.)''\
+    }        
+
+    \begin{description}\setlength{\itemsep}{3pt}
+        \item[\huge\alert{$\neg$}] ``neplatí X'', \emph{negace}
+        \item[\huge\alert{$\landsymb$}] ``X a Y'', \emph{konjunkce}
+        \item[\huge\alert{$\lorsymb$}] ``X nebo Y'', \emph{disjunkce} (není exkluzivní)
+        \item[\huge\alert{$\limpliessymb$}] ``pokud X, potom Y'', \emph{implikace} (čistě logická)
+        \item[\huge\alert{$\liffsymb$}] ``X, právě když Y'', \emph{ekvivalence}
+    \end{description}
 
 \end{frame}
 
 
 \begin{frame}{Formalizace ve výrokové logice}
-\alert{Výrok} je tvrzení, kterému lze přiřadit pravdivostní hodnotu: 
-\begin{center}
-    \alert{pravdivý} (\emph{True}, 1), nebo \alert{lživý} (\emph{False}, 0)
-\end{center}
-\begin{example}{}
-    ``(Trpaslík lže,) \emph{právě když} (druhá chodba vede k drakovi.)''\\
-    ``(První chodba vede k pokladu) \emph{nebo} (první chodba vede k drakovi.)''
-\end{example}
+
+    Volba množiny prvovýroků: bity informace popisující daný systém
+    \myexample{            
+        $p_1=${\it ``Poklad je v první chodbě.''}\\
+        $p_2=${\it ``Poklad je ve druhé chodbě.''}
+    }
+    Co nejmenší, např. hodnota $t=${\it ``Trpaslík mluví pravdu.''} je jednoznačně určená hodnotami $\mathbb P=\{p_1,p_2\}$.
+    \begin{itemize}
+        \item {\it Poklad nebo drak, ale ne obojí}: zakódované do volby $\mathbb P$ (přítomnost draka je absence pokladu)
+        \item {\it ``První chodba vede k drakovi.''} $\Leftrightarrow$ \alert{$\neg p_1$}
+        \item {\it ``Alespoň jedna z chodeb vede k pokladu.''} $\Leftrightarrow$ \alert{$p_1 \lor p_2$}
+        \item {\it Trpaslík buď mluví pravdu, nebo lže}:
+        $$
+        \varphi = \alert{(\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))}
+        $$
+    \end{itemize}
+
+    \alert{Teorie} $T=\{ \varphi \}$ v \alert{jazyce} $\mathbb P=\{p_1,p_2\}$, $\varphi$ je \alert{axiom} $T$.
+
+\end{frame}
 
 
-\begin{itemize}
-    \item 
-    \item Výroky se skládají z \alert{prvovýroků}\footnote{výrokových proměnných} zkombinovaných pomocí logických spojek:
+\begin{frame}{Modely a důsledky}
+
+    Lze určit, kde je poklad? Je $p_1$ nebo $p_2$ \alert{důsledkem} $\varphi$ resp. $T$?    
+
+    \alert{``Svět''}, ve kterém je např. v první chodbě poklad a ve druhé drak, popíšeme pomocí \alert{pravdivostního ohodnocení} $p_1=1,p_2=0$, neboli \alert{modelu} $v=(1,0)$ jazyka $\mathbb P$. Celkem máme 4 ``světy'' a modely:
+    $$
+    \M_\mathbb P=\{(0,0),(0,1),(1,0),(1,1)\}.
+    $$
+    Je ``svět'' popsaný modelem $v = (1,0)$ \emph{konzistentní} s tím, co víme, tj. \alert{platí} v modelu $v$ výrok $\varphi$ resp. teorie $T$? Vyhodnotíme podle stromové struktury $\varphi$:
+    $$
+    v(p_1) = 1,\ v(p_2) = 0,\ v(\neg p_1) = 0,\ v(p_1 \lor p_2)=1,\ \dots,\ \alert{v(\varphi)=0}
+    $$
+    Množina \alert{modelů výroku} \( \varphi \) (resp.\ \emph{modelů teorie} \( T \)):
+    $$
+    \M_\mathbb P(\varphi)=\M_\mathbb P(T)=\{(0,1)\}.
+    $$
+    \alert{V každém modelu teorie $T$ platí výrok $p_2$}, neboli $p_2$ je \alert{důsledek} $T$.
     
+
+\end{frame}
+
+
+\begin{frame}{Dokazovací systémy}
     
-
-    \item 
-    
-
-
-    \item 
-\end{itemize}
-
-    . Některé výroky lze vyjádřit pomocí jednodušších výroků a logických spojek, např.  ``(Trpaslík lže,) \emph{právě když} (druhá chodba vede k drakovi.)'' nebo ``(První chodba vede k pokladu) \emph{nebo} (první chodba vede k drakovi.)'' Pokud výrok takto rozložit nelze, říká se mu \emph{prvovýrok}, \emph{atomický výrok}, nebo \emph{výroková proměnná}.
-
-    Popíšeme tedy celou situaci pomocí \emph{výrokových proměnných}. Můžeme si je také představit jako jednoduché zjišťovací (ano/ne) otázky, na které musíme znát odpověď, abychom věděli vše o dané situaci. Jako naše výrokové proměnné zvolme ``Poklad je v první chodbě.'' (označme \(p_1\)), a ``Poklad je v druhé chodbě.'' (\(p_2\)). V úvahu přichází i jiné výrokové proměnné, např. ``V první chodbě je drak.'' (\(d_1\)) nebo ``Trpaslík mluví pravdu.'' (\(t\)). Ty lze ale vyjádřit pomocí \( \{p_1,p_2\} \), např.\ platí \(t\), právě když neplatí \(p_1\). Tj.\ známe-li pravdivostní hodnoty \(p_1,p_2\), pravdivostní hodnoty \(d_1,t\) jsou jednoznačně určené. A menší počet výrokových proměnných znamená menší prohledávací prostor.
-    
-    Vyjádříme tedy všechny naše znalosti jako (\emph{složené}) výroky a zapíšeme je ve formálním zápisu v \emph{jazyce} výrokové logiky nad množinou prvovýroků \( \mathbb P=\{p_1,p_2\} \), za použití symbolů reprezentujících logické spojky \( \neg \) (``neplatí X'', \emph{negace}), \( \landsymb \) (``X a Y'', \emph{konjunkce}), \( \lorsymb \) (``X nebo Y'', \emph{disjunkce}), \( \limpliessymb \) (``pokud X, potom Y'', \emph{implikace}), \( \liffsymb \) (``X, právě když Y'', \emph{ekvivalence}) a závorek (,). Zde je dobré zmínit, že disjunkce není exkluzivní, tj. ``X nebo Y'' platí i pokud platí jak X tak Y, a  implikace je čistě logická: ``pokud X, potom Y'' platí kdykoliv neplatí X nebo platí Y.
-    
-    Informace o tom, že v chodbě je poklad nebo drak, ale ne obojí, už je zakódovaná v naší volbě výrokových proměnných: přítomnost draka je totéž co absence pokladu. Tvrzení trpaslíka, že ``První chodba vede k drakovi.'' tedy vyjádříme jako ``Neplatí, že poklad je v první chodbě.'', formálně \(\neg p_1\). Tvrzení, že ``Alespoň jedna z těch dvou chodeb vede k pokladu.'' vyjádříme jako ``Poklad je v první chodbě nebo poklad je v druhé chodbě.'', formálně \( p_1 \lor p_2\). Informaci, že trpaslíci buď vždy mluví pravdu, nebo vždy lžou, si přeložíme tak, že buď platí oba naše výroky, nebo platí negace obou našich výroků, formálně:
-    \[
-        (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
-    \]
-    Označme tento výrok jako \( \varphi \) (od slova ``formule'', výrokům se někdy také říká \emph{výrokové formule}). V našem příkladě lze všechny informace vyjádřit jediným výrokem, v praxi ale často potřebujeme výroků více, někdy i nekonečně mnoho (například pokud chceme popsat výpočet nějakého programu a nevíme apriori kolik kroků bude mít), potom popíšeme situaci pomocí množiny výroků, tzv. \emph{teorie}, zde \( T=\{ \varphi \} \). Výrokům z \( T \) říkáme také \emph{axiomy} teorie~\( T \)\footnote{Terminologie v logice často pochází z jejích aplikace v matematice, viz příloha~\ref{appendix:history} o historii logiky.}.    
-
 \end{frame}
 
 
 \end{document}
 
-
-
-\subsection{Modely a důsledky}
-
-Jsou naše informace dostačující k určení, zda je v některé z chodeb poklad? Jinými slovy, ptáme se, zda je jeden z výroků \( p_1, p_2 \) logickým \emph{důsledkem} výroku \( \varphi \), resp.\ teorie \( T \). Co to znamená?
-
-Představme si, že existuje více různých ``světů'' lišících se v tom, co je na konci první a na konci druhé chodby. Například, v jednom ze světů je na konci první chodby poklad a na konci druhé chodby drak. Tento svět můžeme popsat pomocí pravdivostního ohodnocení výrokových proměnných: \( p_1=1, p_2=0 \). Takovému ohodnocení říkáme \emph{model} jazyka \( \mathbb P=\{p_1,p_2\} \) a zapisujeme ho zkráceně jako \( v = (1,0) \) (\(v\) od slova ``valuation''). Celkem tedy máme čtyři různé světy, popsané \emph{modely jazyka}
-\[
-    \M_\mathbb P=\{(0,0),(0,1),(1,0),(1,1)\}.
-\]
-
-Je svět popsaný modelem \( v = (1,0) \) konzistentní s informacemi, které máme, tj. \emph{platí} v něm výrok \( \varphi \), resp.\ teorie \( T \)? Pravdivostní hodnotu (složeného) výroku \( \varphi \) v modelu \(v\), označme ji \( v(\varphi) \), můžeme snadno zjistit: Víme, že \( v(p_1) = 1 \) a \( v(p_2) = 0 \), takže \( v(\neg p_1) = 0 \), a také \( v(\neg p_1 \land (p_1 \lor p_2))=0 \) (jde o konjunkci dvou výroků, a první z konjunktů je v modelu \( v \) nepravdivý). Podobně \( v(p_1 \lor p_2)=1 \) (neboť \( v(p_1) = 1 \)), takže \( v(\neg(p_1 \lor p_2))=0 \), a \( v(\neg (\neg p_1) \land \neg (p_1 \lor p_2))=0 \). Výrok \( \varphi \) je disjunkcí dvou výroků, z nichž ani jeden v modelu \(v\) neplatí, tedy \( v(\varphi)=0 \).  
-
-Bystrý čtenář jistě vidí stromovou strukturu výroku \( \varphi \) a postupné vyhodnocování \( v(\varphi) \) od listů směrem ke kořeni. Formální definice představíme v příští kapitole.
-
-Podobně určíme pravdivostní hodnoty výroku \( \varphi \) v ostatních modelech. Zjistíme, že množina \emph{modelů výroku} \( \varphi \) (resp.\ \emph{modelů teorie} \( T \)), tj.\ množina všech modelů jazyka, ve kterých platí \( \varphi \) (resp.\ všechny výroky z teorie \( T \)), je
-\[	
-    \M_\mathbb P(\varphi)=\M_\mathbb P(T)=\{(0,1)\}.
-\]
-Vidíme, že naše informace jednoznačně určují model \( (0,1) \), tedy svět, ve kterém je v první chodbě drak a ve druhé poklad. Obecně modelů může být více, stačí nám vědět, že v každém modelu \( \varphi \), resp.{\ }\(T \), platí výrok \( p_2 \), tedy že \( p_2 \) je \emph{důsledkem} teorie \( T \); také říkáme, že \( p_2 \) \emph{platí} v teorii \( T \).
-
-\subsection{Dokazovací systémy}
 
 Postup, který jsme zvolili, je velmi neefektivní. Máme-li \( n \) výrokových proměnných\footnote{V praxi máme běžně tisíce proměnných.}, existuje~\( 2^n \) modelů jazyka a není prakticky možné ověřovat platnost teorie v každém z nich. Na řadu přichází tzv.\ \emph{dokazovací systémy}. V daném dokazovacím systému je \emph{důkaz} výroku~\( \psi \) z teorie \(T\) přesně, formálně definovaný syntaktický objekt, který v sobě zahrnuje snadno (mechanicky) ověřitelný ``důkaz'' (důvod), proč \( \psi \) platí v \(T\), a který můžeme hledat (pomocí počítače) čistě na základě struktury výroku \( \psi \) a axiomů teorie \(T\) (``syntaxe''), tj.\ aniž bychom se museli zabývat modely (``sémantikou'').
 

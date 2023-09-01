@@ -249,11 +249,11 @@ Výsledná teorie \( T_3 \) je \emph{splnitelná} (má model), právě když gra
 \end{tikzpicture}
 \end{center}
 
-Jakmile máme teorii \(T_3\) formalizující 3-obarvení grafu \( \structure{G} \), můžeme snadno řešit související otázky, například najít všechna obarvení, ve kterých vrchol 1 je modrý a vrchol 2 zelený: odpovídají modelům teorie \( T_3 \cup \{ p_1^B, p_2^G\} \). Nebo můžeme dokázat, že vrcholy 2 a 4 musejí být obarveny stejnou barvou. Můžeme použít tablo metodu: v kořeni tabla bude předpoklad
+Jakmile máme teorii \(T_3\) formalizující 3-obarvení grafu \( \structure{G} \), můžeme snadno řešit související otázky, například najít všechna obarvení, ve kterých je vrchol 1 modrý a vrchol 2 zelený: odpovídají modelům teorie \( T_3 \cup \{ p_1^B, p_2^G\} \). Nebo můžeme dokázat, že vrcholy 2 a 4 musejí být obarveny stejnou barvou. Můžeme použít tablo metodu: v kořeni tabla bude předpoklad
 \[
-\text{False  }(p_2^R \land p_2^R)\lor(p_2^G \land p_2^G)\lor(p_2^B \land p_2^B)
+\text{False  }(p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B)
 \]
-Nebo můžeme najít rezoluční zamítnutí teorie vzniklé převedením axiomů teorie \( T_3 \) do CNF, a přidáním CNF ekvivalentu \emph{negace} výroku \( (p_2^R \land p_2^R)\lor(p_2^G \land p_2^G)\lor(p_2^B \land p_2^B) \)	(neboť jde o důkaz sporem, tedy pro spor předpokládáme, že \emph{nemají} stejnou barvu).
+Nebo můžeme najít rezoluční zamítnutí teorie vzniklé převedením axiomů teorie \( T_3 \) do CNF, a přidáním CNF ekvivalentu \emph{negace} výroku \( (p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B) \)	(neboť jde o důkaz sporem, tedy pro spor předpokládáme, že \emph{nemají} stejnou barvu).
 
 
 
@@ -347,9 +347,9 @@ V tomto kurzu se omezíme na výrokovou logiku a predikátovou logiku prvního �
 
 Přednášku lze rozdělit do třech částí. 
 
-První část se zabývá výrokovou logikou. Nejprve představíme syntaxi a sémantiku, dále problém splnitelnosti CNF formulí (známý NP-úplný problém SAT) a jeho polynomiálně řešitelné fragmenty (2-SAT, Horn-SAT). Budeme pokračovat tablo metodu, u níž si dokážeme korektnost a úplnost, a také několik aplikací, například Větu u kompaktnosti. A na závěr představíme rezoluční metodu ve výrokové logice a její aplikaci v programovacím jazyce Prolog. 
+První část se zabývá výrokovou logikou. Nejprve představíme syntaxi a sémantiku, dále problém splnitelnosti CNF formulí (známý NP-úplný problém SAT) a jeho polynomiálně řešitelné fragmenty (2-SAT, Horn-SAT). Budeme pokračovat tablo metodu, u níž si dokážeme korektnost a úplnost, a také několik aplikací, například Větu u kompaktnosti. A na závěr představíme rezoluční metodu ve výrokové logice.
 
-Ve druhé části představíme predikátovou logiku. Začneme opět syntaxí a sémantiku,ukážeme si jak lze adaptovat tablo metodu pro predikátovou logiku, opět včetně několika aplikací, a skončíme znovu rezoluční metodou. 
+Ve druhé části představíme predikátovou logiku. Začneme opět syntaxí a sémantikou, ukážeme si jak lze adaptovat tablo metodu pro predikátovou logiku, a skončíme znovu rezoluční metodou. Kromě toho zmíníme několik praktických aplikací: databázové dotazy, logické programování (jazyk Prolog), a softwarovou verifikaci.
 
 Třetí část je úvodem do teorie modelů, definovatelnosti, axiomatizovatelnosti, a algoritmické rozhodnutelnosti. Na závěr si představíme slavné Gödelovy věty o neúplnosti, které ukazují meze formální metody (formální dokazatelnosti v axiomatickém systému).
 

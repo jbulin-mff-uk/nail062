@@ -41,7 +41,7 @@
     \end{block}
 
     \begin{block}{Materiály}
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky:}}} Kapitola 1 a Sekce 2.1 z Kapitoly 2
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Kapitola 1 a Sekce 2.1 z Kapitoly 2
     \end{block}
 
 \end{frame}
@@ -61,7 +61,8 @@
         \end{enumerate}        
     \end{block}
 
-    \textbf{V informatice obojí:} daný systém nejprve \emph{formálně popíšeme}, a poté o něm \emph{formálně uvažujeme} (automaticky!), tj. odvozujeme \alert{platné inference} za použití nějakého \alert{dokazovacího systému} 
+    \myblock{\textbf{V informatice obojí:} daný systém nejprve \emph{formálně popíšeme}, a poté o něm \emph{formálně uvažujeme} (automaticky!), tj. odvozujeme \alert{platné inference} za použití nějakého \alert{dokazovacího systému}
+    }
 
 \end{frame}
 
@@ -134,9 +135,11 @@
         \item {\it ``První chodba vede k drakovi.''} $\Leftrightarrow$ \alert{$\neg p_1$}
         \item {\it ``Alespoň jedna z chodeb vede k pokladu.''} $\Leftrightarrow$ \alert{$p_1 \lor p_2$}
         \item {\it Trpaslík buď mluví pravdu, nebo lže}:
+        \myexample{\vspace{-6pt}
         $$
-        \varphi = \alert{(\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))}
+        \varphi = (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
         $$
+        }
     \end{itemize}
 
     \alert{Teorie} $T=\{ \varphi \}$ v \alert{jazyce} $\mathbb P=\{p_1,p_2\}$, $\varphi$ je \alert{axiom} $T$.
@@ -149,71 +152,101 @@
     Lze určit, kde je poklad? Je $p_1$ nebo $p_2$ \alert{důsledkem} $\varphi$ resp. $T$?    
 
     \alert{``Svět''}, ve kterém je např. v první chodbě poklad a ve druhé drak, popíšeme pomocí \alert{pravdivostního ohodnocení} $p_1=1,p_2=0$, neboli \alert{modelu} $v=(1,0)$ jazyka $\mathbb P$. Celkem máme 4 ``světy'' a modely:
+    \myexample{\vspace{-6pt}
     $$
     \M_\mathbb P=\{(0,0),(0,1),(1,0),(1,1)\}.
     $$
+    }
     Je ``svět'' popsaný modelem $v = (1,0)$ \emph{konzistentní} s tím, co víme, tj. \alert{platí} v modelu $v$ výrok $\varphi$ resp. teorie $T$? Vyhodnotíme podle stromové struktury $\varphi$:
     $$
     v(p_1) = 1,\ v(p_2) = 0,\ v(\neg p_1) = 0,\ v(p_1 \lor p_2)=1,\ \dots,\ \alert{v(\varphi)=0}
     $$
     Množina \alert{modelů výroku} \( \varphi \) (resp.\ \emph{modelů teorie} \( T \)):
+    \myexample{\vspace{-6pt}
     $$
     \M_\mathbb P(\varphi)=\M_\mathbb P(T)=\{(0,1)\}.
     $$
-    \alert{V každém modelu teorie $T$ platí výrok $p_2$}, neboli $p_2$ je \alert{důsledek} $T$.
-    
-
-\end{frame}
-
-
-\begin{frame}{Dokazovací systémy}
+    }
+    \myblock{V \alert{každém modelu} teorie $T$ platí výrok $p_2$, neboli $p_2$ je \alert{důsledek}~$T$.}
     
 \end{frame}
 
 
-\end{document}
+\begin{frame}{Důkazové systémy}
 
+    Ověřovat všechny modely je nepraktické, pro $|\mathbb P|=n$ máme $2^n$ modelů, a $\mathbb P$ může být i nekonečná.
 
-Postup, který jsme zvolili, je velmi neefektivní. Máme-li \( n \) výrokových proměnných\footnote{V praxi máme běžně tisíce proměnných.}, existuje~\( 2^n \) modelů jazyka a není prakticky možné ověřovat platnost teorie v každém z nich. Na řadu přichází tzv.\ \emph{dokazovací systémy}. V daném dokazovacím systému je \emph{důkaz} výroku~\( \psi \) z teorie \(T\) přesně, formálně definovaný syntaktický objekt, který v sobě zahrnuje snadno (mechanicky) ověřitelný ``důkaz'' (důvod), proč \( \psi \) platí v \(T\), a který můžeme hledat (pomocí počítače) čistě na základě struktury výroku \( \psi \) a axiomů teorie \(T\) (``syntaxe''), tj.\ aniž bychom se museli zabývat modely (``sémantikou'').
+    \textbf{Důkazový systém}
+    \begin{itemize}
+        \item \alert{důkaz} výroku~\( \psi \) z teorie \(T\) je formálně definovaný syntaktický objekt, snadno (mechanicky) ověřitelný
+        \item lze hledat algoritmicky čistě na základě struktury \( \psi \) a axiomů \(T\) (``\emph{syntaxe}''), nemusíme se zabývat modely (``\emph{sémantikou}'').
+    \end{itemize}        
+    Klíčové vlastnosti: 
+    \myblock{
+    \begin{itemize}
+        \item \alert{korektnost}: pokud existuje důkaz \( \psi \) z \(T\), potom \( \psi \) platí v \(T\)
+        \item \alert{úplnost}, pokud \( \psi \) platí v \(T\), potom existuje důkaz \( \psi \) z \(T\)
+    \end{itemize}
+    }
+    %Korektnost je nutná, ale efektivní důkazový systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
+    Ukážeme si \alert{metodu analytického tabla} a \alert{rezoluční metodu}. Obě dokazují \emph{sporem}: předpokládají platnost $T$ a \( \neg \psi \), hledají spor.
 
-Po důkazovém systému chceme dvě vlastnosti: 
+\end{frame}
+
+%\section{tablo metoda (neformálně)}
+
+\begin{frame}{Metoda analytického tabla}
+
 \begin{itemize}
-    \item \emph{korektnost}, tj.\ pokud máme důkaz \( \psi \) z \(T\), potom \( \psi \) platí v \(T\), a
-    \item \emph{úplnost}, tj.\ pokud \( \psi \) platí v \(T\), potom existuje důkaz \( \psi \) z \(T\),
+    \item důkaz je strom olabelovaný předpoklady o platnosti výroků
+    \item v kořeni: \alert{neplatí} dokazovaný výrok $\psi$ (důkaz sporem)
+    \item připojíme platnost axiomů z $T$
+    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících invariant:\smallskip
+    
+    \myalert{
+        Každý model teorie \(T\), ve kterém neplatí \(\psi\), se musí \emph{shodovat} s některou z větví tabla. 
+    }
+    \item například:
+    \myblock{
+    \alert{\small True $(\varphi_1 \limplies \varphi_2 )$} zredukujeme rozvětvením na \alert{\small False $\varphi_1$} a \alert{\small True $\varphi_2$},\\
+    \alert{\small False $(\varphi_1 \limplies \varphi_2 )$} zredukujeme připojením \alert{\small True $\varphi_1$} a \alert{\small False $\varphi_2$}.
+    }
+    \item \alert{sporná} větev = předpokládá True i False stejného výroku
+    \item \alert{důkaz} = všechny větve sporné (tj. nemůže existovat model $T$, ve kterém neplatí $\psi$)
 \end{itemize}
-přičemž korektnost je nutností (bez ní nemá smysl důkazy hledat), a úplnost je dobrá vlastnost, ale efektivní důkazový systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
 
-Zde stručně nastíníme dva důkazové systémy: \emph{metodu analytického tabla} a \emph{rezoluční metodu}. Později budou představeny formálně, a u obou si dokážeme i jejich korektnost a úplnost. Oba tyto důkazové systémy jsou založeny na \emph{důkazu sporem}, tj.\ předpokládají platnost axiomů z \(T\) a negace výroku \( \psi \), a snaží se dojít ke sporu.
+\end{frame}
 
-\subsection{Tablo metoda}
 
-V metodě analytického tabla je důkazem \emph{tablo}: strom jehož vrcholy jsou označkované předpoklady o platnosti výroků. Podívejme se na příklad tabla na obrázku~\ref{figure:tableaux-proof-example}. 
+\begin{frame}{Příklad tablo důkazu}
 
-\begin{figure}
-    \centering
-    \begin{forest}
-    [False \( p_2 \)
-        [True \( (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2)) \) 
-            [True \( \neg p_1 \land (p_1 \lor p_2) \)
-                [True \( \neg p_1 \)
-                    [True \( p_1 \lor p_2 \)
-                        [False \( p_1 \)
-                            [True \( p_1 \), tikz={\node[fit to=tree,label=below:\emph{fail}] {};}
-                            ]
-                            [True \( p_2 \), tikz={\node[fit to=tree,label=below:\emph{fail}] {};}
+    \vspace{-6pt}
+    \begin{figure}\scalebox{0.8}{\small
+        \centering
+        \begin{forest}
+        [False \( p_2 \)
+            [True \( (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2)) \) 
+                [True \( \neg p_1 \land (p_1 \lor p_2) \)
+                    [True \( \neg p_1 \)
+                        [True \( p_1 \lor p_2 \)
+                            [False \( p_1 \)
+                                [True \( p_1 \), tikz={\node[fit to=tree,label=below:\alert{fail}] {};}
+                                ]
+                                [True \( p_2 \), tikz={\node[fit to=tree,label=below:\alert{fail}] {};}
+                                ]
                             ]
                         ]
                     ]
                 ]
-            ]
-            [True \( \neg (\neg p_1) \land \neg (p_1 \lor p_2) \)
-                [True \( \neg (\neg p_1) \)
-                    [True \(\neg (p_1 \lor p_2) \)
-                        [False \( (\neg p_1) \)
-                            [True \( p_1 \)
-                                [False \(p_1 \lor p_2 \)
-                                    [False \(p_1\)
-                                        [False \(p_2\), tikz={\node[fit to=tree,label=below:\emph{fail}] {};}
+                [True \( \neg (\neg p_1) \land \neg (p_1 \lor p_2) \)
+                    [True \( \neg (\neg p_1) \)
+                        [True \(\neg (p_1 \lor p_2) \)
+                            [False \( (\neg p_1) \)
+                                [True \( p_1 \)
+                                    [False \(p_1 \lor p_2 \)
+                                        [False \(p_1\)
+                                            [False \(p_2\), tikz={\node[fit to=tree,label=below:\alert{fail}] {};}
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -223,166 +256,282 @@ V metodě analytického tabla je důkazem \emph{tablo}: strom jehož vrcholy jso
                 ]
             ]
         ]
-    ]
-    \end{forest}
+        \end{forest}
 
-\caption{Tablo důkaz výroku \( p_2 \) z teorie \(T\)}\label{figure:tableaux-proof-example}
-\end{figure}
+    }
+    \end{figure}    
 
-Začneme předpokladem, že neplatí výrok \(p_2\) (neboť dokazujeme sporem). Poté připojíme platnost všech axiomů teorie \(T\) (v našem případě je jen jeden: výrok \( \varphi \) sestrojený výše). Dále budujeme tablo tak, že zjednodušujeme výroky v předpokladech, a to podle jistých pravidel, která zaručují následující invariant: 
+\end{frame}
 
-\begin{tcolorbox}
-\emph{Každý model teorie \(T\), ve kterém neplatí \(p_2\), se musí \emph{shodovat} s některou z větví tabla (tj.\ splňovat všechny předpoklady na dané větvi).} 
-\end{tcolorbox}
 
-Výrok \( \varphi \) je disjunkcí dvou výroků, \( \varphi = \varphi_1 \lor \varphi_2 \). Pokud tedy platí v nějakém modelu, potom buď v tomto modelu platí \( \varphi_1 \), nebo v něm platí \( \varphi_2 \). Rozvětvíme strom podle těchto dvou možností. V dalším kroku máme předpoklad o pravdivosti výroku \( \neg p_1 \land (p_1 \lor p_2) \). V tom případě musí platit jak \( \neg p_1 \), tak \( p_1 \lor p_2 \), připojíme tedy na konec větve oba tyto předpoklady. Pravdivost \( \neg p_1 \) znamená lživost \( p_1 \), a tak dále.
+%\section{rezoluční metoda (neformálně)}
 
-Takto postupujeme, dokud je možné výroky v předpokladech zjednodušit, tj.\ dokud to nejsou jen výrokové proměnné. Pokud na jedné větvi najdeme dvojici opačných předpokladů o nějakém výroku \( \psi \), tj.\ že platí, a zároveň že neplatí, víme, že se s touto větví nemůže shodovat žádný model. Takové větvi říkáme \emph{sporná}.  Protože dokazujeme sporem, důkaz je takové tablo, ve kterém je každá větev sporná. Tím je zaručeno, že neexistuje model \(T\), ve kterém neplatí \(p_2\). Z toho plyne, že \(p_2\) platí v každém modelu \(T\), neboli je to důsledek \(T\), což jsme chtěli dokázat.
 
-Zatím se spokojíme s pochopením základní myšlenky této metody, detaily představíme v budoucí kapitole.
- 
-\subsection{Rezoluční metoda}
+\begin{frame}{Konjunktivní normální forma (CNF)}
 
-Není těžké naprogramovat systematické hledání tablo důkazu. V praxi se ale používá jiný důkazový systém, který má mnohem jednodušší a efektivnější implementaci: tzv.\ \emph{rezoluční metoda}. Tato metoda pochází z roku 1965, a je základem většiny \emph{systémů automatického dokazování}, \emph{SAT solverů}, nebo třeba interpreterů jazyka Prolog (o kterém si budeme povídat později).
+    \alert{literál} $p$, $\neg p$\hfill \alert{klauzule} disjunkce literálů\hfill \alert{CNF} konjunkce klauzulí
 
-Rezoluční metoda je založena na faktu, že každý výrok lze ekvivalentně vyjádřit ve speciálním tvaru, v tzv.\ \emph{konjunktivní normální formě (CNF)}. \emph{Literál} je výroková proměnná \(p\) nebo její negace \(\neg p\) (tj.\ literály jsou výroky, které jen určují hodnotu jedné výrokové proměnné). Disjunkci několika literálů, např. \( p \lor \neg q\lor \neg r\), říkáme \emph{klauzule}. A výrok je v CNF, pokud je konjunkcí klauzulí. Ke každému výroku \( \psi \) existuje \emph{ekvivalentní} výrok \( \psi' \) v {CNF}. Ekvivalentní znamená mající stejný význam (stejné modely), píšeme \( \psi \sim \psi' \). Později si ukážeme dvě metody převodu do CNF, nyní jen na našem příkladě: ve výroku
-\[
+    \myblock{
+        každý výrok má \alert{ekvivalentní} CNF (\alert{$\psi \sim \psi'$}, stejné modely)
+    }
+    \myexample{\vspace{-6pt}
+    $$
     (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
-\]
-nejprve nahradíme \( \neg (\neg p_1) \sim p_1 \) a \( \neg (p_1 \lor p_2) \sim (\neg p_1 \land \neg p_2) \):
-\[
+    $$
+    }\vspace{-6pt}
+    nahradíme \alert{$\neg (\neg p_1) \sim p_1$} a \alert{$\neg (p_1 \lor p_2) \sim (\neg p_1 \land \neg p_2)$} (\emph{De Morgan})
+    \myexample{\vspace{-6pt}
+    $$
     (\neg p_1 \land (p_1 \lor p_2)) \lor (p_1 \land \neg p_1 \land \neg p_2)
-\]
-a dále opakovaně použijeme \emph{distributivitu} \( \lorsymb \) vůči \( \landsymb \) (představte si, že \( \lorsymb \) je operace násobení a \( \landsymb \) je operace sčítání):
-\[
-    (\neg p_1 \lor p_1) \land (\neg p_1 \lor \neg p_1) \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2 \lor p_1) \land (p_1 \lor p_2 \lor \neg p_1) \land (p_1 \lor p_2 \lor \neg p_2)
-\]
-Tento výrok už je v CNF, ale dále ho zjednodušíme: vynecháme z klauzulí duplicitní literály, a uvědomíme si, že obsahuje-li klauzule dvojici opačných literálů \( p, \neg p \), je to \emph{tautologie} (platí v každém modelu) a proto ji můžeme odstranit. Dostáváme CNF výrok
-\[
+    $$
+    }\vspace{-6pt}
+    a dále opakovaně použijeme \alert{distributivitu} \( \lorsymb \) vůči \( \landsymb \):
+    \myexample{\vspace{-18pt}
+    \begin{gather*}
+    (\neg p_1 \lor p_1) \land (\neg p_1 \lor \neg p_1) \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2 \lor p_1) \land\\ (p_1 \lor p_2 \lor \neg p_1)\land (p_1 \lor p_2 \lor \neg p_2)    
+    \end{gather*}    
+    }\vspace{-6pt}
+    už je CNF, ještě zjednodušíme: odstraníme duplicitní literály, a klauzule obsahující $p_i$ a zároveň $\neg p_i$ (to jsou \alert{tautologie})
+    \myexample{\vspace{-6pt}
+    $$
     \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)
-\]
-který je ekvivalentní původnímu výroku \( \phi \)
-Protože chceme dokázat \(p_2\) sporem, přidáme ještě klauzuli \(\neg p_2\):
-\[
-    \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2) \land \neg p_2
-\]
-Výrok \(p_2\) platí v teorii \(T\), právě když je tento CNF výrok \emph{nesplnitelný} (nemá žádný model). Výroky v CNF budeme zapisovat také v \emph{množinové reprezentaci}\footnote{V praktické implementaci bychom mohli použít seznam klauzulí, kde každá klauzule je seznam (unikátních) literálů v nějakém zvoleném uspořádání. Představte si opět tisíce výrokových proměnných a klauzulí.}:
-\[
-    \left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
-\]
-\emph{Rezoluční pravidlo} říká, že pokud máme dvojici klauzulí, z nichž jedna obsahuje literál \(p\) a druhá opačný literál \(\neg p\), potom z nich logicky plyne také jejich\ \emph{rezolventa}: klauzule vzniklá odstraněním literálu \(p\) z první a \(\neg p\) z druhé klauzule a sjednocením zbylých literálů. Například, z \( p \lor \neg q\lor \neg r\) a \( \neg p \lor \neg q \lor s\) můžeme odvodit rezolventu \( \neg q \lor \neg r \lor s\). \emph{Rezoluční zamítnutí} formule v CNF je potom posloupnost klauzulí, která končí \emph{prázdnou klauzulí \( \square \)} (znamenající spor) a kde každá klauzule je buď z dané formule, nebo je rezolventou nějakých dvou předchozích klauzulí. V našem případě:
+    $$
+    }
+\end{frame}
+
+
+\begin{frame}{Rezoluční důkaz}
+
+Důkaz sporem: převedeme \alert{negaci} dokazovaného do CNF a přidáme
+
+\myblock{
+\alert{\(p_2\) platí v \(T\)}, právě když je následující CNF výrok \alert{nesplnitelný}:
+}
+\myexample{\vspace{-6pt}
+$$
+\neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)\land\alert{\neg p_2}
+$$
+}\vspace{-6pt}
+množinový zápis:
+\myexample{\vspace{-6pt}
+$$
+S=\left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
+$$
+}
+\myalert{\alert{rezoluční pravidlo}: je-li $p\in C_1$ a $\neg p\in C_2$, potom \emph{rezolventa} 
+$$
+C= (C_1\setminus \{p\})\cup(C_2\setminus \{\neg p\})
+$$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
+}\vspace{-6pt}
+\alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
+\myblock{protože $\square$ nemá žádný model, je i $S$ nesplnitelná}
+
+\end{frame}
+
+
+\begin{frame}{Příklad rezolučního důkazu}
+
+\alert{rezoluční zamítnutí} (třetí klauzule je rezolventou 1. a 2., pátá je rezolventou 3. a 4.)
+\myexample{\vspace{-6pt}
 \[
     \{\neg p_1\},\{p_1, p_2\},\{p_2\},\{\neg p_2\},\square
 \]
-Třetí klauzule je rezolventou první a druhé, pátá je rezolventou třetí a čtvrté. Rezoluci lze také přirozeně znázornit pomocí \emph{rezolučního stromu}, kde listy jsou klauzule z dané formule, a vnitřní vrcholy jsou rezolventy svých potomků:
+}
 
+
+\alert{rezoluční strom} (listy klauzule z $S$, vnitřní vrcholy rezolventy synů) 
+\myexample{
+    \begin{center}
+        \begin{forest}
+        for tree={grow=north}
+        [\( \square \)
+            [\( \{\neg p_2\} \)]
+            [\( \{p_2\} \)
+            [{\( \{p_1, p_2\} \)}]
+            [\( \{\neg p_1\} \)]
+            ]
+        ]
+        \end{forest}
+    \end{center}
+}
+\end{frame}
+
+
+%todo reorder
+
+\section{1.3 Další druhy logických systémů}
+
+
+\begin{frame}{Predikátové logiky vyšších řádů}
+
+    \begin{itemize}
+        \item Predikátová logika, kde proměnné reprezentují jednotlivé vrcholy, je logika \alert{prvního řádu} (\alert{first-order}, \alert{FO})
+        \item Logika \alert{druhého řádu} (\alert{second-order}, \alert{SO}): proměnné i pro množiny vrcholů a $n$-tic vrcholů (tj. relace, funkce)
+        \smallskip
+
+        \myexample{\it
+            ``Každá neprázdná zdola omezená podmnožina má infimum.''
+            {\small
+            \begin{align*}
+            &(\forall S)((\exists x)S(x) \land (\exists x)(\forall y)(S(y) \limplies x\leq y) \limplies  {}\\ 
+            &(\exists x)((\forall y)(S(y) \limplies x\leq y) \land (\forall z)((\forall y)(S(y) \limplies z\leq y)\limplies z\leq x)))
+            \end{align*}
+            }
+        }
+        \item A v logice \emph{třetího řádu} máme i množiny množin (např. v topologii).
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Logiky zobecňující pojem pravdy}
+    Kromě toho lze zobecnit pojem platnosti (pravdy):
+    
+    \begin{itemize}        
+        \item \alert{temporální logiky} (platnost `vždy', `někdy v budoucnosti', `dokud' apod.) -- např. v paralelním programování
+        \item \alert{modální logiky} (`je možné', `je nutné') -- v umělé inteligenci, uvažování autonomních agentů o svém okolí
+        \item \alert{fuzzy logiky} (`je 0.35 pravdivé') -- v automatických pračkách
+        \item \alert{intuicionistická logika} (povoluje jen konstruktivní důkazy, nemá \emph{zákon vyloučeného třetího})
+    \end{itemize}
+\end{frame}
+
+
+\section{1.4 O přednášce}
+
+
+\begin{frame}{Obsah předmětu}
+
+    \begin{enumerate}[I.]
+        \item Výroková logika (5 přednášek)
+        \begin{itemize}
+            \item Syntaxe a sémantika
+            \item Problém SAT
+            \item Tablo metoda
+            \item Rezoluční metoda
+        \end{itemize}
+        \item Predikátová logika (6 přednášek)
+        \begin{itemize}
+            \item Syntaxe a sémantika
+            \item Tablo metoda v predikátové logice
+            \item Rezoluční metoda v predikátové logice
+            \item Aplikace: databáze, Prolog, verifikace
+        \end{itemize}
+        \item Pokročilé partie (2 přednášky)
+        \begin{itemize}
+            \item Teorie modelů
+            \item Nerozhodnutelnost a neúplnost
+        \end{itemize}
+    \end{enumerate}    
+
+\end{frame}
+
+
+\section*{ČÁST I -- VÝROKOVÁ LOGIKA}
+
+
+\section{\sc Kapitola 2: Syntaxe a sémantika výrokové logiky}
+
+
+%\section{příklad: barvení grafů}
+
+
+\begin{frame}{Příklad: Barvení grafů}
+
+    \myexample{
+    Najděte vrcholové obarvení následujícího grafu třemi barvami.
+    \begin{center}
+    \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
+    \node (1) {$1$};
+    \node[right of=1] (2) {$2$};
+    \node[below of=2] (3) {$3$};
+    \node[left of=3] (4) {$4$};
+    \path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
+    \end{tikzpicture}
+    \end{center}
+    }
+
+    
+    graf: množina vrcholů a množina (libovolně) \alert{orientovaných} hran
+    \[
+    \mystructure G = \langle V; E \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle
+    \]
+    jak formalizovat? pro $v\in V$ a $c\in C=\{R,G,B\}$:
+    \myalert{\vspace{-6pt}
+    $$
+    p_v^c=\text{\it``vrchol \(v\) má barvu \(c\)''}
+    $$
+    }
+
+    \mbox{\small $\mathbb P=\{p_v^c\mid c\in C,v\in V\}=\{p_1^R,p_1^G,p_1^B,p_2^R,p_2^G,p_2^B,p_3^R,p_3^G,p_3^B,p_4^R,p_4^G,p_4^B\}$}
+
+máme celkem \( |\M_\mathbb P|=2^{12}=4096 \) \alert{modelů jazyka} (12-dim. vektorů)
+\end{frame}
+
+
+\begin{frame}{Formalizace hranového obarvení}
+\begin{itemize}
+    \item každý vrchol má nejvýše jednu barvu: $4^4=2^8=256$ modelů
+
+    \myexample{\vspace{-12pt}
+    $$
+    T_1 = \{ (\neg p_v^R \lor \neg p_v^G) \land (\neg p_v^R \lor \neg p_v^B) \land (\neg p_v^G \lor \neg p_v^B) \mid v \in V \}
+    $$
+    }
+    \item a každý vrchol má alespoň jednu barvu: $3^4=81$ modelů
+    
+    \myexample{\vspace{-12pt}
+    $$T_2 = T_1\cup \{ p_v^R \lor p_v^G \lor p_v^B \mid v \in V \}= T_1\cup \{\bigvee_{c\in C} p_v^c \mid v \in V \}
+    $$
+    }
+    $T_2$ je \alert{extenze} teorie $T_1$ neboť \alert{každý důsledek $T_1$ platí i v $T_2$}, zde dokonce $\M_\mathbb P(T_2)\subseteq\M_\mathbb P(T_1)$
+    %\footnote{Proč $\subseteq$? Čím více vlastností požadujeme, tím méně objektů je splňuje.}
+
+    \item nakonec přidáme \alert{hranovou podmínku}:
+     
+    \myexample{
+    $$
+    T_3 = T_2\cup \{ \bigwedge_{c\in C} 
+    (\neg p_u^c \lor \neg p_v^c) \mid (u,v) \in E \}
+    $$
+    }  
+    Výsledná teorie \( T_3 \) je \alert{splnitelná} (má model), právě když je graf \( \mystructure{G} \) 3-obarvitelný.   
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Co s ní?}
+
+\textbf{Všechna obarvení?} 
+
+$T_3$ má 6 modelů: \( v = (1,0,0,0,1,0,0,0,1,0,1,0) \) a další získané permutací barev \vspace{-12pt}
 \begin{center}
-\begin{forest}
-for tree={grow=north}
-[\( \square \)
-    [\( \{\neg p_2\} \)]
-    [\( \{p_2\} \)
-    [{\( \{p_1, p_2\} \)}]
-    [\( \{\neg p_1\} \)]
-    ]
-]
-\end{forest}
+    \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.3cm,node distance=1cm}]
+    \node[fill=red] (1) {$1$};
+    \node[fill=green,right of=1] (2) {$2$};
+    \node[fill=blue,below of=2] (3) {$3$};
+    \node[fill=green,left of=3] (4) {$4$};
+    \path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
+    \end{tikzpicture}
 \end{center}
 
-Pokud by formule měla model, musely by v něm platit její klauzule, tedy i postupně všechny rezolventy v posloupnosti, a nakonec prázdná klauzule. Ta ale neplatí v žádném modelu. Máme tedy důkaz sporem a víme, že ve druhé chodbě najdeme poklad.
+\textbf{Obarvení, ve kterých je vrchol 1 modrý a vrchol 2 zelený?} 
+
+Odpovídají modelům teorie \( T_3 \cup \{ p_1^B, p_2^G\} \)
+
+\textbf{Důkaz, že vrcholy 2 a 4 musí mít stejnou barvu?}
+
+\alert{Tablo} s kořenem $\text{False  }(p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B)$
+
+Nebo \alert{rezolucí}: přidáme \alert{negaci} \( (p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B) \), vše převedeme do CNF a zamítneme
+
+\end{frame}
 
 
-\subsection{Příklad: Barvení grafů}\label{subsection:example-graph-coloring}
-
-Ve druhém příkladu se trochu přiblížíme aplikacím. Na rozdíl od logických hádanek ve formě slovních úloh, různé varianty problému barvení grafů se objevují v rozmanitých úlohách z praxe, od rozvrhovacích problémů přes návrh fyzických a síťových systémů po zpracování obrazu.
-
-\begin{tcolorbox}
-\begin{example}\label{example:graph-coloring-intro}
-Najděte vrcholové obarvení následujícího grafu třemi barvami, tj.\ přiřaďte vrcholům barvy R, G, B tak, aby žádná hrana nebyla monochromatická.
-\begin{center}
-\begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
-\node (1) {$1$};
-\node[right of=1] (2) {$2$};
-\node[below of=2] (3) {$3$};
-\node[left of=3] (4) {$4$};
-\path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
-\end{tikzpicture}
-\end{center}
-\end{example}
-\end{tcolorbox}
-
-Graf si reprezentujeme jako množinu vrcholů a množinu hran, kde každá hrana je dvojice vrcholů. Lépe se nám bude pracovat s uspořádanými dvojicemi, zvolíme tedy (libovolnou) orientaci hran.
-\[
-\structure G = \langle V; E \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle
-\]
+\section{1.2 Predikátová logika}
 
 
-
-Začneme opět formalizací ve výrokové logice. Označme si množinu barev jako \( C=\{R,G,B\} \).  Přirozená volba výrokových proměnných je ``vrchol \(v\) má barvu \(c\)'', označme \(p_v^c\), pro každý vrchol \(v \in V\) a každou barvu \(c\in C\). Naše (uspořádaná) množina výrokových proměnných má 12 prvků:
-\[
-\mathbb P=\{p_v^c\mid c\in C,v\in V\}=\{p_1^R,p_1^G,p_1^B,p_2^R,p_2^G,p_2^B,p_3^R,p_3^G,p_3^B,p_4^R,p_4^G,p_4^B\}
-\]
-Máme celkem \( |\M_\mathbb P|=2^{12}=4096 \) modelů jazyka (reprezentovaných 12-dimenzionálními 0--1 vektory). Většinu z nich nelze interpretovat jako obarvení grafu. Například \( v=(1,1,0,0,\dots,0) \) říká, že vrchol 1 je obarvený červeně, a také zeleně. Začneme tedy teorií vyjadřující, že každý vrchol má nejvýše jednu barvu. Existuje více způsobů, jak to můžeme vyjádřit. My řekneme pro každý vrchol, že nesmí mít (alespoň) jednu z každé dvojice barev. Tím dostaneme teorii v {CNF}:
-
-\begin{align*}
-T_1 = \{ 
-&(\neg p_1^R \lor \neg p_1^G) \land (\neg p_1^R \lor \neg p_1^B) \land (\neg p_1^G \lor \neg p_1^B),\\
-&(\neg p_2^R \lor \neg p_2^G) \land (\neg p_2^R \lor \neg p_2^B) \land (\neg p_2^G \lor \neg p_2^B),\\
-&(\neg p_3^R \lor \neg p_3^G) \land (\neg p_3^R \lor \neg p_3^B) \land (\neg p_3^G \lor \neg p_3^B),\\
-&(\neg p_4^R \lor \neg p_4^G) \land (\neg p_4^R \lor \neg p_4^B) \land (\neg p_4^G \lor \neg p_4^B)\} \\
-    = \{ &(\neg p_v^R \lor \neg p_v^G) \land (\neg p_v^R \lor \neg p_v^B) \land (\neg p_v^G \lor \neg p_v^B) \mid v \in V \} 
-\end{align*}
-Teorii \(T_1\) bychom mohli říkat teorie částečných vrcholových obarvení grafu \(\structure G\). Teorie \(T_1\) má \(|\M_\mathbb P(T_1)|= 4^4=2^8=256\) modelů. (Proč?) Pokud chceme úplná obarvení, přidáme podmínku, že každý vrchol má alespoň jednu barvu.\footnote{Symbol \(\bigvee \) používáme podobně jako symboly \(\sum \) pro součet a \(\prod \) pro součin: ke zjednodušení zápisu výroku, který je ve formě disjunkce. Např.\ pokud \(v=1\), potom \( \bigvee_{c\in C} p_v^c \) reprezentuje výrok \( p_1^R \lor p_1^G \lor p_1^B \). Analogicky \(\bigwedge \) pro konjunkci.}
-
-\begin{align*}
-T_2 &= T_1\cup \{p_1^R \lor p_1^G \lor p_1^B, p_2^R \lor p_2^G \lor p_2^B, p_3^R \lor p_3^G \lor p_3^B, p_4^R \lor p_4^G \lor p_4^B\} \\
-    &= T_1\cup \{ p_v^R \lor p_v^G \lor p_v^B \mid v \in V \} \\
-    &= T_1\cup \{\bigvee_{c\in C} p_v^c \mid v \in V \}  
-\end{align*}
-
-Teorie \( T_2 \) má \(3^4=81\) modelů. Jde o \emph{extenzi} teorie \( T_1 \), neboť každý důsledek teorie \( T_1 \) platí i v teorii \( T_2 \). Platí dokonce, že \( \M_\mathbb P(T_2)\subseteq\M_\mathbb P(T_1) \).\footnote{Zde vidíme typickou ukázku antimonotónního vztahu tzv.\ Galoisovy korespondence: čím více vlastností (výroků) požadujeme, tím méně objektů (modelů) splňuje tyto vlastnosti.} Zbývá přidat podmínku zakazující monochromatické hrany. Pro každou hranu a každou barvu specifikujeme, že alespoň jeden z vrcholů hrany nesmí mít danou barvu. Zde pro názornost naposledy napíšeme úplný seznam výroků, nadále budeme využívat zkráceného zápisu.
-\begin{align*}
-    T_3 = T_2\cup \{ & (\neg p_1^R \lor \neg p_2^R) \land (\neg p_1^G \lor \neg p_2^G) \land (\neg p_1^B \lor \neg p_2^B),\\
-    & (\neg p_1^R \lor \neg p_3^R) \land (\neg p_1^G \lor \neg p_3^G) \land (\neg p_1^B \lor \neg p_3^B),\\
-    & (\neg p_1^R \lor \neg p_4^R) \land (\neg p_1^G \lor \neg p_4^G) \land (\neg p_1^B \lor \neg p_4^B),\\
-    & (\neg p_2^R \lor \neg p_3^R) \land (\neg p_2^G \lor \neg p_3^G) \land (\neg p_2^B \lor \neg p_3^B),\\
-    & (\neg p_3^R \lor \neg p_4^R) \land (\neg p_3^G \lor \neg p_4^G) \land (\neg p_3^B \lor \neg p_4^B)\} \\  
-= T_2\cup \{ &\bigwedge_{c\in C} 
-(\neg p_u^c \lor \neg p_v^c) \mid (u,v) \in E \}
-\end{align*}
-Výsledná teorie \( T_3 \) je \emph{splnitelná} (má model), právě když graf \( \structure{G} \) je 3-obarvitelný. Má 6 modelů jednoznačně odpovídajících 3-obarvení grafu \( \structure G \). Model \( v = (1,0,0,0,1,0,0,0,1,0,1,0) \) odpovídá následujícímu obarvení, ostatní obarvení získáme permutací barev.
-\begin{center}
-\begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
-\node[fill=red] (1) {$1$};
-\node[fill=green,right of=1] (2) {$2$};
-\node[fill=blue,below of=2] (3) {$3$};
-\node[fill=green,left of=3] (4) {$4$};
-\path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
-\end{tikzpicture}
-\end{center}
-
-Jakmile máme teorii \(T_3\) formalizující 3-obarvení grafu \( \structure{G} \), můžeme snadno řešit související otázky, například najít všechna obarvení, ve kterých vrchol 1 je modrý a vrchol 2 zelený: odpovídají modelům teorie \( T_3 \cup \{ p_1^B, p_2^G\} \). Nebo můžeme dokázat, že vrcholy 2 a 4 musejí být obarveny stejnou barvou. Můžeme použít tablo metodu: v kořeni tabla bude předpoklad
-\[
-\text{False  }(p_2^R \land p_2^R)\lor(p_2^G \land p_2^G)\lor(p_2^B \land p_2^B)
-\]
-Nebo můžeme najít rezoluční zamítnutí teorie vzniklé převedením axiomů teorie \( T_3 \) do CNF, a přidáním CNF ekvivalentu \emph{negace} výroku \( (p_2^R \land p_2^R)\lor(p_2^G \land p_2^G)\lor(p_2^B \land p_2^B) \)	(neboť jde o důkaz sporem, tedy pro spor předpokládáme, že \emph{nemají} stejnou barvu).
-
-
-
-\section{Predikátová logika}
-
-Nyní si velmi stručně a neformálně představíme \emph{predikátovou logiku}. Predikátová logika se zabývá vlastnostmi objektů a vztahy mezi objekty. Například:
-\begin{quote}\it
-    Všichni lidé jsou smrtelní.\\
-    Sókratés je člověk.\\
-    Sókratés je smrtelný.
-\end{quote}
-Ve skutečnosti výroková logika vznikla později (asi o století) než Aristotelova predikátová logika, a byla poté na dlouho převážně zapomenuta.
-
-
-\subsection{Nevýhody formalizace ve výrokové logice}\label{subsection:disadvantages-of-propositional-logic}
-
-Nevýhodou formalizace našeho problému ve výrokové logice je fakt, že výsledná teorie \( T_3 \) je poměrně velká, a navíc byla vytvořena ad hoc pro graf  \( \structure{G} \). Představme si, že potřebujeme graf \( \structure{G} \) změnit, například přidáním vrcholu 5 spojeného hranami s vrcholy 2 a 3:
+\begin{frame}{Nevýhody formalizace ve výrokové logice}
+Teorie $T_3$ je poměrně velká, a `natvrdo' kóduje graf $\mystructure G$.  
 
 \begin{center}
     \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
@@ -395,73 +544,101 @@ Nevýhodou formalizace našeho problému ve výrokové logice je fakt, že výsl
     \path[draw] (2) -- (5) -- (3);
     \end{tikzpicture}
 \end{center}
+Obohatit jazyk $\mathbb P'=\mathbb P \cup \{ p_5^R,p_5^G,p_5^B\}
+$ a vytvořit ještě větší teorii~$T'_3$ přidáním axiomů o vrcholu 5 a hranách $(2, 5), (3,5)$?
 
-Abychom byli schopni formalizovat nový problém, musíme přidat do našeho jazyka tři nové výrokové proměnné: \(\mathbb P'=\mathbb P \cup \{ p_5^R,p_5^G,p_5^B\} \), a vytvořit nové teorie \( T'_1, T'_2, T'_3 \) přidáním axiomů týkajících se vrcholu 5 a hran \( (2, 5), (3,5) \). Problémem je, že strukturu grafu \( \structure{G} \) a přirozené vlastnosti jako ``z vrcholu \(u\) vede hrana do vrcholu \(v\)'', nebo ``vrchol \(u\) je zelený'' jsme (`natvrdo', `nepřirozeně') zakódovali do 0--1 proměnných. Tento nedostatek odstraňuje \emph{predikátová logika}.
+A co vlastnosti obecně platné o všech nebo mnoha grafech?
 
-\subsection{Stručné představení predikátové logiky}
-
-\emph{Modelem} v predikátové logice není 0--1 vektor, ale \emph{struktura}. Příkladem struktur jsou naše (orientované) grafy:
-\begin{align*}
-    &\structure G = \langle V^\structure G; E^\structure G \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle \\ 
-    &\structure{G}' = \langle V^{\structure{G}'}; E^{\structure{G}'} \rangle = \langle \{1,2,3,4,5\}; \{(1,2),(1,3),(1,4),(2,3),(3,4),(2,5),(3,5)\} \rangle
-\end{align*}
-Oba grafy sestávají z množiny vrcholů, a z binární relace na této množině. Jde o struktury v \emph{jazyce teorie grafů} \( \mathcal L=\langle E \rangle \), kde \(E\) je binární \emph{relační symbol}. \emph{Jazyk} predikátové logiky specifikuje jaké relace (kolik a jakých arit --- unární, binární, ternární, atd.) mají struktury mít, a jaké symboly pro ně budeme používat. Kromě toho používáme symbol rovnosti \(=\) a struktury mohou obsahovat také funkce a konstanty (jako například funkce \( +,-,\cdot \) a konstanty $0,1$ v \emph{tělese} reálných čísel), ty si ale necháme na později.
-
-Predikátová logika používá tytéž logické spojky jako výroková logika, ale základním stavebním kamenem \emph{predikátových formulí} nejsou výrokové proměnné, nýbrž tzv.\ \emph{atomické formule}, například: \( E(x,y) \) představuje tvrzení, že v grafu vede hrana z vrcholu \(x\) do vrcholu \(y\). Zde \(x,y\) jsou \emph{proměnné} reprezentující vrcholy daného grafu. Kromě toho ve formulích můžeme používat \emph{kvantifikátory}: \( (\forall x) \) ``pro všechny vrcholy \(x\)'' a \( (\exists y) \) ``existuje vrchol \(y\)''.\footnote{Kvantifikátory si můžeme představit jako ``konjunkci'' resp.\ ``disjunkci'' přes všechny vrcholy grafu.} 
-
-Nyní můžeme formalizovat tvrzení, která dávají smysl pro libovolný graf. Například: 
+\myblock{
+V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \alert{proměnných} a přirozeně vyjádřit vlastnosti jako:
 \begin{itemize}
-    \item ``V grafu nejsou smyčky'': \[ (\forall x)(\neg E(x,x)) \] 
-    \item ``Existuje vrchol výstupního stupně 1'': \[ (\exists x)(\exists y)(E(x,y) \land (\forall z)(E(x,z) \limplies y=z)) \] 
+    \item \emph{``z vrcholu \(u\) vede hrana do vrcholu \(v\)''}
+    \item \emph{``vrchol \(u\) je zelený''}
 \end{itemize}
-V daném grafu \(\structure{G}\) a při dosazení vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) vyhodnotíme \( E(x,y) \) jako True, právě když \( (u,v)\in E^{\structure{G}} \).
+}
+\end{frame}
 
 
-\subsection{Formalizace barvení grafů v predikátové logice}
+\begin{frame}{Predikátová logika: struktury a jazyk}
+
+    \textbf{Modely} už nejsou 0--1 vektory, ale \alert{struktury}, např. naše (orientované) grafy: 
+    \myexample{\vspace{-12pt}\scriptsize
+    \begin{align*}
+        &\mystructure G = \langle V^\mystructure G; E^\mystructure G \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle \\ 
+        &\mystructure{G}' = \langle V^{\mystructure{G}'}; E^{\mystructure{G}'} \rangle = \langle \{1,2,3,4,5\}; \{(1,2),(1,3),(1,4),(2,3),(3,4),(2,5),(3,5)\} \rangle
+    \end{align*}
+    }\vspace{-6pt}
+    \begin{itemize}
+        \item množina vrcholů, a binární relace na této množině
+        \item \alert{jazyk} specifikuje kolik \alert{relací} jakých arit má struktura mít, a symboly pro ně
+        \item např. \alert{jazyk grafů} \( \mathcal L=\langle E \rangle \) (kde \(E\) je binární relační symbol)
+        \item $\mystructure G$ a $\mystructure G'$ jsou \alert{struktury v jazyce} $\mathcal L$ (\alert{$\mathcal L$-struktury})   
+        \item můžeme mít také \alert{funkce} a \alert{konstanty}, a symbol \alert{$=$} pro \alert{rovnost} 
+    \end{itemize}
+
+\end{frame}
 
 
-Vraťme se zpět k barvení grafů. Přirozený způsob jak formalizovat náš problém 3-obarvitelnosti je v jazyce \( \mathcal L' =\langle E, R, G, B \rangle \), kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly, tedy \(R(x)\) znamená ``vrchol \(x\) je červený''. Strukturou pro tento jazyk je (orientovaný) graf spolu s trojicí množin vrcholů, např.
+\begin{frame}{Predikátová logika: syntaxe a sémantika}
+
+    \textbf{Syntaxe}: místo prvovýroků \alert{atomické formule}, např. $E(x,y)$, kde $x,y$ jsou \alert{proměnné} reprezentující vrcholy; stejné logické spojky, ale navíc \alert{kvantifikátory}:
+  
+    \begin{description}
+        \item[\alert{\( (\forall x) \)}] {\it``pro všechny vrcholy \(x\)''}
+        \item[\alert{\( (\exists y) \)}] {\it``existuje vrchol \(y\)''}
+    \end{description}
+    (hrají roli ``konjunkce'' a ``disjunkce'' přes všechny prvky)
+    
+    \myexample{
+    \begin{itemize}
+        \item ``V grafu nejsou smyčky'': \alert{$(\forall x)(\neg E(x,x))$}
+        \item ``Existuje vrchol výstupního stupně 1'': 
+        \alert{$(\exists x)(\exists y)(E(x,y) \land (\forall z)(E(x,z) \limplies y=z))$}
+    \end{itemize}
+
+    
+    }
+    \textbf{Sémantika}: V daném grafu \(\mystructure{G}\) a při \alert{dosazení} vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) \alert{vyhodnotíme} \( E(x,y) \) jako \alert{True}, právě když \alert{\( (u,v)\in E^{\mystructure{G}} \)}.
+        
+\end{frame}
+
+
+\begin{frame}{Barvení grafů v predikátové logice}
+      
+Jazyk \alert{\( \mathcal L' =\langle E, R, G, B \rangle \)}, kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly (\(R(x)\) znamená {\it``vrchol \(x\) je červený''}) 
+
+$\mathcal L'$-struktura: graf s trojicí množin vrcholů
+\myexample{\vspace{-15pt}\small
 \begin{align*}
-\structure G_C &= \langle V^{\structure G_C}; E^{\structure G_C}, R^{\structure G_C}, G^{\structure G_C}, B^{\structure G_C} \rangle \\
+\mystructure G_C &= \langle V^{\mystructure G_C}; E^{\mystructure G_C}, R^{\mystructure G_C}, G^{\mystructure G_C}, B^{\mystructure G_C} \rangle \\
 &= \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\}, \{1\}, \{2,4\}, \{3\} \rangle    
 \end{align*}
-reprezentuje graf \( \structure{G} \) s validním obarvením z obrázku výše. Budeme říkat, že \( \structure{G}_C \) je \emph{expanze} \(\mathcal L\)-struktury \( \structure{G} \) do jazyka \( \mathcal L' \).
+}
+\scalebox{0.5}{
+\begin{center}
+    \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.3cm,node distance=1cm}]
+    \node[fill=red] (1) {$1$};
+    \node[fill=green,right of=1] (2) {$2$};
+    \node[fill=blue,below of=2] (3) {$3$};
+    \node[fill=green,left of=3] (4) {$4$};
+    \path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
+    \end{tikzpicture}
+\end{center}
+}
 
-Podobně jako ve výrokové logice musíme nejprve zajistit, aby naše modely reprezentovaly obarvené grafy. Začneme požadavkem, aby každý vrchol byl obarven nejvýše jednou barvou:
-\[
-(\forall x)((\neg R(x) \lor \neg G(x)) \land (\neg R(x) \lor \neg B(x)) \land (\neg G(x) \lor \neg B(x)))
-\]
-Obarvení alespoň jednou barvou vyjádříme takto:
-\[
-(\forall x)(R(x) \lor G(x) \lor B(x))
-\]
-A hranovou podmínku formalizujeme pomocí predikátu \( E(x,y) \) například takto:
-\[	
-(\forall x)(\forall y)(E(x,y) \limplies ((\neg R(x) \lor \neg R(y)) \land (\neg G(x) \lor \neg G(y)) \land (\neg B(x) \lor \neg B(y))))
-\]
-Modely takto vzniklé teorie reprezentují orientované grafy s vrcholovým 3-obarvením. 
+\( \mystructure{G}_C \) je \alert{expanze} \(\mathcal L\)-struktury \( \mystructure{G} \) \alert{do jazyka} \( \mathcal L' \).
 
+\myexample{Nejvýše jedna barva, alespoň jedna barva, hranová podmínka:
 
-\section{Další druhy logických systémů}
+\small
+\begin{itemize}
+    \item $(\forall x)((\neg R(x) \lor \neg G(x)) \land (\neg R(x) \lor \neg B(x)) \land (\neg G(x) \lor \neg B(x)))$
+    \item $(\forall x)(R(x) \lor G(x) \lor B(x))$
+    \item $(\forall x)(\forall y)(E(x,y) \limplies ((\neg R(x) \lor \neg R(y)) \land (\neg G(x) \lor \neg G(y)) \land (\neg B(x) \lor \neg B(y))))$
+\end{itemize}
+}
 
-Predikátové logice, kde proměnné reprezentují jednotlivé vrcholy, říkáme logika \emph{prvního řádu} (anglicky  \emph{first-order (FO) logic}). V logice \emph{druhého řádu} (anglicky \emph{second-order (SO) logic}) máme také proměnné reprezentující množiny vrcholů nebo i množiny \(n\)-tic vrcholů (tj.\ relace, funkce). Například tvrzení, že každá neprázdná zdola omezená podmnožina má infimum\footnote{Což platí v uspořádané množině reálných čísel, ale neplatí v racionálních číslech, např.\ \( \{x \mid x^2 > 2, x > 0\} \).}, můžeme formalizovat v logice druhého řádu takto:\footnote{I když je tato formule velmi složitá, pokuste se porozumět jednotlivým částem.}
-\begin{align*}
-&(\forall S)((\exists x)S(x) \land (\exists x)(\forall y)(S(y) \limplies x\leq y) \limplies  {}\\ 
-&(\exists x)((\forall y)(S(y) \limplies x\leq y) \land (\forall z)((\forall y)(S(y) \limplies z\leq y)\limplies z\leq x)))
-\end{align*}
-V logice třetího řádu máme i proměnné reprezentující množiny množin (což je užitečné např.\ v topologii), atd.
-
-Kromě výrokové a predikátové logiky existují i další typy logických systémů, například intuicionistická logika (která povoluje jen konstruktivní důkazy), temporální logiky (kde mluvíme o platnosti `vždy', `někdy v budoucnosti', `dokud' apod.), modální logiky (`je možné', `je nutné'), nebo fuzzy logiky (kde máme výroky `0.35 pravdivé'). Tyto logiky mají důležité aplikace v informatice, např.\ v umělé inteligenci (modální logiky pro uvažování autonomních agentů o svém okolí), v paralelním programování (temporální logiky), nebo v automatických pračkách (fuzzy logiky). Více viz Příloha~\ref{appendix:other-logics}. V tomto kurzu se omezíme na výrokovou logiku a predikátovou logiku prvního řádu.
-
-
-\section{O přednášce}
-
-Přednášku lze rozdělit do třech částí. 
-
-První část se zabývá výrokovou logikou. Nejprve představíme syntaxi a sémantiku, dále problém splnitelnosti CNF formulí (známý NP-úplný problém SAT) a jeho polynomiálně řešitelné fragmenty (2-SAT, Horn-SAT). Budeme pokračovat tablo metodu, u níž si dokážeme korektnost a úplnost, a také několik aplikací, například Větu u kompaktnosti. A na závěr představíme rezoluční metodu ve výrokové logice a její aplikaci v programovacím jazyce Prolog. 
-
-Ve druhé části představíme predikátovou logiku. Začneme opět syntaxí a sémantiku,ukážeme si jak lze adaptovat tablo metodu pro predikátovou logiku, opět včetně několika aplikací, a skončíme znovu rezoluční metodou. 
-
-Třetí část je úvodem do teorie modelů, definovatelnosti, axiomatizovatelnosti, a algoritmické rozhodnutelnosti. Na závěr si představíme slavné Gödelovy věty o neúplnosti, které ukazují meze formální metody (formální dokazatelnosti v axiomatickém systému).
+\end{frame}
 
 
+\end{document}

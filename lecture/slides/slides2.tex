@@ -133,22 +133,16 @@
 
 \myblock{
     \alert{Pravdivostní funkce} výroku $\varphi$ v \emph{konečném} jazyce $\mathbb P$ je funkce  \alert{$f_{\varphi,\mathbb P}\colon\{0,1\}^{|\mathbb P|}\to\{0,1\}$} definovaná induktivně:
-
+\begin{itemize}\setlength{\leftmargini}{-0.5cm}
+    \item je-li $\varphi$ $i$-tý prvovýrok z $\mathbb P$: \alert{$f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=x_i$}
+    \item je-li $\varphi=(\neg\varphi')$: \alert{ 
+    $f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\neg(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}))$}
+    \item je-li $(\varphi'\lbin\varphi'')$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$:\alert{
+    $f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\lbinsymb(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}), f_{\varphi'',\mathbb P}(x_0,\dots,x_{n-1}))$
+    }
+\end{itemize}
 }
 
-% \begin{definition}[Pravdivostní funkce]\label{definition:truth-function}
-% 
-% \begin{itemize}
-%     \item je-li $\varphi$ $i$-tý prvovýrok z $\mathbb P$, potom $f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=x_i$,
-%     \item je-li $\varphi=(\neg\varphi')$, potom 
-%     $$
-%     f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\neg(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1})),$$
-%     \item je-li $(\varphi'\lbin\varphi'')$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, potom 
-%     $$
-%     f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\lbinsymb(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}), f_{\varphi'',\mathbb P}(x_0,\dots,x_{n-1})).
-%     $$
-% \end{itemize}
-% \end{definition}
 
 % \begin{example}
 %     Spočtěme pravdivostní funkci výroku $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ v jazyce~$\mathbb P'=\{p,q,r,s\}$:

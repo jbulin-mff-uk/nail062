@@ -16,11 +16,11 @@
 \frame{\titlepage}
 
 
-\begin{frame}{Cesta k jistému úspěchu u zkoušky\footnote{Podrobnosti o zkoušce včas upřesníme. Základní formát i většina otázek ale pravděpodobně zůstanou stejné, viz \href{https://jbulin.github.io/teaching/fall/nail062/files/info-o-zkouskach.pdf}{\alert{\textbf{loňské informace o zkouškách}}}.}}
+\begin{frame}{Cesta k jistému úspěchu u zkoušky\footnote{Podrobnosti o zkoušce včas upřesníme. Základní formát i většina otázek ale pravděpodobně zůstanou stejné, viz loňské \href{https://jbulin.github.io/teaching/fall/nail062/files/info-o-zkouskach.pdf}{\alert{\textbf{informace o zkouškách}}}.}}
 
 \begin{itemize}    
     \item Studujte \alert{průběžně (každý týden)}, a průběžně také \alert{testujte své znalosti}: umíte sami \alert{napsat}(!) definici, větu, důkaz?
-    \item Před každou přednáškou alespoň zběžně projděte příslušné sekce v \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápiscích z přednášky}}}. Ty obsahují vše, co po vás bude vyžadováno. Snažte se pochopit smysl definic a tvrzení.
+    \item Před každou přednáškou alespoň zběžně projděte příslušné sekce v \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápiscích z přednášky}}}. Ty obsahují vše, co po vás bude vyžadováno.\footnote{Nedoporučujeme učit se primárně podle slidů! Mnoho detailů v nich chybí.} Snažte se pochopit smysl definic a tvrzení.
     \item Po každé přednášce si skripta \alert{podrobně přečtěte}. Pokud něčemu nebudete rozumět, využijte konzultačních hodin.
     \item Snažte se zúčastnit všech přednášek, pokud nemůžete, včas se materiál doučte, případně využijte konzultačních hodin.
     \item Ujistěte se, že rozumíte nejen myšlenkám, ale umíte pracovat i s \alert{formalizmem}: ten je neoddělitelnou součástí logiky.
@@ -649,9 +649,9 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
     
     \alert{sémantika} popisuje význam syntaktických objektů ``v reálném světě'' (\emph{model}, \dots)
         
-    Klíčem k logice je vztah mezi syntaxí a sémantikou:
+    Klíčem k logice je \alert{vztah mezi syntaxí a sémantikou}:
     \begin{itemize}
-        \item sémantické objekty studujeme pomocí syntaxe (`jaké výroky  platí v modelu?')
+        \item sémantické objekty studujeme pomocí syntaxe (`jaké výroky platí v modelu?')
         \item syntaktické pomocí sémantiky, např. ekvivalence výroků: $\psi \sim \psi'$ právě když $\M_\mathbb P(\psi)=\M_\mathbb P(\psi')$
     \end{itemize}
 \end{frame}
@@ -679,112 +679,102 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
 
 
 \begin{frame}{Výrok}
-\begin{definition}[Výrok]\label{definition:proposition}
-    \emph{Výrok} (\emph{výroková formule}) v jazyce $\mathbb P$ je prvek množiny $\VF_\mathbb P$ definované následovně: $\VF_\mathbb P$ je nejmenší množina splňující\footnote{Takovému druhu definice říkáme \emph{induktivní}. Lze také přirozeně vyjádřit pomocí \emph{formální gramatiky}, viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN071}{NTIN071 Automaty a gramatiky}.}
+
+    \myblock{    
+    \alert{Výrok} (\alert{výroková formule}) v jazyce $\mathbb P$ je prvek množiny $\VF_\mathbb P$ definované \emph{induktivně}: $\VF_\mathbb P$ je nejmenší množina splňující
     \begin{itemize}
         \item pro každý prvovýrok $p\in\mathbb P$ platí $p\in\VF_\mathbb P$,
         \item pro každý výrok $\varphi\in\VF_\mathbb P$ je $(\neg\varphi)$ také prvek $\VF_\mathbb P$
         \item pro každé $\varphi,\psi\in\VF_\mathbb P$ jsou $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, a $(\varphi\liff\psi)$ také prvky $\VF_\mathbb P$.
-    \end{itemize}        
-\end{definition}    
+    \end{itemize}
+    }
+    \myalert{Výroky jsou nutně \emph{konečné} řetězce!}\vspace{-6pt}
+    \alert{$\Var(\varphi)$}: množina všech prvovýroků ve $\varphi$ (vždy konečná)\\
+    \alert{podvýrok}: podřetězec, který je sám výrok
+    
+
+    \myexample{
+        $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$, $\Var(\varphi)=\{p,q\}$\\
+        podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$
+    }\vspace{-6pt}
+    \alert{pravda}: $\top=(p\lor(\neg p))$ , \alert{spor}: $\bot=(p\land(\neg p))$ \\
+    (kde $p\in\mathbb P$ je pevně daný)
+
 \end{frame}
 
 
-\begin{frame}{Strom výroku}
-    
+\begin{frame}{Konvence zápisu}
+    při \emph{zápisu} výroků můžeme vynechat některé závorky:
+    \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}
+    \begin{itemize}
+        \item priorita operátorů: $\neg$ nejvyšší, dále $\landsymb$ a $\lorsymb$, nakonec $\limpliessymb$ a $\liffsymb$
+        \item asociativita $\landsymb$ a $\lorsymb$: nápis $p\land q\land r$ znamená výrok $(p\land (q\land r))$
+        \item vnější závorky nemusíme psát
+    \end{itemize}
+
+    \textbf{Poznámka:} v definici jsme mohli místo \emph{infixového} zápisu zvolit \emph{prefixový} (``polskou notaci''):
+    {\it ``každý prvovýrok je výrok, jsou-li $\varphi,\psi$ výroky, jsou výroky také $\neg \varphi$, $\landsymb \varphi \psi$, $\lorsymb \varphi \psi$, $\limpliessymb \varphi \psi$, a $\liffsymb \varphi \psi$''} nebo i \emph{postfixový}
+    \myexample{
+        $\varphi=\liffsymb \lorsymb p \neg q \limpliessymb r \landsymb p q$\\
+        $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$
+    }
+    Důležitá je jen \alert{stromová struktura} výroků!
+
+\end{frame}
+
+
+\begin{frame}{Strom výroku}   
+
+    \myblock{
+    \alert{$\Tree(\varphi)$} je zakořeněný uspořádaný strom, definovaný induktivně: 
+        \begin{itemize}
+            \item $\varphi=p\in\mathbb P$: jediný vrchol, s labelem $p$
+            \item $\varphi=(\neg \varphi')$: kořen s labelem $\neg$, jediný syn je kořen $\Tree(\varphi')$.
+            \item $\varphi=(\varphi' \lbin \varphi'')$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$: kořen s labelem $\lbinsymb$ a dvěma syny: levý syn je kořen $\Tree(\varphi')$, pravý $\Tree(\varphi'')$.
+        \end{itemize}
+    }
+
+    \bigskip
+
+    \begin{columns}
+        \column{0.55\textwidth}
+        
+        \myexample{$\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$} 
+            
+        rekonstrukce $\varphi$ průchodem stromu, 
+        podvýroky odpovídají podstromům
+
+        \bigskip
+        \myalert{$\Tree(\varphi)$ je jednoznačně určený!}
+
+        \column{0.45\textwidth}
+        \scalebox{0.9}{    
+            \begin{forest}
+                for tree={circle,draw=blue!20,fill=blue!10,minimum size=24pt}
+                [$\liffsymb$ [$\lorsymb$ [$p$] [$\neg$ [$q$]]] [$\limpliessymb$ [$r$] [$\landsymb$ [$p$] [$q$]]]]
+            \end{forest}
+        } 
+    \end{columns}
+
 \end{frame}
 
 
 \begin{frame}{Teorie}
+    \myblock{
+        \alert{Teorie} v jazyce $\mathbb P$ je libovolná množina výroků $T\subseteq\VF_\mathbb P$. Výrokům $\varphi\in T$ říkáme také \alert{axiomy}.
+    }
+
+    \myexample{
+        $T=\emptyset$ a $T=\VF_\mathbb P$ nad libovolným jazykem,\\
+        $T=\{p\land q,q\limplies (p\lor r)\}$ v jazyce $\mathbb P=\{p,q,r\}$\\
+        $T=\{p_0\}\cup\{p_i\limplies p_{i+1}\mid i\in\mathbb N\}$ nad \emph{nekonečným} $\mathbb P=\{p_i\mid i\in\mathbb N\}$
+    }
+
+    \textbf{Poznámka:} \emph{Konečnou} teorii by bylo možné (byť ne praktické!) nahradit jediným výrokem: konjunkcí všech axiomů.
     
+    Připouštíme ale i \emph{nekonečné teorie}; hodí se např. pro popis systému v (diskrétním) čase $t=0,1,2,\dots$.
+
 \end{frame}
 
 
 \end{document}
-
-
-% \subsection{Výrok}
-
-% Základním stavebním kamenem výrokové logiky je \emph{výrok} neboli \emph{výroková formule}. Je to konečný řetězec sestavený z výrokových proměnných a logických symbolů podle jistých pravidel. Prvovýroky jsou výroky, a dále můžeme vytvářet výroky z jednodušších výroků a logických symbolů: například pro logickou spojku $\landsymb$ vypíšeme nejprve symbol `(', potom první výrok, symbol `$\landsymb$', druhý výrok, a nakonec symbol `)'.
-% \begin{definition}[Výrok]\label{definition:proposition}
-%     \emph{Výrok} (\emph{výroková formule}) v jazyce $\mathbb P$ je prvek množiny $\VF_\mathbb P$ definované následovně: $\VF_\mathbb P$ je nejmenší množina splňující\footnote{Takovému druhu definice říkáme \emph{induktivní}. Lze také přirozeně vyjádřit pomocí \emph{formální gramatiky}, viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN071}{NTIN071 Automaty a gramatiky}.}
-%     \begin{itemize}
-%         \item pro každý prvovýrok $p\in\mathbb P$ platí $p\in\VF_\mathbb P$,
-%         \item pro každý výrok $\varphi\in\VF_\mathbb P$ je $(\neg\varphi)$ také prvek $\VF_\mathbb P$
-%         \item pro každé $\varphi,\psi\in\VF_\mathbb P$ jsou $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, a $(\varphi\liff\psi)$ také prvky $\VF_\mathbb P$.
-%     \end{itemize}        
-% \end{definition}
-% Výroky označujeme obvykle řeckými písmeny $\varphi,\psi,\chi$ ($\varphi$ od slova ``formule''). Abychom nemuseli vypisovat všechny čtyři binární logické spojky, používáme pro ně někdy zástupný symbol $\lbinsymb$. Třetí bod definice bychom tedy mohli vyjádřit takto:
-% \begin{itemize}
-%     \item pro každé $\varphi,\psi\in\VF_\mathbb P$ a $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$ je $(\varphi\lbin\psi)$ také prvek $\VF_\mathbb P$.
-% \end{itemize}  
-
-
-% \emph{Podvýrok} (\emph{podformule}) je podřetězec, který je sám o sobě výrokem. Uvědomte si, že všechny výroky jsou nutně konečné řetězce, vzniklé aplikací konečně mnoha kroků z definice na své podvýroky. 	
-
-% \begin{example}\label{example:proposition}
-% Výrok $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ má následující podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$.
-% \end{example}
-
-% Výrok v jazyce $\mathbb P$ nemusí obsahovat všechny prvovýroky z $\mathbb P$ (ani nemůže pokud je $\mathbb P$ nekonečná množina). Bude se nám proto hodit značení $\Var(\varphi)$ pro množinu prvovýroků vyskytujících se ve $\varphi$.\footnote{Pokud nespecifikujeme v jakém jazyce je výrok (a pokud to není jasné z kontextu), myslíme tím, že je v jazyce $\Var(\varphi)$.} V našem příkladě $\Var(\varphi)=\{p,q,r\}$.
-
-% Zavedeme si zkratky pro dva speciální výroky: $\top=(p\lor(\neg p))$ (\emph{pravda}) a $\bot=(p\land(\neg p))$ (\emph{spor}), kde $p\in\mathbb P$ je pevně zvolený (např.\ první prvovýrok z $\mathbb P$). Tedy výrok~$\top$ je vždy pravdivý a výrok~$\bot$ je vždy nepravdivý.
-
-
-% Při zápisu výroků můžeme pro lepší čitelnost některé závorky vynechat. Např.\ výrok $\varphi$ z příkladu~\ref{example:proposition} můžeme reprezentovat nápisem
-% $p\lor \neg q \liff (r\limplies p \land q)$. Vynecháváme vnější závorky a používáme prioritu operátorů: $\neg$ má nejvyšší prioritu, dále $\landsymb,\lorsymb$, a konečně $\limpliessymb,\liffsymb$ mají nejnižší prioritu. Dále nápisem $p\land q\land r\land s$ myslíme výrok $(p\land (q\land (r \land s)))$, a podobně pro $\lorsymb$.\footnote{Díky asociativitě $\landsymb,\lorsymb$ na uzávorkování nezáleží.}\footnote{Někdy se zavádí jemnější priority, $\landsymb$ mívá vyšší prioritu než $\lorsymb$,  $\limpliessymb$ vyšší než $\liffsymb$. A někdy se píše $p\limplies q\limplies r$ místo $(p\limplies (r\limplies q))$, byť $\limpliessymb$ není asociativní a na uzávorkování záleží. Obojímu se ale raději vyhneme.}
-
-
-% \subsection{Strom výroku}
-
-% V definici výroku jsme zvolili \emph{infixový} zápis se závorkami čistě z důvodu čitelnosti pro člověka. Nic by nám nebránilo použít \emph{prefixový} zápis (``polskou notaci''), tj.\ definovat výroky takto:
-% \begin{itemize}
-%     \item každý prvovýrok je výrok, a
-%     \item jsou-li $\varphi,\psi$ výroky, jsou také $\neg \varphi$, $\landsymb \varphi \psi$, $\lorsymb \varphi \psi$, $\limpliessymb \varphi \psi$, a $\liffsymb \varphi \psi$ výroky.
-% \end{itemize}
-% Výrok $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ bychom potom zapsali jako $\varphi=\liffsymb \lorsymb p \neg q \limpliessymb r \landsymb p q$. Také bychom mohli použít \emph{postfixový} zápis a psát $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$. Vše podstatné o výroku ve skutečnosti obsahuje jeho stromová struktura, která zachycuje, jak je sestaven z jednodušších výroků, obdobně jako strom aritmetického výrazu.
-
-% \begin{example}\label{example:tree}
-% Strom výroku $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ je znázorněný na obrázku~\ref{figure:tree-of-proposition}.
-% \begin{figure}
-% \centering
-%     \begin{forest}
-%         for tree={circle,draw=blue!20,fill=blue!10,minimum size=24pt}
-%         [$\liffsymb$ [$\lorsymb$ [$p$] [$\neg$ [$q$]]] [$\limpliessymb$ [$r$] [$\landsymb$ [$p$] [$q$]]]]
-%     \end{forest}
-%     \caption{Strom výroku $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$}\label{figure:tree-of-proposition}
-% \end{figure}
-% Všimněte si také, že podvýroky $\varphi$ odpovídají podstromům. Výrok $\varphi$ získáme průchodem stromem od kořene, v každém vrcholu:
-% \begin{itemize} 
-%     \item pokud je label prvovýrok, vypíšeme ho   
-%     \item pokud je label negace: vypíšeme `($\neg$', rekurzivně zavoláme syna, vypíšeme `)',   
-%     \item jinak (pro binární logické spojky):
-%     vypíšeme `(', zavoláme levého syna, vypíšeme label, zavoláme pravého syna, vypíšeme `)'.\footnote{Prefixový a postfixový zápis bychom získali podobně, ale nevypisujeme závorky a label vypíšeme hned při vstupu resp.\ těsně před opuštěním vrcholu.}
-% \end{itemize}
-% \end{example}
-
-% Nyní si strom výroku definujeme formálně, \emph{indukcí podle struktury výroku}:\footnote{Jakmile máme definovaný strom výroku, můžeme indukci podle struktury výroku chápat jako indukci podle hloubky stromu. Zatím tím ale chápejme indukci podle počtu kroků z definice~\ref{definition:proposition}, kterými výrok vznikl. Alternativně postačí indukce podle délky výroku, nebo podle počtu logických spojek.}
-
-% \begin{definition}[Strom výroku]
-%     \emph{Strom výroku} $\varphi$, označme $\Tree(\varphi)$ je zakořeněný uspořádaný strom, definovaný induktivně takto: 
-%     \begin{itemize}
-%         \item Je-li $\varphi$ prvovýrok $p$, obsahuje $\Tree(\varphi)$ jediný vrchol, jeho label je $p$.
-%         \item Je-li $\varphi$ tvaru $(\neg \varphi')$, má $\Tree(\varphi)$ kořen s labelem $\neg$, a jeho jediný syn je kořen $\Tree(\varphi')$.
-%         \item Je-li $\varphi$ tvaru $(\varphi' \lbin \varphi'')$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, má $\Tree(\varphi)$ kořen s labelem $\lbinsymb$ a dvěma syny: levý syn je kořen stromu $\Tree(\varphi')$, pravý je kořen $\Tree(\varphi'')$.
-%     \end{itemize}
-% \end{definition}
-
-% \begin{exercise}
-%     Dokažte, že každý výrok má jednoznačně určený strom výroku, a naopak.
-% \end{exercise}
-
-
-% \subsection{Teorie}
-
-% V praktických aplikacích nevyjádříme požadované vlastnosti jediným výrokem --- to by musel být velmi dlouhý a složitý a špatně by se s ním pracovalo --- ale mnoha jednoduššími výroky.
-
-% \begin{definition}[Teorie]\label{definition:theory}
-%     \emph{Teorie} v jazyce $\mathbb P$ je libovolná množina výroků v $\mathbb P$, tedy libovolná podmnožina $T\subseteq\VF_\mathbb P$. Jednotlivým výrokům $\varphi\in T$ říkáme také \emph{axiomy}.
-% \end{definition}
-
-% \emph{Konečné} teorie by tedy bylo možné (byť ne praktické) nahradit jediným výrokem: konjunkcí všech jejich axiomů. Připouštíme ale i nekonečné teorie, triviálním příkladem je teorie $T=\VF_\mathbb P$, a prázdná teorie $T=\emptyset$.\footnote{Nekonečné teorie se hodí například pro popis vývoje nějakého systému v (diskrétním) čase $t=0,1,2,\dots$ Prázdná teorie se nehodí k ničemu, ale bylo by nešikovné formulovat věty o logice, pokud by teorie musely být neprázdné.}

@@ -33,17 +33,18 @@
 
 \begin{frame}{První přednáška}
 
-    \begin{block}{Program}
+    \textbf{Program}
         \begin{itemize}
             \item úvod do logiky
             \item neformální představení výrokové a predikátové logiky
             \item syntaxe výrokové logiky
         \end{itemize}        
-    \end{block}
 
-    \begin{block}{Materiály}
+
+    \textbf{Materiály}
+
         \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Kapitola 1 a Sekce 2.1 z Kapitoly 2
-    \end{block}
+
 
 \end{frame}
 
@@ -55,12 +56,12 @@
 
     % \includegraphics[width=\textwidth]{slides1-images/definiton-of-logic.png}
     
-    \begin{block}{\href{https://www.google.com/search?q=define+logic}{Dvě definice:}}
+    \href{https://www.google.com/search?q=define+logic}{\textbf{Dvě definice:}}
         \begin{enumerate}
             \item soubor principů, které jsou základem uspořádání prvků nějakého systému (např.\ počítačového programu, elektronického zařízení, komunikačního protokolu)
             \item věda o uvažování prováděném podle striktních pravidel zachovávajících platnost 
         \end{enumerate}        
-    \end{block}
+
 
     \myblock{\textbf{V informatice obojí:} daný systém nejprve \emph{formálně popíšeme}, a poté o něm \emph{formálně uvažujeme} (automaticky!), tj. odvozujeme \alert{platné inference} za použití nějakého \alert{dokazovacího systému}
     }
@@ -72,7 +73,7 @@
 
     {\footnotesize Filozofie $\to$}  {\normalsize Matematika $\to$}  {\large Teoretická informatika $\to$} 
         
-    {\Large Aplikovaná informatika}
+    \myalertinline{\Large Aplikovaná informatika}
 
     \begin{itemize}
         \item logic programming
@@ -93,7 +94,17 @@
 \begin{frame}{Příklad ze života: Hledání pokladu}
 
     \myexample{
-        Při hledání pokladu jsme narazili na rozcestí dvou chodeb. Víme, že na konci každé chodby je buď poklad, nebo drak, ale ne obojí. Trpaslík nám řekl, že: \emph{``Alespoň jedna z těch dvou chodeb vede k pokladu''}, a že \emph{``První chodba vede k drakovi.''} Je známo, že trpaslíci buď vždy mluví pravdu, nebo vždy lžou. Kterou cestou se máme vydat?
+        Při hledání pokladu jsme narazili na rozcestí dvou chodeb. Víme, že na konci každé chodby je buď poklad, nebo drak, ale ne obojí. 
+        
+        \medskip
+        Trpaslík nám řekl, že: 
+        \begin{itemize}
+            \item \emph{``Alespoň jedna z těch dvou chodeb vede k pokladu''}, a že
+            \item \emph{``První chodba vede k drakovi.''}
+        \end{itemize}
+
+        \medskip
+        Je známo, že trpaslíci buď vždy mluví pravdu, nebo vždy lžou. Kterou cestou se máme vydat?
     }
 
 \end{frame}
@@ -125,25 +136,30 @@
 
 \begin{frame}{Formalizace ve výrokové logice}
 
-    Volba množiny prvovýroků: bity informace popisující daný systém
+    Volba množiny prvovýroků: \myalertinline{bity informace popisující daný systém}
+    
     \myexample{            
         $p_1=${\it ``Poklad je v první chodbě.''}\\
         $p_2=${\it ``Poklad je ve druhé chodbě.''}
-    }
-    Co nejmenší, např. hodnota $t=${\it ``Trpaslík mluví pravdu.''} je jednoznačně určená hodnotami $\mathbb P=\{p_1,p_2\}$.
+    }\vspace{-12pt}
+
+    (Co nejmenší, např. hodnota $t=${\it ``Trpaslík mluví pravdu.''} je jednoznačně určená hodnotami $\mathbb P=\{p_1,p_2\}$.)
     \begin{itemize}
         \item {\it Poklad nebo drak, ale ne obojí}: zakódované do volby $\mathbb P$ (přítomnost draka je absence pokladu)
         \item {\it ``První chodba vede k drakovi.''} $\Leftrightarrow$ \alert{$\neg p_1$}
         \item {\it ``Alespoň jedna z chodeb vede k pokladu.''} $\Leftrightarrow$ \alert{$p_1 \lor p_2$}
         \item {\it Trpaslík buď mluví pravdu, nebo lže}:
-        \myexample{\vspace{-6pt}
+        \myexamplemath{
         $$
         \varphi = (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
         $$
         }
     \end{itemize}
 
+    \medskip
+    \myblock{
     \alert{Teorie} $T=\{ \varphi \}$ v \alert{jazyce} $\mathbb P=\{p_1,p_2\}$, $\varphi$ je \alert{axiom} $T$.
+    }
 
 \end{frame}
 
@@ -168,6 +184,8 @@
     \M_\mathbb P(\varphi)=\M_\mathbb P(T)=\{(0,1)\}.
     $$
     }
+
+    \vspace{-12pt}
     \myblock{V \alert{každém modelu} teorie $T$ platí výrok $p_2$, neboli $p_2$ je \alert{důsledek}~$T$.}
     
 \end{frame}
@@ -182,13 +200,15 @@
         \item \alert{důkaz} výroku~\( \psi \) z teorie \(T\) je formálně definovaný syntaktický objekt, snadno (mechanicky) ověřitelný
         \item lze hledat algoritmicky čistě na základě struktury \( \psi \) a axiomů \(T\) (``\emph{syntaxe}''), nemusíme se zabývat modely (``\emph{sémantikou}'').
     \end{itemize}        
-    Klíčové vlastnosti: 
+    Klíčové vlastnosti:
+
     \myblock{
     \begin{itemize}
         \item \alert{korektnost}: pokud existuje důkaz \( \psi \) z \(T\), potom \( \psi \) platí v \(T\)
         \item \alert{úplnost}, pokud \( \psi \) platí v \(T\), potom existuje důkaz \( \psi \) z \(T\)
     \end{itemize}
     }
+
     %Korektnost je nutná, ale efektivní důkazový systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
     Ukážeme si \alert{metodu analytického tabla} a \alert{rezoluční metodu}. Obě dokazují \emph{sporem}: předpokládají platnost $T$ a \( \neg \psi \), hledají spor.
 
@@ -202,16 +222,20 @@
     \item důkaz je strom olabelovaný předpoklady o platnosti výroků
     \item v kořeni: \alert{neplatí} dokazovaný výrok $\psi$ (důkaz sporem)
     \item připojíme platnost axiomů z $T$
-    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících invariant:\smallskip
+    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících následující \alert{invariant}:\medskip
     
     \myalert{
         Každý model teorie \(T\), ve kterém neplatí \(\psi\), se musí \emph{shodovat} s některou z větví tabla. 
     }
-    \item například:
+    
+    \vspace{-6pt}
+    \item například:\medskip
     \myblock{
     \alert{\small True $(\varphi_1 \limplies \varphi_2 )$} zredukujeme rozvětvením na \alert{\small False $\varphi_1$} a \alert{\small True $\varphi_2$},\\
     \alert{\small False $(\varphi_1 \limplies \varphi_2 )$} zredukujeme připojením \alert{\small True $\varphi_1$} a \alert{\small False $\varphi_2$}.
     }
+        
+    \vspace{-6pt}
     \item \alert{sporná} větev = předpokládá True i False stejného výroku
     \item \alert{důkaz} = všechny větve sporné (tj. nemůže existovat model $T$, ve kterém neplatí $\psi$)
 \end{itemize}
@@ -275,25 +299,39 @@
     \myblock{
         každý výrok má \alert{ekvivalentní} CNF (\alert{$\psi \sim \psi'$}, stejné modely)
     }
-    \myexample{\vspace{-6pt}
-    $$
+
+    
+    \vspace{-12pt}
+    \myexample{např. pro výrok 
+    $
     (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
-    $$
-    }\vspace{-6pt}
+    $
+    }
+
+    \vspace{-12pt}
+
     nahradíme \alert{$\neg (\neg p_1) \sim p_1$} a \alert{$\neg (p_1 \lor p_2) \sim (\neg p_1 \land \neg p_2)$} (\emph{De Morgan})
-    \myexample{\vspace{-6pt}
+
+    \myexamplemath{
     $$
     (\neg p_1 \land (p_1 \lor p_2)) \lor (p_1 \land \neg p_1 \land \neg p_2)
     $$
-    }\vspace{-6pt}
-    a dále opakovaně použijeme \alert{distributivitu} \( \lorsymb \) vůči \( \landsymb \):
-    \myexample{\vspace{-18pt}
+    }
+
+    \vspace{-18pt}
+
+    a dále opakovaně použijeme \alert{distributivitu} \( \lorsymb \) vůči \( \landsymb \): \medskip
+
+    \myexamplemath{\vspace{-12pt}
     \begin{gather*}
     (\neg p_1 \lor p_1) \land (\neg p_1 \lor \neg p_1) \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2 \lor p_1) \land\\ (p_1 \lor p_2 \lor \neg p_1)\land (p_1 \lor p_2 \lor \neg p_2)    
     \end{gather*}    
-    }\vspace{-6pt}
+    }
+
+    \vspace{-6pt}
     už je CNF, ještě zjednodušíme: odstraníme duplicitní literály, a klauzule obsahující $p_i$ a zároveň $\neg p_i$ (to jsou \alert{tautologie})
-    \myexample{\vspace{-6pt}
+
+    \myexamplemath{
     $$
     \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)
     $$
@@ -308,23 +346,26 @@ Důkaz sporem: převedeme \alert{negaci} dokazovaného do CNF a přidáme
 \myblock{
 \alert{\(p_2\) platí v \(T\)}, právě když je následující CNF výrok \alert{nesplnitelný}:
 }
-\myexample{\vspace{-6pt}
+\myexamplemath{
 $$
 \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)\land\alert{\neg p_2}
 $$
 }\vspace{-6pt}
+
 množinový zápis:
-\myexample{\vspace{-6pt}
-$$
+\myexampleinline{$
 S=\left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
-$$
+$
 }
+
 \myalert{\alert{rezoluční pravidlo}: je-li $p\in C_1$ a $\neg p\in C_2$, potom \emph{rezolventa} 
 $$
 C= (C_1\setminus \{p\})\cup(C_2\setminus \{\neg p\})
 $$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
-}\vspace{-6pt}
-\alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
+}
+
+\alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, kde každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
+
 \myblock{protože $\square$ nemá žádný model, je i $S$ nesplnitelná}
 
 \end{frame}
@@ -383,11 +424,13 @@ $$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
     \mystructure G = \langle V; E \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle
     \]
     jak formalizovat? pro $v\in V$ a $c\in C=\{R,G,B\}$:
-    \myalert{\vspace{-6pt}
+    \myalertmath{
     $$
     p_v^c=\text{\it``vrchol \(v\) má barvu \(c\)''}
     $$
     }
+
+    \vspace{-12pt}
 
     \mbox{\small $\mathbb P=\{p_v^c\mid c\in C,v\in V\}=\{p_1^R,p_1^G,p_1^B,p_2^R,p_2^G,p_2^B,p_3^R,p_3^G,p_3^B,p_4^R,p_4^G,p_4^B\}$}
 
@@ -521,10 +564,9 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \aler
         \item ``V grafu nejsou smyčky'': \alert{$(\forall x)(\neg E(x,x))$}
         \item ``Existuje vrchol výstupního stupně 1'': 
         \alert{$(\exists x)(\exists y)(E(x,y) \land (\forall z)(E(x,z) \limplies y=z))$}
-    \end{itemize}
-
-    
+    \end{itemize}    
     }
+
     \textbf{Sémantika}: V daném grafu \(\mystructure{G}\) a při \alert{dosazení} vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) \alert{vyhodnotíme} \( E(x,y) \) jako \alert{True}, právě když \alert{\( (u,v)\in E^{\mystructure{G}} \)}.
         
 \end{frame}
@@ -688,8 +730,10 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
         \item pro každé $\varphi,\psi\in\VF_\mathbb P$ jsou $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, a $(\varphi\liff\psi)$ také prvky $\VF_\mathbb P$.
     \end{itemize}
     }
+
     \myalert{Výroky jsou nutně \emph{konečné} řetězce!}\vspace{-6pt}
-    \alert{$\Var(\varphi)$}: množina všech prvovýroků ve $\varphi$ (vždy konečná)\\
+    \alert{$\Var(\varphi)$}: množina všech prvovýroků ve $\varphi$ (vždy konečná)
+
     \alert{podvýrok}: podřetězec, který je sám výrok
     
 
@@ -697,6 +741,7 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
         $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$, $\Var(\varphi)=\{p,q\}$\\
         podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$
     }\vspace{-6pt}
+    
     \alert{pravda}: $\top=(p\lor(\neg p))$ , \alert{spor}: $\bot=(p\land(\neg p))$ \\
     (kde $p\in\mathbb P$ je pevně daný)
 
@@ -705,7 +750,7 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
 
 \begin{frame}{Konvence zápisu}
     při \emph{zápisu} výroků můžeme vynechat některé závorky:
-    \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}
+    \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}\vspace{-12pt}
     \begin{itemize}
         \item priorita operátorů: $\neg$ nejvyšší, dále $\landsymb$ a $\lorsymb$, nakonec $\limpliessymb$ a $\liffsymb$
         \item asociativita $\landsymb$ a $\lorsymb$: nápis $p\land q\land r$ znamená výrok $(p\land (q\land r))$
@@ -714,11 +759,13 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
 
     \textbf{Poznámka:} v definici jsme mohli místo \emph{infixového} zápisu zvolit \emph{prefixový} (``polskou notaci''):
     {\it ``každý prvovýrok je výrok, jsou-li $\varphi,\psi$ výroky, jsou výroky také $\neg \varphi$, $\landsymb \varphi \psi$, $\lorsymb \varphi \psi$, $\limpliessymb \varphi \psi$, a $\liffsymb \varphi \psi$''} nebo i \emph{postfixový}
+    
     \myexample{
         $\varphi=\liffsymb \lorsymb p \neg q \limpliessymb r \landsymb p q$\\
         $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$
     }
-    Důležitá je jen \alert{stromová struktura} výroků!
+
+    \myalert{Důležitá je jen \alert{stromová struktura} výroků!}
 
 \end{frame}
 

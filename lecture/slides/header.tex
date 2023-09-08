@@ -4,55 +4,81 @@
 %\usecolortheme{spruce}
 %\metroset{block=fill}
 
-% block indentation workaround
-% map defaulf block to oldblock
-\let\oldblock\block
-\let\endoldblock\endblock
-% change block by adding smallskip
-\renewenvironment{block}[1]
-    {\begin{oldblock}{#1}
-        \smallskip
-    }
-    { 
-    \end{oldblock}
-    }
-
 % define Metropolis colors    
 \definecolor{mAlert}{HTML}{EB811B}
 \definecolor{mExample}{HTML}{14B03D}
 \definecolor{mBlock}{HTML}{23373b}
 
-\usepackage[most]{tcolorbox}
-
-%\newcommand{\myexample}[1]{\leavevmode\textcolor{mExample}{#1}}
-\newcommand{\myalert}[1]{
-\begin{tcolorbox}[colback=mAlert!10, enhanced, boxrule=0pt, boxsep=-1mm, frame hidden, left=2mm, right=2mm]
-    {#1}  
-\end{tcolorbox}
-}
-\newcommand{\myexample}[1]{
-\begin{tcolorbox}[colback=mExample!10, enhanced, boxrule=0pt, boxsep=-1mm, frame hidden, left=2mm, right=2mm]
-    {#1}  
-\end{tcolorbox}
-}
+% my blocks
+\setlength\fboxsep{0pt}
 \newcommand{\myblock}[1]{
-\begin{tcolorbox}[colback=mBlock!10, enhanced, boxrule=0pt, boxsep=-1mm, frame hidden, left=2mm, right=2mm]
-    {#1}  
-\end{tcolorbox}
+    \colorbox{mBlock!10}{
+        \begin{minipage}{\textwidth}
+            #1
+        \end{minipage}
+        }
+}
+\newcommand{\myblockmath}[1]{
+    \colorbox{mBlock!10}{
+        \begin{minipage}{\textwidth}
+            \vspace{-6pt}
+            #1
+        \end{minipage}
+    }
+}
+\newcommand{\myblockinline}[1]{
+    \colorbox{mBlock!10}{#1}
+}
+\newcommand{\myexample}[1]{    
+    \colorbox{mExample!10}{
+        \begin{minipage}{\textwidth}
+            #1
+        \end{minipage}
+    }
+}
+\newcommand{\myexamplemath}[1]{
+    \vspace{-6pt}
+    \colorbox{mExample!10}{
+        \begin{minipage}{\textwidth}
+            \vspace{-6pt}
+            #1
+        \end{minipage}
+    }
+}
+\newcommand{\myexampleinline}[1]{
+    \colorbox{mExample!10}{#1}
+}
+\newcommand{\myalert}[1]{
+    \colorbox{mAlert!10}{
+        \begin{minipage}{\textwidth}
+            #1
+        \end{minipage}
+        }
+}
+\newcommand{\myalertmath}[1]{
+    \colorbox{mAlert!10}{
+        \begin{minipage}{\textwidth}
+            \vspace{-6pt}
+            #1
+        \end{minipage}
+    }
+}
+\newcommand{\myalertinline}[1]{
+    \colorbox{mAlert!10}{#1}
 }
 
-% \usepackage{tikzsymbols}
-% \newcommand{\observesymbol}{\dWinkey[1.2]}
+\newcommand{\mytheorem}[2]{
+    \myblock{\textbf{#1} #2}
+}
 
+\newcommand{\myproof}[1]{
+    \textbf{Důkaz} #1 \qedsymbol
+}
+
+%% other
 \newcommand{\mystructure}[1]{\mathcal{#1}}
 
 
-
-% \newcommand{\myexamplemath}[1]{
-% \begin{tcolorbox}[colback=mExample!10, enhanced, boxrule=0pt, frame hidden]
-%     \ensuremath{#1}  
-% \end{tcolorbox}
-% }
 
 
 %% packages

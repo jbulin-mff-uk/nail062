@@ -454,126 +454,155 @@ Další zajímavé logické spojky:
 \begin{frame}{CNF a DNF}
 
 \begin{itemize}
-    \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
-    \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
-    \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
-    \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
+    \item \alert{literál} je prvovýrok nebo jeho negace, 
+    $\bar \ell$ je \alert{opačný literál} k $\ell$ (pro \emph{pozitivní} $\ell=p$ je $\bar \ell=\neg p$, pro \emph{negativní}  $\ell=\neg p$  je $\bar \ell=p$)
+    \item \alert{klauzule} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$ 
+    (\emph{jednotková klauzule} je samotný literál, \emph{prázdná klauzule} je $\bot$)
+    \item výrok je v \alert{konjunktivní normální formě} (\alert{CNF}) je-li konjunkcí klauzulí (prázdný CNF výrok je $\top$)
+    \item \alert{elementární konjunkce} je konjunkce literálů $E=\ell_1\land\dots\land\ell_n$ (\emph{jednotková} el. konjunkce je samotný literál,  \emph{prázdná} je $\top$)
+    \item výrok je v \alert{disjunktivní normální formě} (\alert{DNF}) je-li disjunkcí elementárních konjunkcí (prázdný DNF výrok je $\bot$)
 \end{itemize}
 
-\begin{example}
-    Výrok ${{p\lor q}\lor\neg r}$ je v CNF (je to jediná klauzule) a zároveň v DNF (je to disjunkce jednotkových elementárních konjunkcí). Výrok $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF, výrok $\neg p\lor (p\land q)$ je v DNF.
-\end{example}
+\myexample{například:
+    \begin{itemize}
+        \item $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF
+        \item $\neg p\lor (p\land q)$ je v DNF
+        \item $\varphi_v$ je v CNF i DNF, $\varphi_M$ je v DNF
+    \end{itemize}
 
-\begin{example}
-    Výrok $\varphi_v$ z důkazu Tvrzení~\ref{proposition:not-and-or-is-universal} je v CNF (je to konjunkce jednotkových klauzulí, tj.\ literálů) a také v DNF (je to jediná elementární konjunkce). Výrok $\varphi_M$ je v DNF.
-\end{example}
+}
+\end{frame}
 
 
-Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzule obsahuje dvojici opačných literálů. Podobně, výrok v DNF je splnitelný, pokud ne každá elementární konjunkce obsahuje dvojici opačných literálů.
+\begin{frame}{O dualitě}
+\myblock{zaměníme-li $0\leftrightsquigarrow 1$, negace zůstává stejná, z $\landsymb$ se stává $\lorsymb$ a naopak}
+\vspace{-12pt}
+
+\begin{itemize}
+    \item $\varphi$ nad $\{\neg,\landsymb,\lorsymb\}$, zaměníme-li $\landsymb,\lorsymb$ a znegujeme-li prvovýroky: \alert{duální} $\psi\sim\neg\varphi$, modely $\varphi$ jsou nemodely $\psi$, $f_\psi(\neg x)=\neg f_\varphi(x)$
+    \item CNF a DNF jsou duální pojmy
+    \item \emph{pravdivost} je duální k \emph{nesplnitelnosti} 
+\end{itemize}
+
+\textbf{Pozorování:} Výrok v CNF je \alert{pravdivý}, právě když každá klauzule má dvojici opačných literálů.
+
+\textbf{Duálně:} Výrok v DNF je \alert{nesplnitelný}, pokud každá elementární konjunkce má dvojici opačných literálů.
+       
+\end{frame}
+
+
+\begin{frame}{Převod do normální formy: sémanticky (příklad)}
+
+mějme výrok \myexampleinline{$\varphi=p\liff (q\lor \neg r)$}
+
+jeho modely jsou \myexampleinline{
+    $M=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$
+}
+
+najdeme DNF a CNF výroky se stejnými modely, tj. ekvivalentní~$\varphi$
+
+DNF sestrojíme tak, že pro každý model přidáme elementární konjunkci vynucující právě tento model:    
+\myexamplemath{\vspace{-12pt}
+$$
+\varphi_{\mathrm{DNF}}=(\neg p\land\neg q\land r)\lor (p\land\neg q\land\neg r) \lor (p\land q\land\neg r)\lor (p\land q\land r)
+$$
+}
+
+při konstrukci CNF potřebujeme \alert{nemodely} $\varphi$: 
+\myexamplemath{$$\overline{M}=\{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$$
+}
+
+každá klauzule zakáže jeden nemodel: 
+\myexamplemath{\vspace{-12pt}
+$$
+\varphi_{\mathrm{CNF}}=(p\lor q\lor r)\land (p\lor\neg q\lor r) \land (p\lor \neg q\lor\neg r)\land (\neg p\lor q\lor\neg r)
+$$ 
+}  
+\end{frame}
+
+
+\begin{frame}{Převod do normální formy: sémanticky}
+\myblock{
+    \textbf{Tvrzení:} Buď $\mathbb P$ konečný, $M\subseteq\M_\mathbb P$ libovolná. Potom existují DNF a CNF výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$, že 
+\alert{$M=\M_\mathbb P(\varphi_{\mathrm{DNF}})=\M_\mathbb P(\varphi_{\mathrm{CNF}})$}.
+
+\vspace{-18pt}
+\begin{align*}
+    \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}\\
+    \varphi_{\mathrm{CNF}} &= \bigwedge_{v\in \overline{M}}\bigvee_{p\in\mathbb P}\overline{p^{v(p)}}=\bigwedge_{v\notin M}\bigvee_{p\in\mathbb P}p^{1-v(p)}
+\end{align*}
+}
+
+\vspace{-6pt}
+\textbf{Důkaz:} $\varphi_{\mathrm{DNF}}=\varphi_M$ říká  \alert{`jsem jeden z modelů z $M$'}
+
+$\varphi_{\mathrm{CNF}}$ říká \alert{`nejsem žádný z nemodelů z $M$'}, je duální k $\varphi'_{\mathrm{DNF}}=\varphi_{\overline{M}}$ pro doplněk $M$, nebo přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou $\M_C=\M_\mathbb P\setminus\{v\}$, tedy každá klauzule zakazuje jeden nemodel\hfill\qedsymbol
+
+\medskip
+\myblock{
+\textbf{Důsledek:} Každý výrok (v libovolném, i nekonečném jazyce $\mathbb P$) je ekvivalentní nějakému výroku v CNF a nějakému výroku v DNF.
+}
+
+\vspace{-12pt}
+\textbf{Důkaz:} použijeme konečný jazyk $\mathbb P'=\Var(\varphi)$, $M=\M_{\mathbb P'}(\varphi)$\hfill\qedsymbol
 
 \end{frame}
 
 
-\section{2.4 Vlastnosti a důsledky teorií}
+\begin{frame}{Převod do normální formy: syntakticky}
+Hledat všechny modely je neefektivní, lze i syntakticky pomocí \alert{ekvivalentních úprav}.
+
+\textbf{Pozorování:} Nahradíme-li podvýrok $\psi$ výroku $\varphi$ ekvivalentním $\psi'$, výsledný výrok $\varphi'$ je také ekvivalentní $\varphi$.
+
+\textbf{Postup úprav:}
+\begin{enumerate}
+    \item přepiš ekvivalenci a implikaci pomocí $\neg,\landsymb,\lorsymb$
+    \item přesuň negace dolů (k listům) ve stromu výroku pomocí de Morganových pravidel, odstraň dvojité negace
+    \item přesuň dolů disjunkce (pro CNF) resp. konjunkce (pro DNF) pomocí distributivity $\landsymb$ a $\lorsymb$
+    \item případně zjednoduš (odstranění duplicit, tautologií apod.)
+\end{enumerate}
+
+Důkaz, že funguje: indukcí dle struktury výroku
+
+\end{frame}
 
 
-\end{document}
+\begin{frame}{Převod do normální formy: syntakticky (příklad)}
+
+
+mějme opět výrok \myexampleinline{$\varphi=p\liff (q\lor \neg r)$}
+
+\begin{itemize}
+    \item přepsat ekvivalence a implikace
+    \begin{align*}
+        p\liff (q\lor \neg r) &\sim (p\limplies (q\lor \neg r)) \land ((q\lor \neg r) \limplies p)\\
+        &\sim (\neg p\lor q\lor \neg r) \land (\neg (q\lor \neg r) \lor p)
+    \end{align*}
+    \item negace dolů
+    $$
+    (\neg p\lor q\lor \neg r) \land ( (\neg q\land r) \lor p)
+    $$
+    \item do CNF (+ seřadíme prvovýroky v klauzulích)
+    \myexamplemath{
+    $$
+    (\neg p\lor q\lor \neg r) \land (p\lor \neg q) \land (p \lor r) 
+    $$
+    }
+
+    \item do DNF (+ zjednodušení)
+    \myexamplemath{
+    $$
+    (\neg p \land \neg q\land r) \lor (p\land q \land r) \lor (p\land \neg r)
+    $$
+    }
+\end{itemize}
 
 
 
 
-% \section{Normální formy}
 
-
-% \begin{itemize}
-%     \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
-%     \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
-%     \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-%     \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
-%     \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
-% \end{itemize}
-
-% \begin{example}
-%     Výrok ${{p\lor q}\lor\neg r}$ je v CNF (je to jediná klauzule) a zároveň v DNF (je to disjunkce jednotkových elementárních konjunkcí). Výrok $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF, výrok $\neg p\lor (p\land q)$ je v DNF.
-% \end{example}
-
-% \begin{example}
-%     Výrok $\varphi_v$ z důkazu Tvrzení~\ref{proposition:not-and-or-is-universal} je v CNF (je to konjunkce jednotkových klauzulí, tj.\ literálů) a také v DNF (je to jediná elementární konjunkce). Výrok $\varphi_M$ je v DNF.
-% \end{example}
-
-% \begin{observation}
-% Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzule obsahuje dvojici opačných literálů. Podobně, výrok v DNF je splnitelný, pokud ne každá elementární konjunkce obsahuje dvojici opačných literálů.
-% \end{observation}
-
-% \subsection{O dualitě}
-
-% Všimněte si, že pokud ve výrokové logice zaměníme hodnoty pro pravdu a nepravdu, tj.\ 0 a 1, pravdivostní tabulka negace zůstává stejná, z konjunkce se stává disjunkce, a naopak. Tomuto konceptu se říká \emph{dualita}; v logice uvidíme mnoho příkladů. 
-
-% Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Neboť $p,q$ jsou proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí pokud $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
-
-% Pojem DNF je duální k pojmu CNF, `je pravdivý' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ a $\lor$, pravdy a nepravdy.
-
-
-% \subsection{Převod do normální formy}\label{subsection:convert-to-normal-form}
-
-% Disjunktivní normální formu jsme již potkali, v důkazu Tvrzení~\ref{proposition:not-and-or-is-universal}. Klíčovou část důkazu bychom mohli zformulovat takto: `Je-li jazyk konečný, lze každou množinu modelů \emph{axiomatizovat} výrokem v DNF'. Z duality dostáváme také axiomatizaci v CNF, neboť doplněk množiny modelů je také množina modelů:
-
-% \begin{proposition} \label{proposition:axiomatize-in-DNF-CNF}
-%     Mějme konečný jazyk $\mathbb P$ a libovolnou množinu modelů $M\subseteq\M_\mathbb P$. Potom existuje výrok $\varphi_{\mathrm{DNF}}$ v DNF a výrok $\varphi_{\mathrm{CNF}}$ v CNF takový, že $M=\M_\mathbb P(\varphi_{\mathrm{DNF}})=\M_\mathbb P(\varphi_{\mathrm{CNF}})$. Konkrétně:
-% \begin{align*}
-%     \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}\\
-%     \varphi_{\mathrm{CNF}} &= \bigwedge_{v\in \overline{M}}\bigvee_{p\in\mathbb P}\overline{p^{v(p)}}=\bigwedge_{v\notin M}\bigvee_{p\in\mathbb P}p^{1-v(p)}
-% \end{align*}
-% \end{proposition}
-
-
-% \begin{proof}
-%     Pro výrok $\varphi_{\mathrm{DNF}}$ viz důkaz Tvrzení~\ref{proposition:not-and-or-is-universal}, každá elementární konjunkce popisuje jeden model. Výrok $\varphi_{\mathrm{CNF}}$ je duální k výroku $\varphi'_{\mathrm{DNF}}$ sestrojenému pro doplněk $M'=\overline{M}$. Nebo můžeme dokázat přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou všechny modely kromě $v$, $\M_C=\M_P\setminus\{v\}$, tedy každá klauzule v konjunkci zakazuje jeden nemodel.
-% \end{proof}
-
-% Tvrzení~\ref{proposition:axiomatize-in-DNF-CNF} dává návod, jak převádět výrok do disjunktivní nebo do konjunktivní normální formy:
-
-% \begin{example}
-%     Uvažme výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve najdeme množinu modelů: $M=\M_\varphi=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Nyní najdeme výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$ podle Tvrzení \ref{proposition:axiomatize-in-DNF-CNF}, ty mají stejnou množinu modelů jako $\varphi$, jsou tedy ekvivalentní.
-
-%     Výrok $\varphi_{\mathrm{DNF}}$ najdeme tak, že pro každý model sestrojíme elementární konjunkci vynucující právě tento model:
-%     $$
-%     \varphi_{\mathrm{DNF}}=(\neg p\land\neg q\land r)\lor (p\land\neg q\land\neg r) \lor (p\land q\land\neg r)\lor (p\land q\land r)
-%     $$
-%     Při konstrukci $\varphi_{\mathrm{CNF}}$ budeme potřebovat \emph{nemodely} $\varphi$, $\overline{M}=\{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$. Každá klauzule zakáže jeden nemodel:
-%     $$
-%     \varphi_{\mathrm{CNF}}=(p\lor q\lor r)\land (p\lor\neg q\lor r) \land (p\lor \neg q\lor\neg r)\land (\neg p\lor q\lor\neg r)
-%     $$   
-% \end{example}
-
-% \begin{corollary}
-%     Každý výrok (v libovolném, i nekonečném jazyce $\mathbb P$) je ekvivalentní nějakému výroku v CNF a nějakému výroku v DNF.
-% \end{corollary}
-% \begin{proof}
-% I když je jazyk $\mathbb P$ nekonečný, výrok $\varphi$ obsahuje jen konečně mnoho výrokových proměnných, můžeme tedy použít Tvrzení \ref{proposition:axiomatize-in-DNF-CNF} pro jazyk $\mathbb P'=\Var(\varphi)$, a množinu modelů $M=\M_{\mathbb P'}(\varphi)$. Protože $M=\M_{\mathbb P'}(\varphi_{\mathrm{DNF}})=\M_{\mathbb P'}(\varphi_{\mathrm{CNF}})=M$, máme $\varphi\sim\varphi_{\mathrm{DNF}}\sim\varphi_{\mathrm{CNF}}$.
-% \end{proof}
-
-% \begin{exercise}
-% Rozmyslete si, jak lze z DNF výroku snadno vygenerovat jeho modely, a z CNF výroku jeho nemodely.
-% \end{exercise}
-
-% \begin{remark}
-%     Kdy lze axiomatizovat \emph{teorii} výrokem v DNF nebo výrokem v CNF? Mějme jazyk $\mathbb P'=\Var(T)$ (tj. všechny výrokové proměnné vyskytující se v axiomech $T$). Má-li $T$ v jazyce $\mathbb P'$ konečně mnoho modelů (tj.\ je-li $\M_{\mathbb P'}(T)$ konečná), můžeme sestrojit výrok v DNF, a má-li konečně mnoho \emph{nemodelů}, můžeme sestrojit výrok v CNF. Obecně ale ne každou teorii lze axiomatizovat \emph{jediným} výrokem v CNF nebo v DNF. Vždy můžeme převést jednotlivé axiomy do CNF (nebo DNF), a můžeme také axiomatizovat teorii jen pomocí (potenciálně nekonečně mnoha) klauzulí.
-% \end{remark}
-
-% Tento způsob převodu do CNF resp. do DNF vyžaduje znalost množiny modelů výroku, je tedy poměrně neefektivní. A také výsledná normální forma může být velmi dlouhá. Ukážeme si ještě jeden postup.
-
-% \subsubsection{Převod pomocí ekvivalentních úprav}
-
-% Využijeme následujícího pozorování: Nahradíme-li nějaký podvýrok $\psi$ výroku $\varphi$ ekvivalentním výrokem $\psi'$, výsledný výrok $\varphi'$ bude také ekvivalentní $\varphi$. Nejprve si ukážeme postup na příkladě:
-
-% \begin{example}
 %     Převedeme opět výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve se zbavíme ekvivalence, vyjádříme ji jako konjunkci dvou implikací. V dalším kroku odstraníme implikace, pomocí pravidla $\varphi\limplies\psi\sim\neg\varphi\lor\psi$:
-%     \begin{align*}
-%         p\liff (q\lor \neg r) &\sim (p\limplies (q\lor \neg r)) \land ((q\lor \neg r) \limplies p)\\
-%         &\sim (\neg p\lor q\lor \neg r) \land (\neg (q\lor \neg r) \lor p)
-%     \end{align*}
+
 %     Nyní si představme strom výroku, v dalším kroku chceme dostat negace na co nejnižší úroveň stromu, bezprostředně nad listy: využijeme toho, že $\neg (q\lor \neg r)\sim \neg q\land \neg\neg r$ a zbavíme se dvojité negace $\neg\neg r\sim r$. Dostáváme výrok 
 %     $$
 %     (\neg p\lor q\lor \neg r) \land ( (\neg q\land r) \lor p)
@@ -586,133 +615,136 @@ Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzul
 %     $$
 %     (\neg p \land \neg q\land r) \lor (p\land q \land r) \lor (p\land \neg r)
 %     $$
-% \end{example}
-
-% Nyní vypíšeme všechny potřebné ekvivalentní úpravy. Důkaz, že každý výrok lze převést do DNF a do CNF lze snadno provést indukcí podle struktury výroku (podle hloubky stromu výroku).
-
-% \begin{tcolorbox}
-% \begin{multicols}{2}
-% \begin{itemize}
-%     \item Implikace a ekvivalence:
-%     \begin{itemize}
-%         \item[] $\varphi\limplies\psi\sim\neg\varphi\lor\psi$
-%         \item[] $\varphi\liff\psi\sim(\neg\varphi\lor\psi)\land(\neg\psi\lor\varphi)$
-%     \end{itemize}
-%     \item Negace:
-%     \begin{itemize}
-%         \item[] $\neg(\varphi\land\psi)\sim\neg\varphi\lor\neg\psi$
-%         \item[] $\neg(\varphi\lor\psi)\sim\neg\varphi\land\neg\psi$
-%         \item[] $\neg\neg\varphi\sim\varphi$
-%     \end{itemize}
-%     \item Konjunkce (převod do DNF):
-%     \begin{itemize}
-%         \item[] $\varphi \land (\psi\lor\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
-%         \item[] $(\varphi \lor \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
-%     \end{itemize}
-%     \item Disjunkce (převod do CNF):
-%     \begin{itemize}
-%         \item[] $\varphi \lor (\psi\land\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
-%         \item[] $(\varphi \land \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
-%     \end{itemize}
-% \end{itemize}
-% \end{multicols}
-% \end{tcolorbox}
 
 
-% Jak uvidíme v příští kapitole, CNF je v praxi mnohem důležitější než DNF (byť jde o duální pojmy). Při popisu reálného systému je přirozenější vyjádření pomocí konjunkce mnoha jednodušších vlastností, než jako jednu velmi dlouhou disjunkci. Existuje mnoho dalších forem reprezentace booleovských funkcí. Podobně jako datové struktury, vhodnou formu reprezentace volíme podle toho, jaké operace potřebujeme s funkcí dělat.\footnote{Viz například přednáška \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL031}{NAIL031 Reprezentace booleovských funkcí}.}
+\end{frame}
 
 
-% \section{Vlastnosti a důsledky teorií}
+\begin{frame}{Ekvivalentní úpravy}
 
-% Podívejme se nyní hlouběji na vlastnosti teorií. Podobně jako pro výroky řekneme, že dvě teorie $T,T'$ v jazyce $\mathbb P$ jsou \emph{ekvivalentní}, pokud mají stejnou množinu modelů:
-% $$
-% T\sim T' \text{ právě když } \M_\mathbb P(T)=\M_\mathbb P(T')
-% $$
-% Jde tedy o teorie vyjadřující tytéž vlastnosti, jen jinak vyjádřené (\emph{axiomatizované}). Zajímat nás budou vlastnosti nezávislé na konkrétní \emph{axiomatizaci}.
+\begin{itemize}
+    \item Implikace a ekvivalence:
+    \begin{itemize}
+        \item[] $\varphi\limplies\psi\sim\neg\varphi\lor\psi$
+        \item[] $\varphi\liff\psi\sim(\neg\varphi\lor\psi)\land(\neg\psi\lor\varphi)$
+    \end{itemize}
+    \item Negace:
+    \begin{itemize}
+        \item[] $\neg(\varphi\land\psi)\sim\neg\varphi\lor\neg\psi$
+        \item[] $\neg(\varphi\lor\psi)\sim\neg\varphi\land\neg\psi$
+        \item[] $\neg\neg\varphi\sim\varphi$
+    \end{itemize}
+    \item Konjunkce (převod do DNF):
+    \begin{itemize}
+        \item[] $\varphi \land (\psi\lor\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
+        \item[] $(\varphi \lor \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
+    \end{itemize}
+    \item Disjunkce (převod do CNF):
+    \begin{itemize}
+        \item[] $\varphi \lor (\psi\land\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
+        \item[] $(\varphi \land \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
+    \end{itemize}
+\end{itemize}
 
-% \begin{example}
-%     Například teorie $T=\{p\limplies q,p\liff r\}$ je ekvivalentní teorii $T'=\{(\neg p\lor q)\land(\neg p\lor r)\land(p\lor\neg r)\}$.
-% \end{example}
+\end{frame}
 
-% \begin{definition}[Vlastnosti teorií]
-% Řekneme, že teorie $T$ v jazyce $\mathbb P$ je
-% \begin{itemize}
-%     \item \emph{sporná}, jestliže v ní platí $\bot$ (spor), ekvivalentně, jestliže nemá žádný model, ekvivalentně, jestliže v ní platí všechny výroky,
-%     \item \emph{bezesporná} (\emph{splnitelná}), pokud není sporná, tj. má nějaký model,
-%     \item \emph{kompletní}, jestliže není sporná a každý výrok je v ní pravdivý nebo lživý (tj. nemá žádné nezávislé výroky), ekvivalentně, pokud má právě jeden model.
-% \end{itemize}    
-% \end{definition}
 
-% Rozmysleme si, proč platí ekvivalence vlastností v definici. Uvědomme si, že ve sporné teorii platí skutečně platí všechny výroky! Vskutku, výrok platí v $T$, pokud platí v každém modelu $T$, ty ale žádné nejsou. Naopak, pokud teorie má alespoň jeden model, v tomto modelu nemůže platit $\bot=p\land\neg p$.
+\section{2.4 Vlastnosti a důsledky teorií}
 
-% A je-li teorie kompletní, nemůže mít dva různé modely $v\neq v'$. Výrok $\varphi_{v}=\bigwedge_{p\in\mathbb P}p^{v(p)}$ (který jsme potkali v důkazu Tvrzení \ref{proposition:not-and-or-is-universal}) by totiž byl nezávislý v $T$, protože platí v modelu $v$ ale ne v modelu $v'$. Naopak, má-li $T$ jediný model $v$, potom každý výrok buď platí ve $v$, a tedy platí v $T$, nebo neplatí ve $v$ a potom je lživý v $T$.
 
-% \begin{example} 
-%     Příkladem sporné teorie je třeba $T_1=\{p,p\limplies q,\neg q\}$. Teorie $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní, například výrok $p\land q$ v ní není pravdivý (neplatí v modelu $(1,0,1)$) ale ani lživý (platí v modelu $(1,1,1)$). Teorie $T_2\cup\{\neg p\}$ je kompletní, jejím jediným modelem je $(0,1,1)$.
-% \end{example}
+\begin{frame}{Vlastnosti teorií}
+ 
 
-% \subsection{Důsledky teorií}
+\begin{itemize}
+    \item \alert{sporná}: $T\models\bot$, ekvivalentně: nemá model, platí v ní vše
+    \item \alert{bezesporná} (\alert{splnitelná}): není sporná, tj. má model
+    \item \alert{kompletní}: bezesporná + každý výrok je v ní pravdivý nebo lživý (nemá nezávislé výroky), ekvivalentně:\myalertinline{právě jeden model}
+    \item \alert{ekvivalence teorií}: $\alert{T\sim T'}$ právě když $\M_\mathbb P(T)=\M_\mathbb P(T')$ (různé \emph{axiomatizace} týchž vlastností)
+\end{itemize}   
 
-% Připomeňme, že důsledek teorie $T$ je každý výrok, který v $T$ platí (tj. platí v každém modelu $T$) a označme si \emph{množinu všech důsledků} teorie $T$ v jazyce $\mathbb P$ jako
-% $$
-% \Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid T\models \varphi\}
-% $$
-% Pokud je teorie $T$ v jazyce $\mathbb P$, můžeme psát: 
-% $$
-% \Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid \M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)\}
-% $$
-% (Dává ale smysl mluvit i o důsledcích teorie v nějakém menším jazyce, který je podmnožinou jazyka $T$). 
+\myexample{\small
+    \begin{itemize}
+        \item $T_1=\{p,p\limplies q,\neg q\}$ je sporná
+        \item $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní, např. $p\land q$ je v ní nezávislý: platí v modelu $(1,1,1)$, neplatí v $(1,0,1)$ 
+        \item $T_2\cup\{\neg p\}$ je kompletní, jediným modelem je $(0,1,1)$.
+        \item ekvivalentní teorie: $\{p\limplies q,r\}\sim\{(\neg p\lor q)\land r\}$
+    \end{itemize}
+}
 
-% Ukážeme si několik jednoduchých vlastností důsledků:
-% \begin{proposition}\label{proposition:properties-of-consequences}
-%     Mějme teorie $T,T'$ a výroky $\varphi,\varphi_1,\dots,\varphi_n$ v jazyce $\mathbb P$. Potom platí:
-%     \begin{enumerate}[(i)]       
-%         \item $T\subseteq\Conseq_\mathbb P(T)$,
-%         \item $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(\Conseq_\mathbb P(T))$,
-%         \item pokud $T\subseteq T'$, potom $\Conseq_\mathbb P(T)\subseteq\Conseq_\mathbb P(T')$,
-%         \item $\varphi\in\Conseq_\mathbb P(\{\varphi_1,\dots,\varphi_n\})$ právě když je výrok $(\varphi_1\land \dots\land\varphi_n)\to\varphi$ tautologie.
-%     \end{enumerate}
-% \end{proposition}
+\end{frame}
 
-% \begin{proof}
-%     Důkaz je snadný, použijeme-li, že $\varphi$ je důsledek $T$ právě když $\M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)$, a uvědomíme-li si následující vztahy:
-%     \begin{itemize}
-%         \item $\M(\Conseq(T))=\M(T)$,
-%         \item je-li $T\subseteq T'$ potom $\M(T)\supseteq\M(T')$,\footnote{Čím více vlastností předepíšeme, tím méně objektů je bude všechny splňovat.}
-%         \item $\psi\limplies\varphi$ je tautologie, právě když platí $\M(\psi)\subseteq\M(\varphi)$,
-%         \item $\M(\varphi_1\land \dots\land\varphi_n)=\M(\varphi_1,\dots,\varphi_n)$.
-%     \end{itemize}
-% \end{proof}
 
-% \begin{exercise}
-%     Dokažte podrobně Tvrzení~\ref{proposition:properties-of-consequences}.
-% \end{exercise}
+\begin{frame}{Důsledky teorií}
+\myblock{
+je-li $T$ v jazyce $\mathbb P$, \alert{množina všech důsledků} teorie $T$ \alert{v jazyce $\mathbb P'$}:\vspace{-12pt}
+$$
+\alert{\Conseq_{\mathbb P'}(T)}=\{\varphi\in\VF_{\mathbb P'}\mid T\models \varphi\}
+$$
+}
 
-% \subsection{Extenze teorií}
+\vspace{-6pt}
+pokud $\mathbb P'=\mathbb P$:
+\myalertinline{
+    $
+\Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid \M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)\}
+$
+}
 
-% Neformálně řečeno, rozšířením, neboli \emph{extenzí} teorie $T$ myslíme jakoukoliv teorii $T'$, která splňuje vše, co platí v teorii $T$ (a něco navíc, nejde-li o triviální případ). Modeluje-li $T$ nějaký systém, lze ji rozšířit dvěma způsoby: přidáním dodatečných požadavků o systému (tomu budeme říkat \emph{jednoduchá extenze}) nebo i rozšířením systému o nějaké nové části. Pokud ve druhém případě nemáme dodatečné požadavky na původní část systému, tedy platí-li o původní části totéž, co předtím, říkáme, že je extenze \emph{konzervativní}.
+\myblock{
+\textbf{Tvrzení:} Jsou-li $T,T'$ teorie a $\varphi,\varphi_1,\dots,\varphi_n$ výroky v jazyce $\mathbb P$:
+    \begin{enumerate}[(i)]       
+        \item $T\subseteq\Conseq_\mathbb P(T)$
+        \item $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(\Conseq_\mathbb P(T))$
+        \item pokud $T\subseteq T'$, potom $\Conseq_\mathbb P(T)\subseteq\Conseq_\mathbb P(T')$
+        \item $\varphi\in\Conseq_\mathbb P(\{\varphi_1,\dots,\varphi_n\})$ právě když $\models(\varphi_1\land \dots\land\varphi_n)\to\varphi$
+    \end{enumerate}
+}
 
-% \begin{example}
-%     Vraťme se k úvodnímu příkladu o barvení grafů, Příklad \ref{example:graph-coloring-intro}. Teorie $T_3$ (úplná obarvení grafu zachovávající hranovou podmínku) je jednoduchou extenzí teorie $T_1$ (částečná obarvení množiny vrcholů bez ohledu na hrany). Teorie $T_3'$ z Sekce \ref{subsection:disadvantages-of-propositional-logic} (přidání nového vrcholu do grafu) je konzervativní, ale ne jednoduchou extenzí $T_3$. A jde o extenzi $T_1$, která není ani jednoduchá ani konzervativní.
-% \end{example}
+\textbf{Důkaz:} dokažte si sami, použijte následující:
+\begin{itemize}
+\item $\M(\Conseq(T))=\M(T)$
+\item je-li $T\subseteq T'$ potom $\M(T)\supseteq\M(T')$
+\item $\models\psi\limplies\varphi$ právě když $\M(\psi)\subseteq\M(\varphi)$\hfill \qedsymbol
+\end{itemize}
 
-% Uveďme nyní konečně formální definice:
+\end{frame}
 
-% \begin{definition}[Extenze teorie]
-%     Mějme teorii $T$ v jazyce $\mathbb P$.
-%     \begin{itemize}
-%         \item \emph{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\Conseq_\mathbb P(T)\subseteq\Conseq_{\mathbb P'}(T')$,
-%         \item je to \emph{jednoduchá extenze}, pokud $\mathbb P'=\mathbb P$,
-%         \item je to \emph{konzervativní extenze}, pokud $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$.
-%     \end{itemize}
-% \end{definition}
-% Extenze tedy znamená, že splňuje všechny důsledky původní teorie. Extenze je jednoduchá, pokud do jazyka nepřidáváme žádné nové výrokové proměnné, a konzervativní, pokud neměníme platnost tvrzení vyjádřitelných v původním jazyce, každý nový důsledek tedy musí obsahovat nějakou nově přidanou výrokovou proměnnou. 
 
-% Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejprve obecné pozorování, které ihned poté ilustrujeme na příkladě:
-% \begin{observation}\label{observation:extensions-semantic-description-propositional}
-%     Je-li $T$ teorie v jazyce $\mathbb P$ a $T'$ teorie v jazyce $\mathbb P'$ obsahujícím jazyk $P$. Potom platí:
-%     \begin{itemize}
-%         \item $T'$ je jednoduchou extenzí $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$,
+\begin{frame}{Extenze teorií: neformálně}
+
+\alert{Extenze} teorie $T$ je jakákoliv teorie, která splňuje vše, co platí v $T$
+\begin{itemize}
+    \item dodatečné požadavky o systému: \alert{jednoduchá extenze}
+    \item přidání nových částí k systému (a v původním platí totéž, co předtím): \alert{konzervativní extenze}
+\end{itemize}
+
+\myexample{
+Úvodní příklad o barvení grafů: 
+\begin{itemize}
+    \item $T_3$ (úplná obarvení s hranovou podmínkou) je jednoduchou extenzí teorie $T_1$ (částečná obarvení bez ohledu na hrany)
+    \item $T_3'$ (přidání nového vrcholu) je konzervativní, ale ne jednoduchou extenzí $T_3$
+    \item $T_3'$ je extenze $T_1$, která není ani jednoduchá, ani konzervativní
+\end{itemize}
+}
+
+\end{frame}
+
+
+\begin{frame}{Extenze teorií: formálně}
+
+\myblock{Buď $T$ v jazyce $\mathbb P$. \alert{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\Conseq_\mathbb P(T)\subseteq\Conseq_{\mathbb P'}(T')$,
+    \begin{itemize}
+        \item \alert{jednoduchá}: $\mathbb P'=\mathbb P$,
+        \item \alert{konzervativní}: $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$.
+    \end{itemize}
+}
+
+\vspace{-6pt}
+(konzervativní: nové důsledky musí obsahovat nové prvovýroky)
+
+\textbf{Tvrzení:} Buď $T$ v jazyce $\mathbb P$ a $T'$ v jazyce $\mathbb P'$ obsahujícím jazyk $P$.
+\begin{itemize}
+\item $T'$ je jednoduchou extenzí $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$,
 %         \item $T'$ je extenzí $T$, právě když $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P'}(T)$. Uvažujeme tedy modely teorie $T$ nad rozšířeným jazykem $\mathbb P'$.\footnote{Pozor, nemůžeme psát $\M_\mathbb P(T')$, protože modely $T'$ musí být ohodnoceními většího jazyka $\mathbb P'$, hodnoty jen pro proměnné z $\mathbb P$ nestačí k určení pravdivostní hodnoty. A nelze psát ani $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P}(T)$, jde o množiny vektorů jiné dimenze.} Jinými slovy, \emph{restrikce}\footnote{\emph{Restrikce} znamená zapomenutí hodnot pro nové výrokové proměnné, resp. smazání příslušných souřadnic při reprezentaci modelu vektorem.} libovolného modelu $v\in\M_{\mathbb P'}(T')$ na původní jazyk $\mathbb P$ musí být modelem $T$, mohli bychom psát $v{\restriction_\mathbb P}\in\M_\mathbb P(T)$ nebo:
 %         $$
 %         \{v{\restriction_\mathbb P}\mid v\in\M_{\mathbb P'}(T')\}\subseteq\M_\mathbb P(T)
@@ -723,8 +755,13 @@ Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzul
 %         $$
 %         \item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')=\M_\mathbb P(T)$, neboli $T'\sim T$.        
 %         \item Kompletní jednoduché extenze $T$ jednoznačně až na ekvivalenci odpovídají modelům $T$.
-%     \end{itemize}
-% \end{observation}
+\end{itemize}
+
+\end{frame}    
+
+
+\begin{frame}{Extenze teorií: příklad}
+
 
 % \begin{example}
 % Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
@@ -741,8 +778,12 @@ Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzul
 % Teorie $T''=\{\neg p\lor q,\neg q\lor r,\neg r\lor p\}$ v jazyce $\mathbb P'$ je extenzí $T$, ale ne konzervativní extenzí, neboť v ní platí $p\liff q$, což neplatí v $T$. Nebo také proto, že model $(0, 1)$ teorie $T$ nelze rozšířit na model teorie $T''$: $(0,1,0)$ ani $(0,1,1)$ nesplňují axiomy $T''$.
 
 % Teorie $T$ je (jednoduchou) extenzí teorie $\{\neg p\lor q\}$ v jazyce $\mathbb P$ a naopak, $T\sim\{\neg p\lor q\}$. Je také, jako každá teorie, jednoduchou konzervativní extenzí sebe sama.
-% \end{example}
+% \end{example}    
+\end{frame}
 
-% \begin{exercise}
-%     Ukažte (podrobně), že má-li teorie $T$ kompletní konzervativní extenzi, potom je sama nutně kompletní.
-% \end{exercise}
+
+
+
+\end{document}
+
+

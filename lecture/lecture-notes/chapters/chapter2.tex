@@ -506,13 +506,13 @@ Disjunktivní normální formu jsme již potkali, v důkazu Tvrzení~\ref{propos
 
 
 \begin{proof}
-    Pro výrok $\varphi_{\mathrm{DNF}}$ viz důkaz Tvrzení~\ref{proposition:not-and-or-is-universal}, každá elementární konjunkce popisuje jeden model. Výrok $\varphi_{\mathrm{CNF}}$ je duální k výroku $\varphi'_{\mathrm{DNF}}$ sestrojenému pro doplněk $M'=\overline{M}$. Nebo můžeme dokázat přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou všechny modely kromě $v$, $\M_C=\M_P\setminus\{v\}$, tedy každá klauzule v konjunkci zakazuje jeden nemodel.
+    Pro výrok $\varphi_{\mathrm{DNF}}$ viz důkaz Tvrzení~\ref{proposition:not-and-or-is-universal}, každá elementární konjunkce popisuje jeden model. Výrok $\varphi_{\mathrm{CNF}}$ je duální k výroku $\varphi'_{\mathrm{DNF}}$ sestrojenému pro doplněk $M'=\overline{M}$. Nebo můžeme dokázat přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou všechny modely kromě $v$, $\M_C=\M_\mathbb P\setminus\{v\}$, tedy každá klauzule v konjunkci zakazuje jeden nemodel.
 \end{proof}
 
 Tvrzení~\ref{proposition:axiomatize-in-DNF-CNF} dává návod, jak převádět výrok do disjunktivní nebo do konjunktivní normální formy:
 
 \begin{example}
-    Uvažme výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve najdeme množinu modelů: $M=\M_\varphi=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Nyní najdeme výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$ podle Tvrzení \ref{proposition:axiomatize-in-DNF-CNF}, ty mají stejnou množinu modelů jako $\varphi$, jsou tedy ekvivalentní.
+    Uvažme výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve najdeme množinu modelů: $M=\M(\varphi)=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Nyní najdeme výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$ podle Tvrzení \ref{proposition:axiomatize-in-DNF-CNF}, ty mají stejnou množinu modelů jako $\varphi$, jsou tedy ekvivalentní.
 
     Výrok $\varphi_{\mathrm{DNF}}$ najdeme tak, že pro každý model sestrojíme elementární konjunkci vynucující právě tento model:
     $$

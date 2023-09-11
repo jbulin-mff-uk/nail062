@@ -700,7 +700,7 @@ $
     \end{enumerate}
 }
 
-\textbf{Důkaz:} dokažte si sami, použijte následující:
+\textbf{Důkaz:} snadný, použijte následující:
 \begin{itemize}
 \item $\M(\Conseq(T))=\M(T)$
 \item je-li $T\subseteq T'$ potom $\M(T)\supseteq\M(T')$
@@ -733,55 +733,66 @@ $
 \begin{frame}{Extenze teorií: formálně}
 
 \myblock{Buď $T$ v jazyce $\mathbb P$. \alert{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\Conseq_\mathbb P(T)\subseteq\Conseq_{\mathbb P'}(T')$,
-    \begin{itemize}
-        \item \alert{jednoduchá}: $\mathbb P'=\mathbb P$,
-        \item \alert{konzervativní}: $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$.
-    \end{itemize}
+  
+\begin{itemize}
+    \item \alert{jednoduchá}: $\mathbb P'=\mathbb P$
+    \item \alert{konzervativní}: $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$\\
+    {\small\it ``nové důsledky musí obsahovat nové prvovýroky''}
+\end{itemize}
 }
 
 \vspace{-6pt}
-(konzervativní: nové důsledky musí obsahovat nové prvovýroky)
 
-\textbf{Tvrzení:} Buď $T$ v jazyce $\mathbb P$ a $T'$ v jazyce $\mathbb P'$ obsahujícím jazyk $P$.
-\begin{itemize}
-\item $T'$ je jednoduchou extenzí $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$,
-%         \item $T'$ je extenzí $T$, právě když $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P'}(T)$. Uvažujeme tedy modely teorie $T$ nad rozšířeným jazykem $\mathbb P'$.\footnote{Pozor, nemůžeme psát $\M_\mathbb P(T')$, protože modely $T'$ musí být ohodnoceními většího jazyka $\mathbb P'$, hodnoty jen pro proměnné z $\mathbb P$ nestačí k určení pravdivostní hodnoty. A nelze psát ani $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P}(T)$, jde o množiny vektorů jiné dimenze.} Jinými slovy, \emph{restrikce}\footnote{\emph{Restrikce} znamená zapomenutí hodnot pro nové výrokové proměnné, resp. smazání příslušných souřadnic při reprezentaci modelu vektorem.} libovolného modelu $v\in\M_{\mathbb P'}(T')$ na původní jazyk $\mathbb P$ musí být modelem $T$, mohli bychom psát $v{\restriction_\mathbb P}\in\M_\mathbb P(T)$ nebo:
-%         $$
-%         \{v{\restriction_\mathbb P}\mid v\in\M_{\mathbb P'}(T')\}\subseteq\M_\mathbb P(T)
-%         $$
-%         \item $T'$ je konzervativní extenzí $T$, pokud je extenzí a navíc platí, že každý model $T$ (v jazyce $\mathbb P$) lze nějak \emph{expandovat} (rozšířit)\footnote{Přidáním hodnot pro nové výrokové proměnné, resp. přidáním odpovídajících souřadnic ve vektorové reprezentaci} na model $T'$ (v jazyce $\mathbb P'$), neboli \emph{každý} model $T$ (v jazyce $\mathbb P$) získáme restrikcí \emph{nějakého} modelu $T'$ na jazyk $\mathbb P$. Mohli bychom psát:
-%         $$
-%         \{v{\restriction_\mathbb P}\mid v\in\M_      {\mathbb P'}(T')\}=\M_\mathbb P(T)
-%         $$
-%         \item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')=\M_\mathbb P(T)$, neboli $T'\sim T$.        
-%         \item Kompletní jednoduché extenze $T$ jednoznačně až na ekvivalenci odpovídají modelům $T$.
-\end{itemize}
+{\small
+%\textbf{Pozorování:} Buď $T$ v jazyce $\mathbb P$ a $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$.
+1. $T'$ je jednoduchá extenze $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$.
 
-\end{frame}    
+2. $T'$ je extenze $T$, právě když $\M_{\mathbb P'}(T')\subseteq\M_{\alert{\mathbb P'}}(T)$. Tj. \alert{restrikce}
+modelů $T'$ na $\mathbb P$ musí být modely $T$:
+\alert{$
+\{v{\restriction_\mathbb P}\mid v\in\M_{\mathbb P'}(T')\}\subseteq\M_\mathbb P(T)
+$}
 
+3. $T'$ je konzervativní extenze $T$, je-li to extenze a navíc každý model $T$ lze \alert{expandovat} na model $T'$ (tj. \emph{každý} model $T$ získáme restrikcí \emph{nějakého} modelu $T'$ na jazyk $\mathbb P$):
+\alert{$
+\{v{\restriction_\mathbb P}\mid v\in\M_      {\mathbb P'}(T')\}=\M_\mathbb P(T)
+$}
 
-\begin{frame}{Extenze teorií: příklad}
+4. $T'$ je extenze $T$ a zároveň $T$ je extenze $T'$, právě když $T\sim T'$.        
 
+5. \alert{Kompletní jednoduché extenze} $T$ \alert{odpovídají modelům} $T$ (jednoznačně až na ekvivalenci).
+}
 
-% \begin{example}
-% Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
-
-% Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:
-% \begin{align*}
-%     \M_{\mathbb P'}(T')&=\{(0,0,0),(0,0,1),(0,1,0),(1,1,1)\}\\ 
-%     &\subseteq\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}=\M_{\mathbb P'}(T)     
-% \end{align*}
-% Jinými slovy, zúžením modelů $T'$ na jazyk $\mathbb P$ dostáváme $\{(0,0),(0,1),(1,1)\}$ což je podmnožina $\M_\mathbb P(T)$. 
-
-% Protože platí dokonce $\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$, jinými slovy, každý model $v\in\M_\mathbb P(T)$ lze rozšířit na model $v'\in\M_{\mathbb P'}(T')$ (např. $(0,1)$ lze rozšířit dodefinováním $v'(r)=0$ na model $(0,1,0)$), je $T'$ dokonce konzervativní extenzí $T$. To znamená, že každý výrok v jazyce $\mathbb P$ platí v $T$, právě když platí v $T'$. Ale výrok $p\limplies r$ (který je v jazyce $\mathbb P'$, ale ne v jazyce $\mathbb P$) je novým důsledkem: platí v $T'$ ale ne v $T$ (viz model $(1,1,0)$).
-
-% Teorie $T''=\{\neg p\lor q,\neg q\lor r,\neg r\lor p\}$ v jazyce $\mathbb P'$ je extenzí $T$, ale ne konzervativní extenzí, neboť v ní platí $p\liff q$, což neplatí v $T$. Nebo také proto, že model $(0, 1)$ teorie $T$ nelze rozšířit na model teorie $T''$: $(0,1,0)$ ani $(0,1,1)$ nesplňují axiomy $T''$.
-
-% Teorie $T$ je (jednoduchou) extenzí teorie $\{\neg p\lor q\}$ v jazyce $\mathbb P$ a naopak, $T\sim\{\neg p\lor q\}$. Je také, jako každá teorie, jednoduchou konzervativní extenzí sebe sama.
-% \end{example}    
 \end{frame}
 
 
+\begin{frame}{Extenze teorií: příklad}
+\small
+\begin{itemize}
+    \item mějme\myexampleinline{
+        $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$
+        }, teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchá extenze $T$: $\M_\mathbb P(T_1)\subseteq\M_\mathbb P(T)$
+    %$\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$
+    \item $T_1$ je kompletní, až na ekvivalenci všechny jednoduché kompletní extenze $T$ jsou: $T_1$, $T_2=\{\neg p,q\}$, a $T_3=\{\neg p,\neg q\}$
+    \item teorie\myexampleinline{
+        $T'=\{p\liff (q\land r)\}$ v $\mathbb P'=\{p,q,r\}$
+    }je extenze $T$: $\mathbb P\subseteq\mathbb P'$ a $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P'}(T)$, restrikce modelů $T'$ na $\mathbb P$ jsou  $\{(0,0),(0,1),(1,1)\}\subseteq\M_\mathbb P(T)$
+    % {\footnotesize
+    % \begin{align*}
+    %     \M_{\mathbb P'}(T')&=\{(0,0,0),(0,0,1),(0,1,0),(1,1,1)\}\\ 
+    %     &\subseteq\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}=\M_{\mathbb P'}(T)     
+    % \end{align*}
+    %}
+    % restrikce modelů $T'$ na $\mathbb P$ jsou {\small $\{(0,0),(0,1),(1,1)\}\subseteq\M_\mathbb P(T)$}
+    
+    \item protože dokonce $\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$, každý model $T$ lze rozšířit na model $T'$, $T'$ je konzervativní extenze $T$
+    \item každý výrok v jazyce $\mathbb P$ platí v $T$, právě když platí v $T'$, ale výrok $p\limplies r$ je novým důsledkem: platí v $T'$ ale ne v $T$
+    \item teorie\myexampleinline{
+        $T''=\{\neg p\lor q,\neg q\lor r,\neg r\lor p\}$ v jazyce $\mathbb P'$
+     }je extenze $T$, ale ne konzervativní, neboť v ní platí $p\liff q$, což neplatí v $T$ (nebo proto, že model $(0, 1)$ teorie $T$ nelze rozšířit na model teorie $T''$)
+\end{itemize}
+ 
+\end{frame}
 
 
 \end{document}

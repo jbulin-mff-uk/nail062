@@ -1,45 +1,57 @@
 \chapter{Problém splnitelnosti}
 
-\emph{Problém splnitelnosti výrokových formulí}, známý také jako \emph{problém SAT}\footnote{Z anglického `Boolean satisfiability problem'.} je následující výpočetní problém: Vstupem je výrok $\varphi$ v CNF (v nějakém rozumném kódování\footnote{Např. DIMACS-CNF formát, viz \href{https://en.wikipedia.org/wiki/SAT_solver}{Wikipedia}.}), a úkolem je rozhodnout, zda je $\varphi$ \emph{splnitelný}.
+\emph{Problém splnitelnosti výrokových formulí}, známý také jako \emph{problém SAT}\footnote{Z anglického `Boolean satisfiability problem'.} je následující výpočetní problém: Vstupem je výrok $\varphi$ v CNF (v nějakém rozumném kódování\footnote{Např. formát \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS-CNF}.}), a úkolem je rozhodnout, zda je $\varphi$ \emph{splnitelný}.
 
 Jak jsme si ukázali v předchozí kapitole, můžeme každý výrok, nebo i každou výrokovou teorii v konečném jazyce, převést do CNF. Problém SAT je tedy v jistém smyslu univerzální; odpovídá na otázku, zda existuje model.
 
 Známá Cook-Levinova věta říká, že problém SAT je \emph{NP-úplný}, tedy je v třídě NP (pokud nám orákulum prozradí správné ohodnocení proměnných, můžeme snadno ověřit, že všechny klauzule jsou splněny) a každý problém z třídy NP na něj lze převést v polynomiálním čase (konkrétně, výpočet Turingova stroje lze popsat pomocí CNF formule).\footnote{Viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN090}{NTIN090 Základy složitosti a vyčíslitelnosti}.}
 
-Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho, dokonce až miliony, výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř?) všech SAT solverů. (V pozdější kapitole uvidíme také souvislost s \emph{rezoluční metodou}.)
+Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho (až desítky milionů) výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř) všech SAT solverů. (V pozdější kapitole uvidíme také souvislost s \emph{rezoluční metodou}.)
 
 
-\section{(draft) SAT solvery}\todo
+\section{SAT solvery}
 
-Praktická ukázka použití řešiče SAT na konkrétní problém.
+První řešiče SAT byly vyvinuty v 60. letech 20. století. Jejich základem je téměř vždy algoritmus DPLL (Davis–Putnam–Logemann–Loveland), který představíme v Sekci \ref{section:DPLL}, respektive některé z jeho vylepšení. Po roce 2000 dochází k poněkud překvapivému, dramatickému vývoji technologií pro řešiče SAT a tím i k rapidnímu růstu jejich užitečnosti v různých oblastech aplikované informatiky. 
 
-% from slides:
+Moderní SAT solvery používají celou řadu technologií pro efektivní řešení typických instancí pocházejících z různých aplikačních domén, strategií a heuristik pro exploraci prostoru řešení (například i za použití strojového učení a neuronových sítí), a dalších vylepšení. Tyto moderní nástroje mají typicky několik desítek tisíc řádků kódu. Dostupnost efektivních SAT solverů významně ovlivnila vývoj například v oblasti softwarové verifikace, analýzy programů, optimalizace, nebo umělé inteligence. Nejlepší SAT solvery spolu pravidelně soutěží v rámci \href{http://www.satcompetition.org}{SAT competition}.
 
+Pro vyzkoušení SAT solvingu nám poslouží řešič \href{https://github.com/mi-ki/glucose-syrup}{\myblue{\texttt{Glucose}}}. Ten přijímá vstup v jednoduchém formátu \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS CNF}. Ukažme si postup použití na následující hříčce zvané \emph{boardomino}:
+
+\begin{example}[Boardomino]
+Lze pokrýt šachovnici s chybějícími dvěma protilehlými rohy perfektně pokrýt kostkami domina?    
+\end{example}
+
+Jak tento problém formalizovat? Zvolme výrokové proměnné $h_{i,j},v_{i,j}$ ($1\leq i,j\leq n$), kde $h_{i,j}$ znamená ``na pozici $(i,j)$ leží levá polovina horizontálně orientované kostky'' a podobně $v_{i,j}$ pro horní polovinu vertikální kostky. Zde $n=8$, ale můžeme vyzkoušet i pro jiné (sudé) rozměry šachovnice. Nyní axiomatizujeme všechny požadované vlastnosti:
 \begin{itemize}
-    \item Problém {SAT}: Je daná výroková formule splnitelná?
-    
-    \item {Příklad}\ \ \mygreen{{\it Lze šachovnici bez dvou protilehlých rohů} perfektně}
-    \mygreen{{\it pokrýt kostkami domina?}}
-    Snadno vytvoříme výrokovou formuli, která je \myblue{splnitelná}, právě když
-    to lze. Pak ji můžeme zkusit ověřit pomocí nějakého SAT řešiče.
+    \item levý horní a pravý dolní roh chybí: $\neg h_{11},\neg v_{11},\neg h_{n,n-1},\neg v_{n-1,n}$
+    \item kostky nevyčnívají z šachovnice (vpravo ani dolů): $\neg h_{i,n},\neg v_{n,i}$ pro  $1\leq i\leq n$
+    \item každé políčko je pokryto alespoň jednou kostkou (první řádek a sloupec zvlášť):
+    \begin{align*}
+        h_{i,j-1}\lor h_{i,j}\lor v_{i-1,j}\lor v_{i,j}&\text{ pro }1<i,j\leq n\\
+        h_{1,j-1}\lor h_{1,j}\lor v_{1,j}&\text{ pro }1<j\leq n\\
+        h_{i,1}\lor v_{i-1,1}\lor v_{i,1}&\text{ pro }1<i\leq n
+    \end{align*}
+    \item každé políčko je pokryto nejvýše jednou kostkou (první řádek a sloupec zvlášť):
+    \begin{align*}
+        (\neg h_{i,j-1}\lor\neg h_{i,j})\land
+        (\neg h_{i,j-1}\lor\neg v_{i-1,j})\land        
+        (\neg h_{i,j-1}\lor\neg v_{i,j})\land&\\
+        (\neg h_{i,j}\lor\neg v_{i-1,j})\land
+        (\neg h_{i,j}\lor\neg v_{i,j})\land
+        (\neg v_{i-1,j}\lor\neg v_{i,j})
+        &\text{ pro }1<i,j\leq n\\
+        (\neg h_{1,j-1}\lor \neg h_{1,j})\land(\neg h_{1,j-1}\lor \neg v_{1,j})\land(\neg h_{1,j}\lor \neg v_{1,j})&\text{ pro }1<j\leq n\\
+        (\neg h_{i,1}\lor \neg v_{i-1,1})\land(\neg h_{i,1}\lor\neg v_{i,1})\land (\neg v_{i-1,1}\lor\neg v_{i,1})&\text{ pro }1<i\leq n
+    \end{align*}    
 
-    \item Nejlepší řešiče pro SAT: \href{http://www.satcompetition.org}{\myblue{\texttt{www.satcompetition.org}}}.
-    
-    \item Řešič v ukázce: \href{http://www.labri.fr/perso/lsimon/glucose/}{\myblue{\texttt{Glucose}}}, formát pro CNF soubory: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\myblue{\texttt{DIMACS}}}.
-    
-    \item Obecnější otázka: \emph{Lze celou matematiku převést do logických formulí?}
-    
-    AI, strojové dokazování, \myblue{Peano: \emph{Formulario}} (1895-1908), \myblue{Mizar system}
-    
-    \item \emph{Proč to lidé (většinou) nedělají?}
-    
-    Jak vyřešíme uvedený příklad \emph{elegantněji}? V čem náš postup spočívá?
+
+
+
 \end{itemize}
 
-% :from slides
+Výsledná teorie už je v CNF, snadno ji můžeme zapsat ve formátu DIMACS CNF, a vyřešit pomocí solveru Glucose. V praxi bychom mohli tento převod naprogramovat, nebo využít jednoho z mnoha vysokoúrovňových jazyků z oblasti \emph{constraint programming} umožňujících překlad do SATu.
 
-
-
+Uvidíme, že takové instance problému SAT budou pro řešiče těžké a už pro poměrně malé rozměry šachovnice se řešení nedočkáme. Jako matematici snadno nahlédneme, že řešení neexistuje: Každá kostka domina pokrývá jedno bílé a jedno černé políčko, ale odebrali jsme dvě bílá, nutně tedy zbudou dvě černá. Tento pohled ale není v zakódování do CNF dostupný. Lze najít částečná ohodnocení téměř všech proměnných, aniž bychom nějakou podmínku porušili. Solver tedy bude muset prohledat téměř celý prostor řešení, než dokáže nesplnitelnost.\footnote{Podobné vlastnosti má také zakódování \emph{holubníkového principu} do SATu.} Klíčovým náhledem do SAT solvingu je fakt, že takové těžké instance se v praxi téměř nikdy nevyskytují.
 
 \section{2-SAT a implikační graf}
 
@@ -218,7 +230,7 @@ Hornovské formule tedy dobře modelují systémy, kde splnění určitých podm
     $$
 \end{example}
 
-Polynomiální algoritmus pro řešení problému Horn-SAT je založený na jednoduché myšlence \emph{jednotkové propagace}: Pokud náš výrok obsahuje \emph{jednotkovou} klauzuli, víme, jak musí být ohodnocenena výroková proměnná obsažená v této klauzuli. A tuto znalost můžeme \emph{propagovat}---využít k zjednodušení výroku. 
+Polynomiální algoritmus pro řešení problému Horn-SAT je založený na jednoduché myšlence \emph{jednotkové propagace}: Pokud náš výrok obsahuje \emph{jednotkovou} klauzuli, víme, jak musí být ohodnocena výroková proměnná obsažená v této klauzuli. A tuto znalost můžeme \emph{propagovat}---využít k zjednodušení výroku. 
 
 Náš výrok $\varphi$ obsahuje jednotkovou klauzuli $p_4$. Víme tedy, že v každém jeho modelu $v\in\M(\varphi)$ musí platit $v(p_4)=1$. To ale znamená, že v libovolném modelu výroku $\varphi$
 \begin{itemize}

@@ -1,9 +1,8 @@
 \documentclass{beamer}
 
-
 \input{header.tex}
 
-\title{Druhá přednáška}
+\title{Třetí přednáška}
 \subtitle{NAIL062 Výroková a predikátová logika}
 \author{Jakub Bulín (KTIML MFF UK)}
 % \institute{KTIML MFF UK}
@@ -38,6 +37,149 @@
 \section{2.5 Algebra výroků}
 
 
+\begin{frame}{Výroky až na ekvivalenci}
+    Kolik existuje výroků nad $\mathbb P=\{p,q,r\}$? Nekonečně mnoho. \alert{Až na ekvivalenci?} Tolik, kolik je možných množin modelů: $2^{2^3}=256$.
+
+    \myalertinline{Výroky až na ekvivalenci studujeme pomocí jejich množin modelů.}
+
+    Ekvivalenční třídy: \alert{$\sfrac{\VF_\mathbb P}{\sim}$}, např. \myexampleinline{\small
+        $[p\limplies q]_\sim=\{p\limplies q,\neg p \lor q,\dots\}$
+    }
+
+    Přiřazení modelů: \myalertinline{
+        \small $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ definované $h([\varphi]_\sim)=\M(\varphi)$
+    }
+    (je dobře definované, prosté, pro konečný jazyk bijekce)
+
+    Na $\sfrac{\VF_\mathbb P}{\sim}$ zavedeme operace $\neg,\landsymb,\lorsymb$ \alert{pomocí reprezentantů}:
+    {\small
+    \begin{align*}
+        \neg [\varphi]_\sim &=[\neg\varphi]_\sim\\
+        [\varphi]_\sim \land [\psi]_\sim &= [\varphi\land\psi]_\sim\\
+        [\varphi]_\sim \lor [\psi]_\sim &= [\varphi\lor\psi]_\sim\\
+    \end{align*}
+    }
+
+    \vspace{-18pt}
+    přidáme konstanty {\small $\bot=[\bot]_\sim,\top=[\top]_\sim$}, máme \emph{Booleovu algebru}: \alert{algebru výroků} jazyka $\mathbb P$; totéž relativně k teorii $T$ (\alert{použijeme $\sim_T$})
+\end{frame}
+
+
+\begin{frame}{Algebra výroků}
+
+\myblock{
+\alert{Algebra výroků} jazyka $\mathbb P$ resp. teorie $T$: \vspace{-6pt}
+\begin{align*}
+    \mathbf{AV}_\mathbb P&=\langle \sfrac{\VF_\mathbb P}{\sim}; \neg, \landsymb, \lorsymb, \bot, \top\rangle\\
+    \mathbf{AV}_\mathbb P(T)&=\langle \sfrac{\VF_\mathbb P}{\sim_T}; \neg_T, \landsymb_T, \lorsymb_T, \bot_T, \top_T\rangle
+\end{align*}
+}
+
+přiřazení modelů $h$ je prosté zobrazení algebry výroků jazyka do \alert{potenční algebry} \myalertinline{
+    $\mathbf{\mathcal P(\M_\mathbb P)}=\langle \mathcal P(\M_\mathbb P); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb P\rangle$
+} \alert{zachovávající} operace a konstanty: $h(\bot)=\emptyset$, $h(\top)=\M_\mathbb P$, a
+{\small
+\begin{align*}
+    h(\neg[\varphi]_\sim)&=\overline{h([\varphi]_\sim)}=\overline{\M(\varphi)}=\M_\mathbb P\setminus\M(\varphi)\\
+    h([\varphi]_\sim\land[\psi]_\sim)&=h([\varphi]_\sim)\cap h([\psi]_\sim)=\M(\varphi)\cap\M(\psi)\\
+    h([\varphi]_\sim\lor[\psi]_\sim)&=h([\varphi]_\sim)\cup h([\psi]_\sim)=\M(\varphi)\cup\M(\psi)
+\end{align*}
+}
+tj. je to  \alert{homomorfismus} Booleových algeber, a nad konečným jazykem bijekce, tzv. \alert{izomorfismus}; stejně pro algebru výroků teorie
+
+\myblock{
+\textbf{Důsledek:}
+Pro bezespornou teorii $T$ nad \emph{konečným} jazykem $\mathbb P$ je algebra výroků   $\mathbf{AV}_\mathbb P(T)$ izomorfní potenční algebře $\mathbf{\mathcal P(\M_\mathbb P(T))}$ prostřednictvím zobrazení $h([\varphi]_{\sim_T})=M(T,\varphi)$.
+}
+
+\end{frame}
+
+
+\begin{frame}{Počítání až na ekvivalenci}
+
+    \myblock{
+    \textbf{Tvrzení:}
+        Mějme $n$-prvkový jazyk $\mathbb P$ a bezespornou teorii $T$ mající právě $k$ modelů. Potom v jazyce $\mathbb P$ existuje \alert{až na ekvivalenci}:
+        \begin{itemize}
+            \item $2^{2^n}$ výroků (resp. teorií),
+            \item $2^{2^n-k}$ výroků pravdivých (resp. lživých) v $T$,
+            \item $2^{2^n}-2\cdot 2^{2^n-k}$ výroků nezávislých v $T$,
+            \item $2^k$ jednoduchých extenzí teorie $T$ (z toho 1 sporná),
+            \item $k$ kompletních jednoduchých extenzí $T$.
+        \end{itemize}
+        Dále \alert{až na $T$-ekvivalenci} existuje:
+        \begin{itemize}
+            \item $2^k$ výroků,
+            \item $1$ výrok pravdivý v $T$, $1$ lživý v $T$,
+            \item $2^k-2$ výroků nezávislých v $T$.
+        \end{itemize}
+    }
+
+    \textbf{Důkaz:} stačí spočítat možné množiny modelů\hfill\qedsymbol
+        
+\end{frame}
+
+
+\section{\sc Kapitola 3: Problém splnitelnosti}
+
+
+\begin{frame}{Problém splnitelnosti Booleovských formulí}
+   
+\textbf{Problém SAT:}
+\begin{itemize}
+    \item vstup: výrok $\varphi$ v CNF
+    \item otázka: je $\varphi$ splnitelný? 
+\end{itemize}
+
+\alert{univerzální problém}: každou teorii nad konečným jazykem lze převést do CNF
+
+\alert{Cook-Levinova věta}: SAT je NP-úplný (důkaz: formalizuj výpočet nedeterministického Turingova stroje ve výrokové logice)
+
+ale některé \emph{fragmenty} jsou v P, efektivně řešitelné, např. 2-SAT a Horn-SAT (viz Sekce 3.2 a 3.3)
+
+\alert{praktický problém}: moderní \emph{SAT solvery} (viz Sekce 3.1) se používají v řadě odvětví aplikované informatiky, poradí si s obrovskými instancemi
+    
+\end{frame}
+
+
+\section{3.1 SAT solvery}
+
+
+\begin{frame}{SAT solvery}
+
+    \begin{itemize}
+        \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.
+        \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)
+        \item řada technologií pro efektivnější řešení instancí pocházejících z různých aplikačních domén, heuristiky pro řízení prohledávání (za použití ML, NN) --- desítky tisíc řádků kódu
+    \end{itemize}
+    
+    \textbf{Praktická ukázka:}
+
+    \myexample{\emph{Boardomino:}
+    Lze pokrýt šachovnici s chybějícími dvěma protilehlými rohy perfektně pokrýt kostkami domina?
+    }
+
+    \vspace{-6pt}
+    těžká instance SATu (proč?), jak zakódovat? 
+    
+    řešič \href{http://www.labri.fr/perso/lsimon/glucose/}{\alert{Glucose}}, formát vstupu: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\alert{DIMACS CNF}}
+    
+\end{frame}
+
+
+\section{3.2 2-SAT a implikační graf}
+
+
+\section{3.3 Horn-SAT a jednotková propagace}
+
+
+\section{3.4 DPLL algoritmus pro řešení problému SAT}
+
+
+
 \end{document}
 
 
+
+    \item Nejlepší řešiče pro SAT: \href{http://www.satcompetition.org}{\myblue{\texttt{www.satcompetition.org}}}.
+    

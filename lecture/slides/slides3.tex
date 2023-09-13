@@ -170,16 +170,314 @@ ale některé \emph{fragmenty} jsou v P, efektivně řešitelné, např. 2-SAT a
 \section{3.2 2-SAT a implikační graf}
 
 
+\begin{frame}{2-SAT vs. 3-SAT}
+
+    \begin{itemize}
+        \item \alert{$k$-CNF}: CNF a každá klauzule nejvýše $k$ literálů
+        \item \alert{$k$-SAT}: je daný $k$-CNF výrok splnitelný?
+        \item $k$-SAT je NP-úplný pro $k\geq 3$ (ke každému výroku lze sestrojit \alert{ekvisplnitelný} 3-CNF výrok)
+        \item ale \myalertinline{2-SAT je v P, dokonce řešitelný v lineárním čase}
+        \item algoritmus využívá tzv. \alert{implikační graf}:         
+        \begin{itemize}
+            \item 2-klauzule $p\lor q$ je ekvivalentní $\neg p\limplies q$ a také $\neg q\limplies p$
+            \item $p\sim p\lor p$ je ekvivalentní $\neg p\limplies p$
+            \item vrcholy jsou literály
+            \item hrany dané implikacemi
+            \item \textbf{myšlenka}: ohodnotíme-li vrchol 1, všude kam se dostaneme po hranách (\alert{komponenta} silné souvislosti) musí být také 1
+        \end{itemize}        
+    \end{itemize}    
+    
+\end{frame}
+
+
+\begin{frame}{Implikační graf}
+
+\begin{itemize}
+    \item $V(\mathcal G_\varphi) = \{p, \neg p \mid p\in\Var(\varphi)\}$,
+    \item $E(\mathcal G_\varphi) = \{(\overline{\ell_1},\ell_2), (\overline{\ell_2},\ell_1)\mid \ell_1\lor \ell_2\text{ je klauzule }\varphi\}\union\{(\overline{\ell},\ell)\mid \ell \text{ je jednotková klauzule }\varphi\}$
+\end{itemize} 
+
+\medskip
+\myexamplemath{\vspace{-6pt}\small
+$$
+    (\neg p_1 \lor p_2) \land (\neg p_2 \lor \neg p_3) 
+    \land  (p_1\lor p_3) \land (p_3\lor \neg p_4)\land  (\neg p_1\lor p_5)\land (p_2\lor p_5)\land p_1\land \neg p_4    
+$$    
+}
+\vspace{-18pt}
+\begin{columns}
+    \begin{column}{0.45\textwidth}
+    
+    \begin{itemize}
+        \item najdeme komponenty silné souvislosti
+        \item literály v komponentě musí být ohodnoceny stejně (jinak ``$1\limplies 0$'')
+        \item pokud má nějaká komponenta opačné literály, je $\varphi$ nesplnitelný
+        \item jinak sestrojíme model:
+    \end{itemize}
+    
+    \end{column}
+    \begin{column}{0.55\textwidth}
+        \scalebox{0.85}{
+        \begin{tikzpicture}[every node/.style={circle,fill=gray!5,draw,minimum width=1cm,node distance=2cm}
+        ]
+        \node[fill=red!10] (-5) {$\neg p_5$};
+        \node[fill=blue!10,right of=-5] (-1) {$\neg p_1$};
+        \node[fill=blue!10,above of=-1] (-2) {$\neg p_2$};
+        \node[fill=blue!10,below of=-1] (3) {$p_3$};    
+        \node[fill=green!10,left of=3] (4) {$p_4$};
+        \node[fill=blue!70,right of=-1] (1) {$p_1$}; 
+        \node[fill=blue!70,above of=1] (2) {$p_2$};
+        \node[fill=blue!70,below of=1] (-3) {$\neg p_3$};       
+        \node[fill=red!70,right of=1] (5) {$p_5$};            
+        \node[fill=green!70,right of=-3] (-4) {$\neg p_4$};
+        \draw[-{Latex[length=2.5mm]}] (-5) -- (-1);
+        \draw[-{Latex[length=2.5mm]}] (-1) -- (3);
+        \draw[-{Latex[length=2.5mm]}] (3) edge[bend right] (-2);
+        \draw[-{Latex[length=2.5mm]}] (-2) -- (-1);
+        \draw[-{Latex[length=2.5mm]}] (4) -- (3);
+        \draw[-{Latex[length=2.5mm]}] (-1) -- (1);
+        \draw[-{Latex[length=2.5mm]}] (-3) -- (1);
+        \draw[-{Latex[length=2.5mm]}] (2) edge[bend left] (-3);
+        \draw[-{Latex[length=2.5mm]}] (1) -- (2);
+        \draw[-{Latex[length=2.5mm]}] (-5) edge[bend left=70] (2);
+        \draw[-{Latex[length=2.5mm]}] (4) edge[bend right] (-4);
+        \draw[-{Latex[length=2.5mm]}] (1) -- (5);
+        \draw[-{Latex[length=2.5mm]}] (-2) edge[bend left=70] (5);
+        \draw[-{Latex[length=2.5mm]}] (-3) -- (-4);
+        \end{tikzpicture}
+        }
+    \end{column}    
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Konstrukce modelu}
+
+\myalert{
+stačí, aby z žádné komponenty ohodnocené 1 nevedla hrana do komponenty ohodnocené 0
+}
+
+\vspace{-9pt}
+provedeme \alert{kontrakci komponent}, výsledný graf $\mathcal G_\varphi^\ast$ je \alert{acyklický}
+
+\vspace{-9pt}
+\begin{center}
+    \scalebox{0.7}{
+        \begin{tikzpicture}[every node/.style={circle,fill=gray!5,draw,minimum width=1cm,node distance=2cm}
+        ]
+        \node[fill=red!10] (C1) {$C_1$};
+        \node[fill=blue!10,below right of=C1] (C3) {$C_3$};
+        \node[fill=green!10,below left of=C3] (C2) {$C_2$};
+        \node[fill=blue!70,right of=C3] (barC3) {$\overline{C_3}$}; 
+        \node[fill=red!70,above right of=barC3] (barC1) {$\overline{C_1}$};                    
+        \node[fill=green!70,below right of=barC3] (barC2) {$\overline{C_2}$};
+        \draw[-{Latex[length=2.5mm]}] (C1) -- (C3);
+        \draw[-{Latex[length=2.5mm]}] (C2) -- (C3);
+        \draw[-{Latex[length=2.5mm]}] (C3) -- (barC3);
+        \draw[-{Latex[length=2.5mm]}] (barC3) -- (barC1);
+        \draw[-{Latex[length=2.5mm]}] (barC3) -- (barC2);
+        \draw[-{Latex[length=2.5mm]}] (C1) edge[bend left] (barC3);
+        \draw[-{Latex[length=2.5mm]}] (C3) edge[bend left] (barC1);
+        \draw[-{Latex[length=2.5mm]}] (C2) edge[bend right] (barC2);
+        \end{tikzpicture}
+    }
+\end{center}
+\vspace{-9pt}
+
+
+najdeme nějaké \alert{topologické uspořádání}; v něm najdeme nejlevější dosud neohodnocenou komponentu, ohodnotíme ji 0, opačnou komponentu ohodnotíme 1, a opakujeme
+
+\vspace{-9pt}
+\begin{center}
+\scalebox{0.7}{
+    \begin{tikzpicture}[every node/.style={circle,fill=gray!5,draw,minimum width=1cm,node distance=2cm}
+        ]
+        \node[fill=red!10,label={below:0}] (C1) {$C_1$};
+        \node[fill=green!10,right of=C1,label={below:0}] (C2) {$C_2$};
+        \node[fill=blue!10,right of=C2,label={below:0}] (C3) {$C_3$};
+        \node[fill=blue!70,right of=C3,label={below:1}] (barC3) {$\overline{C_3}$}; 
+        \node[fill=green!70,right of=barC3,label={below:1}] (barC2) {$\overline{C_2}$};
+        \node[fill=red!70,right of=barC2,label={below:1}] (barC1) {$\overline{C_1}$};                    
+        
+        \draw[-{Latex[length=2.5mm]}] (C1) edge[bend left] (C3);
+        \draw[-{Latex[length=2.5mm]}] (C2) -- (C3);
+        \draw[-{Latex[length=2.5mm]}] (C3) -- (barC3);
+        \draw[-{Latex[length=2.5mm]}] (barC3) edge[bend left] (barC1);
+        \draw[-{Latex[length=2.5mm]}] (barC3) -- (barC2);
+        \draw[-{Latex[length=2.5mm]}] (C1) edge[bend left] (barC3);
+        \draw[-{Latex[length=2.5mm]}] (C3) edge[bend left] (barC1);
+        \draw[-{Latex[length=2.5mm]}] (C2) edge[bend left] (barC2);
+        \end{tikzpicture}
+    }
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}{Shrnutí}
+     
+\myblock{
+\textbf{Tvrzení:} $\varphi$ je splnitelný, právě když žádná silně souvislá komponenta v $\mathcal G_\varphi$ neobsahuje dvojici opačných literálů.
+}
+
+\vspace{-12pt}
+\textbf{Důkaz:} $\Rightarrow$ literály v komponentě musí být ohodnoceny stejně
+
+$\Leftarrow$ ohodnocení zkonstruované výše je model $\varphi$:
+\begin{itemize}
+    \item \alert{jednotková} klauzule $\ell$ platí\myalertinline{
+        kvůli hraně ${\ell}\limplies\ell$}, komponenta s $\overline{\ell}$ byla ohodnocena dříve, a to 0, takže $v(\ell)=1$
+    \item podobně pro \alert{2-klauzuli} $\ell_1\lor\ell_2$,\myalertinline{
+        máme hrany $\overline{\ell_1}\limplies\ell_2$, $\overline{\ell_2}\limplies\ell_1$}   
+    
+    pokud jsme $\ell_1$ ohodnotili dříve než $\ell_2$, museli jsme jako první narazit na komponentu s $\overline{\ell_1}$ a ohodnotit ji 0, tedy $\ell_1$ platí; v~opačném případě symetricky platí $\ell_2$ \hfill\qedsymbol
+\end{itemize}
+
+
+\myblock{
+\textbf{Důsledek:} 2-SAT je řešitelný v lineárním čase, včetně konstrukce modelu (pokud existuje). 
+}
+
+\vspace{-12pt}
+\textbf{Důkaz:}
+Komponenty silné souvislosti i topologické uspořádání najdeme v čase $\mathcal O(|V|+|E|)$, stačí je projít jednou \hfill\qedsymbol
+
+\end{frame}
+
+
 \section{3.3 Horn-SAT a jednotková propagace}
+
+
+\begin{frame}{Horn-SAT}
+
+    \begin{itemize}
+        \item \alert{hornovská klauzule}: \emph{nejvýše jeden *pozitivní* literál}
+        $$
+        \alert{\neg p_1\lor \neg p_2\lor \dots \lor \neg p_n\lor q}\ \sim\ (p_1\land p_2\land\dots \land p_n)\limplies q
+        $$
+        základ logického programování (Prolog \myblockinline{\texttt{q:-p1,p2,...,pn.}})
+        \item \myalertinline{Horn-SAT}, tj. splnitelnost \alert{hornovského} výroku (konjunkce hornovských klauzulí) \myalertinline{je opět v P, v lineárním čase}
+        \item algoritmus využívá tzv. \alert{jednotkovou propagaci}:  
+        \begin{itemize}
+            \item jednotková klauzule vynucuje hodnotu výrokové proměnné
+            \item tím můžeme výrok zjednodušit, např. pro $\neg p$ ($p=0$):\\
+            odstraníme klauzule s literálem $\neg p$, už jsou splněné\\
+            odstraníme literál $p$ (nemůže být splněný)
+            \item žádná jednotková klauzule $\Rightarrow$ každá klauzule má \alert{aspoň jeden negativní literál} $\Rightarrow$ vše nastavíme na 0
+        \end{itemize}    
+    \end{itemize}    
+    
+\end{frame}
+
+
+\begin{frame}{Jednotková propagace}
+
+\myexamplemath{\vspace{-9pt}
+    $$
+    \varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)\land(\neg p_5\lor \neg p_4)\land \alert{p_4}
+    $$
+}
+
+\vspace{-12pt}
+\begin{itemize}
+    \item nastav $v(p_4)=1$, odstraň klauzule obsahující literál $p_4$, z ostatních klauzulí odstraň $\neg p_4$
+    $$
+    \varphi^{p_4}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land (\neg p_2\lor\neg p_3)\land\alert{\neg p_5}
+    $$
+    \item nastav $v(p_5)=0$, proveď jednotkovou propagaci $\neg p_5$
+    $$
+    (\varphi^{p_4})^{\neg p_5}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)
+    $$
+    \item už žádná jednotková klauzule, v každé klauzuli alespoň dva literály ale \alert{nejvýše jeden pozitivní, tj. alespoň jeden negativní}: $v(p_1)=v(p_2)=v(p_3)=0$, model $v=(0,0,0,1,0)$
+\end{itemize}
+
+\myalertmath{
+    $$
+    \varphi^\ell=\{C\setminus\{\overline{\ell}\}\mid C\in\varphi,\ell\notin C\}\qquad\text{(množinový zápis)}
+    $$
+}
+\myblock{
+\textbf{Pozorování:} $\varphi^\ell$ neobsahuje $\ell$ ani $\overline{\ell}$, modely = modely $\varphi$ splňující $\ell$
+}
+
+\vspace{-12pt}
+\myexampleinline{
+    $\psi=p\land (\neg p\lor q)\land (\neg q\lor r)\land\neg r$} je nesplnitelný, co se stane?
+
+\end{frame}
+
+
+\begin{frame}{Algoritmus pro Horn-SAT}
+
+    \textbf{vstup}: výrok $\varphi$ v Hornově tvaru,\\ \textbf{výstup}: model $\varphi$ nebo informace, že $\varphi$ není splnitelný
+    \begin{enumerate}
+        \item Pokud $\varphi$ obsahuje dvojici opačných jednotkových klauzulí $\ell,\overline{\ell}$, není splnitelný.
+        \item Pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnoť všechny zbývající proměnné 0.
+        \item Pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, nahraď $\varphi$ výrokem $\varphi^\ell$, a vrať se na začátek.
+    \end{enumerate}
+
+\myblock{
+\textbf{Tvrzení:} Algoritmus je korektní.\\
+\textbf{Důsledek:} Horn-SAT lze řešit v lineárním čase.\vspace{3pt}
+}
+
+\vspace{-12pt}
+\textbf{Důkaz:} {\small Korektnost plyne z pozorování a z diskuze. V každém kroku stačí projít, výrok zkrátíme (kvadratický horní odhad, ale při vhodné implementaci lineární)}
+
+\end{frame}
 
 
 \section{3.4 DPLL algoritmus pro řešení problému SAT}
 
 
+\begin{frame}{Algoritmus DPLL (Davis-Putnam-Logemann-Loveland, 1961)}
+\alert{čistý výskyt} $p$ = buď jen v pozitivních nebo jen v negativních literálech (lze mu nastavit příslušnou hodnotu!)
+
+\myblock{
+DPLL = jednotková propagace + čistý výskyt + větvení (rekurze)
+}
+        \textbf{vstup}: výrok $\varphi$ v CNF,\\ 
+        \textbf{výstup}: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
+        \begin{enumerate}                
+            \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď \alert{jednotkovou propagaci}, a nahraď $\varphi$ výrokem $\varphi^\ell$.
+             \item Dokud existuje literál $\ell$, který má ve $\varphi$ \alert{čistý výskyt}, ohodnoť $\ell$ hodnotou 1, a odstraň klauzule obsahující $\ell$.
+            \item Pokud $\varphi$ neobsahuje žádnou klauzuli, je splnitelný.
+            \item Pokud $\varphi$ obsahuje prázdnou klauzuli, není splnitelný.
+            \item Jinak zvol dosud neohodnocenou výrokovou proměnnou $p$, a \alert{zavolej algoritmus rekurzivně} na $\varphi\land p$ a na $\varphi\land \neg p$.
+        \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}{Ukázkový běh}
+
+\medskip
+
+\myexamplemath{\small\vspace{-6pt}
+    \begin{align*}
+        &(\neg p\lor q\lor \neg r)\land(\neg p\lor\neg q\lor\neg s)\land(p\lor \neg r\lor \neg s)\land \\ &(q\lor \neg r\lor s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
+    \end{align*}
+}
+
+žádná jednotková klauzule, $\neg r$ má \alert{čistý výskyt}: nastav  $v(r)=0$ a odstraň klauzule obsahující $\neg r$:
+    $$
+    (\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
+    $$
+    už žádný čistý výskyt, rekurzivně zavolej na:
+    \begin{enumerate}
+        \item $(\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\alert{\land p}$
+        \item $(\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\alert{\land \neg p}$
+    \end{enumerate}
+    a pokračuj dále v obou větvích výpočtu
+    \begin{gather*}
+        \vdots \\
+        \M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}
+    \end{gather*}
+ 
+    
+\end{frame}
+
 
 \end{document}
 
-
-
-    \item Nejlepší řešiče pro SAT: \href{http://www.satcompetition.org}{\myblue{\texttt{www.satcompetition.org}}}.
-    

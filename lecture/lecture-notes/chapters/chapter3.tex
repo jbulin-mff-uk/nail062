@@ -249,7 +249,7 @@ Jednotkovou propagací jsme získali ve výroku $\varphi^{p_4}$ novou jednotkovo
 $$
 (\varphi^{p_4})^{\neg p_5}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)
 $$
-Výsledný výrok už neobsahuje jednotkovou klauzuli. To ale znamená, že každá klauzule obsahuje alespoň dva literály, a nejvýše jeden z nich může být pozitivní! (Zde potřebujeme hornovskost výroku.) Protože každá klauzule obsahuje negativní literál, stačí ohodnotit všechny zbývající proměnné 0, a výrok bude splněn: $v(p_1)=v(p_2)=v(p_3)=0$. Dostáváme tedy model $v=(0,0,0,1,1)$.
+Výsledný výrok už neobsahuje jednotkovou klauzuli. To ale znamená, že každá klauzule obsahuje alespoň dva literály, a nejvýše jeden z nich může být pozitivní! (Zde potřebujeme hornovskost výroku.) Protože každá klauzule obsahuje negativní literál, stačí ohodnotit všechny zbývající proměnné 0, a výrok bude splněn: $v(p_1)=v(p_2)=v(p_3)=0$. Dostáváme tedy model $v=(0,0,0,1,0)$.
 
 \begin{example}
     Co by se stalo, pokud by výrok nebyl splnitelný? Podívejme se na výrok 
@@ -348,6 +348,6 @@ Algoritmus běží v exponenciálním čase: počet větvení výpočtu nemůže
         Po provedení jednotkové propagace $\neg p$ máme $s\land \neg s\land(q\lor s)$. Po provedení jednotkové propagace $s$ máme $\square\land q$, kde $\square$ je prázdná klauzule. Výrok je tedy nesplnitelný a v této větvi nedostaneme žádné modely. 
     \end{itemize}
 
-Zjistili jsme, že původní výrok je splnitelný, má 8 modelů, konkrétně: $\M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\},\}$.\footnote{To znamená, že je ekvivalentní výroku $p\land \neg r$.}
+Zjistili jsme, že původní výrok je splnitelný, má 8 modelů, konkrétně: $\M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}$.\footnote{To znamená, že je ekvivalentní výroku $p\land \neg r$.}
     
 \end{example}

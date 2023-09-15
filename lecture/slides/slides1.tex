@@ -138,7 +138,7 @@
     \myexample{            
         $p_1=${\it ``Poklad je v první chodbě.''}\\
         $p_2=${\it ``Poklad je ve druhé chodbě.''}
-    }\vspace{-12pt}
+    }
 
     (Co nejmenší, např. hodnota $t=${\it ``Trpaslík mluví pravdu.''} je jednoznačně určená hodnotami $\mathbb P=\{p_1,p_2\}$.)
     \begin{itemize}
@@ -182,7 +182,6 @@
     $$
     }
 
-    \vspace{-12pt}
     \myblock{V \alert{každém modelu} teorie $T$ platí výrok $p_2$, neboli $p_2$ je \alert{důsledek}~$T$.}
     
 \end{frame}
@@ -211,7 +210,6 @@
 
 \end{frame}
 
-%\section{tablo metoda (neformálně)}
 
 \begin{frame}{Metoda analytického tabla}
 
@@ -219,20 +217,25 @@
     \item důkaz je strom olabelovaný předpoklady o platnosti výroků
     \item v kořeni: \alert{neplatí} dokazovaný výrok $\psi$ (důkaz sporem)
     \item připojíme platnost axiomů z $T$
-    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících následující \alert{invariant}:\medskip
+    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících následující \alert{invariant}:
     
-    \myalert{
+    \bigskip
+    \myalert{\it
         Každý model teorie \(T\), ve kterém neplatí \(\psi\), se musí \emph{shodovat} s některou z větví tabla. 
     }
     
-    \vspace{-6pt}
-    \item například:\medskip
+    \bigskip
+
+    \item například:
+    
+    \bigskip
     \myblock{
     \alert{\small True $(\varphi_1 \limplies \varphi_2 )$} zredukujeme rozvětvením na \alert{\small False $\varphi_1$} a \alert{\small True $\varphi_2$},\\
     \alert{\small False $(\varphi_1 \limplies \varphi_2 )$} zredukujeme připojením \alert{\small True $\varphi_1$} a \alert{\small False $\varphi_2$}.
     }
+    \smallskip    
         
-    \vspace{-6pt}
+
     \item \alert{sporná} větev = předpokládá True i False stejného výroku
     \item \alert{důkaz} = všechny větve sporné (tj. nemůže existovat model $T$, ve kterém neplatí $\psi$)
 \end{itemize}
@@ -286,9 +289,6 @@
 \end{frame}
 
 
-%\section{rezoluční metoda (neformálně)}
-
-
 \begin{frame}{Konjunktivní normální forma (CNF)}
 
     \alert{literál} $p$, $\neg p$\hfill \alert{klauzule} disjunkce literálů\hfill \alert{CNF} konjunkce klauzulí
@@ -296,16 +296,12 @@
     \myblock{
         každý výrok má \alert{ekvivalentní} CNF (\alert{$\psi \sim \psi'$}, stejné modely)
     }
-
     
-    \vspace{-12pt}
     \myexample{např. pro výrok 
     $
     (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
     $
     }
-
-    \vspace{-12pt}
 
     nahradíme \alert{$\neg (\neg p_1) \sim p_1$} a \alert{$\neg (p_1 \lor p_2) \sim (\neg p_1 \land \neg p_2)$} (\emph{De Morgan})
 
@@ -315,17 +311,14 @@
     $$
     }
 
-    \vspace{-18pt}
-
     a dále opakovaně použijeme \alert{distributivitu} \( \lorsymb \) vůči \( \landsymb \): \medskip
 
-    \myexamplemath{\vspace{-12pt}
+    \myexampleamsmath{
     \begin{gather*}
     (\neg p_1 \lor p_1) \land (\neg p_1 \lor \neg p_1) \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2 \lor p_1) \land\\ (p_1 \lor p_2 \lor \neg p_1)\land (p_1 \lor p_2 \lor \neg p_2)    
     \end{gather*}    
     }
 
-    \vspace{-6pt}
     už je CNF, ještě zjednodušíme: odstraníme duplicitní literály, a klauzule obsahující $p_i$ a zároveň $\neg p_i$ (to jsou \alert{tautologie})
 
     \myexamplemath{
@@ -333,71 +326,77 @@
     \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)
     $$
     }
+
 \end{frame}
 
 
 \begin{frame}{Rezoluční důkaz}
 
-Důkaz sporem: převedeme \alert{negaci} dokazovaného do CNF a přidáme
+    Důkaz sporem: převedeme \alert{negaci} dokazovaného do CNF a přidáme
 
-\myblock{
-\alert{\(p_2\) platí v \(T\)}, právě když je následující CNF výrok \alert{nesplnitelný}:
-}
-\myexamplemath{
-$$
-\neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)\land\alert{\neg p_2}
-$$
-}\vspace{-6pt}
+    \myblock{
+    \alert{\(p_2\) platí v \(T\)}, právě když je následující CNF výrok \alert{nesplnitelný}:
+    }
 
-množinový zápis:
-\myexampleinline{$
-S=\left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
-$
-}
+    \myexamplemath{
+    $$
+    \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)\land\alert{\neg p_2}
+    $$
+    }
 
-\myalert{\alert{rezoluční pravidlo}: je-li $p\in C_1$ a $\neg p\in C_2$, potom \emph{rezolventa} 
-$$
-C= (C_1\setminus \{p\})\cup(C_2\setminus \{\neg p\})
-$$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
-}
+    množinový zápis:
+    \myexampleinline{$
+    S=\left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
+    $
+    }
 
-\alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, kde každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
+    \medskip
 
-\myblock{protože $\square$ nemá žádný model, je i $S$ nesplnitelná}
+    \myalert{\alert{rezoluční pravidlo}: je-li $p\in C_1$ a $\neg p\in C_2$, potom \emph{rezolventa} 
+    $$
+    C= (C_1\setminus \{p\})\cup(C_2\setminus \{\neg p\})
+    $$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
+    }
+    
+    \medskip
+
+    \alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, kde každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
+
+    \myblock{\textbf{myšlenka:} protože $\square$ nemá žádný model, je i $S$ nesplnitelná}
 
 \end{frame}
 
 
 \begin{frame}{Příklad rezolučního důkazu}
 
-\alert{rezoluční zamítnutí} (třetí klauzule je rezolventou 1. a 2., pátá je rezolventou 3. a 4.)
-\myexample{\vspace{-6pt}
-\[
-    \{\neg p_1\},\{p_1, p_2\},\{p_2\},\{\neg p_2\},\square
-\]
-}
+    \alert{rezoluční zamítnutí} (třetí klauzule je rezolventou 1. a 2., pátá je rezolventou 3. a 4.)
 
+    \myexamplemath{
+    \[
+        \{\neg p_1\},\{p_1, p_2\},\{p_2\},\{\neg p_2\},\square
+    \]
+    }
 
-\alert{rezoluční strom} (listy klauzule z $S$, vnitřní vrcholy rezolventy synů) 
-\myexample{
-    \begin{center}
-        \begin{forest}
-        for tree={grow=north}
-        [\( \square \)
-            [\( \{\neg p_2\} \)]
-            [\( \{p_2\} \)
-            [{\( \{p_1, p_2\} \)}]
-            [\( \{\neg p_1\} \)]
+    \bigskip
+
+    \alert{rezoluční strom} (listy klauzule z $S$, vnitřní vrcholy rezolventy synů) 
+
+    \myexample{
+        \begin{center}
+            \begin{forest}
+            for tree={grow=north}
+            [\( \square \)
+                [\( \{\neg p_2\} \)]
+                [\( \{p_2\} \)
+                [{\( \{p_1, p_2\} \)}]
+                [\( \{\neg p_1\} \)]
+                ]
             ]
-        ]
-        \end{forest}
-    \end{center}
-}
+            \end{forest}
+        \end{center}
+    }
+
 \end{frame}
-
-
-
-%\section{příklad: barvení grafů}
 
 
 \begin{frame}{Příklad: Barvení grafů}
@@ -414,55 +413,60 @@ $$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
     \end{tikzpicture}
     \end{center}
     }
-
     
     graf: množina vrcholů a množina (libovolně) \alert{orientovaných} hran
     \[
     \mystructure G = \langle V; E \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle
     \]
     jak formalizovat? pro $v\in V$ a $c\in C=\{R,G,B\}$:
+    
     \myalertmath{
     $$
     p_v^c=\text{\it``vrchol \(v\) má barvu \(c\)''}
     $$
     }
 
-    \vspace{-12pt}
-
     \mbox{\small $\mathbb P=\{p_v^c\mid c\in C,v\in V\}=\{p_1^R,p_1^G,p_1^B,p_2^R,p_2^G,p_2^B,p_3^R,p_3^G,p_3^B,p_4^R,p_4^G,p_4^B\}$}
 
-máme celkem \( |\M_\mathbb P|=2^{12}=4096 \) \alert{modelů jazyka} (12-dim. vektorů)
+    máme celkem \( |\M_\mathbb P|=2^{12}=4096 \) \alert{modelů jazyka} (12-dim. vektorů)
 \end{frame}
 
 
 \begin{frame}{Formalizace hranového obarvení}
-\begin{itemize}
-    \item každý vrchol má nejvýše jednu barvu: $4^4=2^8=256$ modelů
 
-    \myexample{\vspace{-12pt}
-    $$
-    T_1 = \{ (\neg p_v^R \lor \neg p_v^G) \land (\neg p_v^R \lor \neg p_v^B) \land (\neg p_v^G \lor \neg p_v^B) \mid v \in V \}
-    $$
-    }
-    \item a každý vrchol má alespoň jednu barvu: $3^4=81$ modelů
-    
-    \myexample{\vspace{-12pt}
-    $$T_2 = T_1\cup \{ p_v^R \lor p_v^G \lor p_v^B \mid v \in V \}= T_1\cup \{\bigvee_{c\in C} p_v^c \mid v \in V \}
-    $$
-    }
-    $T_2$ je \alert{extenze} teorie $T_1$ neboť \alert{každý důsledek $T_1$ platí i v $T_2$}, zde dokonce $\M_\mathbb P(T_2)\subseteq\M_\mathbb P(T_1)$
-    %\footnote{Proč $\subseteq$? Čím více vlastností požadujeme, tím méně objektů je splňuje.}
+    \begin{itemize}
+        \item každý vrchol má nejvýše jednu barvu: $4^4=2^8=256$ modelů\medskip
 
-    \item nakonec přidáme \alert{hranovou podmínku}:
-     
-    \myexample{
-    $$
-    T_3 = T_2\cup \{ \bigwedge_{c\in C} 
-    (\neg p_u^c \lor \neg p_v^c) \mid (u,v) \in E \}
-    $$
-    }  
-    Výsledná teorie \( T_3 \) je \alert{splnitelná} (má model), právě když je graf \( \mystructure{G} \) 3-obarvitelný.   
-\end{itemize}
+        \myexamplemath{\vspace{-9pt}$$
+        T_1 = \{ (\neg p_v^R \lor \neg p_v^G) \land (\neg p_v^R \lor \neg p_v^B) \land (\neg p_v^G \lor \neg p_v^B) \mid v \in V \}
+        $$}
+
+        \medskip
+
+        \item a každý vrchol má alespoň jednu barvu: $3^4=81$ modelů\medskip
+        
+        \myexamplemath{\vspace{-9pt}$$T_2 = T_1\cup \{ p_v^R \lor p_v^G \lor p_v^B \mid v \in V \}= T_1\cup \{\bigvee_{c\in C} p_v^c \mid v \in V \}
+        $$}
+
+        \medskip
+        
+        \myblock{$T_2$ je \alert{extenze} teorie $T_1$ neboť \alert{každý důsledek $T_1$ platí i v $T_2$}, zde dokonce $\M_\mathbb P(T_2)\subseteq\M_\mathbb P(T_1)$}
+        %\footnote{Proč $\subseteq$? Čím více vlastností požadujeme, tím méně objektů je splňuje.}
+
+        \medskip
+
+        \item nakonec přidáme \alert{hranovou podmínku}:\medskip
+        
+        \myexamplemath{$$
+        T_3 = T_2\cup \{ \bigwedge_{c\in C} 
+        (\neg p_u^c \lor \neg p_v^c) \mid (u,v) \in E \}
+        $$}  
+
+        \medskip
+
+        Výsledná teorie \( T_3 \) je \alert{splnitelná} (má model), právě když je graf \( \mystructure{G} \) 3-obarvitelný.   
+    \end{itemize}
+
 \end{frame}
 
 
@@ -517,7 +521,7 @@ $ a vytvořit ještě větší teorii~$T'_3$ přidáním axiomů o vrcholu 5 a h
 A co vlastnosti obecně platné o všech nebo mnoha grafech?
 
 \myblock{
-V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \alert{proměnných} a přirozeně vyjádřit vlastnosti jako:
+V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí \alert{proměnných} a přirozeně vyjádřit vlastnosti jako:
 \begin{itemize}
     \item \emph{``z vrcholu \(u\) vede hrana do vrcholu \(v\)''}
     \item \emph{``vrchol \(u\) je zelený''}
@@ -528,13 +532,14 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \aler
 
 \begin{frame}{Predikátová logika: struktury a jazyk}
 
-    \textbf{Modely} už nejsou 0--1 vektory, ale \alert{struktury}, např. naše (orientované) grafy: 
-    \myexample{\vspace{-12pt}\footnotesize
-    \begin{align*}
+    \textbf{Modely} už nejsou 0--1 vektory, ale \alert{struktury}, např. naše (orientované) grafy:
+
+    \myexampleamsmath{\footnotesize\vspace{6pt}\begin{align*}
         &\mystructure G = \langle V^\mystructure G; E^\mystructure G \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle \\ 
         &\mystructure{G}' = \langle V^{\mystructure{G}'}; E^{\mystructure{G}'} \rangle = \langle \{1,2,3,4,5\}; \{(1,2),(1,3),(1,4),(2,3),(3,4),(2,5),(3,5)\} \rangle
     \end{align*}
-    }\vspace{-6pt}
+    }
+
     \begin{itemize}
         \item množina vrcholů, a binární relace na této množině
         \item \alert{jazyk} specifikuje kolik \alert{relací} jakých arit má struktura mít, a symboly pro ně
@@ -550,12 +555,17 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \aler
 
     \textbf{Syntaxe}: místo prvovýroků \alert{atomické formule}, např. $E(x,y)$, kde $x,y$ jsou \alert{proměnné} reprezentující vrcholy; stejné logické spojky, ale navíc \alert{kvantifikátory}:
   
+    \myalert{
     \begin{description}
         \item[\alert{\( (\forall x) \)}] {\it``pro všechny vrcholy \(x\)''}
         \item[\alert{\( (\exists y) \)}] {\it``existuje vrchol \(y\)''}
     \end{description}
+    }
+
     (hrají roli ``konjunkce'' a ``disjunkce'' přes všechny prvky)
     
+    \bigskip
+
     \myexample{
     \begin{itemize}
         \item ``V grafu nejsou smyčky'': \alert{$(\forall x)(\neg E(x,x))$}
@@ -564,6 +574,8 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \aler
     \end{itemize}    
     }
 
+    \bigskip
+
     \textbf{Sémantika}: V daném grafu \(\mystructure{G}\) a při \alert{dosazení} vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) \alert{vyhodnotíme} \( E(x,y) \) jako \alert{True}, právě když \alert{\( (u,v)\in E^{\mystructure{G}} \)}.
         
 \end{frame}
@@ -571,41 +583,43 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} pomocí \aler
 
 \begin{frame}{Barvení grafů v predikátové logice}
       
-Jazyk \alert{\( \mathcal L' =\langle E, R, G, B \rangle \)}, kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly (\(R(x)\) znamená {\it``vrchol \(x\) je červený''}) 
+    Jazyk \alert{\( \mathcal L' =\langle E, R, G, B \rangle \)}, kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly (\(R(x)\) znamená {\it``vrchol \(x\) je červený''}) 
 
-$\mathcal L'$-struktura: graf s trojicí množin vrcholů
+    \alert{$\mathcal L'$-struktura}: graf s trojicí množin vrcholů
 
-\vspace{-32pt}
-\begin{flushright}
-    \scalebox{0.75}{
-        \tikz[every node/.style={circle,fill=blue!10,draw,minimum size=0.3cm,node distance=1cm}]{
-        \node[fill=red] (1) {$1$};
-        \node[fill=green,right of=1] (2) {$2$};
-        \node[fill=blue,below of=2] (3) {$3$};
-        \node[fill=green,left of=3] (4) {$4$};
-        \path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
+    \vspace{-32pt}
+    \begin{flushright}
+        \scalebox{0.75}{
+            \tikz[every node/.style={circle,fill=blue!10,draw,minimum size=0.3cm,node distance=1cm}]{
+            \node[fill=red] (1) {$1$};
+            \node[fill=green,right of=1] (2) {$2$};
+            \node[fill=blue,below of=2] (3) {$3$};
+            \node[fill=green,left of=3] (4) {$4$};
+            \path[draw] (1) -- (2) -- (3) -- (4) -- (1) -- (3);
+            }
         }
+    \end{flushright}
+
+    \myexampleamsmath{\vspace{3pt}\small
+    \begin{align*}
+    \mystructure G_C &= \langle V^{\mystructure G_C}; E^{\mystructure G_C}, R^{\mystructure G_C}, G^{\mystructure G_C}, B^{\mystructure G_C} \rangle \\
+    &= \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\}, \alert{\{1\}, \{2,4\}, \{3\}} \rangle    
+    \end{align*}
+    }  
+
+    \( \mystructure{G}_C \) je \alert{expanze} \(\mathcal L\)-struktury \( \mystructure{G} \) \alert{do jazyka} \( \mathcal L' \)
+
+    \bigskip
+
+    Nejvýše jedna barva, alespoň jedna barva, hranová podmínka:
+
+    \myexample{\small
+    \begin{itemize}
+        \item $(\forall x)((\neg R(x) \lor \neg G(x)) \land (\neg R(x) \lor \neg B(x)) \land (\neg G(x) \lor \neg B(x)))$
+        \item $(\forall x)(R(x) \lor G(x) \lor B(x))$
+        \item $(\forall x)(\forall y)(E(x,y) \limplies ((\neg R(x) \lor \neg R(y)) \land (\neg G(x) \lor \neg G(y)) \land (\neg B(x) \lor \neg B(y))))$
+    \end{itemize}
     }
-\end{flushright}
-
-\myexample{\vspace{-15pt}\small
-\begin{align*}
-\mystructure G_C &= \langle V^{\mystructure G_C}; E^{\mystructure G_C}, R^{\mystructure G_C}, G^{\mystructure G_C}, B^{\mystructure G_C} \rangle \\
-&= \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\}, \alert{\{1\}, \{2,4\}, \{3\}} \rangle    
-\end{align*}
-}
-
-\( \mystructure{G}_C \) je \alert{expanze} \(\mathcal L\)-struktury \( \mystructure{G} \) \alert{do jazyka} \( \mathcal L' \).
-
-\myexample{Nejvýše jedna barva, alespoň jedna barva, hranová podmínka:
-
-\small
-\begin{itemize}
-    \item $(\forall x)((\neg R(x) \lor \neg G(x)) \land (\neg R(x) \lor \neg B(x)) \land (\neg G(x) \lor \neg B(x)))$
-    \item $(\forall x)(R(x) \lor G(x) \lor B(x))$
-    \item $(\forall x)(\forall y)(E(x,y) \limplies ((\neg R(x) \lor \neg R(y)) \land (\neg G(x) \lor \neg G(y)) \land (\neg B(x) \lor \neg B(y))))$
-\end{itemize}
-}
 
 \end{frame}
 
@@ -618,17 +632,25 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
     \begin{itemize}
         \item Predikátová logika, kde proměnné reprezentují jednotlivé vrcholy, je logika \alert{prvního řádu} (\alert{first-order}, \alert{FO})
         \item Logika \alert{druhého řádu} (\alert{second-order}, \alert{SO}): proměnné i pro množiny vrcholů a $n$-tic vrcholů (tj. relace, funkce)
-        \smallskip
+        \bigskip
 
-        \myexample{\it
-            ``Každá neprázdná zdola omezená podmnožina má infimum.''
-            {\small
-            \begin{align*}
-            &(\forall S)((\exists x)S(x) \land (\exists x)(\forall y)(S(y) \limplies x\leq y) \limplies  {}\\ 
-            &(\exists x)((\forall y)(S(y) \limplies x\leq y) \land (\forall z)((\forall y)(S(y) \limplies z\leq y)\limplies z\leq x)))
-            \end{align*}
-            }
-        }
+        % \myexample{\it
+        %     ``Každá neprázdná zdola omezená podmnožina má infimum.''
+        %     {\small
+        %     \begin{align*}
+        %     &(\forall S)((\exists x)S(x) \land (\exists x)(\forall y)(S(y) \limplies x\leq y) \limplies  {}\\ 
+        %     &(\exists x)((\forall y)(S(y) \limplies x\leq y) \land (\forall z)((\forall y)(S(y) \limplies z\leq y)\limplies z\leq x)))
+        %     \end{align*}
+        %     }
+        % }
+        \myexamplemath{
+        $$(\exists S)(\forall x)(\forall y)(E(x,y)\limplies (S(x)\liff\neg S(y)))$$
+        }      
+        \begin{center}
+            \it ``Graf je bipartitní.''
+        \end{center}  
+
+        \medskip
         \item A v logice \emph{třetího řádu} máme i množiny množin (např. v topologii).
     \end{itemize}
 
@@ -700,19 +722,26 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
 
 
 \begin{frame}{Jazyk}
-    určený množinou \alert{prvovýroků} (\alert{výrokových proměnných}, \alert{atomických výroků}) -- neprázdná, konečná nebo i \emph{nekonečná}
-    \myexample{\vspace{-18pt}
-        \begin{align*}
-            \mathbb P_1 &= \{ p, q, r\}\\
-            \mathbb P_2 &= \{ p_0, p_1, p_2, p_3, \ldots \} = \{ p_i \mid i \in \mathbb N \}
-        \end{align*}
-    }
-    (obvykle \emph{spočetná}, \emph{uspořádaná})
-
-    dále do jazyka patří \alert{logické symboly}:
     \begin{itemize}
-        \item logické spojky $\neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb$
-        \item závorky $(,)$
+        \item určený množinou \alert{prvovýroků} (\alert{výrokových proměnných}, \alert{atomických výroků}) -- neprázdná, konečná nebo i \emph{nekonečná}
+    
+        \medskip
+        \myexampleamsmath{
+            \begin{align*}
+                \mathbb P_1 &= \{ p, q, r\}\\
+                \mathbb P_2 &= \{ p_0, p_1, p_2, p_3, \ldots \} = \{ p_i \mid i \in \mathbb N \}
+            \end{align*}
+        }
+        \medskip
+        
+        (obvykle \emph{spočetná}, \emph{uspořádaná})
+    
+        \medskip
+        \item dále do jazyka patří \alert{logické symboly}:
+        \begin{itemize}
+            \item logické spojky $\neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb$
+            \item závorky $(,)$
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -728,26 +757,28 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
     \end{itemize}
     }
 
-    \myalert{Výroky jsou nutně \emph{konečné} řetězce!}\vspace{-6pt}
+    \myalert{Výroky jsou nutně \emph{konečné} řetězce!}
+
     \alert{$\Var(\varphi)$}: množina všech prvovýroků ve $\varphi$ (vždy konečná)
 
     \alert{podvýrok}: podřetězec, který je sám výrok
     
-
     \myexample{
         $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$, $\Var(\varphi)=\{p,q\}$\\
         podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$
-    }\vspace{-6pt}
-    
-    \alert{pravda}: $\top=(p\lor(\neg p))$ , \alert{spor}: $\bot=(p\land(\neg p))$ \\
-    (kde $p\in\mathbb P$ je pevně daný)
+    }
+
+    \alert{pravda}: $\top=(p\lor(\neg p))$, \alert{spor}: $\bot=(p\land(\neg p))$ \\ {\small (kde $p\in\mathbb P$ je pevně daný)}
 
 \end{frame}
 
 
 \begin{frame}{Konvence zápisu}
+    
     při \emph{zápisu} výroků můžeme vynechat některé závorky:
-    \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}\vspace{-12pt}
+
+    \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}
+
     \begin{itemize}
         \item priorita operátorů: $\neg$ nejvyšší, dále $\landsymb$ a $\lorsymb$, nakonec $\limpliessymb$ a $\liffsymb$
         \item asociativita $\landsymb$ a $\lorsymb$: nápis $p\land q\land r$ znamená výrok $(p\land (q\land r))$
@@ -762,6 +793,7 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
         $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$
     }
 
+    \medskip
     \myalert{Důležitá je jen \alert{stromová struktura} výroků!}
 
 \end{frame}
@@ -804,15 +836,20 @@ $\mathcal L'$-struktura: graf s trojicí množin vrcholů
 
 
 \begin{frame}{Teorie}
+
     \myblock{
         \alert{Teorie} v jazyce $\mathbb P$ je libovolná množina výroků $T\subseteq\VF_\mathbb P$. Výrokům $\varphi\in T$ říkáme také \alert{axiomy}.
     }
+
+    \medskip
 
     \myexample{
         $T=\emptyset$ a $T=\VF_\mathbb P$ nad libovolným jazykem,\\
         $T=\{p\land q,q\limplies (p\lor r)\}$ v jazyce $\mathbb P=\{p,q,r\}$\\
         $T=\{p_0\}\cup\{p_i\limplies p_{i+1}\mid i\in\mathbb N\}$ nad \emph{nekonečným} $\mathbb P=\{p_i\mid i\in\mathbb N\}$
     }
+    
+    \medskip
 
     \textbf{Poznámka:} \emph{Konečnou} teorii by bylo možné (byť ne praktické!) nahradit jediným výrokem: konjunkcí všech axiomů.
     

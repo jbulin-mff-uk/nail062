@@ -31,9 +31,57 @@
 \end{frame}
 
 
+\section{\sc Kapitola 4: Metoda analytického tabla}
 
 
+\section{4.1 Formální dokazovací systémy}
 
+
+\begin{frame}{Formální dokazovací systém}
+
+    chceme zjistit, zda výrok platí [\alert{$T\models\varphi$}], a to čistě syntakticky, aniž bychom se zabývali sémantikou: najít \alert{(formální) důkaz} [\alert{$T\proves\varphi$}]
+
+    \alert{důkaz} je konečný syntaktický objekt vycházející z $\varphi$ a axiomů $T$
+
+    dokazování lze dělat \alert{algoritmicky} (pokud máme algoritmický přístup k axiomům $T$, která může být nekonečná), a lze rychle algoritmicky \alert{ověřit}, zda je daný objekt opravdu korektní důkaz
+
+    \begin{itemize}
+        \item \alert{korektnost}: ``co dokážu, platí'' \hfill \myalertinline{%
+            $T\proves\varphi\ \Rightarrow\ T\models\varphi$}
+        \item \alert{úplnost}: ``dokážu vše, co platí'' \hfill \myalertinline{%
+            $T\models\varphi\ \Rightarrow\ T\proves\varphi$}
+    \end{itemize}
+    (korektnost je nutná, úplnost ne: rychlý dokazovací systém může být praktický i když není úplný)
+
+    ukážeme si: \emph{tablo metodu}, \emph{hilbertovský kalkulus}, \emph{rezoluční metodu}
+    
+    \myblock{nutný předpoklad: \alert{jazyk musí být spočetný} (potom i $T$ je spočetná)}
+
+\end{frame}
+
+
+\section{4.2 Úvod do tablo metody}
+
+
+\begin{frame}{Tablo metoda neformálně}
+
+    nejprve případ $T=\emptyset$, tedy dokazujeme, že $\varphi$ platí \emph{v logice}
+
+    \alert{tablo} je strom představující \alert{hledání protipříkladu} (modelu $v\not\models\varphi$), když všechny větve \alert{selžou}, máme důkaz (sporem)
+
+    labely: \alert{položky} $\mathrm{T}\psi,\mathrm{F}\psi$ (určují, zda na dané větvi platí výrok $\psi$)
+
+    kořen \alert{$\mathrm{F}\varphi$}, dále rozvíjíme \alert{redukcí} položek (podle struktury výroků v nich), aby platil \alert{invariant}:
+
+    \myalert{
+        Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
+    }
+
+    je-li na větvi \alert{$\mathrm{T}\psi$} a zároveň \alert{$\mathrm{F}\psi$}, potom \alert{selhala} (je \alert{sporná}), pokud všechny větve selhaly, je tablo \alert{sporné}, je to \alert{důkaz} $T\proves\varphi$
+
+    pokud nějaká větev neselhala a je \alert{dokončená} (vše na ní zredukované), lze z ní zkonstruovat model, ve kterém $\varphi$ neplatí
+
+\end{frame}
 
 
 \end{document}

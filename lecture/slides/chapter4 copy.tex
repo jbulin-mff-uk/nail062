@@ -1,37 +1,4 @@
-\chapter{Metoda analytického tabla}
-\label{chapter:tableau-method-propositional}
 
-V této kapitole představíme \emph{Metodu analytického tabla}. Jde o syntaktickou proceduru, kterou můžeme použít pro zjištění, zda daný výrok platí v dané teorii, aniž bychom se museli zabývat sémantikou (např. hledat všechny modely, což je nepraktické). Dokážeme si její \emph{korektnost} (`dává správné odpovědi') a \emph{úplnost} (`funguje vždy'), a použijeme ji také k důkazu tzv.\ \emph{Věty o kompaktnosti} (`vlastnosti nekonečného objektu stačí ukázat pro jeho konečné části').
-
-\section{Formální dokazovací systémy}
-
-\emph{Formální dokazovací systém} formalizuje `dokazování' (např. v matematice) jako přesně (algoritmicky) danou syntaktickou proceduru. \emph{Důkaz} faktu, že v teorii $T$ platí výrok $\varphi$ (neboli $T\models\varphi$) je konečný syntaktický objekt vycházející z axiomů $T$ a výroku $\varphi$. Pokud důkaz existuje, lze ho nalézt `algoritmicky',\footnote{Zde ale musíme být opatrní v případě nekonečné teorie $T$, jak je zadaná? Algoritmus musí mít efektivní přístup ke všem axiomům.} a algoritmicky jsme také schopni ověřit, že je daný objekt opravdu důkaz.
-
-Existuje-li důkaz, říkáme, že $\varphi$ je (v daném dokazovacím systému) \emph{dokazatelný} z $T$, a píšeme $T\proves\varphi$. Po dokazovacím systému požadujeme dvě vlastnosti:
-\begin{itemize}
-    \item \emph{korektnost}: je-li výrok dokazatelný z teorie, je v ní pravdivý ($T\proves\varphi\Rightarrow T\models\varphi$)
-    \item \emph{úplnost}: je-li výrok pravdivý v teorii, je z ní dokazatelný ($T\models\varphi\Rightarrow T\proves\varphi$)
-\end{itemize}
-(Přičemž korektnost vyžadujeme vždy, ale efektivní dokazovací systém může být praktický, i pokud není úplný, zejména pokud je úplný pro nějakou zajímavou třídu výroků resp. teorií.)
-
-V této kapitole si ukážeme kromě \emph{tablo metody} také \emph{hilbertovský kalkulus}, a v příští kapitole představíme další dokazovací systém, tzv.\ \emph{rezoluční metodu}.
-
-
-\section{Úvod do tablo metody}
-
-Po zbytek této kapitoly budeme předpokládat, že máme daný \emph{spočetný} jazyk $\mathbb P$. Z toho plyne, že i každá teorie nad $\mathbb P$ je spočetná. Nejprve se soustředíme na případ, kdy $T=\emptyset$, tedy dokazujeme, že výrok $\varphi$ platí \emph{logicky} (je to \emph{tautologie}). 
-
-\emph{Tablo} je olabelovaný strom představující hledání protipříkladu, tj. modelu, ve kterém $\varphi$ neplatí. Labely na vrcholech, kterým budeme říkat \emph{položky}, sestávají ze symbolu $\mathrm{T}$ resp. $\mathrm{F}$ (`True'/`False') následovaného nějakým výrokem $\psi$ a představují předpoklad (požadavek), že v modelu výrok $\psi$ platí resp. neplatí. Do kořene tabla dáme položku $\mathrm{F}\varphi$, tj. hledáme model, ve kterém \emph{neplatí} $\varphi$. Dále budeme tablo rozvíjet pomocí pravidel pro \emph{redukci} položek. Tato pravidla zajišťují následující invariant: 
-\begin{quote}
-    Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
-\end{quote}
-Pokud na některé větvi dostaneme položky tvaru $\mathrm{T}\psi$ a $\mathrm{F}\psi$, říkáme, že větev \emph{selhala} (je \emph{sporná}) a víme, že žádný model s ní nemůže souhlasit. Pokud selžou všechny větve, víme, že neexistuje žádný model, ve kterém by neplatilo $\varphi$, a máme tedy \emph{důkaz}, že $\varphi$ platí. (Všimněte si, že jde o \emph{důkaz sporem}.)
-
-Pokud nějaká větev neselhala, ale je \emph{dokončená}, tj. všechny položky jsou zredukované, víme, že $\varphi$ neplatí, a budeme z této větve schopni zkonstruovat konkrétní model, ve kterém neplatí.
-
-
-\begin{example}\label{example:tableau-intro-examples}
-Ukažme si celý postup na dvou příkladech, viz Obrázek \ref{figure:tableau-proof-two-examples}.
 \begin{itemize}
     \item[(a)] Nejprve sestrojme tablo důkaz výroku $\varphi=((p\limplies q)\limplies p)\limplies p$. Začneme kořenem s položkou $\mathrm{F}\varphi$. Tato položka je tvaru $\mathrm{F}\varphi_1\limplies\varphi_2$ (`neplatí implikace'), pokud se s ní shoduje nějaký model, musí splňovat $\mathrm{T}(p\limplies q)\limplies p$ a $\mathrm{F}p$, připojíme tedy tyto dvě položky. (Ve skutečnosti připojíme \emph{atomické tablo} pro tento případ, viz Tabulka \ref{table:atomic-tableaux}, kořen tohoto atomického tabla ale vynecháme, abychom zbytečně nezopakovali tutéž položku.) Tím jsme \emph{zredukovali} položku v kořeni. 
     

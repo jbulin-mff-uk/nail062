@@ -64,14 +64,14 @@ Vidíme, že naše informace jednoznačně určují model \( (0,1) \), tedy svě
 
 Postup, který jsme zvolili, je velmi neefektivní. Máme-li \( n \) výrokových proměnných\footnote{V praxi máme běžně tisíce proměnných.}, existuje~\( 2^n \) modelů jazyka a není prakticky možné ověřovat platnost teorie v každém z nich. Na řadu přichází tzv.\ \emph{dokazovací systémy}. V daném dokazovacím systému je \emph{důkaz} výroku~\( \psi \) z teorie \(T\) přesně, formálně definovaný syntaktický objekt, který v sobě zahrnuje snadno (mechanicky) ověřitelný ``důkaz'' (důvod), proč \( \psi \) platí v \(T\), a který můžeme hledat (pomocí počítače) čistě na základě struktury výroku \( \psi \) a axiomů teorie \(T\) (``syntaxe''), tj.\ aniž bychom se museli zabývat modely (``sémantikou'').
 
-Po důkazovém systému chceme dvě vlastnosti: 
+Po dokazovacím systému chceme dvě vlastnosti: 
 \begin{itemize}
     \item \emph{korektnost}, tj.\ pokud máme důkaz \( \psi \) z \(T\), potom \( \psi \) platí v \(T\), a
     \item \emph{úplnost}, tj.\ pokud \( \psi \) platí v \(T\), potom existuje důkaz \( \psi \) z \(T\),
 \end{itemize}
-přičemž korektnost je nutností (bez ní nemá smysl důkazy hledat), a úplnost je dobrá vlastnost, ale efektivní důkazový systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
+přičemž korektnost je nutností (bez ní nemá smysl důkazy hledat), a úplnost je dobrá vlastnost, ale efektivní dokazovací systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
 
-Zde stručně nastíníme dva důkazové systémy: \emph{metodu analytického tabla} a \emph{rezoluční metodu}. Později budou představeny formálně, a u obou si dokážeme i jejich korektnost a úplnost. Oba tyto důkazové systémy jsou založeny na \emph{důkazu sporem}, tj.\ předpokládají platnost axiomů z \(T\) a negace výroku \( \psi \), a snaží se dojít ke sporu.
+Zde stručně nastíníme dva dokazovací systémy: \emph{metodu analytického tabla} a \emph{rezoluční metodu}. Později budou představeny formálně, a u obou si dokážeme i jejich korektnost a úplnost. Oba tyto dokazovací systémy jsou založeny na \emph{důkazu sporem}, tj.\ předpokládají platnost axiomů z \(T\) a negace výroku \( \psi \), a snaží se dojít ke sporu.
 
 \subsection{Tablo metoda}
 
@@ -131,7 +131,7 @@ Zatím se spokojíme s pochopením základní myšlenky této metody, detaily p�
  
 \subsection{Rezoluční metoda}
 
-Není těžké naprogramovat systematické hledání tablo důkazu. V praxi se ale používá jiný důkazový systém, který má mnohem jednodušší a efektivnější implementaci: tzv.\ \emph{rezoluční metoda}. Tato metoda pochází z roku 1965, a je základem většiny \emph{systémů automatického dokazování}, \emph{SAT solverů}, nebo třeba interpreterů jazyka Prolog (o kterém si budeme povídat později).
+Není těžké naprogramovat systematické hledání tablo důkazu. V praxi se ale používá jiný dokazovací systém, který má mnohem jednodušší a efektivnější implementaci: tzv.\ \emph{rezoluční metoda}. Tato metoda pochází z roku 1965, a je základem většiny \emph{systémů automatického dokazování}, \emph{SAT solverů}, nebo třeba interpreterů jazyka Prolog (o kterém si budeme povídat později).
 
 Rezoluční metoda je založena na faktu, že každý výrok lze ekvivalentně vyjádřit ve speciálním tvaru, v tzv.\ \emph{konjunktivní normální formě (CNF)}. \emph{Literál} je výroková proměnná \(p\) nebo její negace \(\neg p\) (tj.\ literály jsou výroky, které jen určují hodnotu jedné výrokové proměnné). Disjunkci několika literálů, např. \( p \lor \neg q\lor \neg r\), říkáme \emph{klauzule}. A výrok je v CNF, pokud je konjunkcí klauzulí. Ke každému výroku \( \psi \) existuje \emph{ekvivalentní} výrok \( \psi' \) v {CNF}. Ekvivalentní znamená mající stejný význam (stejné modely), píšeme \( \psi \sim \psi' \). Později si ukážeme dvě metody převodu do CNF, nyní jen na našem příkladě: ve výroku
 \[

@@ -1,6 +1,6 @@
 \chapter{Rezoluční metoda}\label{chapter:propositional-resolution}
 
-V této kapitole představíme jiný důkazový systém, vhodnější pro praktické aplikace,  tzv. \emph{rezoluční metodu}. Tato metoda je základem např. \emph{logického programování} nebo systémů \emph{automatického dokazování} a \emph{softwarové verifikace}. V této kapitole se omezíme na rezoluční metodu ve výrokové logice, ale v pozdější kapitole si ukážeme koncept \emph{unifikace}, který umožňuje hledat rezoluční důkazy v logice predikátové.
+V této kapitole představíme jiný dokazovací systém, vhodnější pro praktické aplikace,  tzv. \emph{rezoluční metodu}. Tato metoda je základem např. \emph{logického programování} nebo systémů \emph{automatického dokazování} a \emph{softwarové verifikace}. V této kapitole se omezíme na rezoluční metodu ve výrokové logice, ale v pozdější kapitole si ukážeme koncept \emph{unifikace}, který umožňuje hledat rezoluční důkazy v logice predikátové.
 
 Rezoluční metoda pracuje s výroky v \emph{konjunktivní normální formě (CNF)}. Připomeňme, že každý výrok lze převést do CNF. Tento převod je v nejhorším případě v exponenciálním čase (dokonce existují výroky jejichž nejkratší CNF ekvivalent je exponenciálně delší), v praxi to ale není problém.
 
@@ -383,7 +383,7 @@ V obecném lineárním důkazu může být každá následující boční klauzu
     LI-důkaz přímo dává rezoluční strom (všechny listy jsou axiomy), a to ve speciálním tvaru, kterému bychom mohli říkat `chlupatá cesta'. A naopak, z rezolučního stromu ve tvaru chlupaté cesty okamžitě získáme LI-důkaz: vrcholy na cestě jsou centrální klauzule, chlupy jsou boční klauzule.
 \end{remark}
 
-Zatímco \emph{lineární rezoluce}\footnote{Tj. důkazový systém založený na hledání \emph{lineárních} důkazů resp. zamítnutí.} je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
+Zatímco \emph{lineární rezoluce}\footnote{Tj. dokazovací systém založený na hledání \emph{lineárních} důkazů resp. zamítnutí.} je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
 
 \subsection{Úplnost LI-rezoluce pro Hornovy formule}
 
@@ -413,7 +413,7 @@ Nyní vyslovíme a dokážeme Větu o úplnosti LI-rezoluce pro Hornovské formu
 Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.   
 \end{theorem}
 \begin{proof}
-    Podobně jako ve Větě o úplnosti rezoluce můžeme díky Věte o kompaktnosti předpokládat, že $T$ je konečná. Důkaz (konstrukci LI-zamítnutí) provedeme indukcí podle počtu proměnných v $T$.
+    Podobně jako ve Větě o úplnosti rezoluce můžeme díky Větě o kompaktnosti předpokládat, že $T$ je konečná. Důkaz (konstrukci LI-zamítnutí) provedeme indukcí podle počtu proměnných v $T$.
 
     Z Pozorování \ref{observation:horn-fact-goal} plyne, že $T$ obsahuje fakt $\{p\}$ pro nějakou výrokovou proměnnou $p$. Protože $T\cup\{G\}$ je nesplnitelná, je podle Lemmatu \ref{lemma:tree-of-reductions} nesplnitelná také $(T\cup\{G\})^p=T^p\cup\{G^p\}$, kde $G^p=G\setminus\{\neg p\}$.
     

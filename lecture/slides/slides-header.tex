@@ -10,70 +10,17 @@
 \definecolor{mBlock}{HTML}{23373b}
 
 % my blocks
-\setlength\fboxsep{0pt}
-\newcommand{\myblock}[1]{
-    \colorbox{mBlock!10}{
-        \begin{minipage}{\textwidth}
-            #1
-        \end{minipage}
-        }
-}
-\newcommand{\myblockmath}[1]{
-    \colorbox{mBlock!10}{
-        \begin{minipage}{\textwidth}
-            \vspace{-6pt}
-            #1
-        \end{minipage}
-    }
-}
-\newcommand{\myblockinline}[1]{
-    \colorbox{mBlock!10}{#1}
-}
-\newcommand{\myexample}[1]{    
-    \colorbox{mExample!10}{
-        \begin{minipage}{\textwidth}
-            #1
-        \end{minipage}
-    }
-}
-\newcommand{\myexamplemath}[1]{
-    \vspace{-6pt}
-    \colorbox{mExample!10}{
-        \begin{minipage}{\textwidth}
-            \vspace{-6pt}
-            #1
-        \end{minipage}
-    }
-}
-\newcommand{\myexampleinline}[1]{
-    \colorbox{mExample!10}{#1}
-}
-\newcommand{\myalert}[1]{
-    \colorbox{mAlert!10}{
-        \begin{minipage}{\textwidth}
-            #1
-        \end{minipage}
-        }
-}
-\newcommand{\myalertmath}[1]{
-    \colorbox{mAlert!10}{
-        \begin{minipage}{\textwidth}
-            \vspace{-6pt}
-            #1
-        \end{minipage}
-    }
-}
-\newcommand{\myalertinline}[1]{
-    \colorbox{mAlert!10}{#1}
-}
+\setlength\fboxsep{0pt}%
 
-\newcommand{\mytheorem}[2]{
-    \myblock{\textbf{#1} #2}
-}
-
-\newcommand{\myproof}[1]{
-    \textbf{Důkaz} #1 \qedsymbol
-}
+\newcommand{\myblock}[1]{\colorbox{mBlock!8}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myblockmath}[1]{\colorbox{mBlock!8}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myblockinline}[1]{\colorbox{mBlock!8}{#1}}
+\newcommand{\myexample}[1]{\colorbox{mExample!8}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myexamplemath}[1]{\colorbox{mExample!8}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myexampleinline}[1]{\colorbox{mExample!8}{#1}}
+\newcommand{\myalert}[1]{\colorbox{mAlert!8}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myalertmath}[1]{\colorbox{mAlert!8}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myalertinline}[1]{\colorbox{mAlert!8}{#1}}
 
 %% other
 \newcommand{\mystructure}[1]{\mathcal{#1}}

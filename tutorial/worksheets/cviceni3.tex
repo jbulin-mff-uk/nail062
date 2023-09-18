@@ -7,7 +7,6 @@
 \usepackage{enumitem}
     \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
     \setlist[itemize]{itemsep=3pt,topsep=6pt}
-\usepackage{multicol}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
 
@@ -16,129 +15,152 @@
 \newtheorem{problem}{Příklad}
 \newtheorem*{ukol}{Domácí úkol}
 
+\DeclareMathOperator{\Conseq}{Csq}
+
 
 \begin{document}
 
 \section*{NAIL062 V\&P Logika: 3. cvičení}
-
+% po 2. přednášce
 
 \textbf{Témata:} 
-Počítání výroků až na ekvivalenci (Lindenbaum-Tarského algebra). 2-SAT a implikační graf. Horn-SAT a jednotková propagace. Algoritmus DPLL. Kódování problémů do SAT.
+Syntaxe a sémantika výrokové logiky. Převod do CNF a DNF. Univerzálnost logických spojek.
+
 
 
 \medskip\begin{problem}
-    Nechť $|\mathbb{P}|=n$ a mějme výrok $\varphi\in\mathrm{VF}_{\mathbb{P}}$ takový, že $|M(\varphi)|=m$. Určete počet až na ekvivalenci:
+    Ukažte, že $\wedge$ a $\vee$ nestačí k definování všech Booleovských operátorů, tj. že $\{\wedge,\vee\}$ není \emph{univerzální} množina logických spojek.
+    \end{problem}
+    
+    \medskip\begin{problem} Jsou následující množiny logických spojek univerzální? Zdůvodněte.
     \begin{enumerate}
-    \item výroků $\psi$ takových, že $\varphi \models \psi$ nebo $\psi \models \varphi$,
-    \item teorií nad $\mathbb{P}$, ve kterých platí $\varphi$,
-    \item úplných teorií nad $\mathbb{P}$ ve kterých platí $\varphi$,
-    \item teorií $T$ nad $\mathbb{P}$ takových, že $T \cup \{\varphi\}$ je bezesporná.
+        \item $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR),
+        \item $\{\uparrow\}$ kde $\uparrow$ je Sheffer stroke (NAND),
+        \item $\{\vee, \rightarrow, \leftrightarrow\}$,
+        \item $\{\vee, \wedge, \rightarrow\}$.
     \end{enumerate}
-    Uvažme navíc spornou teorii $\{\varphi,\psi\}$ kde $|M(\psi)|=p$. Spočtěte až na ekvivalenci:
+    \end{problem}
+    
+    
+    \medskip\begin{problem}
+    Uvažte ternární Booleovský operátor $\mathrm{IFTE}(p, q, r)$ definovaný jako `if $p$ then $q$ else $r$'. 
     \begin{enumerate}
-    \setcounter{enumi}{4}
-    \item výroky $\chi$ takové, že $\varphi \vee \psi \models \chi$, 
-    \item teorie, ve kterých platí $\varphi \vee \psi$.
+        \item Zkonstruujte pravdivostní tabulku.
+        \item Ukažte, že všechny základní Booleovské operátory ($\neg, \to, \wedge,\vee,\dots$) lze vyjádřit pomocí IFTE a konstant TRUE a FALSE.
+    \end{enumerate}  
+    \end{problem}
+
+
+\medskip\begin{problem}
+    Mějme teorii $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ v jazyce $\{p, q, r, s\}$.
+    \begin{enumerate}
+        \item Uveďte příklad následujícího: výrok pravdivý v $T$, lživý v $T$, nezávislý v $T$, splnitelný v $T$, a dvojice $T$-ekvivalentních výroků.
+        \item Které z následujících výroků jsou pravdivé, lživé, nezávislé, splnitelné v $T$? $T$-ekvivalentní? 
+        $$
+        p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r\vee s
+        $$
     \end{enumerate}
 \end{problem}
-
     
-\medskip\begin{problem} Sestrojte implikační graf daného 2-CNF výroku. Je splnitelný? Pokud ano, najděte nějaké řešení.
+    
+\medskip\begin{problem} Určete množinu modelů dané formule. Využijte toho, že je v DNF resp. v CNF.
 \begin{enumerate}
-    \item $(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee \neg p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee \neg p_1)$,
-    \item $(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee p_1)$,
-    \item $(p_0 \vee  p_2) \wedge  (p_0 \vee  \neg p_3) \wedge  (p_1 \vee  \neg p_3) 
-    \wedge  (p_1 \vee  \neg p_4) \wedge  (p_2 \vee  \neg p_4) 
-    \wedge  (p_0 \vee  \neg p_5)
-    \wedge 
-    (p_1 \vee  \neg p_5) \wedge  (p_2 \vee  \neg p_5) \wedge  (\neg p_1 \vee  \neg p_6) \wedge  (p_4 \vee  p_6) \wedge  (p_5 \vee  p_6) \wedge  p_1\wedge \neg p_7$.
+    \item $(\neg p_1 \wedge \neg p_2)\vee( \neg p_1 \wedge p_2)\vee( p_1 \wedge \neg p_2)\vee( p_2 \wedge \neg p_3)\vee( p_1 \wedge p_3)$
+    \item $(\neg p_1 \vee \neg p_2)\wedge( \neg p_1 \vee p_2)\wedge( p_1 \vee \neg p_2)\wedge( p_2 \vee \neg p_3)\wedge( p_1 \vee p_3)$
+    \item $(p_1 \wedge  \neg p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(\neg p_3)\vee(p_2 \wedge  p_4)\vee(p_1 \wedge  p_3 \wedge  p_5 )\vee(p_3 \wedge  \neg p_4 \wedge  p_2 )$
+    \item $(p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4 )\wedge(p_2 \vee p_3 \vee \neg p_4 )\wedge(\neg p_3)\wedge(p_2 \vee p_4)\wedge(p_1 \vee p_3 \vee p_5 )\wedge(p_3 \vee \neg p_4 \vee p_2 )$
 \end{enumerate}
 \end{problem}
-
-
-\medskip\begin{problem}
-Pomocí jednotkové propagace zjistěte, zda je následující Hornův výrok splnitelný. Pokud ano, najděte nějaké splňující ohodnocení.
-\begin{align*}
-    &(\neg p_1 \vee \neg p_3 \vee p_2)\wedge(\neg p_1 \vee p_2)\wedge p_1 \wedge (\neg p_1 \vee \neg p_2 \vee p_3)\wedge \\
-    &(\neg p_2 \vee \neg p_4 \vee p_1)\wedge(\neg p_4 \vee \neg p_3 \vee \neg p_2)\wedge(p_4\vee \neg p_5 \vee\neg p_6)
-\end{align*}
-\end{problem}
     
-
-\medskip\begin{problem}
-    Pomocí algoritmu DPLL rozhodněte, zda je následující CNF formule splnitelná.
-    \begin{enumerate}
-        \item $$ (\neg p_1 \wedge \neg p_2)\land( \neg p_1 \wedge p_2)\land( p_1 \wedge \neg p_2)\land( p_2 \wedge \neg p_3)\land( p_1 \wedge p_3)$$
-        \item \begin{align*}
-            &(\neg p_1 \wedge p_3 \wedge p_4)\vee( \neg p_2 \wedge p_6 \wedge p_4)\vee( \neg p_2 \wedge \neg p_6 \wedge \neg p_3)\vee(
-                \neg p_4 \wedge \neg p_2)\vee \\ & ( p_2 \wedge \neg p_3 \wedge \neg p_1)\vee ( p_2 \wedge p_6 \wedge p_3)\vee
-                ( p_2 \wedge \neg p_6 \wedge \neg p_4)\vee
-                ( p_1 \wedge p_5)\vee \\ & ( p_1 \wedge p_6)\vee(
-                \neg p_6 \wedge p_3 \wedge \neg p_5)\vee( p_1 \wedge \neg p_3 \wedge \neg p_5)    
-        \end{align*}
-    \end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Lze šachovnici $4\times 4$ bez dvou protilehlých rohů perfektně pokrýt kostkami domina? Zakódujte tento problém do SAT. Zobecněte na všechna sudá~$n$.
+    
+\medskip\begin{problem} Převeďte následující výroky do CNF a DNF (I) tabulkou (určením modelů), (II) ekvivalentními úpravami.
+\begin{enumerate}
+    \item $(\neg p \vee q)\to (\neg q \wedge r)$,
+    \item $(\neg p \to (\neg q \to r))\to p$,
+\end{enumerate}
 \end{problem}
     
     
-\medskip\begin{problem}
-    Lze obarvit čísla od 1 do $n$ dvěma barvami tak, že neexistuje monochromatické řešení rovnice
-    $a+b=c$ s $1\leq a<b<c\leq n$? Sestrojte výrokovou formuli $\varphi_n$ v CNF která je splnitelná, právě když to lze. Zkuste nejprve $n=8$.
+\medskip\begin{problem} Pro danou formuli $\varphi$ v CNF najděte a 3-CNF formuli $\varphi'$ takovou, že $\varphi'$ je splnitelná, právě když $\varphi$ je splnitelná. Popište efektivní algoritmus konstrukce $\varphi'$ je-li dána $\varphi$ (tj. redukci z problému SAT do problému 3-SAT).
+\end{problem}
     
-    Zkuste si doma: Napište skript generující $\varphi_n$ v DIMACS CNF formátu. Použijte SAT solver k nalezení nejmenšího $n$ pro které takové obarvení neexistuje (tj. každé 2-obarvení obsahuje monochromatickou trojici $a<b<c$ takovou, že $a+b=c$).
+    
+\medskip\begin{problem} Najděte (co nejkratší) CNF a DNF reprezentace Booleovské funkce $\mathrm{maj}: {^3}2\to 2$, která vrací převládající hodnotu mezi 3 vstupy.
+\end{problem}
+    
+    
+\medskip\begin{problem} Uměli byste nalézt CNF a DNF reprezentace $n$-ární parity, tj. Booleovské funkce $\mathrm{par}: {^n}2\to 2$ definované pomocí $\mathrm{par}(x_1,\dots,x_n)=(x_1+\dots+x_n)\bmod 2$,
+která vrací XOR všech vstupních hodnot? Zkuste to pro malé hodnoty $n$.
+\end{problem}
+    
+    
+\medskip\begin{problem} Buď $\mathbb P$ spočetně nekonečná množina prvovýroků. Ukažte, že již neplatí, že každou $K\subseteq \mathrm{M}_\mathbb P$ lze axiomatizovat výrokem v CNF i výrokem v DNF. Najděte množinu modelů $K$, kterou nelze axiomatizovat ani výrokem v CNF, ani výrokem v DNF.
 \end{problem}
 
-    
+
 \medskip\begin{problem}
-    Zakódujte problém setřídění trojice celých čísel do SAT.
+Uvažte následující dvě teorie:
+\begin{enumerate}[label=(\Roman*)]
+    \item $T=\{p\wedge q,p\to\neg q,q\}$ v jazyce $\mathbb P=\{p,q\}$
+    \item $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ v jazyce $\mathbb P=\{p,q,r\}$        
+\end{enumerate}
+\begin{enumerate}
+    \item Rozhodněte, zda je teorie $T$ [konzistentní/splnitelná/kompletní]. (konzistentní=bezesporná, kompletní=úplná)
+    \item Uveďte příklad výroku $\varphi$, který je [platný/nesplnitelný/nezávislý] v $T$
+    \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní/kompletní/konzervativní jednoduchá/kompletní jednoduchá/kompletní konzervativní].
+\end{enumerate}
+
 \end{problem}
-    
         
+    
 \medskip\begin{problem}
-Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvami tak, že žádné dva sousedící regiony nemají stejnou barvu. Najděte takové obarvení pomocí SAT solveru.
-\begin{multicols}{2}
+Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$. 
 \begin{enumerate}
-    \item Mapa krajů Česka  
-    
-    \vfill \includegraphics[width=0.45\textwidth]{files/map-coloring-czechia.png} \vfill
-    
-    \item Těžší instance  
-    
-    \vfill \includegraphics[width=0.45\textwidth]{files/map-coloring-hard.png} \vfill
+    \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$?
+    \item Určete všechny modely $T$.
 \end{enumerate}
-\end{multicols}
 \end{problem}
 
 
-
-\medskip\begin{ukol}[3 body]{\,}
-\begin{enumerate}[label=\arabic*.]
-\item Pomocí algoritmu implikačního grafu najděte všechny modely následující teorie:
-$$
-T=\{p,\neg q \to \neg r,\neg q \to \neg s,r \to p,\neg s \to \neg p\}
-$$
-
-\item Pomocí algoritmu jednotkové propagace najděte všechny modely následující teorie:
-\begin{align*}
-    &(\neg a \vee \neg b \vee c \vee \neg d)\wedge(\neg b \vee c)\wedge d \wedge (\neg a \vee \neg c \vee e)\wedge \\
-    &(\neg c \vee \neg d)\wedge(\neg a \vee \neg d \vee \neg e)\wedge(a\vee \neg b \vee\neg e)
-\end{align*}
-
-\item Uvažme následující výroky $\varphi$ a $\psi$ nad $\mathbb P=\{p, q, r, s\}$:
-\begin{align*}
-    \varphi &= (\neg p \vee  q)\to(p\wedge r)\\
-    \psi &= s\to q
-\end{align*}
+\medskip\begin{problem}
+Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro každou teorii $T$ a výroky $\varphi$, $\psi$ v jazyce $\mathbb{P}$ platí:
 \begin{enumerate}
-    \item Určete počet (až na ekvivalenci) výroků $\chi$ nad $\mathbb P$ takových, že $\varphi\wedge\psi\models\chi$.
-    \item Určete počet (až na ekvivalenci) úplných teorií $T$ nad $\mathbb P$ takových, že $T\models\varphi\wedge\psi$.
-    \item Najděte nějakou axiomatizaci pro každou (až na ekvivalenci) kompletní teorii $T$ nad $\mathbb P$ takovou, že $T\models\varphi\wedge\psi$.
+    \item $T \models \varphi$,\ \  právě když \ \ $T \not\models \neg \varphi$
+    \item $T \models \varphi$ a $T \models \psi$,\ \ právě když \ \ $T \models \varphi \wedge \psi$
+    \item $T \models \varphi$ nebo $T \models \psi$,\ \ právě když \ \ $T \models \varphi \vee \psi$
+    \item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
 \end{enumerate}
+\end{problem}
+    
+
+\medskip\begin{problem}
+Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro libovolné teorie $T$, $S$ nad~$\mathbb{P}$ platí:
+\begin{enumerate}
+    \item $S\subseteq T \Rightarrow \Conseq(T) \subseteq \Conseq(S)$
+    \item $\Conseq(S\cup T)=\Conseq(S) \cup \Conseq(T)$
+    \item $\Conseq(S\cap T)=\Conseq(S) \cap \Conseq(T)$
+\end{enumerate}
+\end{problem}
+
+
+\medskip\begin{ukol}[2 body]{\,}
+\begin{enumerate}[label=\arabic*.]
+    \item Převeďte následující výrok do CNF a DNF:
+    $$
+    ((p\to \neg q) \to \neg r) \to \neg p.
+    $$
+    \begin{enumerate}
+        \item tabulkou (určením modelů),
+        \item ekvivalentními úpravami (pokuste se najít co nejkratší CNF a DNF ekvivalenty).
+    \end{enumerate}
+    \item Uvažte  teorii $S=\{p_i \to (p_{i+1} \vee q_{i+1}), q_i \to (p_{i+1} \vee q_{i+1}) \mid i\in \mathbb{N}\}$ nad $\mathrm{var}(S)$.
+    \begin{enumerate}
+            \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $S$?
+            \item Které výroky ve tvaru  $p_i \to (p_j \vee q_j)$ jsou důsledky $S$?
+            \item Určete všechny modely $S$.
+    \end{enumerate}
 \end{enumerate} 
 \end{ukol}
+
 
 \end{document}

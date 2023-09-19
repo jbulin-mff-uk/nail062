@@ -1,18 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage{a4wide}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{enumitem}
-    \setlist[enumerate]{label=(\alph*),itemsep=0pt,topsep=0pt}
-    \setlist[itemize]{itemsep=0pt,topsep=0pt}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-
-\theoremstyle{definition}
-\newtheorem{problem}{Příklad}
-\newtheorem*{ukol}{Domácí úkol}
+\input{header.tex}
 
 
 \begin{document}
@@ -21,123 +9,107 @@
 % po 6. přednášce
 
 \textbf{Témata:}
-Struktury a podstruktury. Extenze teorií, extenze o definice. Definovatelné množiny.
+Syntaxe a sémantika predikátové logiky. Struktury a podstruktury. Extenze teorií, extenze o definice. Definovatelné množiny.
 
 
 \medskip\begin{problem}
-    Uvažme $\underline{\mathbb{Z}}_4=\langle\{0,1,2,3\},+,-,0 \rangle$ kde $+$ je binární sčítání modulo $4$ a $-$ je unární funkce, která vrací \emph{inverzní} prvek $+$ vzhledem k \emph{neutrálnímu} prvku $0$.
-    \begin{enumerate}        
-        \item Je $\underline{\mathbb{Z}}_4$ model teorie grup (tj. je to \emph{grupa})?
-        \item Určete všechny podstruktury $\underline{\mathbb{Z}}_4\langle a\rangle$ generované nějakým $a\in \mathbb{Z}_4$.
-        \item Obsahuje $\underline{\mathbb{Z}}_4$ ještě nějaké další podstruktury?
-        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ modelem teorie grup?
-        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ elementárně ekvivalentní $\underline{\mathbb{Z}}_4$?
-        \item Je každá podstruktura \emph{komutativní} grupy (tj. grupy, která splňuje $x+y=y+x$) také komutativní grupa?
+    Určete volné a vázané výskyty proměnných v následujících formulích. Poté je převeďte na varianty, ve kterých nebudou proměnné s volným i vázaným výskytem zároveň.
+    \begin{enumerate}
+       \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
+       \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
+       \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
+    \end{enumerate}
+    \end{problem}
+    
+    \medskip\begin{problem}
+    Označme $\varphi$ formuli $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Které z následujících termů jsou substituovatelné do $\varphi$?
+    \begin{enumerate}
+       \item term $z$ za proměnnou $x$, term $y$ za proměnnou $x$,
+       \item term $z$ za proměnnou $y$, term $2*y$ za proměnnou $y$,
+       \item term $x$ za proměnnou $z$, term $y$ za proměnnou $z$,
     \end{enumerate}
 \end{problem}
- 
-        
+    
 \medskip\begin{problem}
-    Buď $\underline{\mathbb{Q}}=\langle\mathbb{Q},+,-,\cdot,0,1 \rangle$ těleso racionálních čísel se standardními operacemi.
-    \begin{enumerate}                
-        \item Existuje redukt $\underline{\mathbb{Q}}$, který je modelem teorie grup?
-        \item Lze redukt $\langle\mathbb{Q},\cdot,1\rangle$ rozšířit na model teorie grup?
-        \item Obsahuje $\underline{\mathbb{Q}}$ podstrukturu, která není elementárně ekvivalentní $\underline{\mathbb{Q}}$?
-        \item Označmě $Th(\underline{\mathbb{Q}})$ množinu všech sentencí pravdivých v $\underline{\mathbb{Q}}$. Je $Th(\underline{\mathbb{Q}})$ úplná teorie?
+    Jsou následující formule variantami formule $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
+    \begin{enumerate}
+    \item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
+    \item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
+    \item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
     \end{enumerate}
+\end{problem}
+    
+    
+\medskip\begin{problem}
+    Mějme strukturu $\mathcal{A}=(\{a,b,c,d\},\vartriangleright^{A})$ v jazyce s jediným binárním relačním symbolem $\vartriangleright$, kde $\vartriangleright^{A}=\{(a,c), (b,c), (c,c), (c,d)\}$. 
+    \begin{itemize}
+        \item Které z následujících formulí jsou pravdivé v $\mathcal A$? 
+        \item Pro každou formuli najděte strukturu $\mathcal{B}$ (existuje-li) takovou, že $\mathcal{B}\models \varphi$ právě když $\mathcal{A}\not\models \varphi$.
+    \end{itemize}    
+    \begin{enumerate}
+       \item $x \vartriangleright y$
+       \item $(\exists x)(\forall y)(y \vartriangleright x)$
+    %   \item $(\exists x)(\forall y)(x \ntriangleright y)$, kde podformule $x \ntriangleright y$ je zkratkou za $\neg(x \vartriangleright y)$
+       \item $(\exists x)(\forall y)((y \vartriangleright x) \to (x \vartriangleright x))$
+    %   \item $(\forall x)(\exists y)((y \ntriangleright x)\to(x \vartriangleright y))$
+       \item $(\forall x)(\forall y)(\exists z)((x \vartriangleright z)\wedge(z \vartriangleright y))$
+       \item $(\forall x)(\exists y)((x \vartriangleright z)\vee(z \vartriangleright y))$
+    %   \item $(x \ntriangleright z) \vee (\exists y)(y \ntriangleright z)$
+    \end{enumerate}
+\end{problem}
+    
+    
+\medskip\begin{problem}
+    Jsou následující sentence pravdivé / lživé / nezávislé (v logice)?
+    \begin{enumerate}
+     \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
+    \item $(\forall x)(P(x)\to Q(f(x))) \wedge (\forall x)P(x) \wedge (\exists x)\neg Q(x)$
+      \item $(\forall x)(P(x) \vee Q(x)) \to ((\forall x)P(x) \vee (\forall x)Q(x))$
+       \item $(\forall x)(P(x)\to Q(x)) \to ((\exists x)P(x)\to(\exists x)Q(x))$
+    \item $(\exists x)(\forall y)P(x,y) \to (\forall y)(\exists x)P(x,y)$
+    %\item $(\forall x)(P(x,z) \to Q(x,y)) \to ((\forall x)(P(x,z) \to (\forall x)Q(x,y))$
+    \end{enumerate}
+\end{problem}
+    
+    
+\medskip\begin{problem}
+    Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
+    \begin{enumerate}
+    \item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
+    \item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
+    \end{enumerate}
+    Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
 \end{problem}
     
 
 \medskip\begin{problem}
-    Mějme teorii $T=\{x=c_1 \vee x=c_2 \vee x=c_3\}$ v jazyce $L=\langle c_1,c_2,c_3\rangle$ s rovností.
-    \begin{enumerate}        
-        \item Je $T$ (sémanticky) konzistentní?
-        \item Jsou všechny modely $T$ elementárně ekvivalentní? Tj. je $T$ kompletní?
-        \item Najděte všechny jednoduché úplné extenze $T$.
-        \item Je teorie $T'=T\cup\{x=c_1 \vee x=c_4\}$ v jazyce $L=\langle c_1,c_2,c_3,c_4\rangle$ extenzí $T$? Je $T'$ jednoduchá extenze $T$? Je $T'$ konzervativní extenze $T$?
+    Rozhodněte, zda následující platí pro každou formuli $\varphi$. Dokažte (sémanticky, z definic) nebo najděte protipříklad.
+    \begin{enumerate}
+       \item $\varphi \models (\forall x)\varphi$
+       \item $\models \varphi \to (\forall x)\varphi$
+       \item $\varphi \models (\exists x)\varphi$
+       \item $\models \varphi \to (\exists x)\varphi$
     \end{enumerate}
 \end{problem}
-
-
+    
+    
 \medskip\begin{problem}
-Buď $T=\{\neg E(x,x), E(x,y)\to E(y,x), (\exists x)(\exists y)(\exists z)(E(x,y)\wedge E(y,z)\wedge E(x,z)\wedge \neg(x=y\vee y=z\vee x=z)),\varphi\}$ teorie v jazyce $L=\langle E\rangle$ s rovností, kde $E$ je binární relační symbol a $\varphi$ vyjadřuje, že ``existují právě čtyři prvky''.
-\begin{enumerate}    
-    \item Uvažme rozšíření $L'=\langle E,c\rangle$ jazyka o nový konstantní symbol $c$. Určete počet (až na ekvivalenci) teorií $T'$ v jazyce $L'$, které jsou extenzemi teorie $T$. 
-    \item Má $T$ nějakou \emph{konzervativní} extenzi v jazyce $L'$? Zdůvodněte.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Nechť $T=\{x=f(f(x)),\varphi, c_1 \ne c_2\}$ je teorie jazyka $L=\langle f,c_1,c_2\rangle$ s rovností, kde $f$ je unární funkční, $c_1,c_2$ jsou konstantní symboly a axiom $\varphi$ vyjadřuje, že ``existují právě $3$ prvky''.
-\begin{enumerate}    
-    \item Určete, kolik má teorie $T$ navzájem neekvivalentních jednoduchých kompletních extenzí. Napište dvě z nich. {\it (3b)}
-    \item Nechť $T'=\{x=f(f(x)),\varphi,f(c_1)\ne f(c_2)\}$ je teorie stejného jazyka, axiom $\varphi$ je stejný jako výše. Je $T'$ extenze $T$? Je $T$ extenze $T'$? Pokud ano, jde o konzervativní extenzi? Uveďte zdůvodnění. {\it (2b)}
-\end{enumerate}
-\end{problem}
-
-
-
-\medskip\begin{problem}
-Nechť $T_n = \{c_i \neq c_j | 1 \leq i < j \leq n\}$ označuje teorii jazyka $L_n = \langle c_1, \dots, c_n \rangle$ s rovností, kde $c_1, \dots, c_n$ jsou konstantní symboly.
-\begin{enumerate}    
-    \item Pro dané konečné $n \geq 1$ určete počet modelů konečné velikosti $k$ teorie $T_n$ až na izomorfismus. Určete počet spočetných modelů teorie $T_n$. 
-    \item Pro jaké dvojice hodnot $n$ a $m$ je $T_n$ extenzí $T_m$? Pro jaké je konzervativní extenzí? Zdůvodněte.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Buď $T'$ extenze teorie $T=\{(\exists y)(x+y=0),(x+y=0)\wedge (x+z=0)\rightarrow y=z\}$ v jazyce $L=\langle +,0,\le\rangle$ s rovností o definice $<$ a unárního $-$ s axiomy
-\begin{align*}
-    -x=y\ \ &\leftrightarrow\ \ x+y=0\\
-    x<y\ \ &\leftrightarrow\ \ x\le y\ \wedge\ \neg(x=y)
-\end{align*}
-Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následujícími formulemi.
-\begin{enumerate}    
-    \item $x+(-x)=0$
-    \item $x+(-y)<x$
-    \item $-(x+y)<-x$
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Mějme jazyk $L=\langle F \rangle$ s rovností, kde $F$ je binární funkční symbol. Najděte formule definující následující množiny (bez parametrů):
-\begin{enumerate}
-    \item interval $(0,\infty)$ v $\mathcal A=\langle\mathbb R, \cdot\rangle$ kde $\cdot$ je násobení reálných čísel,
-    \item množina $\{(x, 1/x)\mid x\neq 0\}$ ve stejné struktuře $\mathcal A$,
-    \item množina všech nejvýše jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$,
-    \item množina všech prvočísel v $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem} % move to tutorial 13?
-Nechť $\mathcal{A}=\langle\mathbb{Z},\mathrm{abs}^A \rangle$ je struktura jazyka $L=\langle \mathrm{abs} \rangle$ s rovností, kde $\mathrm{abs}$ je unární funkční symbol a $\mathrm{abs}^A$ je funkce absolutní hodnoty v $\mathbb{Z}$.
-\begin{enumerate}
-    \item Nalezněte příklady $(i)$ netriviální (t.j. jiné než $\emptyset$ a $\mathbb{Z}$) množiny definovatelné v $\mathcal{A}$ bez parametrů a $(ii)$ množiny nedefinovatelné v $\mathcal{A}$ bez parametrů.
-    \item Mějme $L$-strukturu $\mathcal{B}=\langle\mathbb{N},\mathrm{id} \rangle$, kde $\mathrm{id}$ je identita. Je $Th(\mathcal{A})$ extenzí $Th(\mathcal{B})$?
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{ukol}[2 body]
-    Nechť $T$ je teorie jazyka $L=\langle T \rangle$ s rovností, kde $T$ je ternární relační symbol, s axiomy:
+    Buď $L=\langle +, -, 0\rangle$ jazyk teorie grup (s rovností). Teorie grup $T$ sestává z těchto axiomů:
     \begin{align*}
-        T(x,y,z)&\to x\ne y \wedge y\ne z \wedge x\ne z \\
-        T(x,y,z)&\to T(y,x,z)\wedge T(y,z,x)\wedge T(z,y,x)\wedge T(z,x,y)\wedge T(x,z,y)\\
-        x\ne y &\to (\exists z)(T(x,y,z)\wedge(\forall u)(T(x,y,u)\to u=z))
+    x+(y+z)&=(x+y)+z\\
+    0+x&=x=x+0\\
+    x+(-x)&=0=(-x)+x
     \end{align*}
-    Modely teorie $T$ jsou tzv. \emph{Steinerovy systémy trojic}, v našem případě uspořádaných. Uvažme model $\mathcal{F}=\langle \{1,2,\dots,7\},T^F\rangle$ teorie $T$ na obrázku (tzv. \emph{Fanova rovina}), kde každá ``přímka'' reprezentuje trojici prvků, jež jsou v relaci $T^F$ v libovolném pořadí, tedy $T^F=\{(2,4,6),(6,2,4),\dots\}$.
-    \begin{center}
-        \includegraphics[height=4cm]{files/fano.png}  
-    \end{center}
-    \begin{enumerate}        
-        \item Nalezněte co nejmenší množinu parametrů $A$, která v modelu $\mathcal{F}$ umožňuje definovat libovolný jeho prvek (formulí jazyka $L$). Pro každý prvek napište příslušnou definující formuli (s dosazenými parametry). Zdůvodněte, proč je $A$ nejmenší možná.
-        \item Jsou teorie $T'=T \cup \{f(x,y)=z \leftrightarrow T(x,y,z)\}$ a $T''=T\cup \{f(x,y)=z \leftrightarrow T(x,y,z) \vee (x=y \wedge y=z)\}$, kde $f$ je nový binární funkční symbol, (korektními) extenzemi teorie $T$ o definici? Uveďte zdůvodnění.
-    \end{enumerate} 
-\end{ukol}
+    Rozhodněte, zda jsou následující formule pravdivé / lživé / nezávislé v $T$. Zdůvodněte.
+    \begin{enumerate}
+        \item $x+y=y+x$
+        \item $x+y=x\ \rightarrow\ y=0$
+        \item $x+y=0\ \rightarrow\ y=-x$
+        \item $-(x+y)=(-y)+(-x)$
+    \end{enumerate}
+\end{problem}
 
 
 \end{document}

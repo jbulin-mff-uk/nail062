@@ -1,20 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage{a4wide}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{enumitem}
-    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
-    \setlist[itemize]{itemsep=3pt,topsep=6pt}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-
-\theoremstyle{plain}
-\newtheorem*{theorem*}{Věta}
-\theoremstyle{definition}
-\newtheorem{problem}{Příklad}
-\newtheorem*{ukol}{Domácí úkol}
+\input{header.tex}
 
 
 \begin{document}
@@ -24,145 +10,97 @@
 
 
 \textbf{Témata:} 
-Rezoluce ve výrokové logice. Aplikace věty o kompaktnosti. Hilbertův kalkulus.
+Ještě tablo metoda: aplikace a pokročilejší problémy. Ukázka rezoluční metody.
 
-
-\medskip\begin{problem}
-Označme jako $\varphi$ výrok $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Ukažte, že $\varphi$ je tautologie:
-\begin{enumerate}
-    \item Převeďte $\neg \varphi$ do CNF a zapište výsledný výrok jako formuli $S$ v množinové reprezentaci.
-    \item Najděte rezoluční zamítnutí $S$.
-\end{enumerate}
-\end{problem}
 
 
 \medskip\begin{problem}
-Najděte rezoluční zamítnutí následujících výroků:
-\begin{enumerate}
-    \item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$
-    \item $\neg(((p\to q)\to \neg q)\to \neg q)$
-\end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem}
-Dokažte rezolucí, že v teorii $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
-\end{problem}
-
-
-\medskip\begin{problem}Nechť prvovýroky $r$, $s$, $t$  reprezentují (po řadě), že \emph{``Radka / Sára / Tom je ve škole''} a označme $\mathbb{P}=\{r,s,t\}$. Víme, že
-    \begin{itemize}\it
-    \item Není-li Tom ve škole, není tam ani Sára.
-    \item Radka bez Sáry do školy nechodí.
-    \item Není-li Radka ve škole, je tam Tom.
-    \end{itemize}
-    \begin{enumerate}
-    \item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P$.
-    \item Rezoluční metodou dokažte, že z $T$ vyplývá, že \emph{Tom je ve škole}: Napište formuli $S$ v množinové reprezentaci, která je nesplnitelná, právě když to platí, a najděte rezoluční zamítnutí $S$. Nakreslete rezoluční strom.
-    \item Určete množinu modelů teorie $T$.
-    \end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-\emph{Half-adder circuit} je logický obvod se dvěma vstupními bity (bit 1, bit 2) a dvěma výstupními bity (carry, sum) znázorněný v následujícím diagramu:
-\begin{center}
-    \includegraphics[width=0.5\textwidth]{files/half-adder.png}
-\end{center}
-\begin{enumerate}
-        \item Formalizujte tento obvod ve výrokové logice. Konktrétně, vyjádřete jej jako výrokovou teorii $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ v jazyce $\mathbb P=\{b_1,b_2,c,s\}$, kde výrokové proměnné znamenají po řadě ``bit 1'', ``bit 2'', ``carry'' a ``sum'', a formule $\varphi,\psi$ neobsahují proměnné $c,s$.
-        %\item Axiomatizujte teorii $T$ výrokem v CNF a také výrokem v DNF
-        \item Dokažte rezoluční metodou, že $T\models c\to\neg s$.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem} Máme k dispozici MgO, H$_2$, O$_2$, a C, a můžeme provádět následující reakce:
+    Aladin našel v jeskyni dvě truhly, A a B. Ví, že každá truhla obsahuje buď poklad, nebo smrtonosnou past.
     \begin{itemize}
-        \item MgO\ +\ H$_2$\ \ $\to$\ \ Mg\ +\ H$_2$O
-        \item C\ +\ O$_2$\ \ $\to$\ \ CO$_2$
-        \item CO$_2$\ +\ H$_2$O\ \ $\to$\ \ H$_2$CO$_3$
+    \item Na truhle A je nápis: {\it ``Alespoň jedna z těchto dvou truhel obsahuje poklad.''}
+    \item Na truhle B je nápis: {\it ``V truhle A je smrtonosná past.''}
     \end{itemize}
+    Aladin ví, že buď jsou oba nápisy pravdivé, nebo jsou oba lživé.
     \begin{enumerate}
-        \item Reprezentujte naše možnosti výrokem (nad vhodně zvoleným jazykem) a převeďte ho do množinové reprezentace.
-        \item Pomocí rezoluce dokažte, že můžeme získat H$_2$CO$_3$. Lze najít LI-důkaz téhož?
+        \item Vyjádřete Aladinovy informace jako teorii $T$ nad vhodně zvolenou množinou výrokových proměnných $\mathbb P$. (Vysvětlete význam jednotlivých výrokových proměnných v $\mathbb P$.)
+        \item Pomocí tablo metody najděte všechny modely teorie $T$.
+        \item Může Aladin zvolit truhlu tak, aby si byl jistý, že v ní bude poklad?
     \end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Celá čísla postihla záhadná nemoc šířící se (v diskrétních krocích) dle následujících pravidel (platících pro všechna čísla ve všech krocích).
-\begin{enumerate}[label=(\roman*)]\it
-\item Zdravé číslo onemocní, právě když je právě jedno číslo nemocné (v předchozím čase).
-\item Nemocné číslo se uzdraví, právě když je předchozí číslo nemocné (v předchozím čase).
-\item V čase $0$ bylo nemocné číslo $0$, ostatní čísla byla zdravá.
-\end{enumerate}
-%(Sousedními čísly čísla $i$ myslíme $i-1$ a $i+1$, předchozím číslem myslíme $i-1$.)
-\begin{enumerate}
-\item Napište teorie $T_1, T_2, T_3$ vyjadřující (po řadě) tvrzení $(i), (ii), (iii)$ nad množinou prvovýroků $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, kde prvovýrok $p_i^t$ vyjadřuje, že ``{\it číslo $i$ je v čase $t$ nemocné.}''
-\item Převeďte axiomy z $T_1, T_2, T_3$ do CNF a napište teorii $S$ v množinové reprezentaci, která je nesplnitelná, právě když $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, tj.: ``{\it Číslo $1$ je zdravé v čase $2$.}'' (Stačí převést jen konkrétní axiomy z $T_1,T_2,T_3$, ze kterých plyne $\neg p_1^2$, a do $S$ uvést jen příslušné klauzule.)
-\item Rezolucí dokažte, že $S$ je nesplnitelná. Zamítnutí znázorněte rezolučním stromem.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-    Najděte rezoluční uzávěry $\mathcal{R}(S)$ pro následující výroky $S$:
-    \begin{enumerate}
-        \item $\{\{p,q\},\{p,\neg q\},\{\neg p,\neg q\}\}$
-        \item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$
-    \end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem}
-    Zkonstruujte \emph{strom dosazení} pro formuli $S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$.
-\end{problem}
-
-
-\medskip\begin{problem}
-    Dokažte podrobně, že je-li $S=\{C_1,C_2\}$ splnitelná a $C$ je rezolventa $C_1$ a $C_2$, potom je i $C$ splnitelná.
-\end{problem}
-
-    
-\medskip\begin{problem} Dokažte pomocí věty o kompaktnosti a variant tvrzení pro konečné objekty:
-\begin{enumerate}
-    \item Každý spočetný rovinný graf je obarvitelný čtyřmi barvami.
-    \item Každé spočetné částečné uspořádání lze rozšířit na úplné (lineární) uspořádání.
-    %\item Hallova věta platí i pro nekonečné množiny.
-\end{enumerate}
-
-\end{problem}
-
-
-
-\medskip\begin{problem}
-V Hilbertově kalkulu dokažte pro libovolné formule následující vztahy:
-\begin{enumerate}
-    %\item $\vdash_H\ p\to p$
-    \item $\{\neg p\}\ \vdash_H\ p\to q$
-    \item $\{\neg(\neg p)\}\ \vdash_H\ p$
-    \item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
-\end{enumerate}    
-\end{problem}
-
-\medskip\begin{problem}
-    Dokažte korektnost Hilbertova kalkulu:
-    \begin{itemize}
-        \item Dokažte, že logické axiomy jsou tautologie.
-        \item Dokažte, že modus ponens je korektní, tj. když $T\models\varphi$ a $T\models\varphi\to\psi$, tak $T\models\psi$.
-        \item Ukažte, že $T\ \vdash_H\ \varphi$ implikuje $T\models\varphi$.
-    \end{itemize}
     \end{problem}
     
-\medskip\begin{problem}
-    Vyslovte a dokažte větu o dedukci pro Hilbertův kalkul.
-\end{problem}
     
+    \medskip\begin{problem} % a bit longer - don't do in class
+    V prezidentských volbách kandidují pan A a pan B.
+    \begin{itemize}
+    \item Pan A říká: {\it ``Budu zvolen nebo pan B lže.''}
+    \item Pan B říká: {\it ``Pan A nebude zvolen nebo lžu.''}
+    \item Bude zvolen právě jeden z nich.
+    \end{itemize}
+    \begin{enumerate}
+    \item Formalizujte jako teorii $T$ v jazyce $\mathbb P=\{z_a,z_b,p_a,p_b\}$, kde $z_a$ resp. $z_b$ znamená, že zvolen bude pan A resp. pan B, a $p_a$ resp. $p_b$ znamená, že A resp. B mluví pravdu.
+    \item Sestrojte dokončená tabla z teorie $T$ s položkami $\mathrm{F}z_a$ resp. $\mathrm{F}z_b$ v kořeni. Jaký z těchto tabel můžeme učinit závěr? [Tabla mohou být poměrně velká.]
+    \item Uveďte příklad výroku nad $\mathbb{P}$, který je v teorii $T$ nezávislý, anebo zdůvodněte, proč takový výrok neexistuje.
+    \item Existuje teorie $S$ nad $\{z_a,z_b\}$ taková, že $T$ je konzervativní extenzí $S$? Uveďte příklad, nebo zdůvodněte, proč ne.
+    \end{enumerate}
+    \end{problem}
 
 
-\medskip\begin{ukol}
-Tentokrát žádný není. Místo domácího úkolu se připravte na zápočtový test: procvičte rezoluční metodu a vyřešte vzorový test (na webu).
-\end{ukol}
+
+\medskip\begin{problem}
+    Uvažme nekonečnou výrokovou teorii (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Pomocí tablo metody najděte všechny modely $T$, a to tak, že sestrojíte tablo z $T$ s položkou $\mathrm{T}p_0\to p_1$ v kořeni. Je každý model $T$ kanonickým modelem pro některou z větví tohoto tabla? Pokuste se sestrojit také \emph{systematické} tablo.
+\end{problem}
+
+
+
+
+\medskip\begin{problem} 
+    Navrhněte vhodná atomická tabla a ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví:
+    \begin{itemize}
+        \item pro Peirceovu spojku $\downarrow$ (NOR),
+        \item pro Shefferovu spojku $\uparrow$ (NAND),
+        \item pro $\oplus$ (XOR),
+        \item pro ternární operátor ``if p then q else r'' (IFTE).
+    \end{itemize}  
+    
+\end{problem}
+
+
+\medskip\begin{problem}
+    Dokažte přímo (transformací tabel) větu o dedukci, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí
+    $$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
+    \end{problem}
+
+
+\medskip\begin{problem}
+    \emph{Half-adder circuit} je logický obvod se dvěma vstupními bity (bit 1, bit 2) a dvěma výstupními bity (carry, sum) znázorněný v následujícím diagramu:
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{files/half-adder.png}
+    \end{center}
+    \begin{enumerate}
+            \item Formalizujte tento obvod ve výrokové logice. Konktrétně, vyjádřete jej jako výrokovou teorii $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ v jazyce $\mathbb P=\{b_1,b_2,c,s\}$, kde výrokové proměnné znamenají po řadě ``bit 1'', ``bit 2'', ``carry'' a ``sum'', a formule $\varphi,\psi$ neobsahují proměnné $c,s$.
+            %\item Axiomatizujte teorii $T$ výrokem v CNF a také výrokem v DNF
+            \item Dokažte tablo metodou, že $T\models c\to\neg s$.
+            \item Dokažte totéž rezoluční metodou (připomeňte si ji).
+    \end{enumerate}
+    \end{problem}
+
+
+\medskip\begin{problem}
+    Celá čísla postihla záhadná nemoc šířící se (v diskrétních krocích) dle následujících pravidel (platících pro všechna čísla ve všech krocích).
+    \begin{enumerate}[label=(\roman*)]\it
+    \item Zdravé číslo onemocní, právě když je právě jedno číslo nemocné (v předchozím čase).
+    \item Nemocné číslo se uzdraví, právě když je předchozí číslo nemocné (v předchozím čase).
+    \item V čase $0$ bylo nemocné číslo $0$, ostatní čísla byla zdravá.
+    \end{enumerate}
+    %(Sousedními čísly čísla $i$ myslíme $i-1$ a $i+1$, předchozím číslem myslíme $i-1$.)
+    \begin{enumerate}
+    \item Napište teorie $T_1, T_2, T_3$ vyjadřující (po řadě) tvrzení $(i), (ii), (iii)$ nad množinou prvovýroků $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, kde prvovýrok $p_i^t$ vyjadřuje, že ``{\it číslo $i$ je v čase $t$ nemocné.}''
+    \item Převeďte axiomy z $T_1, T_2, T_3$ do CNF a napište teorii $S$ v množinové reprezentaci, která je nesplnitelná, právě když $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, tj.: ``{\it Číslo $1$ je zdravé v čase $2$.}'' (Stačí převést jen konkrétní axiomy z $T_1,T_2,T_3$, ze kterých plyne $\neg p_1^2$, a do $S$ uvést jen příslušné klauzule.)
+    \item Rezolucí dokažte, že $S$ je nesplnitelná. Zamítnutí znázorněte rezolučním stromem.
+    \end{enumerate}
+\end{problem}
+
+ 
+
 
 \end{document}

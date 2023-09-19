@@ -1,21 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage{a4wide}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{enumitem}
-    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
-    \setlist[itemize]{itemsep=3pt,topsep=6pt}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-
-
-\theoremstyle{definition}
-\newtheorem{problem}{Příklad}
-\newtheorem*{ukol}{Domácí úkol}
-
-\DeclareMathOperator{\Conseq}{Csq}
+\input{header.tex}
 
 
 \begin{document}
@@ -26,6 +11,71 @@
 \textbf{Témata:} 
 Syntaxe a sémantika výrokové logiky. Převod do CNF a DNF. Univerzálnost logických spojek.
 
+
+\medskip\begin{problem}
+    Mějme teorii $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ v jazyce $\{p, q, r\}$.
+    \begin{enumerate}
+        \item Uveďte příklad následujícího: výrok pravdivý v $T$, lživý v $T$, nezávislý v $T$, splnitelný v $T$, a dvojice $T$-ekvivalentních výroků.
+        \item Které z následujících výroků jsou pravdivé, lživé, nezávislé, splnitelné v $T$? $T$-ekvivalentní? 
+        $$
+        p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r
+        $$
+    \end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem}
+    Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$. 
+    \begin{enumerate}
+        \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$?
+        \item Určete všechny modely $T$.
+    \end{enumerate}
+    \end{problem}
+    
+    
+\medskip\begin{problem} Určete množinu modelů dané formule. Využijte toho, že je v DNF resp. v CNF.
+\begin{enumerate}
+    \item $(\neg p_1 \wedge \neg p_2)\vee( \neg p_1 \wedge p_2)\vee( p_1 \wedge \neg p_2)\vee( p_2 \wedge \neg p_3)$
+    \item $(\neg p_1 \vee \neg p_2)\wedge( \neg p_1 \vee p_2)\wedge( p_1 \vee \neg p_2)\wedge( p_2 \vee \neg p_3)$
+    \item $(p_1 \wedge  \neg p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(\neg p_3)\vee(p_2 \wedge  p_4)\vee(p_1 \wedge  p_3 \wedge  p_5 )$
+    \item $(p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4 )\wedge(p_2 \vee p_3 \vee \neg p_4 )\wedge(\neg p_3)\wedge(p_2 \vee p_4)\wedge(p_1 \vee p_3 \vee p_5 )$
+\end{enumerate}
+\end{problem}
+    
+    
+\medskip\begin{problem} Převeďte následující výroky do CNF a DNF 
+\begin{enumerate}
+    \item $(\neg p \vee q)\to (\neg q \wedge r)$,
+    \item $(\neg p \to (\neg q \to r))\to p$,
+\end{enumerate}
+Proveďte to:
+\begin{itemize}
+    \item[(I)] sémanticky (pomocí pravdivostní tabulky),
+    \item[(II)]  ekvivalentními úpravami.
+\end{itemize}    
+
+\end{problem}
+     
+    
+\medskip\begin{problem} Najděte (co nejkratší) CNF a DNF reprezentace Booleovské funkce $\mathrm{maj}: {^3}2\to 2$, která vrací převládající hodnotu mezi 3 vstupy.
+\end{problem}
+    
+    
+\medskip\begin{problem} Najděte CNF a DNF reprezentaci $n$-ární parity, tj. Booleovské funkce $\mathrm{par}: {^n}2\to 2$,
+která vrací XOR všech vstupních hodnot:
+$$
+\mathrm{par}(x_1,\dots,x_n)=(x_1+\dots+x_n)\bmod 2
+$$
+Zkuste to pro malé hodnoty $n$.
+\end{problem}
+    
+    
+\medskip\begin{problem} Buď $\mathbb P$ spočetně nekonečná množina prvovýroků. 
+\begin{itemize}
+    \item Ukažte, že již neplatí, že každou $K\subseteq \mathrm{M}_\mathbb P$ lze axiomatizovat výrokem v CNF i výrokem v DNF.
+    \item  Uveďte příklad množiny modelů $K$, kterou nelze axiomatizovat ani výrokem v CNF, ani výrokem v DNF.
+\end{itemize}
+\end{problem}
 
 
 \medskip\begin{problem}
@@ -50,117 +100,5 @@ Syntaxe a sémantika výrokové logiky. Převod do CNF a DNF. Univerzálnost log
     \end{enumerate}  
     \end{problem}
 
-
-\medskip\begin{problem}
-    Mějme teorii $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ v jazyce $\{p, q, r, s\}$.
-    \begin{enumerate}
-        \item Uveďte příklad následujícího: výrok pravdivý v $T$, lživý v $T$, nezávislý v $T$, splnitelný v $T$, a dvojice $T$-ekvivalentních výroků.
-        \item Které z následujících výroků jsou pravdivé, lživé, nezávislé, splnitelné v $T$? $T$-ekvivalentní? 
-        $$
-        p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r\vee s
-        $$
-    \end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem} Určete množinu modelů dané formule. Využijte toho, že je v DNF resp. v CNF.
-\begin{enumerate}
-    \item $(\neg p_1 \wedge \neg p_2)\vee( \neg p_1 \wedge p_2)\vee( p_1 \wedge \neg p_2)\vee( p_2 \wedge \neg p_3)\vee( p_1 \wedge p_3)$
-    \item $(\neg p_1 \vee \neg p_2)\wedge( \neg p_1 \vee p_2)\wedge( p_1 \vee \neg p_2)\wedge( p_2 \vee \neg p_3)\wedge( p_1 \vee p_3)$
-    \item $(p_1 \wedge  \neg p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(p_2 \wedge  p_3 \wedge  \neg p_4 )\vee(\neg p_3)\vee(p_2 \wedge  p_4)\vee(p_1 \wedge  p_3 \wedge  p_5 )\vee(p_3 \wedge  \neg p_4 \wedge  p_2 )$
-    \item $(p_1 \vee \neg p_2 \vee p_3 \vee \neg p_4 )\wedge(p_2 \vee p_3 \vee \neg p_4 )\wedge(\neg p_3)\wedge(p_2 \vee p_4)\wedge(p_1 \vee p_3 \vee p_5 )\wedge(p_3 \vee \neg p_4 \vee p_2 )$
-\end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem} Převeďte následující výroky do CNF a DNF (I) tabulkou (určením modelů), (II) ekvivalentními úpravami.
-\begin{enumerate}
-    \item $(\neg p \vee q)\to (\neg q \wedge r)$,
-    \item $(\neg p \to (\neg q \to r))\to p$,
-\end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem} Pro danou formuli $\varphi$ v CNF najděte a 3-CNF formuli $\varphi'$ takovou, že $\varphi'$ je splnitelná, právě když $\varphi$ je splnitelná. Popište efektivní algoritmus konstrukce $\varphi'$ je-li dána $\varphi$ (tj. redukci z problému SAT do problému 3-SAT).
-\end{problem}
-    
-    
-\medskip\begin{problem} Najděte (co nejkratší) CNF a DNF reprezentace Booleovské funkce $\mathrm{maj}: {^3}2\to 2$, která vrací převládající hodnotu mezi 3 vstupy.
-\end{problem}
-    
-    
-\medskip\begin{problem} Uměli byste nalézt CNF a DNF reprezentace $n$-ární parity, tj. Booleovské funkce $\mathrm{par}: {^n}2\to 2$ definované pomocí $\mathrm{par}(x_1,\dots,x_n)=(x_1+\dots+x_n)\bmod 2$,
-která vrací XOR všech vstupních hodnot? Zkuste to pro malé hodnoty $n$.
-\end{problem}
-    
-    
-\medskip\begin{problem} Buď $\mathbb P$ spočetně nekonečná množina prvovýroků. Ukažte, že již neplatí, že každou $K\subseteq \mathrm{M}_\mathbb P$ lze axiomatizovat výrokem v CNF i výrokem v DNF. Najděte množinu modelů $K$, kterou nelze axiomatizovat ani výrokem v CNF, ani výrokem v DNF.
-\end{problem}
-
-
-\medskip\begin{problem}
-Uvažte následující dvě teorie:
-\begin{enumerate}[label=(\Roman*)]
-    \item $T=\{p\wedge q,p\to\neg q,q\}$ v jazyce $\mathbb P=\{p,q\}$
-    \item $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ v jazyce $\mathbb P=\{p,q,r\}$        
-\end{enumerate}
-\begin{enumerate}
-    \item Rozhodněte, zda je teorie $T$ [konzistentní/splnitelná/kompletní]. (konzistentní=bezesporná, kompletní=úplná)
-    \item Uveďte příklad výroku $\varphi$, který je [platný/nesplnitelný/nezávislý] v $T$
-    \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní/kompletní/konzervativní jednoduchá/kompletní jednoduchá/kompletní konzervativní].
-\end{enumerate}
-
-\end{problem}
-        
-    
-\medskip\begin{problem}
-Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$. 
-\begin{enumerate}
-    \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$?
-    \item Určete všechny modely $T$.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro každou teorii $T$ a výroky $\varphi$, $\psi$ v jazyce $\mathbb{P}$ platí:
-\begin{enumerate}
-    \item $T \models \varphi$,\ \  právě když \ \ $T \not\models \neg \varphi$
-    \item $T \models \varphi$ a $T \models \psi$,\ \ právě když \ \ $T \models \varphi \wedge \psi$
-    \item $T \models \varphi$ nebo $T \models \psi$,\ \ právě když \ \ $T \models \varphi \vee \psi$
-    \item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
-\end{enumerate}
-\end{problem}
-    
-
-\medskip\begin{problem}
-Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro libovolné teorie $T$, $S$ nad~$\mathbb{P}$ platí:
-\begin{enumerate}
-    \item $S\subseteq T \Rightarrow \Conseq(T) \subseteq \Conseq(S)$
-    \item $\Conseq(S\cup T)=\Conseq(S) \cup \Conseq(T)$
-    \item $\Conseq(S\cap T)=\Conseq(S) \cap \Conseq(T)$
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{ukol}[2 body]{\,}
-\begin{enumerate}[label=\arabic*.]
-    \item Převeďte následující výrok do CNF a DNF:
-    $$
-    ((p\to \neg q) \to \neg r) \to \neg p.
-    $$
-    \begin{enumerate}
-        \item tabulkou (určením modelů),
-        \item ekvivalentními úpravami (pokuste se najít co nejkratší CNF a DNF ekvivalenty).
-    \end{enumerate}
-    \item Uvažte  teorii $S=\{p_i \to (p_{i+1} \vee q_{i+1}), q_i \to (p_{i+1} \vee q_{i+1}) \mid i\in \mathbb{N}\}$ nad $\mathrm{var}(S)$.
-    \begin{enumerate}
-            \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $S$?
-            \item Které výroky ve tvaru  $p_i \to (p_j \vee q_j)$ jsou důsledky $S$?
-            \item Určete všechny modely $S$.
-    \end{enumerate}
-\end{enumerate} 
-\end{ukol}
-
-
+   
 \end{document}

@@ -1,19 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage{a4wide}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{enumitem}
-    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
-    \setlist[itemize]{itemsep=3pt,topsep=6pt}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-
-
-\theoremstyle{definition}
-\newtheorem{problem}{Příklad}
-\newtheorem*{ukol}{Domácí úkol}
+\input{header.tex}
 
 
 \begin{document}
@@ -23,111 +10,115 @@
 
 
 \textbf{Témata:}
-(Zápočtový test z výrokové logiky.) Syntaxe a sémantika predikátové logiky.
+Rezoluce ve výrokové logice. Aplikace věty o kompaktnosti. Hilbertův kalkulus.
 
 
 \medskip\begin{problem}
-    Určete volné a vázané výskyty proměnných v následujících formulích. Poté je převeďte na varianty, ve kterých nebudou proměnné s volným i vázaným výskytem zároveň.
+    Označme jako $\varphi$ výrok $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Ukažte, že $\varphi$ je tautologie:
     \begin{enumerate}
-       \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
-       \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
-       \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
+        \item Převeďte $\neg \varphi$ do CNF a zapište výsledný výrok jako formuli $S$ v množinové reprezentaci.
+        \item Najděte rezoluční zamítnutí $S$.
     \end{enumerate}
     \end{problem}
     
+    
     \medskip\begin{problem}
-    Označme $\varphi$ formuli $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Které z následujících termů jsou substituovatelné do $\varphi$?
+    Najděte rezoluční zamítnutí následujících výroků:
     \begin{enumerate}
-       \item term $z$ za proměnnou $x$, term $y$ za proměnnou $x$,
-       \item term $z$ za proměnnou $y$, term $2*y$ za proměnnou $y$,
-       \item term $x$ za proměnnou $z$, term $y$ za proměnnou $z$,
+        \item $\neg(((p\to q)\to \neg q)\to \neg q)$
+        \item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$
+        
     \end{enumerate}
-\end{problem}
+    \end{problem}
+        
+        
+    \medskip\begin{problem}
+    Dokažte rezolucí, že v teorii $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
+    \end{problem}
     
-\medskip\begin{problem}
-    Jsou následující formule variantami formule $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
+    
+    \medskip\begin{problem}Nechť prvovýroky $r$, $s$, $t$  reprezentují (po řadě), že \emph{``Radka / Sára / Tom je ve škole''} a označme $\mathbb{P}=\{r,s,t\}$. Víme, že
+        \begin{itemize}\it
+        \item Není-li Tom ve škole, není tam ani Sára.
+        \item Radka bez Sáry do školy nechodí.
+        \item Není-li Radka ve škole, je tam Tom.
+        \end{itemize}
+        \begin{enumerate}
+        \item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P$.
+        \item Rezoluční metodou dokažte, že z $T$ vyplývá, že \emph{Tom je ve škole}: Napište formuli $S$ v množinové reprezentaci, která je nesplnitelná, právě když to platí, a najděte rezoluční zamítnutí $S$. Nakreslete rezoluční strom.
+        \item Určete množinu modelů teorie $T$.
+        \end{enumerate}
+    \end{problem}
+    
+    
+    \medskip\begin{problem} Máme k dispozici MgO, H$_2$, O$_2$, a C, a můžeme provádět následující reakce:
+        \begin{itemize}
+            \item MgO\ +\ H$_2$\ \ $\to$\ \ Mg\ +\ H$_2$O
+            \item C\ +\ O$_2$\ \ $\to$\ \ CO$_2$
+            \item CO$_2$\ +\ H$_2$O\ \ $\to$\ \ H$_2$CO$_3$
+        \end{itemize}
+        \begin{enumerate}
+            \item Reprezentujte naše možnosti výrokem %(nad vhodně zvoleným jazykem) 
+            a převeďte ho do množinové reprezentace.
+            \item Pomocí rezoluce dokažte, že můžeme získat H$_2$CO$_3$. Lze najít LI-důkaz téhož?
+        \end{enumerate}
+    \end{problem}
+    
+    
+    \medskip\begin{problem}
+        Najděte rezoluční uzávěry $\mathcal{R}(S)$ pro následující výroky $S$:
+        \begin{enumerate}
+            \item $\{\{p,q\},\{p,\neg q\},\{\neg p,\neg q\}\}$
+            \item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$
+        \end{enumerate}
+    \end{problem}
+        
+        
+    \medskip\begin{problem}
+        Zkonstruujte \emph{strom dosazení} pro formuli $S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$.
+    \end{problem}
+    
+    
+    \medskip\begin{problem}
+        Dokažte podrobně, že je-li $S=\{C_1,C_2\}$ splnitelná a $C$ je rezolventa $C_1$ a $C_2$, potom je i $C$ splnitelná.
+    \end{problem}
+    
+        
+    \medskip\begin{problem} Dokažte pomocí věty o kompaktnosti a variant tvrzení pro konečné objekty:
     \begin{enumerate}
-    \item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
-    \item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
-    \item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
+        \item Každý spočetný rovinný graf je obarvitelný čtyřmi barvami.
+        \item Každé spočetné částečné uspořádání lze rozšířit na úplné (lineární) uspořádání.
+        %\item Hallova věta platí i pro nekonečné množiny.
     \end{enumerate}
-\end{problem}
+    
+    \end{problem}
     
     
-\medskip\begin{problem}
-    Mějme strukturu $\mathcal{A}=(\{a,b,c,d\},\vartriangleright^{A})$ v jazyce s jediným binárním relačním symbolem $\vartriangleright$, kde $\vartriangleright^{A}=\{(a,c), (b,c), (c,c), (c,d)\}$. 
-    \begin{itemize}
-        \item Které z následujících formulí jsou pravdivé v $\mathcal A$? 
-        \item Pro každou formuli najděte strukturu $\mathcal{B}$ (existuje-li) takovou, že $\mathcal{B}\models \varphi$ právě když $\mathcal{A}\not\models \varphi$.
-    \end{itemize}    
+    
+    \medskip\begin{problem}
+    V Hilbertově kalkulu dokažte pro libovolné formule následující vztahy:
     \begin{enumerate}
-       \item $x \vartriangleright y$
-       \item $(\exists x)(\forall y)(y \vartriangleright x)$
-    %   \item $(\exists x)(\forall y)(x \ntriangleright y)$, kde podformule $x \ntriangleright y$ je zkratkou za $\neg(x \vartriangleright y)$
-       \item $(\exists x)(\forall y)((y \vartriangleright x) \to (x \vartriangleright x))$
-    %   \item $(\forall x)(\exists y)((y \ntriangleright x)\to(x \vartriangleright y))$
-       \item $(\forall x)(\forall y)(\exists z)((x \vartriangleright z)\wedge(z \vartriangleright y))$
-       \item $(\forall x)(\exists y)((x \vartriangleright z)\vee(z \vartriangleright y))$
-    %   \item $(x \ntriangleright z) \vee (\exists y)(y \ntriangleright z)$
-    \end{enumerate}
-\end{problem}
+        %\item $\vdash_H\ p\to p$
+        \item $\{\neg p\}\ \vdash_H\ p\to q$
+        \item $\{\neg(\neg p)\}\ \vdash_H\ p$
+        \item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
+    \end{enumerate}    
+    \end{problem}
     
-    
-\medskip\begin{problem}
-    Jsou následující sentence pravdivé / lživé / nezávislé (v logice)?
-    \begin{enumerate}
-     \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
-    \item $(\forall x)(P(x)\to Q(f(x))) \wedge (\forall x)P(x) \wedge (\exists x)\neg Q(x)$
-      \item $(\forall x)(P(x) \vee Q(x)) \to ((\forall x)P(x) \vee (\forall x)Q(x))$
-       \item $(\forall x)(P(x)\to Q(x)) \to ((\exists x)P(x)\to(\exists x)Q(x))$
-    \item $(\exists x)(\forall y)P(x,y) \to (\forall y)(\exists x)P(x,y)$
-    %\item $(\forall x)(P(x,z) \to Q(x,y)) \to ((\forall x)(P(x,z) \to (\forall x)Q(x,y))$
-    \end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem}
-    Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
-    \begin{enumerate}
-    \item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
-    \item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
-    \item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
-    \item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
-    \end{enumerate}
-    Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
-\end{problem}
-    
+    \medskip\begin{problem}
+        Dokažte korektnost Hilbertova kalkulu:
+        \begin{itemize}
+            \item Dokažte, že logické axiomy jsou tautologie.
+            \item Dokažte, že modus ponens je korektní, tj. když $T\models\varphi$ a $T\models\varphi\to\psi$, tak $T\models\psi$.
+            \item Ukažte, že $T\ \vdash_H\ \varphi$ implikuje $T\models\varphi$.
+        \end{itemize}
+        \end{problem}
+        
+    \medskip\begin{problem}
+        Vyslovte a dokažte větu o dedukci pro Hilbertův kalkul.
+    \end{problem}
+       
 
-\medskip\begin{problem}
-    Rozhodněte, zda následující platí pro každou formuli $\varphi$. Dokažte (sémanticky, z definic) nebo najděte protipříklad.
-    \begin{enumerate}
-       \item $\varphi \models (\forall x)\varphi$
-       \item $\models \varphi \to (\forall x)\varphi$
-       \item $\varphi \models (\exists x)\varphi$
-       \item $\models \varphi \to (\exists x)\varphi$
-    \end{enumerate}
-\end{problem}
-    
-    
-\medskip\begin{problem}
-    Buď $L=\langle +, -, 0\rangle$ jazyk teorie grup (s rovností). Teorie grup $T$ sestává z těchto axiomů:
-    \begin{align*}
-    x+(y+z)&=(x+y)+z\\
-    0+x&=x=x+0\\
-    x+(-x)&=0=(-x)+x
-    \end{align*}
-    Rozhodněte, zda jsou následující formule pravdivé / lživé / nezávislé v $T$. Zdůvodněte.
-    \begin{enumerate}
-        \item $x+y=y+x$
-        \item $x+y=x\ \rightarrow\ y=0$
-        \item $x+y=0\ \rightarrow\ y=-x$
-        \item $-(x+y)=(-y)+(-x)$
-    \end{enumerate}
-\end{problem}
 
-
-\medskip\begin{ukol}
-Tentokrát žádný není. Místo toho řešte příklady zbývající ze cvičení.
-\end{ukol}
 
 \end{document}

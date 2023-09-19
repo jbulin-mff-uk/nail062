@@ -1,20 +1,6 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
 
-\usepackage{a4wide}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{enumitem}
-    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
-    \setlist[itemize]{itemsep=3pt,topsep=6pt}
-\usepackage{multicol}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-
-
-\theoremstyle{definition}
-\newtheorem{problem}{Příklad}
-\newtheorem*{ukol}{Domácí úkol}
+\input{header.tex}
 
 
 \begin{document}
@@ -24,7 +10,59 @@
 
 
 \textbf{Témata:} 
-Tablo metoda ve výrokové logice. 
+Algoritmus DPLL. Kódování problémů do SAT. Tablo metoda ve výrokové logice. 
+
+
+\medskip\begin{problem}
+    Pomocí algoritmu DPLL rozhodněte, zda je následující CNF formule splnitelná.
+    \begin{enumerate}
+        \item $$ (\neg p_1 \wedge \neg p_2)\land( \neg p_1 \wedge p_2)\land( p_1 \wedge \neg p_2)\land( p_2 \wedge \neg p_3)\land( p_1 \wedge p_3)$$
+        \item \begin{align*}
+            &(\neg p_1 \wedge p_3 \wedge p_4)\vee( \neg p_2 \wedge p_6 \wedge p_4)\vee( \neg p_2 \wedge \neg p_6 \wedge \neg p_3)\vee(
+                \neg p_4 \wedge \neg p_2)\vee \\ & ( p_2 \wedge \neg p_3 \wedge \neg p_1)\vee ( p_2 \wedge p_6 \wedge p_3)\vee
+                ( p_2 \wedge \neg p_6 \wedge \neg p_4)\vee
+                ( p_1 \wedge p_5)\vee \\ & ( p_1 \wedge p_6)\vee(
+                \neg p_6 \wedge p_3 \wedge \neg p_5)\vee( p_1 \wedge \neg p_3 \wedge \neg p_5)    
+        \end{align*}
+    \end{enumerate}
+\end{problem}
+
+
+% \medskip\begin{problem}
+%     Lze šachovnici $4\times 4$ bez dvou protilehlých rohů perfektně pokrýt kostkami domina? Zakódujte tento problém do SAT. Zobecněte na všechna sudá~$n$.
+%     \end{problem}
+        
+        
+    \medskip\begin{problem}
+        Lze obarvit čísla od 1 do $n$ dvěma barvami tak, že neexistuje monochromatické řešení rovnice
+        $a+b=c$ pro žádná $1\leq a<b<c\leq n$? Sestrojte výrokovou formuli $\varphi_n$ v CNF která je splnitelná, právě když to lze. Zkuste nejprve $n=8$.
+        
+        Zkuste si doma: Napište skript generující $\varphi_n$ v DIMACS CNF formátu. Použijte SAT solver k nalezení nejmenšího $n$ pro které takové obarvení neexistuje (tj. každé 2-obarvení obsahuje monochromatickou trojici $a<b<c$ takovou, že $a+b=c$).
+    \end{problem}
+    
+        
+    \medskip\begin{problem}
+        Zakódujte problém setřídění trojice celých čísel do SAT.
+    \end{problem}
+        
+            
+    \medskip\begin{problem}
+    Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvami tak, že žádné dva sousedící regiony nemají stejnou barvu. Najděte takové obarvení pomocí SAT solveru.
+    \begin{multicols}{2}
+    \begin{enumerate}
+        \item Mapa krajů Česka  
+        
+        \vfill \includegraphics[width=0.5\textwidth]{files/map-coloring-czechia.png} \vfill
+        
+        \item Těžší instance  
+        
+        \vfill \includegraphics[width=0.33\textwidth]{files/map-coloring-hard.png} \vfill
+    \end{enumerate}
+    \end{multicols}
+    \end{problem}
+    
+    
+\newpage   
 
 
 \medskip\begin{problem}
@@ -57,69 +95,5 @@ Tablo metoda ve výrokové logice.
     \end{enumerate}
 \end{problem}
 
-\medskip\begin{problem}
-Aladin našel v jeskyni dvě truhly, A a B. Ví, že každá truhla obsahuje buď poklad, nebo smrtonosnou past.
-\begin{itemize}
-\item Na truhle A je nápis: {\it ``Alespoň jedna z těchto dvou truhel obsahuje poklad.''}
-\item Na truhle B je nápis: {\it ``V truhle A je smrtonosná past.''}
-\end{itemize}
-Aladin ví, že buď jsou oba nápisy pravdivé, nebo jsou oba lživé.
-\begin{enumerate}
-    \item Vyjádřete Aladinovy informace jako teorii $T$ nad vhodně zvolenou množinou výrokových proměnných $\mathbb P$. (Vysvětlete význam jednotlivých výrokových proměnných v $\mathbb P$.)
-    \item Pomocí tablo metody najděte všechny modely teorie $T$.
-    \item Může Aladin zvolit truhlu tak, aby si byl jistý, že bude obsahovat poklad? Pokud ano, kterou?
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem} % a bit longer - don't do in class
-V prezidentských volbách kandidují pan A a pan B.
-\begin{itemize}
-\item Pan A říká: {\it ``Budu zvolen nebo pan B lže.''}
-\item {Pan B říká: {\it ``Pan A nebude zvolen nebo lžu.''}
-\item Bude zvolen právě jeden z nich.
-\end{itemize}
-\begin{enumerate}
-\item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P=\{z_a,z_b,p_a,p_b\}$, kde $z_a$ resp. $z_b$ znamená, že zvolen bude pan A resp. pan B, a $p_a$ resp. $p_b$ znamená, že A resp. B mluví pravdu.
-\item Sestrojte dokončená tabla z teorie $T$ s položkami $\mathrm{F}z_a$ resp. $\mathrm{F}z_b$ v kořeni. Jaký z těchto tabel můžeme učinit závěr?
-\item Uveďte příklad výroku nad $\mathbb{P}$, který je v teorii $T$ nezávislý, anebo zdůvodněte, proč takový výrok neexistuje.
-\item Existuje teorie $S$ nad $\{z_a,z_b\}$ taková, že $T$ je konzervativní extenzí $S$? Uveďte příklad, nebo zdůvodněte, proč ne.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-    Uvažme nekonečnou výrokovou teorii (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Pomocí tablo metody najděte všechny modely $T$, a to tak, že sestrojíte tablo z $T$ s položkou $\mathrm{T}p_0\to p_1$ v kořeni. Je každý model $T$ kanonickým modelem pro některou z větví tohoto tabla? Pokuste se sestrojit také \emph{systematické} tablo.
-\end{problem}
-
-
-
-
-\medskip\begin{problem} 
-    Navrhněte vhodná atomická tabla pro Peirceovu spojku $\downarrow$ (NOR), pro Shefferovu spojku $\uparrow$ (NAND), a pro $\oplus$ (XOR).
-\end{problem}
-
-
-\medskip\begin{problem}
-Dokažte přímo (transformací tabel) větu o dedukci, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí
-$$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
-\end{problem}\medskip
-
-
-\medskip\begin{ukol}[3 body]{\,}
-
-\begin{enumerate}[label=\arabic*.]
-\item Pomocí tablo metody:
-\begin{enumerate}
-    \item dokažte, že následující výrok je tautologie: 
-    $$(p \to (q \to r)) \to ((p\to q)\to (p \to r))$$
-    \item dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev:
-    $$\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$$
-    \item určete všechny modely:
-    $$\{ q \to p,\ r \to q,\ (r \to p) \to s\}$$
-\end{enumerate}
-\item Navrhněte vhodná atomická tabla pro ternární operátor ``if p then q else r'' (IFTE). Ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví.
-\end{enumerate} 
-\end{ukol}
 
 \end{document}

@@ -37,6 +37,90 @@
 
 
 
+    \medskip\begin{ukol}[2 body]{\,}
+        \begin{enumerate}[label=\arabic*.]
+            \item Převeďte následující výrok do CNF a DNF:
+            $$
+            ((p\to \neg q) \to \neg r) \to \neg p.
+            $$
+            \begin{enumerate}
+                \item tabulkou (určením modelů),
+                \item ekvivalentními úpravami (pokuste se najít co nejkratší CNF a DNF ekvivalenty).
+            \end{enumerate}
+            \item Uvažte  teorii $S=\{p_i \to (p_{i+1} \vee q_{i+1}), q_i \to (p_{i+1} \vee q_{i+1}) \mid i\in \mathbb{N}\}$ nad $\mathrm{var}(S)$.
+            \begin{enumerate}
+                    \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $S$?
+                    \item Které výroky ve tvaru  $p_i \to (p_j \vee q_j)$ jsou důsledky $S$?
+                    \item Určete všechny modely $S$.
+            \end{enumerate}
+        \end{enumerate} 
+        \end{ukol}
+
+
+
+
+        \medskip\begin{ukol}[3 body]{\,}
+            \begin{enumerate}[label=\arabic*.]
+            \item Pomocí algoritmu implikačního grafu najděte všechny modely následující teorie:
+            $$
+            T=\{p,\neg q \to \neg r,\neg q \to \neg s,r \to p,\neg s \to \neg p\}
+            $$
+            
+            \item Pomocí algoritmu jednotkové propagace najděte všechny modely následující teorie:
+            \begin{align*}
+                &(\neg a \vee \neg b \vee c \vee \neg d)\wedge(\neg b \vee c)\wedge d \wedge (\neg a \vee \neg c \vee e)\wedge \\
+                &(\neg c \vee \neg d)\wedge(\neg a \vee \neg d \vee \neg e)\wedge(a\vee \neg b \vee\neg e)
+            \end{align*}
+            
+            \item Uvažme následující výroky $\varphi$ a $\psi$ nad $\mathbb P=\{p, q, r, s\}$:
+            \begin{align*}
+                \varphi &= (\neg p \vee  q)\to(p\wedge r)\\
+                \psi &= s\to q
+            \end{align*}
+            \begin{enumerate}
+                \item Určete počet (až na ekvivalenci) výroků $\chi$ nad $\mathbb P$ takových, že $\varphi\wedge\psi\models\chi$.
+                \item Určete počet (až na ekvivalenci) úplných teorií $T$ nad $\mathbb P$ takových, že $T\models\varphi\wedge\psi$.
+                \item Najděte nějakou axiomatizaci pro každou (až na ekvivalenci) kompletní teorii $T$ nad $\mathbb P$ takovou, že $T\models\varphi\wedge\psi$.
+            \end{enumerate}
+            \end{enumerate} 
+            \end{ukol}
+
+
+            \medskip\begin{ukol}[3 body]{\,}
+
+                \begin{enumerate}[label=\arabic*.]
+                \item Pomocí tablo metody:
+                \begin{enumerate}
+                    \item dokažte, že následující výrok je tautologie: 
+                    $$(p \to (q \to r)) \to ((p\to q)\to (p \to r))$$
+                    \item dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev:
+                    $$\{ p \to r,\ p \vee q,\ \neg s \to \neg q\} \models r \to s$$
+                    \item určete všechny modely:
+                    $$\{ q \to p,\ r \to q,\ (r \to p) \to s\}$$
+                \end{enumerate}
+                \item 
+                \end{enumerate} 
+                \end{ukol}
+
+
+
+                \medskip\begin{ukol}[2 body]
+                    Nechť $T$ je teorie jazyka $L=\langle T \rangle$ s rovností, kde $T$ je ternární relační symbol, s axiomy:
+                    \begin{align*}
+                        T(x,y,z)&\to x\ne y \wedge y\ne z \wedge x\ne z \\
+                        T(x,y,z)&\to T(y,x,z)\wedge T(y,z,x)\wedge T(z,y,x)\wedge T(z,x,y)\wedge T(x,z,y)\\
+                        x\ne y &\to (\exists z)(T(x,y,z)\wedge(\forall u)(T(x,y,u)\to u=z))
+                    \end{align*}
+                    Modely teorie $T$ jsou tzv. \emph{Steinerovy systémy trojic}, v našem případě uspořádaných. Uvažme model $\mathcal{F}=\langle \{1,2,\dots,7\},T^F\rangle$ teorie $T$ na obrázku (tzv. \emph{Fanova rovina}), kde každá ``přímka'' reprezentuje trojici prvků, jež jsou v relaci $T^F$ v libovolném pořadí, tedy $T^F=\{(2,4,6),(6,2,4),\dots\}$.
+                    \begin{center}
+                        \includegraphics[height=4cm]{files/fano.png}  
+                    \end{center}
+                    \begin{enumerate}        
+                        \item Nalezněte co nejmenší množinu parametrů $A$, která v modelu $\mathcal{F}$ umožňuje definovat libovolný jeho prvek (formulí jazyka $L$). Pro každý prvek napište příslušnou definující formuli (s dosazenými parametry). Zdůvodněte, proč je $A$ nejmenší možná.
+                        \item Jsou teorie $T'=T \cup \{f(x,y)=z \leftrightarrow T(x,y,z)\}$ a $T''=T\cup \{f(x,y)=z \leftrightarrow T(x,y,z) \vee (x=y \wedge y=z)\}$, kde $f$ je nový binární funkční symbol, (korektními) extenzemi teorie $T$ o definici? Uveďte zdůvodnění.
+                    \end{enumerate} 
+                \end{ukol}
+
 
 \maketitle
 

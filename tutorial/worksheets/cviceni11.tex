@@ -7,116 +7,143 @@
 
 \section*{NAIL062 V\&P Logika: 11. cvičení}
 % po 9. přednášce
+% 1 a 2 sám stručně, 3 přeskočit.
 
 
-\textbf{Témata:}
-Unifikace. Rezoluce v predikátové logice.
+
+\textbf{Témata:} Aplikace Věty o kompaktnosti. Ještě tablo metoda. Převod do PNF. Skolemizace. Herbrandova věta.
 
 
-\medskip\begin{problem} Víme, že platí následující:
-    \begin{itemize}\it
-        \item Je-li cihla na (jiné) cihle, potom není na zemi.
-        \item Každá cihla je na (jiné) cihle nebo na zemi.
-        \item Žádná cihla není na cihle, která by byla na (jiné) cihle.
-    \end{itemize}
-    Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí následující tvrzení: {\it ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''}
-\end{problem}
-        
-    
-\medskip\begin{problem} Víme, že platí následující:
-    \begin{itemize}\it
-        \item Každý holič holí všechny, kdo neholí sami sebe
-        \item Žádný holič neholí nikoho, kdo holí sám sebe.
-    \end{itemize}
-    Formalizujte ve vhodném jazyce predikátové logiky a dokažte rezolucí, že: {\it Neexistují žádní holiči.}
+
+\medskip\begin{problem} Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ $L$-teorie, která má nekončený model a platí v ní axiomy lineárního uspořádání. Pomocí věty o kompaktnosti ukažte, že $T$ má model 
+    s \emph{nekonečným klesajícím řetězcem}.
+    %$\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že existují prvky $c_i$ pro každé $i\in \mathbb{N}$ v $A$ takové, že: $\dots < c_{n+1} < c_n< \dots <c_0$. 
+    (Z toho plyne, že \emph{dobré uspořádání}, tj. lineární a každá neprázdná podmnožina má nejmenší prvek, není definovatelné v logice prvního řádu.)
 \end{problem}
 
-
-\medskip\begin{problem}
-Jsou dána následující tvrzení o~proběhlém genetickém experimentu:
-\begin{enumerate}[label=(\roman*)]\it
-    \item Každá ovce byla buď porozena jinou ovcí, nebo byla naklonována (avšak nikoli oboje zároveň).
-    \item Žádná naklonovaná ovce neporodila.
-\end{enumerate}
-Chceme ukázat rezolucí, že pak: {\it (iii) Pokud ovce porodila, byla sama porozena.} Konkrétně:
-\begin{enumerate}
-    \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti, kde $P$ je binární relační symbol, $K$ je unární relační symbol a $P(x,y)$, $K(x)$ značí, že \emph{``ovce $x$ porodila ovci $y$''} a \emph{``ovce $x$ byla naklonována''}.    
-    \item S využitím Skolemizace těchto formulí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. Zapište ji v množinové reprezentaci.
-    \item Najděte rezoluční zamítnutí $S$, znázorněte je rezolučním stromem. U každého kroku uveďte použitou unifikaci.
-\end{enumerate}
-\end{problem}
-        
-
-\medskip\begin{problem}
-Mějme jazyk $L=\langle <, j, h, s\rangle$ bez rovností, kde $j,h,q$ jsou konstantní symboly značící (po řadě) jablka, hrušky, švestky, dále $<$ je binární relační symbol a $x < y$ značí, že {\it ``ovoce $y$ je lepší než ovoce $x$''}. Víme, že:
-\begin{enumerate}[label=(\roman*)]\it
-    \item Relace ``být lepší'' je ostré částečné uspořádání (ireflexivní, asymetrická, tranzitivní relace).
-    \item Hrušky jsou lepší než jablka.
-\end{enumerate}
-Chceme rezolucí dokázat následující tvrzení.
-\begin{enumerate}[label=(\roman*)]\it
-    \setcounter{enumi}{2}
-    \item Jsou-li švestky lepší než hrušky, nejsou jablka lepší než švestky.
-\end{enumerate}
-\smallskip
-
-Konkrétně:
-\begin{enumerate}
-\item Tvrzení $(i)$, $(ii)$, $(iii)$ vyjádřete otevřenými formulemi jazyka $L$.
-\item Pomocí předchozích formulí či jejich negací nalezněte otevřenou teorii $T$ nad $L$ axiomatizovanou klauzulemi, která je nesplnitelná, právě když z $(i)$, $(ii)$ vyplývá $(iii)$. Napište $T$ v množinové reprezentaci.
-\item Rezolucí dokažte, že $T$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci. {\it Nápověda: stačí čtyři rezoluční kroky.}
-\item Nalezněte konjunkci základních instancí axiomů $T$, která je nesplnitelná. {\it Nápověda: využijte unifikace z (c).}
-\item Je $T$ zamítnutelná LI-rezolucí? Uveďte zdůvodnění.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-Nechť $T=\{\neg(\exists x) R(x), (\exists x)(\forall y)(P(x,y)\to P(y,x)), (\forall x)((\exists y)(P(x,y)\wedge P(y,x))\to R(x)),$ $(\forall x)(\exists y)P(x,y)\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti.
-\begin{enumerate}
-\item Skolemizací nalezněte k $T$ otevřenou ekvisplnitelnou teorii $T'$ (nad vhodně rozšířeným jazykem).
-\item Převeďte $T'$ na ekvivalentní teorii $S$ v CNF. Zapište $S$ v množinové reprezentaci.
-\item Nalezněte rezoluční zamítnutí teorie $S$. U každého kroku uveďte použitou unifikaci.
-\item Nalezněte konjunkci základních instancí axiomů $S$, která je nesplnitelná.
-\item Má teorie $T$ jednoduchou kompletní extenzi? Uveďte zdůvodnění.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem}
-    Ukažte, že daná množina klauzulí je zamítnutelná (rezolucí). Popište zamítnutí pomocí rezolučního stromu. V každém kroku rezoluce napište použitou unifikaci a podtrhněte rezolvované literály.
-    \begin{align*}
-        S=\{
-            &\{P(a,x,f(y)),P(a,z,f(h(b))),\neg Q(y,z)\},\\
-            &\{\neg Q(h(b),w),H(w,a)\},\\
-            &\{\neg P(a,w,f(h(b))),H(x,a)\},\\
-            &\{P(a,u,f(h(u))),H(u,a),Q(h(b),b)\},\\
-            &\{\neg H(v,a)\}
-        \}
-    \end{align*}
-\end{problem}
-
-
-\medskip\begin{ukol}[3 body]
-Známe následující informace o zadávání zakázek:
-\begin{enumerate}[label=(\roman*)] \it
-    \item Každý úředník, který je odpovědný za nějakou zakázku a vezme od nějaké společnosti úplatek, je kriminálník.
-    \item Zakázku vyhraje pouze společnost, která podplatí všechny úředníky odpovědné za tuto zakázku.
-    \item Pan Lubor je úředník.
-    \item Nějaká společnost vyhrála nějakou zakázku, za kterou je pan Lubor odpovědný.
-\end{enumerate}
-Pomocí rezoluce dokažte, že: {\it (v) Pan Lubor je kriminálník.}
-\begin{enumerate}
-    \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1, \dots, \varphi_5$ v jazyce $L=\langle U, Z, S, K, P, V, O, l \rangle$ bez rovnosti, kde $U, Z, S$ a $K$ jsou unární relační symboly a $U(x), Z(x), S(x), K(x)$ znamenají (po řadě) ``$x$ je úředník / zakázka / společnost / kriminálník'', $P, V, O$ jsou binární relační symboly, kde $P(x,y), V(x,y), O(x,y)$ značí (po řadě) ``$x$ podplatil $y$'', ``$x$ vyhrál $y$'' a ``$x$ je odpovědný za $y$'' a $l$ je konstanta označující pana Lubora.
-    \item Pomocí skolemizace předchozích formulí nalezněte otevřenou teorii $T$ (případně ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$.
-    \item Převedením axiomů $T$ do CNF nalezněte teorii $T'$ ekvivalentní $T$ a axiomatizovanou klauzulemi. Napište $T'$ v množinové reprezentaci.
-    \item Rezolucí dokažte, že $T'$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci.
-    \item Nalezněte konjunkci základních instancí axiomů $T'$, která je nesplnitelná.
+\medskip\begin{problem} Dokažte syntakticky, pomocí transformací tabel:
+    \begin{enumerate}
+        \item {\it Větu o konstantách:} Buď $\varphi$ $L$-formule s volnými proměnnými $x_1,\dots,x_n$ a $T$ $L$-teorie. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí:
+        $T \vdash (\forall x_1)\dots(\forall x_n)\varphi$ právě když $T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n)$
+        \item {\it Větu o dedukci:} Pro každou (uzavřenou) teorii $T$ a sentence $\varphi$, $\psi$ platí: $T\vdash \varphi\to\psi$ právě když $T,\varphi\vdash\psi$
     \end{enumerate}
+    \end{problem} 
 
 
+\medskip\begin{problem}
+    Ukažme, že platí následující pravidla, kde
+   $\varphi$ a $\psi$ jsou sentence nebo formule s volnou proměnnou $x$ (značíme $\varphi(x)$, $\psi(x)$). Najděte tablo důkazy dané formule.  (Viz převod do PNF, stejně lze dokázat i ostatní pravidla o vytýkání kvantifikátorů.)
+\begin{enumerate}
+    \item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$,
+    \item $(\forall x)\neg \varphi(x)\to \neg(\exists x)\varphi(x)$,
+    % \item $(\exists x)(\varphi(x)\vee \psi(x))\leftrightarrow (\exists x)\varphi(x)\vee (\exists x)\psi(x)$,
+    % \item $(\forall x)(\varphi(x)\wedge\psi(x))\leftrightarrow (\forall x)\varphi(x)\wedge(\forall x)\psi(x)$,
+    % \item $(\varphi \vee (\forall x)\psi(x))\to (\forall x)(\varphi \vee \psi(x))$ kde $x$ není volná v $\varphi$,
+    % \item $(\varphi \wedge (\exists x)\psi(x))\to (\exists x)(\varphi \wedge \psi(x))$ kde $x$ není volná v $\varphi$.
+    % \item $(\exists x)(\varphi \to \psi(x))\to(\varphi \to (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+    % \item $(\exists x)(\varphi \wedge \psi(x))\to(\varphi \wedge (\exists x)\psi(x))$ kde $x$ není volná v $\varphi$,
+    \item $(\exists x)(\varphi(x)\to\psi)\to((\forall x)\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$,
+    \item $((\exists x)\varphi(x)\to\psi)\to(\forall x)(\varphi(x)\to \psi)$ kde $x$ není volná v $\psi$.
+\end{enumerate}
+\end{problem}
 
-Kromě tohoto úkolu se připravte na zápočtový test. Vyřešte vzorový test (na webu).
-\end{ukol}
+
+\medskip\begin{problem} Převeďte následující formule do PNF. Poté najděte jejich Skolemovy varianty.
+    \begin{enumerate}
+        \item $(\forall y)((\exists x)P(x,y)\to Q(y,z))\wedge (\exists y)((\forall x)R(x,y)\vee Q(x,y))$
+        \item $(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)$
+        \item $\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)$
+    \end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem} Převeďte na ekvisplnitelnou CNF formuli, zapište v množinové reprezentaci.
+    \vspace{-6pt}
+{\setlength{\columnsep}{-1cm}
+\begin{multicols}{2}
+\begin{enumerate}
+    \item $(\forall y)(\exists x)P(x,y)$
+    \item $\neg (\forall y)(\exists x)P(x,y)$
+    \item $\neg (\exists x)((P(x)\to P(c))\wedge (P(x)\to P(d)))$
+    \item $(\exists x)(\forall y)(\exists z)(P(x,z)\wedge P(z,y) \to R(x,y))$
+\end{enumerate}
+\end{multicols}
+}
+\end{problem}
+
+    
+\medskip\begin{problem} Skolemova varianta nemusí být ekvivalentní původní formuli, ověřte, že platí:
+\begin{enumerate}
+    \item $\models (\forall x)P(x,f(x)) \to (\forall x)(\exists y)P(x,y)$
+    \item $\not\models (\forall x)(\exists y)P(x,y)\to (\forall x)P(x,f(x))$
+\end{enumerate}
+
+\end{problem}
+
+
+\medskip\begin{problem}
+Nechť $T=\{\varphi_1,\varphi_2\}$ je teorie v jazyce $L=\langle R\rangle$ s~rovností, kde:
+\begin{align*}
+\varphi_1=&\quad (\exists y)R(y,x)\\
+\varphi_2=&\quad (\exists z)(R(z,x)\wedge R(z,y)\wedge (\forall w)(R(w,x) \wedge R(w,y)\to R(w,z)))
+\end{align*}
+\begin{enumerate}
+\item Pomocí skolemizace sestrojte otevřeně axiomatizovanou teorii $T'$ (případně v širším jazyce $L'$) ekvisplnitelnou s $T$. {\it (2b)} 
+\item Buď $\mathcal{A}=\langle\mathbb{N}\cup\{0\},R^A\rangle$, kde $(n,m)\in R^A$ právě když $n$ dělí $m$.  Nalezněte expanzi $\mathcal{A}'$ $L$-struktury $\mathcal{A}$ do jazyka $L'$ takovou, že $\mathcal{A}'\models T'$. {\it (2b)}
+\end{enumerate}
+\end{problem}
+
+
+% \medskip\begin{problem}
+% Nechť $T=\{\varphi_1,\varphi_2,\varphi_3\}$ je teorie v jazyce $L=\langle<,f,g,h\rangle$ s~rovností, kde:
+% \begin{align*}
+%     \varphi_1=&\quad (\forall u)(\exists v)(\forall x)(v<x \to u<f(x))\\
+%     \varphi_2=&\quad (\exists u)(\forall v)(\exists x)(v<x \wedge \neg u<g(x))\\
+%     \varphi_3=&\quad (\exists u)(\forall x)\neg u<h(x)
+% \end{align*}
+% \begin{enumerate}
+%     %\item Nalezněte formule $\varphi'_1$, $\varphi'_2$ v prenexním tvaru a ekvivalentní s $\varphi_1$ resp. $\varphi_2$.
+%     \item Pomocí skolemizace sestrojte otevřenou teorii $T'$ ekvisplnitelnou s $T$.
+%     \item Buď $\mathcal{A}=\langle\mathbb{R},<,\mathrm{id},\mathrm{tg}',\sin\rangle$, kde $<$ má svůj obvyklý význam na $\mathbb{R}$, $\mathrm{id}(r)=r$ pro všechna $r\in\mathbb{R}$, $\mathrm{tg}'(k\pi/2)=0$ pro $k\in\mathbb{Z}$, $\mathrm{tg}'(r)=\mathrm{tg}(r)$ ($\mathrm{tg}$ je funkce tangens) pro $r\neq k\pi/2$ s $k\in\mathbb{Z}$ a $\sin$ je funkce sinus. Nalezněte expanzi $\mathcal{A}'$ struktury $\mathcal{A}$ takovou, že $\mathcal{A}'\models T'$.
+% \end{enumerate}
+% \end{problem}
+
+
+\medskip\begin{problem} % the 2nd part could be moved to tutorial 9
+Teorie těles $T$ jazyka $L=\langle +,-,\cdot,0,1\rangle$ obsahuje jeden axiom $\varphi$, který není otevřený: $x\neq 0\ \to\ (\exists y)(x\cdot y=1)$. Víme, že $T\models 0\cdot y=0$ a $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
+\begin{enumerate}
+    \item Najděte Skolemovu variantu $\varphi_S$ formule $\varphi$ s novým funkčním symbolem $f$.
+    \item Uvažme teorii $T'$ vzniklou z $T$ nahrazením $\varphi$ za $\varphi_S$. Platí $\varphi$ v $T'$?
+    \item Lze každý model $T$ \emph{jednoznačně} rozšířit na model $T'$?
+\end{enumerate}
+Nyní uvažme formuli $\psi=x\cdot y=1\vee  (x=0 \wedge y=0)$.
+\begin{enumerate}
+    \setcounter{enumi}{3}
+    \item Platí v $T$ axiomy existence a jednoznačnosti pro $\psi(x,y)$ a proměnnou $y$?
+    \item Sestrojte extenzi $T''$ teorie $T$ o definici symbolu $f$ formulí $\psi$.
+    \item Je $T''$ ekvivalentní teorii $T'$?
+    \item Najděte $L$-formuli, která je v $T''$-ekvivalentní s formulí:
+    $f(x\cdot y)=f(x)\cdot f(y)$
+\end{enumerate}
+\end{problem}
+
+
+% \medskip\begin{problem} Popište Herbrandovo univerzum a uveďte příklad Herbrandovy struktury pro následující jazyky:
+% \begin{enumerate}
+%     \item $L=\langle P,Q,f,a,b \rangle$ kde  $P,Q$ jsou relační symboly, $P$ unární a $Q$ binární, $f$ je unární funkční symbol, a $a,b$ jsou konstantní symboly.
+%     \item $L=\langle P,f,g,a \rangle$ kde $P$ je binární relační symbol, $f,g$ jsou unární funkční symboly, a symbol $a$ je konstantní.
+% \end{enumerate}
+% \end{problem}
+
+
+\medskip\begin{problem} Sestrojte Herbrandův model dané teorie, nebo najděte nesplnitelnou konjunkci základních instancí jejích axiomů ($a,b$ jsou konstantní symboly v daném jazyce).
+\begin{enumerate}
+    \item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,b), P(a)\}$
+    \item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,b), P(a)\}$
+    \item $T=\{P(x,f(x)),\neg P(x,g(x))\}$
+    \item $T=\{P(x,f(x)),\neg P(x,g(x)), P(g(x),f(y)) \to P(x,y)\}$
+\end{enumerate}
+\end{problem}
+
 
 \end{document}

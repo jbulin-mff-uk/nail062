@@ -7,128 +7,115 @@
 
 \section*{NAIL062 V\&P Logika: 10. cvičení}
 % po 8. přednášce
-
+% příklady 5 a 7 přeskočit
 
 \textbf{Témata:}
-Aplikace Věty o kompaktnosti. Převod do PNF. Skolemizace. Herbrandova věta.
+Extenze o definice. Definovatelné množiny. Tablo metoda v predikátové logice, jazyky s rovností.
 
 
-\medskip\begin{problem} Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ teorie v tomto jazyce taková, že $T$ má nekončený model a platí v ní axiomy lineárního uspořádání $T$. Pomocí věty o kompaktnosti ukažte, že $T$ má model $\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že existují prvky $c_i$ pro každé $i\in \mathbb{N}$ v $A$ takové, že: $\dots < c_{n+1} < c_n< \dots <c_0$.
-    (Z toho plyne, že pojem \emph{dobrého uspořádání} není definovatelný v logice prvního řádu.)
+\medskip\begin{problem}
+Buď $T'$ extenze teorie $T=\{(\exists y)(x+y=0),(x+y=0)\wedge (x+z=0)\rightarrow y=z\}$ v jazyce $L=\langle +,0,\le\rangle$ s rovností o definice $<$ a unárního $-$ s axiomy
+\begin{align*}
+    -x=y\ \ &\leftrightarrow\ \ x+y=0\\
+    x<y\ \ &\leftrightarrow\ \ x\le y\ \wedge\ \neg(x=y)
+\end{align*}
+Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následujícími formulemi.
+\medskip
+
+(a) $x+(-x)=0$ \hfill (b) $x+(-y)<x$ \hfill (c) $-(x+y)<-x$\hfill{}
+
 \end{problem}
 
 
-\medskip\begin{problem} Převeďte následující formule do PNF. Poté najděte jejich Skolemovy varianty.
-\begin{enumerate}
-    \item $(\forall y)((\exists x)P(x,y)\to Q(y,z))\wedge (\exists y)((\forall x)R(x,y)\vee Q(x,y))$
-    \item $(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)$
-    \item $\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)$
+\medskip\begin{problem}
+    Mějme jazyk $L=\langle F \rangle$ s rovností, kde $F$ je binární funkční symbol. Najděte formule definující následující množiny (bez parametrů):
+    \begin{enumerate}
+        \item interval $(0,\infty)$ v $\mathcal A=\langle\mathbb R, \cdot\rangle$ kde $\cdot$ je násobení reálných čísel,
+        \item množina $\{(x, 1/x)\mid x\neq 0\}$ ve stejné struktuře $\mathcal A$,
+        \item množina všech nejvýše jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$,
+        \item množina všech prvočísel v $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$.
+    \end{enumerate}
+\end{problem}
+
+
+
+
+
+\medskip\begin{problem}
+    Předpokládejme, že:
+    \begin{itemize}\it
+    \item Všichni viníci jsou lháři.
+    \item Alespoň jeden z obviněných je také svědkem.
+    \item Žádný svědek nelže.
+    \end{itemize}
+    Dokažte tablo metodou, že: {\it Ne všichni obvinění jsou viníci.}
+\end{problem} 
+    
+
+\medskip\begin{problem}
+Uvažte následující tvrzení:
+\begin{enumerate}[label=(\roman*)] \it 
+    \item Nula je malé číslo.
+    \item Číslo je malé, právě když je blízko nuly.
+    \item Součet dvou malých čísel je malé číslo.
+    \item Je-li $x$ blízko $y$, potom $f(x)$ je blízko $f(y)$.
 \end{enumerate}
-\end{problem}
+Chceme dokázat, že platí: {\it (v) Jsou-li $x$ a $y$ malá čísla, potom $f(x+y)$ je blízko $f(0)$.}
 
-
-\medskip\begin{problem} Převeďte na ekvisplnitelnou CNF formuli, zapište v množinové reprezentaci.
 \begin{enumerate}
-    \item $(\forall y)(\exists x)P(x,y)$
-    \item $\neg (\forall y)(\exists x)P(x,y)$
-    \item $\neg (\exists x)((P(x)\to P(a))\wedge (P(x)\to P(b)))$
-    \item $(\exists x)(\forall y)(\exists z)(P(x,z)\wedge P(z,y) \to R(x,y))$
+\item Formalizujte %tvrzení po řadě 
+jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ s rovností.
+%, kde $M$ je unární relační symbol ($M(x)$ značí, že ``$x$ je malé''), $B$ je binární relační symbol ($B(x,y)$ značí, že ``$x$ je blízko $y$''), $f$ je unární funkční symbol, $+$ je binární funkční symbol (označující součet) a $0$ je konstantní symbol.
+\item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.
+% {\it (Nápověda: Axiomy rovnosti nejsou v tablu nezbytné.)}
+\item Rozhodněte, zda platí $T\models \varphi_5$ a zda platí $T\models M(f(0))$.
+
+\item Pokud existují, uveďte alespoň dvě kompletní jednoduché extenze teorie $T$.
 \end{enumerate}
 \end{problem}
 
     
-\medskip\begin{problem} Ověřte následující. (Tj. Skolemova varianta nemusí být ekvivalentní původní formuli.)
-\begin{enumerate}
-    \item $\models (\forall x)P(x,f(x)) \to (\forall x)(\exists y)P(x,y)$
-    \item $\not\models (\forall x)(\exists y)P(x,y)\to (\forall x)P(x,f(x))$
-\end{enumerate}
-
+\medskip\begin{problem} Nechť $L(x,y)$ reprezentuje \emph{``existuje let z $x$ do $y$''} a $S(x,y)$ reprezentuje \emph{``existuje spojení z $x$ do $y$''}. Předpokládejme, že
+    \begin{itemize}  
+    \item Z Prahy lze letět do Bratislavy, Londýna a New Yorku, a z New Yorku do Paříže,
+    \item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
+    \item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
+    \item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
+    \end{itemize}
+    Dokažte tablo metodou, že existuje spojení z Bratislavy do Paříže.
 \end{problem}
 
 
-\medskip\begin{problem}
-Nechť $T=\{\varphi_1,\varphi_2\}$ je teorie v jazyce $L=\langle R\rangle$ s~rovností, kde:
+\medskip\begin{problem} Mějme teorii $T^*$ s axiomy rovnosti. Pomocí tablo metody ukažte, že:
+\begin{enumerate} 
+    \item $T^*\models x=y\ \to\ y=x$\hfill(symetrie)
+    \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(tranzitivita)
+\end{enumerate}
+{\it Hint:} Pro (a) použijte axiom rovnosti $(iii)$ pro $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
+    na (b) použijte $(iii)$ pro $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
+\end{problem}
+
+
+\medskip\begin{problem} 
+Buď $T$ následující teorie v jazyce $L=\langle R,f,c,d\rangle$ s rovností, kde $R$ je binární relační symbol,  $f$ unární funkční symbol, a $c,d$ konstantní symboly:
+$$
+T=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y,R(f(x),x)\}
+$$
+Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou následující formule:
 \begin{align*}
-\varphi_1=&\quad (\exists y)R(y,x)\\
-\varphi_2=&\quad (\exists z)(R(z,x)\wedge R(z,y)\wedge (\forall w)(R(w,x) \wedge R(w,y)\to R(w,z)))
+    \varphi &= R(c,d) \wedge (\forall x)(x=c\vee x=d)\\
+    \psi &= (\exists x)R(x,f(x))
 \end{align*}
 \begin{enumerate}
-\item Pomocí skolemizace sestrojte otevřeně axiomatizovanou teorii $T'$ (případně v širším jazyce $L'$) ekvisplnitelnou s $T$. {\it (2b)} 
-\item Buď $\mathcal{A}=\langle\mathbb{N}\cup\{0\},R^A\rangle$, kde $(n,m)\in R^A$ právě když $n$ dělí $m$.  Nalezněte expanzi $\mathcal{A}'$ $L$-struktury $\mathcal{A}$ do jazyka $L'$ takovou, že $\mathcal{A}'\models T'$. {\it (2b)}
+    \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Tablo může vyjít poměrně velké. Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je jejich důsledek.)
+    \item Ukažte, že $\psi$ není důsledek teorie $T$, tím že najdete model $T$, ve kterém $\psi$ neplatí.
+    \item Kolik kompletních jednoduchých extenzí (až na ekvivalenci) má teorie $T\cup \{\varphi\}$? Uveďte dvě.
+    \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností. Je $T$ konzervativní extenzí $S$?
+     $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$     
 \end{enumerate}
 \end{problem}
 
 
-\medskip\begin{problem}
-Nechť $T=\{\varphi_1,\varphi_2,\varphi_3\}$ je teorie v jazyce $L=\langle<,f,g,h\rangle$ s~rovností, kde:
-\begin{align*}
-    \varphi_1=&\quad (\forall u)(\exists v)(\forall x)(v<x \to u<f(x))\\
-    \varphi_2=&\quad (\exists u)(\forall v)(\exists x)(v<x \wedge \neg u<g(x))\\
-    \varphi_3=&\quad (\exists u)(\forall x)\neg u<h(x)
-\end{align*}
-\begin{enumerate}
-    %\item Nalezněte formule $\varphi'_1$, $\varphi'_2$ v prenexním tvaru a ekvivalentní s $\varphi_1$ resp. $\varphi_2$.
-    \item Pomocí skolemizace sestrojte otevřenou teorii $T'$ ekvisplnitelnou s $T$.
-    \item Buď $\mathcal{A}=\langle\mathbb{R},<,\mathrm{id},\mathrm{tg}',\sin\rangle$, kde $<$ má svůj obvyklý význam na $\mathbb{R}$, $\mathrm{id}(r)=r$ pro všechna $r\in\mathbb{R}$, $\mathrm{tg}'(k\pi/2)=0$ pro $k\in\mathbb{Z}$, $\mathrm{tg}'(r)=\mathrm{tg}(r)$ ($\mathrm{tg}$ je funkce tangens) pro $r\neq k\pi/2$ s $k\in\mathbb{Z}$ a $\sin$ je funkce sinus. Nalezněte expanzi $\mathcal{A}'$ struktury $\mathcal{A}$ takovou, že $\mathcal{A}'\models T'$.
-\end{enumerate}
-\end{problem}
 
-
-\medskip\begin{problem} % the 2nd part could be moved to tutorial 9
-Teorie těles $T$ jazyka $L=\langle +,-,\cdot,0,1\rangle$ obsahuje jeden axiom $\varphi$, který není otevřený: $x\neq 0\ \to\ (\exists y)(x\cdot y=1)$. Víme, že $T\models 0\cdot y=0$ a $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
-\begin{enumerate}
-    \item Najděte Skolemovu variantu $\varphi_S$ formule $\varphi$ s novým funkčním symbolem $f$.
-    \item Uvažme teorii $T'$ vzniklou z $T$ nahrazením $\varphi$ za $\varphi_S$. Platí $\varphi$ v $T'$?
-    \item Lze každý model $T$ \emph{jednoznačně} rozšířit na model $T'$?
-\end{enumerate}
-Nyní uvažme formuli $\psi=x\cdot y=1\vee  (x=0 \wedge y=0)$.
-\begin{enumerate}
-    \setcounter{enumi}{3}
-    \item Platí v $T$ axiomy existence a jednoznačnosti pro $\psi(x,y)$ a proměnnou $y$?
-    \item Sestrojte extenzi $T''$ teorie $T$ o definici symbolu $f$ formulí $\psi$.
-    \item Je $T''$ ekvivalentní teorii $T'$?
-    \item Najděte $L$-formuli, která je v $T''$-ekvivalentní s formulí:
-    $f(x\cdot y)=f(x)\cdot f(y)$
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem} Popište Herbrandovo univerzum a uveďte příklad Herbrandovy struktury pro následující jazyky:
-\begin{enumerate}
-    \item $L=\langle P,Q,f,a,b \rangle$ kde  $P,Q$ jsou relační symboly, $P$ unární a $Q$ binární, $f$ je unární funkční symbol, a $a,b$ jsou konstantní symboly.
-    \item $L=\langle P,f,g,a \rangle$ kde $P$ je binární relační symbol, $f,g$ jsou unární funkční symboly, a symbol $a$ je konstantní.
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{problem} Sestrojte Herbrandův model dané teorie, nebo najděte nesplnitelnou konjunkci základních instancí jejích axiomů ($a,b$ jsou konstantní symboly v daném jazyce).
-\begin{enumerate}
-    \item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,b), P(a)\}$
-    \item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,b), P(a)\}$
-    \item $T=\{P(x,f(x)),\neg P(x,g(x))\}$
-    \item $T=\{P(x,f(x)),\neg P(x,g(x)), P(g(x),f(y)) \to P(x,y)\}$
-\end{enumerate}
-\end{problem}
-
-
-\medskip\begin{ukol}[2 body] {\,}
-\begin{enumerate}[label=\arabic*.]
-\item Nechť $T=\{(\exists x)R(x), (\exists y)\neg P(x,y), (\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti. Najděte otevřenou teorii $T'$ ekvisplnitelnou s $T$. Převeďte $T'$ do CNF a výslednou formuli $S$ zapište v množinové reprezentaci.
-\item Nechť $T=\{R(x,x),\ R(x,y) \wedge R(y,x) \to x=y,\ R(x,y) \wedge R(y,z) \to R(x,z),\ R(x,y) \vee R(y,x), c\ne d, \varphi,\psi\}$ je teorie jazyka $L=\langle P,R,f,c,d\rangle$ s rovností
-%, kde $P$, $R$ jsou binární relační symboly, $f$ je binární funkční symbol, $c$, $d$ jsou konstantní symboly  
-a $\varphi$, $\psi$ jsou
-\begin{align*}
-    \varphi:\quad P(x,y) &\leftrightarrow R(x,y) \wedge x\ne y\\
-    \psi:\quad P(x,y) &\to P(x,f(x,y)) \wedge P(f(x,y),y)
-\end{align*}
-\begin{enumerate}
-    \item Nalezněte expanzi struktury $\langle \mathbb{Q},\le \rangle$ do jazyka $L$ na model teorie $T$.
-    \item Je sentence $(\forall x)R(c,x)$ pravdivá/lživá/nezávislá v $T$? Zdůvodněte všechny tři odpovědi.
-    \item Nalezněte dvě neekvivalentní kompletní jednoduché extenze $T$ nebo zdůvodněte, proč neexistují.
-    \item Nechť $T'=T\setminus\{\varphi,\psi\}$ je jazyka $L'=\langle R,f,c,d\rangle$. Je teorie $T$ konzervativní extenzí teorie $T'$? Uveďte zdůvodnění.
-\end{enumerate}
-\end{enumerate}
-
-\end{ukol}
 
 \end{document}

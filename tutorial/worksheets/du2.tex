@@ -13,7 +13,9 @@ Celkem 10 bodů. Řešení odevzdejte v papírové podobě na cvičení nebo, po
 
 \bigskip
 
-\noindent {\textbf{Poznámka:} Úkol neobsahuje rezoluci v predikátové logice, protože ji teprve budeme cvičit. V zápočtovém testu se ale velmi pravděpodobně vyskytne.
+\noindent {\textbf{Poznámka:} Používáte-li tablo metodu, musí řešení obsahovat tablo korektně sestrojené přesně podle definice: nedělejte žádné zkratky, nevynechávejte vrcholy nad rámec konvence z přednášky, apod. Podobně, používáte-li rezoluční metodu, musí řešení obsahovat korektní rezoluční strom. (Rezoluční důkaz zapisovat nemusíte.) 
+
+Úkol neobsahuje rezoluci v predikátové logice, protože ji teprve budeme cvičit. V zápočtovém testu se ale velmi pravděpodobně vyskytne.
 
 \medskip\begin{problem}[4 body]
     Uvažte následující tvrzení:
@@ -46,7 +48,7 @@ Celkem 10 bodů. Řešení odevzdejte v papírové podobě na cvičení nebo, po
     Pomocí rezoluce dokažte, že: {\it (v) Pan Lubor je kriminálník.}
     \begin{enumerate}
         \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1, \dots, \varphi_5$ v jazyce $L=\langle U, Z, S, K, P, V, O, l \rangle$ bez rovnosti, kde $U, Z, S$ a $K$ jsou unární relační symboly a $U(x), Z(x), S(x), K(x)$ znamenají (po řadě) ``$x$ je úředník / zakázka / společnost / kriminálník'', $P, V, O$ jsou binární relační symboly, kde $P(x,y), V(x,y), O(x,y)$ značí (po řadě) ``$x$ podplatil $y$'', ``$x$ vyhrál $y$'' a ``$x$ je odpovědný za $y$'' a $l$ je konstanta označující pana Lubora.
-        \item Pomocí skolemizace předchozích formulí nalezněte otevřenou teorii $T$ (případně ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$.
+        \item Pomocí skolemizace předchozích formulí nebo jejich negací nalezněte otevřenou teorii $T$ (případně ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$.
         \item Převedením axiomů $T$ do CNF nalezněte teorii $T'$ ekvivalentní $T$ a axiomatizovanou klauzulemi. Napište $T'$ v množinové reprezentaci.
         
         \bigskip
@@ -59,17 +61,17 @@ Celkem 10 bodů. Řešení odevzdejte v papírové podobě na cvičení nebo, po
 
 
 \medskip\begin{problem}[2 body]
-    Nechť $T=\{R(x,x),\ R(x,y) \wedge R(y,x) \to x=y,\ R(x,y) \wedge R(y,z) \to R(x,z),\ R(x,y) \vee R(y,x), c\ne d, \varphi,\psi\}$ je teorie jazyka $L=\langle P,R,f,c,d\rangle$ s rovností, kde $P$, $R$ jsou binární relační symboly, $f$ je binární funkční symbol, $c$, $d$ jsou konstantní symboly  
+    Nechť $T=\{R(x,x),\ R(x,y) \wedge R(y,x) \to x=y,\ R(x,y) \wedge R(y,z) \to R(x,z),\ R(x,y) \vee R(y,x), \neg c=d, \varphi,\psi\}$ je teorie jazyka $L=\langle R,P,f,c,d\rangle$ s rovností, kde $R$, $P$ jsou binární relační symboly, $f$ je binární funkční symbol, $c$, $d$ jsou konstantní symboly  
     a $\varphi$, $\psi$ jsou následující formule:
     \begin{align*}
-        \varphi:\quad P(x,y) &\leftrightarrow R(x,y) \wedge x\ne y\\
+        \varphi:\quad P(x,y) &\leftrightarrow R(x,y) \wedge \neg x=y\\
         \psi:\quad P(x,y) &\to P(x,f(x,y)) \wedge P(f(x,y),y)
     \end{align*}
     \begin{enumerate}
-        \item Nalezněte expanzi struktury $\langle \mathbb{Q},\le \rangle$ do jazyka $L$ na model teorie $T$.
+        \item Najděte expanzi struktury $\langle \mathbb{Q},\le \rangle$ (v jazyce $L'=\langle R\rangle$) do jazyka $L$ na model teorie~$T$.
         \item Je sentence $(\forall x)R(c,x)$ pravdivá/lživá/nezávislá v $T$? Zdůvodněte všechny tři odpovědi.
         \item Nalezněte dvě neekvivalentní kompletní jednoduché extenze $T$ nebo zdůvodněte, proč neexistují.
-        \item Nechť $T'=T\setminus\{\varphi,\psi\}$ je jazyka $L'=\langle R,f,c,d\rangle$. Je teorie $T$ konzervativní extenzí teorie $T'$? Uveďte zdůvodnění.
+        \item Nechť $T'=T\setminus\{\varphi,\psi\}$ je jazyka $L'=\langle R,f,c,d\rangle$. Je teorie $T$ extenzí teorie $T'$? Je teorie $T$ konzervativní extenzí teorie $T'$? Uveďte zdůvodnění.
     \end{enumerate}
 \end{problem}
 

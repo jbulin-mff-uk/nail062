@@ -351,3 +351,5 @@ Algoritmus běží v exponenciálním čase: počet větvení výpočtu nemůže
 Zjistili jsme, že původní výrok je splnitelný, má 8 modelů, konkrétně: $\M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}$.\footnote{To znamená, že je ekvivalentní výroku $p\land \neg r$.}
     
 \end{example}
+
+Co dále? Základní algoritmus DPLL, který systematicky prohledává prostor možných řešení, byl na konci 90. let 20. století různými způsoby doplněn a rozšířen. Zmiňme algoritmus zvaný \emph{Conflict-driven clause learning (CDCL)}. Ten je založený na myšlence, že ze selhání větve prohledávacího stromu se můžeme \emph{naučit} novou klauzuli, která tomuto konkrétnímu selhání (``konfliktu'') zabraňuje. Kromě toho se můžeme vrátit zpět ve stromu o více úrovní najednou (tzv. \emph{back-jumping}) na místo, kde jsme začali ohodnocovat proměnné v této nové klauzuli. Tím zabráníme opakovanému nalezení ``téhož'' konfliktu. Více o SAT solverech se dozvíte například v předmětu \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL094}{NAIL094 Decision procedures and SAT/SMT solvers}.

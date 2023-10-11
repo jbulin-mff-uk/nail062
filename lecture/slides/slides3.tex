@@ -151,6 +151,7 @@
     \begin{itemize}
         \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.
         \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)
+        \item různá rozšíření, např. \href{https://en.wikipedia.org/wiki/Conflict-driven_clause_learning}{\alert{Conflict-driven clause learning (CDCL)}}
         \item řada technologií pro efektivnější řešení instancí pocházejících z různých aplikačních domén, heuristiky pro řízení prohledávání (za použití ML, NN) --- desítky tisíc řádků kódu
     \end{itemize}
     
@@ -408,7 +409,7 @@
     \begin{enumerate}
         \item Pokud $\varphi$ obsahuje dvojici opačných jednotkových klauzulí $\ell,\overline{\ell}$, není splnitelný.
         \item Pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnoť všechny zbývající proměnné 0.
-        \item Pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, nahraď $\varphi$ výrokem $\varphi^\ell$, a vrať se na začátek.
+        \item Pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, nahraď $\varphi$ výrokem~$\varphi^\ell$, a vrať se na začátek.
     \end{enumerate}
 
     \myblock{
@@ -434,7 +435,7 @@
     \textbf{vstup}: výrok $\varphi$ v CNF,\\ 
     \textbf{výstup}: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
     \begin{enumerate}                
-        \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď \alert{jednotkovou propagaci}, nahraď $\varphi$ výrokem $\varphi^\ell$.
+        \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď \alert{jednotkovou propagaci}, nahraď $\varphi$ výrokem~$\varphi^\ell$.
          \item Dokud existuje literál $\ell$, který má ve $\varphi$ \alert{čistý výskyt}, ohodnoť $\ell$ hodnotou 1, a odstraň klauzule obsahující $\ell$.
         \item Pokud $\varphi$ neobsahuje žádnou klauzuli, je splnitelný.
         \item Pokud $\varphi$ obsahuje prázdnou klauzuli, není splnitelný.

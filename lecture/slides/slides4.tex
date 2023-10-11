@@ -84,6 +84,341 @@
 \end{frame}
 
 
-\end{document}
+\begin{frame}{Příklad: tablo důkaz $((p\limplies q)\limplies p)\limplies p$}
 
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \begin{forest}
+        [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
+            [$\mathrm{T}(p\limplies q)\limplies p$
+                [$\mathrm{F}p$
+                    [$\mathrm{F}p\limplies q$
+                        [$\mathrm{T}p$ 
+                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                        ]                
+                    ]
+                    [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                    ]
+                ]
+            ]
+        ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item \alert{důkaz sporem}: v kořeni příznak F
+            \item redukujeme položku tvaru \alert{$\mathrm{F}\varphi_1\limplies\varphi_2$}:
+            \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models p$
+            \item proto na větev připojíme položky \alert{$\mathrm{T}(p\limplies q)\limplies p$} a \alert{$\mathrm{F}p$}, invariant platí
+            \item redukce položky \alert{$\mathrm{T}(p\limplies q)\limplies p$}: model se shoduje s \alert{$\mathrm{F}(p\limplies q)$} nebo s \alert{$\mathrm{T}p$}, \alert{rozvětvi!}
+            \item redukce \alert{$\mathrm{F}(p\limplies q)$}: připoj  \alert{$\mathrm{T}p$} a \alert{$\mathrm{F}q$}
+            \item všechny větve sporné, protipříklad neexistuje, tedy máme tablo důkaz, píšeme: \alert{$\proves ((p\limplies q)\limplies p)\limplies p$}
+        \end{itemize}
+
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo pro $\mathrm{F}(\neg q\lor p)\limplies p$}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \begin{forest}
+            [$\mathrm{F}(\neg q\lor p)\limplies p$
+                [$\mathrm{T}\neg q\lor p$
+                    [$\mathrm{F}p$
+                        [$\mathrm{T}\neg q$
+                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
+                        ]
+                        [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item tablo je dokončené, ale není sporné
+            \item tedy nejde o důkaz
+            \item levá větev dává protipříklad: model \alert{$v=(0,0)$} ve kterém výrok neplatí
+            \item invariant říká, že existuje-li protipříklad, shoduje se s některou větví
+            \item tato větev nemůže být sporná
+            \item tak se dokáže \alert{korektnost} tablo metody
+        \end{itemize}
+
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Poznámky}
+
+    \begin{itemize}
+        \item Jak redukujeme položky? \begin{itemize}
+            \item Připojíme příslušné \alert{atomické tablo} (viz následující slide) na konec všech bezesporných větví procházejících vrcholem.
+        \end{itemize}
+        \item Co když dokazujeme v nějaké teorii $T$? \begin{itemize}
+            \item Připojíme položky $\mathrm{T}\alpha$ pro (všechny) axiomy $\alpha\in T$.
+        \end{itemize}
+        \item Co když je $T$ nekonečná? \begin{itemize}
+            \item Tablo může být nekonečné. 
+            \item Ale vyjde-li sporné, lze sestrojit jiné, které je konečné a také sporné. (``Existuje-li důkaz, existuje konečný důkaz.'')
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla}
+
+        \begin{tabular}{@{}c||c|c|c|c|c@{}}
+         & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
+        True
+        &  
+        \begin{forest}
+        [$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
+        \end{forest}
+        &  
+        \begin{forest}
+        [$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
+        \end{forest}
+        & 
+        \begin{forest}
+        [$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
+        \end{forest}
+        &  
+        \begin{forest}
+        [$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        \\ \midrule
+        False 
+        & 
+        \begin{forest}
+        [$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
+        \end{forest}
+        \end{tabular}
+    
+\end{frame}
+
+
+\begin{frame}{Konstrukce tabel z příkladů}
+    
+    \begin{center}
+    \scalebox{0.7}{
+
+    \begin{columns}
+        
+        \column{0.5\textwidth}
+
+        \centering
+            \begin{forest}
+            [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
+                [\textcolor{blue}{$\mathrm{F}((p\limplies q)\limplies p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [$\mathrm{T}(p\limplies q)\limplies p$
+                        [$\mathrm{F}p$
+                            [\textcolor{blue}{$\mathrm{T}(p\limplies q)\limplies p$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                [$\mathrm{F}p\limplies q$
+                                    [\textcolor{blue}{$\mathrm{F}p\limplies q$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                        [$\mathrm{T}p$ 
+                                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                        ]
+                                    ]
+                                ]
+                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            \end{forest}
+
+        \column{0.5\textwidth}
+
+        \centering
+
+            \begin{forest}
+            [$\mathrm{F}(\neg q\lor p)\limplies p$
+                [\textcolor{blue}{$\mathrm{F}(\neg q\lor p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [$\mathrm{T}\neg q\lor p$
+                        [$\mathrm{F}p$
+                            [\textcolor{blue}{$\mathrm{T}(\neg q\lor p)$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                [$\mathrm{T}\neg q$
+                                    [\textcolor{blue}{$\mathrm{T}\neg q$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                        [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
+                                    ]
+                                ]
+                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            \end{forest}
+
+    \end{columns}
+
+    }
+
+
+    \alert{konvence:} kořeny atomických tabel (\textcolor{blue}{modře}) nezakreslujeme   
+
+    \end{center}    
+
+\end{frame}
+
+
+\begin{frame}{O stromech}
+    
+    \begin{itemize}
+        \item \alert{strom} je $T\neq\emptyset$ s částečným uspořádáním $<_T$, které má nejmenší prvek (\alert{kořen}) a množina předků libovolného vrcholu je \alert{dobře uspořádaná} (každá její neprázdná podmnožina má nejmenší prvek, to zakáže nekonečné klesající řetězce předků)
+        \item \alert{větev} je maximální lineárně uspořádaná podmnožina $T$.
+        \item \alert{uspořádaný strom} má navíc lineární uspořádání $<_L$ množiny synů každého vrcholu (říkáme mu \alert{pravolevé}, $<_T$ je \alert{stromové})
+        \item \alert{označkovaný strom} má navíc funkci $\mathrm{label}\colon T\to\mathrm{Labels}$        
+    \end{itemize}
+
+    \myblock{\textbf{Königovo lemma:} Nekonečný, konečně větvící strom má nekonečnou větev.}
+
+\end{frame}
+
+
+\section{4.3 Tablo důkaz}
+
+
+\begin{frame}{Formální definice tabla}
+
+    \begin{itemize}
+        \item \alert{položka} je nápis $\mathrm{T}\varphi$ nebo $\mathrm{F}\varphi$, kde $\varphi$ je nějaký výrok
+        \item \alert{konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+        \begin{itemize}
+            \item jednoprvkový strom s libovolnou položkou je tablo z teorie $T$
+            \item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme a konec větve $V$ připojit atomické tablo pro položku $P$
+            \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom $\alpha\in T$
+        \end{itemize}
+        \item \alert{tablo z teorie $T$} je buď konečné, nebo i nekonečné: v tom případě je spočetné a definujeme ho jako $\tau=\bigcup_{i\geq 0}\tau_i$, kde:
+        \begin{itemize}
+            \item $\tau_i$ jsou konečná tabla z $T$
+            \item $\tau_0$ je jednoprvkové tablo
+            \item $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku
+        \end{itemize}
+        \item \alert{tablo pro položku $P$} je tablo, které má položku $P$ v kořeni
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Dokončené a sporné tablo}
+
+    \begin{itemize}
+        \item Tablo je \alert{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \alert{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \alert{bezesporná}.
+        \item Tablo je \alert{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \alert{dokončená}, pokud je sporná, nebo
+        \begin{itemize}
+            \item každá její položka je na této větvi \alert{redukovaná},
+            \item a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \alert{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+        \begin{itemize}
+            \item je tvaru $\mathrm{T}p$ resp. $\mathrm{F}p$ pro nějaký prvovýrok $p\in\mathbb P$, 
+            \item nebo při konstrukci tabla již došlo k jejímu rozvoji na $V$, tj. vyskytuje se na $V$ jako kořen atomického tabla (byť ho podle konvence nezakreslujeme).
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz a tablo zamítnutí}
+
+    \begin{itemize}
+        \item \alert{tablo důkaz} výroku $\varphi$ z teorie $T$ je \alert{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni
+        \item pokud existuje, je $\varphi$ \alert{(tablo) dokazatelný} z $T$, píšeme \alert{$T\proves\varphi$}
+        \item podobně, \alert{tablo zamítnutí} je sporné tablo s $\mathrm{T}\varphi$ v kořeni
+        \item existuje-li, je $\varphi$ \alert{(tablo) zamítnutelný} z $T$, tj. platí \alert{$T\proves\neg\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    %todo
+    \begin{example}\label{example:tableaux-from-theory}
+        Ukážeme si dva příklady. Tabla jsou znázorněná na Obrázku \ref{figure:tableaux-from-theory-figure}. 
+        \begin{itemize}
+            \item[(a)] Tablo důkaz výroku $\psi$ z teorie $T=\{\varphi,\varphi\limplies\psi\}$, tj. $T\proves\psi$ (kde $\varphi,\psi$ jsou nějaké pevně dané výroky). Tomuto faktu se říká \emph{Věta o dedukci}.
+            \item[(b)] Dokončené tablo pro výrok $p_0$ z teorie $T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$. Nejlevější větev je bezesporná dokončená. Obsahuje položky $\mathrm{T}p_{i+1}\limplies p_i$ a $\mathrm{F}p_i$ pro všechna $i\in\mathbb N$. Shoduje se tedy s modelem $v=(0,0,\dots)$, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro všechna $i$.
+        \end{itemize} 
+    \end{example}
+    
+    \begin{figure}
+        \begin{minipage}{.49\textwidth}
+        \centering
+        \begin{forest}
+        [$\mathrm{F}\psi$
+            [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
+                [$\mathrm{F}\varphi$
+                    [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]                
+                [$\mathrm{T}\psi$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+            ]
+        ]
+        \end{forest}
+        \end{minipage}
+        \begin{minipage}{.49\textwidth}
+        \centering
+        \begin{forest}
+        [$\mathrm{F}p_0$
+            [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
+                [$\mathrm{F}p_1$                
+                    [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
+                        [$\mathrm{F}p_2$ [$\vdots$]] 
+                        [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
+                    ]                
+                ]
+                [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+            ]
+        ]
+        \end{forest}
+        \end{minipage}
+        \label{figure:tableaux-from-theory-figure}
+        \caption{Tabla z Příkladu \ref{example:tableaux-from-theory}. Položky vycházející z axiomů jsou označeny modře.}
+    \end{figure}
+
+\end{frame}
+
+
+\section{4.4 Konečnost a systematičnost důkazů}
+
+\end{document}
 

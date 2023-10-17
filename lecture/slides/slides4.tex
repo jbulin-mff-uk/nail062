@@ -370,55 +370,150 @@
 \end{frame}
 
 
-\begin{frame}{Příklad}
+\begin{frame}{Příklad: tablo důkaz}
 
-    %todo
-    \begin{example}\label{example:tableaux-from-theory}
-        Ukážeme si dva příklady. Tabla jsou znázorněná na Obrázku \ref{figure:tableaux-from-theory-figure}. 
-        \begin{itemize}
-            \item[(a)] Tablo důkaz výroku $\psi$ z teorie $T=\{\varphi,\varphi\limplies\psi\}$, tj. $T\proves\psi$ (kde $\varphi,\psi$ jsou nějaké pevně dané výroky). Tomuto faktu se říká \emph{Věta o dedukci}.
-            \item[(b)] Dokončené tablo pro výrok $p_0$ z teorie $T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$. Nejlevější větev je bezesporná dokončená. Obsahuje položky $\mathrm{T}p_{i+1}\limplies p_i$ a $\mathrm{F}p_i$ pro všechna $i\in\mathbb N$. Shoduje se tedy s modelem $v=(0,0,\dots)$, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro všechna $i$.
-        \end{itemize} 
-    \end{example}
+    \begin{columns}
     
-    \begin{figure}
-        \begin{minipage}{.49\textwidth}
+        \column{0.32\textwidth}
+
         \centering
         \begin{forest}
-        [$\mathrm{F}\psi$
-            [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
-                [$\mathrm{F}\varphi$
-                    [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                ]                
-                [$\mathrm{T}\psi$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-            ]
-        ]
-        \end{forest}
-        \end{minipage}
-        \begin{minipage}{.49\textwidth}
-        \centering
-        \begin{forest}
-        [$\mathrm{F}p_0$
-            [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
-                [$\mathrm{F}p_1$                
-                    [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
-                        [$\mathrm{F}p_2$ [$\vdots$]] 
-                        [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
+            [$\mathrm{F}\psi$
+                [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
+                    [$\mathrm{F}\varphi$
+                        [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                     ]                
+                    [$\mathrm{T}\psi$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                 ]
-                [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
             ]
-        ]
         \end{forest}
-        \end{minipage}
-        \label{figure:tableaux-from-theory-figure}
-        \caption{Tabla z Příkladu \ref{example:tableaux-from-theory}. Položky vycházející z axiomů jsou označeny modře.}
-    \end{figure}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item tablo důkaz výroku \alert{$\psi$} z \alert{$T=\{\varphi,\varphi\limplies\psi\}$}
+            \item položky vycházející z axiomů jsou \textcolor{blue}{modře}
+            \item ukázali jsme tedy \alert{$T\proves\psi$}
+            \item $\varphi,\psi$ jsou libovolné pevně dané výroky \item tím jsme dokázali tzv. \alert{větu o dedukci}
+        \end{itemize}
+    
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: dokončené tablo, které není sporné}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+        \begin{forest}
+            [$\mathrm{F}p_0$
+                [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
+                    [$\mathrm{F}p_1$                
+                        [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
+                            [$\mathrm{F}p_2$ [$\vdots$]] 
+                            [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
+                        ]                
+                    ]
+                    [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]
+            ]
+        \end{forest}   
+        
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item dokončené tablo pro výrok \alert{$p_0$} z teorie \alert{$T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$}. \item nejlevější větev je \alert{dokončená} a \alert{bezesporná}
+            \item sestává z položek \alert{$\mathrm{T}p_{i+1}\limplies p_i$} a \alert{$\mathrm{F}p_i$} pro všechna $i\in\mathbb N$
+            \item shoduje se s modelem \alert{$v=(0,0,\dots)$}, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro vš. $i$
+            \item máme protipříklad ukazující, že \alert{$T\not\models p_0$}
+        \end{itemize}
+
+    \end{columns}
 
 \end{frame}
 
 
 \section{4.4 Konečnost a systematičnost důkazů}
+
+
+\begin{frame}{Konečnost a systematičnost důkazů}
+
+    Dokážeme:
+    \begin{itemize}
+        \item existuje-li tablo důkaz, existuje i \alert{konečný} tablo důkaz
+        \item existuje algoritmus, který umí vždy zkonstruovat dokončené tablo, tzv. \alert{systematické tablo}
+        \item tento algoritmus tedy \alert{zkonstruuje tablo důkaz}, pokud existuje 
+        
+        \medskip
+
+        (zde potřebujeme \emph{korektnost} a \emph{úplnost}, ty dokážeme později)    
+        
+        \medskip
+
+        (pokud tablo důkaz neexistuje, algoritmus se nemusí zastavit)
+    \end{itemize}
+    
+
+\end{frame}
+
+
+\begin{frame}{Dokončení tabla: v čem je problém?}
+
+    Pro konečnou $T$ je snadné zkonstruovat dokončené tablo:
+    \begin{itemize}
+        \item na začátku použijeme všechny axiomy
+        \item při redukci položek se výroky v nich zkracují
+        \item stačí nedělat zbytečné kroky
+    \end{itemize}
+
+    Pro \alert{nekonečnou} $T$ bychom ale mohli zkonstruovat nekonečné tablo, a přitom:
+    \begin{itemize}
+        \item nikdy nepoužít některý axiom, nebo
+        \item nikdy se nedostat k redukci některé položky
+    \end{itemize}
+        
+    \textbf{Myšlenka} \alert{systematického tabla}: na všechny se dostane, střídáme
+    \begin{itemize}
+        \item \alert{přidání následujícího axiomu} na všechny bezesporné větve ($T$ je spočetná, axiomy libovolně očíslujeme)
+        \item \alert{redukce následující položky} (po úrovních, zleva doprava) na všech bezesporných větvích, které jí procházejí  
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Definice systematického tabla}
+ 
+    \alert{Systematické tablo} z teorie $T=\{\alpha_1,\alpha_2,\dots\}$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+
+    \begin{itemize}
+        \item buď $P$ nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$
+        \item nejprve definujeme $\tau_i'$ jako tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$
+        \item pokud taková položka $P$ neexistuje, potom $\tau_i'=\tau_i$
+        \item tablo $\tau_{i+1}$ vznikne z $\tau_i'$ připojením $\mathrm{T}\alpha_{i+1}$ na každou bezespornou větev
+        \item to v případě, že $i<|T|$, jinak (je-li $T$ konečná a už jsme použili všechny axiomy) definujeme $\tau_{i+1}=\tau_i'$
+    \end{itemize}  
+
+\end{frame}
+
+
+\begin{frame}{Dokončenost systematického tabla}
+
+    \myblock{
+    \textbf{Lemma:} Systematické tablo je dokončené.
+    }
+
+    % \textbf{Důkaz:} 
+    
+    % TODO
+
+    %     Ukážeme, že každá větev je dokončená. Sporné větve jsou dokončené. Bezesporné větve obsahují položky $\mathrm{T}\alpha_i$ (ty jsme připojili v $i$-tém kroku) a každá položka na nich je redukovaná. Vskutku, kdyby $P$ byla neredukovaná na bezesporné větvi $V$, přišla by na ni v nějakém kroku řada, neboť v úrovních nad $P$ a vlevo od $P$ existuje jen konečně mnoho položek. (Používáme zjevného faktu, že každý prefix bezesporné větve je také bezesporná větev, tedy během konstrukce $V$ nikdy není sporná.)\hfill\qedsymbol
+
+\end{frame}
+
 
 \end{document}
 

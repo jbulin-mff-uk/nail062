@@ -1,34 +1,8 @@
 
+  
 
 
 
-
-
-
-
-\section{Konečnost a systematičnost důkazů}\label{section:finiteness-and-systematicity-of-proofs}
-
-V této sekci dokážeme, že pokud existuje tablo důkaz, existuje vždy také \emph{konečný} tablo důkaz. Představíme také algoritmus, kterým nějaký tablo důkaz můžeme vždy najít, pro důkaz tohoto faktu ale budeme potřebovat Věty o korektnosti a úplnosti z následující sekce. Prozatím ukážeme, že tento algoritmus nám umožní vždy sestrojit dokončené tablo.
-
-Všimněte si, že při redukci položky přidáváme do tabla pouze položky obsahující kratší výroky. Pokud tedy máme konečnou teorii, a neděláme zbytečné kroky (například nepřidáváme opakovaně tentýž axiom, nebo totéž atomické tablo), je snadné sestrojit dokončené tablo, které bude konečné.
-
-Je-li teorie $T$ nekonečná, musíme ale být opatrnější. Mohli bychom nekonečně dlouho konstruovat tablo, a přitom se nikdy nedostat k redukci určité položky, nebo nikdy nepoužít některý z axiomů. Definujeme tedy konkrétní algoritmus pro konstrukci tabla, výsledku budeme říkat \emph{systematické tablo}. Myšlenka konstrukce je jednoduchá: střídáme krok redukce položky (zároveň na všech bezesporných větvích, které jí procházejí) a krokem použití axiomu. Položky procházíme po úrovních, a v rámci úrovně v pravolevém uspořádání. A axiomy teorie ve zvoleném očíslování.
-
-\begin{definition}
-Mějme položku $R$ a (konečnou nebo nekonečnou\footnote{Připomeňme, že $T$ je spočetná, neboť jazyk je (v celé kapitole) spočetný.}) teorii $T=\{\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
-
-\begin{itemize}
-    \item Nechť $P$ je nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$. Definujeme nejprve tablo $\tau_i'$ jako tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$. (Pokud taková položka neexistuje, potom  $\tau_i'=\tau_i$.)
-    \item Následně, $\tau_{i+1}$ je tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_i$ na každou bezespornou větev $\tau_i'$. To v případě, že $i\leq |T|$, jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$.
-\end{itemize}    
-\end{definition}
-
-\begin{lemma}\label{lemma:systematic-is-finished}
-    Systematické tablo je dokončené.
-\end{lemma}
-\begin{proof}
-    Ukážeme, že každá větev je dokončená. Sporné větve jsou dokončené. Bezesporné větve obsahují položky $\mathrm{T}\alpha_i$ (ty jsme připojili v $i$-tém kroku) a každá položka na nich je redukovaná. Vskutku, kdyby $P$ byla neredukovaná na bezesporné větvi $V$, přišla by na ni v nějakém kroku řada, neboť v úrovních nad $P$ a vlevo od $P$ existuje jen konečně mnoho položek. (Používáme zjevného faktu, že každý prefix bezesporné větve je také bezesporná větev, tedy během konstrukce $V$ nikdy není sporná.)
-\end{proof}
 
 Nyní se vraťme k otázce konečnosti důkazů:
 

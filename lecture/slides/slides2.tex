@@ -149,8 +149,8 @@
         \scalebox{0.5}{
                 \begin{tabular}{c|cc}
                 & 0 & 1  \\ \hline
-                0 & 1 & 1  \\
-                1 & 1 & 0 
+                0 & 0 & 1  \\
+                1 & 1 & 1 
                 \end{tabular}
         }
         &        
@@ -352,8 +352,8 @@
     \myexample{
     Najděme modely $T=\{p\lor q\lor r, q\limplies r, \neg r\}$ (v jazyce $\mathbb P=\{p,q,r\}$):\vspace{-6pt}
     \begin{align*}
-        &\M_\mathbb P(r)=\{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\}\\
-        &\M_\mathbb P(r,q\limplies r)=\{(0,0,0),(1,0,0)\}\\
+        &\M_\mathbb P(\neg r)=\{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\}\\
+        &\M_\mathbb P(\neg r,q\limplies r)=\{(0,0,0),(1,0,0)\}\\
         &\M_\mathbb P(T)=\{(1,0,0)\}    
     \end{align*}
     }
@@ -408,7 +408,7 @@
     \myexample{např. pro $T=\{p\lor q,\neg r\}$:
         \begin{itemize}
             \item výroky $q\lor p$, $\neg p\lor\neg q\lor \neg r$ jsou pravdivé v $T$
-            \item výrok $\neg p\lor\neg q\lor r$ je v $T$ lživý
+            \item výrok $(\neg p\land\neg q)\lor r$ je v $T$ lživý
             \item výroky $p\liff q, p\land q$ jsou v $T$ nezávislé, a také splnitelné
             \item platí $p\sim_T p\lor r$ (ale $p\not\sim p\lor r$)
         \end{itemize}      

@@ -1,43 +1,4 @@
 
-  
-
-
-
-
-Nyní se vraťme k otázce konečnosti důkazů:
-
-\begin{theorem}[Konečnost sporu]\label{theorem:finiteness-of-contradiction}
-    Je-li $\tau=\bigcup_{i\geq 0}\tau_i$ sporné tablo, potom existuje $n\in\mathbb N$ takové, že $\tau_n$ je sporné konečné tablo.
-\end{theorem}
-\begin{proof}
-    Uvažme množinu $S$ všech vrcholů stromu $\tau$, které nad sebou (ve stromovém uspořádání) neobsahují spor, tj. dvojici položek $\mathrm{T}\psi$, $\mathrm{F}\psi$.
-
-    Kdyby množina $S$ byla nekonečná, podle Königova lemmatu použitého na podstrom $\tau$ na množině $S$ bychom měli nekonečnou, bezespornou větev v $S$. To by ale znamenalo, že máme i bezespornou větev v $\tau$, což je ve sporu s tím, že $\tau$ je sporné. (Podrobněji: Větev na $S$ by byla podvětví nějaké větve $V$ v $\tau$, která je sporná, tj. obsahuje nějakou (konkrétní) spornou dvojici položek, která ale existuje už v nějakém konečném prefixu $V$.)
-
-    Množina $S$ je tedy konečná. To znamená, že existuje $d\in\mathbb N$ takové, že celá $S$ leží v hloubce nejvýše $d$. Každý vrchol na úrovni $d+1$ má tedy nad sebou spor. Zvolme $n$ tak, že $\tau_n$ už obsahuje všechny vrcholy $\tau$ z prvních $d+1$ úrovní: každá větev $\tau_n$ je tedy sporná.
-\end{proof}
-
-\begin{corollary}\label{corollary:systematic-contradictory-is-finite}
-    Pokud při konstrukci tabla nikdy neprodlužujeme sporné větve, např. pro systematické tablo, potom sporné tablo je konečné.
-\end{corollary}
-\begin{proof}
-Použijeme Větu \ref{theorem:finiteness-of-contradiction}, máme $\tau=\tau_n$ neboť sporné tablo už neměníme.    
-\end{proof}
-
-\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness-of-proofs}
-    Pokud $T\proves\varphi$, potom existuje i \emph{konečný} tablo důkaz $\varphi$ z $T$.
-\end{corollary}
-\begin{proof}
-Snadno plyne z Důsledku \ref{corollary:systematic-contradictory-is-finite}: stačí při konstrukci $\tau$ ignorovat kroky, které by prodloužily spornou větev.
-\end{proof}
-
-Vyslovíme zde také následující důsledek. Dokážeme ho ale až v příští sekci.
-
-\begin{corollary}[Systematičnost důkazů]\label{corollary:systematicity-of-proofs}
-    Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
-\end{corollary}
-
-K důkazu budeme potřebovat dvě fakta: pokud je $\varphi$ dokazatelná z $T$, potom v $T$ platí (Věta o korektnosti), tj. nemůže existovat protipříklad. A dále pokud by systematické tablo mělo bezespornou větev, znamenalo by to, že existuje protipříklad (to je klíčem k Větě o úplnosti).
 
 
 \section{Korektnost a úplnost}

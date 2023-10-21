@@ -407,13 +407,13 @@ Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravd
 \begin{proof}
 Dokážeme sporem. Předpokládejme, že $\varphi$ v $T$ neplatí, tj. existuje protipříklad: model $v\in\M(T)$, ve kterém $\varphi$ neplatí.
 
-Protože je $\varphi$ dokazatelná z $T$, existuje tablo důkaz $\varphi$ z T, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Model $v$ se shoduje s položkou $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné, včetně $V$. Takže $V$ obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme tedy $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.
+Protože je $\varphi$ dokazatelná z $T$, existuje tablo důkaz $\varphi$ z $T$, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Model $v$ se shoduje s položkou $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné, včetně $V$. Takže $V$ obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme tedy $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.
 
 \end{proof}
 
 \subsection{Věta o úplnosti}
 
-Ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto jeden konkrétní:
+Ukážeme, že pokud selže dokazování, tj. pokud dostaneme \emph{bezespornou} větev v \emph{dokončeném} tablu z teorie $T$ pro položku $\mathrm{F}\varphi$, potom tato větev poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto jeden konkrétní:
 
 \begin{definition}[Kanonický model]\label{definition:canonical-model}
 Je-li $V$ bezesporná větev dokončeného tabla, potom \emph{kanonický model} pro $V$ je model definovaný předpisem (pro $p\in\mathbb P$):

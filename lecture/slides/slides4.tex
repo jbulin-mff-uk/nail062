@@ -570,7 +570,7 @@
     Důkaz bude až v příští sekci, chybí nám dvě fakta:
     \begin{itemize}
         \item je-li $\varphi$ dokazatelná z $T$, potom v $T$ platí (Věta o korektnosti)
-        \item pokud by systematické tablo mělo bezespornou větev, šel by z ní vyrobit protipříklad (to je klíč km důkazu Věty o úplnosti)1
+        \item pokud by systematické tablo mělo bezespornou větev, šel by z ní vyrobit protipříklad (to je klíč k důkazu Věty o úplnosti)1
     \end{itemize}
 
 \end{frame}
@@ -579,6 +579,191 @@
 \section{4.5 Korektnost a úplnost}
 
 
+\begin{frame}{Korektnost a úplnost}
+    
+    Nyní ukážeme, že \alert{dokazatelnost} je totéž, co \alert{platnost}, tj. pro každou teorii $T$ a výrok $\varphi$:
+    \alert{
+    $$
+    T\proves\varphi\ \Leftrightarrow\ T\models\varphi
+    $$
+    }
+
+    Rozdělíme na dvě implikace: 
+    
+    \begin{itemize}
+        \item \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$} \hspace{0.5cm} (korektnost) \hfill {\it``co jsme dokázali, platí''}
+        \item\alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}  \hspace{0.5cm} (úplnost) \hfill {\it ``co platí, lze dokázat''}
+    \end{itemize} 
+ 
+\end{frame}
+
+
+\begin{frame}{Korektnost: pomocné lemma}
+
+
+    Model $v$ se \alert{shoduje}
+    \begin{itemize}
+        \item \alert{s položkou $P$}, pokud
+        $P=\mathrm{T}\varphi$ a $v\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $v\not\models\varphi$
+        \item \alert{s větví $V$}, pokud se shoduje s každou položkou na této větvi
+    \end{itemize}
+    
+    \medskip
+
+    \myblock{
+    \textbf{Lemma:}
+        Shoduje-li se model teorie $T$ s položkou v kořeni tabla z teorie $T$, potom se shoduje s některou větví.
+    }
+
+    \smallskip
+    
+    \textbf{Důkaz:}
+    Indukcí podle kroků $i$ při konstrukci tabla $\tau=\bigcup_{i\geq 0}\tau_i$ najdeme posloupnost větví $V_0\subseteq V_1\subseteq\dots$ takovou, že:
+     \begin{itemize}
+        \item $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $v$
+        \item $V_{i+1}$ je prodloužením $V_i$
+     \end{itemize}
+    Hledaná větev v $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$.
+    
+    \alert{Báze indukce:} Model $v$ se shoduje s kořenem $\tau$, tj. s (jednoprvkovou) větví $V_0$ v $\tau_0$.
+
+\end{frame}
+
+
+\begin{frame}{Pokračování důkazu pomocného lemmatu}
+
+    \alert{Indukční krok:}
+    
+    Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení $V_i$, definujeme $V_{i+1}=V_i$.
+
+    \medskip
+
+    Pokud $\tau_{i+1}$ vzniklo připojením $\mathrm{T}\alpha$ (pro axiom $\alpha\in T$) na konec $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev. Protože $v\models T$, máme i $v\models\alpha$, tedy $v$ se shoduje i s novou položkou.
+    
+    \medskip
+
+     Nechť $\tau_{i+1}$ vzniklo připojením atomického tabla pro položku $P$ na konec $V_i$. Protože se $v$ shoduje s $P$ (která leží na $V_i$), shoduje se i s kořenem připojeného atomického tabla, a proto se shoduje i s některou z jeho větví. (Ověříme si pro všechna atomická tabla.) Definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev atomického tabla.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Věta o korektnosti [tablo metody ve výrokové logice]}
+
+    \myblock{
+    \textbf{Věta (O korektnosti):}
+    Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravdivý v~$T$, tj. \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$}.
+    }
+
+    \medskip
+
+    \textbf{Myšlenka důkazu:} Protipříklad by se shodoval s některou z větví tablo důkazu, ty jsou ale všechny sporné.
+
+    \medskip
+
+    \textbf{Důkaz:} Sporem, nechť $T\not\models\varphi$, tj. existuje $v\in\M(T)$, že $v\not\models\varphi$.
+        
+    Protože je $T\proves\varphi$, existuje tablo důkaz $\varphi$ z $T$, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. 
+        
+    Model $v$ se shoduje s kořenem $\mathrm{F}\varphi$, tedy podle Lemmatu se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné. Takže na $V$ jsou $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Úplnost: pomocné lemma}
+
+    chceme selže-li dokazování, dostaneme \alert{bezespornou, dokončenou} větev v tablu z $T$ s $\mathrm{F}\varphi$ v kořeni; ukážeme, že dává protipříklad:
+
+    \alert{Kanonický model} pro bezespornou, dokončenou větev $V$ je model
+    $$
+    v(p)=\begin{cases}
+        1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$}\\
+        0 \text{ jinak}
+    \end{cases}
+    $$  
+    
+    \medskip
+
+    \myblock{
+    \textbf{Lemma:}
+    Kanonický model pro (bezespornou, dokončenou) větev $V$ se shoduje s $V$.
+    }
+
+    \bigskip
+    
+    (tento model tedy musí splňovat všechny axiomy $T$, ale protože se shoduje s položkou $\mathrm{F}\varphi$ v kořeni, neplatí v něm výrok $\varphi$)
+
+\end{frame}
+
+
+\begin{frame}{Důkaz pomocného lemmatu}
+
+    \textbf{Důkaz:}
+    Indukcí podle struktury výroků v položkách. \alert{Báze indukce:} 
+    \begin{itemize}
+        \item je-li \alert{$P=\mathrm{T}p$} pro prvovýrok $p$, máme $v(p)=1$, shoduje se
+        \item je-li \alert{$P=\mathrm{F}p$}, potom na $V$ nemůže být $\mathrm{T}p$ (byla by sporná), máme tedy $v(p)=0$, shoduje se
+    \end{itemize}
+
+    \alert{Indukční krok:} rozebereme dva případy, ostatní jsou obdobné
+
+    \begin{itemize}
+        \item \alert{$P=\mathrm{T}\varphi\land\psi$}. Protože je $V$ dokončená, je na ní $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi $v$ shoduje: $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
+    
+        \item \alert{$P=\mathrm{F}\varphi\land\psi$}. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.\hfill\qedsymbol
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Věta o úplnosti (+ důkaz systematičnosti)}
+
+    \myblock{
+    \textbf{Věta (O úplnosti):} Je-li výrok $\varphi$ pravdivý v teorii $T$, potom je tablo dokazatelný z $T$, tj. \alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}.
+    }
+    
+    \textbf{Důkaz:}
+    Ukážeme, že libovolné dokončené (např. \alert{systematické}) tablo z $T$ s $\mathrm{F}\varphi$ v kořeni je nutně sporné, tedy je tablo důkazem. 
+    
+    Sporem: \alert{Není-li sporné}, má bezespornou (dokončenou) větev $V$, a dle Lemmatu se s ní kanonický model pro $V$ shoduje. 
+    
+    Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $T$. Model $v$ tedy splňuje všechny axiomy a máme $v\models T$. 
+    
+    Protože se ale $v$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, máme $v\not\models\varphi$, což dává protipříklad, a máme $T\not\models\varphi$, spor.\hfill\qedsymbol
+
+
+    \textbf{Dokázali jsme i Důsledek o systematičnosti důkazů:}  Z důkazu vidíme, že i systematické tablo pro položku $\mathrm{F}\varphi$ je nutně sporné, a je tedy tablo důkazem.\hfill\qedsymbol
+
+\end{frame}
+
+
+\section{4.6 Důsledky korektnosti a úplnosti}
+
+
+\begin{frame}{$\proves\ =\ \models$}
+
+    Syntaktickou analogií \alert{důsledků} jsou \alert{teorémy}:
+    $$\Thm_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid T\proves\varphi\}$$
+    
+    Z korektnosti a úplnosti okamžitě dostáváme:
+        \begin{itemize}
+            \item $T\proves\varphi$ právě když $T\models\varphi$
+            \item $\Thm_\mathbb P(T)=\Conseq_\mathbb P(T)$
+        \end{itemize}
+    
+    Všude můžeme nahradit `\alert{platnost}' pojmem `\alert{dokazatelnost}'.  Např:
+    \begin{itemize}
+        \item $T$ je \alert{sporná}, je-li v ní dokazatelný spor (tj. \alert{$T\proves\bot$})
+        \item $T$ je \alert{kompletní}, je-li pro každý výrok buď $T\proves\varphi$ nebo $T\proves\neg\varphi$, ale ne obojí (jinak by byla sporná)
+    \end{itemize}
+
+    \textbf{Věta (O dedukci):} $T,\varphi\proves\psi$ právě když  $T\proves\varphi\to\psi$.
+
+    \textbf{Důkaz:} Stačí dokázat $T,\varphi\models\psi\Leftrightarrow T\models\varphi\to\psi$, což je snadné.
+
+\end{frame}
+
 
 \end{document}
+
+
 

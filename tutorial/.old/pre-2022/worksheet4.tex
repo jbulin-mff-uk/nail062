@@ -27,7 +27,7 @@
 
 \begin{problem}
 Prove directly (by tableau transformations) the deduction theorem, i.e. for every theory $T$ and propositions $\varphi$, $\psi$,
-$$T \vdash \varphi\to \psi\text{\ \ if and only if\ \ }T,\varphi \vdash \psi.$$
+$$T  \varphi\to \psi\text{\ \ if and only if\ \ }T,\varphi  \psi.$$
 \end{problem}\medskip
 
 % \begin{problem}
@@ -128,18 +128,18 @@ In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $
 \item $\varphi_i \in T$ (an axiom of the theory), or
 \item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
 \end{itemize}
-If such a proof exists, we write $T\ \vdash_H\ \varphi$.
+If such a proof exists, we write $T\ _H\ \varphi$.
 
 \bigskip
 
 \begin{problem}
 Find proofs for the following:
 \begin{enumerate}[(a)]
-\item $\vdash_H\ p\to p$
-\item $\{\neg p\}\ \vdash_H\ p\to q$
-\item $\{\neg(\neg p)\}\ \vdash_H\ p$
-\item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
-\item $\{p, q \to (p\to r)\}\ \vdash_H\ q\to r$
+\item $_H\ p\to p$
+\item $\{\neg p\}\ _H\ p\to q$
+\item $\{\neg(\neg p)\}\ _H\ p$
+\item $\{p\to q,q \to r\}\ _H\ p\to r$
+\item $\{p, q \to (p\to r)\}\ _H\ q\to r$
 
 \end{enumerate}
 \end{problem}\medskip
@@ -150,7 +150,7 @@ Prove soundness of Hilbert's calculus:
 \begin{itemize}
     \item Show that the logical axioms are tautologies.
     \item Show that modus ponens is sound, i.e., if $T\models\varphi$ and $T\models\varphi\to\psi$, then $T\models\psi$.
-    \item Show that $T\ \vdash_H\ \varphi$ implies $T\models\varphi$.
+    \item Show that $T\ _H\ \varphi$ implies $T\models\varphi$.
 \end{itemize}
 \end{problem}\medskip
 

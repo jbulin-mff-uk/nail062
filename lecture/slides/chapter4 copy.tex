@@ -79,16 +79,16 @@ Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovac�
     \item $\varphi_i$ lze odvodit z předchozích formulí pomocí odvozovacího pravidla.
     \end{itemize}
     
-    %$\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$. Značíme $T \vdash_{H} \varphi$, popř. $\vdash_H \varphi$ pro $T=\emptyset$.
+    %$\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$. Značíme $T _{H} \varphi$, popř. $_H \varphi$ pro $T=\emptyset$.
     \medskip
     
     {\it \myblue{Poznámka}\ \ Volba axiomů a odvozovacích pravidel se v může v různých dokazovacích systémech Hilbertova stylu lišit.}
     
     \subsubsection*{Příklad a korektnost}
-    Formule $\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$, značíme $T \vdash_{H} \varphi$.
+    Formule $\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$, značíme $T _{H} \varphi$.
     \smallskip
     
-    Je-li $T=\emptyset$, značíme $\vdash_H \varphi$. Např. pro \mygreen{$T=\{\neg \varphi\}$} je \mygreen{$T \vdash_H \varphi \to \psi$} pro každé $\psi$.
+    Je-li $T=\emptyset$, značíme $_H \varphi$. Např. pro \mygreen{$T=\{\neg \varphi\}$} je \mygreen{$T _H \varphi \to \psi$} pro každé $\psi$.
     \mygreen{\vspace{-2mm}\begin{align*}
     1)& &\neg \varphi& & &\text{axiom z $T$} \\
     2)& &\neg \varphi& \to (\neg \psi \to \neg \varphi)& &\text{logický axiom $(i)$}\\
@@ -98,7 +98,7 @@ Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovac�
     \end{align*}}
     
     \vspace{-4mm}
-    {\bf \myblue{Věta}}\ \ {\it  Pro každou teorii $T$ a formuli $\varphi$,\ \ $T\vdash_H \varphi\ \Rightarrow\ T\models \varphi$.}
+    {\bf \myblue{Věta}}\ \ {\it  Pro každou teorii $T$ a formuli $\varphi$,\ \ $T_H \varphi\ \Rightarrow\ T\models \varphi$.}
     \smallskip
     
     {\it \myblue{Důkaz}}
@@ -109,7 +109,7 @@ Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovac�
 \end{itemize}
     \medskip
     
-    {\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. $T\models \varphi \Rightarrow T\vdash_H \varphi$ pro každou teorii $T$ a formuli $\varphi$.}
+    {\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. $T\models \varphi \Rightarrow T_H \varphi$ pro každou teorii $T$ a formuli $\varphi$.}
 
 % :from slides
 
@@ -134,4 +134,4 @@ Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovac�
 %     \item $\varphi_i \in T$ (an axiom of the theory), or
 %     \item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
 %     \end{itemize}
-%     If such a proof exists, we write $T\ \vdash_H\ \varphi$.
+%     If such a proof exists, we write $T\ _H\ \varphi$.

@@ -101,7 +101,7 @@ to show (b) apply $(iii)$ for $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
 \smallskip
 
 \begin{theorem*} Let $\varphi$ be a formula of a language $L$ with free variables $x_1,\dots,x_n$ and let $T$ be a theory in $L$. Let $L'$ denote the extension of $L$ with new constant symbols $c_1,\dots,c_n$ and let $T'$ denote the theory $T$ in $L'$. Then
-$$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{if and only if}\quad T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n).$$
+$$T  (\forall x_1)\dots(\forall x_n)\varphi \quad\text{if and only if}\quad T'\varphi(x_1/c_1,\dots,x_n/c_n).$$
 \end{theorem*}
 \end{problem} 
 
@@ -113,7 +113,7 @@ $$T \vdash (\forall x_1)\dots(\forall x_n)\varphi \quad\text{if and only if}\qua
 \smallskip
 
 \begin{theorem*} For every theory $T$ (in a closed form) and sentences $\varphi$, $\psi$,
-$$T\vdash \varphi\to\psi\quad\text{if and only if}\quad T,\varphi\vdash\psi.$$
+$$T \varphi\to\psi\quad\text{if and only if}\quad T,\varphi\psi.$$
 \end{theorem*}
 \end{problem} 
 

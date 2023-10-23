@@ -25,7 +25,7 @@
 
 \begin{problem}
 Dokažte přímo (transformací tabel) větu o dedukci, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí
-$$T \vdash \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi \vdash \psi.$$
+$$T  \varphi\to \psi\text{\ \ právě když\ \ }T,\varphi  \psi.$$
 \end{problem}\medskip
 
 % \begin{problem}
@@ -107,11 +107,11 @@ Zkonstruujte \emph{strom dosazení} pro formuli $S=\{\{p,r\},\{q,\neg r\},\{\neg
 \begin{problem}
 V Hilbertově kalkulu dokažte pro libovolné formule následující vztahy:
 \begin{enumerate}[(a)]
-\item $\vdash_H\ p\to p$
-\item $\{\neg p\}\ \vdash_H\ p\to q$
-\item $\{\neg(\neg p)\}\ \vdash_H\ p$
-\item $\{p\to q,q \to r\}\ \vdash_H\ p\to r$
-\item $\{p, q \to (p\to r)\}\ \vdash_H\ q\to r$
+\item $_H\ p\to p$
+\item $\{\neg p\}\ _H\ p\to q$
+\item $\{\neg(\neg p)\}\ _H\ p$
+\item $\{p\to q,q \to r\}\ _H\ p\to r$
+\item $\{p, q \to (p\to r)\}\ _H\ q\to r$
 
 \end{enumerate}
 \end{problem}\medskip
@@ -121,7 +121,7 @@ Dokažte korektnost hilbertovského kalkulu:
 \begin{itemize}
     \item Dokažte, že logické axiomy jsou tautologie.
     \item Dokažte, že modus ponens je korektní, tj. když $T\models\varphi$ a $T\models\varphi\to\psi$, tak $T\models\psi$.
-    \item Ukažte, že $T\ \vdash_H\ \varphi$ implikuje $T\models\varphi$.
+    \item Ukažte, že $T\ _H\ \varphi$ implikuje $T\models\varphi$.
 \end{itemize}
 \end{problem}\medskip
 
@@ -156,7 +156,7 @@ In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $
 \item $\varphi_i \in T$ (an axiom of the theory), or
 \item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
 \end{itemize}
-If such a proof exists, we write $T\ \vdash_H\ \varphi$.
+If such a proof exists, we write $T\ _H\ \varphi$.
 
 
 

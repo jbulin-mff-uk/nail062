@@ -33,8 +33,63 @@
 \end{frame}
 
 
-\begin{frame}{}
+\section{4.7 Věta o kompaktnosti}
+
+
+\begin{frame}{Věta o kompaktnosti}
+
+    % \begin{itemize}
+    %     \item `kompaktnost' v kalkulu: každá posloupnost má konvergentní podposloupnost 
+    %     \item představte si `konvergenci' zvětšujících se konečných částí k nekonečnému celku
+    % \end{itemize}
+
+    %Tvrzení o nekonečných objektech/procesech $\leftrightsquigarrow$ tvrzení o (všech) konečných částech. 
+
+    \myblock{
+        \textbf{Věta (O kompaktnosti):} Teorie má model, právě když každá její konečná část má model.
+    }
+    \smallskip
+
+    \textbf{Důkaz:} \alert{$\Rightarrow$ Snadné:} Model $T$ je zjevně modelem každé její části.
     
+    \alert{$\Leftarrow$ Nepřímo:} buď $T$ sporná, najdeme spornou konečnou $T'\subseteq T$.
+
+    Z \alert{úplnosti} víme, že $T\proves\bot$, tedy existuje i \alert{konečný} tablo důkaz $\tau$ výroku $\bot$ z $T$. Konstrukce $\tau$ má konečně mnoho kroků, použili jsme tedy jen konečně 
+    mnoho axiomů z $T$. Definujme:
+    
+    \myalertmath{
+    $$
+    T'=\{\alpha\in T\mid \mathrm{T}\alpha\text{ je položka v tablu $\tau$}\}
+    $$
+    }   
+
+    Tedy $\tau$ je tablo jen z teorie $T'$, máme tablo důkaz $T'\proves\bot$, dle \alert{korektnosti} je $T'$ sporná.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Aplikace kompaktnosti}
+
+    \myblock{
+        \textbf{Důsledek:} Spočetně nekonečný graf je bipartitní, právě když je každý jeho konečný podgraf bipartitní.
+    }
+
+%     \textbf{Důkaz:} Každý podgraf bipartitního grafu je zjevně také bipartitní. Ukažme opačnou implikaci. Graf je bipartitní, právě když je obarvitelný 2 barvami. Označme barvy $0,1$.
+
+%     Sestrojíme výrokovou teorii $T$ v jazyce $\mathbb P=\{p_v\mid v\in V(G)\}$, kde hodnota výrokové proměnné $p_v$ reprezentuje barvu vrcholu $v$.
+%     $$  
+%         T=\{p_u\limplies\neg p_v\mid \{u,v\}\in E(G)\}
+%     $$
+%     Zřejmě platí, že $G$ je bipartitní, právě když $T$ má model. Podle Věty o kompaktnosti stačí ukázat, že každá konečná část $T$ má model. Vezměme tedy konečnou $T'\subseteq T$. Buď $G'$ podgraf $G$ indukovaný na množině vrcholů, o kterých se zmiňuje teorie $T'$, tj. $V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}$. Protože je $T'$ konečná, je $G'$ také konečný, a podle předpokladu je 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model teorie $T'$.\hfill\qedsymbol
+
+%     Tvrzení o nekonečných objektech/procesech $\leftrightsquigarrow$ tvrzení o (všech) konečných částech. Například:
+
+    
+% Následující jednoduchou aplikaci Věty o kompaktnosti můžete chápat jako šablonu, kterou následuje i mnoho dalších, složitějších aplikací této věty. 
+
+% Základem této techniky je popis požadované vlastnosti nekonečného objektu pomocí (nekonečné) výrokové teorie. Dále si všimněte, jak z konečné části teorie sestrojíme konečný podobjekt mající danou vlastnost (v našem případě konečný podgraf, který je bipartitní).
+    
+
 \end{frame}
 
 

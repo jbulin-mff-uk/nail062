@@ -553,91 +553,81 @@ Základem této techniky je popis požadované vlastnosti nekonečného objektu 
     Vyslovte a dokažte `spočetně nekonečnou' analogii Hallovy věty.
 \end{exercise}
 
-\section{(draft) Hilbertovský kalkulus}\label{section:hilbert-calculus-propositional}
-\todo
-Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovací systém, tzv. \emph{hilbertovský deduktivní systém} neboli \emph{hilbertovský kalkulus}. Jde o nejstarší dokazovací systém, modelovaný podle matematických důkazů. Jak uvidíme na příkladě, dokazování je v něm poměrně pracné, hodí se tedy spíše pro teoretické účely. Jde také o korektní a úplný dokazovací systém (to ale necháme bez důkazu).
+\section{Hilbertovský kalkulus}\label{section:hilbert-calculus-propositional}
 
-% from slides:
+Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovací systém, tzv. \emph{hilbertovský deduktivní systém} neboli \emph{hilbertovský kalkulus}. Jde o nejstarší dokazovací systém, modelovaný podle matematických důkazů. Jak uvidíme na příkladě, dokazování je v něm poměrně pracné, hodí se tedy spíše pro teoretické účely. Jde také o korektní a úplný dokazovací systém. (Korektnost ukážeme, úplnost ale necháme bez důkazu.)
 
-\begin{itemize}
-    \item základní logické spojky: $\neg$, $\to$ (ostatní z nich odvozené)
-    
-    \item \mdef{logické axiomy} (\myblue{schémata} logických axiomů):
-    \vspace{-2mm}\begin{align*}(i)& &\varphi &\to (\psi \to \varphi) \\
-    (ii)& &(\varphi\to (\psi \to \chi))&\to ((\varphi \to \psi)\to(\varphi \to \chi))\qquad\qquad\qquad\qquad\phantom{\ } \\
-    (iii)& &(\neg \varphi \to \neg \psi)&\to(\psi \to \varphi)
-    \end{align*}
-    
-    \vspace{-2mm}
-    kde $\varphi$, $\psi$, $\chi$ jsou libovolné formule (daného jazyka).
-    \item \mdef{odvozovací pravidlo}:
-    \vspace{-3mm}
-    $$\frac{\varphi,\ \varphi \to \psi}{\psi}\qquad\text{\myblue{(modus ponens)}}$$
-    \end{itemize}
-    
-    \vspace{-1mm}
-    \mdef{Důkaz} (\emph{Hilbertova stylu}) formule $\varphi$ v teorii $T$ je \myblue{konečná} posloupnost
-    \smallskip
-    
-    $\varphi_0, \dots, \varphi_n=\varphi$ formulí taková, že pro každé $i\le n$
+Hilbertovský kalkulus používá jen dvě základní logické spojky: negaci a implikaci. (Připomeňme, že ostatní logické spojky z nich lze odvodit.) Systém sestává z logických axiomů daných následujícími \emph{schématy}, a z jednoho \emph{odvozovacího pravidla}, tzv. \emph{modus ponens}: 
+
+\begin{definition}[Schémata axiomů v hilbertovském kalkulu]
+Pro libovolné výroky $\varphi,\psi,\chi$ jsou následující výroky logickými axiomy:
+\begin{enumerate}[(i)]
+    \item $\varphi \limplies (\psi \limplies \varphi)$
+    \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
+    \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
+\end{enumerate}        
+\end{definition}
+
+Všimněte si, že všechny logické axiomy jsou opravdu tautologie. Poznamenejme, že lze zvolit i jiný systém logických aximů, existuje jich celá řada, viz článek \href{https://en.wikipedia.org/wiki/List_of_Hilbert_systems}{List of Hilbert systems} na Wikipedii.
+
+\begin{definition}[Modus ponens]
+Odvozovací pravidlo \emph{modus ponens} říká, že pokud jsme již dokázali výrok $\varphi$ a také výrok $\varphi\limplies\psi$, můžeme odvodit i výrok $\psi$. Zapisujeme ho následovně:
+$$
+\frac{\varphi, \varphi \limplies \psi}{\psi}
+$$ 
+\end{definition}
+
+Všimněte si, že modus ponens je \emph{korektní}, tj. platí-li v nějaké teorii $T\models\varphi$ a $T\models\varphi\limplies\psi$, máme i $T\models\psi$.
+
+Nyní jsme již připraveni definovat \emph{důkaz}. Půjde o konečnou posloupnost výroků, ve které každý nově napsaný výrok je buď axiomem (logickým nebo z teorie, ve které dokazujeme), nebo lze odvodit z předchozích pomocí modus ponens:
+
+\begin{definition}[Hilbertovský důkaz]
+    \emph{Hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \emph{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$ platí:
     \begin{itemize}
-    \item $\varphi_i$ je logický axiom nebo $\varphi_i \in T$ (axiom teorie), nebo
-    \item $\varphi_i$ lze odvodit z předchozích formulí pomocí odvozovacího pravidla.
+    \item $\varphi_i$ je logický axiom, nebo
+    \item $\varphi_i$ je axiom teorie ($\varphi_i \in T$), nebo
+    \item $\varphi_i$ lze odvodit z nějakých předchozích výroků $\varphi_j,\varphi_k$ (kde $j,k<i$) pomocí modus ponens.
     \end{itemize}
-    
-    %$\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$. Značíme $T \proves_{H} \varphi$, popř. $\proves_H \varphi$ pro $T=\emptyset$.
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \ Volba axiomů a odvozovacích pravidel se v může v různých dokazovacích systémech Hilbertova stylu lišit.}
-    
-    \subsubsection*{Příklad a korektnost}
-    Formule $\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$, značíme $T \proves_{H} \varphi$.
-    \smallskip
-    
-    Je-li $T=\emptyset$, značíme $\proves_H \varphi$. Např. pro \mygreen{$T=\{\neg \varphi\}$} je \mygreen{$T \proves_H \varphi \to \psi$} pro každé $\psi$.
-    \mygreen{\vspace{-2mm}\begin{align*}
-    1)& &\neg \varphi& & &\text{axiom z $T$} \\
-    2)& &\neg \varphi& \to (\neg \psi \to \neg \varphi)& &\text{logický axiom $(i)$}\\
-    3)& &\neg \psi &\to \neg \varphi& &\text{modus ponens z 1), 2)}\\
-    4)& &(\neg \psi \to \neg \varphi)&\to(\varphi \to \psi)& &\text{logický axiom $(iii)$}\\
-    5)& &\varphi &\to \psi&  &\text{modus ponens z 3), 4)}
-    \end{align*}}
-    
-    \vspace{-4mm}
-    {\bf \myblue{Věta}}\ \ {\it  Pro každou teorii $T$ a formuli $\varphi$,\ \ $T\proves_H \varphi\ \Rightarrow\ T\models \varphi$.}
-    \smallskip
-    
-    {\it \myblue{Důkaz}}
-    \begin{itemize}
-    \item Je-li $\varphi\in T$ nebo logický axiom, je $T \models \varphi$ (logické axiomy jsou tautologie),
-    \item jestliže $T \models \varphi$ a $T \models \varphi \to \psi$, pak $T \models \psi$, tj. modus ponens je \myblue{korektní},
-    \item tedy každá formule vyskytující se v důkazu z $T$ platí v $T$. \qed
-\end{itemize}
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. $T\models \varphi \Rightarrow T\proves_H \varphi$ pro každou teorii $T$ a formuli $\varphi$.}
+    Existuje-li hilbertovský důkaz, říkáme, že je $\varphi$ \emph{(hilbertovsky) dokazatelný}, a píšeme $T\proves_H\varphi$.           
+\end{definition}
 
-% :from slides
+Pojem hilbertovského důkazu si ilustrujeme na jednoduchém příkladě:
+
+\begin{example}
+Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí $T\proves_H\varphi\limplies\psi$. Hilbertovským důkazem je následující posloupnost výroků:
+\begin{enumerate}\it
+    \item $\neg\varphi$\hfill axiom teorie
+    \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom dle (i)
+    \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
+    \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom dle (iii)
+    \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4. 
+\end{enumerate}
+\end{example}
+
+Jak jsme již zmínili, hilbertovský kalkulus je korektní a úplný dokazovací systém.
+
+\begin{theorem}[O korektnosti hilbertovského kalkulu]
+Pro každou teorii $T$ a výrok $\varphi$ platí: 
+$$
+T\proves_H \varphi\ \Rightarrow\ T\models\varphi
+$$ 
+\end{theorem}
+\begin{proof}
+Indukcí dle indexu $i$ ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+
+Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie. Je-li $\varphi_i\in T$, také jistě platí $T \models \varphi_i$. Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale z korektnosti modus ponens platí i $T \models \varphi_i$.
+\end{proof}
+
+Pro úplnost ještě vyslovme úplnost, důkaz ale neuvedeme.
+
+\begin{theorem}[O úplnosti hilbertovského kalkulu]
+Pro každou teorii $T$ a výrok $\varphi$ platí: 
+$$
+T\models\varphi\ \Rightarrow\ T\proves_H\varphi
+$$
+\end{theorem}
 
 
-% \subsection*{Hilbert's calculus}
-%     The \emph{Hilbert's propositional calculus} is a proof system for propositional logic where 
-%     \begin{itemize}
-%         \item we only use the logical connectives $\neg,\to$
-%         \item we have the following (schemes of) \emph{logical axioms}:
-%         \begin{enumerate}[(i)]
-%             \item $\varphi \to (\psi \to \varphi)$
-%             \item $(\varphi\to (\psi \to \chi)) \to ((\varphi \to \psi)\to(\varphi \to \chi))$
-%             \item $(\neg \varphi \to \neg \psi)\to(\psi \to \varphi)$
-%         \end{enumerate}
-%         \item and the following \emph{rule of inference}:
-%         $$\frac{\varphi,\ \varphi \to \psi}{\psi}$$
-%         i.e. ``from $\varphi$ and $\varphi\to\psi$ infer $\psi$'' (called ``modus ponens'')
-%     \end{itemize}
-%     In Hilbert's calculus, a \emph{proof} of a proposition $\varphi$ from a theory $T$ is a finite sequence $\varphi_0,\dots,\varphi_n=\varphi$ of formulas such that for every $i\leq n$,
-%     \begin{itemize}
-%     \item $\varphi_i$ is a logical axiom, or 
-%     \item $\varphi_i \in T$ (an axiom of the theory), or
-%     \item $\varphi_i$ can be inferred from a pair of preceding propositions $\varphi_j$, $\varphi_k$ ($j<i,k<i$) by applying the rule of inference.
-%     \end{itemize}
-%     If such a proof exists, we write $T\ \proves_H\ \varphi$.
+
+
+

@@ -36,14 +36,7 @@
 \section{4.7 Věta o kompaktnosti}
 
 
-\begin{frame}{Věta o kompaktnosti}
-
-    % \begin{itemize}
-    %     \item `kompaktnost' v kalkulu: každá posloupnost má konvergentní podposloupnost 
-    %     \item představte si `konvergenci' zvětšujících se konečných částí k nekonečnému celku
-    % \end{itemize}
-
-    %Tvrzení o nekonečných objektech/procesech $\leftrightsquigarrow$ tvrzení o (všech) konečných částech. 
+\begin{frame}{Kompaktnost}
 
     \myblock{
         \textbf{Věta (O kompaktnosti):} Teorie má model, právě když každá její konečná část má model.
@@ -69,30 +62,129 @@
 
 
 \begin{frame}{Aplikace kompaktnosti}
-
-    \myblock{
-        \textbf{Důsledek:} Spočetně nekonečný graf je bipartitní, právě když je každý jeho konečný podgraf bipartitní.
-    }
-
-%     \textbf{Důkaz:} Každý podgraf bipartitního grafu je zjevně také bipartitní. Ukažme opačnou implikaci. Graf je bipartitní, právě když je obarvitelný 2 barvami. Označme barvy $0,1$.
-
-%     Sestrojíme výrokovou teorii $T$ v jazyce $\mathbb P=\{p_v\mid v\in V(G)\}$, kde hodnota výrokové proměnné $p_v$ reprezentuje barvu vrcholu $v$.
-%     $$  
-%         T=\{p_u\limplies\neg p_v\mid \{u,v\}\in E(G)\}
-%     $$
-%     Zřejmě platí, že $G$ je bipartitní, právě když $T$ má model. Podle Věty o kompaktnosti stačí ukázat, že každá konečná část $T$ má model. Vezměme tedy konečnou $T'\subseteq T$. Buď $G'$ podgraf $G$ indukovaný na množině vrcholů, o kterých se zmiňuje teorie $T'$, tj. $V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}$. Protože je $T'$ konečná, je $G'$ také konečný, a podle předpokladu je 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model teorie $T'$.\hfill\qedsymbol
-
-%     Tvrzení o nekonečných objektech/procesech $\leftrightsquigarrow$ tvrzení o (všech) konečných částech. Například:
-
+     
+    \begin{center}
+        vlastnost nekonečného objektu~$\mathcal O$
     
-% Následující jednoduchou aplikaci Věty o kompaktnosti můžete chápat jako šablonu, kterou následuje i mnoho dalších, složitějších aplikací této věty. 
+        $\Updownarrow$
 
-% Základem této techniky je popis požadované vlastnosti nekonečného objektu pomocí (nekonečné) výrokové teorie. Dále si všimněte, jak z konečné části teorie sestrojíme konečný podobjekt mající danou vlastnost (v našem případě konečný podgraf, který je bipartitní).
+        vlastnost všech konečných podobjektů~$\mathcal O'$
+    \end{center}
     
+    \begin{itemize}
+        \item vlastnost popíšeme pomocí (nekonečné) teorie $T$
+        \item ke každé konečné $T'\subseteq T$ sestrojíme konečný podobjekt $\mathcal O'$
+        \item $\mathcal O'$ splňuje danou vlastnost
+        \item to nám dává model $T'$
+        \item dle Věty o kompaktnosti má i $T$ model
+        \item což ukazuje, že i nekonečný objekt $\mathcal O$ splňuje vlastnost
+    \end{itemize}
+     
+    Věta o kompaktnosti má mnoho aplikací (několik z nich uvidíme později), následující příklad chápejte jako `šablonu'.
 
 \end{frame}
 
 
+\begin{frame}{Aplikace kompaktnosti: příklad}
+
+    \myexample{
+        \textbf{Důsledek:} Spočetně nekonečný graf je bipartitní, právě když je každý jeho konečný podgraf bipartitní.
+    }
+
+    \textbf{Důkaz:} \alert{$\Rightarrow$} Každý podgraf bipartitního grafu je bipartitní. 
+    
+    \alert{$\Leftarrow$} $G$ je bipartitní, právě když je obarvitelný 2 barvami. Mějme jazyk $\mathbb P=\{p_v\mid v\in V(G)\}$ (kde $p_v$ je barva $v$) a uvažme teorii
+    
+    \myalertmath{
+    $$  
+        T=\{p_u\limplies\neg p_v\mid \{u,v\}\in E(G)\}
+    $$
+    }
+
+    Zřejmě $G$ je bipartitní, právě když $T$ má model. Dle Věty o kompaktnosti stačí ukázat, že každá konečná $T'\subseteq T$ má model.
+    
+    Buď $G'$ podgraf $G$ indukovaný na vrcholech, o kterých $T'$ mluví:
+    $$
+    V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}
+    $$
+    Protože je $T'$ konečná, je $G'$ také konečný, tedy je dle předpokladu 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model $T'$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\section{4.8 Hilbertovský kalkulus}
+
+
+\begin{frame}{Hilbertovský deduktivní systém}
+
+    \begin{itemize}
+        \item jiný, původní dokazovací systém 
+        \item používá jen logické spojky $\neg$, $\limplies$
+        \item \alert{schémata logických axiomů} ($\varphi,\psi,\chi$ jsou libovolné výroky)
+        \begin{enumerate}[(i)]
+            \item $\varphi \limplies (\psi \limplies \varphi)$
+            \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
+            \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
+        \end{enumerate}
+        \item \alert{odvozovací pravidlo}: tzv. \emph{modus ponens}
+                $$\frac{\varphi, \varphi \limplies \psi}{\psi}$$       
+        \item \alert{hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \emph{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$:
+        \begin{itemize}
+        \item $\varphi_i$ je \alert{logický axiom}, nebo
+        \item $\varphi_i$ je \alert{axiom teorie} ($\varphi_i \in T$), nebo
+        \item $\varphi_i$ lze odvodit z předchozích pomocí \alert{odvozovacího pravidla}
+        \end{itemize}
+        \item existuje-li hilbertovský důkaz, píšeme: \alert{$T\proves_H\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad hilbertovského důkazu}
+
+    Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí:  
+    \myexamplemath{  
+    $$
+    T\proves_H\varphi\limplies\psi
+    $$
+    }
+
+    Hilbertovským důkazem je následující posloupnost výroků:
+    
+    \begin{enumerate}\it
+        \item $\neg\varphi$\hfill axiom teorie
+        \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom (i)
+        \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
+        \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom (iii)
+        \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4.
+    \end{enumerate}    
+
+\end{frame}
+
+
+\begin{frame}{Korektnost a úplnost}
+
+    \myblock{
+    \textbf{Věta (o korektnosti hilbertovského kalkulu):}
+    $T\proves_H\varphi \Rightarrow T\models\varphi$
+    }
+
+    \medskip
+
+    \textbf{Důkaz:} Indukcí dle délky důkazu ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+    \begin{itemize}
+        \item Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie.
+        \item Je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$.
+        \item Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale platí i $T \models \varphi_i$. (Modus ponens je \alert{korektní} odvozovací pravidlo)\hfill\qedsymbol
+    \end{itemize}
+
+    \myblock{
+    \textbf{Věta (o úplnosti hilbertovského kalkulu):}
+    $T\models\varphi\ \Rightarrow\ T\proves_H\varphi$
+    }
+
+    Důkaz vynecháme.
+    
+\end{frame}
+
 \end{document}
-
-

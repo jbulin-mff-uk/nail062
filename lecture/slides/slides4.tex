@@ -90,6 +90,8 @@
     
         \column{0.32\textwidth}
 
+        \centering
+
         \begin{forest}
         [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
             [$\mathrm{T}(p\limplies q)\limplies p$
@@ -111,7 +113,7 @@
         \begin{itemize}
             \item \alert{důkaz sporem}: v kořeni příznak F
             \item redukujeme položku tvaru \alert{$\mathrm{F}\varphi_1\limplies\varphi_2$}:
-            \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models p$
+            \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models\varphi_2$
             \item proto na větev připojíme položky \alert{$\mathrm{T}(p\limplies q)\limplies p$} a \alert{$\mathrm{F}p$}, invariant platí
             \item redukce položky \alert{$\mathrm{T}(p\limplies q)\limplies p$}: model se shoduje s \alert{$\mathrm{F}(p\limplies q)$} nebo s \alert{$\mathrm{T}p$}, \alert{rozvětvi!}
             \item redukce \alert{$\mathrm{F}(p\limplies q)$}: připoj  \alert{$\mathrm{T}p$} a \alert{$\mathrm{F}q$}
@@ -128,6 +130,8 @@
     \begin{columns}
     
         \column{0.32\textwidth}
+
+        \centering
 
         \begin{forest}
             [$\mathrm{F}(\neg q\lor p)\limplies p$
@@ -478,8 +482,8 @@
         
     \textbf{Myšlenka} \alert{systematického tabla}: na všechny se dostane, střídáme
     \begin{itemize}
-        \item \alert{přidání následujícího axiomu} na všechny bezesporné větve ($T$ je spočetná, axiomy libovolně očíslujeme)
-        \item \alert{redukce následující položky} (po úrovních, zleva doprava) na všech bezesporných větvích, které jí procházejí  
+        \item \alert{redukce následující položky} (po úrovních, zleva doprava) na všech bezesporných větvích, které jí procházejí 
+        \item \alert{přidání následujícího axiomu} na všechny bezesporné větve ($T$~je spočetná, axiomy libovolně očíslujeme)         
     \end{itemize}
 
 \end{frame}
@@ -545,17 +549,11 @@
 
 \begin{frame}{Důsledky konečnosti sporu}
     
-    \myblock{
-    \textbf{Důsledek:} Pokud neprodlužujeme už sporné větve (např. pro systematické tablo), potom sporné tablo je konečné.
-    }
-
-    \textbf{Důkaz:} 
-    Platí $\tau=\tau_n$, neboť sporné tablo už neměníme.\hfill\qedsymbol   
-    
-    \bigskip
+    Tedy: Pokud neprodlužujeme už sporné větve (např. pro systematické tablo), potom sporné tablo je konečné.
+    \medskip
 
     \myblock{
-    \textbf{Důsledek (Konečnost důkazů):} Pokud $T\proves\varphi$, potom existuje i \alert{konečný} tablo důkaz $\varphi$ z $T$.
+    \textbf{Důsledek (Konečnost důkazů):} Pokud $T\proves\varphi$, potom existuje i~\alert{konečný} tablo důkaz $\varphi$ z $T$.
     }
 
     \textbf{Důkaz:} 

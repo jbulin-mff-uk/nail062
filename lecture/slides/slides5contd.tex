@@ -1,0 +1,45 @@
+\documentclass{beamer}
+
+\input{slides-header.tex}
+
+\title{Pátá přednáška -- druhá část}
+\subtitle{NAIL062 Výroková a predikátová logika}
+\author{Jakub Bulín (KTIML MFF UK)}
+% \institute{KTIML MFF UK}
+\date{Zimní semestr 2023}
+
+
+\begin{document}
+
+
+\begin{frame}{Strom dosazení a nesplnitelnost}
+    
+    %Z konstrukce je vidět, jak postupovat v případě konečné formule. Strom dosazení ale dává smysl, a následující důsledek platí, i pro nekonečné formule:
+
+    \myblock{
+    \textbf{Důsledek:} 
+    CNF formule $S$ (ve spočetném jazyce) je nesplnitelná, právě když každá větev stromu dosazení obsahuje $\square$.
+    }
+
+    \textbf{Důkaz:} 
+        Pro konečnou formuli $S$ plyne z diskuze výše, můžeme snadno dokázat indukcí podle velikosti $\Var(S)$: 
+        \begin{itemize}
+            \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
+            \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma \ref{lemma:tree-of-reductions}.
+        \end{itemize} 
+    Je-li $S$ nekonečná a splnitelná, potom má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. Je-li nekonečná a nesplnitelná, potom podle Věty o kompaktnosti existuje konečná část $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+
+\begin{frame}{Úplnost rezoluce}
+
+\end{frame}
+
+
+\section{5.4 LI-rezoluce a Horn-SAT}
+
+
+\end{document}

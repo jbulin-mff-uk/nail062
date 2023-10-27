@@ -110,14 +110,14 @@ Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{e
     for tree={grow=north}
     [$ \square $
         [$ \{\neg r\} $
-            [{$ \{p, \neg r\} $}]
             [{$ \{\neg p, \neg r\} $}]
+            [{$ \{p, \neg r\} $}]
         ]
         [$ \{r\} $
             [{$ \{\neg p, r\} $}]
             [{$ \{p,r\} $}
+                [{$ \{q, r\} $}]
                 [{$ \{p,\neg q, r\} $}]
-                [{$ \{q, r\} $}]                
             ]
         ]
     ]
@@ -143,7 +143,7 @@ Zaveďme ještě jeden pojem, tzv. \emph{rezoluční uzávěr}, který obsahuje 
 \end{definition}
 
 \begin{example}
-    Spočtěme rezoluční uzávěr formule $S==\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
+    Spočtěme rezoluční uzávěr formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
     \begin{align*}
         \mathcal R(S)=\{&\textcolor{blue}{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}},\\&\{p,\neg q\},\{\neg q,r\},\{r,\neg r\},\{p,\neg p\},\{r,s\},\{p,r\},\{p,q\},\{r\},\{p\}\}
     \end{align*}
@@ -178,7 +178,7 @@ V důkazu úplnosti budeme potřebovat zkonstruovat rezoluční strom, jeho kons
 \begin{definition}[Dosazení literálu]
     Je-li $S$ formule a $\ell$ literál, potom \emph{dosazením} $\ell$ do $S$ myslíme formuli:
     $$
-        S^\ell=\{C\setminus\{\bar\ell\}\mid l\notin C\in S\}
+        S^\ell=\{C\setminus\{\bar\ell\}\mid \ell\notin C\in S\}
     $$    
 \end{definition}
 
@@ -553,71 +553,71 @@ A programu položíme dotaz:
     Ekvivalence prvních dvou podmínek je důkaz sporem, ekvivalence druhé a třetí je Věta o úplnosti LI-rezoluce pro Hornovy formule.
 \end{proof}
 
-\subsection{(draft) SLD-rezoluce}\todo
+% \subsection{(draft) SLD-rezoluce}\todo
 
 
-% from slides:
+% % from slides:
 
-\subsubsection*{Rezoluce v Prologu}
-\emph{1) S klauzulemi interpret pracuje jako s \myblue{uspořádanými seznamy} literálů.}
-
-
-\mdef{LD-rezoluce} (\emph{linear definite}) je $LI$-rezoluce, při které v každém kroku rezolventa aktuálního cíle \mygreen{$(\neg p_1, \dots, \neg p_{i-1},\neg p_i, \neg p_{i+1},\dots, \neg p_n)$} a boční
-klauzule \mygreen{$(p_i, \neg q_1, \dots, \neg q_m)$} je:
-$$(\neg p_1, \dots, \neg p_{i-1},\neg q_1, \dots, \neg q_m, \neg p_{i+1},\dots, \neg p_n)$$
-
-{\bf \myblue{Pozorování}}\ \ {\it Každý LI-důkaz lze transformovat na LD-důkaz stejné klauzule}
-{\it ze stejné formule se stejnou počáteční klauzulí (cílem).}
-
-\medskip
-
-\noindent \emph{2) Výběr literálu z cílové klauzule, přes který se rezolvuje, je určen daným}
-\emph{\myblue{selekčním pravidlem} $\mathcal{R}$. Typicky, ``vyber první literál z aktuálního cíle''.}
-
-\mdef{SLD-rezoluce} (\emph{selection}) dle $\mathcal{R}$ je $LD$-rezoluce, při které se v kroku $(C_i,B_i)$
-rezolvuje přes literál $\mathcal{R}(C_i)$.
-
-\medskip
-
-{\bf \myblue{Pozorování}}\ \ {\it Každý LD-důkaz lze transformovat na SLD-důkaz stejné}
-{\it klauzule ze stejné formule se stejnou počáteční klauzulí (cílem).}
-
-\medskip
-
-{\bf \myblue{Důsledek}}\ \ {\it SLD-rezoluce je \myblue{úplná} pro dotazy nad programy v Prologu.}
+% \subsubsection*{Rezoluce v Prologu}
+% \emph{1) S klauzulemi interpret pracuje jako s \myblue{uspořádanými seznamy} literálů.}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% \mdef{LD-rezoluce} (\emph{linear definite}) je $LI$-rezoluce, při které v každém kroku rezolventa aktuálního cíle \mygreen{$(\neg p_1, \dots, \neg p_{i-1},\neg p_i, \neg p_{i+1},\dots, \neg p_n)$} a boční
+% klauzule \mygreen{$(p_i, \neg q_1, \dots, \neg q_m)$} je:
+% $$(\neg p_1, \dots, \neg p_{i-1},\neg q_1, \dots, \neg q_m, \neg p_{i+1},\dots, \neg p_n)$$
 
-\subsubsection*{Prohledávací SLD-strom}
-{\it Dosud není určen výběr programové klauzule pro rezoluci s aktuálním cílem.}
+% {\bf \myblue{Pozorování}}\ \ {\it Každý LI-důkaz lze transformovat na LD-důkaz stejné klauzule}
+% {\it ze stejné formule se stejnou počáteční klauzulí (cílem).}
 
-\mdef{SLD-strom} programu $P$ a cíle $G$ pro selekční pravidlo $\mathcal{R}$ je strom s vrcholy označenými cíly takový, že kořen je označen $G$ a je-li nějaký vrchol označen $G'$, má tolik synů, kolik je \myblue{možností} rezolucí $G'$ s programovými klauzulemi v $P$ dle literálu $\mathcal{R}(G')$. Synové jsou označeni příslušnými rezolventami.
+% \medskip
 
-\smallskip
-\centerline{\includegraphics[scale=0.9]{files/rezoluceSLDstrom.pdf}}
-\smallskip
+% \noindent \emph{2) Výběr literálu z cílové klauzule, přes který se rezolvuje, je určen daným}
+% \emph{\myblue{selekčním pravidlem} $\mathcal{R}$. Typicky, ``vyber první literál z aktuálního cíle''.}
 
-%{\it Interpret Prologu prochází tímto SLD-stromem.}
+% \mdef{SLD-rezoluce} (\emph{selection}) dle $\mathcal{R}$ je $LD$-rezoluce, při které se v kroku $(C_i,B_i)$
+% rezolvuje přes literál $\mathcal{R}(C_i)$.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% \medskip
 
-\subsubsection*{Závěrečné poznámky}
+% {\bf \myblue{Pozorování}}\ \ {\it Každý LD-důkaz lze transformovat na SLD-důkaz stejné}
+% {\it klauzule ze stejné formule se stejnou počáteční klauzulí (cílem).}
 
-\begin{itemize}
-\item Interpret Prologu \myblue{prochází} SLD-strom, způsob není předepsán.
+% \medskip
 
-\item Implementace, které používají \myblue{DFS}, nezachovávají úplnost.
+% {\bf \myblue{Důsledek}}\ \ {\it SLD-rezoluce je \myblue{úplná} pro dotazy nad programy v Prologu.}
 
-\smallskip
-\centerline{\includegraphics[scale=0.9]{files/rezoluceneuplnost.pdf}}
-\smallskip
 
-\item Jistou kontrolu nad prohledáváním poskytuje !, tzv. \myblue{řez}.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
-\item Při povolení \myblue{negace} nastanou potíže se sémantikou programů.
+% \subsubsection*{Prohledávací SLD-strom}
+% {\it Dosud není určen výběr programové klauzule pro rezoluci s aktuálním cílem.}
 
-\item Síla rezoluční metody bude více patrná v predikátové logice.
-\end{itemize}
+% \mdef{SLD-strom} programu $P$ a cíle $G$ pro selekční pravidlo $\mathcal{R}$ je strom s vrcholy označenými cíly takový, že kořen je označen $G$ a je-li nějaký vrchol označen $G'$, má tolik synů, kolik je \myblue{možností} rezolucí $G'$ s programovými klauzulemi v $P$ dle literálu $\mathcal{R}(G')$. Synové jsou označeni příslušnými rezolventami.
 
-% :from slides
+% \smallskip
+% \centerline{\includegraphics[scale=0.9]{files/rezoluceSLDstrom.pdf}}
+% \smallskip
+
+% %{\it Interpret Prologu prochází tímto SLD-stromem.}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+% \subsubsection*{Závěrečné poznámky}
+
+% \begin{itemize}
+% \item Interpret Prologu \myblue{prochází} SLD-strom, způsob není předepsán.
+
+% \item Implementace, které používají \myblue{DFS}, nezachovávají úplnost.
+
+% \smallskip
+% \centerline{\includegraphics[scale=0.9]{files/rezoluceneuplnost.pdf}}
+% \smallskip
+
+% \item Jistou kontrolu nad prohledáváním poskytuje !, tzv. \myblue{řez}.
+
+% \item Při povolení \myblue{negace} nastanou potíže se sémantikou programů.
+
+% \item Síla rezoluční metody bude více patrná v predikátové logice.
+% \end{itemize}
+
+% % :from slides

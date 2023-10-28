@@ -1,38 +1,4 @@
 
-\begin{remark}\label{remark:linear-resolution}
-    $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
-\end{remark}
-Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky důkazu: základ indukce je zřejmý, a máme-li boční klauzuli $B_i$ která není axiomem z $S$, potom $B_i=C_j$ pro nějaké $j<i$ a stačí připojit místo $B_i$ rezoluční strom pro důkaz $C_j$ z $S$. Opačnou implikaci si ukážeme jen na příkladě:
-
-\begin{example} \label{example:linear-proof}
-    Zkonstruujme lineární zamítnutí formule $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (tj. lineární důkaz $\square$ z $S$). Lineární důkaz může vypadat třeba takto:
-
-    \begin{center}
-        \begin{forest}
-            for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
-            [{\square}
-                [,phantom]
-                [{\{\neg p\}}
-                    [,phantom]
-                    [{\{q\}}
-                        [,phantom]
-                        [{\textcolor{blue}{\{p\}}}
-                            [,phantom]
-                            [{\{p,q\}}]
-                            [{\{p,\neg q\}}]
-                        ]
-                        [{\{\neg p,q\}}]
-                    ]
-                    [{\{\neg p,\neg q\}}]                    
-                ]
-                [{\textcolor{red}{\{p\}}}]
-            ]
-        \end{forest}  
-    \end{center}
-    Poslední boční klauzule $\textcolor{red}{\{p\}}$ (červeně) není z $S$, ale je rovna předchozí centrální klauzuli (modře).
-\end{example}
-
-
 
 \subsection{LI-rezoluce}
 

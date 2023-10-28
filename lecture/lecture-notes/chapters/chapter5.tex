@@ -313,11 +313,6 @@ Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve fo
     \end{center}
 \end{definition}
 
-\begin{remark}\label{remark:linear-resolution}
-    $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
-\end{remark}
-Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky důkazu: základ indukce je zřejmý, a máme-li boční klauzuli $B_i$ která není axiomem z $S$, potom $B_i=C_j$ pro nějaké $j<i$ a stačí připojit místo $B_i$ rezoluční strom pro důkaz $C_j$ z $S$. Opačnou implikaci si ukážeme jen na příkladě:
-
 \begin{example} \label{example:linear-proof}
     Zkonstruujme lineární zamítnutí formule $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (tj. lineární důkaz $\square$ z $S$). Lineární důkaz může vypadat třeba takto:
 
@@ -350,9 +345,18 @@ Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky
     Převeďte lineární důkaz z Příkladu \ref{example:linear-proof} na rezoluční strom.
 \end{exercise}
 
-\begin{exercise}
-    Dokažte podrobně obě implikace v Poznámce \ref{remark:linear-resolution}.
-\end{exercise}
+\begin{remark}\label{remark:linear-resolution}
+    $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
+\end{remark}
+Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky důkazu: základ indukce je zřejmý, a máme-li boční klauzuli $B_i$ která není axiomem z $S$, potom $B_i=C_j$ pro nějaké $j<i$ a stačí připojit místo $B_i$ rezoluční strom pro důkaz $C_j$ z $S$. Všimněte si, že z toho plyne i \emph{korektnost} lineární rezoluce.
+
+Důkaz opačné implikace neuvedeme. Plyne z \emph{úplnosti} lineární rezoluce, jejíž důkaz najdete v učebnici \emph{A. Nerode, R. Shore: Logic for Applications}~\cite{nerode_logic_2012}.
+
+
+
+% \begin{exercise}
+%     Dokažte podrobně obě implikace v Poznámce \ref{remark:linear-resolution}.
+% \end{exercise}
 
 
 \subsection{LI-rezoluce}

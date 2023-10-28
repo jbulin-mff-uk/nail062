@@ -12,34 +12,60 @@
 \begin{document}
 
 
-\begin{frame}{Strom dosazení a nesplnitelnost}
-    
-    %Z konstrukce je vidět, jak postupovat v případě konečné formule. Strom dosazení ale dává smysl, a následující důsledek platí, i pro nekonečné formule:
-
-    \myblock{
-    \textbf{Důsledek:} 
-    CNF formule $S$ (ve spočetném jazyce) je nesplnitelná, právě když každá větev stromu dosazení obsahuje $\square$.
-    }
-
-    \textbf{Důkaz:} 
-        Pro konečnou formuli $S$ plyne z diskuze výše, můžeme snadno dokázat indukcí podle velikosti $\Var(S)$: 
-        \begin{itemize}
-            \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
-            \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma \ref{lemma:tree-of-reductions}.
-        \end{itemize} 
-    Je-li $S$ nekonečná a splnitelná, potom má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. Je-li nekonečná a nesplnitelná, potom podle Věty o kompaktnosti existuje konečná část $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
-    \hfill\qedsymbol
-
-\end{frame}
-
-
-
-\begin{frame}{Úplnost rezoluce}
-
-\end{frame}
 
 
 \section{5.4 LI-rezoluce a Horn-SAT}
 
+
+\begin{frame}{Lineární důkaz}
+
+    \alert{Lineární důkaz} (rezolucí) klauzule $C$ z formule $S$ je konečná posloupnost
+    $$
+    \begin{bmatrix}
+        C_0 \\
+        B_0
+    \end{bmatrix},
+    \begin{bmatrix}
+        C_1 \\
+        B_1
+    \end{bmatrix},\dots,
+    \begin{bmatrix}
+        C_n \\
+        B_n
+    \end{bmatrix},
+    C_{n+1}
+    $$
+    kde $C_i$ říkáme \alert{centrální} klauzule, $C_0$ je \alert{počáteční}, $C_{n+1}=C$ je \alert{koncová}, $B_i$ jsou \alert{boční} klauzule, a platí:
+    \begin{itemize}
+        \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
+        \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
+    \end{itemize}
+    \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$. Lineární důkaz můžeme znázornit takto:
+    \begin{center}
+        \begin{forest}
+            for tree={math content,grow=west,text height=2ex, text depth=1ex}
+            [C_{n+1}
+                [,phantom]
+                [C_n
+                    [,phantom]
+                    [\cdots\cdots\cdots
+                        [C_2
+                            [,phantom]
+                            [C_1
+                                [,phantom]
+                                [C_0]
+                                [B_0]
+                            ]
+                            [B_1]
+                        ]
+                    ]
+                    [B_{n-1}]                    
+                ]
+                [B_n]
+            ]
+        \end{forest}  
+    \end{center}
+
+\end{frame}
 
 \end{document}

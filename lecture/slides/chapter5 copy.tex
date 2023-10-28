@@ -1,43 +1,4 @@
 
-Z konstrukce je vidět, jak postupovat v případě konečné formule. Strom dosazení ale dává smysl, a následující důsledek platí, i pro nekonečné formule:
-
-
-\begin{corollary}
-    Formule $S$ (nad spočetným jazykem) je nesplnitelná, právě když každá větev stromu dosazení obsahuje prázdnou klauzuli $\square$.
-\end{corollary}
-
-\begin{proof}
-    Pro konečnou formuli $S$ plyne z diskuze výše, můžeme snadno dokázat indukcí podle velikosti $\Var(S)$: 
-    \begin{itemize}
-        \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
-        \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma \ref{lemma:tree-of-reductions}.
-    \end{itemize} 
-Je-li $S$ nekonečná a splnitelná, potom má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. Je-li nekonečná a nesplnitelná, potom podle Věty o kompaktnosti existuje konečná část $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
-\end{proof}
-
-\subsection{Úplnost rezoluce}
-
-\begin{theorem}[O úplnosti rezoluce]
-Je-li $S$ nesplnitelná, je rezolucí zamítnutelná (tj. $S\proves_R\square$).
-\end{theorem}   
-\begin{proof}
-Je-li $S$ nekonečná, má z Věty o kompaktnosti konečnou nesplnitelnou část $S'$. Rezoluční zamítnutí $S'$ je také rezolučním zamítnutím $S$. Předpokládejme tedy, že $S$ je konečná. 
-
-Důkaz provedeme indukcí podle počtu proměnných v $S$. Je-li $|\Var(S)|=0$, jediná možná nesplnitelná formule bez proměnných je $S=\{\square\}$ a máme jednokrokový důkaz $S\proves_R\square$. Jinak vyberme $p\in\Var(S)$. Podle Lemmatu \ref{lemma:tree-of-reductions} jsou $S^p$ i $S^{\bar p}$ nesplnitelné. Mají o jednu proměnnou méně, tedy podle indukčního předpokladu existují rezoluční stromy $T$ pro $S^p\proves_R\square$ a $T'$ pro $S^{\bar p}\proves_R\square$.
-
-Ukážeme, jak ze stromu $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. Analogicky vyrobíme $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. v posledním kroku rezolučního důkazu získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
-
-Zbývá ukázat konstrukci stromu $\widehat T$: množina vrcholů i uspořádání jsou stejné, změníme jen některé klauzule ve vrcholech, a to přidáním literálu $\neg p$. Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a buď je $C\in S$, nebo není, ale $C\cup\{\neg p\}\in S$. V prvním případě necháme label stejný. Ve druhém případě přidáme do $C$ \emph{a do všech klauzulí nad tímto listem} literál $\neg p$. V listech jsou nyní jen klauzule z $S$, v kořeni jsme $\square$ změnili na $\neg p$. A každý vnitřní vrchol je nadále rezolventou svých synů.
-\end{proof}
-
-\begin{exercise}
-    Důkaz Věty o úplnosti rezoluce dává návod, jak rekurzivně `vypěstovat' rezoluční zamítnutí. Rozmyslete si jak a proveďte na nějakém příkladě nesplnitelné formule.
-\end{exercise} %\todo udělat příklad?
-
-\section{LI-rezoluce a Horn-SAT}
-
-Začneme jiným pohledem na rezoluční důkaz, tzv. \emph{lineárním důkazem}.
-
 \subsection{Lineární důkaz}
 
 Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve formě tzv. \emph{lineárního důkazu}, kde v každém kroku máme jednu \emph{centrální} klauzuli, kterou rezolvujeme s \emph{boční} (`side') klauzulí, která je buď jednou z předchozích centrálních klauzulí, nebo axiomem z $S$. Rezolventa je potom novou centrální klauzulí.\footnote{Zatímco konstrukci rezolučního stromu lze snadno popsat rekurzivně, lineární důkaz lépe odpovídá procedurálnímu výpočtu. Jde jen o to, jak najít vhodnou boční klauzuli.}

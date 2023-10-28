@@ -504,4 +504,63 @@
 \end{frame}
 
 
+
+\begin{frame}{Strom dosazení a nesplnitelnost}
+    
+    \myblock{
+    \textbf{Důsledek:} 
+    CNF formule $S$ (ve spočetném jazyce, \alert{může být i nekonečná}) je nesplnitelná, právě když každá větev stromu dosazení obsahuje $\square$.
+    }
+
+    \textbf{Důkaz:} 
+        Pro \alert{konečnou} $S$ snadno dokážeme indukcí dle $|\Var(S)|$: 
+        \begin{itemize}
+            \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
+            \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma.
+        \end{itemize} 
+    Je-li $S$ \alert{nekonečná a splnitelná}, má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. 
+    
+    Je-li \alert{nekonečná a nesplnitelná}, dle Věty o kompaktnosti existuje konečná $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Úplnost rezoluce}
+
+    \myblock{
+    \textbf{Věta (O úplnosti rezoluce):} 
+    Je-li CNF formule $S$ nesplnitelná, je rezolucí zamítnutelná (tj. $S\proves_R\square$).
+    }
+
+    \textbf{Důkaz:} \alert{Je-li $S$ nekonečná}, má z kompaktnosti konečnou nesplnitelnou část, její rezoluční zamítnutí je také zamítnutí $S$. 
+    
+    \alert{Je-li $S$ konečná}, ukážeme indukcí dle počtu proměnných: Je-li $|\Var(S)|=0$, jediná možná nesplnitelná formule bez proměnných je $S=\{\square\}$, a máme jednokrokový důkaz $S\proves_R\square$. 
+    
+    Jinak vyberme $p\in\Var(S)$. Podle Lemmatu jsou $S^p$ i $S^{\bar p}$ nesplnitelné. Mají o proměnnou méně, tedy dle ind. předpokladu existují rezoluční stromy $T$ pro $S^p\proves_R\square$ a $T'$ pro $S^{\bar p}\proves_R\square$.
+
+    Ukážeme, jak z $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. Analogicky $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
+
+\end{frame}
+
+
+\begin{frame}{Dokončení důkazu}
+
+    Rezoluční strom \alert{$T$ pro $S^p\proves_R\square$} \scalebox{1.5}{$\rightsquigarrow$} \alert{$\widehat T$ pro $S\proves_R \neg p$}: 
+    
+    Vrcholy i uspořádání jsou stejné, jen do některých klauzulí ve vrcholech \alert{přidáme literál $\neg p$}. 
+    
+    Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a
+    \begin{itemize}
+        \item buď $C\in S$,
+        \item nebo $C\notin S$, ale $C\cup\{\neg p\}\in S$
+    \end{itemize}
+    
+    V prvním případě necháme label stejný. Ve druhém případě přidáme do $C$ \alert{a do všech klauzulí nad tímto listem} literál $\neg p$. 
+    
+    Listy jsou nyní klauzule z $S$, a každý vnitřní vrchol je nadále rezolventou svých synů. V kořeni jsme $\square$ změnili na $\neg p$ (ledaže každý list $T$ už byl klauzule z $S$, to ale už $T$ dává $S\proves_R\square$). \hfill\qedsymbol
+
+\end{frame}
+
+
 \end{document}

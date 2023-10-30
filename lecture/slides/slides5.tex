@@ -604,7 +604,7 @@
         \item výsledná \alert{rezolventa je novou centrální klauzulí}
     \end{itemize}
 
-    (Tento pohled lépe odpovídá procedurálnímu výpočtu, jde jen o to, jak vybírat vhodné boční klauzle.)
+    (Tento pohled lépe odpovídá procedurálnímu výpočtu, jde jen o to, jak vybírat vhodné boční klauzule.)
 
 \end{frame}
 
@@ -636,6 +636,7 @@
         \end{forest}  
     \end{center}
 
+    \myblock{
     \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
     $$
     \begin{bmatrix}
@@ -657,7 +658,8 @@
         \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
         \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
     \end{itemize}
-    \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$.     
+    \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$. 
+    }    
 
 \end{frame}
 
@@ -697,6 +699,68 @@
     
     \alert{$\Leftarrow$} Plyne z úplnosti lineární rezoluce, důkaz najdete v učebnici.
         
+\end{frame}
+
+
+\begin{frame}{LI-rezoluce}
+    
+    \begin{itemize}
+        \item \alert{lineární důkaz:} boční klauzule je \alert{axiom nebo dřívější centrální}
+        \item co když požadujeme, aby boční klauzule byly \alert{pouze axiomy?}
+        
+        $\Rightarrow$ \alert{LI-rezoluce (linear-input)}        
+            
+    \end{itemize}
+    
+    \myblock{
+    \alert{LI-důkaz} (rezolucí) klauzule $C$ z formule $S$ je lineární důkaz 
+    $$
+    \begin{bmatrix}
+        C_0 \\
+        B_0
+    \end{bmatrix},
+    \begin{bmatrix}
+        C_1 \\
+        B_1
+    \end{bmatrix},\dots,
+    \begin{bmatrix}
+        C_n \\
+        B_n
+    \end{bmatrix},
+    C
+    $$
+    ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud LI-důkaz existuje, říkáme, že je $C$ \alert{LI-dokazatelná} z $S$, a píšeme \alert{$S\proves_{LI}C$}. Pokud $S\proves_{LI}\square$, je $S$ \alert{LI-zamítnutelná}.
+    }
+
+    \begin{itemize}
+        \item LI-důkaz odpovídá rezolučnímu stromu tvaru \emph{``chlupaté cesty''}
+        \item z toho plyne korektnost
+        \item ztrácíme úplnost, ale hledání důkazů je snazší
+        \item ukážeme \alert{úplnost pro Hornovy formule}, je základem Prologu
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Hornovy formule}
+        
+    \begin{itemize}
+        \item \alert{Hornova klauzule} má nejvýše jeden pozitivní literál
+        \item \alert{Hornova formule} je množina Hornových klauzulí (i nekonečná)
+        \item \alert{Fakt} je pozitivní jednotková klauzule, např. $\{p\}$
+        \item \alert{Pravidlo} je klauzule s právě jedním pozitivním a alespoň jedním negativním literálem
+        \item Pravidlům a faktům říkáme \alert{programové klauzule}
+        \item \alert{Cíl} je neprázdná klauzule bez pozitivního literálu       
+        \item dokazujeme sporem: \alert{cíl} je negací toho, co chceme dokázat (konjunkce faktů)
+    \end{itemize}
+
+    \myblock{
+        \textbf{Pozorování:}
+        Je-li Hornova formule $S$ nesplnitelná a $\square\notin S$, potom obsahuje fakt i cíl.
+    }
+
+    \textbf{Důkaz:} Neobsahuje-li fakt, ohodnotíme všechny proměnné~0; neobsahuje-li cíl, ohodnotíme 1.\hfill\qedsymbol
+
 \end{frame}
 
 

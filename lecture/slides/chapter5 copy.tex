@@ -1,39 +1,4 @@
 
-
-\subsection{LI-rezoluce}
-
-V obecném lineárním důkazu může být každá následující boční klauzule buď axiom z $S$ nebo jedna z předchozích centrálních klauzulí. Pokud zakážeme druhou možnost, budeme-li tedy požadovat, aby všechny boční klauzule byly z $S$, dostaneme tzv. \emph{LI (linear-input)} rezoluci:
-    
-\begin{definition}[LI-důkaz]
-    \emph{LI-důkaz} (rezolucí) klauzule $C$ z formule $S$ je lineární důkaz 
-    $$
-    \begin{bmatrix}
-        C_0 \\
-        B_0
-    \end{bmatrix},
-    \begin{bmatrix}
-        C_1 \\
-        B_1
-    \end{bmatrix},\dots,
-    \begin{bmatrix}
-        C_n \\
-        B_n
-    \end{bmatrix},
-    C
-    $$
-    ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud LI-důkaz existuje, říkáme, že je $C$ \emph{LI-dokazatelná} z $S$, a píšeme $S\proves_{LI}C$. Pokud $S\proves_{LI}\square$, je $S$ \emph{LI-zamítnutelná}.
-\end{definition}
-
-\begin{remark}
-    LI-důkaz přímo dává rezoluční strom (všechny listy jsou axiomy), a to ve speciálním tvaru, kterému bychom mohli říkat `chlupatá cesta'. A naopak, z rezolučního stromu ve tvaru chlupaté cesty okamžitě získáme LI-důkaz: vrcholy na cestě jsou centrální klauzule, chlupy jsou boční klauzule.
-\end{remark}
-
-Zatímco \emph{lineární rezoluce}\footnote{Tj. dokazovací systém založený na hledání \emph{lineárních} důkazů resp. zamítnutí.} je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
-
-\subsection{Úplnost LI-rezoluce pro Hornovy formule}
-
-Jak si nyní ukážeme, LI-rezoluce je \emph{úplná pro Hornovy formule}. A jak uvidíme v následující sekci, je základem interpreterů jazyka Prolog, který s Hornovými formulemi pracuje. Nejprve připomeňme terminologii týkající se hornovskosti a také programů, a to v množinové reprezentaci:
-
 \begin{itemize}
     \item \emph{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál.
     \item \emph{Hornova formule} je (konečná, nebo i nekonečná) množina Hornových klauzulí.

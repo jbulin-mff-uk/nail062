@@ -8,6 +8,7 @@
 \section*{NAIL062 V\&P Logika: 5. cvičení}
 % po 4. přednášce
 
+% 2023: [4 z 4. cvičení], 1a, 2, 3, 5ab, 6ab, 7ab
 
 \textbf{Témata:} 
 Algoritmus DPLL. Kódování problémů do SAT. Tablo metoda ve výrokové logice. 
@@ -16,13 +17,13 @@ Algoritmus DPLL. Kódování problémů do SAT. Tablo metoda ve výrokové logic
 \medskip\begin{problem}
     Pomocí algoritmu DPLL rozhodněte, zda je následující CNF formule splnitelná.
     \begin{enumerate}
-        \item $$ (\neg p_1 \wedge \neg p_2)\land( \neg p_1 \wedge p_2)\land( p_1 \wedge \neg p_2)\land( p_2 \wedge \neg p_3)\land( p_1 \wedge p_3)$$
+        \item $$ (\neg p_1 \lor \neg p_2)\land( \neg p_1 \lor p_2)\land( p_1 \lor \neg p_2)\land( p_2 \lor \neg p_3)\land( p_1 \lor p_3)$$
         \item \begin{align*}
-            &(\neg p_1 \wedge p_3 \wedge p_4)\vee( \neg p_2 \wedge p_6 \wedge p_4)\vee( \neg p_2 \wedge \neg p_6 \wedge \neg p_3)\vee(
-                \neg p_4 \wedge \neg p_2)\vee \\ & ( p_2 \wedge \neg p_3 \wedge \neg p_1)\vee ( p_2 \wedge p_6 \wedge p_3)\vee
-                ( p_2 \wedge \neg p_6 \wedge \neg p_4)\vee
-                ( p_1 \wedge p_5)\vee \\ & ( p_1 \wedge p_6)\vee(
-                \neg p_6 \wedge p_3 \wedge \neg p_5)\vee( p_1 \wedge \neg p_3 \wedge \neg p_5)    
+            &(\neg p_1 \lor p_3 \lor p_4)\land( \neg p_2 \lor p_6 \lor p_4)\land( \neg p_2 \lor \neg p_6 \lor \neg p_3)\land(
+                \neg p_4 \lor \neg p_2)\land \\ & ( p_2 \lor \neg p_3 \lor \neg p_1)\land ( p_2 \lor p_6 \lor p_3)\land
+                ( p_2 \lor \neg p_6 \lor \neg p_4)\land
+                ( p_1 \lor p_5)\land \\ & ( p_1 \lor p_6)\land(
+                \neg p_6 \lor p_3 \lor \neg p_5)\land( p_1 \lor \neg p_3 \lor \neg p_5)    
         \end{align*}
     \end{enumerate}
 \end{problem}

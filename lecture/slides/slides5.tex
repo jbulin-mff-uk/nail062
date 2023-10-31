@@ -495,6 +495,7 @@
         \end{forest}
     \end{center}
     \vspace{-12pt}
+    % ! beamer+forest conflict: compile with care
 
     \begin{itemize}
         \item jakmile větev obsahuje $\square$, je nesplnitelná a nepokračujeme v ní
@@ -760,6 +761,234 @@
     }
 
     \textbf{Důkaz:} Neobsahuje-li fakt, ohodnotíme všechny proměnné~0; neobsahuje-li cíl, ohodnotíme 1.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Příklad použití LI-rezoluce}
+    
+    Ukážeme: \myexampleinline{
+        $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}\ \models\ p\land q$
+    } Sestrojíme LI-zamítnutí $T\cup\{G\}\proves_{LI}\square$ pro cíl $G=\{\neg p,\neg q\}$. 
+    
+    
+    V $T$ \alert{najdeme fakt}, a provedeme \alert{jednotkovou propagaci} v $T\cup\{G\}$. Opakujeme, dokud není formule prázdná:
+    \begin{itemize}
+        \item $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, $G=\{\neg p,\neg q\}$
+        \item $T^s=\{\{p,\neg r\},\{\neg q,r\},\{q\}\}$, $G^s=\{\neg p,\neg q\}$
+        \item $T^{sq}=\{\{p,\neg r\},\{r\}\}$, $G^{sq}=\{\neg p\}$
+        \item $T^{sqr}=\{\{p\}\}$, $G^{sqr}=\{\neg p\}$
+        \item $T^{sqrp}=\emptyset$, $G^{sqrp}=\square$
+    \end{itemize}
+
+    To, že vždy najdeme fakt, plyne z Pozorování pro $T\cup\{G\}$.
+
+    Nyní zpětným postupem sestrojíme rezoluční zamítnutí, podobně jako v důkazu úplnosti rezoluce.
+    
+\end{frame}
+
+
+\begin{frame}{Konstrukce zamítnutí zpětným postupem}
+
+    \begin{itemize}
+        \item $T^{sqrp},G^{sqrp}\proves_{LI}\square$:
+        \begin{center}
+            \begin{forest}
+                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+                            [{\square}]                       ]
+            \end{forest} 
+        \end{center}
+        \item $T^{sqr},G^{sqr}\proves_{LI}\square$:
+        \begin{center}
+            \begin{forest}
+                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+                            [{\square}
+                                [,phantom]
+                                [\{\alert{\neg p}\}]
+                                [{\{p\}}]                        
+                            ]
+            \end{forest} 
+        \end{center}
+        
+        \item $T^{sq},G^{sq}\proves_{LI}\square$:
+        \begin{center}
+            \begin{forest}
+                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+                        [{\square}
+                            [,phantom]
+                            [{\{\alert{\neg r}\}}
+                                [,phantom]
+                                [{\{\neg p\}}]
+                                [{\{p,\alert{\neg r}\}}]                        
+                            ]
+                            [{\{r\}}]
+                        ]
+            \end{forest} 
+        \end{center}
+        
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Konstrukce zamítnutí zpětným postupem -- pokračování}
+    
+    \begin{itemize}
+        \item $T^{s},G^{s}\proves_{LI}\square$:
+        
+        \bigskip
+
+        \begin{center}
+            \begin{forest}
+                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
+                    [{\square}
+                        [,phantom]
+                        [{\{\alert{\neg q}\}}
+                            [,phantom]
+                            [{\{\alert{\neg q},\neg r\}}
+                                [,phantom]
+                                [{\{\neg p,\alert{\neg q}\}}]
+                                [{\{p,\neg r\}}]                        
+                            ]
+                            [{\{\alert{\neg q},r\}}]
+                        ]
+                        [{\{q\}}]                    
+                    ]
+            \end{forest} 
+        \end{center}
+        
+        \item $T,G\proves_{LI}\square$
+        
+        \bigskip
+            \begin{forest}
+                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
+                [{\square}
+                    [,phantom]
+                    [{\{\alert{\neg s}\}}
+                        [,phantom]
+                        [{\{\neg q,\alert{\neg s}\}}
+                            [,phantom]
+                            [{\{\neg q,\neg r,\alert{\neg s}\}}
+                                [,phantom]
+                                [{\{\neg p,\neg q\}}]
+                                [{\{p,\neg r,\alert{\neg s}\}}]                        
+                            ]
+                            [{\{\neg q,r\}}]
+                        ]
+                        [{\{q,\alert{\neg s}\}}]                    
+                    ]
+                    [{\{s\}}]
+                ]
+            \end{forest}
+        
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Úplnost pro Hornovy formule}
+ 
+    \myblock{
+    \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):} 
+    Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
+    }
+
+    \textbf{Důkaz:} Opět lze díky Větě o kompaktnosti předpokládat, že $T$ je konečná. LI-zamítnutí sestrojíme indukcí podle počtu proměnných.
+
+    Z Pozorování víme, že $T$ obsahuje fakt $\{p\}$. Protože $T\cup\{G\}$ je nesplnitelná, je dle Lemmatu o dosazení \alert{nesplnitelná i} $(T\cup\{G\})^p$ $=$ \alert{$T^p\cup\{G^p\}$}, kde $G^p=G\setminus\{\neg p\}$.
+    
+    Všimněte si, že \alert{$T^p$ je splnitelná}. (Stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$.) 
+    
+    Zároveň má $T^p$ méně proměnných než $T$. \alert{Je-li $G^p$ cíl}, využijeme indukčního předpokladu (následující slide). Co když ale $G^p$ není cíl?       
+    
+\end{frame}
+
+
+\begin{frame}{Dokončení důkazu}
+
+    \alert{Není-li $G^p$ cíl}, nutně $G^p=\square$ a $G=\{\neg p\}$. Potom je $\square$ rezolventou $G$ a faktu $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T$. (To dává i \alert{bázi indukce}.)
+
+
+    \alert{Je-li $G^p$ cíl}, dle \alert{indukčního předpokladu} existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
+    
+    Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce):
+
+    \begin{itemize}
+        \item Přidáme literál $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (vznikly odebráním $\neg p$), a do všech vrcholů nad nimi.
+        \item Tím získáme $T\cup\{G\}\proves_{LI}\neg p$.
+        \item Na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.\hfill\qedsymbol
+    \end{itemize}
+
+\end{frame}
+
+
+
+
+
+\section{5.5 Rezoluce v Prologu}
+
+
+\begin{frame}[fragile]{Program v Prologu}
+    
+    síla Prologu vychází z \alert{unifikace} a rezoluce v predikátové logice, nyní si ale ukážeme příklad \alert{výrokového} programu:
+
+    \begin{itemize}
+        \item \alert{program} v Prologu je Hornova formule obsahující pouze \alert{programové klauzule}, tj. \alert{fakta} nebo \alert{pravidla}
+        \item \alert{dotaz} je konjunkce faktů, negace dotazu je \alert{cíl}
+    \end{itemize}
+    
+    
+        
+
+    Např.\myexampleinline{
+        program $\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, dotaz $p\land q$
+    } 
+    \begin{itemize}
+        \item klauzule $\{p,\neg r,\neg s\}$ je ekvivalentní $r\land s\limplies p$, píšeme \texttt{p:-r,s.}
+        \item výsledný program a dotaz:
+        \begin{verbatim}
+            p:-r,s.
+            r:-q.
+            q:-s.
+            s.
+            ?-p,q.    
+        \end{verbatim}
+    \end{itemize}
+    
+    Například klauzuli $\{p,\neg r,\neg s\}$, která je ekvivalentní $r\land s\limplies p$, zapíšeme v Prologu jako: \texttt{p:-r,s.}
+    \begin{verbatim}
+        p:-r,s.
+        r:-q.
+        q:-s.
+        s.    
+    \end{verbatim}
+    A programu položíme dotaz:
+    \begin{verbatim}
+        ?-p,q.    
+    \end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}{Rezoluce v Prologu}
+    
+    \myblock{
+        \textbf{Důsledek:} Mějme program $P$ a dotaz $Q=p_1\land\dots\land p_n$, a označme $G=\{\neg p_1,\dots,\neg p_n\}$ (tj. $G\sim \neg Q$). Následující podmínky jsou ekvivalentní:
+        
+        \begin{enumerate}[(i)]
+            \item $P\models Q$,
+            \item $P\cup\{G\}$ je nesplnitelná,
+            \item $P\cup\{G\}\proves_{LI}\square$, a existuje LI-zamítnutí začínající cílem $G$.
+        \end{enumerate}
+    }
+    
+    \medskip
+
+    \textbf{Důkaz:}
+    \begin{itemize}
+        \item \alert{(i)$\Leftrightarrow$(ii)} Věta o důkazu sporem
+        \item \alert{(ii)$\Leftrightarrow$(iii)} Věta o úplnosti LI-rezoluce pro Hornovy formule\hfill\qedsymbol
+    \end{itemize}
 
 \end{frame}
 

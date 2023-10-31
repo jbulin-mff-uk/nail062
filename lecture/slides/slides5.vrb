@@ -1,0 +1,39 @@
+\frametitle{Program v Prologu}
+
+    síla Prologu vychází z \alert{unifikace} a rezoluce v predikátové logice, nyní si ale ukážeme příklad \alert{výrokového} programu:
+
+    \begin{itemize}
+        \item \alert{program} v Prologu je Hornova formule obsahující pouze \alert{programové klauzule}, tj. \alert{fakta} nebo \alert{pravidla}
+        \item \alert{dotaz} je konjunkce faktů, negace dotazu je \alert{cíl}
+    \end{itemize}
+
+
+
+
+    Např.\myexampleinline{
+        program $\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, dotaz $p\land q$
+    }
+    \begin{itemize}
+        \item klauzule $\{p,\neg r,\neg s\}$ je ekvivalentní $r\land s\limplies p$, píšeme \texttt{p:-r,s.}
+        \item výsledný program a dotaz:
+        \begin{verbatim}
+            p:-r,s.
+            r:-q.
+            q:-s.
+            s.
+            ?-p,q.
+        \end{verbatim}
+    \end{itemize}
+
+    Například klauzuli $\{p,\neg r,\neg s\}$, která je ekvivalentní $r\land s\limplies p$, zapíšeme v Prologu jako: \texttt{p:-r,s.}
+    \begin{verbatim}
+        p:-r,s.
+        r:-q.
+        q:-s.
+        s.
+    \end{verbatim}
+    A programu položíme dotaz:
+    \begin{verbatim}
+        ?-p,q.
+    \end{verbatim}
+

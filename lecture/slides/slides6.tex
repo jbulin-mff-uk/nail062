@@ -790,6 +790,76 @@
 \end{frame}
 
 
+\begin{frame}{Pravdivostní hodnota formule}
+
+    \myblock{\smallskip
+    Buď $\varphi$ v jazyce $L$, $\A\in\M_L$, $e:\Var\to A$ ohodnocení proměnných. \alert{Pravdivostní hodnota} $\varphi$ v $\A$ při ohodnocení $e$, \alert{$\mathrm{PH}^\A(\varphi)[e]$}:
+    \begin{itemize}
+        \item pro atomickou formuli $R(t_1,\dots,t_n)$:
+        $$
+        \mathrm{PH}^\A(R(t_1,\dots,t_n))[e]=
+        \begin{cases}
+            1 & \text{pokud }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A\\
+            0 & \text{jinak}    
+        \end{cases}
+        $$        
+        \item pro formuli tvaru $(\neg\varphi)$:
+        $$
+        \mathrm{PH}^\A(\neg \varphi)[e]=f_\neg(\mathrm{PH}^\A(\varphi)[e])=1-\mathrm{PH}^\A(\varphi)[e]
+        $$
+        \item pro formuli tvaru $(\varphi\lbin\psi)$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$:
+        $$
+        \mathrm{PH}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{PH}^\A(\varphi)[e],\mathrm{PH}^\A(\psi)[e])
+        $$
+    \end{itemize}
+    \smallskip
+    }
+    
+\end{frame}
+
+
+\begin{frame}{Pravdivostní hodnota formule: zbytek definice a poznámky}
+    
+    \myblock{
+    \smallskip
+    \begin{itemize}
+        \item pro formuli tvaru $(Qx)\varphi$ kde $Q\in\{\forall,\exists\}$:    
+        \begin{align*}
+            \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
+            \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
+        \end{align*}
+        kde \alert{$e(x/a)$} je ohodnocení získané z $e$ změnou $e(x)$ na $a$
+    \end{itemize}
+    \smallskip
+    }
+
+    \textbf{Pozorování:} Závisí pouze na ohodnocení volných proměnných. Speciálně, pro sentenci nezávisí na ohodnocení.
+
+    \begin{itemize}
+        \item Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
+        \item speciálně, $\mathrm{PH}^\A(t_1=t_2)[e]=1$ $\Leftrightarrow$ $(t_1^\A[e],t_2^\A[e])\in {=^\A}$ (\alert{identita} na $A$), tj. $t_1^\A[e]=t_2^\A[e]$ (obě strany jsou stejný prvek $A$)
+        \item 
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Příklady}
+    
+    Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:
+    \begin{itemize}
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence)
+    \end{itemize}   
+    Ale pro strukturu $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ máme: 
+    \begin{itemize}
+        \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ 
+    \end{itemize}     
+
+\end{frame}
+
+
 
 \section{6.5 Vlastnosti teorií}
 

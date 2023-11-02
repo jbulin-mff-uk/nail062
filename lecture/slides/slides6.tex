@@ -237,13 +237,27 @@
 \begin{frame}{Příklady signatur}
 
     \begin{itemize}
-        \item \alert{$\langle E \rangle$} signatura \alert{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy)
-        \item \alert{$\langle \leq \rangle$} signatura \alert{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol (ne každá struktura v této signatuře je částečné uspořádání! k tomu musí splňovat příslušné \alert{axiomy})
-        \item \alert{$\langle +, -, 0\rangle$} signatura \alert{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol
-        \item \alert{$\langle +, -, 0,\cdot,1\rangle$} signatura \alert{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol
-        \item \alert{$\langle +, -, 0,\cdot,1,\leq\rangle$} signatura \alert{uspořádaných těles}: $\leq$ je binární relační symbol
-        \item \alert{$\langle -,\landsymb,\lorsymb,\bot,\top\rangle$} signatura \alert{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční, $\bot,\top$ jsou konstantní symboly
-        \item \alert{$\langle S,+,\cdot,0,\leq\rangle$} signatura \alert{aritmetiky}: $S$ je unární funkční symbol
+        \item \myexampleinline{
+        $\langle E \rangle$
+        } signatura \alert{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy)
+        \item \myexampleinline{
+        $\langle \leq \rangle$
+        } signatura \alert{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol (ne každá struktura v této signatuře je částečné uspořádání! k tomu musí splňovat příslušné \alert{axiomy})
+        \item \myexampleinline{
+        $\langle +, -, 0\rangle$
+        } signatura \alert{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol
+        \item \myexampleinline{
+        $\langle +, -, 0,\cdot,1\rangle$
+        } signatura \alert{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol
+        \item \myexampleinline{
+        $\langle +, -, 0,\cdot,1,\leq\rangle$
+        } signatura \alert{uspořádaných těles}: $\leq$ je binární relační symbol
+        \item \myexampleinline{
+        $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$
+        } signatura \alert{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční, $\bot,\top$ jsou konstantní symboly
+        \item \myexampleinline{
+        $\langle S,+,\cdot,0,\leq\rangle$
+        } signatura \alert{aritmetiky}: $S$ je unární funkční symbol
     \end{itemize}
     
 \end{frame}
@@ -284,7 +298,9 @@
     
     Struktury \alert{v signatuře grup} jsou například následující \alert{grupy}:
         \begin{itemize}
-            \item $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$, \alert{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$). 
+            \item \myexampleinline{
+                $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$
+            }, \alert{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$). 
             
             \smallskip
             
@@ -292,8 +308,12 @@
 
             \smallskip
 
-            \item $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$ je \alert{symetrická grupa} (grupa všech permutací) na $n$ prvcích.
-            \item $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$ je \alert{multiplikativní grupa (nenulových) racionálních čísel}. \myalertinline{(Interpretací \alert{symbolu} $0$ je \alert{číslo} $1$!)}
+            \item \myexampleinline{
+                $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$
+             } je \alert{symetrická grupa} (grupa všech permutací) na $n$ prvcích.
+            \item \myexampleinline{
+                $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$
+                } je \alert{multiplikativní grupa (nenulových) racionálních čísel}. \myalertinline{(Interpretací \alert{symbolu} $0$ je \alert{číslo} $1$!)}
         \end{itemize}
         Všechny tyto struktury \alert{splňují axiomy teorie grup}, snadno ale najdeme jiné, které axiomy nesplňují, nejsou tedy grupami.
     
@@ -304,13 +324,20 @@
 \begin{frame}{Příklady struktur 3/3}
     
     \begin{itemize}
-        \item Struktury $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ a $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$ (se standardními operacemi a uspořádáním) jsou \alert{v signatuře uspořádaných těles} (ale jen první z nich je uspořádané těleso).
-        \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, tzv. \alert{potenční algebra} nad množinou $X$, je struktura \alert{v signatuře Booleových algeber}. (\alert{Booleova algebra} je to pokud $X\neq\emptyset$.)
-        \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, kde $S(x)=x+1$, a ostatní symboly jsou interpretovány standardně, je \alert{standardní model aritmetiky}.
+        \item Struktury \myexampleinline{
+            $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$
+         }a\myexampleinline{
+            $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$
+          } (se standardními operacemi a uspořádáním) jsou \alert{v signatuře uspořádaných těles} (ale jen první z nich je uspořádané těleso).
+        \item \myexampleinline{
+            $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$
+        }, tzv. \alert{potenční algebra} nad množinou $X$, je struktura \alert{v signatuře Booleových algeber}. (\alert{Booleova algebra} je to pokud $X\neq\emptyset$.)
+        \item \myexampleinline{
+            $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$
+        }, kde $S(x)=x+1$, a ostatní symboly jsou realizovány standardně, je \alert{standardní model aritmetiky}.
     \end{itemize}
 
 \end{frame}
-
 
 
 \begin{frame}{Definice struktury}
@@ -859,6 +886,71 @@
 
 \end{frame}
 
+
+\begin{frame}{Platnost ve struktuře}
+    
+    \myblock{
+        Mějme formuli $\varphi$, strukturu $\A$ (ve stejném jazyce), a ohodnocení $e$.
+
+        \begin{itemize}
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=1$, $\varphi$ \alert{platí} v $\A$ \alert{při ohodnocení} $e$, \alert{$\A\models\varphi[e]$}
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=0$, $\varphi$ \alert{neplatí} v $\A$ \alert{při ohodnoc.} $e$, \alert{$\A\not\models\varphi[e]$} 
+            \item $\varphi$ je \alert{pravdivá} (\alert{platí}) v $\A$, \alert{$\A\models\varphi$}, pokud platí při každém ohodnocení $e:\Var\to A$
+            \item $\varphi$ je \alert{lživá} v $\A$, pokud neplatí při žádném ohodnocení (v tom případě $\A\models\neg\varphi$)                       
+        \end{itemize} 
+    }
+    
+    \begin{itemize}
+        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! (Platí to ale pro sentence.)
+        \item \alert{platnost} je klíčový pojem sémantiky a celé logiky
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Zřejmé vlastnosti platnosti ve struktuře při ohodnocení}
+
+    \begin{itemize}
+        \item $\A\models\neg\varphi[e]$ právě když $\A\not\models\varphi[e]$
+        \item $\A\models(\varphi\land\psi)[e]$ právě když $\A\models\varphi[e]$ a $\A\models\psi[e]$
+        \item $\A\models(\varphi\lor\psi)[e]$ právě když $\A\models\varphi[e]$ nebo $\A\models\psi[e]$
+        \item $\A\models(\varphi\limplies\psi)[e]$ právě když platí: jestliže $\A\models\varphi[e]$ potom $\A \models\psi[e]$
+        \item $\A\models(\varphi\liff\psi)[e]$ právě když platí: $\A\models\varphi[e]$ právě když $\A\models\psi[e]
+        $
+        \item \myalertinline{
+            $\A\models(\forall x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro každé $a\in A$
+            }
+        \item \myalertinline{
+            $\A\models(\exists x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro nějaké $a\in A$
+        }
+        \item je-li term $t$ substituovatelný za proměnnou $x$ do $\varphi$, potom:
+        \myalertamsmath{
+        $$
+        \A\models\varphi(x/t)[e]\text{ právě když }\A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e]
+        $$
+        }
+        \item je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$
+    \end{itemize}
+
+    (dokažte si snadno z definic)   
+
+\end{frame}
+
+
+\begin{frame}{Zřejmé vlastnosti platnosti ve struktuře}
+
+    \begin{itemize}
+        \item pokud $\A\models\varphi$, potom $\A\not\models\neg\varphi$; je-li $\varphi$ sentence, platí i opačná implikace
+        \item $\A\models\varphi\land\psi$ právě když $\A\models\varphi$ a $\A\models\psi$
+        \item pokud $\A\models\varphi$ nebo $\A\models\psi$, potom $\A\models\varphi\lor\psi$; je-li $\varphi$ sentence,  platí i opačná implikace.
+        \item $\A\models\varphi$ právě když $\A\models
+        (\forall x)\varphi$
+        \item speciálně, $\varphi(x_1,\dots,x_n)$ platí ve struktuře $\A$, právě když v $\A$ platí její \alert{generální uzávěr}, tj. sentence $(\forall x_1)\cdots(\forall x_n)\varphi$ 
+    \end{itemize}
+
+    (dokažte si snadno z definic) 
+
+\end{frame}
 
 
 \section{6.5 Vlastnosti teorií}

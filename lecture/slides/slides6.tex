@@ -932,7 +932,7 @@
         \item je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$
     \end{itemize}
 
-    (dokažte si snadno z definic)   
+    (dokažte si snadno z definic, najděte protipříklady)  
 
 \end{frame}
 
@@ -948,12 +948,228 @@
         \item speciálně, $\varphi(x_1,\dots,x_n)$ platí ve struktuře $\A$, právě když v $\A$ platí její \alert{generální uzávěr}, tj. sentence $(\forall x_1)\cdots(\forall x_n)\varphi$ 
     \end{itemize}
 
-    (dokažte si snadno z definic) 
+    (dokažte si snadno z definic, najděte protipříklady)
 
 \end{frame}
 
 
 \section{6.5 Vlastnosti teorií}
+
+
+\begin{frame}{Platnost v teorii}
+
+    \begin{itemize}
+        \item \alert{teorie} jazyka $L$ je množina $L$-formulí, její prvky jsou \alert{axiomy}
+        \item \alert{model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, značíme $\A\models T$
+        \item \alert{třída modelů} teorie $T$ je:
+        $$
+        \alert{\M_L(T)}=\{\A\in\M_L\mid\A\models T\}
+        $$
+    \end{itemize}
+    
+    Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom $\varphi$ je:
+    \begin{itemize}
+        \item \alert{pravdivá (platí) v $T$}, značíme \alert{$T\models\varphi$}, pokud $\A\models\varphi$ pro všechna $\A\in\M(T)$ (neboli: \myalertinline{
+            $\M(T)\subseteq\M(\varphi)$
+            })
+        \item \alert{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: \myalertinline{$\M(T)\cap\M(\varphi)=\emptyset$})
+        \item \alert{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$
+        \item je-li $T=\emptyset$ (tj. $\M(T)=\M_L$), píšeme jen \alert{$\models\varphi$}, a říkáme, že $\varphi$ \alert{je pravdivá (v logice), (logicky) platí, je tautologie}, apod.
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Další sémantické pojmy o teorii}
+    
+    \begin{itemize}
+        \item $T$ je \alert{sporná}, pokud v ní platí \alert{spor} $\bot$ (definujeme jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je lib. relační symbol)
+        \item $T$ je sporná, právě když v ní platí každá formule (ekvivalentně, nemá žádný model), jinak je \alert{bezesporná} (neplatí-li v ní spor, má-li alespoň jeden model)
+        \item \alert{důsledky} $T$ jsou \alert{sentence} pravdivé v $T$, množina všech důsledků $T$ v jazyce $L$ je
+        $$
+        \alert{\Conseq_L(T)}=\{\varphi\mid\text{$\varphi$ je sentence a }T\models \varphi\}
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kompletnost v predikátové logice}
+
+    %Připomeňme, že \alert{výroková} teorie je kompletní, je-li bezesporná a každý výrok v ní buď platí, nebo platí jeho negace. Ekvivalentně, má právě jeden model.
+
+    
+    \begin{itemize}
+        \item $T$ je \alert{kompletní}, je-li bezesporná a každá \alert{sentence} je v ní buď pravdivá, nebo lživá. \myalertinline{Pozor: neplatí, že má jediný model!}
+        \item máme-li jeden model, máme i nekonečně mnoho \alert{izomorfních} modelů (liší se jen pojmenováním prvků, definujeme později)
+        \item uvažovat jediný model \alert{až na izomorfismus} ale také \alert{nestačí}!
+    \end{itemize}
+    
+    \myblock{ 
+        Struktury $\A,\B$ (v témž jazyce) jsou \alert{elementárně ekvivalentní}, píšeme \alert{$\A\equiv\B$}, pokud v nich platí tytéž sentence.
+    }
+ 
+    \textbf{Pozorování:} Teorie je kompletní, právě když má právě jeden model \alert{až na elementární ekvivalenci}.   
+
+    Příklad: uspořádané množiny \myexampleinline{
+        $\A=\langle\mathbb Q,\leq\rangle$
+     } a \myexampleinline{
+        $\B=\langle\mathbb R,\leq\rangle$
+     }.
+     \begin{itemize}
+        \item \alert{nejsou izomorfní}, $\mathbb Q$ je spočetná a $\mathbb R$ nespočetná množina, neexistuje dokonce žádná \alert{bijekce} mezi doménami
+        \item \alert{ale $\A\equiv\B$}: indukcí dle struktury sentence $\varphi$ lze ukázat $\A\models\varphi\Leftrightarrow\B\models\varphi$; netriviální případ je $\exists$, klíčová je \alert{hustota} uspořádání $(x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)$
+     \end{itemize}     
+
+\end{frame}
+
+
+\begin{frame}{Platnost pomocí nesplnitelnosti}
+
+    Otázku platnosti v teorii lze převést na problém existence modelu:
+
+    \medskip
+
+    \myblock{
+    \textbf{Tvrzení (O nesplnitelnosti a pravdivosti):}
+        Je-li $T$ teorie a $\varphi$ \alert{sentence} (v témž jazyce), potom: $T\models\varphi$ $\Leftrightarrow$ $T\cup\{\neg\varphi\}$ nemá model.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+        Platí následující ekvivalence: 
+        \begin{itemize}
+            \item $T\cup\{\neg\varphi\}$ nemá model,
+            \item právě když $\neg\varphi$ neplatí v žádném modelu $T$,
+            \item právě když $\varphi$ platí v každém modelu $T$  ($\varphi$ je sentence!). \hfill\qedsymbol
+        \end{itemize}
+
+
+    NB: Předpoklad, že $\varphi$ je sentence, je nutný: pro $T=\{P(c)\}$ a formuli $\varphi=P(x)$ je $P(c)\not\models P(x)$ ale $\{P(c),\neg P(x)\}$ nemá model.
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Teorie grafů}
+    
+    \myexampleinline{Teorie grafů}: $L=\langle E\rangle$ s rovností, axiomy \alert{ireflexivity} a \alert{symetrie}
+    
+    \myalertmath{
+    $$
+    T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
+    $$
+    }
+
+    \textbf{Modely:} $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, tj. \alert{jednoduché} grafy, hranu $\{x,y\}$ reprezentuje dvojice $(x,y),(y,x)$
+    \begin{itemize}
+        \item Formule \myexampleinline{
+            $\neg x=y\limplies E(x,y)$
+         } platí v grafu, právě když je \alert{úplný}. Je tedy nezávislá v $T_\text{graph}$.
+        \item Formule \myexampleinline{
+            $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land$
+         } \myexampleinline{
+            $(\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$
+        } vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Teorie uspořádání}
+
+    \myexampleinline{Teorie uspořádání}: v jazyce uspořádání $L=\langle\leq\rangle$ s rovností, axiomy \alert{reflexivity}, \alert{antisymetrie}, a \alert{tranzitivity}
+    {\small
+    $$
+    T=\{ x\leq x,\ x\leq y\land y\leq x\limplies x=y,\ x\leq y\land y\leq z\limplies x\leq z\}
+    $$
+    }
+
+    \vspace{-6pt}
+
+    \textbf{Modely:} $\langle S,\leq^S\rangle$, kde $\leq^S$ je \alert{částečné uspořádání}. 
+    
+    Příklad: \myexampleinline{
+        $\A=\langle\mathbb N,\leq\rangle$
+    }, \myexampleinline{
+        $\B=\langle\mathcal P(X),\subseteq\rangle$
+     } pro $X=\{0,1,2\}$.
+    \begin{itemize}
+        \item Formule \myexampleinline{
+            $x\leq y\lor y\leq x$
+         } (\alert{linearita}) platí v $\A$, ale neplatí v $\B$: neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
+        \item Sentence \myexampleinline{
+            $(\exists x)(\forall y)(y\leq x)$
+         } (označme $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je také nezávislá v $T$.
+        \item Formule \myexampleinline{
+            $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$
+         } (označme  $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \alert{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Algebraické teorie 1/2}
+
+    \myexampleinline{Teorie grup}: $L=\langle +,-,0\rangle$ s rovností, axiomy 
+    \alert{asociativita $+$}, \alert{neutralita $0$ vůči $+$}, a \alert{$-x$ je inverzní prvek k $x$ (vůči $+$ a $0$)}
+    {\small
+    \begin{align*}
+        T_1=\{& x + (y + z) = (x + y) + z,\\
+            & 0 + x = x,\ x + 0 = 0,\\
+            & x + (-x) = 0,\ (-x) + x = 0\}\\
+    \end{align*}
+    }
+   
+    \vspace{-24pt}
+
+    \myexampleinline{Teorie komutativních grup}: navíc \alert{komutativita $+$} 
+    {\small
+    $$
+    T_2=T_1\cup\{x+y=y+x\}
+    $$
+    }
+
+    \vspace{-6pt}
+
+    \myexampleinline{Teorie okruhů}: $L=\langle +,-,0,\cdot,1\rangle$ s rovností, navíc \alert{neutralita $1$ vůči~$\cdot$}, \alert{asociativita~$\cdot$}, a \alert{(levá i pravá) distributivita $\cdot$ vůči $+$}
+    {\small
+    \begin{align*}
+        T_3=T_2\cup\{   & 1 \cdot x = x \cdot 1,\\
+        & x \cdot (y \cdot z) = (x \cdot y) \cdot z,\\
+        & x \cdot (y + z) = x \cdot y + x \cdot z,\\
+        & (x + y) \cdot z = x \cdot z + y \cdot z\}
+    \end{align*}
+    }
+\end{frame}
+    
+
+\begin{frame}{Příklady teorií: Algebraické teorie 2/2}
+    
+    \myexampleinline{Teorie komutativních okruhů}: navíc axiom \alert{komutativity $\cdot$}:
+    {\small
+    $$
+    T_4 = T_3 \cup \{x \cdot y = y \cdot x\}
+    $$
+    }
+    
+    \myexampleinline{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \alert{existence inverzního prvku k $\cdot$} a \alert{netriviality}:
+    {\small
+    $$
+    T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1),\ \neg\,0=1\}
+    $$
+    }
+
+    \myexampleinline{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \alert{kompatibility uspořádání}: 
+
+    \begin{itemize}
+        \item $x\leq y\limplies (x+z\leq y+z)$
+        \item $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$
+    \end{itemize}
+
+    Modely jsou tělesa s \alert{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi.
+
+\end{frame}
 
 
 \end{document}

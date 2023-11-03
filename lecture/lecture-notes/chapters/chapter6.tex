@@ -668,7 +668,7 @@ V této sekci se podíváme na způsoby, jak můžeme vytvářet nové struktury
 
 \subsubsection{Podstruktura}
 
-Pojem \emph{podstruktury} zobecňuje podgrupy, podprostory vektorového prostoru, a indukované podgrafy grafu: vybereme nějakou podmnožinu $B$ univerza struktury $\A$, a vytvoříme na ní strukturu $\B$ stejné signatury, která `zdědí' relace, operace, a konstanty. Abychom to mohli provést, potřebujeme, aby byla množina $B$ \emph{uzavřená} na všechny operace a obsahovala všechny konstanty.\footnote{Stejně jako ne každá množina vektorů je podprostor, k tomu musí obsahovat nulový vektor, ke každému vektoru obsahovat všechny jeho skalární násobky, a pro každou dvojici vektorů obsahovat jejich součet. Jinými slovy, jen (neprázdné) množiny uzavřené na \emph{lineární kombinace} vektorů dávají vzniknout podprostorům.}
+Pojem \emph{podstruktury} zobecňuje podgrupy, podprostory vektorového prostoru, a indukované podgrafy grafu: vybereme nějakou podmnožinu $B$ univerza struktury $\A$, a vytvoříme na ní strukturu $\B$ stejné signatury, která `zdědí' relace, funkce, a konstanty. Abychom to mohli provést, potřebujeme, aby byla množina $B$ \emph{uzavřená} na všechny funkce a obsahovala všechny konstanty.\footnote{Stejně jako ne každá množina vektorů je podprostor, k tomu musí obsahovat nulový vektor, ke každému vektoru obsahovat všechny jeho skalární násobky, a pro každou dvojici vektorů obsahovat jejich součet. Jinými slovy, jen (neprázdné) množiny uzavřené na \emph{lineární kombinace} vektorů dávají vzniknout podprostorům.}
 
 \begin{definition}[Podstruktura]
 Mějme strukturu $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ v signatuře $\langle\mathcal R,\mathcal F\rangle$. Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \emph{(indukovaná) podstruktura $\A$}, značíme $\B\subseteq\A$, jestliže
@@ -720,26 +720,26 @@ Jak je tomu s platností formulí v podstruktuře? Uveďme několik jednoduchýc
 
 \subsubsection{Generovaná podstruktura}
 
-Co dělat, máme-li podmnožinu univerza, která \emph{není} uzavřená na operace struktury? V tom případě uvážíme \emph{uzávěr} této množiny na operace.\footnote{Viz pojem \emph{lineárního obalu} množiny vektorů.}
+Co dělat, máme-li podmnožinu univerza, která \emph{není} uzavřená na funkce struktury? V tom případě uvážíme \emph{uzávěr} této množiny na funkce.\footnote{Viz pojem \emph{lineárního obalu} množiny vektorů.}
 
 \begin{definition}
     Mějme strukturu $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ a neprázdnou podmnožinu $X\subseteq A$. Označme jako $B$ nejmenší podmnožinu $A$, která obsahuje množinu $X$ a je uzavřená na všechny funkce struktury $\A$ (tj. také obsahuje všechny konstanty). Potom o podstruktuře $\A\restriction B$ říkáme, že je \emph{generovaná} množinou $X$, a značíme ji $\A\langle X\rangle$.
 \end{definition}
 
 \begin{example}
-    Uvažme struktury $\underline{\mathbb Q}=\langle Q,+,\cdot,0\rangle$, $\underline{\mathbb Z}=\langle Z,+,\cdot,0\rangle$, a $\underline{\mathbb N}=\langle N,+,\cdot,0\rangle$. Potom $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$, $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$, a $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel.
+    Uvažme struktury $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$, $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$, a $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$. Potom $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$, $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$, a $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel.
 \end{example}
 
 \begin{example}
-    Pokud $\A$ nemá žádné operace (ani konstanty), např. je-li to graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
+    Pokud $\A$ nemá žádné funkce (ani konstanty), např. je-li to graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
 \end{example}
 
 \subsubsection{Expanze a redukt}
 
-Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také nechat univerzum stejné, a přidat resp. odebrat relace, operace, a konstanty. Výsledku takové operace říkáme \emph{expanze} resp. \emph{redukt}. Všimněte si, že jde o strukturu v jiné signatuře.
+Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také nechat univerzum stejné, a přidat resp. odebrat relace, funkce, a konstanty. Výsledku takové operace říkáme \emph{expanze} resp. \emph{redukt}. Všimněte si, že jde o strukturu v jiné signatuře.
 
 \begin{definition}[Expanze a redukt]
-    Mějme jazyky $L\subseteq L'$, $L$-strukturu $\A$, a $L'$-strukturu $\A'$ na stejné doméně $A=A'$. Jestliže je interpretace každého symbolu [relačního, funkčního, konstantního] stejná [relace, funkce, konstanta] v $\A$ i v $\A'$ potom říkáme, že struktura $\A'$ je \emph{expanzí} struktury $\A$ do jazyka $L'$ (také říkáme, že je \emph{$L'$-expanzí}) a že struktura $\A$ je \emph{reduktem} struktury $\A'$ na jazyk $L$ (také říkáme, že je \emph{$L$-reduktem}).    
+    Mějme jazyky $L\subseteq L'$, $L$-strukturu $\A$, a $L'$-strukturu $\A'$ na stejné doméně $A=A'$. Jestliže je interpretace každého symbolu z $L$ [relačního, funkčního, konstantního] stejná [relace, funkce, konstanta] v $\A$ i v $\A'$ potom říkáme, že struktura $\A'$ je \emph{expanzí} struktury $\A$ do jazyka $L'$ (také říkáme, že je \emph{$L'$-expanzí}) a že struktura $\A$ je \emph{reduktem} struktury $\A'$ na jazyk $L$ (také říkáme, že je \emph{$L$-reduktem}).    
 \end{definition}
 
 \begin{example}
@@ -764,13 +764,13 @@ Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také
 \begin{proof}
     Tvrzení stačí dokázat pro jednu volnou proměnnou $x$ a jednu konstantu $c$, indukcí se snadno rozšíří na $n$ konstant.
     
-    Předpokládejme nejprve, že $\varphi$ platí v každém modelu teorie $T$. Chceme ukázat, že $\varphi(x/c)$ platí v každém modelu $\A'$ teorie $T'$. Vezměme tedy takový model $\A'$ a libovolné ohodnocení $e\colon\Var\to A$ a ukažme, že $\A'\models\varphi(x/c)[e]$.
+    Předpokládejme nejprve, že $\varphi$ platí v každém modelu teorie $T$. Chceme ukázat, že $\varphi(x/c)$ platí v každém modelu $\A'$ teorie $T'$. Vezměme tedy takový model $\A'$ a libovolné ohodnocení $e\colon\Var\to A'$ a ukažme, že $\A'\models\varphi(x/c)[e]$.
 
     Označme jako $\A$ redukt $\A'$ na jazyk $L$ (`zapomeneme' konstantu $c^{\A'}$). Všimněte si, že $\A$ je model teorie $T$ (axiomy $T$ jsou tytéž jako $T'$, neobsahují symbol $c$) tedy v něm platí $\varphi$. Protože dle předpokladu platí $\A\models\varphi[e']$ pro \emph{libovolné} ohodnocení $e'$, platí i pro ohodnocení $e(x/c^{\A'})$ ve kterém ohodnotíme proměnnou $x$ interpretací konstantního symbolu $c$ ve struktuře $\A'$, máme tedy $\A\models\varphi[e(x/c^{\A'})]$. To ale znamená, že $\A'\models\varphi(x/c)[e]$, což jsme chtěli dokázat.
     
     Naopak, předpokládejme, že $\varphi(x/c)$ platí v každém modelu teorie $T'$ a ukažme, že $\varphi$ platí v každém modelu $\A$ teorie $T$. Zvolme tedy takový model $\A$ a nějaké ohodnocení $e\colon\Var\to A$ a ukažme, že $\A\models\varphi[e]$.
 
-    Označme jako $\A'$ expanzi $\A$ do jazyka $L'$, kde konstantní symbol $c$ interpretujeme jako prvek $c^{\A'}=e(x)$. Protože dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$, platí i $\A'\models\varphi(x/c)[e]$, což ale znamená, že $\A'\models\varphi[e]$. (Neboť $e=e(x/c)$ a $\A'\models\varphi(x/c)[e(x/c)]$ platí právě když $\A'\models\varphi[e(x/c)]$.) Formule $\varphi$ ale neobsahuje $c$ (zde používáme, že $c$ je \emph{nový}), máme tedy i $\A\models\varphi[e]$.
+    Označme jako $\A'$ expanzi $\A$ do jazyka $L'$, kde konstantní symbol $c$ interpretujeme jako prvek $c^{\A'}=e(x)$. Protože dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$, platí i $\A'\models\varphi(x/c)[e]$, což ale znamená, že $\A'\models\varphi[e]$. (Neboť $e=e(x/c^{\A'})$ a $\A'\models\varphi(x/c)[e]$ platí právě když $\A'\models\varphi[e(x/c^{\A'})]$, což je $\A'\models\varphi[e]$.) Formule $\varphi$ ale neobsahuje $c$ (zde používáme, že $c$ je \emph{nový}), máme tedy i $\A\models\varphi[e]$.
 \end{proof}
 
 

@@ -27,7 +27,7 @@
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}Sekce 6.6-6.9 z Kapitoly 6
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.6-6.9 z Kapitoly 6
 
 \end{frame}
 
@@ -38,8 +38,8 @@
 \begin{frame}{Podstruktura}
 
     \begin{itemize}
-        \item \alert{podstruktura} zobecňuje podgrupu, podprostor vektorového prostoru, (indukovaný) podgraf: na podmnožině $B$ univerza vytvoříme strukturu, která \myalertinline{``zdědí'' relace, operace a konstanty}
-        \item $B$ musí být \alert{uzavřená} na všechny operace (vč. konstant)
+        \item \alert{podstruktura} zobecňuje podgrupu, podprostor vektorového prostoru, (indukovaný) podgraf: na podmnožině $B$ univerza vytvoříme strukturu, která \myalertinline{``zdědí'' relace, funkce a konstanty}
+        \item $B$ musí být \alert{uzavřená} na všechny funkce (vč. konstant)
     \end{itemize}
 
     \myblock{
@@ -48,10 +48,11 @@
     \begin{itemize}
         \item $\emptyset\neq B\subseteq A$
         \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$
-        \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$ (tj. $f^\B$ je restrikce $f^\A$ na množinu $B$, a výstupy jsou všechny z $B$)
-        \item speciálně, pro konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$.
+        \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$, tj. $f^\B$ je restrikce $f^\A$ na množinu $B$, a výstupy jsou všechny z $B$
     \end{itemize}
     }
+
+    speciálně, pro konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$
     
 
 
@@ -86,36 +87,215 @@
 \end{frame}
 
 
-\begin{frame}{Platnost v podstruktuře}
+\begin{frame}{Platnost v podstruktuře (pro otevřené formule je zachována)}
     
+    
+    
+    \myblock{
+    \textbf{Pozorování:}
+    Je-li $\B\subseteq\A$, $\varphi$ \alert{otevřená} formule, a \alert{$e\colon\Var\to B$}, potom platí: $\B\models\varphi[e]$ právě když $\A\models\varphi[e]$.
+    }
+
+    \textbf{Důkaz:}
+    Snadno indukcí dle struktury $\varphi$, pro atomickou zřejmé.\hfill\qedsymbol
+    
+    \medskip
+
+    \myblock{
+    \textbf{Důsledek:}
+    \alert{Otevřená} formule platí ve struktuře $\A$, právě když platí v každé podstruktuře $\B\subseteq\A$.
+    }
+
+    \medskip
+
+    Teorie $T$ je \alert{otevřená}, jsou-li všechny její axiomy otevřené formule.
+
+    \myblock{
+    \textbf{Důsledek:}
+    Modely otevřené teorie jsou uzavřené na podstruktury, tj. každá podstruktura modelu této teorie je také její model.
+    }
+
+    \medskip
+
+    \begin{itemize}
+        \item \myexampleinline{Teorie grafů} je otevřená. Podstruktura grafu je také graf: (indukovaný) \alert{podgraf}. Stejně podgrupy, Booleovy podalgebry.
+        \item \myexampleinline{Teorie těles} není otevřená. Později ukážeme, že ani \alert{otevřeně axiomatizovatelná} (kvantifikátoru v axiomu o existenci inverzního prvku se nezbavíme). Podstruktura tělesa $\mathbb Q$ na množině $\mathbb Z$, $\mathbb Q\restriction\mathbb Z$, není těleso. (Je to tzv. \alert{okruh}.)
+    \end{itemize}
     
 \end{frame}
 
 
-\begin{frame}{Generovaná podstruktura}
+\begin{frame}{Generovaná podstruktura (zobecníme lineární obal vektorů)}
     
+    Co když podmnožina univerza \alert{není} uzavřená? Vezmeme její \alert{uzávěr}. %(zobecňuje \alert{lineární obal} množiny vektorů).
+
+    \medskip
+
+    \myblock{
+    Mějme $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ a $\emptyset\neq X\subseteq A$. Buď $B\subseteq A$ nejmenší podmnožina, která obsahuje $X$ a je uzavřená na všechny funkce $\A$ (tj. obsahuje i všechny konstanty). Potom podstruktura $\A\restriction B$ je \alert{generovaná} $X$, značíme ji \alert{$\A\langle X\rangle$}.
+    }
+
+    \medskip
+
+    Např. pro \myexampleinline{
+        $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$
+    }, \myexampleinline{
+        $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$
+    }, \myexampleinline{
+        $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$
+    }: 
+    \begin{itemize}
+        \item $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$
+        \item $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$
+        \item $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel
+    \end{itemize}
+
+    \medskip
+    
+    Pokud $\A$ nemá žádné funkce (ani konstanty), např. graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
     
 \end{frame}
 
 
 \begin{frame}{Expanze a redukt}
+ 
+    \myblock{
+    Mějme $L\subseteq L'$,  $L$-strukturu $\A$ a $L'$-strukturu $\A'$ na stejné doméně. Je-li interpretace každého symbolu z $L$ stejná v $\A$ i v $\A'$, potom:
+    \begin{itemize}
+        \item $\A'$ je \alert{expanze} $\A$ do $L'$ (\alert{$L'$-expanze} struktury $\A$)
+        \item $\A$ je \alert{redukt} $\A'$ na $L$ (\alert{$L$-redukt} struktury $\A'$) 
+    \end{itemize} 
+    }  
+
+    \medskip
+    Například:
+    \begin{itemize}
+        \item Mějme \myexampleinline{grupu celých čísel $\langle\mathbb Z,+,-,0\rangle$}. Potom: 
+        \begin{itemize}
+            \item struktura $\langle \mathbb Z,+\rangle$ je její redukt
+            \item struktura $\langle\mathbb Z,+,-,0,\cdot,1\rangle$ (\alert{okruh} celých čísel) je její expanze
+        \end{itemize}
     
+        \item Mějme \myexampleinline{graf $\mathcal G=\langle G, E^\mathcal G\rangle$}. Potom \alert{expanze $\mathcal G$ o jména prvků} (z množiny G) je struktura $\langle G, E^G,c_v^\mathcal G\rangle_{v\in G}$ v jazyce $\langle E,c_v\rangle_{v\in G}$, kde $c_v^\mathcal G=v$ pro všechny vrcholy $v\in G$.
+    \end{itemize}
+
 \end{frame}
 
 
 \begin{frame}{Věta o konstantách}
 
+    \begin{itemize}
+        \item splnit formuli s volnou proměnnou $x$ je totéž, co splnit formuli, ve které je $x$ nahrazena \alert{novým} konstantním symbolem $c$
+        \item proč: nový symbol lze v modelu interpretovat každým prvkem
+        \item podobný trik využijeme v tablo metodě
+    \end{itemize}
 
+    \myblock{
+    \textbf{Věta (O konstantách):}
+    Mějme $L$-formuli $\varphi$ s volnými proměnnými $x_1,\dots,x_n$. Označme jako $L'$ rozšíření $L$ o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$, ale v jazyce $L'$. Potom:
+    $$
+    T\models\varphi\ \text{ právě když }\ T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
+    $$
+    \vspace{-12pt}
+    }
+
+    \textbf{Důkaz:} stačí ukázat pro jednu volnou proměnnou, rozšířit indukcí
+
+    \alert{\Large \bf $\Rightarrow$} \textbf{Víme:} $\varphi$ platí v každém modelu $T$. \textbf{Chceme:} $\varphi(x/c)$ platí v každém modelu $T'$. Mějme model $\A'\models T'$ a ohodnocení $e\colon\Var\to A'$ a ukažme, že \alert{$\A'\models\varphi(x/c)[e]$}.
+
+\end{frame}
+
+
+\begin{frame}{Pokračování důkazu}
+
+    Buď $\A$ redukt $\A'$ na $L$ (`zapomeneme' konstantu $c^{\A'}$). Všimněte si, že \alert{$\A$ je model $T$} (axiomy $T=T'$ neobsahují \alert{nový} symbol $c$). Dle předpokladu $\A\models\varphi$, tj. $\A\models\varphi[e']$ pro \alert{libovolné} ohodnocení~$e'$, speciálně pro $e(x/c^{\A'})$ kde $x$ ohodnotíme  interpretací $c$ v $\A'$.
+    
+    Máme $\A\models\varphi[e(x/c^{\A'})]$, což ale znamená $\A'\models\varphi(x/c)[e]$.
+    
+    \alert{\Large \bf $\Leftarrow$} \textbf{Víme:} $\varphi(x/c)$ platí v každém modelu $T'$. \textbf{Chceme:} $\varphi$ platí v každém modelu $T$. Zvolme $\A\models T$ a ohodnocení $e\colon\Var\to A$ a ukažme, že \alert{$\A\models\varphi[e]$}.
+
+    Buď $\A'$ expanze $\A$ do $L'$, kde $c$ interpretujeme jako $c^{\A'}=e(x)$. Dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$. Tedy $\A'\models\varphi(x/c)[e]$, což znamená \alert{$\A'\models\varphi[e]$} ($e=e(x/c^{\A'})$, z toho plyne $\A'\models\varphi(x/c)[e]\Leftrightarrow\A'\models\varphi[e(x/c^{\A'})]\Leftrightarrow\A'\models\varphi[e]$).
+    
+    Formule $\varphi$ neobsahuje $c$ (je \alert{nový}), máme tedy i $\A\models\varphi[e]$. \hfill\qedsymbol
+    
 \end{frame}
 
 
 \section{6.7 Extenze teorií}
 
 
+\begin{frame}{Extenze teorie}
+
+    
+\end{frame}
+
+
+\begin{frame}{Extenze teorie: sémantický popis}
+
+    
+\end{frame}
+
+
+\begin{frame}{Definice relačního symbolu}
+    
+
+\end{frame}
+
+
+\begin{frame}{Definice funkčního symbolu}
+    
+
+\end{frame}
+
+
+\begin{frame}{Definice konstantního symbolu}
+
+   
+
+\end{frame}
+
+
+\begin{frame}{Extenze o definice}
+
+    
+
+\end{frame}
+
+
 \section{6.8 Definovatelnost ve struktuře}
 
 
+\begin{frame}{Definovatelné množiny}
+
+    
+\end{frame}
+
+
+\begin{frame}{Definovatelnost s parametry}
+
+    
+\end{frame}
+
+
+\begin{frame}{Aplikace: databázové dotazy}
+    
+
+\end{frame}
+
+
 \section{6.9 Vztah výrokové a predikátové logiky}
+
+
+\begin{frame}{Booleovy algebry}
+
+    
+\end{frame}
+
+
+\begin{frame}{Vztah výrokové a predikátové logiky}
+   
+
+\end{frame}
 
 
 \end{document}

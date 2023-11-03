@@ -1,35 +1,4 @@
 
-\subsubsection{Algebraické teorie}
-
-
-
-
-\section{Podstruktura, expanze, redukt}
-
-V této sekci se podíváme na způsoby, jak můžeme vytvářet nové struktury z existujících.
-
-\subsubsection{Podstruktura}
-
-Pojem \emph{podstruktury} zobecňuje podgrupy, podprostory vektorového tělesa, a indukované podgrafy grafu: vybereme nějakou podmnožinu $B$ univerza struktury $\A$, a vytvoříme na ní strukturu $\B$ stejné signatury, která `zdědí' relace, operace, a konstanty. Abychom to mohli provést, potřebujeme, aby byla množina $B$ \emph{uzavřená} na všechny operace a obsahovala všechny konstanty.\footnote{Stejně jako ne každá množina vektorů je podprostor, k tomu musí obsahovat nulový vektor, ke každému vektoru obsahovat všechny jeho skalární násobky, a pro každou dvojici vektorů obsahovat jejich součet. Jinými slovy, jen (neprázdné) množiny uzavřené na \emph{lineární kombinace} vektorů dávají vzniknout podprostorům.}
-
-\begin{definition}[Podstruktura]
-Mějme strukturu $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ v signatuře $\langle\mathcal R,\mathcal F\rangle$. Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \emph{(indukovaná) podstruktura $\A$}, značíme $\B\subseteq\A$, jestliže
-\begin{itemize}
-    \item $\emptyset\neq B\subseteq A$,
-    \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$,
-    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$ (tj. funkce $f^\B$ je restrikce $f^\A$ na množinu $B$, a její výstupy jsou všechny také z $B$),
-    \item speciálně, pro každý konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$.
-\end{itemize}
-\end{definition}
-Množina $C\subseteq A$ je \emph{uzavřená} na funkci $f:A^n\to A$, pokud $f(x_1,\dots,x_n)\in C$ pro všechna $x_i\in C$. Platí:
-\begin{observation}
-    Množina $\emptyset\neq C\subseteq A$ je univerzem podstruktury struktury $\A$, právě když je $C$ uzavřená na všechny funkce struktury $\A$ (včetně konstant).
-\end{observation}
-V tom případě říkáme této podstruktuře \emph{restrikce} $\A$ na množinu $C$, a značíme ji $\A\restriction C$.
-
-\begin{example}
-    $\underline{\mathbb Z}=\langle Z,+,\cdot,0\rangle$ je podstrukturou $\underline{\mathbb Q}=\langle Q,+,\cdot,0\rangle$, můžeme psát $\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$. Struktura $\underline{\mathbb N}=\langle N,+,\cdot,0\rangle$ je podstrukturou obou těchto struktur, $\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$.
-\end{example}
 
 \subsubsection{Platnost v podstruktuře}
 

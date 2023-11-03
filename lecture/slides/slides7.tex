@@ -35,6 +35,80 @@
 \section{6.6 Podstruktura, expanze, redukt}
 
 
+\begin{frame}{Podstruktura}
+
+    \begin{itemize}
+        \item \alert{podstruktura} zobecňuje podgrupu, podprostor vektorového prostoru, (indukovaný) podgraf: na podmnožině $B$ univerza vytvoříme strukturu, která \myalertinline{``zdědí'' relace, operace a konstanty}
+        \item $B$ musí být \alert{uzavřená} na všechny operace (vč. konstant)
+    \end{itemize}
+
+    \myblock{
+    Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \alert{(indukovaná) podstruktura} struktury $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ (v též signatuře $\langle\mathcal R,\mathcal F\rangle$), značíme \alert{$\B\subseteq\A$}, jestliže:
+
+    \begin{itemize}
+        \item $\emptyset\neq B\subseteq A$
+        \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$
+        \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$ (tj. $f^\B$ je restrikce $f^\A$ na množinu $B$, a výstupy jsou všechny z $B$)
+        \item speciálně, pro konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$.
+    \end{itemize}
+    }
+    
+
+
+\end{frame}
+
+
+\begin{frame}{Restrikce na podmnožinu, příklady}
+    
+    Množina $C\subseteq A$ je \alert{uzavřená} na funkci $f:A^n\to A$, pokud $f(x_1,\dots,x_n)\in C$ pro všechna $x_i\in C$.
+
+    \medskip
+
+    \myblock{
+    \textbf{Pozorování:} Množina $\emptyset\neq C\subseteq A$ je univerzem podstruktury, právě když je uzavřená na všechny funkce struktury $\A$ (včetně konstant). V tom případě je to \alert{restrikce} $\A$ na množinu $C$, značíme \alert{$\A\restriction C$}.
+    }
+
+    \medskip
+    
+    \begin{itemize}
+        \item \myexampleinline{
+            $\underline{\mathbb Z}=\langle \mathbb Z,+,\cdot,0\rangle$
+         } je podstrukturou \myexampleinline{
+            $\underline{\mathbb Q}=\langle \mathbb Q,+,\cdot,0\rangle$
+            }, můžeme psát: \alert{$\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$}
+        \item \myexampleinline{
+            $\underline{\mathbb N}=\langle \mathbb N,+,\cdot,0\rangle$
+         } je podstrukturou obou těchto struktur, platí: \alert{$\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$}
+        \item Množina \myexampleinline{
+            $\{k\in\mathbb Z\mid k\leq 0\}$
+         } není univerzem podstruktury $\underline{\mathbb Z}$ ani~$\underline{\mathbb Q}$, není uzavřená na násobení.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Platnost v podstruktuře}
+    
+    
+\end{frame}
+
+
+\begin{frame}{Generovaná podstruktura}
+    
+    
+\end{frame}
+
+
+\begin{frame}{Expanze a redukt}
+    
+\end{frame}
+
+
+\begin{frame}{Věta o konstantách}
+
+
+\end{frame}
+
+
 \section{6.7 Extenze teorií}
 
 

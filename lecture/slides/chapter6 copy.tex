@@ -1,31 +1,5 @@
 
 
-\section{Extenze teorií}
-
-Pojem \emph{extenze} teorie definujeme stejně jako ve výrokové logice:
-
-\begin{definition}[Extenze teorie]
-    Mějme teorii $T$ v jazyce $L$.
-    \begin{itemize}
-        \item \emph{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $L'\supseteq L$ splňující $\Conseq_L(T)\subseteq\Conseq_{L'}(T')$,
-        \item je to \emph{jednoduchá extenze}, pokud $L'=L$,
-        \item je to \emph{konzervativní extenze}, pokud $\Conseq_L(T)=\Conseq_L(T')=\Conseq_{L'}(T')\cap \Fm_L$, kde $\Fm_L$ značí množinu všech formulí v jazyce $L$.
-        \item Teorie $T'$ (v jazyce $L$) je \emph{ekvivalentní} teorii $T$, pokud je $T'$ extenzí $T$ a $T$ extenzí $T'$.
-    \end{itemize}
-\end{definition}
-
-Podobně jako ve výrokové logice, pro teorie ve stejném jazyce platí následující sémantický popis těchto pojmů:
-
-\begin{observation}
-Mějme teorie $T,T'$ v jazyce $L$. Potom:
-\begin{itemize}
-    \item $T'$ je extenze $T$, právě když $\M_L(T')\subseteq\M_L(T)$.
-    \item $T'$ je ekvivalentní s $T$, právě když $\M_L(T')=\M_L(T)$.
-\end{itemize}
-\end{observation}
-
-Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Připomeňme situaci ve výrokové logice, popsanou v Pozorování \ref{observation:extensions-semantic-description-propositional}. Zformulujeme a dokážeme analogické tvrzení: Zatímco ve výrokové logice jsme přidávali hodnoty pro nové prvovýroky, resp. je zapomínali, v predikátové logice budeme expandovat resp. redukovat struktury, tj. přidávat nebo zapomínat interpretace relačních, funkčních, a konstantních symbolů. Princip tvrzení ale zůstává stejný.
-
 \begin{proposition}\label{proposition:semantic-conditions-for-extensions}
     Mějme jazyky $L\subseteq L'$, teorii $T$ v jazyce $L$, a teorii $T'$ v jazyce $L'$.
     \begin{enumerate}[(i)]

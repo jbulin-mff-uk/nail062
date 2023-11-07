@@ -876,7 +876,7 @@ Nový funkční symbol definujeme obdobným způsobem, musíme si ale být jisti
         $$
         \min(x_1,x_2)=y\ \liff\ y\leq x_1\land y\leq x_2\land (\forall z)(z\leq x_1\land z\leq x_2\limplies z\leq y)
         $$
-        Existence a jednoznačnost platí díky linearitě. Pokud bychom ale měli pouze teorii uspořádání, taková formule by nebyla dobrou definicí: v některých modelech by $\min(x_1,x_2)$ pro některé prvky neexistovalo, selhala by tedy požadovaná \emph{jednoznačnost}.
+        Existence a jednoznačnost platí díky linearitě. Pokud bychom ale měli pouze teorii uspořádání, taková formule by nebyla dobrou definicí: v některých modelech by $\min(x_1,x_2)$ pro některé prvky neexistovalo, selhala by tedy požadovaná \emph{existence}.
     \end{itemize}
 \end{example}
 
@@ -911,7 +911,7 @@ A platí také analogické tvrzení o rozvádění definic:
     $$
     kde $\psi'$ je varianta $\psi$ zaručující substituovatelnost všech termů.
 
-    Mějme model $\A$ teorie $T'$ a ohodnocení $e$. Označme $a=f^\A(t_1,\dots,t_n)[e]$. Díky existenci a jednoznačnosti platí:
+    Mějme model $\A$ teorie $T'$ a ohodnocení $e$. Označme $a=(f(t_1,\dots,t_n))^\A[e]$. Díky existenci a jednoznačnosti platí:
     $$
     \A\models\psi'(x_1/t_1,\dots,x_n/t_n,y/z)[e]\ \text{ právě když }\ e(z)=a 
     $$
@@ -925,7 +925,7 @@ Konstantní symbol je speciálním případem funkčního symbolu arity $0$. Pla
 \begin{example}
     Ukážeme si dva příklady:
     \begin{itemize}
-        \item Teorii aritmetiky můžeme rozšířit o definici konstantního symbolu $1$ formulí $\psi(y)$ tvaru $y=S(0)$, přidáme tedy axiom $1=y\ \liff\ y=S(0)$.
+        \item Libovolnou teorii v jazyce aritmetiky můžeme rozšířit o definici konstantního symbolu $1$ formulí $\psi(y)$ tvaru $y=S(0)$, přidáme tedy axiom $1=y\ \liff\ y=S(0)$.
         \item Uvažme teorii těles a nový symbol $\frac{1}{2}$, definovaný formulí $y\cdot (1+1)=1$, tj. přidáním axiomu: 
         $$
         \frac{1}{2}=y\ \liff\ y\cdot (1+1)=1
@@ -958,7 +958,7 @@ Na závěr ještě jeden příklad, na kterém si ukážeme i rozvádění defin
         -x=y\ &\liff\ x+y=0\\
         x<y\ &\liff\ x\leq y\land\neg(x=y)
     \end{align*}
-    Formule $-x<y$ (v jazyce $L'=\langle +,-,0,\leq,<\rangle)$ s rovností) je v této extenzi o definice ekvivalentní následující formuli:
+    Formule $-x<y$ (v jazyce $L'=\langle +,-,0,\leq,<\rangle$ s rovností) je v této extenzi o definice ekvivalentní následující formuli:
     $$
     (\exists z)((z\leq y\land\neg(z=y))\land x+z=0)
     $$
@@ -1039,7 +1039,7 @@ SQL dotaz ve své nejjednodušší formě (pomineme-li např. \emph{agregační 
 
 Výsledkem bude množina $\varphi^{\text{Database},\text{`T. Hanks'}} (x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ definovaná ve struktuře $\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$, kde $D=\{\text{`Atlas'},\text{`Lucerna'},\dots,\text{`M. Keaton'}\}$, s parametrem `T. Hanks' následující formulí $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ :
 $$
-(\exists y_\mathrm{title})(\exists y_\mathrm{director})(\mathrm{Program}(x_\mathrm{cinema},y_\mathrm{title},x_\mathrm{time}) \land \mathrm{Movies}(y_\mathrm{title},y_\mathrm{director},\text{`T. Hanks'}))
+(\exists y_\mathrm{title})(\exists y_\mathrm{director})(\mathrm{Program}(x_\mathrm{cinema},y_\mathrm{title},x_\mathrm{time}) \land \mathrm{Movies}(y_\mathrm{title},y_\mathrm{director},y_\mathrm{actor}))
 $$
 
 

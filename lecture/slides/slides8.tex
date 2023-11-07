@@ -36,6 +36,58 @@
 
 \section{7.1 Neformální úvod}
 
+\begin{frame}{Úvodní příklady}
+    
+    \begin{minipage}{.49\textwidth}
+        \centering
+        \scalebox{0.85}{
+        \begin{forest}
+            for tree={math content}
+            [\F(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)
+                [\textcolor{red}{\T(\exists x)\neg P(x)}
+                    [\F\neg(\forall x)P(x)
+                        [\textcolor{blue}{\T(\forall x)P(x)}
+                            [\T\neg P(c_0)
+                                [\F P(c_0)
+                                    [\textcolor{blue}{\T(\forall x)P(x)}
+                                        [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+        }
+    \end{minipage}
+    \begin{minipage}{.49\textwidth}
+        \centering
+        \scalebox{0.85}{
+        \begin{forest}
+            for tree={math content}
+            [\F\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)
+                [\T\neg(\forall x) P(x)
+                    [\textcolor{blue}{\F(\exists x)\neg P(x)}
+                        [\textcolor{red}{\F(\forall x)P(x)}
+                            [\F P(c_0)
+                                [\textcolor{blue}{\F (\exists x)\neg P(x)}
+                                    [\F\neg P(c_0)
+                                        [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+        }
+    \end{minipage}
+
+
+\end{frame}
+
 
 \section{7.2 Formální definice}
 

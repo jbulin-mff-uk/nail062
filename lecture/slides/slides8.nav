@@ -12,23 +12,25 @@
 \headcommand {\sectionentry {2}{7.1 Neform\IeC {\'a}ln\IeC {\'\i } \IeC {\'u}vod}{4}{7.1 Neform\IeC {\'a}ln\IeC {\'\i } \IeC {\'u}vod}{0}}
 \headcommand {\slideentry {2}{0}{1}{4/4}{}{0}}
 \headcommand {\beamer@framepages {4}{4}}
-\headcommand {\beamer@sectionpages {4}{4}}
-\headcommand {\beamer@subsectionpages {4}{4}}
-\headcommand {\sectionentry {3}{7.2 Form\IeC {\'a}ln\IeC {\'\i } definice}{5}{7.2 Form\IeC {\'a}ln\IeC {\'\i } definice}{0}}
-\headcommand {\slideentry {3}{0}{1}{5/5}{}{0}}
+\headcommand {\slideentry {2}{0}{2}{5/5}{}{0}}
 \headcommand {\beamer@framepages {5}{5}}
-\headcommand {\beamer@sectionpages {5}{5}}
-\headcommand {\beamer@subsectionpages {5}{5}}
-\headcommand {\sectionentry {4}{7.3 Jazyky s rovnost\IeC {\'\i }}{6}{7.3 Jazyky s rovnost\IeC {\'\i }}{0}}
-\headcommand {\slideentry {4}{0}{1}{6/6}{}{0}}
+\headcommand {\beamer@sectionpages {4}{5}}
+\headcommand {\beamer@subsectionpages {4}{5}}
+\headcommand {\sectionentry {3}{7.2 Form\IeC {\'a}ln\IeC {\'\i } definice}{6}{7.2 Form\IeC {\'a}ln\IeC {\'\i } definice}{0}}
+\headcommand {\slideentry {3}{0}{1}{6/6}{}{0}}
 \headcommand {\beamer@framepages {6}{6}}
 \headcommand {\beamer@sectionpages {6}{6}}
 \headcommand {\beamer@subsectionpages {6}{6}}
-\headcommand {\sectionentry {5}{7.4 Korektnost a \IeC {\'u}plnost}{7}{7.4 Korektnost a \IeC {\'u}plnost}{0}}
-\headcommand {\slideentry {5}{0}{1}{7/7}{}{0}}
+\headcommand {\sectionentry {4}{7.3 Jazyky s rovnost\IeC {\'\i }}{7}{7.3 Jazyky s rovnost\IeC {\'\i }}{0}}
+\headcommand {\slideentry {4}{0}{1}{7/7}{}{0}}
 \headcommand {\beamer@framepages {7}{7}}
-\headcommand {\beamer@partpages {1}{7}}
-\headcommand {\beamer@subsectionpages {7}{7}}
 \headcommand {\beamer@sectionpages {7}{7}}
-\headcommand {\beamer@documentpages {7}}
-\headcommand {\gdef \inserttotalframenumber {2}}
+\headcommand {\beamer@subsectionpages {7}{7}}
+\headcommand {\sectionentry {5}{7.4 Korektnost a \IeC {\'u}plnost}{8}{7.4 Korektnost a \IeC {\'u}plnost}{0}}
+\headcommand {\slideentry {5}{0}{1}{8/8}{}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\beamer@partpages {1}{8}}
+\headcommand {\beamer@subsectionpages {8}{8}}
+\headcommand {\beamer@sectionpages {8}{8}}
+\headcommand {\beamer@documentpages {8}}
+\headcommand {\gdef \inserttotalframenumber {3}}

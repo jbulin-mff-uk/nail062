@@ -36,11 +36,11 @@
 
 \section{7.1 Neformální úvod}
 
-\begin{frame}{Úvodní příklady}
+\begin{frame}{Úvodní příklady: dva tablo důkazy}
     
     \begin{minipage}{.49\textwidth}
         \centering
-        \scalebox{0.85}{
+        \scalebox{0.87}{
         \begin{forest}
             for tree={math content}
             [\F(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)
@@ -63,7 +63,7 @@
     \end{minipage}
     \begin{minipage}{.49\textwidth}
         \centering
-        \scalebox{0.85}{
+        \scalebox{0.87}{
         \begin{forest}
             for tree={math content}
             [\F\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)
@@ -85,11 +85,432 @@
         }
     \end{minipage}
 
+    % \begin{itemize}\footnotesize
+    %     \item $c_0$ je \alert{pomocný konstantní symbol} (přidáme do jazyka)
+    %     \item kvantifikátory: položky typu ``\textcolor{red}{svědek}'' vs. typu ``\textcolor{blue}{všichni}''
+    % \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Tablo metoda v predikátové logice}
+
+    \begin{itemize}
+        \item opět vždy předpokládáme, že jazyk $L$ je spočetný
+        (nejprve bez rovnosti, později metodu rozšíříme pro rovnost)
+        \item v položkách musí být \alert{sentence}: pravdivostní hodnota nesmí záviset na ohodnocení (ale můžeme vzít \alert{generální uzávěry})
+        \item \alert{redukce položek}: stejná atomická tabla pro logické spojky (kde $\varphi,\psi$ jsou sentence), ale čtyři nové případy \alert{pro kvantifikátory}:
+        \begin{itemize}
+            \item typ ``\textcolor{red}{svědek}'': položky tvaru \textcolor{red}{$\mathrm{T}(\exists x)\varphi(x)$} a \textcolor{red}{$\mathrm{F}(\forall x)\varphi(x)$}
+            \item typ ``\textcolor{blue}{všichni}'': položky tvaru \textcolor{blue}{$\mathrm{T}(\forall x)\varphi(x)$} a \textcolor{blue}{$\mathrm{F}(\exists x)\varphi(x)$}    
+        \end{itemize}
+        \item kvantifikátor nelze odstranit, $\varphi(x)$ by typicky nebyla sentence
+        \item místo toho za $x$ \alert{substituujeme} \alert{konstantní term} $t$: \myalertinline{
+            $\varphi(x/t)$
+        }
+        \item jaký? podle typu položky (``\textcolor{red}{svědek}'' vs. ``\textcolor{blue}{všichni}'')
+        % \begin{itemize}
+        %     \item jazyk rozšíříme o pomocné konstantní symboly
+        %     \item typ ``\textcolor{red}{svědek}'': nový pomocný konstantní symbol, reprezentuje `svědka'
+        %     \item typ ``\textcolor{blue}{všichni}'': jakýkoliv konstantní term (na bezesporné dokončené větvi musíme substituovat všechny -- )
+        % \end{itemize}
+       
+    \end{itemize}        
+
+\end{frame}
+
+
+\begin{frame}{Redukce položek s kvantifikátorem}
+
+    \begin{itemize}
+        \item jazyk $L$ rozšíříme o spočetně mnoho \alert{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$, 
+        %(ale píšeme i $c,d,\dots$)
+        označíme \alert{$L_C$}
+        \item vždy máme k dispozici \alert{nový}, dosud \alert{nepoužitý} symbol $c\in C$
+        
+        \medskip
+
+        \item \textbf{typ} ``\textcolor{red}{svědek}''\textbf{:} dosadíme \alert{nový} $c\in C$ (dosud na větvi není)
+        \begin{itemize}
+            \item pro $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$
+            \item $c$ hraje roli prvku, který položku `splňuje'
+        \end{itemize}
+
+        \medskip
+
+        \item \textbf{typ} ``\textcolor{blue}{všichni}''\textbf{:} substituujeme \alert{libovolný} konstantní $L_C$-term
+        \begin{itemize}
+            \item pro $\T(\forall x)\varphi(x)$ tedy máme $\T\varphi(x/t)$
+            \item bezesporná větev je \alert{dokončená} jen pokud \alert{dosadíme všechny $t$} (`použijeme vše, co víme')
+        \end{itemize}
+
+        \medskip
+
+        \item \textbf{konvence:} kořeny atomických tabel nekreslíme \alert{kromě položek typu} ``\textcolor{blue}{všichni}'' (po jednom dosazení ještě nejsme hotovi!)
+        
+        \medskip
+        
+        \item \textbf{typický postup:} nejprve zredukujeme položky typu ``\textcolor{red}{svědek}'', poté zjistíme, co `\alert{o svědcích říkají}' položky typu ``\textcolor{blue}{všichni}'' 
+        
+    \end{itemize}
 
 \end{frame}
 
 
 \section{7.2 Formální definice}
+
+
+\begin{frame}{Jazyk, položky, atomická tabla}
+
+    \begin{itemize}
+        \item buď $L$ \alert{spočetný} jazyk \alert{bez rovnosti}.
+        \item označme $L_C$ rozšíření $L$ o spočetně mnoho nových \alert{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$
+        \item zvolme očíslování konstantních $L_C$-termů: $\{t_i\mid i\in\mathbb N\}$
+        \item mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$
+        \item \alert{položka} je nápis $\T\varphi$ nebo $\F\varphi$, kde $\varphi$ je $L_C$-sentence
+        \item položky tvaru $\T(\exists x)\varphi(x)$ a $\F(\forall x)\varphi(x)$ jsou \alert{typu} ``\textcolor{red}{svědek}''
+        \item položky tvaru $\T(\forall x)\varphi(x)$ a $\F(\exists x)\varphi(x)$ jsou \alert{typu} ``\textcolor{blue}{všichni}'' 
+        \item \alert{atomická tabla} jsou násl. položkami označkované stromy:
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla pro kvantifikátory}
+
+    $\varphi$ je libovolná $L_C$-sentence, $x$ proměnná, $t_i$ konstantní $L_C$-term,
+    $c_i\in C$ je nový pomocný konstantní symbol (při konstrukci tabla nesměl dosud být na dané větvi)
+    
+    \begin{center}
+        \begin{tabular}{@{}c||c|c@{}}
+            & $\forall$ & $\exists$ \\ \midrule \midrule
+            True
+            &  
+            \textcolor{blue}{
+            \begin{forest}
+                [$\T(\forall x)\varphi(x)$ [$\T\varphi(x/t_i)$]]
+            \end{forest}
+            }
+            &
+            \textcolor{red}{  
+            \begin{forest}
+                [$\T(\exists x)\varphi(x)$ [$\T\varphi(x/c_i)$]]
+            \end{forest}
+            }
+            \\ \midrule
+            False 
+            &  
+            \textcolor{red}{
+            \begin{forest}
+                [$\F(\forall x)\varphi(x)$ [$\F\varphi(x/c_i)$]]
+            \end{forest}
+            }
+            &  
+            \textcolor{blue}{
+            \begin{forest}
+                [$\F(\exists x)\varphi(x)$ [$\F\varphi(x/t_i)$]]
+            \end{forest} 
+            }
+        \end{tabular}
+    \end{center}    
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla pro logické spojky}
+
+    $\varphi$ a $\psi$ jsou libovolné $L_C$-sentence
+    
+    \begin{center}
+        \scalebox{0.9}{
+        \begin{tabular}{@{}c||c|c|c|c|c@{}}
+            & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
+            True
+            &  
+            \begin{forest}
+            [$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
+            \end{forest}
+            &  
+            \begin{forest}
+            [$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
+            \end{forest}
+            & 
+            \begin{forest}
+            [$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
+            \end{forest}
+            &  
+            \begin{forest}
+            [$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            \\ \midrule
+            False 
+            & 
+            \begin{forest}
+            [$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
+            \end{forest}
+        \end{tabular}
+        }
+    \end{center}
+    
+\end{frame}
+
+
+\begin{frame}{Formální definice tabla}
+    
+    \begin{itemize}
+        \item \alert{konečné tablo z teorie $T$} je uspoř., položkami označ. strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+        \begin{itemize}
+            \item jednoprvkový strom s libovolnou položkou je tablo z teorie $T$
+            \item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme na konec větve $V$ připojit atomické tablo pro položku $P$
+            
+            \medskip
+            
+            \myalert{je-li $P$ typu ``\textcolor{red}{svědek}'', můžeme použít jen $c_i\in C$, který dosud na $V$ není (pro typ ``\textcolor{blue}{všichni}'' lze použít lib. konst. $L_C$-term $t_i$)
+            }
+
+            \medskip
+            
+            \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom $\alpha\in T$
+        \end{itemize}
+        \item \alert{tablo z teorie $T$} je buď konečné, nebo i nekonečné: v tom případě je spočetné a definujeme ho jako $\tau=\bigcup_{i\geq 0}\tau_i$, kde:
+        \begin{itemize}
+            \item $\tau_i$ jsou konečná tabla z $T$
+            \item $\tau_0$ je jednoprvkové tablo
+            \item $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku
+        \end{itemize}
+        \item \alert{tablo pro položku $P$} je tablo, které má položku $P$ v kořeni
+    \end{itemize}
+   
+    \textbf{konvence:} kořen atom. tabla nezapisujeme \myalertinline{není-li $P$ typu ``\textcolor{blue}{všichni}''} 
+
+\end{frame}
+
+
+\begin{frame}{Dokončené a sporné tablo}
+
+    \begin{itemize}
+        \item Tablo je \alert{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \alert{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějakou \myalertinline{sentenci} $\psi$, jinak je \alert{bezesporná}.
+        \item Tablo je \alert{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \alert{dokončená}, pokud je sporná, nebo
+        \begin{itemize}
+            \item každá její položka je na této větvi \alert{redukovaná},
+            \item a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \alert{redukovaná} na větvi $V$ procházející $P$, pokud 
+        \begin{itemize}
+            \item je tvaru $\mathrm{T}\psi$ resp. $\mathrm{F}\psi$ pro \myalertinline{atomickou sentenci}, nebo
+            \item \myalertinline{není typu ``\textcolor{blue}{všichni}'' a} vyskytuje se na $V$ jako kořen atomického tabla (tj., typicky, již došlo k jejímu rozvoji na $V$)\myalertinline{, nebo}
+        \end{itemize}
+        \myalert{
+        \begin{itemize}
+            \item je typu ``\textcolor{blue}{všichni}'' a všechny její \alert{výskyty} na větvi $V$ jsou na $V$ \alert{redukované}.
+        \end{itemize}
+        }
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kdy je výskyt položky typu ``všichni'' redukovaný?}
+    Výskyt položky $P$ typu ``\textcolor{blue}{všichni}'' na $V$ je \alert{$i$-tý}, má-li právě $i-1$ předků označených $P$, a \alert{$i$-tý výskyt je redukovaný} na $V$, pokud
+    \begin{itemize}
+        \item $P$ má $(i+1)$-ní výskyt na $V$, a zároveň
+        \item na $V$ je položka \alert{$\T\varphi(x/t_i)$} (je-li $P=\T(\forall x)\varphi(x)$) resp. \alert{$\F\varphi(x/t_i)$} (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term (tj., typicky, už jsme za $x$ substituovali $t_i$)
+    \end{itemize} 
+
+
+    \textbf{NB:} je-li položka typu ``\textcolor{blue}{všichni}'' na $V$ redukovaná, má na $V$ nekonečně výskytů, a dosadili jsme všechny konstantní $L_C$-termy
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz a tablo zamítnutí}
+
+    \begin{itemize}
+        \item \alert{tablo důkaz} \myalertinline{sentence} $\varphi$ z teorie $T$ je \alert{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni
+        \item pokud existuje, je $\varphi$ \alert{(tablo) dokazatelný} z $T$, píšeme \alert{$T\proves\varphi$}
+        \item podobně, \alert{tablo zamítnutí} je sporné tablo s $\mathrm{T}\varphi$ v kořeni
+        \item existuje-li, je $\varphi$ \alert{(tablo) zamítnutelný} z $T$, tj. platí \alert{$T\proves\neg\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo důkaz (v logice)}
+
+    \centering
+    \scalebox{0.64}{
+        \begin{forest}
+            for tree={math content}
+            [\F(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))
+                [\textcolor{blue}{\T(\forall x)(P(x) \limplies Q(x))}
+                    [\F(\forall x)P(x) \limplies (\forall x)Q(x)
+                        [\textcolor{blue}{\T(\forall x)P(x)}
+                            [\textcolor{red}{\F(\forall x)Q(x)}
+                                [\F Q(c_0)
+                                    [\textcolor{blue}{\T(\forall x)P(x)}
+                                        [\T P(c_0)
+                                            [\textcolor{blue}{\T(\forall x)(P(x) \limplies Q(x))}
+                                                [\T P(c_0)\limplies Q(c_0)
+                                                    [\F P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                    [\T Q(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]            
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+    }
+
+\end{frame}
+
+
+\begin{frame}{Ještě příklad ($\varphi,\psi$ jsou formule s jedinou volnou proměnnou $x$)}
+
+    \centering
+    \scalebox{0.73}{
+        \centering
+        \begin{forest}
+        for tree={math content}
+        [\F(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))
+            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                [\F(\forall x)\varphi (x) \land (\forall x)\psi(x)
+                    [\textcolor{red}{\F(\forall x)\varphi (x)}
+                        [\F\varphi(c_0)
+                            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                                [\T\varphi(c_0) \land \psi(c_0)
+                                    [\T\varphi(c_0)
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                    [\textcolor{red}{\F(\forall x)\psi(x)}
+                        [\F\psi(c_0)
+                            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                                [\T\varphi(c_0) \land \psi(c_0)
+                                    [\T\varphi(c_0)
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            [\textcolor{red}{\F(\forall x)(\varphi(x) \land \psi(x))}
+                [\T(\forall x)\varphi (x) \land (\forall x)\psi(x)
+                    [\textcolor{blue}{\T(\forall x)\varphi (x)}
+                        [\textcolor{blue}{\T(\forall x)\psi(x)}
+                            [\F(\varphi(c_0) \land \psi(c_0))
+                                [\F\varphi(c_0)
+                                    [\textcolor{blue}{\T(\forall x)\varphi (x)}
+                                        [\T\varphi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                                [\F\psi(c_0)
+                                    [\textcolor{blue}{\T(\forall x)\psi (x)}
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        ]
+        \end{forest}
+    }
+
+    \vspace{-4pt}
+    \footnotesize
+    ($c_0$ lze použít jako \alert{nový} ve všech případech: \alert{na dané větvi} se dosud nevyskytuje)
+
+\end{frame}
+
+
+\begin{frame}{Systematické tablo}
+
+    \vspace{-6pt}
+    musí někdy zredukovat každou položku, použít každý axiom, a nově ve všech položkách typu ``\textcolor{blue}{všichni}'' \alert{dosadit každý $L_C$ term $t_i$ }
+
+    \myblock{
+    \alert{Systematické tablo} z $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$ pro položku $R $ je $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové s položkou $R$, a pro $i\geq 0$:
+
+    \begin{itemize}
+        \item buď $P$ nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$ \myalertinline{(resp. je-li typu ``\textcolor{blue}{všichni}'', její \alert{výskyt} není redukovaný)}
+        \item nejprve definujeme $\tau_i'$ vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející~$P$, kde
+        
+        \smallskip
+        
+        \myalert{
+        je-li $P$ typu ``\textcolor{blue}{všichni}'' a má-li ve vrcholu $k$-tý výskyt, dosadíme $k$-tý $L_C$-term $t_k$,
+        je-li typu ``\textcolor{red}{svědek}'', substituujeme $c_i\in C$ s nejmenším $i$, které na větvi zatím není
+        }
+
+        \item pokud taková položka $P$ neexistuje, potom $\tau_i'=\tau_i$
+        \item $\tau_{i+1}$ vznikne z $\tau_i'$ připojením $\mathrm{T}\alpha_{i+1}$ na vš. bezesporné větve (pokud už jsme použili všechny axiomy, definujeme $\tau_{i+1}=\tau_i'$)
+    \end{itemize} 
+    }
+
+\end{frame}
+
+
+\begin{frame}{Konečnost a systematičnost důkazů}
+
+    \myblock{
+        \textbf{Lemma:} Systematické tablo je dokončené.
+    }
+
+    \textbf{Důkaz:} $k$-tý výskyt položky typu ``\textcolor{blue}{všichni}'' redukujeme když na něj narazíme: připojíme $(k+1)$-ní výskyt a dosadíme $k$-tý $L_C$-term $t_k$. Zbytek důkazu jako ve výrokové logice.\hfill\qedsymbol
+
+    \bigskip
+
+    Neprodlužujeme-li sporné větve (což nemusíme), je sporné tablo vždy konečné. Důkaz stejný jako ve výrokové logice:
+
+    \myblock{
+        \textbf{Důsledek (Konečnost důkazů):}
+    Pokud $T\proves\varphi$, potom existuje i konečný tablo důkaz $\varphi$ z $T$.
+    }
+
+    \bigskip
+
+    Stejně jako ve výrokové logice z důkazu plyne:
+
+    \myblock{
+        \textbf{Důsledek (Systematičnost důkazů):}
+        Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+    }
+    
+\end{frame}
 
 
 \section{7.3 Jazyky s rovností}

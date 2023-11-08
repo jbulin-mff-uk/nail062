@@ -74,7 +74,7 @@ Kvantifikátor nemůžeme pouze odstranit, neboť výsledná formule $\varphi(x)
 Jazyk $L$ teorie $T$, ve které dokazujeme, rozšíříme o spočetně mnoho \emph{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$ (ale budeme psát i $c,d,\dots$), výsledný rozšířený jazyk označíme $L_C$. Konstantní termy v jazyce $L_C$ tedy existují, i pokud původní jazyk $L$ nemá žádné konstanty. A vždy při konstrukci tabla máme k dispozici nějaký \emph{nový}, dosud \emph{nepoužitý} (ani v teorii, ani v konstruovaném tablu) pomocný konstantní symbol $c\in C$.
 
 \subsubsection{Svědci}
-Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Zde používáme větu o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
+Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Srovnej s Větou o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
 
 Na Obrázku \ref{figure:predicate-tableau-intro-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
 
@@ -227,7 +227,8 @@ Definice v této části jsou téměř identické odpovídajícím definicím z 
          
         \item Položka $P$ je \emph{redukovaná} na větvi $V$ procházející touto položkou, pokud 
         \begin{itemize}
-            \item není typu `všichni' a při konstrukci tabla již došlo k jejímu rozvoji na $V$, tj. vyskytuje se na $V$ jako kořen atomického tabla.\footnote{Byť podle konvence tento kořen nezapisujeme.}
+            \item je tvaru $\mathrm{T}\psi$ resp. $\mathrm{F}\psi$ pro \emph{atomickou sentenci} $\psi$ (tj. $R(t_1,\dots,t_n)$, kde $t_i$ jsou \emph{konstantní} $L_C$-termy), nebo
+            \item není typu `všichni' a vyskytuje se na $V$ jako kořen atomického tabla\footnote{Byť podle konvence tento kořen nezapisujeme.} (tj., typicky, při konstrukci tabla již došlo k jejímu rozvoji na $V$), nebo
             \item je typu `všichni' a všechny její \emph{výskyty} na $V$ jsou na větvi $V$ \emph{redukované}.
         \end{itemize}
         \item Výskyt položky $P$ typu `všichni' na větvi $V$ je \emph{$i$-tý}, pokud má na $V$ právě $i-1$ předků označených touto položkou, a $i$-tý výskyt je \emph{redukovaný} na $V$, pokud
@@ -288,8 +289,8 @@ for tree={math content}
                 [\textcolor{red}{\F\varphi(c_0)}
                     [\T(\forall x)(\varphi(x) \land \psi(x))
                         [\T\varphi(c_0) \land \psi(c_0)
-                            [\textcolor{red}{\T(\varphi(c_0)}
-                                [\T(\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            [\textcolor{red}{\T\varphi(c_0)}
+                                [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                             ]
                         ]
                     ]
@@ -299,8 +300,8 @@ for tree={math content}
                 [\textcolor{red}{\F\psi(c_0)}
                     [\T(\forall x)(\varphi(x) \land \psi(x))
                         [\T\varphi(c_0) \land \psi(c_0)
-                            [\T(\varphi(c_0)
-                                [\textcolor{red}{\T(\psi(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                            [\T\varphi(c_0)
+                                [\textcolor{red}{\T\psi(c_0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                             ]
                         ]
                     ]

@@ -1,29 +1,4 @@
 
-\section{Korektnost a úplnost}
-
-V této sekci dokážeme, že tablo metoda je i v predikátové logice korektní a úplná. Důkazy obou vět mají stejnou strukturu jako ve výrokové logice, liší se jen v implementačních detailech.
-
-\subsection{Věta o korektnosti}
-
-Model (struktura) $\A$ se \alert{shoduje} s položkou $P$, pokud
-$P=\mathrm{T}\varphi$ a $\A\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $\A\not\models\varphi$. Dále $\A$ se shoduje s větví $V$, pokud se shoduje s každou položkou na této větvi.
-
-Ukážeme nejprve pomocné lemma analogické Lemmatu \ref{lemma:agrees-with-branch}:
-\begin{lemma}\label{lemma:agrees-with-branch-predicate}
-    Shoduje-li se model $\A$ teorie $T$ s položkou v kořeni tabla z teorie $T$ (v jazyce $L$), potom lze $\A$ expandovat do jazyka $L_C$ tak, že se shoduje s některou větví v tablu.
-\end{lemma}
-Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytující se na větvi $V$. Ostatní konstantní symboly lze interpretovat libovolně.
-
-\begin{proof}
-    Mějme tablo $\tau=\bigcup_{i\geq 0}\tau_i$ z teorie $T$ a model $\A\in\M_L(T)$ shodující se s kořenem $\tau$, tedy s (jednoprvkovou) větví $V_0$ v (jednoprvkovém) $\tau_0$.
-    
-    Indukcí podle $i$ najdeme posloupnost větví $V_i$ a expanzí $\A_i$ modelu $\A$ o konstanty $c^\A\in C$ vyskytující se na $V_i$ takových, že $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $\A_i$, $V_{i+1}$ je prodloužením $V_i$, a $\A_{i+1}$ je expanzí $\A_i$ (mohou si být i rovny). Požadovaná větev tabla $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$. Expanzi modelu $\A$ do jazyka $L_C$ získáme jako `limitu' expanzí $\A_i$, tj. vyskytuje-li se symbol $c\in C$ na $V$, vyskytuje se na nějaké z větví $V_i$ a interpretujeme ho stejně jako v $\A_i$ (ostatní pomocné symboly interpretujeme libovolně).
-    \begin{itemize}
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení větve $V_i$, definujeme $V_{i+1}=V_i$ a $\A_{i+1}=\A_{i}$.
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ připojením položky $\mathrm{T}\alpha$ (pro nějaký axiom $\alpha\in T$) na konec větve  $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev a $\A_{i+1}=\A_i$ (nepřidali jsme žádný nový pomocný konstantní symbol). Protože $\A_{i+1}$ je modelem $T$, platí v něm axiom $\alpha$, tedy shoduje se i s novou položkou $\mathrm{T}\alpha$.
-        \item Nechť $\tau_{i+1}$ vzniklo z $\tau_i$ připojením atomického tabla pro nějakou položku $P$ na konec větve $V_i$. Protože se model $\A_i$ shoduje s položkou $P$ (která leží na větvi $V_i$), shoduje se i s kořenem připojeného atomického tabla.
-        \begin{itemize}
-            \item Pokud jsme připojili atomické tablo pro logickou spojku, položíme $\A_{i+1}=\A_i$ (nepřidali jsme nový pomocný symbol). Protože $\A_{i+1}$ se shoduje s kořenem atomického tabla, shoduje se i s některou z jeho větví (stejně jako ve výrokové logice); definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev.
             \item Je-li položka $P$ typu `svědek': Pokud je $P=\T(\exists x)\varphi(x)$, potom $\A_i\models(\exists x)\varphi(x)$, tedy existuje $a\in A$ takové, že $\A_i\models\varphi(x)[e(x/a)]$. Větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o nově přidanou položku $\T\varphi(x/c)$ a model $\A_{i+1}$ jako expanzi $\A_i$ o konstantu $c^A=a$. Případ $P=\F(\forall x)\varphi(x)$ je obdobný.
             \item Je-li položka $P$ typu `všichni', větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o atomické tablo. Nově přidaná položka je $\T\varphi(x/t)$ nebo $\F\varphi(x/t)$ pro nějaký $L_C$-term $t$. Předpokládejme, že jde o první z těchto dvou možností, pro druhou je důkaz analogický. 
             Model $\A_{i+1}$ definujeme jako \alert{libovolnou} expanzi $\A_i$ o nové konstanty vyskytující se v $t$.    

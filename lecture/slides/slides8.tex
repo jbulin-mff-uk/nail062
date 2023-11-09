@@ -534,7 +534,6 @@
     
     Poté vezmeme \alert{faktorstrukturu} $\B=\A/_{=^\A}$, v ní už je $=^\B$ \alert{identita}.
 
-
 \end{frame}
 
 
@@ -590,22 +589,12 @@
         \item axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruence
     \end{itemize}
 
-        V tablo metodě pro jazyk s rovností implicitně přidáme axiomy rovnosti (přesněji jejich generální uzávěry, potřebujeme sentence).
-
-     
-    
-    
-
-   
-    
-    
+    V tablo metodě pro jazyk s rovností implicitně přidáme axiomy rovnosti (přesněji jejich generální uzávěry, potřebujeme sentence).
 
 \end{frame}
 
 
 \begin{frame}{Tablo důkaz s rovností}
-
-    
 
     Je-li $T$ teorie v jazyce $L$ s rovností, označme jako $T^*$ rozšíření $T$ o generální uzávěry axiomů rovnosti pro $L$. 
     
@@ -614,15 +603,12 @@
         \item podobně pro tablo zamítnutí, a obecně jakékoliv tablo z $T$
     \end{itemize}
  
-
     \textbf{Pozorování:}
     \begin{itemize}
         \item Je-li $\A\models T^*$, potom i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita.
         \item Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
     \end{itemize}
-    
-    
-    
+     
     (Použijeme při konstrukci \alert{kanonického modelu} v důkazu úplnosti.)
 
 \end{frame}
@@ -631,6 +617,157 @@
 
 \section{7.4 Korektnost a úplnost}
 
+
+\begin{frame}{Korektnost a úplnost}
+    
+    Stejně jako ve výrokové logice:
+    
+    \begin{center}
+        \alert{dokazatelnost} je totéž, co \alert{platnost}    
+    \end{center}
+    
+
+    \begin{itemize}
+        \item \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$} \hspace{0.5cm} (korektnost) \hfill {\it``co jsme dokázali, platí''}
+        \item\alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}  \hspace{0.5cm} (úplnost) \hfill {\it ``co platí, lze dokázat''}
+    \end{itemize} 
+
+    \bigskip
+
+    (Důkazy mají stejnou strukturu, liší se jen v implementačních detailech pomocných lemmat.)
+ 
+\end{frame}
+
+
+\begin{frame}{Korektnost: pomocné lemma}
+
+    \vspace{-6pt}
+    Model $\A$ se \alert{shoduje} \alert{s položkou $P$}, pokud
+    $P=\mathrm{T}\varphi$ a $\A\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $\A\not\models\varphi$, a \alert{s větví $V$}, shoduje-li s každou položkou na $V$.
+    
+    \smallskip
+
+    \myblock{
+    \textbf{Lemma:}
+        Shoduje-li se model $\A$ teorie $T$ (v jazyce $L$) s položkou v kořeni tabla z $T$, potom \myalertinline{lze $\A$ expandovat do jazyka $L_C$} (interpretovat symboly $c_i\in C$) tak, že se shoduje s některou větví v tablu.
+    }
+    
+    {\small NB: Stačí interpret. symboly $c_i$ vyskytující se na větvi, ostatní libovolně.}
+   
+    \textbf{Důkaz:}
+    Indukcí podle konstrukce $\tau=\bigcup_{i\geq 0}\tau_i$ najdeme  posloupnost větví $V_0\subseteq V_1\subseteq\dots$ a expanzí $\A_i$ o konstanty na $V_i$ tak, že:
+     \begin{itemize}
+        \item $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $\A_i$
+        \item $V_{i+1}$ je prodloužením $V_i$ a $\A_{i+1}$ je expanzí $\A_i$
+     \end{itemize}
+    Hledaná větev v $\tau$ je $V=\bigcup_{i\geq 0}V_i$, $L_C$-expanze $\A$ je `limita' $\A_i$: vyskytuje-li se $c\in C$ na $V_i$, interpretuj jako v $\A_i$, jinak libovolně.
+
+    \alert{Báze:} $\A_0=\A$ se shoduje s kořenem, tj. s (jednoprvkovou) $V_0$ v $\tau_0$.
+
+\end{frame}
+
+
+\begin{frame}{Pokračování důkazu pomocného lemmatu}
+
+    \vspace{-6pt}
+    \alert{Indukční krok:} Pokud jsme neprodloužili $V_i$: $V_{i+1}=V_i$, $\A_{i+1}=\A_i$.
+
+    \vspace{-3pt}
+
+    Pokud jsme připojili $\mathrm{T}\alpha$ (pro $\alpha\in T$) na konec $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev, $\A_{i+1}=\A_i$ (nepřidali jsme nový symbol). Protože $\A\models T$, máme i $\A_{i+1}\models\alpha$, tedy se shoduje.
+  
+    Nechť $\tau_{i+1}$ vzniklo připojením atomického tabla pro $P$ na konec $V_i$.
+
+    \vspace{-3pt}
+    
+    \begin{itemize}
+        \item \textbf{logická spojka:} $\A_{i+1}=\A_i$ se shoduje s kořenem atomického tabla, tedy i s některou větví, o tu prodloužíme $V_i$ na $V_{i+1}$
+        
+        \medskip
+
+        \item \textbf{typ ``}\textcolor{red}{svědek}\textbf{'':} SÚNO $P=\T(\exists x)\varphi(x)$: $\A_i\models(\exists x)\varphi(x)$, tedy \myalertinline{existuje $a\in A$, že $\A_i\models\varphi(x)[e(x/a)]$}. $V_{i+1}$ je prodloužení $V_i$ o nově přidanou $\T\varphi(x/c)$, $\A_{i+1}$ expanze $\A_i$ o \myalertinline{konst. $c^A=a$}
+        
+        \medskip
+
+        \item \textbf{typ ``}\textcolor{blue}{všichni}\textbf{'':} $V_{i+1}$ je prodloužení $V_i$ o atomické tablo. SÚNO nová položka $\T\varphi(x/t)$ pro nějaký $L_C$-term $t$. 
+        Model $\A_{i+1}$ je \myalertinline{libovolná expanze} $\A_i$ o nové symboly z $t$.    
+        $\A_i\models(\forall x)\varphi(x)$ $\Rightarrow$ $\A_{i+1}\models(\forall x)\varphi(x)$ $\Rightarrow$ \myalertinline{
+            $\A_{i+1}\models\varphi(x/t)$
+        }, tedy se shoduje. \hfill\qedsymbol
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Věta o korektnosti [tablo metody ve predikátové logice]}
+
+    \myblock{
+    \textbf{Věta (O korektnosti):}
+    Je-li sentence $\varphi$ tablo dokazatelná z teorie~$T$, potom je $\varphi$ pravdivá v~$T$, tj. \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$}.
+    }
+
+    \medskip
+
+    \textbf{Myšlenka důkazu:} Protipříklad by se [po vhodné interpretaci pomocných symbolů] shodoval s některou větví, ty jsou ale sporné.
+
+    \medskip
+
+    \textbf{Důkaz:} Sporem, nechť $T\not\models\varphi$, tj. existuje $\A\in\M(T)$, že $\A\not\models\varphi$.
+        
+    Protože $T\proves\varphi$, existuje tablo důkaz $\varphi$ z $T$, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. 
+        
+    Model $\A$ se shoduje s kořenem $\mathrm{F}\varphi$, tedy podle Lemmatu lze interpretovat symboly $c\in C$ tak, že se výsledná $L_C$-expanze $\A'$ shoduje s nějakou větví $V$. Všechny větve jsou ale sporné, musela by se shodovat s $\T\psi$ a zároveň $\F\psi$ pro nějakou $L_C$-sentenci $\psi$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\end{document}
+
+
+\begin{frame}{Úplnost: pomocné lemma}
+
+    chceme selže-li dokazování, dostaneme \alert{bezespornou, dokončenou} větev v tablu z $T$ s $\mathrm{F}\varphi$ v kořeni; ukážeme, že dává protipříklad:
+
+    \alert{Kanonický model} pro bezespornou, dokončenou větev $V$ je model
+    $$
+    v(p)=\begin{cases}
+        1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$}\\
+        0 \text{ jinak}
+    \end{cases}
+    $$  
+    
+    \medskip
+
+    \myblock{
+    \textbf{Lemma:}
+    Kanonický model pro (bezespornou, dokončenou) větev $V$ se shoduje s $V$.
+    }
+
+    \bigskip
+    
+    (tento model tedy musí splňovat všechny axiomy $T$, ale protože se shoduje s položkou $\mathrm{F}\varphi$ v kořeni, neplatí v něm výrok $\varphi$)
+
+\end{frame}
+
+
+\begin{frame}{Důkaz pomocného lemmatu}
+
+    \textbf{Důkaz:}
+    Indukcí podle struktury výroků v položkách. \alert{Báze indukce:} 
+    \begin{itemize}
+        \item je-li \alert{$P=\mathrm{T}p$} pro prvovýrok $p$, máme $v(p)=1$, shoduje se
+        \item je-li \alert{$P=\mathrm{F}p$}, potom na $V$ nemůže být $\mathrm{T}p$ (byla by sporná), máme tedy $v(p)=0$, shoduje se
+    \end{itemize}
+
+    \alert{Indukční krok:} rozebereme dva případy, ostatní jsou obdobné
+
+    \begin{itemize}
+        \item \alert{$P=\mathrm{T}\varphi\land\psi$}. Protože je $V$ dokončená, je na ní $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi $v$ shoduje: $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
+    
+        \item \alert{$P=\mathrm{F}\varphi\land\psi$}. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.\hfill\qedsymbol
+    \end{itemize}
+
+\end{frame}
 
 \end{document}
 

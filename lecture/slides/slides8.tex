@@ -516,6 +516,119 @@
 \section{7.3 Jazyky s rovností}
 
 
+\begin{frame}{Rovnost}
+
+    $1+0=0+1$? identita celých čísel, výrazů, množin, unifikovatelnost termů (v Prologu), \dots
+
+    Tablo je čistě \alert{syntaktický} objekt, ale \alert{$=^\A$} má být \alert{identita} na $A$. Jak toho docílit?
+
+    Mějme dokončenou bezespornou větev tabla s položkou \alert{$\T c_1=c_2$}. V \alert{kanonickém modelu} musí platit nejen \alert{$(c_1^\A,c_2^\A)\in {=^\A}$}, ale také:
+
+    \begin{itemize}
+        \item $c_2^\A =^\A c_1^\A$
+        \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$
+        \item $c_1^\A\in P^\A$ právě když $c_2^\A\in P^\A$
+    \end{itemize}
+
+    To vynutíme přidáním \alert{axiomů rovnosti}, $=^\A$ bude \alert{kongruence}~$\A$ (ekvivalence, která se chová dobře k funkcím a relacím). 
+    
+    Poté vezmeme \alert{faktorstrukturu} $\B=\A/_{=^\A}$, v ní už je $=^\B$ \alert{identita}.
+
+
+\end{frame}
+
+
+\begin{frame}{Kongruence a faktorstruktura}
+    
+        Buď $\sim$ ekvivalence na $A$, $f\colon A^n\to A$, $R\subseteq A^n$. Říkáme, že $\sim$ je:
+        \begin{itemize}
+            \item \alert{kongruence pro $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že \myalertinline{
+                $x_i\sim y_i$ ($1\leq i\leq n$)
+             }, platí \myalertinline{
+                $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$
+            }
+            \item \alert{kongruence pro $R$}, pokud pro všechna $x_i,y_i\in A$ taková, že \myalertinline{
+                $x_i\sim y_i$ ($1\leq i\leq n$)
+             }, platí \myalertinline{
+                $R(x_1,\dots,x_n)$ $\Leftrightarrow$ $R(y_1,\dots,y_n)$
+            }
+        \end{itemize}    
+        \alert{Kongruence} struktury $\A$ je ekvivalence na $A$, která je kongruencí pro všechny funkce a relace $\A$. 
+    
+        \alert{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura \alert{$\A/_\sim$ } v témž jazyce, doména $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, funkce a relace definujeme \alert{pomocí reprezentantů}:
+        
+        \myalert{
+        \begin{itemize}
+            \item $f^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)=[f^\A(x_1,\dots,x_n)]_\sim$
+            \item $R^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)$ $\Leftrightarrow$ $R^\A(x_1,\dots,x_n)$
+        \end{itemize}
+        } 
+        
+\end{frame}
+
+
+\begin{frame}{Axiomy rovnosti}
+
+    \myblock{
+    \alert{Axiomy rovnosti} pro jazyk $L$ s rovností:
+    \begin{enumerate}[(i)]
+        \item $x=x$
+        \item pro každý $n$-ární funkční symbol $f$ jazyka $L$:
+        $$
+        x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)
+        $$
+        \item pro každý $n$-ární relační symbol $R$ jazyka $L$ \alert{včetně rovnosti}:
+        $$
+        x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))
+        $$ 
+    \end{enumerate}
+    }
+
+    \begin{itemize}
+        \item symetrie a tranzitivita plynou z (iii) pro $=$ (dokažte si)
+        \item z axiomů $(i)$ a $(iii)$ tedy plyne, že relace $=^\A$ je ekvivalence
+        \item axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruence
+    \end{itemize}
+
+        V tablo metodě pro jazyk s rovností implicitně přidáme axiomy rovnosti (přesněji jejich generální uzávěry, potřebujeme sentence).
+
+     
+    
+    
+
+   
+    
+    
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz s rovností}
+
+    
+
+    Je-li $T$ teorie v jazyce $L$ s rovností, označme jako $T^*$ rozšíření $T$ o generální uzávěry axiomů rovnosti pro $L$. 
+    
+    \begin{itemize}
+        \item \alert{tablo důkaz} z teorie $T$ je \alert{tablo důkaz} z $T^*$
+        \item podobně pro tablo zamítnutí, a obecně jakékoliv tablo z $T$
+    \end{itemize}
+ 
+
+    \textbf{Pozorování:}
+    \begin{itemize}
+        \item Je-li $\A\models T^*$, potom i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita.
+        \item Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
+    \end{itemize}
+    
+    
+    
+    (Použijeme při konstrukci \alert{kanonického modelu} v důkazu úplnosti.)
+
+\end{frame}
+
+
+
 \section{7.4 Korektnost a úplnost}
 
 

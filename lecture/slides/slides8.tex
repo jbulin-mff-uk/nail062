@@ -614,7 +614,6 @@
 \end{frame}
 
 
-
 \section{7.4 Korektnost a úplnost}
 
 
@@ -624,8 +623,7 @@
     
     \begin{center}
         \alert{dokazatelnost} je totéž, co \alert{platnost}    
-    \end{center}
-    
+    \end{center}    
 
     \begin{itemize}
         \item \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$} \hspace{0.5cm} (korektnost) \hfill {\it``co jsme dokázali, platí''}
@@ -721,54 +719,178 @@
 \end{frame}
 
 
-\end{document}
+\begin{frame}{Kanonický model: jazyk bez rovnosti}
+
+    opět z \alert{bezesporné dokončené} větve $V$ (tabla z $T$) vyrobíme model\\
+    jeho doména? trik: \myalertinline{ze syntaktických objektů uděláme sémantické}
+
+    \medskip
+
+    \myblock{
+    Je-li $L=\langle\mathcal F,\mathcal R\rangle$ bez rovnosti, \alert{kanonický model} pro bezespornou dokončenou $V$ je $L_C$-struktura $\A=\langle A,\mathcal F^\mathcal A\cup C^\mathcal A,\mathcal R^\mathcal A\rangle$, kde:
+    \begin{itemize}
+        \item doména $A$ je \myalertinline{množina všech konstantních $L_C$-termů}
+        \item pro $n$-ární relační symbol $R\in\mathcal R$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:
+        $$
+        (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\ \Leftrightarrow\ \text{na $V$ je položka $\T R(s_1,\dots,s_n)$}
+        $$
+        \item pro $n$-ární funkční symbol $f\in\mathcal F$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:        
+        $$
+        f^\mathcal A(\text{``$s_1$''},\dots,\text{``$s_n$''})=\text{``$f(s_1,\dots,s_n)$''}
+        $$
+        \item speciálně, pro konstantní symbol $c$ máme $c^\mathcal A=\text{``$c$''}$
+    \end{itemize}
+    }
+
+    %(``$t$'' píšeme pro zdůraznění, že term $t$ chápeme jako řetězec znaků)
+
+    (funkce $f^\mathcal A$  je ``vytvoření'' termu ze symbolu $f$ a vstupních termů)
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    \myexampleinline{
+        $T=\{(\forall x)R(f(x))\}$
+    } v jazyce $L=\langle R,f,d \rangle$ bez rovnosti ($R$ unární relační, $f$ unární funkční, $d$ konstantní). Protipříklad: \myexampleinline{
+        $T\not\models\neg R(d)$
+    }
+
+    \begin{itemize}
+        \item dokončené tablo z $T$ s položkou $\F\neg R(d)$ v kořeni má jedinou, bezespornou větev $V$
+        \item \alert{kanon. model:} $L_C$-struktura {$\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,\dots\rangle$}
+        \item doména je {$A=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$c_0$''},\text{``$f(c_0)$''},$ $\text{``$f(f(c_0))$''},\dots,\text{``$c_1$''},\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}$}
+        \item interpretace symbolů jsou:
+        \begin{itemize}
+            \item $d^\A=\text{``$d$''}$
+            \item $c^\A_i=\text{``$c_i$''}$ pro všechna $i\in \mathbb N$
+            \item $f^\A(\text{``$d$''})=\text{``$f(d)$''}$, $f^\A(\text{``$f(d)$''})=\text{``$f(f(d))$''}$, \dots
+            \item $\alert{R^\A=A\setminus C}=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$f(c_0)$''},$ $\text{``$f(f(c_0))$''},\dots,\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}$.
+        \end{itemize}
+        \item redukt na původní jazyk $L$: $\A'=\langle A, R^\A, f^\A, d^\A\rangle$
+    \end{itemize}
+        
+\end{frame}
+
+
+\begin{frame}{Kanonický model: jazyk s rovností}
+
+    \myblock{
+    Je-li $L$ s rovností:
+    \begin{itemize}
+        \item vezmeme kanonický model $\mathcal B$ pro $V$ jako by byl $L$ bez rovnosti
+        \item definujeme relaci $=^B$ stejně jako pro ostatní relační symboly:
+        $$
+        \text{``$s_1$''}=^B\text{``$s_2$''}\ \Leftrightarrow\ \text{na $V$ je položka $\T s_1=s_2$}
+        $$
+        \item \alert{kanonický model} pro $V$ je faktorstruktura \alert{$\A=\B/_{=^B}$}
+    \end{itemize} 
+    }
+
+    \medskip
+
+    \begin{itemize}
+        \item tablo je nyní z teorie $T^*$ (rozšíření o axiomy rovnosti)
+        \item $=^B$ je opravdu kongruence struktury $\B$ a $=^\A$ je identita na $A$
+        \item \textbf{Pozorování:} pro lib. formuli $\varphi$ platí \alert{$\B\models\varphi$ právě když $\A\models\varphi$}\\
+        (symbol $=$ interpretujeme jako $=^B$ v $\B$ a jako identitu v $\A$)
+    \end{itemize}
+
+    \textbf{Všimněte si:}    
+    \begin{itemize}
+        \item v jazyce bez rovnosti je kanonický model spočetně nekonečný
+        \item v jazyce s rovností může být i konečný
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    \myexampleinline{
+        $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$
+    } $L=\langle R,f,d \rangle$ \myalertinline{s rovností}\\ opět chceme protipříklad ukazující, že \myexampleinline{
+        $T\not\models\neg R(d)$
+    }
+
+    \begin{itemize}
+        \item dokončené tablo \alert{z $T^*$} pro $\F\neg R(d)$ má jedinou, bezespornou $V$
+        \item sestrojíme kanonický model jako by byl jazyk bez rovnosti:
+        $$
+        \B=\langle B,R^\B,f^\B,d^\B,c_0^\B,c_1^\B,c_2^\B,\dots\rangle
+        $$
+        \item \alert{`$=$' jako obyčejný symbol:} $s_1=^B s_2$ $\Leftrightarrow$ $s_1=f(\cdots (f(s_2))\cdots)$ nebo \small$s_2=f(\cdots (f(s_1))\cdots)$ pro sudý počet~$f$    
+        $$\hspace{-1cm}
+        B/_{=^B} = \{[\text{``$d$''}]_{=^B},[\text{``$f(d)$''}]_{=^B},[\text{``$c_0$''}]_{=^B},[\text{``$f(c_0)$''}]_{=^B},[\text{``$c_1$''}]_{=^B},[\text{``$f(c_1)$''}]_{=^B},\dots\}
+        $$    
+        \item \alert{kanonický model}: 
+        $\A=\B/_{=^B}=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$
+        \begin{itemize}
+            \item $A=B/_{=^B}$, $d^\A=[\text{``$d$''}]_{=^B}$, $c^\A_i=[\text{``$c_i$''}]_{=^B}$ pro všechna $i\in \mathbb N$,
+            \item $f^\A([\text{``$d$''}]_{=^B})=[\text{``$f(d)$''}]_{=^B}$, $f^\A([\text{``$f(d)$''}]_{=^B})=[\text{``$f(f(d))$''}]_{=^B}=[\text{``$d$''}]_{=^B}$, \dots
+            \item $R^\A=A=B/_{=^B}$.
+        \end{itemize}        
+        \item redukt na původní jazyk $L$: $\A'=\langle A, R^\A, f^\A, d^\A\rangle$
+    \end{itemize}
+
+\end{frame}
 
 
 \begin{frame}{Úplnost: pomocné lemma}
-
-    chceme selže-li dokazování, dostaneme \alert{bezespornou, dokončenou} větev v tablu z $T$ s $\mathrm{F}\varphi$ v kořeni; ukážeme, že dává protipříklad:
-
-    \alert{Kanonický model} pro bezespornou, dokončenou větev $V$ je model
-    $$
-    v(p)=\begin{cases}
-        1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$}\\
-        0 \text{ jinak}
-    \end{cases}
-    $$  
-    
-    \medskip
 
     \myblock{
     \textbf{Lemma:}
     Kanonický model pro (bezespornou, dokončenou) větev $V$ se shoduje s $V$.
     }
 
-    \bigskip
-    
-    (tento model tedy musí splňovat všechny axiomy $T$, ale protože se shoduje s položkou $\mathrm{F}\varphi$ v kořeni, neplatí v něm výrok $\varphi$)
+    \textbf{Důkaz:}
+    \alert{Jazyk bez rovnosti:} indukcí podle struktury sentence v $P$
+
+    \begin{itemize}
+        \item \textbf{atomická sentence:} stejně jako ve VL (\alert{báze indukce})
+        
+        \medskip
+
+        \item \textbf{logická spojka:} stejně jako ve VL
+        
+        \medskip
+
+        \item \textbf{typ ``}\textcolor{red}{svědek}\textbf{'':} \alert{$P=\T(\exists x)\varphi(x)$}, potom je na $V$ i $T\varphi(x/c)$ pro nějaké $\text{``$c$''}\in A$; z indukčního předpokladu $\A\models\varphi(x/c)$, tj. $\A\models\varphi(x)[e(x/\text{``$c$''})]$ tedy i $\A\models(\exists x)\varphi(x)$
+
+        \medskip
+
+        \item \textbf{typ ``}\textcolor{blue}{všichni}\textbf{'':} \alert{$P=\T(\forall x)\varphi(x)$}, na $V$ jsou i položky $T\varphi(x/t)$ pro každý konstantní $L_C$-term, tj. pro každý prvek $\text{``$t$''}\in A$; z~ind. předpokladu je $\A\models\varphi(x/t)$, tj. $\A\models\varphi(x)[e(x/\text{``$t$''})]$ pro každé $\text{``$t$''}\in A$, tedy $\A\models(\forall x)\varphi(x)$
+        
+    \end{itemize}
+
+    \alert{Jazyk s rovností:} $\A=\B/_{=^B}$, pro $\B$ máme, zbytek z Pozorování \hfill\qedsymbol
 
 \end{frame}
 
 
-\begin{frame}{Důkaz pomocného lemmatu}
+\begin{frame}{Věta o úplnosti}
+
+    \myblock{
+    \textbf{Věta (O úplnosti):} Je-li sentence $\varphi$ pravdivá v teorii $T$, potom je tablo dokazatelná z $T$, tj. \alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}.
+    }
+    
+    \smallskip
 
     \textbf{Důkaz:}
-    Indukcí podle struktury výroků v položkách. \alert{Báze indukce:} 
-    \begin{itemize}
-        \item je-li \alert{$P=\mathrm{T}p$} pro prvovýrok $p$, máme $v(p)=1$, shoduje se
-        \item je-li \alert{$P=\mathrm{F}p$}, potom na $V$ nemůže být $\mathrm{T}p$ (byla by sporná), máme tedy $v(p)=0$, shoduje se
-    \end{itemize}
-
-    \alert{Indukční krok:} rozebereme dva případy, ostatní jsou obdobné
-
-    \begin{itemize}
-        \item \alert{$P=\mathrm{T}\varphi\land\psi$}. Protože je $V$ dokončená, je na ní $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi $v$ shoduje: $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
+    Ukážeme, že libovolné dokončené (např. \alert{systematické}) tablo z $T$ s $\mathrm{F}\varphi$ v kořeni je nutně sporné, tedy je tablo důkazem. 
     
-        \item \alert{$P=\mathrm{F}\varphi\land\psi$}. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.\hfill\qedsymbol
-    \end{itemize}
+    Sporem: \alert{Není-li sporné}, má bezespornou (dokončenou) větev $V$, a dle Lemmatu se kanonický model $\A$ s větví $V$ shoduje. 
+    
+    \myalert{
+    Buď $\A'$ redukt $\A$ na jazyk teorie $T$ (zapomeň pomocné symboly).
+    }
+
+    Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $T$. Model $\A$, \myalertinline{tedy i $\A'$}, splňuje všechny axiomy a máme \alert{$\A'\models T$}. 
+    
+    Protože se ale $\A$, \myalertinline{tedy i $\A'$}, shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, máme \alert{$\A'\not\models\varphi$}, což dává protipříklad, a máme \alert{$T\not\models\varphi$}, spor.\hfill\qedsymbol
 
 \end{frame}
 
+
 \end{document}
-
-

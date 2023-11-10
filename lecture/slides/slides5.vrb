@@ -7,9 +7,6 @@
         \item \alert{dotaz} je konjunkce faktů, negace dotazu je \alert{cíl}
     \end{itemize}
 
-
-
-
     Např.\myexampleinline{
         program $\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, dotaz $p\land q$
     }

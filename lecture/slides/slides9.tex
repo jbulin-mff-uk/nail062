@@ -122,53 +122,48 @@
 
 \begin{frame}{Hilbertovský kalkulus v predikátové logice}
 
+    \vspace{-6pt}
     \begin{itemize}
-        \item používá jen logické spojky $\neg$, $\limplies$
-        \item dokazují se libovolné formule (nejen sentence)
-        \item \alert{schémata logických axiomů} ($\varphi,\psi,\chi$ jsou libovolné formule, $t$ term, $x$ proměnná)
+        \item používá jen $\neg$ a $\limplies$, dokazuje lib. formule (nejen sentence)
+        \item \alert{schémata log. axiomů} ($\varphi,\psi,\chi$ formule, $t$ term, $x$ proměnná)
         \begin{enumerate}[(i)]
             \item $\varphi \limplies (\psi \limplies \varphi)$
             \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
             \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$            
         \end{enumerate}
+
+        \medskip
+
         \myalert{
         \begin{enumerate}[(iv)]
-            \item $(\forall x)\varphi \limplies \varphi(x/t)$ \hspace{1cm} je-li $t$ substituovatelný za $x$ do $\varphi$
-            \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$ \hspace{0.5cm} není-li $x$ volná proměnná ve $\varphi$}
+            \item $(\forall x)\varphi \limplies \varphi(x/t)$ \hfill je-li $t$ substituovatelný za $x$ do $\varphi$
+            \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$ \hfill není-li $x$ volná ve $\varphi$
         \end{enumerate}
+        
+        a navíc \textbf{axiomy rovnosti}, je-li jazyk s rovností
         }
-        \item \alert{odvozovací pravidlo}: tzv. \alert{modus ponens}
-                $$\frac{\varphi, \varphi \limplies \psi}{\psi}$$       
-        \item \alert{hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \alert{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$:
-        \begin{itemize}
-        \item $\varphi_i$ je \alert{logický axiom}, nebo
-        \item $\varphi_i$ je \alert{axiom teorie} ($\varphi_i \in T$), nebo
-        \item $\varphi_i$ lze odvodit z předchozích pomocí \alert{odvozovacího pravidla}
-        \end{itemize}
-        \item existuje-li hilbertovský důkaz, píšeme: \alert{$T\proves_H\varphi$}
+
+        \medskip
+
+        \item \alert{odvozovací pravidla}:\vspace{-6pt}
+        \begin{center}
+            \begin{minipage}{0.45\textwidth}
+                $$
+                \frac{\varphi, \varphi \limplies \psi}{\psi}\ \text{(modus ponens)}
+                $$
+            \end{minipage}          
+            \begin{minipage}{0.45\textwidth}
+                \myalertmath{
+                $$
+                \frac{\varphi}{(\forall x)\varphi} \ \text{(generalizace)} 
+                $$
+                }
+            \end{minipage}            
+        \end{center}        
+        
+        \item \alert{hilbertovský důkaz} formule $\varphi$ z $T$ je \alert{konečná} posloupnost formulí $\varphi_0, \dots, \varphi_n=\varphi$, kde $\varphi_i$ je \alert{logický axiom}, \alert{axiom teorie}, nebo lze odvodit z předchozích pomocí odvozovacích pravidel
+        \item existuje-li, píšeme \alert{$T\proves_H\varphi$}
     \end{itemize}
-
-\end{frame}
-
-
-\begin{frame}{Příklad hilbertovského důkazu}
-
-    Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí:  
-    \myexamplemath{  
-    $$
-    T\proves_H\varphi\limplies\psi
-    $$
-    }
-
-    Hilbertovským důkazem je následující posloupnost výroků:
-    
-    \begin{enumerate}\it
-        \item $\neg\varphi$\hfill axiom teorie
-        \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom (i)
-        \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
-        \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom (iii)
-        \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4.
-    \end{enumerate}    
 
 \end{frame}
 
@@ -182,11 +177,16 @@
 
     \medskip
 
-    \textbf{Důkaz:} Indukcí dle délky důkazu ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+    \textbf{Důkaz:} Indukcí dle délky důkazu: každá $\varphi_i$ (vč. $\varphi_n=\varphi$) platí v $T$
     \begin{itemize}
-        \item Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie.
-        \item Je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$.
-        \item Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale platí i $T \models \varphi_i$. (Modus ponens je \alert{korektní} odvozovací pravidlo)\hfill\qedsymbol
+        \item je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie
+        \item je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$
+        \item modus ponens i generalizace jsou \alert{korektní} inferenční pravidla:
+        \begin{itemize}
+            \item je-li $T\models\varphi$ a $T\models\varphi\to\psi$, potom $T\models\psi$
+            \item je-li $T\models\varphi$, potom $T\models(\forall x)\varphi$
+            \hfill\qedsymbol
+        \end{itemize}
     \end{itemize}
 
     \myblock{

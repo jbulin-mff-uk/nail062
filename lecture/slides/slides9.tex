@@ -66,14 +66,16 @@
 
 \begin{frame}{Löwenheim-Skolemova věta \& Věta o kompaktnosti}
     
+    \medskip
+    
     \myblock{
     \textbf{Věta (Löwenheim-Skolemova):}
     Je-li $L$ spočetný bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
     }
 
-    \textbf{Důkaz:} V $T$ není dokazatelný spor. Dokončené tablo z $T$ s $\F\bot$ v kořeni tedy musí obsahovat bezespornou větev. Hledaný model je $L$-redukt kanonického modelu pro tuto větev.\hfill\qedsymbol
+    (Později ukážeme i verzi s rovností, kan. model může být konečný.)
 
-    Později ukážeme i verzi s rovností, kan. model může být konečný.
+    \textbf{Důkaz:} V $T$ není dokazatelný spor. Dokončené tablo z $T$ s $\F\bot$ v kořeni tedy musí obsahovat bezespornou větev. Hledaný model je $L$-redukt kanonického modelu pro tuto větev.\hfill\qedsymbol
 
     \bigskip
 
@@ -118,6 +120,83 @@
 
 
 
+\begin{frame}{Hilbertovský kalkulus v predikátové logice}
+
+    \begin{itemize}
+        \item používá jen logické spojky $\neg$, $\limplies$
+        \item dokazují se libovolné formule (nejen sentence)
+        \item \alert{schémata logických axiomů} ($\varphi,\psi,\chi$ jsou libovolné formule, $t$ term, $x$ proměnná)
+        \begin{enumerate}[(i)]
+            \item $\varphi \limplies (\psi \limplies \varphi)$
+            \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
+            \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$            
+        \end{enumerate}
+        \myalert{
+        \begin{enumerate}[(iv)]
+            \item $(\forall x)\varphi \limplies \varphi(x/t)$ \hspace{1cm} je-li $t$ substituovatelný za $x$ do $\varphi$
+            \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$ \hspace{0.5cm} není-li $x$ volná proměnná ve $\varphi$}
+        \end{enumerate}
+        }
+        \item \alert{odvozovací pravidlo}: tzv. \alert{modus ponens}
+                $$\frac{\varphi, \varphi \limplies \psi}{\psi}$$       
+        \item \alert{hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \alert{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$:
+        \begin{itemize}
+        \item $\varphi_i$ je \alert{logický axiom}, nebo
+        \item $\varphi_i$ je \alert{axiom teorie} ($\varphi_i \in T$), nebo
+        \item $\varphi_i$ lze odvodit z předchozích pomocí \alert{odvozovacího pravidla}
+        \end{itemize}
+        \item existuje-li hilbertovský důkaz, píšeme: \alert{$T\proves_H\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad hilbertovského důkazu}
+
+    Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí:  
+    \myexamplemath{  
+    $$
+    T\proves_H\varphi\limplies\psi
+    $$
+    }
+
+    Hilbertovským důkazem je následující posloupnost výroků:
+    
+    \begin{enumerate}\it
+        \item $\neg\varphi$\hfill axiom teorie
+        \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom (i)
+        \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
+        \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom (iii)
+        \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4.
+    \end{enumerate}    
+
+\end{frame}
+
+
+\begin{frame}{Korektnost a úplnost}
+
+    \myblock{
+    \textbf{Věta (o korektnosti hilbertovského kalkulu):}
+    $T\proves_H\varphi \Rightarrow T\models\varphi$
+    }
+
+    \medskip
+
+    \textbf{Důkaz:} Indukcí dle délky důkazu ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+    \begin{itemize}
+        \item Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie.
+        \item Je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$.
+        \item Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale platí i $T \models \varphi_i$. (Modus ponens je \alert{korektní} odvozovací pravidlo)\hfill\qedsymbol
+    \end{itemize}
+
+    \myblock{
+    \textbf{Věta (o úplnosti hilbertovského kalkulu):}
+    $T\models\varphi\ \Rightarrow\ T\proves_H\varphi$
+    }
+
+    Důkaz vynecháme.
+    
+\end{frame}
 
 
 \section{\sc Kapitola 8: Rezoluce v predikátové logice}

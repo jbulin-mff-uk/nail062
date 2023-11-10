@@ -161,7 +161,7 @@
             \end{minipage}            
         \end{center}        
         
-        \item \alert{hilbertovský důkaz} formule $\varphi$ z $T$ je \alert{konečná} posloupnost formulí $\varphi_0, \dots, \varphi_n=\varphi$, kde $\varphi_i$ je \alert{logický axiom}, \alert{axiom teorie}, nebo lze odvodit z předchozích pomocí odvozovacích pravidel
+        \item \alert{hilbertovský důkaz} formule $\varphi$ z $T$ je \alert{konečná} posloupnost $\varphi_0, \dots, \varphi_n=\varphi$, kde $\varphi_i$ je \alert{logický axiom} (vč. axiomů rovnosti), \alert{axiom teorie}, nebo lze odvodit z předchozích pomocí pravidel
         \item existuje-li, píšeme \alert{$T\proves_H\varphi$}
     \end{itemize}
 
@@ -179,9 +179,9 @@
 
     \textbf{Důkaz:} Indukcí dle délky důkazu: každá $\varphi_i$ (vč. $\varphi_n=\varphi$) platí v $T$
     \begin{itemize}
-        \item je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie
-        \item je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$
-        \item modus ponens i generalizace jsou \alert{korektní} inferenční pravidla:
+        \item logické axiomy (vč. axiomů rovnosti) jsou tautologie, platí v $T$
+        \item axiomy z $T$ jistě v $T$ také platí
+         \item modus ponens i generalizace jsou \alert{korektní} inferenční pravidla:
         \begin{itemize}
             \item je-li $T\models\varphi$ a $T\models\varphi\to\psi$, potom $T\models\psi$
             \item je-li $T\models\varphi$, potom $T\models(\forall x)\varphi$
@@ -189,6 +189,8 @@
         \end{itemize}
     \end{itemize}
 
+    \bigskip
+    
     \myblock{
     \textbf{Věta (o úplnosti hilbertovského kalkulu):}
     $T\models\varphi\ \Rightarrow\ T\proves_H\varphi$

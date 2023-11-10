@@ -673,72 +673,74 @@ $$
 Všimněte si, že každá konečná část teorie $T$ má model. Z věty o kompaktnosti tedy plyne, že i teorie $T$ má model. Říkáme mu \emph{nestandardní model} (označme ho $\A$). Platí v něm tytéž sentence, které platí ve standardním modelu, ale zároveň obsahuje prvek $c^\A$, který je větší než každé $n\in \mathbb N$ (čímž zde myslíme hodnotu termu $\underline n$ v nestandardním modelu $\A$).
     
 
-\section{(draft) Hilbertovský kalkulus v predikátové logice}
-\todo
+\section{Hilbertovský kalkulus v predikátové logice}
 
-Na závěr kapitoly si ukážeme, jak lze adaptovat Hilbertův kalkulus, představený v Sekci \ref{section:hilbert-calculus-propositional} pro použití v predikátové logice. To není těžké, abychom se vypořádali s kvantifikátory, stačí přidat dvě nová schémata logických axiomů a jedno nové inferenční pravidlo. Opět si ukážeme korektnost tohoto dokazovacího systému, a jen zmíníme, že je také úplný.
+Na závěr kapitoly si ukážeme, jak lze adaptovat Hilbertův kalkulus, představený v Sekci \ref{section:hilbert-calculus-propositional}, pro použití v predikátové logice. To není těžké, abychom se vypořádali s kvantifikátory, stačí přidat dvě nová schémata logických axiomů a jedno nové inferenční pravidlo. Opět si ukážeme korektnost tohoto dokazovacího systému, a jen zmíníme, že je také úplný.
 
-% from slides:
-\subsubsection*{Hilbertovský kalkul}
+Důkazy budou sestávat z libovolných formulí, nejen sentencí. Připomeňme, že Hilbertovský kalkulus používá jen spojky $\neg$ a $\limpliessymb$. Budeme mít obdobné logické axiomy, jako ve výrokové logice; v případě jazyka s rovností navíc přidáme \alert{axiomy rovnosti}. 
+
+\begin{definition}[Schémata axiomů v hilbertovském kalkulu v predikátové logice]
+Pro libovolné formule $\varphi,\psi,\chi$, term $t$, a proměnnou $x$ jsou následující formule logickými axiomy:
+\begin{enumerate}[(i)]
+    \item $\varphi \limplies (\psi \limplies \varphi)$
+    \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
+    \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
+    \item $(\forall x)\varphi \limplies \varphi(x/t)$, je-li $t$ substituovatelný za $x$ do $\varphi$
+    \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$, není-li $x$ volná ve $\varphi$
+\end{enumerate}
+Je-li jazyk s rovností, potom jsou logickými axiomy také \emph{axiomy rovnosti} pro daný jazyk.       
+\end{definition}
+
+Všimněte si, že všechny logické axiomy jsou opravdu tautologie. Jako odvozovací pravidla nám poslouží \emph{modus ponens} a dále \emph{pravidlo generalizace}: 
+
+\begin{definition}[Modus ponens]
+\emph{Modus ponens} říká, že pokud jsme již dokázali $\varphi$ a také  $\varphi\limplies\psi$, můžeme odvodit i formuli $\psi$:
+$$
+\frac{\varphi, \varphi \limplies \psi}{\psi}
+$$ 
+\end{definition}
+
+\begin{definition}[Pravidlo generalizace]
+    \emph{Pravidlo generalizace} říká, že pokud jsme dokázali $\varphi$, lze odvodit i formuli $(\forall x)\varphi$ (pro libovolnou proměnnou $x$):
+    $$
+    \frac{\varphi}{(\forall x)\varphi}
+    $$ 
+\end{definition}
+
+Všimněte si, že obě odvozovací pravidla jsou \emph{korektní}, tj. platí-li v nějaké teorii $T\models\varphi$ a $T\models\varphi\limplies\psi$, máme i $T\models\psi$, a podobně platí-li $T\models\varphi$, platí i $T\models(\forall x)\varphi$.
+
+Stejně jako ve výrokové logice, \emph{důkaz} bude konečná posloupnost formulí, ve které je každá nově napsaná formule buď axiomem (logickým, vč. axiomu rovnosti, nebo z teorie, ve které dokazujeme), nebo lze odvodit z předchozích pomocí jednoho z odvozovacích pravidel:
+
+\begin{definition}[Hilbertovský důkaz]
+    \emph{Hilbertovský důkaz} formule $\varphi$ z teorie $T$ je \emph{konečná} posloupnost formulí $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$ platí:
     \begin{itemize}
-    \item základní logické spojky a kvantifikátory:\ \ $\neg$, $\to$, $(\forall x)$ (ostatní odvozené)
-    
-    \item dokazují se libovolné formule (nejen sentence)
-    
-    \item \mdef{logické axiomy} (\myblue{schémata} logických axiomů)
-    \vspace{-2mm}\begin{align*}(i)& &\varphi &\to (\psi \to \varphi) \\
-    (ii)& &(\varphi\to (\psi \to \chi))&\to ((\varphi \to \psi)\to(\varphi \to \chi))\qquad\qquad\qquad\qquad\phantom{\ } \\
-    (iii)& &(\neg \varphi \to \neg \psi)&\to(\psi \to \varphi)\\
-    (iv)& &(\forall x)\varphi &\to\varphi(x/t)\quad\quad\quad\ \ \ \text{ je-li $t$ substituovatelný za $x$ do $\varphi$}\\
-    (v)& &(\forall x)(\varphi \to \psi)&\to(\varphi \to (\forall x)\psi)\quad\text{není-li $x$ volná proměnná ve $\varphi$}\\
-    \end{align*}
-    
-    \vspace{-6mm}
-    kde $\varphi$, $\psi$, $\chi$ jsou libovolné formule (daného jazyka), $t$ je libovolný term a
-    \vspace{0.5mm}
-    
-    $x$ je libovolná proměnná.
-    \smallskip
-    
-    \item je-li jazyk s rovností, mezi logické axiomy patří navíc \myblue{axiomy rovnosti}
-    
-    \item \mdef{odvozovací (deduktivní) pravidla}
-    \vspace{-2mm}
-    $$\frac{\varphi,\ \varphi \to \psi}{\psi}\quad\text{\myblue{(modus ponens)},}\qquad\frac{\varphi}{(\forall x)\varphi}\quad\text{\myblue{(generalizace)}}$$
+    \item $\varphi_i$ je logický axiom (včetně axiomu rovnosti, je-li jazyk s rovností), nebo
+    \item $\varphi_i$ je axiom teorie ($\varphi_i \in T$), nebo
+    \item $\varphi_i$ lze odvodit z nějakých předchozích formulí $\varphi_j,\varphi_k$ (kde $j,k<i$) pomocí modus ponens, nebo
+    \item $\varphi_i$ lze odvodit z nějaké předchozí formule $\varphi_j$ (kde $j<i$) pomocí pravidla generalizace.
     \end{itemize}
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    \subsubsection*{Pojem důkazu}
-    \mdef{Důkaz} (\emph{Hilbertova stylu}) formule $\varphi$ z teorie $T$ je \myblue{konečná} posloupnost
-    \smallskip
-    
-    $\varphi_0, \dots, \varphi_n=\varphi$ formulí taková, že pro každé $i\le n$
-    \smallskip
-    
-    \begin{itemize}
-    \item $\varphi_i$ je logický axiom nebo $\varphi_i \in T$ (axiom teorie), nebo
-    \smallskip
-    
-    \item $\varphi_i$ lze odvodit z předchozích formulí pomocí odvozovacích pravidel.
-    \end{itemize}
-    \smallskip
-    
-    Formule $\varphi$ je \mdef{dokazatelná} v $T$, má-li důkaz z $T$, značíme $T \proves_{H} \varphi$.
-    \bigskip
-    
-    {\bf \myblue{Věta} (o korektnosti Hilbertova kalkulu)}\ \ {\it  Pro každou teorii $T$ a formuli $\varphi$,\ \ $T\proves_H \varphi\ \Rightarrow\ T\models \varphi$.}
-    \medskip
-    
-    {\it \myblue{Důkaz}}
-    \begin{itemize}
-    \item Je-li $\varphi\in T$ nebo logický axiom, je $T \models \varphi$ (logické axiomy jsou tautologie),
-    \item jestliže $T \models \varphi$ a $T \models \varphi \to \psi$, pak $T \models \psi$, \emph{tj. modus ponens je korektní},
-    \item jestliže $T \models \varphi$, pak $T \models (\forall x)\varphi$, \emph{tj. pravidlo generalizace je korektní},
-    \item tedy každá formule vyskytující se v důkazu z $T$ platí v $T$. $\qed$
-    \end{itemize}
-    \medskip
-    
-    {\it \myblue{Poznámka}\ \ Platí i \myblue{úplnost}, tj. $T\models \varphi \Rightarrow T\proves_H \varphi$ pro každou teorii $T$ a formuli $\varphi$.}
-% :from slides
+    Existuje-li hilbertovský důkaz, je $\varphi$ \emph{(hilbertovsky) dokazatelná}, píšeme $T\proves_H\varphi$.           
+\end{definition}
+
+I v predikátové logice je hilbertovský kalkulus korektní a úplný dokazovací systém.
+
+\begin{theorem}[O korektnosti hilbertovského kalkulu]
+Pro každou teorii $T$ a formuli $\varphi$ platí: 
+$$
+T\proves_H \varphi\ \Rightarrow\ T\models\varphi
+$$ 
+\end{theorem}
+\begin{proof}
+Indukcí dle indexu $i$ ukážeme, že každá formule $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+
+Je-li $\varphi_i$ logický axiom (včetně axiomu rovnosti), $T \models \varphi_i$ platí protože logické axiomy jsou tautologie. Je-li $\varphi_i\in T$, také jistě platí $T \models \varphi_i$. Zbytek plyne z korektnosti odvozovacích pravidel.
+\end{proof}
+
+Pro úplnost ještě vyslovme úplnost, důkaz ale neuvedeme.
+
+\begin{theorem}[O úplnosti hilbertovského kalkulu]
+Pro každou teorii $T$ a formuli $\varphi$ platí: 
+$$
+T\models\varphi\ \Rightarrow\ T\proves_H\varphi
+$$
+\end{theorem}

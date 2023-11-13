@@ -207,6 +207,60 @@
 \section{8.1 Úvod}
 
 
+\begin{frame}{Rezoluce v predikátové logice}
+
+    $T\models\varphi$? {\Large$\rightsquigarrow$} $T\cup\{\neg \varphi\}$ {\Large$\rightsquigarrow$} CNF formule $S$ {\Large$\rightsquigarrow$} rezoluční zamítnutí
+
+    \begin{itemize}
+        \item \alert{literál} je \alert{atomická formule} $R(t_1,\dots,t_n)$ nebo její negace
+        \item \alert{klauzule} je konečná množina literálů, \alert{formule} množina klauzulí
+        \item otevřenou formuli snadno převedeme do CNF, i univerzální kvantifikátor na začátku:{\small\myexampleinline{
+            $(\forall x)(P(x)\lor \neg Q(x))\sim \{P(x),\neg Q(x)\}$
+            }}
+        \item co s existenčními kvantifikátory? nové symboly pro `svědky'
+        {\small\myexampleinline{
+        $(\exists x)(P(x)\lor \neg Q(x))\rightsquigarrow \{P(c),\neg Q(c)\}$
+        }} ``\alert{skolemizace}''
+        \item není ekvivalentní, ale zachovává \alert{[ne]splnitelnost}, to nám stačí
+        \item rezoluční krok? literály nemusí být stejné, stačí \alert{unifikovatelné}
+        {\myexampleinline{
+        z klauzulí $\{P(x),\neg Q(x)\}$ a $\{Q(f(c))\}$ odvodíme $\{P(f(c))\}$
+        }}
+        \item \alert{unifikace} je substituce $\{x/f(c)\}$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+    
+    1. Nechť \myexampleinline{
+        $T=\{(\forall x)P(x),(\forall x)(P(x)\limplies Q(x))\}$
+    } a \myexampleinline{
+            $\varphi=(\exists x)Q(x)$
+        }. 
+    $$\neg\varphi=\neg(\exists x)Q(x)\sim(\forall x)\neg Q(x)\sim\neg Q(x)$$ 
+    Teorii $T\cup\{\neg \varphi\}$ tedy můžeme převést na \alert{ekvivalentní} CNF formuli
+    $$
+    S = \{\{P(x)\},\{\neg P(x),Q(x)\},\{\neg Q(x)\}\}
+    $$
+    kterou snadno zamítneme rezolucí ve dvou krocích. (Představte si místo $P(x)$ prvovýrok $p$ a místo $Q(x)$ prvovýrok $q$.)
+
+    % 2. Máme-li $T=\{(\exists x)P(x),P(x)\liff Q(x)\}$ a $\varphi=(\exists x)Q(x)$, potom můžeme převést do CNF jako obvykle, dostáváme:
+    % $$
+    % T\cup\{\neg \varphi\}\sim\{(\exists x)P(x),\neg P(x)\lor Q(x),\neg Q(x)\lor P(x),\neg Q(x)\}
+    % $$
+    % Formuli $(\exists x)P(x)$ nyní nahradíme $P(c)$, kde $c$ je nový konstantní symbol. Tím dostáváme CNF formuli:
+    % $$
+    % S = \{\{P(c)\},\{\neg P(x),Q(x)\},\{\neg Q(x),P(x)\},\{\neg Q(x)\}\}
+    % $$
+    % Ta není ekvivalentní teorii $T\cup\{\neg \varphi\}$, ale je s ní \alert{ekvisplnitelná} (v tomto případě jsou obě nesplnitelné).
+
+
+\end{frame}
+
+
+
 \section{8.2 Skolemizace}
 
 

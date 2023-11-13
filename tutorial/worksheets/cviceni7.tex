@@ -8,7 +8,9 @@
 \section*{NAIL062 V\&P Logika: 7. cvičení}
 % po 5. přednášce
 
-% 2023: plan: 1, 2a, 3, 4, 6a, 7a, 9a
+% 2023: 2a, 3, 4, 6b (částečně), 7 včetně konstrukce zamítnutí (z důkazu úplnosti), 9b
+% 2a může v závislosti na převodu do CNF vyjít moc jednoduché, raději 2b
+
 
 
 \textbf{Témata:}
@@ -71,16 +73,17 @@ Rezoluce ve výrokové logice. Aplikace věty o kompaktnosti. Hilbertův kalkulu
         Najděte rezoluční uzávěry $\mathcal{R}(S)$ pro následující výroky $S$:
         \begin{enumerate}
             \item $\{\{p,q\},\{p,\neg q\},\{\neg p,\neg q\}\}$
-            \item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$
+            \item $\{\{p,\neg q,r\},\{q,r\},\{\neg p, r\},\{q,\neg r\},\{\neg q\}\}$ (uzávěr je poměrně velký, vymyslete systematický postup a vygenerujte jen část)
         \end{enumerate}
     \end{problem}
         
         
     \medskip\begin{problem}
-        Zkonstruujte \emph{strom dosazení} pro následující formuli: 
+        Zkonstruujte \emph{strom dosazení} pro následující formuli. Na základě tohoto stromu sestrojte rezoluční zamítnutí, dle postupu z důkazu Věty o úplnosti rezoluce.
         $$
         S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}
         $$
+        
     \end{problem}
     
     
@@ -103,9 +106,9 @@ Rezoluce ve výrokové logice. Aplikace věty o kompaktnosti. Hilbertův kalkulu
     V Hilbertově kalkulu dokažte pro libovolné formule následující vztahy:
     \begin{enumerate}
         %\item $_H\ p\to p$
-        \item $\{\neg p\}\ _H\ p\to q$
-        \item $\{\neg(\neg p)\}\ _H\ p$
-        \item $\{p\to q,q \to r\}\ _H\ p\to r$
+        \item $\{\neg p\}\proves_H\ p\to q$
+        \item $\{\neg(\neg p)\}\proves_H\ p$
+        \item $\{p\to q,q \to r\}\proves_H\ p\to r$
     \end{enumerate}    
     \end{problem}
     
@@ -114,7 +117,7 @@ Rezoluce ve výrokové logice. Aplikace věty o kompaktnosti. Hilbertův kalkulu
         \begin{itemize}
             \item Dokažte, že logické axiomy jsou tautologie.
             \item Dokažte, že modus ponens je korektní, tj. když $T\models\varphi$ a $T\models\varphi\to\psi$, tak $T\models\psi$.
-            \item Ukažte, že $T\ _H\ \varphi$ implikuje $T\models\varphi$.
+            \item Ukažte, že $T\proves_H\ \varphi$ implikuje $T\models\varphi$.
         \end{itemize}
         \end{problem}
         

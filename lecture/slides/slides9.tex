@@ -234,36 +234,348 @@
 
 \begin{frame}{Příklady}
     
-    1. Nechť \myexampleinline{
-        $T=\{(\forall x)P(x),(\forall x)(P(x)\limplies Q(x))\}$
-    } a \myexampleinline{
-            $\varphi=(\exists x)Q(x)$
-        }. 
+    1. \myexampleinline{
+        $T=\{(\forall x)P(x),(\forall x)(P(x)\limplies Q(x))\}$, $\varphi=(\exists x)Q(x)$
+    }
     $$\neg\varphi=\neg(\exists x)Q(x)\sim(\forall x)\neg Q(x)\sim\neg Q(x)$$ 
-    Teorii $T\cup\{\neg \varphi\}$ tedy můžeme převést na \alert{ekvivalentní} CNF formuli
+    $T\cup\{\neg \varphi\}$ je \alert{ekvivalentní} \myalertinline{\small
+        $S = \{\{P(x)\},\{\neg P(x),Q(x)\},\{\neg Q(x)\}\}$
+    }
+    rezoluční zamítnutí: představte si $p$ místo $P(x)$, $q$ místo $Q(x)$
+
+    2. \myexampleinline{
+        $T=\{(\forall x)(\exists y)R(x,y),R(x,y)\limplies Q(x)\}$, $\varphi=(\exists x)Q(x)$
+    }
     $$
-    S = \{\{P(x)\},\{\neg P(x),Q(x)\},\{\neg Q(x)\}\}
+    T\cup\{\neg \varphi\}\sim\{(\forall x)(\exists y)R(x,y),\neg R(x,y)\lor Q(x),\neg Q(x)\}
     $$
-    kterou snadno zamítneme rezolucí ve dvou krocích. (Představte si místo $P(x)$ prvovýrok $p$ a místo $Q(x)$ prvovýrok $q$.)
+    formuli \alert{$(\forall x)(\exists y)R(x,y)$} nahradíme \alert{$R(x,f(x))$}, kde $f$ je nový unární funkční symbol (reprezentuje \alert{výběr svědka}):
 
-    % 2. Máme-li $T=\{(\exists x)P(x),P(x)\liff Q(x)\}$ a $\varphi=(\exists x)Q(x)$, potom můžeme převést do CNF jako obvykle, dostáváme:
-    % $$
-    % T\cup\{\neg \varphi\}\sim\{(\exists x)P(x),\neg P(x)\lor Q(x),\neg Q(x)\lor P(x),\neg Q(x)\}
-    % $$
-    % Formuli $(\exists x)P(x)$ nyní nahradíme $P(c)$, kde $c$ je nový konstantní symbol. Tím dostáváme CNF formuli:
-    % $$
-    % S = \{\{P(c)\},\{\neg P(x),Q(x)\},\{\neg Q(x),P(x)\},\{\neg Q(x)\}\}
-    % $$
-    % Ta není ekvivalentní teorii $T\cup\{\neg \varphi\}$, ale je s ní \alert{ekvisplnitelná} (v tomto případě jsou obě nesplnitelné).
+    \myalertmath{
+    $$
+    S = \{\{R(x,f(x))\},\{\neg R(x,y),Q(x)\},\{\neg Q(x)\}\}
+    $$
+    }
 
-
+    není ekvivalentní, ale \alert{ekvisplnitelná} (zde obě nesplnitelné), vidíme po \alert{substituci $y/f(x)$}, která \alert{unifikuje} $R(x,f(x))$ a $R(x,y)$
+ 
 \end{frame}
 
+
+\begin{frame}{Unifikace}
+
+    \myexamplemath{
+        $$
+        S = \{\{R(x,f(x))\},\{\neg R(x,y),Q(x)\},\{\neg Q(x)\}\}
+        $$
+    }
+
+    \begin{itemize}
+        \item na \alert{úrovni výrokové logiky} (\alert{ground level}):
+        \myalertmath{ 
+        $$
+        \{\{r\},\{\neg p,q\},\{\neg q,p\},\{\neg q\}\}
+        $$
+        }
+        není nesplnitelné! musíme využít, že $R(x,f(x))$ a $R(x,y)$ mají `podobnou strukturu' (jsou \alert{unifikovatelné})
+        \item klauzule $\{\neg R(x,y),Q(x)\}$ platí i po provedení libovolné substituce: \alert{$\{\neg R(x/t),Q(x/t)\}$} je důsledek $S$ pro lib. term $t$
+        \item představme si `přidání' všech takto získaných klauzulí do $S$: potom už je na ground level nesplnitelné (ale nekonečné)
+        \item \alert{unifikační algoritmus} nám dá správnou substituci \myalertinline{
+            $y/f(x)$
+        }
+        \item zahrneme už do \alert{rezolučního pravidla}, tedy \alert{rezolventou} klauzulí $\{P(c)\}$ a $\{\neg P(x),Q(x)\}$ bude klauzule $\{Q(c)\}$.
+    \end{itemize}
+ 
+\end{frame}
+
+\begin{frame}{Rezoluční pravidlo}
+    
+    \begin{itemize}
+
+        \item zahrnuje aplikaci unifikace
+        \item lze vybrat \alert{více literálů najednou}, ale musí být unifikovatelné:
+        
+        \bigskip
+
+        např. z \myexampleinline{
+        $\{R(x,f(x)),R(g(y),z)\},\{\neg R(g(c),u),P(u)\}$
+        } odvodíme rezolventu \myalertinline{
+            $\{P(f(g(c)))\}$
+        } za použití \alert{unifikace} 
+
+        \medskip
+
+        \myalertmath{
+            $$
+            \{x/g(c),y/c,z/f(g(c)),u/f(g(c))\}
+            $$
+        }
+
+        \bigskip
+
+        \item budeme vyžadovat disjunktní množiny proměnných v klauzulích; lze přejmenovat, proměnné mají \alert{lokální význam}:
+        $$
+        \models(\forall x)(\psi \land \chi) \leftrightarrow (\forall x)\psi \land (\forall x)\chi
+        $$
+        
+    \end{itemize}
+
+\end{frame}
 
 
 \section{8.2 Skolemizace}
 
 
+\begin{frame}{Ekvisplnitelná otevřená teorie}
+
+    \begin{itemize}
+        \item teorie $T$ v jazyce $L$ a $T'$ v (ne nutně stejném) jazyce $L'$ jsou  \alert{ekvisplnitelné}, pokud platí: $T$ má model $\Leftrightarrow$ $T'$ má model
+        \item zajímá nás jen [ne]splnitelnost (dokazujeme sporem)
+        \item pro převod do CNF a rezoluci potřebujeme otevřené formule 
+    \end{itemize}
+
+    \myblock{
+    \textbf{Cíl:} Ke každé teorii $T$ sestrojíme \alert{ekvisplnitelnou, otevřenou} $T'$.
+    }
+
+    \begin{enumerate}
+        \item převod do \alert{prenexní normální formy} (vytkneme kvantifikátory)
+        \item nahradíme generálními uzávěry \myalertinline{(potřebujeme sentence!)}
+        \item nahradíme sentence \alert{Skolemovými variantami} (odstranění $\exists$)
+        \item odstraníme zbývající $\forall$, máme otevřené formule
+    \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}{Prenexní normální forma}
+
+    
+    \myblock{Formule $\varphi$ je v \alert{prenexní normální formě (PNF)}, je-li následujícího tvaru, kde $Q_i\in\{\forall,\exists\}$ a formule $\varphi'$ je otevřená:
+    $$
+    (Q_1x_1)\dots(Q_nx_n)\varphi'
+    $$
+    \vspace{-16pt}
+    }
+    \begin{itemize}
+        \item $(Q_1x_1)\dots(Q_nx_n)$ je \alert{kvantifikátorový prefix}, $\varphi'$ \alert{otevřené jádro}
+        \item \alert{univerzální} formule: v PNF a všechny kvantifikátory jsou $\forall$
+    \end{itemize}
+
+    \myblock{
+    \textbf{Tvrzení:}
+        Ke každé formuli $\varphi$ existuje \alert{ekvivalentní} formule v PNF.
+    }    
+    
+    \textbf{Důkaz:} nahrazujeme podformule ekvivalentními s cílem posunout kvantifikátory blíž kořeni $\Tree(\varphi)$, dle pravidel z násl. Lemmatu.\hfill\qedsymbol
+
+
+    \myblock{
+    \textbf{Důsledek:} Existuje i ekvivalentní PNF \alert{sentence} (generální uzávěr).
+    }
+
+\end{frame}
+
+
+\begin{frame}{Pravidla vytýkání kvantifikátorů}
+
+    \myblock{
+    \textbf{Lemma:} Označme $\overline{Q}$ opačný kvantifikátor ke $Q$. Jsou-li $\varphi$ a $\psi$ formule, kde \alert{$x$ není volná v $\psi$}, potom:
+    \begin{align*}
+        \neg (Qx)\varphi\ &\sim\ (\overline{Q}x)\neg\varphi\\
+        (Qx)\varphi \land \psi\ &\sim\ (Qx)(\varphi \land \psi)\\
+        (Qx)\varphi \lor \psi\ &\sim\ (Qx)(\varphi \lor \psi)\\
+        (Qx)\varphi \limplies \psi\ &\sim\ \alert{(\overline{Q}x)}(\varphi \limplies \psi)\\
+        \psi \limplies (Qx)\varphi\ &\sim\ (Qx)(\psi \limplies \varphi)
+    \end{align*}
+    }
+
+    \textbf{Důkaz:} snadno ověříme sémanticky, nebo tablo metodou (potom ale nejsou-li sentence, musíme nahradit generálními uzávěry)\hfill\qedsymbol
+
+    \smallskip
+
+    \textbf{Pozorování:} Nahradíme-li ve $\varphi$ podformuli $\psi$ ekvivalentní $\psi'$, je i výsledná formule $\varphi'$ ekvivalentní $\varphi$. (Připomeňme: $\varphi\sim\varphi'$ právě když mají stejné modely, tj. $\models\varphi\liff\varphi'$)
+    
+\end{frame}
+
+
+\begin{frame}{Převod do PNF: příklad}
+
+    \myexamplemath{
+        $$
+        (\forall z)P(x,z)\land P(y,z)\ \limplies\ \neg(\exists x)P(x,y)
+        $$
+    }      
+    \begin{align*}
+        \sim &\ 
+        \alert{(\forall u)} P(x,\alert{u})\land P(y,z)\ \limplies\ (\forall x)\neg P(x,y)\\ \sim &\ 
+        (\forall u)(P(x,u)\land P(y,z))\ \limplies\ \alert{(\forall v)}\neg P(\alert{v},y)\\ \sim &\ 
+        (\exists u)( P(x,u)\land P(y,z)\ \limplies\ (\forall v)\neg P(v,y))\\ \sim &\ 
+        (\exists u)(\forall v)( P(x,u)\land P(y,z)\ \limplies\ \neg P(v,y))
+    \end{align*}
+    
+    \begin{itemize}
+        \item v prvím kroku přejmenujeme $z$ na $u$, \alert{nesmí být volná v $P(y,z)$}
+        \item podobně ve druhém kroku $x$ na $v$
+        \item která pravidla používáme? sledujte postup na stromu formule
+        \item chceme-li sentenci:
+        $$
+        \alert{(\forall x)(\forall y)(\forall z)}(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Poznámky}
+
+    \begin{enumerate}
+        \item proč se při vytýkání z \alert{antecedentu} mění kvantifikátor?
+        \begin{align*}
+            \alert{(Qx)\varphi \limplies \psi}&\sim\neg(Qx)\varphi \lor\psi\\&\sim\alert{(\overline{Q}x)}(\neg\varphi)\lor\psi\\
+            &\sim(\overline{Q}x)(\neg\varphi\lor\psi)\sim \alert{(\overline{Q}x)(\varphi \limplies \psi)}    
+        \end{align*}
+
+        \medskip
+    
+        \item proč nesmí být $x$ volná v $\psi$? neplatilo by, např:
+        \myexamplemath{
+        $$
+        (\exists x)P(x)\land Q(x)\ \not\sim\ (\exists x)(P(x)\land Q(x))
+        $$
+        }
+        musíme přejmenovat vázanou proměnnou $x$ na novou: 
+        
+        \myexampleinline{
+        $
+        (\exists x)P(x)\land Q(x)\ \sim\ (\exists y)P(y)\land Q(x) \sim (\exists y)(P(y)\land Q(x))
+        $
+        }
+
+        \medskip
+
+        \item PNF není jednoznačná, lze vytýkat v různém pořadí; lepší je nejprve vytknout ty, \alert{ze kterých se nakonec stanou existenční:}
+        
+        \medskip
+
+        \myalertmath{
+            $$
+            (\exists y)(\forall x)\varphi(x,y)\text{ je lepší než }(\forall x)(\exists y)\varphi(x,y)
+            $$
+        }
+        
+        \medskip
+
+        (protože ``$y$ nezávisí na $x$'')
+    \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}{Skolemova varianta}
+
+   TODO
+
+\end{frame}
+
+
+\begin{frame}{Je to konzervativní extenze}
+
+   TODO 
+
+\end{frame}
+
+
+\begin{frame}{Skolemova věta (shrnutí postupu)}
+
+    \myblock{
+    \textbf{Věta:} Každá teorie má otevřenou konzervativní extenzi.
+    }
+
+    \textbf{Důkaz} Mějme $L$-teorii $T$. Axiomy nahradíme generálními uzávěry a převedeme do PNF, máme ekvivalentní $L$-teorii $T'$. V ní každý axiom nahradíme jeho Skolemovou variantou. 
+    
+    Tím získáme teorii $T''$ v rozšířeném jazyce~$L'$. Lemma říká:
+    \begin{itemize}
+        \item $L$-redukt každého modelu $T''$ je model $T'$
+        \item každý model $T'$ lze expandovat do $L'$ na model $T''$
+       \end{itemize}
+    Neboli $T''$ je konzervativní extenzí $T'$, tedy i $T$. Je axiomatizovaná  univerzálními sentencemi, odstraníme kvantifikátorové prefixy (vezmeme jádra) a máme ekvivalentní otevřenou teorii $T'''$.    
+    \hfill\qedsymbol
+
+    \medskip
+
+    \myblock{
+    \textbf{Důsledek:} Ke každé teorii můžeme pomocí skolemizace najít ekvisplnitelnou otevřenou teorii. (A tu už snadno převedeme do CNF.)
+    }
+
+\end{frame}
+
+
 \end{document}
+
+
+
+\subsection{Skolemova varianta}
+
+Nyní jsme převedli naše axiomy na ekvivalentní sentence v prenexním tvaru. Pokud by některá sentence obsahovala pouze univerzální kvantifikátory, tj. byla tvaru 
+$$(\forall x_1)\dots(\forall x_n)\varphi(x_1,\dots,x_n)$$ 
+kde $\varphi$ je otevřená, mohli bychom ji prostě nahradit jejím otevřeným jádrem $\varphi$, které je jí v tomto případě ekvivalentní. Jak si ale poradit s existenčními kvantifikátory, např. $(\exists x)\varphi(x)$, $(\forall x)(\exists y)\varphi(x,y)$, apod? Ty nejprve nahradíme jejich \alert{Skolemovou variantou}.
+
+\begin{definition}[Skolemova varianta]
+Mějme $L$-sentenci $\varphi$ v PNF, a nechť všechny její vázané proměnné jsou různé. Nechť existenční kvantifikátory z prefixu $\varphi$ jsou $(\exists y_1),\dots,(\exists y_n)$ (v tomto pořadí), a nechť pro každé $i$ jsou $(\forall x_1),\dots,(\forall x_{n_i})$ právě všechny univerzální kvantifikátory předcházející kvantifikátor $(\exists y_i)$ v prefixu $\varphi$. 
+
+Označme $L'$ rozšíření $L$ o \alert{nové} $n_i$-ární funkční symboly $f_1,\dots,f_n$, kde symbol $f_i$ je arity $n_i$, pro každé $i$. \alert{Skolemova varianta} sentence $\varphi$ je $L'$-sentence $\varphi_S$ vzniklá z $\varphi$ tak, že pro každé $i=1,\dots,n$:
+\begin{itemize}
+    \item odstraníme z prefixu kvantifikátor $(\exists y_i)$, a
+    \item substituujeme za proměnnou $y_i$ term $f_i(x_1,\dots,x_{n_i})$.
+\end{itemize}
+Tomuto procesu říkáme také \alert{skolemizace}.
+\end{definition}
+
+\begin{example}
+    Skolemova varianta sentence 
+    $$\varphi=(\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1,x_1,x_2,y_2,x_3)$$
+    je sentence
+    $$
+    \varphi_S=(\forall x_1)(\forall x_2)(\forall x_3)R(f_1,x_1,x_2,f_2(x_1,x_2),x_3)
+    $$
+    kde $f_1$ je nový konstantní symbol a $f_2$ je nový binární funkční symbol.
+\end{example}
+
+\begin{remark}
+    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Například, máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
+
+    Je také důležité, aby každý symbol použitý při skolemizaci byl opravdu nový, jeho jedinou `rolí' v celé teorii musí být reprezentovat `existující' prvky v této formuli.
+\end{remark} 
+
+V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
+
+\begin{lemma}\label{lemma:skolem-variant-conservative-extension}
+Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence 
+$$
+(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$$
+kde $f$ je nový funkční symbol. Potom:
+\begin{enumerate}[(i)]
+    \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
+    \item každý model $\varphi$ lze expandovat na model $\varphi'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    Nejprve dokažme část (i): Mějme model $\A'\models\varphi'$ a nechť $\A$ je jeho redukt na jazyk $L$. Pro každé ohodnocení proměnných $e$ platí $\A\models\psi[e(y/a)]$ pro $a=(f(x_1,\dots,x_n))^{\A'}[e]$, tedy $\A\models\varphi$.
+    
+    Nyní část (ii): Protože $\A\models\varphi$, existuje funkce $f^A:A^n\to A$ taková, že pro každé ohodnocení proměnných $e$ platí $\A\models \psi[e(y/a)]$, kde $a=f^A(e(x_1),\dots,e(x_n))$. To znamená, že expanze struktury $\A$ vzniklá přidáním funkce $f^A$ je modelem $\varphi'$.    
+\end{proof}
+
+\begin{remark}
+    Expanze modelu ve druhé části tvrzení nemusí být (a typicky není) jednoznačná, na rozdíl od extenze o definici nového funkčního symbolu.
+\end{remark}
+
+Aplikujeme-li předchozí lemma opakovaně (postupně pro všechny existenční kvantifikátory), získáme následující důsledek:
+
+\begin{corollary}
+    Sentence $\varphi$ a její skolemova varianta $\varphi_S$ jsou ekvisplnitelné.
+\end{corollary}
+
 
 

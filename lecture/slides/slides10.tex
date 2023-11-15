@@ -34,6 +34,180 @@
 \section{8.3 Grounding}
 
 
+\begin{frame}{Grounding}
+
+    \begin{itemize}
+        \item \alert{základní (ground) instance} otevřené $\varphi$ ve volných proměnných $x_1,\dots,x_n$ je $\varphi(x_1/t_1,\dots,x_n/t_n)$, kde vš. $t_i$ jsou konstantní
+        
+        \bigskip
+        
+        \myblock{\textbf{Herbrandova věta} říká, že je-li \alert{otevřená} teorie \alert{nesplnitelná}, lze to doložit ``na konkrétních prvcích'': existuje konečně mnoho \alert{základních instancí} axiomů, jejichž konjunkce je nesplnitelná}
+        
+        \bigskip
+        \item např. pro \myexampleinline{
+            $T=\{P(x,y)\lor R(x,y),\neg P(c,y),\neg R(x,f(x))\}$
+        } substituujeme \alert{konstantní} termy $\{x/c,y/f(c)\}$:
+        
+        \myalertmath{\vspace{-12pt}
+            $$
+            (P(c,f(c))\lor R(c,f(c)))\ \land\ \neg P(c,f(c))\ \land\ \neg R(c,f(c))
+            $$
+        } 
+
+        \item základní atomické sentence chápeme jako prvovýroky: 
+        
+        \myalertmath{
+            $$
+            (p_1 \lor p_2) \land \neg p_1 \land \neg p_2
+            $$
+        }
+
+        \item to už snadno zamítneme výrokovou rezolucí
+        \item $p_1$ znamená ``platí $P(c,f(c))$'', $p_2$ znamená ``platí $R(c,f(c))$''        
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Přímá redukce do výrokové logiky}
+
+    Herbrandova věta + korektnost a úplnost výrokové rezoluce dává následující, neefektivní postup ($S'$ je moc velká, i nekonečná):
+    
+    \medskip
+
+    \myalert{
+    \begin{enumerate}
+        \item $S$ $\rightsquigarrow$ $S'$ = množina všech základních instancí klauzulí z $S$
+        \item atomické sentence v $S'$ chápeme jako prvovýroky
+        \item $S$ nesplnitelná $\Leftrightarrow$ $S'$ zamítnutelná `na úrovni výrokové logiky'
+    \end{enumerate}
+    }
+    
+    \medskip
+
+    Např. pro \myexampleinline{
+        $S=\{\{P(x,y),R(x,y)\},\{\neg P(c,y)\},\{\neg R(x,f(x))\}\}$
+    }
+    {\footnotesize
+    \begin{align*}
+        S'=\{&\{P(c,c),R(c,c)\},\{P(c,f(c)),R(c,f(c))\},\{P(f(c),c),R(f(c),c)\},\dots,\\ 
+        &\{\neg P(c,c)\}, \{\neg P(c,f(c))\},\{\neg P(c,f(f(c)))\},\{\neg P(c,f(f(f(c))))\}, \dots,\\
+        &\{\neg R(c,f(c))\}, \{\neg R(f(c),f(f(c)))\},\{\neg R(f(f(c)),f(f(f(c))))\},\dots\}    
+    \end{align*}
+    }
+    $S'$ je nesplnitelná obsahuje konečnou nesplnitelnou podmnožinu:
+    $$
+    \{\{P(c,f(c)),R(c,f(c))\},\{\neg P(c,f(c))\},\{\neg R(c,f(c))\}\}\proves_R\square
+    $$
+
+    \myalertinline{\textbf{Efektivnější} je hledat vhodné základní instance \alert{unifikací} [za chvíli]}
+
+\end{frame}
+
+
+\begin{frame}{Herbrandův model}
+
+    \myblock{
+    Mějme jazyk $L=\langle\mathcal R,\mathcal F\rangle$ s alespoň jedním konstantním symbolem. $L$-struktura $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$ je \alert{Herbrandův model}, jestliže:
+    \begin{itemize}
+        \item $A$ je množina všech konst. $L$-termů (\alert{Herbrandovo univerzum})
+        \item pro každý $n$-ární $f\in\mathcal F$ a (konstantní) $\text{``$t_1$''},\dots,\text{``$t_n$''}\in A$:
+        \myalertmath{
+        $$
+        f^\A(\text{``$t_1$''},\dots,\text{``$t_n$''})=\text{``$f(t_1,\dots,t_n)$''}
+        $$
+        }
+        \item speciálně, pro konstantní symbol $c\in\mathcal F$ je $c^\A=\text{``$c$''}$
+        \item na relační symboly neklademe podmínky
+    \end{itemize}
+    }
+
+    \medskip
+
+    Např. \myexampleinline{
+        $L=\langle P,f,c\rangle$
+    } ($P$ unární rel., $f$ binární funkční, $c$ konstantní)
+    \alert{Herbrandův model} je každá struktura $\A=\langle A,P^\A,f^\A,c^\A\rangle$, kde
+    \begin{itemize}\small
+        \item  $A=\{\text{``$c$''},\text{``$f(c,c)$''},\text{``$f(c,f(c,c))$''},\text{``$f(f(c,c),c)$''}\dots\}$
+        \item $c^\A=\text{``$c$''}$
+        \item $f^\A(\text{``$c$''},\text{``$c$''})=\text{``$f(c,c)$''}$, $f^\A(\text{``$c$''},\text{``$f(c,c)$''})=\text{``$f(c,f(c,c))$''}$, $f^\A(\text{``$f(c,c)$''},\text{``$c$''})=\text{``$f(f(c,c),c)$''}$, atd.
+        \item $P^\A\subseteq A$ může být libovolná
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Herbrandova věta}
+
+    \myblock{
+    \textbf{Věta (Herbrandova):}
+        Je-li $T$ otevřená, v jazyce bez rovnosti a s alespoň jedním konstantním symbolem, potom:
+        \begin{itemize}
+            \item buď má $T$ \alert{Herbrandův model}, nebo
+            \item existuje konečně mnoho základních instancí axiomů $T$, jejichž konjunkce je nesplnitelná.
+        \end{itemize}
+    }
+    
+    \textbf{Důkaz:}
+        \alert{$T_\text{ground}$} = \myalertinline{množina všech základních instancí axiomů $T$}
+
+        \vspace{-3pt}
+        
+        Zkonstruujeme \alert{``systematické tablo''} $\tau$ z $T_\text{ground}$ s $\F\bot$ v kořeni, ale z jazyka $L$, bez rozšíření o pomocné konstantní symboly na $L_C$. (Nepotřebujeme je, protože v $T_\text{ground}$ nejsou kvantifikátory.)
+        
+        Pokud má $\tau$ bezespornou větev, je \alert{``kanonický model''} (opět bez pomocných symbolů) Herbrandovým modelem $T$. 
+        
+        Jinak je $\tau$ \alert{důkaz sporu}, $T_\text{ground}$ (a tedy i $T$) je nesplnitelná. Tablo $\tau$ je konečné, používá jen konečně mnoho $\alpha_\text{ground}\in T_\text{ground}$, jejich konjunkce už je nesplnitelná.\hfill\qedsymbol
+    
+
+\end{frame}
+
+
+\begin{frame}{Poznámky}
+
+    \begin{itemize}
+        \item konstatní symbol potřebujeme, aby existovaly vůbec nějaké konstantní termy (ale není-li v $L$ žádný, můžeme ho přidat)
+        \item Herbrandův model je podobný kanonickému, ale nepřidáváme pomocné symboly, a neříkáme nic o relacích
+        \item je-li jazyk s rovností, najdeme Herbrandův model pro $T^*$ (přidané axiomy rovnosti) a faktorizujeme podle $=^A$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Důsledky Herbrandovy věty}
+
+    \myblock{
+    \textbf{Důsledek:}
+    Mějme otevřenou $\varphi(x_1,\dots,x_n)$ v $L$ s konst. symbolem. Potom existuje $m\in\mathbb N$ a konstantní $L$-termy $t_{ij}$ ($i\in[m],j\in[n]$), že sentence \myalertinline{
+        $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$
+    } je pravdivá, právě když je následující formule (výroková) tautologie:
+
+    \vspace{-12pt}
+    $$
+    \varphi(x_1/t_{11},\dots,x_n/t_{1n})\lor \dots \lor \varphi(x_1/t_{m1},\dots,x_n/t_{mn})
+    $$
+    \vspace{-16pt}
+    }
+
+    \textbf{Důkaz:}
+    Je \alert{pravdivá}, právě když $(\forall x_1)\dots(\forall x_n)\neg\varphi$ neboli $\neg\varphi$ je \alert{nesplnitelná}. Stačí aplikovat Herbrandovu větu na $T=\{\neg\varphi\}$.\hfill\qedsymbol
+
+    \bigskip
+
+    \myblock{
+    \textbf{Důsledek:}
+    Je-li $T$ otevřená v jazyce s konstantním symbolem, potom $T$ má model, právě když má model teorie $T_\text{ground}$.
+    }
+
+    \textbf{Důkaz:}
+    \alert{\Large$\Rightarrow$} V modelu $T$ platí i všechny základní instance axiomů. Je tedy i modelem $T_\text{ground}$. 
+    
+    \alert{\Large$\Leftarrow$} Pokud $T$ nemá model, podle Herbrandovy věty je nějaká konečná podmnožina teorie $T_\text{ground}$ nesplnitelná.\hfill\qedsymbol
+
+\end{frame}
+
+
 \section{8.4 Unifikace}
 
 

@@ -179,6 +179,18 @@
 
     \myblock{
     \textbf{Důsledek:}
+    Je-li $T$ otevřená v jazyce s konstantním symbolem, potom $T$ má model, právě když má model teorie $T_\text{ground}$.
+    }
+
+    \textbf{Důkaz:}
+    \alert{\Large$\Rightarrow$} V modelu $T$ platí i všechny základní instance axiomů. Je tedy i modelem $T_\text{ground}$. 
+    
+    \alert{\Large$\Leftarrow$} Pokud $T$ nemá model, podle Herbrandovy věty je nějaká konečná podmnožina teorie $T_\text{ground}$ nesplnitelná.\hfill\qedsymbol
+
+    \bigskip
+
+    \myblock{
+    \textbf{Důsledek:}
     Mějme otevřenou $\varphi(x_1,\dots,x_n)$ v $L$ s konst. symbolem. Potom existuje $m\in\mathbb N$ a konstantní $L$-termy $t_{ij}$ ($i\in[m],j\in[n]$), že sentence \myalertinline{
         $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$
     } je pravdivá, právě když je následující formule (výroková) tautologie:
@@ -192,18 +204,6 @@
 
     \textbf{Důkaz:}
     Je \alert{pravdivá}, právě když $(\forall x_1)\dots(\forall x_n)\neg\varphi$ neboli $\neg\varphi$ je \alert{nesplnitelná}. Stačí aplikovat Herbrandovu větu na $T=\{\neg\varphi\}$.\hfill\qedsymbol
-
-    \bigskip
-
-    \myblock{
-    \textbf{Důsledek:}
-    Je-li $T$ otevřená v jazyce s konstantním symbolem, potom $T$ má model, právě když má model teorie $T_\text{ground}$.
-    }
-
-    \textbf{Důkaz:}
-    \alert{\Large$\Rightarrow$} V modelu $T$ platí i všechny základní instance axiomů. Je tedy i modelem $T_\text{ground}$. 
-    
-    \alert{\Large$\Leftarrow$} Pokud $T$ nemá model, podle Herbrandovy věty je nějaká konečná podmnožina teorie $T_\text{ground}$ nesplnitelná.\hfill\qedsymbol
 
 \end{frame}
 

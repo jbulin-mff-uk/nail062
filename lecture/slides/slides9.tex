@@ -474,15 +474,60 @@
 
 \begin{frame}{Skolemova varianta}
 
-   TODO
+    Je-li PNF sentence \alert{univerzální}, tvaru $(\forall x_1)\dots(\forall x_n)\psi(x_1,\dots,x_n)$, nahradíme otevřeným jádrem $\psi$. Jinak musíme provést \alert{skolemizaci}:
+
+    \medskip
+
+    \myblock{
+    Buď $\varphi$ $L$-\alert{sentence} v PNF, všechny vázané proměnné různé. Nechť
+    \begin{itemize}
+        \item existenční kvantifikátory jsou $(\exists y_1),\dots,(\exists y_n)$ (v tom pořadí)
+        \item pro každé $i$ jsou $(\forall x_1),\dots,(\forall x_{n_i})$ právě všechny univerzální kvantifikátory předcházející $(\exists y_i)$ v prefixu $\varphi$
+    \end{itemize}
+    Buď $L'$ rozšíření $L$ o \alert{nové} funkční symboly $f_1,\dots,f_n$, kde $f_i$ je $n_i$-ární. \alert{Skolemova varianta} $\varphi$ je $L'$-sentence $\varphi_S$ vzniklá \myalertinline{
+        odstraněním $(\exists y_i)$
+    } a substitucí termu \myalertinline{
+        $f_i(x_1,\dots,x_{n_i})$ za $y_i$
+    }, postupně pro $i=1,\dots,n$. 
+    }
+
+    \medskip
+
+    \myexampleamsmath{
+    \begin{align*}
+        \varphi&=\textcolor{red}{(\exists y_1)}(\forall x_1)(\forall x_2)\textcolor{blue}{(\exists y_2)}(\forall x_3)\ R(\textcolor{red}{y_1},x_1,x_2,\textcolor{blue}{y_2},x_3)\\
+        \varphi_S&=(\forall x_1)(\forall x_2)(\forall x_3)\ R(\textcolor{red}{f_1},x_1,x_2,\textcolor{blue}{f_2(x_1,x_2)},x_3) 
+    \end{align*}    
+    }
+
+    \begin{itemize}
+        \item \myalertinline{musí být sentence!} pro \myexampleinline{
+            $(\exists y)E(x,y)$} ne \xcancel{$E(x,c)$} ale $E(x,f(x))$
+        \item \myalertinline{nové symboly!} (jedinou rolí je reprezentovat `svědky' ve $\varphi$)
+    \end{itemize}
 
 \end{frame}
 
 
 \begin{frame}{Je to konzervativní extenze}
 
-   TODO 
+    \myblock{
+    \textbf{Lemma:} Buď $\varphi$ $L$-sentence $(\forall x_1)\dots(\forall x_n)(\exists y)\psi$, $f$ nový funkční symbol, a $\varphi'$ sentence 
+    $(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$. Potom:
+    \begin{enumerate}[(i)]
+        \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
+        \item každý model $\varphi$ lze expandovat na model $\varphi'$.
+    \end{enumerate}
+    }
 
+    \textbf{Důkaz:} \alert{(i)} Buď $\A'$ model $\varphi'$, $\A$ jeho $L$-redukt, $e:\Var\to\A$. $\A\models\varphi[e]$ platí neboť $\A\models\psi[e(y/a)]$ pro $a=(f(x_1,\dots,x_n))^{\A'}[e]$.
+    
+    \alert{(ii)} Protože $\A\models\varphi$, existuje funkce $f^A:A^n\to A$, že pro každé ohodnocení $e$ platí $\A\models \psi[e(y/a)]$ pro $a=f^A(e(x_1),\dots,e(x_n))$. To znamená, že expanze o funkci $f^A$ splňuje $\varphi'$.\hfill\qedsymbol 
+    \begin{itemize}
+        \item říká, že $\{\varphi'\}$ je konzervativní extenze $\{\varphi\}$, opakovaná aplikace dává \alert{Skolemovu větu} (výsledek skolemizace je otevřená konzervativní extenze, speciálně je ekvisplnitelná)  
+        \item expanze v (ii) není jednoznačná (na rozdíl od extenze o definici nového funkčního symbolu)      
+    \end{itemize}
+   
 \end{frame}
 
 
@@ -512,70 +557,3 @@
 
 
 \end{document}
-
-
-
-\subsection{Skolemova varianta}
-
-Nyní jsme převedli naše axiomy na ekvivalentní sentence v prenexním tvaru. Pokud by některá sentence obsahovala pouze univerzální kvantifikátory, tj. byla tvaru 
-$$(\forall x_1)\dots(\forall x_n)\varphi(x_1,\dots,x_n)$$ 
-kde $\varphi$ je otevřená, mohli bychom ji prostě nahradit jejím otevřeným jádrem $\varphi$, které je jí v tomto případě ekvivalentní. Jak si ale poradit s existenčními kvantifikátory, např. $(\exists x)\varphi(x)$, $(\forall x)(\exists y)\varphi(x,y)$, apod? Ty nejprve nahradíme jejich \alert{Skolemovou variantou}.
-
-\begin{definition}[Skolemova varianta]
-Mějme $L$-sentenci $\varphi$ v PNF, a nechť všechny její vázané proměnné jsou různé. Nechť existenční kvantifikátory z prefixu $\varphi$ jsou $(\exists y_1),\dots,(\exists y_n)$ (v tomto pořadí), a nechť pro každé $i$ jsou $(\forall x_1),\dots,(\forall x_{n_i})$ právě všechny univerzální kvantifikátory předcházející kvantifikátor $(\exists y_i)$ v prefixu $\varphi$. 
-
-Označme $L'$ rozšíření $L$ o \alert{nové} $n_i$-ární funkční symboly $f_1,\dots,f_n$, kde symbol $f_i$ je arity $n_i$, pro každé $i$. \alert{Skolemova varianta} sentence $\varphi$ je $L'$-sentence $\varphi_S$ vzniklá z $\varphi$ tak, že pro každé $i=1,\dots,n$:
-\begin{itemize}
-    \item odstraníme z prefixu kvantifikátor $(\exists y_i)$, a
-    \item substituujeme za proměnnou $y_i$ term $f_i(x_1,\dots,x_{n_i})$.
-\end{itemize}
-Tomuto procesu říkáme také \alert{skolemizace}.
-\end{definition}
-
-\begin{example}
-    Skolemova varianta sentence 
-    $$\varphi=(\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1,x_1,x_2,y_2,x_3)$$
-    je sentence
-    $$
-    \varphi_S=(\forall x_1)(\forall x_2)(\forall x_3)R(f_1,x_1,x_2,f_2(x_1,x_2),x_3)
-    $$
-    kde $f_1$ je nový konstantní symbol a $f_2$ je nový binární funkční symbol.
-\end{example}
-
-\begin{remark}
-    Nezapomeňte, že při skolemizaci musíme vycházet ze sentence! Například, máme-li formuli $(\exists y)E(x,y)$, není $E(x,c)$ její Skolemova varianta. Musíme napřed provést generální uzávěr $(\forall x)(\exists y)E(x,y)$, a potom správně skolemizovat jako $(\forall x)E(x,f(x))$, což je ekvivalentní otevřené formuli $E(x,f(x))$ (která říká něco mnohem slabšího než $E(x,c)$).
-
-    Je také důležité, aby každý symbol použitý při skolemizaci byl opravdu nový, jeho jedinou `rolí' v celé teorii musí být reprezentovat `existující' prvky v této formuli.
-\end{remark} 
-
-V následujícím lemmatu ukážeme klíčovou vlastnost skolemovy varianty:
-
-\begin{lemma}\label{lemma:skolem-variant-conservative-extension}
-Mějme $L$-sentenci $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ a nechť $\varphi'$ je sentence 
-$$
-(\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$$
-kde $f$ je nový funkční symbol. Potom:
-\begin{enumerate}[(i)]
-    \item $L$-redukt každého modelu $\varphi'$ je modelem $\varphi$, a 
-    \item každý model $\varphi$ lze expandovat na model $\varphi'$.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-    Nejprve dokažme část (i): Mějme model $\A'\models\varphi'$ a nechť $\A$ je jeho redukt na jazyk $L$. Pro každé ohodnocení proměnných $e$ platí $\A\models\psi[e(y/a)]$ pro $a=(f(x_1,\dots,x_n))^{\A'}[e]$, tedy $\A\models\varphi$.
-    
-    Nyní část (ii): Protože $\A\models\varphi$, existuje funkce $f^A:A^n\to A$ taková, že pro každé ohodnocení proměnných $e$ platí $\A\models \psi[e(y/a)]$, kde $a=f^A(e(x_1),\dots,e(x_n))$. To znamená, že expanze struktury $\A$ vzniklá přidáním funkce $f^A$ je modelem $\varphi'$.    
-\end{proof}
-
-\begin{remark}
-    Expanze modelu ve druhé části tvrzení nemusí být (a typicky není) jednoznačná, na rozdíl od extenze o definici nového funkčního symbolu.
-\end{remark}
-
-Aplikujeme-li předchozí lemma opakovaně (postupně pro všechny existenční kvantifikátory), získáme následující důsledek:
-
-\begin{corollary}
-    Sentence $\varphi$ a její skolemova varianta $\varphi_S$ jsou ekvisplnitelné.
-\end{corollary}
-
-
-

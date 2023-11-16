@@ -211,6 +211,104 @@
 \section{8.4 Unifikace}
 
 
+\begin{frame}{Příklady substitucí}
+
+    Místo \alert{všech základních} použijeme \alert{`vhodné'} substituce (\alert{unifikace}):
+
+    \myexampleinline{
+        1. $\{P(x),Q(x,a)\}$ a $\{\neg P(y),\neg Q(b,y)\}$
+        } \vspace{-6pt}
+        \begin{itemize}
+            \item substitucí \myalertinline{
+            $\{x/b,y/a\}$
+            } získáme $\{P(b),Q(b,a)\}$ a $\{\neg P(a),\neg Q(b,a)\}$, z nich rezolucí $\{P(b),\neg P(a)\}$
+            \item nebo \myalertinline{
+            $\{x/y\}$
+            } a rezolucí přes $P(y)$ máme $\{Q(y,a),\neg Q(b,y)\}$
+            \item šlo by např. \myalertinline{
+                $\{x/a\}$
+            }, získat $\{Q(a,a),\neg Q(b,a)\}$, ale to je \alert{horší}   
+        \end{itemize}         
+          
+    \myexampleinline{
+        2. $\{P(x),Q(x,z)\}$ a $\{\neg P(y),\neg Q(f(y),y)\}$
+    } \vspace{-6pt}
+        \begin{itemize}
+            \item lze použít \myalertinline{
+                $\{x/f(a),y/a,z/a\}$
+                }, získat $\{P(f(a)),Q(f(a),a)\}$ a $\{\neg P(a),\neg Q(f(a),a)\}$, rezolucí \alert{$\{P(f(a)),\neg P(a)\}$}
+            \item \alert{lepší} je \myalertinline{
+                $\{x/f(z),y/z\}$
+            }, dává $\{P(f(z)),Q(f(z),z)\}$ a $\{\neg P(z),\neg Q(f(z),z)\}$, rezolventu \alert{$\{P(f(z)),\neg P(z)\}$}
+            \item proč lepší? \alert{obecnější}, rezolventa `říká více': {\small$\{P(f(a)),\neg P(a)\}$} je důsledkem {\small$\{P(f(z)),\neg P(z)\}$}, ale nejsou ekvivalentní
+            \item $\{x/f(a),y/a,z/a\}$ získáme \alert{složením} $\{x/f(z),y/z\}$ a $\{z/a\}$
+        \end{itemize}            
+
+\end{frame}
+
+
+\begin{frame}{Substituce formálně}
+
+    \begin{itemize}
+        \item \alert{substituce} je konečná množina \alert{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$}, kde $x_i$ jsou navzájem různé proměnné, $t_i$ jsou termy, $t_i$ není $x_i$
+        \begin{itemize}
+            \item \alert{základní}: všechny termy $t_i$ jsou konstantní
+            \item \alert{přejmenování proměnných}: vš. $t_i$ navzájem různé proměnné
+        \end{itemize}
+        \item \alert{výraz} je term nebo literál (atomická formule nebo její negace)
+        \item \alert{instance} výrazu $E$ \alert{při substituci} $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, \alert{$E\sigma$}: simultánně nahradíme  všechny výskyty $x_i$ za termy $t_i$
+        \item pro množinu výrazů $S$ je \alert{$S\sigma=\{E\sigma\mid E\in S\}$}
+        
+        \bigskip
+        
+        \item simultánně, aby výskyt $x_i$ v termu $t_j$ nevedl ke zřetězení
+        \item např. \myexampleinline{
+            $S=\{P(x),R(y,z)\}$, $\sigma=\{x/f(y,z),y/x,z/c\}$
+        }
+        $$
+        S\sigma=\{P(f(y,z)),R(x,c)\}
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Skládání substitucí}
+    
+
+\end{frame}
+
+
+\begin{frame}{Vlastnosti skládání}
+
+    
+\end{frame}
+
+
+\begin{frame}{Unifikace}
+    
+
+\end{frame}
+
+
+\begin{frame}{Unifikační algoritmus}
+   
+
+\end{frame}
+
+
+\begin{frame}{Ukázkový běh}
+    
+
+\end{frame}
+
+
+\begin{frame}{Důkaz korektnosti}
+    
+
+\end{frame}
+
+
 \section{8.5 Rezoluční metoda}
 
 

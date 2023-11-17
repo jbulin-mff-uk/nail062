@@ -249,6 +249,7 @@
 
 \begin{frame}{Substituce formálně}
 
+    \myblock{
     \begin{itemize}
         \item \alert{substituce} je konečná množina \alert{$\sigma=\{x_1/t_1,\dots,x_n/t_n\}$}, kde $x_i$ jsou navzájem různé proměnné, $t_i$ jsou termy, $t_i$ není $x_i$
         \begin{itemize}
@@ -258,10 +259,13 @@
         \item \alert{výraz} je term nebo literál (atomická formule nebo její negace)
         \item \alert{instance} výrazu $E$ \alert{při substituci} $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, \alert{$E\sigma$}: simultánně nahradíme  všechny výskyty $x_i$ za termy $t_i$
         \item pro množinu výrazů $S$ je \alert{$S\sigma=\{E\sigma\mid E\in S\}$}
-        
-        \bigskip
-        
-        \item simultánně, aby výskyt $x_i$ v termu $t_j$ nevedl ke zřetězení
+    \end{itemize}
+    }
+
+    \bigskip
+    
+    \begin{itemize}
+        \item simultánně proto, aby výskyt $x_i$ v termu $t_j$ nevedl ke zřetězení
         \item např. \myexampleinline{
             $S=\{P(x),R(y,z)\}$, $\sigma=\{x/f(y,z),y/x,z/c\}$
         }
@@ -275,41 +279,330 @@
 
 \begin{frame}{Skládání substitucí}
     
+    \begin{itemize}
+        \item substituce lze \alert{skládat}, \alert{$\sigma\tau$} znamená nejprve $\sigma$ a potom~$\tau$
+        \item chceme, aby platilo \alert{$E(\sigma\tau)=(E\sigma)\tau$}, pro libovolný výraz $E$
+        \item např. pro výraz \myexampleinline{
+            $E=P(x,w,u)$
+        } a substituce
+        $$
+        \sigma=\{x/f(y),w/v\}\qquad\tau=\{x/a,y/g(x),v/w,u/c\}
+        $$
+        máme $E\sigma=P(f(y),v,u)$ a $(E\sigma)\tau=P(f(g(x)),w,c)$, takže:
+        $$
+        \sigma\tau=\{x/f(g(x)),y/g(x),v/w,u/c\}
+        $$
+        \item skládání není komutativní, $\sigma\tau$ je (typicky) jiná než $\tau\sigma$, zde
+        $$
+        \tau\sigma=\{x/a,y/g(f(y)),u/c,w/v\}
+        $$
+        \item ale je asociativní (takže nemusíme psát závorky v $\sigma_1\sigma_2\cdots\sigma_n$)
+    \end{itemize}
+
+    \myblock{
+        Buď $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$, označme $X=\{x_1,\dots,x_n\}$ a $Y=\{y_1,\dots,y_m\}$. \alert{Složení $\sigma$ a $\tau$} je substituce
+        \vspace{-6pt}
+        $$
+        \sigma\tau=\{x_i/t_i\tau\mid x_i\in X,x_i\neq t_i\tau\}\cup\{y_j/s_j\mid y_j\in Y\setminus X\}
+        $$        
+    }
 
 \end{frame}
 
 
 \begin{frame}{Vlastnosti skládání}
 
+    \myblock{
+        \textbf{Tvrzení:} Pro libovolné substituce $\sigma$, $\tau$, $\varrho$ a výraz $E$ platí:
+        \vspace{-6pt}
+        \begin{center}
+            (i)  $(E\sigma)\tau=E(\sigma\tau)$ \qquad
+            (ii) $(\sigma\tau)\varrho=\sigma(\tau\varrho)$
+        \end{center}
+        
+    }
+
+    \medskip
+
+    \textbf{Důkaz:} \alert{(i)} Buď $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ a $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. Stačí pro $E$ proměnnou (substituce nemění ostatní symboly):
+    \begin{itemize}
+        \item pro $E=x_i$ je $E\sigma=t_i$ a $(E\sigma)\tau=t_i\tau=E(\sigma\tau)$
+        \item pro $E=y_j\notin X$ je $E\sigma=E$ a $(E\sigma)\tau=E\tau=s_j=E(\sigma\tau)$
+        \item je-li $E$ jiná proměnná, potom $(E\sigma)\tau=E=E(\sigma\tau)$.
+    \end{itemize}
+    \alert{(i)} opakovaným užitím (i) máme pro lib. výraz, tedy i proměnnou:
+    $$
+    E((\sigma\tau)\varrho)=(E(\sigma\tau))\varrho=((E\sigma)\tau)\varrho=(E\sigma)(\tau\varrho)=E(\sigma(\tau\varrho))
+    $$
+    Z toho plyne, že $(\sigma\tau)\varrho$ a $\sigma(\tau\varrho)$ jsou touž substitucí. 
     
+    (Podrobněji, zřejmě platí: $\pi=\{z_1/v_1,\dots,z_k/v_k\}$ právě když $z_i\pi=v_i$ a $E\pi=E$ je-li $E$ proměnná různá od všech $z_i$.) \hfill\qedsymbol
+ 
+
 \end{frame}
 
 
 \begin{frame}{Unifikace}
+        
+    \myblock{
+    \begin{itemize}
+        \item \alert{unifikace} pro $S=\{E_1,\dots,E_n\}$ je substituce $\sigma$ taková, že $E_1\sigma=E_2\sigma=\cdots =E_n\sigma$, tj.  $S\sigma$ obsahuje jediný výraz
+        \item pokud má $S$ unifikaci, je \alert{unifikovatelná}
+        \item unifikace pro $S$ je \alert{nejobecnější}, pokud pro každou unifikaci $\tau$ pro $S$ existuje substituce $\lambda$ taková, že $\tau=\sigma\lambda$        
+    \end{itemize}
+    }
     
+    NB: různé nejobecnějších unifikace pro $S$ se liší jen přejmenováním proměnných
+    
+    Např. pro \myexampleinline{
+        $S=\{P(f(x),y),P(f(a),w)\}$
+    } 
+
+    \begin{itemize}
+        \item $\sigma=\{x/a,y/w\}$ je nejobecnější unifikace
+        \item $\tau=\{x/a,y/b,w/b\}$ je unifikace, ale není nejobecnější, nelze z ní získat např. unifikaci $\varrho=\{x/a, y/c, w/c\}$
+        \item z nejobecnější unifikace $\sigma$ získáme $\tau=\sigma\lambda$ pro $\lambda=\{w/b\}$
+    \end{itemize}
 
 \end{frame}
 
 
 \begin{frame}{Unifikační algoritmus}
    
+    \vspace{-6pt}
+    \begin{itemize}
+        \item postupně od začátku výrazů aplikuje substituce %tak, aby se výrazy stávaly více podobnými
+        \item buď $p$ nejlevější pozice, na které se nějaké dva výrazy z $S$ liší
+        \item \alert{$D(S)$} je množina všech podvýrazů začínajících na pozici $p$
+        \item \myexampleinline{\small
+            $S=\{P(x,y),P(f(x),z),P(z,f(x))\}, p=3, D(S)=\{x,f(x),z\}$
+        }  
+    \end{itemize}
+    
+    \medskip
+
+    \myblock{
+    \textbf{vstup}: konečná množina výrazů $S\neq\emptyset$\\
+    \textbf{výstup:} nejobecnější unifikace $\sigma$ nebo info, že není unifikovatelná
+    
+    \begin{enumerate}[(1)]\setcounter{enumi}{-1}
+        \item nastav $S_0:=S$, $\sigma_0:=\emptyset$, $k:=0$
+        \item pokud $|S_k|=1$, vrať $\sigma=\sigma_0\sigma_1\cdots \sigma_k$
+        \item zjisti, zda je v $D(S_k)$ proměnná $x$ a term $t$ \alert{neobsahující} $x$
+        \item pokud ano, nastav $\sigma_{k+1}:=\{x/t\}$, $S_{k+1}:=S_k\sigma_{k+1}$, $k:=k+1$, a jdi na (1)
+        \item pokud ne, odpověz, že $S$ není unifikovatelná
+    \end{enumerate}
+    }
+
+    NB: hledání $x$ a $t$ v kroku (2) je relativně výpočetně náročné
 
 \end{frame}
 
 
 \begin{frame}{Ukázkový běh}
+    \vspace{-6pt}
+    \myexampleinline{\small
+    $S=S_0=\{P(f(y,g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),y)\}$
+    }
+
+    \vspace{-1pt}
     
+    \alert{($k=0$)} $|S_0|>1$, $D(S_0)=\{y,h(w),h(b)\}$, proměnná $y$ není v $h(w)$, nastavíme $\sigma_1:=\{y/h(w)\}$ a $S_1=S_0\sigma_1$
+    
+    \myexampleinline{\small
+    $S_1=\{P(f(h(w),g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),h(w))\}$
+    }
+
+    \vspace{-1pt}
+
+    \alert{($k=1$)} $D(S_1)=\{w,b\}$, $\sigma_2=\{w/b\}$, $S_2=S_1\sigma_2$    
+    
+    \myexampleinline{\small
+    $S_2=\{P(f(h(b),g(z)),h(b)),\ P(f(h(b),g(a)),t)\}$
+    }
+
+    \vspace{-1pt}
+        
+    \alert{($k=2$)} $D(S_2)=\{z,a\}$, $\sigma_3=\{z/a\}$, $S_3=S_2\sigma_3$    
+    
+    \myexampleinline{\small
+    $S_3=\{P(f(h(b),g(a)),h(b)),\ P(f(h(b),g(a)),t)\}$
+    }
+
+    \vspace{-1pt}
+
+    \alert{($k=3$)} $D(S_3)=\{h(b),t\}$, $\sigma_4=\{t/h(b)\}$, $S_4=S_3\sigma_4$    
+    
+    \myexampleinline{\small
+    $S_4=\{P(f(h(b),g(a)),h(b))\}$
+    }
+
+    \vspace{-1pt}
+
+    \alert{($k=4$)} $|S_4|=1$, nejobecnější unifikace pro $S$ je
+    $\sigma=\sigma_1\sigma_2\sigma_3\sigma_4=$\\    
+    $\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=$\myalertinline{
+        $\{y/h(b),w/b,z/a,t/h(b)\}$
+    }    
 
 \end{frame}
 
 
 \begin{frame}{Důkaz korektnosti}
     
+    \myblock{
+    \textbf{Tvrzení:}
+    Unifikační algoritmus je korektní. Pro sestrojenou $\sigma$ navíc platí, že je-li $\tau$ libovolná unifikace, potom $\tau=\sigma\tau$.
+    }
+    
+    \textbf{Důkaz:} Algoritmus vždy skončí, neboť v každém kroku eliminuje proměnnou. Skončí-li neúspěchem, nelze unifikovat $S_k$, tedy ani $S$.
+    
+    Odpoví-li $\sigma=\sigma_0\sigma_1\cdots\sigma_k$, zjevně jde o unifikaci. Zbývá dokázat, že je nejobecnější, k tomu stačí dokázat vlastnost `navíc': Buď $\tau$ lib. unifikace pro $S$. Indukcí pro $0\leq i\leq k$ ukážeme \alert{$\tau=\sigma_0\sigma_1\cdots\sigma_i\tau$}
+    
+    \alert{(báze indukce)} Pro $i=0$ je $\sigma_0=\emptyset$, $\tau=\sigma_0\tau$ tedy platí triviálně.
+
+    \alert{(indukční krok)} Buď $\sigma_{i+1}=\{x/t\}$. Ukažme, že pro lib. proměnnou platí: \alert{$u\sigma_{i+1}\tau=u\tau$} Z toho okamžitě plyne i $\tau=\sigma_0\sigma_1\cdots\sigma_i\sigma_{i+1}\tau$.
+    
+    Pro \alert{$u\neq x$} je $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. Je-li \alert{$u=x$}, máme $u\sigma_{i+1}=x\sigma_{i+1}=t$. Protože $\tau$ unifikuje $S_i=S\sigma_0\sigma_1\cdots\sigma_i$ a $x,t\in D(S_i)$, $\tau$ unifikuje i $x$ a $t$, tzn. $t\tau=x\tau$, tj. $u\sigma_{i+1}\tau=u\tau$.\hfill\qedsymbol
 
 \end{frame}
 
 
 \section{8.5 Rezoluční metoda}
+
+
+\begin{frame}{Příklad rezolučního kroku}
+
+    Chceme-li ukázat $T\models\varphi$, skolemizací najdeme CNF formuli $S$ ekvisplnitelnou s $T\cup\{\neg\varphi\}$. Stačí najít rezoluční zamítnutí $S$.
+
+    Jediným podstatným rozdílem bude \alert{rezoluční pravidlo}. 
+
+    Rezolventou dvojice klauzulí bude klauzule, kterou lze odvodit aplikací \alert{(nejobecnější) unifikace}. Nejprve příklad:
+
+    \myexampleinline{
+        $C_1=\{P(x),Q(x,y),Q(x,f(z))\}, C_2=\{\neg P(u),\neg Q(f(u),u)\}$
+    } 
+
+    Vyberme z $C_1$ \alert{oba} pozitivní literály začínající $Q$, z $C_2$ negativní. 
+
+    $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace \myalertinline{
+        $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$
+    }
+
+    \begin{itemize}
+        \item $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$
+        \item $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$
+    \end{itemize}
+
+    z nich odvodíme rezolventu $C=\{P(f(f(v))),\neg P(f(v))\}$
+    
+\end{frame}
+
+
+\begin{frame}{Rezoluční pravidlo}
+
+    \myblock{
+    Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných tvaru
+    $$
+    C_1=C_1'\sqcup \{A_1,\dots,A_n\},\quad C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}
+    $$
+    kde $n,m\ge 1$ a $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ lze unifikovat. Buď $\sigma$ nejobecnější unifikace $S$. \alert{Rezolventa} $C_1$ a $C_2$ je potom klauzule
+    $$
+    C=C_1'\sigma \cup C_2'\sigma
+    $$
+    }
+
+    \bigskip
+
+    Disjunktní množiny proměnných lze získat přejmenováním. Proč? Např. z \myexampleinline{
+        $\{\{P(x)\},\{\neg P(f(x))\}\}$
+    } lze získat $\square$, nahradíme-li $\{P(x)\}$ klauzulí $\{P(y)\}$. Ale $S=\{P(x),P(f(x))\}$ není unifikovatelná.
+        
+\end{frame}
+
+
+\begin{frame}{Rezoluční důkaz}
+
+    \myblock{
+    \alert{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je konečná posloupnost klauzulí $C_0,C_1,\dots,C_n=C$ taková, že pro každé $i$ je buď
+    \vspace{-12pt}
+    \begin{itemize}
+        \item $C_i=C_i'\sigma$ pro nějakou 
+            \myalertinline{
+                $C'_i\in S$ a přejmenování proměnných $\sigma$
+            } 
+        \item nebo $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
+    \end{itemize}
+    Existuje-li, je $C$ \alert{rezolucí dokazatelná} z $S$, \alert{$S\proves_R C$}. \alert{(Rezoluční) zamítnutí}  $S$ je rez. důkaz $\square$ z $S$, potom je $S$ \alert{(rezolucí) zamítnutelná}.
+    }
+
+    \bigskip
+
+    Proč potřebujeme odstranit více literálů z jedné klauzule najednou? Např. \myexampleinline{
+        $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$
+    } je zamítnutelná, ale neexistuje zamítnutí, které by v každém kroku odstranilo jen jeden.  
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    \bigskip
+    \myexampleamsmath{
+    \begin{align*}
+        S=\{&\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{\neg P(x,x)\},\\
+        & \{\neg P(x,y),P(y,x)\},\{P(x,f(x))\}\}
+    \end{align*} 
+    }
+    
+    \bigskip
+
+    Rezoluční zamítnutí:       
+    \begin{align*}
+        &\{\neg P(x,y),\neg P(y,z), P(x,z)\},\\
+        &\{P(x',f(x'))\},\\
+        &\{\neg P(f(x),z),P(x,z)\},\\
+        &\{\neg P(x,y),P(y,x)\},\{P(x',f(x'))\},\\
+        &\{P(f(x'),x')\},\\
+        &\{P(x,x)\},\\
+        &\{P(x',x')\},\\
+        &\square   
+    \end{align*}
+    
+\end{frame}
+
+
+\begin{frame}{Příklad rezolučního stromu}
+
+    \myexampleamsmath{
+    \begin{align*}
+        S=\{&\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{\neg P(x,x)\},\\
+        & \{\neg P(x,y),P(y,x)\},\{P(x,f(x))\}\}
+    \end{align*} 
+    }
+    
+    \vspace{1cm}
+
+    \scalebox{0.85}{
+    \hspace{-1cm}\begin{forest}
+        for tree={l=1.5cm, grow=north}
+        [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$x'/x$}}
+            [{$ \{\neg P(x',x')\} $}]
+            [{$ \{P(x,x)\} $}, label=left:{\footnotesize\textcolor{blue}{$z/x,x'/x$}}
+                [{$ \{P(f(x'),x')\} $}, label=right:{\footnotesize\textcolor{blue}{$x/x',y/f(x')$}}
+                    [{$ \{P(x',f(x'))\} $}]
+                    [{$ \{\neg P(x,y),P(y,x)\} $}]            
+                ]
+                [{$ \{\neg P(f(x),z),P(x,z)\} $}, label=left:{\footnotesize\textcolor{blue}{$y/f(x'),x'/x$}}
+                    [{$ \{P(x',f(x'))\} $}]
+                    [{$ \{\neg P(x,y),\neg P(y,z), P(x,z) \} $}]                
+                ]
+            ]
+        ]
+    \end{forest}
+    }    
+
+\end{frame}
 
 
 \end{document}

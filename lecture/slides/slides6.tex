@@ -268,7 +268,7 @@
     \alert{Strukturu} dané signatury získáme tak, že:
     \begin{itemize}
         \item zvolíme neprázdnou \alert{doménu}, a na ní
-        \item zvolíme \alert{realizace} (také říkáme \alert{interpretace}) všech relačních a funkčních symbolů (a konstant)
+        \item zvolíme \alert{realizace} (také říkáme \alert{interpretace}) všech relačních a funkčních symbolů (včetně konstantních)
         \item to znamená \alert{konkrétní} relace resp. funkce příslušných arit
         \item realizací konstantního symbolu je zvolený prvek z domény
         \item na tom, jaké konkrétní symboly jsou v signatuře nezáleží (např. $+$ neznamená, že realizace musí souviset se sčítáním)
@@ -396,6 +396,7 @@
 
 \begin{frame}{Termy}
 
+    \vspace{-6pt}
     \alert{čistě syntaktické} `výrazy' z proměnných, konstantních symbolů, funkčních symbolů, závorek a čárek
     
     \myblock{
@@ -420,6 +421,7 @@
 
 \begin{frame}{Strom termu}
     
+    \vspace{-3pt}
     \alert{Strom termu} $t$, \alert{$\Tree(t)$}: v listech proměnné nebo konst. symboly, ve vnitřních vrcholech funkční symboly (arita je rovna počtu synů)
 
     \begin{center}
@@ -863,9 +865,8 @@
     \textbf{Pozorování:} Závisí pouze na ohodnocení volných proměnných. Speciálně, pro sentenci nezávisí na ohodnocení.
 
     \begin{itemize}
-        \item Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
-        \item speciálně, $\mathrm{PH}^\A(t_1=t_2)[e]=1$ $\Leftrightarrow$ $(t_1^\A[e],t_2^\A[e])\in {=^\A}$ (\alert{identita} na $A$), tj. $t_1^\A[e]=t_2^\A[e]$ (obě strany jsou stejný prvek $A$)
-        \item 
+        \item tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla jedna vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$)
+        \item speciálně, $\mathrm{PH}^\A(t_1=t_2)[e]=1$ $\Leftrightarrow$ $(t_1^\A[e],t_2^\A[e])\in {=^\A}$ (\alert{identita} na $A$), tj. $t_1^\A[e]=t_2^\A[e]$ (je to stejný prvek $A$)
     \end{itemize}
     
 \end{frame}
@@ -901,7 +902,7 @@
     }
     
     \begin{itemize}
-        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! (Platí to ale pro sentence.)
+        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! \\(je to pravda jen pro sentence)
         \item \alert{platnost} je klíčový pojem sémantiky a celé logiky
     \end{itemize}
     

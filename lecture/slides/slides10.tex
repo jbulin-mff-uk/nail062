@@ -512,11 +512,17 @@
     $$
     }
 
-    \bigskip
+    \medskip
 
-    Disjunktní množiny proměnných lze získat přejmenováním. Proč? Např. z \myexampleinline{
-        $\{\{P(x)\},\{\neg P(f(x))\}\}$
-    } lze získat $\square$, nahradíme-li $\{P(x)\}$ klauzulí $\{P(y)\}$. Ale $S=\{P(x),P(f(x))\}$ není unifikovatelná.
+    \begin{itemize}
+        \item Disjunktní množ. proměnných získáme přejmenováním. Proč? Z~\myexampleinline{
+            $\{\{P(x)\},\{\neg P(f(x))\}\}$
+        } odvodíme $\square$, nahradíme-li $\{P(x)\}$ klauzulí $\{P(y)\}$. Ale $S=\{P(x),P(f(x))\}$ není unifikovatelná.
+    
+        \item Proč potřebujeme z klauzule odstranit více literálů najednou? \myexampleinline{
+            $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$
+        } je zamítnutelná, ale nemá zamítnutí, které by v každém kroku odstranilo jen jeden.  
+    \end{itemize}
         
 \end{frame}
 
@@ -536,52 +542,41 @@
     Existuje-li, je $C$ \alert{rezolucí dokazatelná} z $S$, \alert{$S\proves_R C$}. \alert{(Rezoluční) zamítnutí}  $S$ je rez. důkaz $\square$ z $S$, potom je $S$ \alert{(rezolucí) zamítnutelná}.
     }
 
-    \bigskip
-
-    Proč potřebujeme odstranit více literálů z jedné klauzule najednou? Např. \myexampleinline{
-        $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$
-    } je zamítnutelná, ale neexistuje zamítnutí, které by v každém kroku odstranilo jen jeden.  
 
 \end{frame}
 
 
 \begin{frame}{Příklad}
 
-    \bigskip
-    \myexampleamsmath{
+    \myexampleamsmath{\small
+    \smallskip
     \begin{align*}
         S=\{&\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{\neg P(x,x)\},\\
         & \{\neg P(x,y),P(y,x)\},\{P(x,f(x))\}\}
     \end{align*} 
     }
-    
-    \bigskip
 
-    Rezoluční zamítnutí:       
+    rezoluční zamítnutí:
+    
+    \myalertamsmath{\small
+    \smallskip
     \begin{align*}
-        &\{\neg P(x,y),\neg P(y,z), P(x,z)\},\\
-        &\{P(x',f(x'))\},\\
-        &\{\neg P(f(x),z),P(x,z)\},\\
-        &\{\neg P(x,y),P(y,x)\},\{P(x',f(x'))\},\\
-        &\{P(f(x'),x')\},\\
-        &\{P(x,x)\},\\
-        &\{P(x',x')\},\\
-        &\square   
+        &\{\neg P(x,y),\neg P(y,z), P(x,z)\},\ 
+        \{P(x',f(x'))\},\ 
+        \textcolor{blue}{\{\neg P(f(x),z),P(x,z)\}},\\
+        &\{\neg P(x,y),P(y,x)\},\ 
+        \textcolor{blue}{\{P(f(x'),x')\}},\ 
+        \textcolor{blue}{\{P(x,x)\}},\ 
+        \{P(x',x')\},\ 
+        \textcolor{blue}{\square}  
     \end{align*}
-    
-\end{frame}
-
-
-\begin{frame}{Příklad rezolučního stromu}
-
-    \myexampleamsmath{
-    \begin{align*}
-        S=\{&\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{\neg P(x,x)\},\\
-        & \{\neg P(x,y),P(y,x)\},\{P(x,f(x))\}\}
-    \end{align*} 
     }
-    
-    \vspace{1cm}
+
+    \medskip
+
+    rezoluční strom:
+
+    \medskip
 
     \scalebox{0.85}{
     \hspace{-1cm}\begin{forest}

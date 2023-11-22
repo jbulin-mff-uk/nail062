@@ -36,7 +36,128 @@
 \section{8.6 Korektnost a úplnost}
 
 
+\begin{frame}{Korektnost rezolučního kroku}
+
+    \myblock{
+    \textbf{Tvrzení:}
+    Mějme klauzule $C_1$, $C_2$ a jejich rezolventu $C$. Platí-li v~nějaké struktuře $\A$ klauzule $C_1$ a $C_2$, potom v ní platí i $C$.
+    }
+
+    \textbf{Důkaz:} Buď $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, a $C=C_1'\sigma \cup C_2'\sigma$, kde $S\sigma=\{A_1\sigma\}$ (a $\sigma$ je
+    nejobecnější). Klauzule jsou otevřené formule, proto platí i jejich instance:     
+    $$
+    \A\models C_1\sigma\ \text{ a }\ \A\models C_2\sigma
+    $$     
+    Po aplikaci unifikace máme: 
+    \begin{align*}        
+        C_1\sigma&=C_1'\sigma \cup \{A_1\sigma\}\\
+        C_2\sigma&=C_2'\sigma \cup \{\neg A_1\sigma\}        
+    \end{align*}
+    Chceme ukázat, že $\A\models C[e]$ pro lib. ohodnocení $e$. 
+    \begin{itemize}
+        \item Je-li \alert{$\A\models A_1\sigma[e]$}, potom $\A\not\models\neg A_1\sigma[e]$ a musí \alert{$\A\models C_2'\sigma[e]$}. Tedy i $\A\models C[e]$. 
+        \item Je-li \alert{$\A\not\models A_1\sigma[e]$}, musí být \alert{$\A\models C_1'\sigma[e]$} a opět $\A\models C[e]$. \hfill\qedsymbol
+    \end{itemize}    
+
+\end{frame}
+
+
+\begin{frame}{Korektnost rezoluce}
+
+    \myblock{
+    \textbf{Věta (O korektnosti rezoluce):}
+    Pokud je CNF formule $S$ rezolucí zamítnutelná, potom je nesplnitelná.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+        Víme, že $S\proves_R\square$, vezměme tedy nějaký rezoluční důkaz $\square$ z $S$. Kdyby existoval model $\A\models S$, díky korektnosti rezolučního pravidla bychom dokázali (indukcí podle délky důkazu) i $\A\models\square$, což ale není možné. \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Lifting lemma}
+
+    úplnost rezoluce dokážeme převedením na případ výrokové logiky: rezoluční důkaz `na úrovni VL' je možné `zvednout' na úroveň PL
+
+    \medskip
+
+    \myblock{
+    \textbf{Lifting lemma:}
+        Buďte $C_1$ a $C_2$ klauzule s disj. množ. proměnných, $C^*_1$ a $C^*_2$ jejich základní instance, $C^*$ rezolventa $C^*_1$ a $C^*_2$. Potom $C_1$ a $C_2$ mají rezolventu $C$ takovou, že $C^*$ je základní instance $C$.
+    }
+
+    (důkaz na příštím slidu)
+
+    \bigskip
+
+    \myblock{
+    \textbf{Důsledek:}
+        Buď $S$ CNF formule a označme $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ pro nějakou základní klauzuli $C^*$ (`na úrovni VL'), potom existuje klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni PL').
+    }
+    
+    \textbf{Důkaz:} Snadno z Lifting lemmatu indukcí dle délky důkazu.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Důkaz Lifting lemmatu}
+
+    Nechť \alert{$C^*_1=C_1\tau_1$} a \alert{$C^*_2=C_2\tau_2$}, $\tau_1$ a $\tau_2$ zákl. substituce nesdílející žádnou proměnnou. Najdeme rezolventu $C$, že \alert{$C^*=C\tau_1\tau_2$}.
+
+    Buď $C^*$ rezolventa $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že:
+    \begin{align*}
+        C_1&=C_1' \sqcup \{A_1,\dots,A_n\},\text{ kde }\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}\\
+        C_2&=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\},\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}
+    \end{align*}
+    Tedy $(\tau_1\tau_2)$ unifikuje $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Buď $\sigma$ nejob. unifikace pro $S$ z Unifikačního algoritmu. Zvolme \alert{$C=C_1'\sigma \cup C_2'\sigma$}.
+
+    \vspace{-24pt}
+    
+    \begin{align*}
+        &\alert{C\tau_1\tau_2
+        =} (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2
+        =C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2
+        \textcolor{red}{=}C_1'\tau_1\tau_2 \cup C_2'\tau_1\tau_2\\ &
+        \textcolor{blue}{=}C_1'\tau_1 \cup C_2'\tau_2
+        =(C_1\setminus\{A_1,\dots,A_n\})\tau_1\cup (C_2\setminus\{\neg B_1,\dots,\neg B_m\})\tau_2\\
+        &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})\alert{=C^*}
+    \end{align*}
+    
+    Zde \textcolor{red}{=} plyne z vlastnosti `navíc' Unif. algoritmu $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, \\a \textcolor{blue}{=} z 
+    toho, že jde o základní substituce nesdílející proměnnou.\hfill\qedsymbol    
+
+\end{frame}
+
+
+\begin{frame}{Úplnost rezoluce}
+
+    \myblock{
+    \textbf{Věta (O úplnosti rezoluce):}
+        Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+    Množina $S^*$ všech základních instancí klauzulí z $S$ je také nesplnitelná (důsledek Herbrandovy věty). Úplnost \alert{výrokové} rezoluce dává $S^*\proves_R\square$ (`na úrovni VL'). 
+    
+    Z důsledku Lifting lemmatu dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni PL'). 
+    
+    Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.        
+    \hfill\qedsymbol
+
+
+    
+
+\end{frame}
+
+
+
 \section{8.7 LI-rezoluce}
+
+
 
 
 \section{ČÁST III -- POKROČILÉ PARTIE}

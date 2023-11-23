@@ -337,8 +337,8 @@ Algoritmus běží v exponenciálním čase: počet větvení výpočtu nemůže
         $$
         Nastavíme $v(p)=1$ a provedeme jednotkovou propagaci: $(\neg q\lor\neg s)\land(q\lor s)$. Nyní rozvětvíme na proměnné $q$:
         \begin{itemize}
-            \item[(q=1)] $(\neg q\lor\neg s)\land(q\lor s)\land q$. Po nastavení $v(q)=1$ a jednotkové propagaci dostáváme $s$, po nastavení $v(s)=1$ a jednotkové propagaci dostáváme výrok neobsahující žádnou klauzuli, je tedy splnitelný ohodnocením $(1,1,0,*,*)$. Odpověď na problém splnitelnosti už máme, pokud chceme znát všechny modely, můžeme dokončit ostatní větve výpočtu.
-            \item[(q=0)] $(\neg q\lor\neg s)\land(q\lor s)\land \neg q$. Dostáváme modely $(1,0,0,*,*)$.
+            \item[(q=1)] $(\neg q\lor\neg s)\land(q\lor s)\land q$. Po nastavení $v(q)=1$ a jednotkové propagaci dostáváme $\neg s$, po nastavení $v(s)=0$ a jednotkové propagaci dostáváme výrok neobsahující žádnou klauzuli, je tedy splnitelný ohodnocením $(1,1,0,0)$. Odpověď na problém splnitelnosti už máme, ostatní větve výpočtu nemusíme dokončovat. Pro ilustraci to ale provedeme.
+            \item[(q=0)] $(\neg q\lor\neg s)\land(q\lor s)\land \neg q$. Jednotkovou propagací s $v(q)=0$ dostáváme $s$, po nastavení $v(s)=1$ a jednotkové propagaci máme prázdnou množinu klauzulí. Dostáváme model $(1,0,0,1)$.
             
         \end{itemize}
         \item[(p=0)] Přidáme jednotkovou klauzuli $\neg p$:
@@ -348,8 +348,7 @@ Algoritmus běží v exponenciálním čase: počet větvení výpočtu nemůže
         Po provedení jednotkové propagace $\neg p$ máme $s\land \neg s\land(q\lor s)$. Po provedení jednotkové propagace $s$ máme $\square\land q$, kde $\square$ je prázdná klauzule. Výrok je tedy nesplnitelný a v této větvi nedostaneme žádné modely. 
     \end{itemize}
 
-Zjistili jsme, že původní výrok je splnitelný, má 8 modelů, konkrétně: $\M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}$.\footnote{To znamená, že je ekvivalentní výroku $p\land \neg r$.}
-    
+Zjistili jsme, že původní výrok je splnitelný. Našli jsme 2 modely: $(1,1,0,0)$ a $(1,0,0,1)$. Mohou ale existovat i další modely, ohodnocení $v(r)=0$ pro literál $\neg r$ s čistým výskytem nemusí být nutné pro splnění všech klauzulí; tento krok nezachovává množinu modelů, jen splnitelnost.    
 \end{example}
 
 Co dále? Základní algoritmus DPLL, který systematicky prohledává prostor možných řešení, byl na konci 90. let 20. století různými způsoby doplněn a rozšířen. Zmiňme algoritmus zvaný \emph{Conflict-driven clause learning (CDCL)}. Ten je založený na myšlence, že ze selhání větve prohledávacího stromu se můžeme \emph{naučit} novou klauzuli, která tomuto konkrétnímu selhání (``konfliktu'') zabraňuje. Kromě toho se můžeme vrátit zpět ve stromu o více úrovní najednou (tzv. \emph{back-jumping}) na místo, kde jsme začali ohodnocovat proměnné v této nové klauzuli. Tím zabráníme opakovanému nalezení ``téhož'' konfliktu. Více o SAT solverech se dozvíte například v předmětu \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL094}{NAIL094 Decision procedures and SAT/SMT solvers}.

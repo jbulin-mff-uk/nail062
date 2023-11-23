@@ -266,7 +266,7 @@
         \end{enumerate}        
     }
     
-    {\small \textbf{Poznámka:} Důkaz \alert{(ii) \Large $\Leftarrow$} vynecháme (technický problém: model, který
+    {\small \textbf{Poznámka:} Důkaz \alert{(ii) \Large $\Rightarrow$} vynecháme (technický problém: model, který
 
     \vspace{-11pt} nelze expandovat $\rightsquigarrow$ $L$-sentence platná v $T$ ale ne v $T'$)}
 
@@ -361,7 +361,7 @@
 \begin{frame}{Definice funkčního symbolu: příklady}
     
     \myblock{
-    vztah $f(x_1,\dots,x_n)=y$ definujeme formulí $\psi(x_1,\dots,x_n)$; pro každý vstup $(x_1,\dots,x_n)$ musí \alert{existovat jednoznačný} výstup $y$
+    vztah $f(x_1,\dots,x_n)=y$ definujeme formulí $\psi(x_1,\dots,x_n,y)$; pro každý vstup $(x_1,\dots,x_n)$ musí \alert{existovat jednoznačný} výstup $y$
     }
 
     \bigskip
@@ -493,17 +493,19 @@
 \begin{frame}{Extenze o definice}
 
     \myblock{
-    $L'$-teorie $T'$ je \alert{extenzí}  $L$-teorie $T$ \alert{o definice}, pokud vznikla postupnou extenzí o definice relačních a funkčních (vč. konstantních) symbolů.
-     } 
+        $L'$-teorie $T'$ je \alert{extenzí}  $L$-teorie $T$ \alert{o definice}, pokud vznikla postupnou extenzí o definice relačních a funkčních (vč. konstantních) symbolů.
+    } 
 
     \medskip
-     
+    
+    \myblock{
     \textbf{Tvrzení:} (snadno indukcí)
-     \begin{itemize}
-        \item Každý model $T$ lze jednoznačně expandovat na model $T'$.
-        \item $T'$ je konzervativní extenze $T$.
-        \item Pro $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$, že $T'\models\varphi'\liff\varphi$.
-    \end{itemize} 
+        \begin{itemize}
+            \item Každý model $T$ lze jednoznačně expandovat na model $T'$.
+            \item $T'$ je konzervativní extenze $T$.
+            \item Pro $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$, že $T'\models\varphi'\liff\varphi$.
+        \end{itemize}
+    }
 
     \bigskip
 

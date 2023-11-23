@@ -148,9 +148,6 @@
     Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.        
     \hfill\qedsymbol
 
-
-    
-
 \end{frame}
 
 
@@ -158,6 +155,85 @@
 \section{8.7 LI-rezoluce}
 
 
+\begin{frame}{Lineární důkaz a LI-důkaz}
+
+    \begin{itemize}
+        \item \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
+        $$
+        \begin{bmatrix}
+            C_0 \\
+            B_0
+        \end{bmatrix},
+        \begin{bmatrix}
+            C_1 \\
+            B_1
+        \end{bmatrix},\dots,
+        \begin{bmatrix}
+            C_n \\
+            B_n
+        \end{bmatrix},
+        C_{n+1}
+        $$
+        kde: $B_0$ a $C_0$ jsou \myalertinline{varianty} klauzulí z $S$, $C_{n+1}=C$,
+        \begin{itemize}
+            \item $C_{i+1}$ je rezolventa $C_i$ a $B_i$
+            \item $B_i$ \alert{varianta} klauzule z $S$ nebo $B_i=C_j$ pro nějaké $j<i$.
+        \end{itemize}
+        \item \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$
+        
+        \item \alert{LI-důkaz} je lin. důkaz, kde vš. $B_i$ jsou varianty klauzulí z $S$
+        \item $C$ \alert{LI-dokazatelná} z $S$, \alert{$S\proves_{LI}C$}, pokud existuje LI-důkaz
+        \item $S$ je \alert{LI-zamítnutelná}, pokud $S\proves_{LI}\square$    
+        \item korektnost (lineární i LI-rezoluce) je zřejmá
+    \end{itemize}
+
+    
+\end{frame}
+
+
+\begin{frame}{Úplnost LI-rezoluce pro Hornovy formule}
+
+    \medskip
+
+    \myblock{
+    \textbf{Věta (O úplnosti lineární rezoluce):}
+        $C$ má lineární důkaz z $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
+    }
+
+    \textbf{Důkaz:} převodem na VL (Lifting lemma zachovává linearitu) \hfill\qedsymbol
+
+    \bigskip
+
+    \myblock{
+    \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):}
+        Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
+    }
+        
+    \textbf{Důkaz:} úplnost ve VL + Herbrandova věta + Lifting lemma\hfill\qedsymbol
+
+    \smallskip
+    
+    \begin{itemize}\small
+        \item \alert{Hornova formule:} množina Hornových klauzulí
+        \item \alert{Hornova klauzule:} nejvýše jeden pozitivní literál   
+        \item \alert{Pravidlo:} klauzule s 1 pozitivním a alespoň 1 negativním literálem  
+         
+        \item \alert{Fakt:} pozitivní jednotková klauzule    
+        \item \alert{Cíl:} neprázdná klauzule bez pozitivního literálu 
+        \item \alert{Programové klauzule:} pravidla a fakta  
+        \item \alert{Program}: Hornova formule obsahující jen programové klauzule
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Rezoluce v Prologu}
+
+    \begin{center}
+        TODO
+    \end{center}
+    
+\end{frame}
 
 
 \section{ČÁST III -- POKROČILÉ PARTIE}
@@ -166,7 +242,235 @@
 \section{\sc Kapitola 9: Teorie modelů}
 
 
+\begin{frame}{Teorie modelů}
+
+    \begin{itemize}
+        \item vztah mezi vlastnostmi teorií a tříd jejich modelů
+        \item bližší matematice než informatice a aplikacím
+        \item jen několik vybraných dostupných výsledků
+        \item[+] co je třeba pro Gödelovy věty (Kapitola 10)
+        \item[+] co se nevešlo jinam 
+    \end{itemize}
+
+\end{frame}
+
+
 \section{9.1 Elementární ekvivalence}
+
+
+\begin{frame}{Teorie struktury}
+
+    \myblock{
+        \alert{Teorie struktury} $\A$ (v jazyce $L$):
+        $$
+        \Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
+        $$
+    }
+
+    \medskip
+
+    Např.  pro \myexampleinline{standardní model aritmetiky} $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$ říkáme $\Th(\underline{\mathbb{N}})$ \alert{aritmetika přirozených čísel}, je \alert{nerozhodnutelná} (neexistuje algoritmus, který pro každou $\varphi$ doběhne a odpoví, zda $T\models\varphi$)
+
+    \medskip
+
+    \textbf{Pozorování:} Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.
+    \begin{itemize}
+        \item $\Th(\A)$ je kompletní teorie
+        \item $\A\in\M_L(T)$ $\Rightarrow$ $\Th(\A)$ je (kompletní) jednoduchá extenze $T$
+        \item $\A\in\M_L(T)$, $T$ kompletní $\Rightarrow$ $\Th(\A)=\Conseq_L(T)\sim T$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Elementární ekvivalence}
+    
+    \myblock{
+        $L$-struktury $\A$ a $\B$ jsou \alert{elementárně ekvivalentní} (\alert{$\A\equiv \B$}), pokud v nich platí tytéž $L$-sentence, neboli: \myalertinline{ 
+            $\A\equiv\B\ \Leftrightarrow\ \Th(\A)=\Th(\B)$ 
+        }
+    }
+
+    \bigskip
+
+    Například pro \myexampleinline{
+        $\langle\mathbb R,\leq\rangle$, 
+        $\langle\mathbb Q,\leq\rangle$,
+        $\langle\mathbb Z,\leq\rangle$
+    }
+    \begin{itemize}
+        \item  \alert{$\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$}: snadno pomocí \alert{hustoty}
+        \item \alert{$\langle\mathbb Q,\leq\rangle\not\equiv\langle\mathbb Z,\leq\rangle$}: v $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, v $\langle\mathbb Q,\leq\rangle$ ne, tedy $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)\setminus\Th(\langle\mathbb Q,\leq\rangle)$ pro následující sentenci:
+        $$
+        \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z))
+        $$        
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kompletní jednoduché extenze}
+
+    \vspace{-6pt}
+
+    Pro teorii $T$ nás hlavně zajímá, jak vypadají modely.
+
+    \vspace{-6pt}
+    \begin{itemize}
+        \item $T$ je \alert{kompletní}, právě když má jediný model až na elementární ekvivalenci (všechny modely jsou elementárně ekvivalentní)
+        \item Modely $T$ až na elementární ekvivalenci jednoznačně odpovídají \alert{kompletním jednoduchým extenzím} $T$, ty jsou tvaru $\Th(\A)$ pro $\A\in\M(T)$, kde $\A\equiv\B\Leftrightarrow\Th(\A)=\Th(\B)$
+    \end{itemize}
+    
+    \myalert{Místo hledání modelů stačí najít kompletní jednoduché extenze!}
+
+    \myblock{
+    \textbf{Motivace:} ukážeme, že lze-li \alert{efektivně popsat} všechny kompletní jednoduché extenze \alert{efektivně dané} teorie, potom je \alert{rozhodnutelná}.
+    }   
+    
+    \begin{itemize}
+        \item algoritmus, který pro vstup $(i,j)$ vypíše $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém očíslování)
+        \item algoritmus, který postupně vygeneruje všechny axiomy teorie
+    \end{itemize}
+
+    Schopnost efektivně popsat kompletní jedn. extenze je vzácná, vyžaduje silné předpoklady, ale u mnoha důležitých teorií to lze. 
+
+\end{frame}
+
+
+\begin{frame}{Příklad: DeLO*}
+
+    \myexample{
+        Teorie \alert{hustého lin. uspořádání (DeLO*)}  je extenze teorie uspořádání o \alert{linearitu} (\alert{dichotomii}), \alert{hustotu}, a někdy se přidává \alert{netrivialita}: 
+        \begin{itemize}
+            \item $x\leq y\lor y\leq x$
+            \item ${x\leq y}\land{\neg\,x=y}\limplies(\exists z)(x\leq z\land z\leq y\land\neg\,z=x\land\neg\,z=y)$
+            \item $(\exists x)(\exists y)(\neg\,x=y)$
+        \end{itemize}        
+    }
+
+    \myblock{
+        \textbf{Tvrzení:} Buď $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$. Následující jsou právě všechny kompletní jednoduché extenze DeLO*:
+        \begin{columns}\small
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
+                    ,\neg\psi\}$
+                    \item $\DeLO^+ = \DeLO^*\ \cup \ \{\neg\varphi
+                    ,\psi\}$                    
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}                   
+                    \item $\DeLO^- = \DeLO^*\ \cup \ \{\varphi
+                    ,\neg\psi\}$
+                    \item $\DeLO^\pm = \DeLO^*\ \cup \ \{\varphi
+                    ,\psi\}$        
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    }
+
+    \smallskip
+
+    Stačí ukázat, že jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat. 
+    
+    Jak ukážeme, kompletnost plyne z faktu, že jsou \alert{$\omega$-kategorické}, tj. mají jediný spočetný model až na \alert{izomorfismus}.
+        
+\end{frame}
+
+
+\begin{frame}{Důsledky Löwenheim-Skolemovy věty bez rovnosti}
+
+    Připomeňme:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (L.-S. bez rovnosti):} 
+        Ve spočetném jazyce bez rovnosti má každá bezesporná teorie spočetně nekonečný model.
+    }
+
+    \medskip
+
+    Jednoduchý důsledek:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Důsledek:}
+    Je-li $L$ spočetný bez rovnosti, potom ke každé $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
+    }
+
+    \textbf{Důkaz:} $\Th(\A)$ je bezesporná (má model $\A$), tedy dle L.-S. věty má spočetně nekonečný model $\B\models\Th(\A)$, to znamená $\B\equiv\A$.\hfill\qedsymbol
+
+    \medskip
+
+    Bez rovnosti tedy nelze vyjádřit např. \myexampleinline{`model má právě 42 prvků'}.
+
+\end{frame}
+
+
+\begin{frame}{Důsledky Löwenheim-Skolemovy věty s rovností}
+
+    V důkazu L.-S. věty máme kanonický model pro bezespornou větev tabla z $T$ pro $\F\bot$; pro jazyk s rovností stačí faktorizovat dle $=^A$:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (L.-S. s rovností):}
+        Ve spočetném jazyce s rovností má každá bezesporná teorie spočetný model (konečný, nebo nekonečný).
+    }
+
+    \medskip
+
+    I tato verze má snadný důsledek pro konkrétní struktury:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Je-li $L$ spočetný s rovností, ke každé \alert{nekonečné} $L$-struktuře existuje elem. ekvivalentní spočetně nekonečná struktura.
+    }
+
+    \smallskip
+
+    \textbf{Důkaz:}
+    Mějme nekonečnou $L$-strukturu $\A$. Stejně jako v důkazu Důsledku bez rovnosti najdeme spočetně nekonečnou $\B\equiv\A$. 
+    
+    Protože v $\A$ neplatí pro žádné $n\in\mathbb N$ sentence vyjadřující `existuje nejvýše $n$ prvků' (což lze pomocí rovnosti snadno zapsat), neplatí ani v $\B$, tedy $\B$ nemůže být konečná.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Spočetné algebraicky uzavřené těleso}
+
+    \begin{itemize}
+        \item \alert{algebraicky uzavřené} těleso: každý polynom nenulového stupně v něm má kořen
+        \item $\mathbb Q$ není, $x^2-2$ nemá v $\mathbb Q$ kořen
+        \item $\mathbb R$ není, $x^2+1$ nemá v $\mathbb R$ kořen
+        \item $\mathbb C$ je algebraicky uzavřené, ale je nespočetné
+    \end{itemize}
+
+    Algebraickou uzavřenost vyjádříme sentencemi $\psi_n$, pro $n>0$:
+    $$
+    (\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0) = 0
+    $$
+    kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$
+
+    \myblock{
+    \textbf{Důsledek:}
+        Existuje spočetné algebraicky uzavřené těleso.
+    }
+
+    \smallskip
+
+    \textbf{Důkaz:}
+    Dle Důsledku L.S. věty (s rovností) existuje spočetně nekonečná $\A\equiv\mathbb C$. Protože $\mathbb C$ je těleso a splňuje $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.\hfill\qedsymbol
+
+\end{frame}
+
+
+
 
 
 \end{document}

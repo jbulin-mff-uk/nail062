@@ -1,156 +1,9 @@
-\chapter{Teorie modelů}\label{chapter:model-theory}
-
-V této kapitole se trochu vzdálíme typickým aplikacím logiky v informatice\footnote{Například použití rezoluce k řešení otázky, zda v dané konečné teorii $T$ platí daná sentence $\varphi$.} a nahlédneme o úroveň abstrakce výše, do oblasti \emph{matematické} logiky. \emph{Teorie modelů} se snaží popsat vztah mezi obecnými vlastnostmi teorií (predikátové logiky) a tříd jejich modelů. Nevyhneme se práci s nekonečnými teoriemi a s nekonečnými strukturami. Jde jen o ukázku několika vybraných výsledků, které jsou pro nás dostupné. Ani se nepokusíme obsáhnout všechny hlavní oblasti teorie modelů, která je velmi bohatá a hluboká. Do této kapitoly jsme také přidali materiál týkající se vlastností modelů, který se nehodil jinam.
-
-
-\section{Elementární ekvivalence}
-
-Nejprve se podíváme na několik vlastností souvisejících s pojmem \emph{elementární ekvivalence}. Připomeňme, že $L$-struktury $\A$ a $\B$ jsou \emph{elementárně ekvivalentní} ($\A\equiv \B$), pokud v nich platí tytéž $L$-sentence.
-
-V teorii modelů nás často zajímá, jaké vlastnosti (sentence) platí v dané, konkrétní struktuře:
-
-\begin{definition}[Teorie struktury]
-Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$ je množina všech $L$-sentencí platných v $\A$:
-$$
-\Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
-$$
-\end{definition}
-
-\begin{example}
-Jako důležitý příklad vezměme \emph{standardní model aritmetiky}, strukturu $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$. Teorii $\Th(\underline{\mathbb{N}})$ říkáme \emph{aritmetika přirozených čísel}. V následující kapitole si ukážeme, že je \emph{(algoritmicky) nerozhodnutelná}.\footnote{Teorie $T$ je \emph{(algoritmicky) rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní sentenci $\varphi$ doběhne a odpoví, zda $T\models\varphi$.}
-\end{example}
-
-Několik jednoduchých vlastností teorie struktury shrneme v následujícím pozorování:
-
-\begin{observation}
-    Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie. Potom:
-    \begin{enumerate}[(i)]
-        \item Teorie $\Th(\A)$ je kompletní.
-        \item Je-li $\A\in\M_L(T)$, potom $\Th(\A)$ je (kompletní) jednoduchá extenze teorie $T$.
-        \item Pokud $\A\in\M_L(T)$ a $T$ je kompletní, potom je $\Th(\A)$ ekvivalentní s $T$, v tom případě $\Th(\A)=\Conseq_L(T)$.
-    \end{enumerate}    
-\end{observation}
-
-Pomocí pojmu \emph{teorie struktury} můžeme také vyjádřit elementární ekvivalenci, pro $L$-struktury $\A,\B$ platí:
-$$
-\A\equiv\B \text{ právě když }\Th(\A)=\Th(\B).
-$$
-
-\begin{example}
-   Podívejme se standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
-   $$
-   \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z)
-   $$
-\end{example}
-
-
-\subsection{Kompletní jednoduché extenze}
-
-Máme-li teorii $T$, zajímá nás, jak vypadají její modely. Připomeňme, že:
-\begin{itemize}
-    \item Teorie je \emph{kompletní}, právě když má jediný model až na elementární ekvivalenci.\footnote{Tedy všechny její modely jsou elementárně ekvivalentní.}
-    \item Modely teorie $T$ až na elementární ekvivalenci jednoznačně odpovídají kompletním jednoduchým extenzím $T$.
-\end{itemize}
-Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
-
-\begin{remark}
-    Jednou z motivací, proč se zabývat kompletními jednoduchými extenzemi, je Tvrzení \ref{propositon:recursively-enumerable-completion} z následující kapitoly, které říká, že pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který postupně vygeneruje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
-\end{remark}
-
-
-Schopnost (efektivně) popsat všechny kompletní jednoduché extenze je poměrně vzácná, a vyžaduje silné předpoklady. Přesto to lze provést u mnoha důležitých teorií. Uveďme jeden příklad: \emph{teorii hustého lineárního uspořádání (dense linear order)}.
-
-\subsubsection{Příklad: DeLO*}
-
-Teorie \emph{hustého lineárního uspořádání (DeLO*)}  je extenze teorie uspořádání o následující axiomy: 
-\begin{itemize}
-    \item axiom \emph{linearity} (někdy se mu říká také \emph{dichotomie}):
-    $$
-    x\leq y\lor y\leq x
-    $$
-    \item axiom \emph{hustoty}
-    $$
-    {x\leq y}\land{\neg\,x=y}\limplies(\exists z)(x\leq z\land z\leq y\land\neg\,z=x\land\neg\,z=y)
-    $$
-\end{itemize}
-Někdy se přidává i axiom \emph{netriviality} $(\exists x)(\exists y)(\neg\,x=y)$ zakazující jednoprvkový model. Tato teorie není kompletní, umíme ale popsat všechny její kompletní jednoduché extenze:
-
-\begin{proposition}
-Mějme sentence $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$ vyjadřující existenci minimálního resp. maximálního prvku. Následující čtyři teorie jsou právě všechny kompletní jednoduché extenze teorie DeLO*:
-\begin{itemize}
-    \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
-    ,\neg\psi\}$
-    \item $\DeLO^+ = \DeLO^*\ \cup \ \{\neg\varphi
-    ,\psi\}$
-    \item $\DeLO^- = \DeLO^*\ \cup \ \{\varphi
-    ,\neg\psi\}$
-    \item $\DeLO^\pm = \DeLO^*\ \cup \ \{\varphi
-    ,\psi\}$        
-\end{itemize}
-\end{proposition}
-
-Stačí ukázat, že tyto čtyři teorie jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat. Jak vysvětlíme v Sekci \ref{section:categoricity}, jejich kompletnost plyne z faktu, že jsou \emph{$\omega$-kategorické}, tj. mají jediný spočetný model až na \emph{izomorfismus}. Viz Důsledek \ref{corollary:complete-simple-extensions-of-delo}.
-
-
-\subsection{Důsledky Löwenheim-Skolemovy věty}
-
-V Sekci \ref{subsection:loewenheim-skolem-theorem} jsme dokázali tzv. Löwenheim-Skolemovu větu, konkrétně její variantu pro jazyky bez rovnosti:
-
-\begin{theorem-unnumbered}[Löwenheim-Skolemova]
-    Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
-\end{theorem-unnumbered}
-
-Tato věta má následující jednoduchý důsledek:
-
-\begin{corollary}\label{corollary:loewenheim-skolem-without-equality}
-    Je-li $L$ spočetný jazyk bez rovnosti, potom ke každé $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
-\end{corollary}
-\begin{proof}
-    Mějme $L$-strukturu $\A$. Teorie $\Th(\A)$ je bezesporná (má model $\A$), tedy dle Löwenheim-Skolemovy má spočetně nekonečný model $\B\models\Th(\A)$. To ale znamená, že $\B\equiv\A$.
-\end{proof}
-V jazyce bez rovnosti tedy nemůžeme vyjádřit například `model má právě 42 prvků'.
-
-V důkazu Löwenheim-Skolemovy věty jsme sestrojený model získali jako kanonický model pro bezespornou větev tabla z $T$ pro položku $\F\bot$. Stejným způsobem se dokáže následující verze pro jazyky s rovností, stačí faktorizovat dle relace $=^A$:
-
-\begin{theorem-unnumbered}[Löwenheim-Skolemova s rovností]
-    Je-li $L$ spočetný jazyk s rovností, potom každá bezesporná $L$-teorie má spočetný model (tj. konečný, nebo spočetně nekonečný).
-\end{theorem-unnumbered}
-
-I tato verze má snadný důsledek pro konkrétní struktury:
-
-\begin{corollary}\label{corollary:loewenheim-skolem-with-equality}
-    Je-li $L$ spočetný jazyk s rovností, potom ke každé \emph{nekonečné} $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
-\end{corollary}
-\begin{proof}
-    Mějme nekonečnou $L$-strukturu $\A$. Stejně jako v důkazu Důsledku \ref{corollary:loewenheim-skolem-without-equality} najdeme spočetně nekonečnou strukturu $\B\equiv\A$. Protože v $\A$ neplatí pro žádné $n\in\mathbb N$ sentence vyjadřující `existuje nejvýše $n$ prvků' (což lze pomocí rovnosti snadno zapsat), neplatí tato sentence ani v $\B$, $\B$ tedy nemůže být konečná struktura.
-\end{proof}
-
-Tento důsledek použijeme, abychom ukázali, že existuje spočetné těleso, které je algebraicky uzavřené:  
-
-\subsubsection*{Spočetné algebraicky uzavřené těleso}
-
-Těleso $\A$ je \emph{algebraicky uzavřené}, pokud každý polynom nenulového stupně v něm má kořen. Těleso reálných čísel $\mathbb R$ není algebraicky uzavřené, neboť $x^2+1$ nemá v $\mathbb R$ kořen, stejně tak těleso $\mathbb Q$ (v něm nemá kořen ani $x^2-2$). Těleso komplexních čísel $\mathbb C$ algebraicky uzavřené je, je ale nespočetné.
-
-Algebraickou uzavřenost lze vyjádřit pomocí následujících sentencí $\psi_n$, pro každé $n>0$:
-$$
-(\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0) = 0
-$$
-kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$ (kde  $\cdot$ je aplikováno ($k-1$)-krát).
-
-\begin{corollary}
-    Existuje spočetné algebraicky uzavřené těleso.
-\end{corollary}
-\begin{proof}
-    Dle Důsledku \ref{corollary:loewenheim-skolem-with-equality} existuje spočetně nekonečná struktura $\A$ elementárně ekvivalentní tělesu $\mathbb C$. Protože $\mathbb C$ je těleso a splňuje sentence $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.
-\end{proof}
-
-
 \section{Izomorfismus struktur}\label{section:isomorphism-of-structures}
 
-Podívejme se blíže na pojem \emph{izomorfismu struktur}, který zobecňuje izomorfismus grafů, vektorových prostorů, apod. Neformálně řečeno, struktury jsou \emph{izomorfní}, pokud se liší jen pojmenováním konkrétních prvků.
+Podívejme se blíže na pojem \alert{izomorfismu struktur}, který zobecňuje izomorfismus grafů, vektorových prostorů, apod. Neformálně řečeno, struktury jsou \alert{izomorfní}, pokud se liší jen pojmenováním konkrétních prvků.
 
 \begin{definition}
-Mějme struktury $\A,\B$ jazyka $L=\langle\mathcal R,\mathcal F\rangle$. \emph{Izomorfismus $\A$ a $\B$} (nebo `$\A$ \emph{na} $\B$') je bijekce $h\colon A\to B$ splňující následující vlastnosti:
+Mějme struktury $\A,\B$ jazyka $L=\langle\mathcal R,\mathcal F\rangle$. \alert{Izomorfismus $\A$ a $\B$} (nebo `$\A$ \alert{na} $\B$') je bijekce $h\colon A\to B$ splňující následující vlastnosti:
 \begin{itemize}
     \item Pro každý ($n$-ární) funkční symbol $f\in\mathcal F$ a pro všechna $a_i\in A$ platí:
     $$
@@ -162,7 +15,7 @@ Mějme struktury $\A,\B$ jazyka $L=\langle\mathcal R,\mathcal F\rangle$. \emph{I
     R^\A(a_1,\dots,a_n)\ \text{ právě když }\ R^\B(h(a_1),\dots,h(a_n))
     $$
 \end{itemize}
-Pokud existuje, říkáme, že $\A$ a $\B$ jsou \emph{izomorfní} (nebo `$\A$ je \emph{izomorfní s $\B$ via $h$}') a píšeme $\A\simeq\B$ (nebo $\A\simeq_h\B$). \emph{Automorfismus} $\A$ je izomorfismus $\A$ na $\A$.
+Pokud existuje, říkáme, že $\A$ a $\B$ jsou \alert{izomorfní} (nebo `$\A$ je \alert{izomorfní s $\B$ via $h$}') a píšeme $\A\simeq\B$ (nebo $\A\simeq_h\B$). \alert{Automorfismus} $\A$ je izomorfismus $\A$ na $\A$.
 \end{definition}
 
 Všimněte si, že relace `býti izomorfní' je ekvivalence. Ukažme si jeden příklad:
@@ -259,7 +112,7 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
         \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
         \end{tikzpicture}
         \end{center}
-    Tento graf má jediný netriviální automorfismus zachovávající vrchol $0$: $h(i)=(5-i) \bmod 5$. Jeho \emph{orbity} jsou $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:
+    Tento graf má jediný netriviální automorfismus zachovávající vrchol $0$: $h(i)=(5-i) \bmod 5$. Jeho \alert{orbity} jsou $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:
     \begin{itemize}
         \item $\{0\}$ je definované formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$,
         \item $\{1,4\}$ lze definovat pomocí formule $E(x,y)$, a
@@ -289,11 +142,11 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
 
 \section{$\omega$-kategorické teorie}\label{section:categoricity}
 
-Nyní se podíváme na teorie, které mají jediný spočetně nekonečný model (až na izomorfismus), říkáme jim \emph{$\omega$-kategorické}.\footnote{Symbol $\omega$ se používá pro nejmenší nekonečné \emph{ordinální} číslo, jinými slovy, pro množinu všech přirozených čísel.}
+Nyní se podíváme na teorie, které mají jediný spočetně nekonečný model (až na izomorfismus), říkáme jim \alert{$\omega$-kategorické}.\footnote{Symbol $\omega$ se používá pro nejmenší nekonečné \alert{ordinální} číslo, jinými slovy, pro množinu všech přirozených čísel.}
 
 \begin{definition}[Izomorfní spektrum, $\kappa$-kategoricita]
-    \emph{Izomorfní spektrum} teorie $T$ je počet $
-    I(\kappa,T)$ modelů $T$ kardinality $\kappa$ až na izomorfismus, pro každou kardinalitu $\kappa$ (včetně \emph{transfinitních}).     Teorie $T$ je \emph{$\kappa$-kategorická}, pokud $
+    \alert{Izomorfní spektrum} teorie $T$ je počet $
+    I(\kappa,T)$ modelů $T$ kardinality $\kappa$ až na izomorfismus, pro každou kardinalitu $\kappa$ (včetně \alert{transfinitních}).     Teorie $T$ je \alert{$\kappa$-kategorická}, pokud $
     I(\kappa,T)=1$.
 \end{definition}
 
@@ -303,7 +156,7 @@ Nadále nás bude zajímat jen případ $\kappa=\omega$, totiž teorie s jediný
     Teorie DeLO je $\omega$-kategorická.
 \end{proposition}
 \begin{proof}
-Vezměme dva spočetně nekonečné modely $\A,\B$ a očíslujme jejich prvky: $A=\{a_i\mid i\in\mathbb N\}$, $B=\{b_i\mid i\in\mathbb N\}$. Indukcí podle $n$ lze díky hustotě nalézt posloupnost $h_0\subseteq h_1\subseteq h_2\subseteq\dots$ prostých (parciálních) funkcí z $A$ do $B$, takových, že $\{a_0,\dots,a_{n-1}\}\subseteq\dom h_n$, $\{b_0,\dots,b_{n-1}\}\subseteq\rng h_n$,\footnote{Zde $\dom$ značí \emph{doménu} a $\rng$ značí \emph{obor hodnot (`range')} funkce.} a \emph{zachovávají uspořádání}\footnote{Tj. je-li $a_i,a_j\in\dom h_n$, potom $a_i\leq^\A a_j$ právě když $h(a_i)\leq^\B h(a_j)$.} Potom $\A\simeq\B$ via $h=\bigcup_{n\in\mathbb N}h_n$.
+Vezměme dva spočetně nekonečné modely $\A,\B$ a očíslujme jejich prvky: $A=\{a_i\mid i\in\mathbb N\}$, $B=\{b_i\mid i\in\mathbb N\}$. Indukcí podle $n$ lze díky hustotě nalézt posloupnost $h_0\subseteq h_1\subseteq h_2\subseteq\dots$ prostých (parciálních) funkcí z $A$ do $B$, takových, že $\{a_0,\dots,a_{n-1}\}\subseteq\dom h_n$, $\{b_0,\dots,b_{n-1}\}\subseteq\rng h_n$,\footnote{Zde $\dom$ značí \alert{doménu} a $\rng$ značí \alert{obor hodnot (`range')} funkce.} a \alert{zachovávají uspořádání}\footnote{Tj. je-li $a_i,a_j\in\dom h_n$, potom $a_i\leq^\A a_j$ právě když $h(a_i)\leq^\B h(a_j)$.} Potom $\A\simeq\B$ via $h=\bigcup_{n\in\mathbb N}h_n$.
 \end{proof}
 
 \begin{corollary}
@@ -324,7 +177,7 @@ $$
 Husté uspořádání jistě nemůže být konečné. Izomorfismus musí zobrazit nejmenší prvek na nejmenší prvek, a největší na největší.
 \end{proof}
 
-Pojem \emph{$\omega$-kategoricity} lze chápat jako zeslabení pojmu \emph{kompletnosti}. Platí následující užitečné kritérium:
+Pojem \alert{$\omega$-kategoricity} lze chápat jako zeslabení pojmu \alert{kompletnosti}. Platí následující užitečné kritérium:
 
 \begin{theorem}[$\omega$-kategorické kritérium kompletnosti]
 Mějme $\omega$-kategorickou teorii $T$ ve spočetném jazyce $L$. Je-li
@@ -351,16 +204,16 @@ Analogické kritérium platí i pro kardinality $\kappa$ větší než $\omega$.
 
 \section{Axiomatizovatelnost}\label{section:axiomatizability}
 
-Na závěr této kapitoly se podíváme, za jakých okolností lze `popsat' (\emph{axiomatizovat}) třídu modelů respektive teorii. Zajímat nás bude také kdy si vystačíme s konečně mnoha axiomy, a kdy to lze pomocí otevřených axiomů (kterých může být i nekonečně mnoho). Srovnejte s Tvrzením \ref{proposition:axiomatize-in-DNF-CNF} z výrokové logiky. 
+Na závěr této kapitoly se podíváme, za jakých okolností lze `popsat' (\alert{axiomatizovat}) třídu modelů respektive teorii. Zajímat nás bude také kdy si vystačíme s konečně mnoha axiomy, a kdy to lze pomocí otevřených axiomů (kterých může být i nekonečně mnoho). Srovnejte s Tvrzením \ref{proposition:axiomatize-in-DNF-CNF} z výrokové logiky. 
 
 \begin{definition}[Axiomatizovatelnost]
 Mějme třídu struktur $K\subseteq\M_L$ v nějakém jazyce $L$. Říkáme, že $K$ je
 \begin{itemize}
-    \item \emph{axiomatizovatelná}, pokud existuje $L$-teorie $T$ taková, že $\M_L(T)=K$,
-    \item \emph{konečně axiomatizovatelná}, pokud je axiomatizovatelná konečnou teorií, a
-    \item \emph{otevřeně axiomatizovatelná}, pokud je axiomatizovatelná otevřenou teorií.
+    \item \alert{axiomatizovatelná}, pokud existuje $L$-teorie $T$ taková, že $\M_L(T)=K$,
+    \item \alert{konečně axiomatizovatelná}, pokud je axiomatizovatelná konečnou teorií, a
+    \item \alert{otevřeně axiomatizovatelná}, pokud je axiomatizovatelná otevřenou teorií.
 \end{itemize}
-O $L$-teorii $T'$ říkáme, že je \emph{konečně} resp. \emph{otevřeně axiomatizovatelná}, pokud to platí o třídě modelů $K=\M_L(T')$.
+O $L$-teorii $T'$ říkáme, že je \alert{konečně} resp. \alert{otevřeně axiomatizovatelná}, pokud to platí o třídě modelů $K=\M_L(T')$.
 \end{definition}
 
 \begin{example}
@@ -398,7 +251,7 @@ Z věty o kompaktnosti snadno získáme následující tvrzení, pomocí kteréh
 \end{proof}
 
 \begin{remark}
-    Třída všech \emph{nekonečných} modelů teorie ale je vždy axiomatizovatelná, máme-li jazyk s rovností: stačí k teorii přidat pro každé $n\in\mathbb N$ axiom vyjadřující `existuje alespoň $n$ prvků'.
+    Třída všech \alert{nekonečných} modelů teorie ale je vždy axiomatizovatelná, máme-li jazyk s rovností: stačí k teorii přidat pro každé $n\in\mathbb N$ axiom vyjadřující `existuje alespoň $n$ prvků'.
 \end{remark}
 
 
@@ -436,8 +289,8 @@ Nechť $T$ je teorie těles. Charakteristika tělesa je nejmenší počet jedni�
 \begin{definition}[Charakteristika tělesa]
 Říkáme, že těleso $\A=\langle A,+,-,0,\cdot,1 \rangle$ je
 \begin{itemize}
-    \item \emph{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ označuje term $1+1+\dots+1$ s $p$ jedničkami, nebo
-    \item \emph{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné prvočíslo $p$.
+    \item \alert{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ označuje term $1+1+\dots+1$ s $p$ jedničkami, nebo
+    \item \alert{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné prvočíslo $p$.
 \end{itemize}
 \end{definition}
 Nechť $T$ je teorie těles. Potom třída těles charakteristiky $p$ je konečně axiomatizována teorií $T\cup \{p1=0\}$. Třída těles charakteristiky 0 je axiomatizována následující (nekonečnou) teorií:

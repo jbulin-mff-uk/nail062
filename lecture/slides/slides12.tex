@@ -131,7 +131,7 @@
 
 \begin{frame}{Definovatelnost a automorfismy}
 
-    definovatelné množiny jsou \alert{invariantní} na automorfismy (např. automorfimus grafu musí zobrazit trojúhelník na trojúhelník):
+    definovatelné množiny jsou \alert{invariantní} na automorfismy (např. automorfismus grafu musí zobrazit trojúhelník na trojúhelník):
 
     \medskip
 
@@ -154,8 +154,7 @@
     \end{align*}
 
     \vspace{-0.85cm}
-    \hfill\qedsymbol
-    
+    \hfill\qedsymbol    
 
 \end{frame}
 
@@ -167,7 +166,7 @@
     \begin{columns}
 
         \begin{column}{0.8\textwidth}            
-            Množiny definovatelné s parametrem $0$, $\mathrm{Df}^1(\mathcal G,\{0\})$? Jediný netriviální automorfimsus zachovávající $0$: \alert{$h(i)=(5-i) \bmod 5$}, orbity $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:            
+            Množiny definovatelné s parametrem $0$, $\mathrm{Df}^1(\mathcal G,\{0\})$? Jediný netriviální automorfismus zachovávající $0$: \alert{$h(i)=(5-i) \bmod 5$}, orbity $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:            
         \end{column} 
 
         \begin{column}{0.2\textwidth}            
@@ -242,19 +241,19 @@
     %\alert{$\omega$-kategoricita} je zeslabení pojmu \alert{kompletnosti}
 
     \myblock{
-    \textbf{Věta:}
-    Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li
-    \begin{enumerate}[(i)]
-        \item $L$ bez rovnosti, nebo
-        \item $L$ s rovností a $T$ nemá konečné modely,
-    \end{enumerate}
-    potom je $T$ kompletní.
+        \textbf{Věta:}
+        Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li
+        \begin{enumerate}[(i)]
+            \item $L$ bez rovnosti, nebo
+            \item $L$ s rovností a $T$ nemá konečné modely,
+        \end{enumerate}
+        potom je $T$ kompletní.
     }
 
     \textbf{Důkaz:}
-    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elemntárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.
+    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elementárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.
     
-    \alert{(ii)} Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali.  \hfill\qedsymbol
+    \alert{(ii)} Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali. \hfill\qedsymbol
 
     \medskip
 
@@ -273,30 +272,142 @@
 
 \begin{frame}{Axiomatizovatelnost}
         
+    Třída struktur $K\subseteq\M_L$ je:
     
+    \begin{itemize}
+        \item \alert{axiomatizovatelná}, existuje-li teorie $T$ taková, že $\M_L(T)=K$
+        \item \alert{konečně}/\alert{otevřeně} axiomatiz., je-li ax. konečnou/otevřenou $T$
+        \item teorie $T'$ je \alert{konečně}/\alert{otevřeně} axiomatizovatelná, platí-li to o třídě jejích modelů $K=\M_L(T')$
+    \end{itemize}
+
+    \textbf{Pozorování:} Je-li $K$ axiomatizovatelná, musí být uzavřená na $\equiv$.
+
+    \medskip
+    
+    \myexample{
+    Například, jak ukážeme:
+    \begin{itemize}
+        \item grafy a částečná uspořádání jsou konečně i otevřeně ax.
+        \item tělesa jsou konečně, ale ne otevřeně axiomatizovatelná
+        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně
+        \item konečné grafy nejsou axiomatizovatelné
+    \end{itemize}
+    }
+
 \end{frame}
 
 
 \begin{frame}{Neaxiomatizovatelnost konečných modelů}
 
+    \smallskip
+
+    \myblock{
+        \textbf{Věta:}
+        Má-li $T$ libovolně velké konečné modely, má i nekonečný model. Potom není třída jejích konečných modelů axiomatizovatelná.
+    }
+
+    \textbf{Důkaz:}
+    \alert{Je-li jazyk bez rovnosti,} vezmeme  kanonický model pro bezespornou větev v tablu z $T$ pro $\F\bot$ ($T$ je bezesporná).
     
+    \alert{Je-li jazyk s rovností,} přidáme spočetně mnoho nových konst. symbolů $c_i$ a vezmeme extenzi: \myalertinline{
+        $T'=T \cup \{\neg c_i = c_j \mid i\neq j\in\mathbb N\}$
+    }
+
+    Každá \alert{konečná část} $T'$ má model: buď $k$ největší, že $c_k$ je v $T'$: lib. $\geq(k+1)$-prvkový model, interpretuj $c_0,\dots,c_k$ jako různé prvky.
+
+    \alert{Věta o kompaktnosti} dává model $T'$, ten je nekonečný, redukt na původní jazyk (zapomenutí $c_i^\A$) je nekonečný model $T$.\hfill\qedsymbol
+
+    \begin{itemize}
+        \item např. \myexampleinline{konečné grafy} nejsou axiomatizovatelné
+        \item \alert{nekonečné modely} teorie jsou vždy axiomatizovatelné, máme-li rovnost: stačí přidat \myalertinline{`existuje alespoň $n$ prvků'} pro vš. $n\in\mathbb N$
+    \end{itemize}
+
 \end{frame}
 
 
 \begin{frame}{Konečná axiomatizovatelnost}
     
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (O konečné axiomatizovatelnosti):}
+        $K\subseteq \M_L$ je konečně axiomatizovatelná, právě když $K$ i $\overline{K}=\M_L\setminus K$ jsou axiomatizovatelné.
+    }
+
+    \textbf{Důkaz:} \alert{\Large$\Rightarrow$}
+    Je-li $K$ axiomatizovatelná \alert{sentencemi} $\varphi_1,\dots,\varphi_n$ (vezmi gen. uzávěry), potom $\neg(\varphi_1\land\varphi_2\land\dots\land\varphi_n)$ axiomatizuje $\overline{K}$.
+
+    \alert{\Large$\Leftarrow$} Buď $K=\M(T)$ a $\overline{K}=\M(S)$. Potom  \alert{$T\cup S$ je sporná}, neboť:
+    $$
+    \M(T\cup S)=\M(T)\cap \M(S)=K\cap\overline{K}=\emptyset
+    $$
+    \alert{Věta o kompaktnosti} dává konečné $T'\subseteq T$ a $S'\subseteq S$ takové, že:
+    $$
+    \emptyset = \M(T'\cup S')=\M(T')\cap \M(S')
+    $$
+    Nyní si všimněme, že platí:
+    $$
+    \M(T)\subseteq \M(T')\subseteq \overline{\M(S')}\subseteq \overline{\M(S)}=\M(T)
+    $$
+    Tím jsme dokázali, že \alert{$M(T)=M(T')$}, neboli $T'$ je konečná axiomatizace $K$. \hfill\qedsymbol
 
 \end{frame}
 
 
-\begin{frame}{Příklad: tělesa charakteristiky 0}
+\begin{frame}{Tělesa charakteristiky 0 nejsou konečně axiomatizovatelná}
 
+    Buď $T$ teorie těles. Těleso $\A=\langle A,+,-,0,\cdot,1 \rangle$ je
+    \vspace{-6pt}
+    \begin{itemize}
+        \item \alert{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ je term $1+1+\dots+1$ (s $p$ jedničkami),
+        \item \alert{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné $p$.
+        \item Tělesa charakteristiky $p$ jsou konečně axiomatizovatelná: \myalertmath{\small
+            $$
+            T_p=T\cup \{p1=0\}
+            $$
+        }
+        \item Tělesa char. 0 jsou axiomatizovatelná, ale ne konečně: \myalertmath{\small
+            $$
+            T_0=T\cup \{\neg\, p1=0\mid p\text{ prvočíslo}\}
+            $$
+        }
+    \end{itemize}
+    \myblock{\vspace{2pt}
+        \textbf{Tvrzení:}
+        Třída $K$ těles char. $0$ není konečně axiomatizovatelná.
+        \vspace{2pt}
+    }
     
+    \textbf{Důkaz:}
+    Stačí ukázat, že $\overline{K}$ (tělesa nenulové char. a netělesa) není axiomatizovatelná. \alert{Sporem: $\overline{K}=\M(S)$.} Potom  
+    $S'=S\cup T_0$ má model, neboť každá konečná část má model: těleso charakteristiky větší než jakékoliv $p$ z axiomu $T_0$ tvaru $\neg\, p1=0$. Je-li $\A$ je model $S'$, potom $\A\in\M(S)=\overline{K}$. Zároveň ale $\A\in\M(T_0)=K$, spor.\hfill\qedsymbol
+
 \end{frame}
 
 
 \begin{frame}{Otevřená axiomatizovatelnost}
+
+    \smallskip
+
+    \myblock{\vspace{2pt}
+        \textbf{Tvrzení:}
+        Je-li $T$ otevřeně axiomatizovatelná, potom je každá podstruktura modelu $T$ také modelem $T$.
+        \vspace{2pt}  
+    }
     
+    \textbf{Důkaz:}
+    Buď $T'$ otevřená axiomatizace $T$, $\A$ model $T'$, $\B\subseteq\A$. Pro každou $\varphi\in T'$ platí $\B\models\varphi$ ($\varphi$ je otevřená), tedy i $\B\models T'$.  
+    \hfill\qedsymbol
+
+    \textbf{Poznámka:} Platí i obráceně, je-li každá podstruktura modelu také model, potom je otevřeně axiomatizovatelná. (Důkaz neuvedeme.)
+
+    \begin{itemize}
+        \item \myexampleinline{DeLO} není otevřeně axiomatizovatelná, např. žádná konečná podstruktura modelu DeLO není hustá
+        \item \myexampleinline{teorie těles} není otevřeně axiomatizovatelná, podstruktura $\mathbb Z\subseteq\mathbb Q$ není těleso, nemá inverzní prvek k $2$ vůči násobení
+        \item pro dané $n\in\mathbb N$ jsou \myexampleinline{nejvýše $n$-prvkové grupy} otevřeně axiomatizovatelné (i jejich podgrupy jsou nejvýše $n$-prvkové); k (otevřené) teorii grup stačí přidat: \myalertinline{
+            $\bigvee_{1\leq i<j\leq n+1}x_i=x_j$
+        }
+    \end{itemize}
 
 \end{frame}
 

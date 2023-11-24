@@ -417,8 +417,21 @@
 
 \begin{frame}{Nerozhodnutelnost a neúplnost}
 
-    
+    Jak lze s teoriemi pracovat algoritmicky?
 
+    \medskip
+
+    + zlatý hřeb přednášky: \alert{Gödelovy věty o neúplnosti} (1931)
+    \begin{itemize}
+        \item ukazují limity formálního přístupu
+        \item zastavily program formalizace matematiky
+        \item pojem \alert{algoritmu} budeme chápat jen intuitivně
+        \item technické podrobnosti důkazů vynecháme
+        
+    \end{itemize}
+
+    Typicky potřebujeme spočetný jazyk.
+     
 \end{frame}
 
 
@@ -427,27 +440,151 @@
 
 \begin{frame}{Rekurzivní axiomatizace}
 
-    
+    \begin{itemize}
+        \item v dokazování povolujeme nekonečné teorie, jak jsou zadané?
+        \item pro ověření že daný důkaz (např. tablo, rezoluční zamítnutí) je korektní potřebujeme algoritmický přístup ke všem axiomům
+        \item mohli bychom požadovat \alert{enumerátor} pro $T$, tj. algoritmus, který vypisuje axiomy z $T$, a každý axiom někdy vypíše
+        \item ale kdyby byl v důkazu chybný axiom, nikdy bychom se to nedozvěděli: stále bychom čekali, zda ho enumerátor vypíše
+        \item proto požadujeme silnější vlastnost:
+    \end{itemize}
+
+    \myblock{
+        $T$ je \alert{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
+    }
+
+    (ekvivalentní enumerátoru vypisujícímu axiomy v lexikograf. pořadí)  
 
 \end{frame}
 
 
 \begin{frame}{Rozhodnutelnost}
+
+    \vspace{-3pt}
+    Můžeme v dané teorii \alert{`algoritmicky rozhodovat pravdu'}?
+
+    \vspace{-3pt}
+    \myblock{
+        \begin{itemize}
+            \item $T$ je \alert{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,
+            \item $T$ je \alert{částečně rozhodnutelná}, existuje-li algoritmus, který: %pro každou vstupní formuli:
+            \begin{itemize}
+                \item pokud $T\models\varphi$, doběhne a odpoví ``ano''
+                \item pokud $T\not\models\varphi$, buď nedoběhne, nebo doběhne a odpoví ``ne''
+            \end{itemize}
+        \end{itemize}
+    }
+
     
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $T$ je rekurzivně axiomatizovaná, potom:
+                
+        (i) $T$ je část. rozhod. \hfill (ii) je-li navíc kompletní, je rozhodnutelná
+    }
+    
+    
+    \textbf{Důkaz:} \alert{(i)} Algoritmus konstruuje systematické tablo z $T$ pro $\F\varphi$; stačí enumerátor pro $T$, nebo postupně generovat vš. sentence a testovat, jsou-li v $T$. Je-li $T\models\varphi$, konstrukce skončí, ověříme, že je tablo sporné. (Jinak skončit nemusí.)
+    
+    \vspace{-3pt}  
+    \alert{(ii)}
+    Víme, že buď $T\proves\varphi$ nebo $T\proves\neg\varphi$. Paralelně konstruujeme tablo pro $\F\varphi$ a pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$). Jedna z konstrukcí po konečně mnoha krocích skončí.
+    \hfill\qedsymbol
+
 
 \end{frame}
 
 
 \begin{frame}{Rekurzivně spočetná kompletace}
 
+    \myblock{
+        $T$ má \alert{rekurzivně spočetnou kompletaci}, je-li (nějaká) množina až na $\sim$ všech jednoduchých kompletních extenzí $T$ \alert{rekurzivně spočetná}, tj. existuje algoritmus, který pro vstup $(i,j)$ vypíše $i$-tý axiom $j$-té extenze (v nějakém uspořádání), nebo odpoví, že už neexistuje.
+    }
+     
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je rozhodnutelná.
+    }
+        
+    \textbf{Důkaz:}
+    Buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tj. kompl. jedn. extenze $T_i$, že $T_i\not\proves\varphi$. Kompletnost $T_i$ dává $T_i\proves\neg\varphi$. 
     
+    Algoritmus paralelně konstruuje tablo důkaz $\varphi$ z $T$ a (postupně) tablo důkazy $\neg\varphi$ ze všech kompletních jedn. extenzí $T_1,T_2,\dots$. (Je-li jich nekonečně mnoho, uděláme \alert{dovetailing}: 1. krok 1. tabla, potom 2. krok 1., 1. krok 2., 3. krok 1., 2. krok 2., 1. krok 3., atd.)
+    
+    Alespoň jedno z tabel je sporné, můžeme předpokládat konečné, algoritmus ho po konečně mnoha krocích zkonstruuje.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+    
+    Následující teorie jsou rekurzivně axiomatizované a mají rekurzivně spočetnou kompletaci, tedy jsou rozhodnutelné:
+
+    \myexample{
+    \begin{enumerate}[(a)]
+    \item Teorie čisté rovnosti
+    \item Teorie unárního predikátu ($T=\emptyset$, $L=\langle U \rangle$ s rovností)
+    \item Teorie hustých lineárních uspořádání DeLO*
+    \item Teorie Booleových algeber (Alfred Tarski 1940),
+    \item Teorie algebraicky uzavřených těles (Tarski 1949),
+    \item Teorie komutativních grup (Wanda Szmielew 1955).
+    \end{enumerate}
+    }
 
 \end{frame}
 
 
 \begin{frame}{Rekurzivní axiomatizovatelnost}
 
+    Kdy lze třídu struktur `efektivně (algoritmicky) popsat'?
+
+    \myblock{
+        $K\subseteq\M_L$ je \alert{rek. axiomatizovatelná}, pokud existuje rek. axiomatizovaná $T$, že $K=M_L(T)$. $T'$ je \alert{rek. axiomatizovatelná}, platí-li to pro třídu jejích modelů (tj. je-li ekvivalentní rek. axiomatizované teorii).
+    }
+
+    (podobně lze definovat \alert{rek. spočetnou axiomatizovatelnost})
+
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $\A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\Th(\A)$ rekurzivně axiomatizovatelná.
+    }
     
+    (z toho plyne i rozhodnutelnost $\Th(\A)$, ale $\A\models\varphi$ lze ověřit přímo)
+
+    \textbf{Důkaz:}
+    Buď $A=\{a_1,\dots,a_n\}$. $\Th(\A)$ axiomatizujeme sentencí ``existuje právě $n$ prvků $a_1,\dots,a_n$ splňujících právě ty \alert{základní vztahy} o funkčních hodnotách a relacích, které platí v $\A$''.
+    
+    Např. je-li $f^\A(a_4, a_2)=a_{17}$, přidej atom. formuli $f(x_{a_4},x_{a_2})=x_{a_{17}}$, pro $(a_3,a_3,a_1)\in R^\A$ přidej $R(x_{a_3},x_{a_3},x_{a_1})$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+
+    Pro následující struktury je $\Th(\A)$ rekurzivně axiomatizovatelná:
+
+    \myexample{
+        \begin{itemize}
+            \item $\langle\mathbb Z,\leq\rangle$, jde o tzv. teorii \alert{diskrétních lineárních uspořádání}        
+            \item $\langle\mathbb Q,\leq\rangle$, jde o teorii DeLO
+            \item $\langle\mathbb N,S,0\rangle$, teorie \alert{následníka s nulou}
+            \item $\langle\mathbb N,S,+,0\rangle$, \alert{Presburgerova aritmetika}
+            \item $\langle\mathbb R,+,-,\cdot,0,1\rangle$, teorie \alert{reálně uzavřených těles}, znamená že lze algoritmicky rozhodovat Euklid. geometrii (Tarski, 1949)
+            \item $\langle \mathbb C,+,-,\cdot,0,1 \rangle$, teorie \alert{algebraicky uzavřených těles char. 0}
+        \end{itemize}
+    }
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Pro struktury výše platí, že $\Th(\A)$ je rozhodnutelná.
+    }
+    \textbf{Důkaz:} $\Th(\A)$ je vždy kompletní.
+
+    \myexample{
+        Teorie \alert{standardního modelu aritmetiky} $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ ale \alert{není} rekurzivně axiomatizovatelná (viz První Gödelova věta o neúplnosti).
+    }
 
 \end{frame}
 

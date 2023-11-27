@@ -34,14 +34,81 @@
 \section{10.2 Aritmetika}
 
 
-\begin{frame}{Robinsonova aritmetika}    
+\begin{frame}{Aritmetika}
 
+    \begin{itemize}
+        \item přirozená čísla hrají důležitou roli v matematice i v aplikacích
+        \item \alert{jazyk aritmetiky} je $L=\langle S,+,\cdot,0,\leq\rangle$ s rovností
+        \item \alert{standardní model aritmetiky}  $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ nemá rekurzivně axiomatizovatelnou teorii (První věta o neúplnosti)
+        \item proto používáme rekurzivně axiomatizované teorie, které vlastnosti $\underline{\mathbb N}$ popisují částečně; říkáme jim \alert{aritmetiky}       
+        \item představíme dvě: \alert{Robinsonovu} $Q$ a \alert{Peanovu} $PA$
+    \end{itemize}
 
 \end{frame}
 
 
-\begin{frame}{Peanova aritmetika}    
+\begin{frame}{Robinsonova aritmetika $Q$}    
 
+    \myblockamsmath{ 
+        \vspace{-12pt}       
+        \begin{align*}
+            &\neg S(x) = 0& &x\cdot 0=0\\
+            &S(x)=S(y)\rightarrow x=y& &x\cdot S(y)=x\cdot y+x\\
+            &x+0=x& &\neg x=0 \rightarrow (\exists y)(x=S(y))\\
+            &x+S(y)=S(x+y)& &x\le y \leftrightarrow (\exists z)(z+x=y)\qquad
+        \end{align*}
+    }
+    
+    \begin{itemize}
+        \item velmi slabá, nelze v ní dokázat např. komutativitu ani asociativitu $+$ či $\cdot$, nebo tranzitivitu $\leq$
+        \item ale lze dokázat všechna \alert{existenční tvrzení o numerálech} pravdivá v $\underline{\mathbb N}$, tj. formule v PNF, jen $\exists$, za volné proměnné substituujeme \alert{numerály} $\underline{n}=S(\dots S(0)\dots)$
+        \item např. pro \myexampleinline{
+            $\varphi(x,y)=(\exists z)(x+z=y)$
+         } je $Q\proves\varphi(\underline{1},\underline{2})$
+    \end{itemize}
+
+    \medskip
+    
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $\varphi(x_1,\dots,x_n)$ existenční formule, $a_1,\dots,a_n\in\mathbb N$, pak
+        $Q\proves\varphi(x_1/\underline{a_1},\dots,x_n/\underline{a_n})$ právě když $\underline{\mathbb{N}}\models \varphi[e(x_1/a_1,\dots,x_n/a_n)]
+        $
+    }
+
+    (Důkaz vynecháme.)
+
+\end{frame}
+
+
+\begin{frame}{Peanova aritmetika $PA$}    
+
+    \myblock{
+        Extenze $Q$ o \alert{schéma indukce}, tj. pro každou $L$-formuli $\varphi(x,\overline{y})$:
+        \vspace{-6pt}
+        $$
+        (\varphi(0,\overline{y}) \land (\forall x)(\varphi(x,\overline{y})\limplies \varphi(S(x),\overline{y}))) \limplies (\forall x)\varphi(x,\overline{y})
+        $$
+        \vspace{-21pt}
+    }
+
+    \begin{itemize}
+        \item mnohem lepší aproximace $\Th(\underline{\mathbb N})$
+        \item dokáže `základní' vlastnosti (např. komut. a asociativitu $+$) \item stále ale existují sentence platné v $\underline{\mathbb N}$ ale nezávislé v $PA$\\(opět dokážeme v První větě o neúplnosti)
+    \end{itemize}
+
+    \bigskip
+
+    \textbf{Poznámka:} strukturu $\underline{\mathbb N}$ lze axiomatizovat (až na $\simeq$) v predikátové logice \alert{2. řádu}, extenzí $PA$ o tzv. \alert{axiom indukce}:
+    $$
+    (\forall X)((X(0) \land (\forall x)(X(x) \limplies X(S(x)))) \limplies (\forall x)X(x))
+    $$
+
+    \begin{itemize}
+        \item $X$ reprezentuje (libovolnou) podmnožinu modelu
+        \item použijeme na množinu všech následníků 0
+        \item každý prvek je následník 0 $\Rightarrow$ izomorfismus s $\underline{\mathbb N}$
+    \end{itemize}
 
 \end{frame}
 
@@ -51,6 +118,17 @@
 
 \begin{frame}{Nerozhodnutelnost predikátové logiky}
     
+    \myblock{
+        \textbf{Věta (O nerozhodnutelnosti predikátové logiky):}
+        Neexistuje algoritmus, který pro vstupní formuli $\varphi$ rozhodne, zda je logicky platná.
+    }
+    \begin{itemize}
+        \item tj. zda je formule $\varphi$ [v lib. jazyce 1. řádu] tautologie ($\models\varphi$)
+        \item neboli $T=\emptyset$ není rozhodnutelná
+    \end{itemize}
+
+    %Protože zatím neznáme potřebný formalismus týkající se algoritmů, např. pojem Turingova stroje, zvolíme jako výchozí bod jiný \alert{nerozhodnutelný problém}. Nejznámějším je tzv. \alert{Halting problem}, tj. otázka, zda se daný program zastaví na daném vstupu.\footnote{Jeho nerozhodnutelnost si dokážete v předmětech NTIN071 Automaty a gramatiky a poté znovu v NTIN090 Základy složitosti a vyčíslitelnosti.} My si ale usnadníme práci tím, že zvolíme jiný nerozhodnutelný problém, tzv. \alert{Hilbertův desátý problém}.\footnote{Hilbert jej vyslovil v roce 1900, a publikoval v roce 1902 spolu s 22 dalšími problémy, které významně ovlivnily matematiku 20., i 21. století. Některé zůstávají nevyřešeny, např. Riemannova hypotéza, \href{https://en.wikipedia.org/wiki/Logic_in_computer_science}{viz Wikipedia}.}
+
 \end{frame}
 
 

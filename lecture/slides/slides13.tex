@@ -122,22 +122,77 @@
         \textbf{Věta (O nerozhodnutelnosti predikátové logiky):}
         Neexistuje algoritmus, který pro vstupní formuli $\varphi$ rozhodne, zda je logicky platná.
     }
+
     \begin{itemize}
         \item tj. zda je formule $\varphi$ [v lib. jazyce 1. řádu] tautologie ($\models\varphi$)
-        \item neboli $T=\emptyset$ není rozhodnutelná
+        \item neboli $T=\emptyset$ není rozhodnutelná 
     \end{itemize}
 
-    %Protože zatím neznáme potřebný formalismus týkající se algoritmů, např. pojem Turingova stroje, zvolíme jako výchozí bod jiný \alert{nerozhodnutelný problém}. Nejznámějším je tzv. \alert{Halting problem}, tj. otázka, zda se daný program zastaví na daném vstupu.\footnote{Jeho nerozhodnutelnost si dokážete v předmětech NTIN071 Automaty a gramatiky a poté znovu v NTIN090 Základy složitosti a vyčíslitelnosti.} My si ale usnadníme práci tím, že zvolíme jiný nerozhodnutelný problém, tzv. \alert{Hilbertův desátý problém}.\footnote{Hilbert jej vyslovil v roce 1900, a publikoval v roce 1902 spolu s 22 dalšími problémy, které významně ovlivnily matematiku 20., i 21. století. Některé zůstávají nevyřešeny, např. Riemannova hypotéza, \href{https://en.wikipedia.org/wiki/Logic_in_computer_science}{viz Wikipedia}.}
+    Nemáme formalismus pro algoritmy (Turingovy stroje), dokážeme redukcí na jiný nerozhodnutelný problém: \alert{\href{https://en.wikipedia.org/wiki/Hilbert\%27s_problems}{Hilbertův 10. problém}}
+
+    \bigskip
+
+    \myalert{
+    \begin{quote}
+        ``Najděte algoritmus, který po konečně mnoha krocích určí, zda daná diofantická rovnice s libovolným počtem proměnných a
+        celočíselnými koeficienty má celočíselné řešení.''
+    \end{quote}
+    }
+
+    \medskip
+
+    \alert{diofantická rovnice}: $p(x_1,\dots,x_n)=0$, kde $p$ je celočíselný polynom
+
+
+    ukážeme, že existuje \alert{redukce} `těžkého' Hilbertova 10. problému na náš problém, tedy i náš problém je `těžký'
+    
+\end{frame}
+
+
+\begin{frame}{Nerozhodnutelnost Hilbertova desátého problému}
+
+    \myblock{
+        \textbf{Věta (Matiyasevich 1970):}    
+        Problém existence celočíselného řešení dané diofantické rovnice s celočís. koeficienty je nerozhodnutelný.
+    }
+
+    (Důkaz neuvedeme.)
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Neexistuje algoritmus rozhodující, mají-li dané polynomy $p(x_1,\dots,x_n),q(x_1,\dots,x_n)$ s \alert{přiroz.} koeficienty \alert{přirozené řešení}, tj.
+        \vspace{-6pt}
+        $$
+        \underline{\mathbb N}\models(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)
+        $$
+        \vspace{-16pt}
+    }
+    
+    \textbf{Důkaz:} \alert{\href{https://en.wikipedia.org/wiki/Lagrange\%27s_four-square_theorem}{Lagrangeova věta o čtyřech čtvercích}} říká, že každé celé číslo lze vyjádřit jako rozdíl dvou přirozených, a naopak, každé přirozené číslo lze vyjádřit jako součet čtyř čtverců. Diofantickou rovnici lze tedy transformovat na rovnici z důsledku, a naopak.\hfill\qedsymbol
 
 \end{frame}
 
 
-\begin{frame}{Hilbertův desátý problém}
+\begin{frame}{Důkaz nerozhodnutelnosti predikátové logiky}
 
-\end{frame}
+    Uvažme $\varphi$ tvaru $(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$ 
+    kde $p$ a $q$ jsou přirozené polynomy. Dle Tvrzení o Robinsonově aritmetice:
+    $$
+    \underline{\mathbb N}\models \varphi\ \Leftrightarrow\  Q\proves \varphi
+    $$
 
+    Buď $\psi_Q$ konjunkce (gen. uzávěrů) axiomů $Q$ (je konečná). Zřejmě: 
+    $$
+    \alert{Q\proves\varphi}\ \Leftrightarrow\ \psi_Q\proves\varphi\ \Leftrightarrow\ \alert{\proves\psi_Q\limplies\varphi}
+    $$
+    Dle Věty o úplnosti je to ale ekvivalentní \alert{$\models\psi_Q\limplies\varphi$}. Dostáváme:
+    $$
+    \underline{\mathbb N}\models \varphi\ \Leftrightarrow\ \models \psi_Q\limplies\varphi
+    $$
+    \alert{Sporem:} Pokud bychom měli algoritmus rozhodující logickou platnost, mohli bychom rozhodovat i existenci přirozeného řešení rovnice $p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$, tj. Hilbertův 10. problém.\hfill\qedsymbol
 
-\begin{frame}{Důkaz nerozhodnutelnosti}
 
 \end{frame}
 
@@ -145,14 +200,75 @@
 \section{10.4 Gödelovy věty}
 
 
-\begin{frame}{První věta o neúplnosti}
+\begin{frame}{První věta o neúplnosti + důsledek o nekompletnosti}
 
+    \myblock{
+        \textbf{Věta (Gödel 1931):}
+        Je-li $T$ bezesporná rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky, potom existuje sentence, která je pravdivá v~$\underline{\mathbb N}$, ale není dokazatelná v $T$.
+    }
+
+    \begin{itemize}
+        \item vlastnosti aritmetiky přir. čísel nelze `rozumně', efektivně popsat (v logice 1. řádu), takový popis je nutně `neúplný'
+        \item \alert{pravdivost} je ve standardním modelu $\underline{\mathbb N}$ zatímco \alert{dokazatelnost} v $T$ (samozřejmě pravdivá v $T$ je v $T$ i dokazatelná)
+        \item \alert{bezespornost} nutná (sporná teorie dokáže vše)
+        \item bez \alert{rekurzivní axiomatizovatelnosti} by teorie nebyla `užitečná'
+        \item extenze $Q$ znamená `základní aritmetická síla' (různé varianty předpokladu; nelze-li zakódovat přir. čísla s $+,\cdot$ je moc `slabá'
+    \end{itemize}    
+
+    \myblock{
+        \textbf{Důsledek:}
+        Splňuje-li teorie $T$ předpoklady První věty o neúplnosti a je-li navíc $\underline{\mathbb N}$ modelem $T$, potom $T$ není kompletní.
+    }
     
+    \textbf{Důkaz:}
+        Vezměme Gödelovu sentenci $\varphi$ ($\underline{\mathbb N}\models\varphi$, $T\not\proves\varphi$). Je-li $T$ kompletní, víme $T\proves\neg\varphi$, z korektnosti $T\models\neg\varphi$, tedy $\underline{\mathbb N}\models\neg\varphi$.
+    \hfill\qedsymbol    
 
 \end{frame}
 
 
+\begin{frame}{O důkazu}
+
+    \begin{itemize}
+        \item Gödelova sentence formalizuje \alert{``Nejsem dokazatelná v $T$''}
+        \item převratná důkazová technika, dva hlavní principy:
+        \item \alert{aritmetizace syntaxe}, zakódování sentencí a jejich dokazatelnosti do přirozených čísel
+        \item \alert{self-reference}, sentence `mluví sama o sobě' (o svém kódu)
+        \item všechny technické detaily vynecháme, viz např. V. Švejdar: \emph{Logika -- neúplnost, složitost a nutnost}, Academia 2002
+    \end{itemize}
+    
+\end{frame}
+
+
 \begin{frame}{Aritmetizace dokazatelnosti}
+    
+    \begin{itemize}
+        \item \alert{Gödelovo číslování} `rozumně' kóduje konečné syntaktické objekty (termy, formule, tablo důkazy) do $\mathbb N$: lze algoritmicky [de-]kódovat, simulovat `manipulaci' s objekty na jejich kódech
+        \item pro $\varphi$ bude \alert{$\lceil\varphi\rceil$} příslušný kód, \alert{$\underline{\varphi}$} odpovídající $\lceil\varphi\rceil$-tý numerál
+        \item pro danou $T$ máme binární relaci $\MyProof_T\subseteq\mathbb N^2$ definovanou
+        \hspace{-1cm}\myalertinline{
+            $(n,m)\in\MyProof_T$ $\Leftrightarrow$
+        $n=\lceil\varphi\rceil$, $m=\lceil\tau\rceil$, $\tau$ je tablo důkaz $\varphi$ z $T$
+        }
+        \item je-li $T$ rek. axiomatizovaná, je relace $\MyProof_T\subseteq\mathbb N^2$ \alert{rekurzivní} (lze algoritmicky ověřit korektnost tabla, tj. $(n,m)\in\MyProof_T$)
+        \item klíčová část důkazu První věty (důkaz vynecháme):
+    \end{itemize}
+
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky, potom existuje formule $\Prf_T(x,y)$ v jazyce aritmetiky, která \alert{reprezentuje} relaci $\MyProof_T$, tj. pro každá $n,m\in\mathbb N$:
+    \begin{itemize}
+        \item je-li $(n,m)\in\MyProof_T$, potom $Q\proves\Prf_T(\underline{n},\underline{m})$
+        \item jinak $Q\proves\neg\Prf_T(\underline{n},\underline{m})$
+    \end{itemize} 
+    }
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Predikát dokazatelnosti}
+
     
 
 \end{frame}
@@ -188,7 +304,7 @@
 \end{frame}
 
 
-\begin{frame}{Druhá věta o neúplnosti}
+\begin{frame}{Gödelova Druhá věta o neúplnosti}
     
 
 \end{frame}

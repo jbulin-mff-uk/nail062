@@ -222,8 +222,6 @@ Důkaz je snadný, využívá faktu, že každé celé číslo lze vyjádřit ja
 \end{proof}
 
 
-
-
 \subsection{Důkaz nerozhodnutelnosti}
 
 Připomeňme, že Robinsonova aritmetika $Q$ má jen konečně mnoho axiomů, $\underline{\mathbb N}$ je jejím modelem, a lze v ní dokázat všechna \emph{existenční tvrzení o numerálech} platná v $\underline{\mathbb N}$. Nyní jsme připraveni dokázat Větu o nerozhodnutelnosti predikátové logiky.
@@ -239,7 +237,7 @@ $$
 
 Označme jako $\psi_Q$ konjunkci (generálních uzávěrů) všech axiomů $Q$. Zřejmě $Q\proves\varphi$, právě když $\psi_Q\proves\varphi$, což platí právě když $\proves\psi_Q\limplies\varphi$. Dle Věty o úplnosti je to ale ekvivalentní $\models\psi_Q\limplies\varphi$. Dostáváme tedy následující ekvivalenci:
 $$
-\underline{\mathbb N}\models \varphi\text{ právě když }\proves \psi_Q\limplies\varphi
+\underline{\mathbb N}\models \varphi\text{ právě když }\models \psi_Q\limplies\varphi
 $$
 To znamená, že pokud existoval algoritmus rozhodující logickou platnost, mohli bychom rozhodovat i existenci přirozeného řešení rovnice $p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$, neboli Hilbertův desátý problém by byl rozhodnutelný.\footnote{Ukazujeme, že existuje \emph{redukce} `těžkého' problému (Hilbertova desátého) na náš problém, tedy i náš problém je `těžký'.} Což by byl spor.   
 \end{proof}

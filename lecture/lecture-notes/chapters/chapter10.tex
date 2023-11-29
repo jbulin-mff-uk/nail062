@@ -352,7 +352,7 @@ S využitím předpokladu, že $T$ je extenzí $Q$, lze dokázat, že tato funkc
 $$
 T\proves d(\underline{\chi(x)})=\underline{\chi(\underline{\chi(x)})}
 $$
-Tedy Robinsonova aritmetika dokazuje \emph{o numerálech}, že $d$ opravdu `zdvojuje'.
+Tedy Robinsonova aritmetika, a tím pádem i naše teorie $T$, dokazuje \emph{o numerálech}, že $d$ opravdu `zdvojuje'.
 
 Hledaná self-referenční sentence $\psi$ je sentence:\footnote{Následující věta zapsaná jednou a ještě jednou v uvozovkách má vlastnost $\varphi$. ``Následující věta zapsaná jednou a ještě jednou v uvozovkách má vlastnost $\varphi$.''}
 $$
@@ -413,7 +413,7 @@ Na závěr si ukážeme dva důsledky a jedno zesílení. Následující okamži
 Je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky a je-li navíc $\underline{\mathbb N}$ modelem teorie $T$, potom $T$ není kompletní.
 \end{corollary}
 \begin{proof}
-Sporná teorie není kompletní. Pokud by $T$ byla bezesporná, splňovala by předpoklady První věty o neúplnosti, tedy by v ní nebyla dokazatelná Gödelova sentence $\psi_T$. Pokud by byla kompletní, musela by dokazovat $\neg\psi_T$. To by ale znamenalo, že platí i $\underline{\mathbb N}\models\neg\psi_T$, přičemž víme, že $\psi_T$ je v $\underline{\mathbb N}$ pravdivá.  
+Protože má $T$ model, není sporná. Splňuje tedy předpoklady První věty o neúplnosti, tedy v ní není dokazatelná Gödelova sentence $\psi_T$. Pokud by byla kompletní, musela by dokazovat $\neg\psi_T$. To by ale znamenalo, že platí i $\underline{\mathbb N}\models\neg\psi_T$, přičemž víme, že $\psi_T$ je v $\underline{\mathbb N}$ pravdivá.  
 \end{proof}
 
 Z toho plyne, že nelze rekurzivně axiomatizovat standardní model přirozených čísel:
@@ -421,7 +421,7 @@ Z toho plyne, že nelze rekurzivně axiomatizovat standardní model přirozenýc
 Teorie $\Th(\underline{\mathbb N})$ není rekurzivně axiomatizovatelná.    
 \end{corollary}
 \begin{proof}
-Teorie $\Th(\underline{\mathbb N})$ je extenzí Robinsonovy aritmetiky a platí v modelu $\underline{\mathbb N}$. Pokud by byla rekurzivně axiomatizovaná, podle předchozího důsledku by nemohla být kompletní, což ale je.
+Teorie $\Th(\underline{\mathbb N})$ je extenzí Robinsonovy aritmetiky a platí v modelu $\underline{\mathbb N}$. Pokud by byla rekurzivně axiomatizovatelná, její (libovolná) rekurzivní axiomatizace by podle předchozího důsledku nemohla být kompletní. Ale $\Th(\underline{\mathbb N})$ kompletní je.
 \end{proof}
 
 Jedním ze zesílení Gödelovy První věty je následující tvrzení, které uvedeme bez důkazu. Ukazuje, že předpoklad $\underline{\mathbb N}\models T$ v prvním důsledku výše je ve skutečnosti nadbytečný.

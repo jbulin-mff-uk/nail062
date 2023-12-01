@@ -813,59 +813,124 @@ Stejně jako ve výrokové logice, LI-rezoluce je úplná pro Hornovské formule
 Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.   
 \end{theorem}
 \begin{proof}
-    Plyne z analogické věty ve výrokové logice, z Herbrandovy věty, a z Lifting lemmatu
+    Plyne z analogické věty ve výrokové logice, z Herbrandovy věty, a z Lifting lemmatu.
 \end{proof}
 
 
-\subsection{(draft) Rezoluce v Prologu}\todo
+\subsection{Rezoluce v Prologu}
 
-% from slides:
-\subsubsection*{Program v Prologu}
-    \mdef{Program} (v Prologu) je Hornova formule obsahující pouze \myblue{programové}
-    \smallskip
-    
-    \myblue{klauzule}, tj. \myblue{fakta} nebo \myblue{pravidla}.
-    \bigskip
-    
-    \centerline{\includegraphics[scale=0.7]{files/rezolucePLprogram}}
-    \bigskip
-    
-    {\it Zajímá nás, zda daný \myblue{existenční dotaz} vyplývá z daného programu.}%, navíc to chceme doložit \myblue{výstupní substitucí}.
+
+% \begin{frame}[fragile]{Program v Prologu}
+
+    \texttt{\small\setlength\tabcolsep{3pt}
+    \begin{tabular}{lr}
+        son(X,Y):-father(Y,X),man(X). 
+        & 
+       \emph{$\{son(X,Y),\neg father(Y,X),\neg man(X)\}$} 
+        \\
+        son(X,Y):-mother(Y,X),man(X).
+        &
+        \emph{$\{son(X,Y),\neg mother(Y,X),\neg man(X)\}$}
+        \\
+        man(charlie). 
+        &
+        \emph{$\{man(charlie)\}$}
+        \\
+        father(bob,charlie). 
+        &
+        \emph{$\{father(bob,charlie)\}$}
+        \\
+        mother(alice,charlie). 
+        &
+        \emph{$\{mother(alice,charlie)\}$}
+        \\
+        \\
+        ?-son(charlie,X). 
+        &
+        \emph{$\{\neg son(charlie,X)\}$}
+    \end{tabular}   
+    }    
+
+% \end{frame}
+
+
+% \begin{frame}{LI-rezoluce v Prologu}
+
+    Platí v programu daný \emph{existenční dotaz},  \textcolor{blue}{$P\models(\exists X)son(charlie,X)$}?
+
     \medskip
-    
-    {\bf \myblue{Důsledek}}\ \ {\it Pro program $P$ a cíl $G=\{\neg A_1, \dots, \neg A_n\}$ v proměnných $X_1,\dots,X_m$
-    
-    \vspace{-0mm}
-    \begin{enumerate}
-    \item[$(1)$] $P \models (\exists X_1)\dots(\exists X_m)(A_1\mand \dots \mand A_n)$, právě když
-    \smallskip
-    
-    \item[$(2)$] $\square$ lze odvodit LI-rezolucí z $P\cup\{G\}$ začínající (variantou) cíle $G$.
-    \end{enumerate}}
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-    
-    \subsubsection*{LI-rezoluce nad programem}
-    {\it Je-li odpověď na dotaz kladná, chceme navíc znát výstupní substituci.}
-    \medskip
-    
-    \mdef{Výstupní substituce} $\sigma$ LI-rezoluce $\square$ z $P\cup\{G\}$ začínající $G=\{\neg A_1,\dots,\neg A_n\}$
-    \smallskip
-    
-    je složení \myblue{mgu} v jednotlivých krocích (jen na proměnné v $G$). Platí,
-    \vspace{-2mm}
-    \mygreen{$$P \models (A_1 \mand \dots \mand A_n)\sigma.$$}
-    
-    \vspace{-2mm}
-    
-    \centerline{\includegraphics[scale=0.63]{files/rezolucePLprogramLI}}
+
+    % \myblock{
+        \textbf{Důsledek:}
+        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:
+        \begin{itemize}
+            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$
+            \item $P\cup\{G\}$ má LI-zamítnutí začínající $G$
+        \end{itemize}
+    % }
+
+    \vspace{-2pt}
+    \textbf{Důkaz:} Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
+
     \bigskip
-    
-    Výstupní substituce $a)$ $X=jiri$,\ \ $b)$ $X=julie$.
-    
-    
-% :from slides
+
+    Je-li odpověď na dotaz kladná, chceme znát i \emph{výstupní substituci} $\sigma$, tj. složení unifikací z rez. kroků, zúženné na proměnné v $G$. Platí:
+    $$
+    P\models(A_1\wedge\dots\wedge A_k)\sigma
+    $$
+
+% \end{frame}
 
 
+% \begin{frame}{Příklady}
+
+    
+    \texttt{?-son(charlie,X).}
+
+    \bigskip
+
+    \begin{forest}
+        for tree={math content,grow=west,l sep=5pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg father(X,c)\}}
+                [,phantom]
+                [{\{\neg father(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\textcolor{red}{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{\{X'/c,Y'/X\}}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{father(b,c)\}}, label=below:{\textcolor{blue}{\{X/b\}}}]
+        ]
+    \end{forest}
+    
+
+    \texttt{X=bob} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}
+
+    \bigskip
+
+    
+    \begin{forest}
+        for tree={math content,grow=west,l sep=3pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg mother(X,c)\}}
+                [,phantom]
+                [{\{\neg mother(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\textcolor{red}{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{\{X'/c,Y'/X\}}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{mother(a,c)\}}, label=below:{\textcolor{blue}{\{X/a\}}}]
+        ]
+    \end{forest}
+    
+
+    \texttt{X=alice} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/a\}$}
+
+% \end{frame}
 

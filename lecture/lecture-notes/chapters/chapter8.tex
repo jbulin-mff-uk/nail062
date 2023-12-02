@@ -820,76 +820,83 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
 \subsection{Rezoluce v Prologu}
 
 
-% \begin{frame}[fragile]{Program v Prologu}
+Na závěr si ukážeme aplikaci LI-rezoluce v programovacím jazyce Prolog. \emph{Program} v Prologu je Hornova formule obsahující pouze \emph{programové klauzule}, tj. \emph{pravidla} a \emph{fakta}.
 
-    \texttt{\small\setlength\tabcolsep{3pt}
+\begin{example}\label{example:predicate-prolog-program}
+Jako příklad vezměme jednoduchý program popisující rodinné vztah třech osob, popsaný v Tabulce \ref{table:predicate-prolog-program}. Na levé straně vidíme syntaxi Prologu, a vpravo je množinový zápis odpovídajících klauzulí; příslušnou CNF formuli označíme $P$.
+
+\begin{table}[h]\centering   
     \begin{tabular}{lr}
-        son(X,Y):-father(Y,X),man(X). 
+        \texttt{son(X,Y):-father(Y,X),man(X).} 
         & 
-       \emph{$\{son(X,Y),\neg father(Y,X),\neg man(X)\}$} 
+        $\{son(X,Y),\neg father(Y,X),\neg man(X)\}$
         \\
-        son(X,Y):-mother(Y,X),man(X).
+        \texttt{son(X,Y):-mother(Y,X),man(X).}
         &
-        \emph{$\{son(X,Y),\neg mother(Y,X),\neg man(X)\}$}
+        $\{son(X,Y),\neg mother(Y,X),\neg man(X)\}$
         \\
-        man(charlie). 
+        \texttt{man(charlie). }
         &
-        \emph{$\{man(charlie)\}$}
+        $\{man(charlie)\}$
         \\
-        father(bob,charlie). 
+        \texttt{father(bob,charlie). }
         &
-        \emph{$\{father(bob,charlie)\}$}
+        $\{father(bob,charlie)\}$
         \\
-        mother(alice,charlie). 
+        \texttt{mother(alice,charlie).} 
         &
-        \emph{$\{mother(alice,charlie)\}$}
+        $\{mother(alice,charlie)\}$
         \\
         \\
-        ?-son(charlie,X). 
+        \texttt{?-son(charlie,X). }
         &
-        \emph{$\{\neg son(charlie,X)\}$}
-    \end{tabular}   
-    }    
+        $\{\neg son(charlie,X)\}$
+    \end{tabular}
+    \label{table:predicate-prolog-program}
+    \caption{Ukázkový program v Prologu}    
+\end{table} 
 
-% \end{frame}
+Poslední řádek v tabulce není součástí programu, jde o \emph{existenční dotaz}. Zajímá nás, zda platí v Programu P:
+$P\models(\exists X)son(charlie,X)$? Všimněte si, že negací dotazu získáme \emph{cíl} $G=\{\neg son(charlie,X)\}$. Chceme tedy \emph{zamítnout} CNF formuli $P\cup\{G\}$. 
+\end{example}
 
+Stejně jako ve výrokové logice (Důsledek \ref{corollary:propositional-prolog}) platí následující jednoduchý důsledek úplnosti LI-rezoluce pro Hornovy formule.
 
-% \begin{frame}{LI-rezoluce v Prologu}
+\begin{corollary}
+Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující podmínky ekvivalentní:
+\begin{itemize}
+    \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$
+    \item $P\cup\{G\}$ má LI-zamítnutí začínající cílem $G$.
+\end{itemize}
+\end{corollary}
+\begin{proof}
+Není těžké nahlédnout, že program $P$ je vždy splnitelná Hornova formule. První podmínka je ekvivalentní nesplnitelnosti $P\cup\{G\}$. Ekvivalence potom plyne z úplnosti LI-rezoluce pro Hornovy formule (Věta \ref{theorem:completeness-of-li-resolution-for-horn-predicate}).
+\end{proof}
 
-    Platí v programu daný \emph{existenční dotaz},  \textcolor{blue}{$P\models(\exists X)son(charlie,X)$}?
-
-    \medskip
-
-    % \myblock{
-        \textbf{Důsledek:}
-        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:
-        \begin{itemize}
-            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$
-            \item $P\cup\{G\}$ má LI-zamítnutí začínající $G$
-        \end{itemize}
-    % }
-
-    \vspace{-2pt}
-    \textbf{Důkaz:} Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
-
-    \bigskip
-
-    Je-li odpověď na dotaz kladná, chceme znát i \emph{výstupní substituci} $\sigma$, tj. složení unifikací z rez. kroků, zúženné na proměnné v $G$. Platí:
+Je-li odpověď na dotaz kladná, chceme znát i \emph{výstupní substituci} $\sigma$, tj. složení unifikací z jednotlivých rezolučních kroků, zúženné na proměnné v $G$. Platí:
     $$
     P\models(A_1\wedge\dots\wedge A_k)\sigma
     $$
 
-% \end{frame}
+\begin{example}
+Pokračujme v Příkladu \ref{example:predicate-prolog-program}. Najdeme všechny výstupní substituce pro náš dotaz: 
+
+\medskip
+
+\texttt{?-son(charlie,X).}\\
+\indent\texttt{X = bob ;}\\
+\indent\texttt{X = alice ;}\\
+\indent\texttt{No}
 
 
-% \begin{frame}{Příklady}
+\medskip
 
-    
-    \texttt{?-son(charlie,X).}
+Záleží na tom, které ze dvou pravidel aplikujeme na cíl. Příslušná zamítnutí jsou znázorněna níže. Výstupní substituci získáme složením substitucí z jednotlivých kroků, a zúžením na proměnnou $X$. (Pro nedostatek místa jsme zkrátili konstantní symboly na $a,b,c$.)
 
-    \bigskip
+\begin{enumerate}[(a)]
+    \item Výstupní substituce $\sigma=\{X/b\}$:
 
-    \begin{forest}
+    \hspace{-0.8cm}\begin{forest}
         for tree={math content,grow=west,l sep=5pt}
         [{\square}
             [,phantom]
@@ -898,21 +905,17 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
                 [{\{\neg father(X,c),\neg man(c)\}}
                     [,phantom]
                     [{\textcolor{red}{\{\neg son(c,X)\}}}]
-                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{\{X'/c,Y'/X\}}}]
+                    [{\{son(X',Y'),\neg father(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
                 ]
                 [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
             ]
-            [{\{father(b,c)\}}, label=below:{\textcolor{blue}{\{X/b\}}}]
+            [{\{father(b,c)\}}, label=below:{\textcolor{blue}{$\{X/b\}$}}]
         ]
     \end{forest}
-    
 
-    \texttt{X=bob} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}
+    \item Výstupní substituce $\sigma=\{X/a\}$:
 
-    \bigskip
-
-    
-    \begin{forest}
+    \hspace{-0.8cm}\begin{forest}
         for tree={math content,grow=west,l sep=3pt}
         [{\square}
             [,phantom]
@@ -921,16 +924,15 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
                 [{\{\neg mother(X,c),\neg man(c)\}}
                     [,phantom]
                     [{\textcolor{red}{\{\neg son(c,X)\}}}]
-                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{\{X'/c,Y'/X\}}}]
+                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
                 ]
                 [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
             ]
-            [{\{mother(a,c)\}}, label=below:{\textcolor{blue}{\{X/a\}}}]
+            [{\{mother(a,c)\}}, label=below:{\textcolor{blue}{$\{X/a\}$}}]
         ]
     \end{forest}
+\end{enumerate}
     
+\end{example}
 
-    \texttt{X=alice} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/a\}$}
-
-% \end{frame}
 

@@ -545,7 +545,7 @@ A programu položíme dotaz:
 \end{verbatim}
 \end{example}
 
-\begin{corollary}
+\begin{corollary}\label{corollary:propositional-prolog}
     Mějme program $P$ a dotaz $Q=p_1\land\dots\land p_n$, a označme $G=\{\neg p_1,\dots,\neg p_n\}$ (tj. $G\sim \neg Q$). Následující podmínky jsou ekvivalentní:
     \begin{itemize}
         \item $P\models Q$,
@@ -554,74 +554,5 @@ A programu položíme dotaz:
     \end{itemize}
 \end{corollary}
 \begin{proof}
-    Ekvivalence prvních dvou podmínek je důkaz sporem, ekvivalence druhé a třetí je Věta o úplnosti LI-rezoluce pro Hornovy formule.
+    Ekvivalence prvních dvou podmínek je důkaz sporem, ekvivalence druhé a třetí je Věta o úplnosti LI-rezoluce pro Hornovy formule. (Všimněte si, že Program je vždy splnitelný.)
 \end{proof}
-
-% \subsection{(draft) SLD-rezoluce}\todo
-
-
-% % from slides:
-
-% \subsubsection*{Rezoluce v Prologu}
-% \emph{1) S klauzulemi interpret pracuje jako s \myblue{uspořádanými seznamy} literálů.}
-
-
-% \mdef{LD-rezoluce} (\emph{linear definite}) je $LI$-rezoluce, při které v každém kroku rezolventa aktuálního cíle \mygreen{$(\neg p_1, \dots, \neg p_{i-1},\neg p_i, \neg p_{i+1},\dots, \neg p_n)$} a boční
-% klauzule \mygreen{$(p_i, \neg q_1, \dots, \neg q_m)$} je:
-% $$(\neg p_1, \dots, \neg p_{i-1},\neg q_1, \dots, \neg q_m, \neg p_{i+1},\dots, \neg p_n)$$
-
-% {\bf \myblue{Pozorování}}\ \ {\it Každý LI-důkaz lze transformovat na LD-důkaz stejné klauzule}
-% {\it ze stejné formule se stejnou počáteční klauzulí (cílem).}
-
-% \medskip
-
-% \noindent \emph{2) Výběr literálu z cílové klauzule, přes který se rezolvuje, je určen daným}
-% \emph{\myblue{selekčním pravidlem} $\mathcal{R}$. Typicky, ``vyber první literál z aktuálního cíle''.}
-
-% \mdef{SLD-rezoluce} (\emph{selection}) dle $\mathcal{R}$ je $LD$-rezoluce, při které se v kroku $(C_i,B_i)$
-% rezolvuje přes literál $\mathcal{R}(C_i)$.
-
-% \medskip
-
-% {\bf \myblue{Pozorování}}\ \ {\it Každý LD-důkaz lze transformovat na SLD-důkaz stejné}
-% {\it klauzule ze stejné formule se stejnou počáteční klauzulí (cílem).}
-
-% \medskip
-
-% {\bf \myblue{Důsledek}}\ \ {\it SLD-rezoluce je \myblue{úplná} pro dotazy nad programy v Prologu.}
-
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-
-% \subsubsection*{Prohledávací SLD-strom}
-% {\it Dosud není určen výběr programové klauzule pro rezoluci s aktuálním cílem.}
-
-% \mdef{SLD-strom} programu $P$ a cíle $G$ pro selekční pravidlo $\mathcal{R}$ je strom s vrcholy označenými cíly takový, že kořen je označen $G$ a je-li nějaký vrchol označen $G'$, má tolik synů, kolik je \myblue{možností} rezolucí $G'$ s programovými klauzulemi v $P$ dle literálu $\mathcal{R}(G')$. Synové jsou označeni příslušnými rezolventami.
-
-% \smallskip
-% \centerline{\includegraphics[scale=0.9]{files/rezoluceSLDstrom.pdf}}
-% \smallskip
-
-% %{\it Interpret Prologu prochází tímto SLD-stromem.}
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-
-% \subsubsection*{Závěrečné poznámky}
-
-% \begin{itemize}
-% \item Interpret Prologu \myblue{prochází} SLD-strom, způsob není předepsán.
-
-% \item Implementace, které používají \myblue{DFS}, nezachovávají úplnost.
-
-% \smallskip
-% \centerline{\includegraphics[scale=0.9]{files/rezoluceneuplnost.pdf}}
-% \smallskip
-
-% \item Jistou kontrolu nad prohledáváním poskytuje !, tzv. \myblue{řez}.
-
-% \item Při povolení \myblue{negace} nastanou potíže se sémantikou programů.
-
-% \item Síla rezoluční metody bude více patrná v predikátové logice.
-% \end{itemize}
-
-% % :from slides

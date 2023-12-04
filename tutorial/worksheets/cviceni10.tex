@@ -8,7 +8,7 @@
 \section*{NAIL062 V\&P Logika: 10. cvičení}
 % po 8. přednášce
 
-% 2023 plan: 1, 2, 3, 4, (6)
+% 2023 : 1, 2abd, 3, 4ab a první část c, (plán: 6a příště)
 % příklady 5 a 7 přeskočit, tabla jsou trochu moc velká
 
 \textbf{Témata:}
@@ -40,9 +40,6 @@ Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následující
 \end{problem}
 
 
-
-
-
 \medskip\begin{problem}
     Předpokládejme, že:
     \begin{itemize}\it
@@ -66,11 +63,11 @@ Chceme dokázat, že platí: {\it (v) Jsou-li $x$ a $y$ malá čísla, potom $f(
 
 \begin{enumerate}
 \item Formalizujte %tvrzení po řadě 
-jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ s rovností.
+jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ bez rovnosti.
 %, kde $M$ je unární relační symbol ($M(x)$ značí, že ``$x$ je malé''), $B$ je binární relační symbol ($B(x,y)$ značí, že ``$x$ je blízko $y$''), $f$ je unární funkční symbol, $+$ je binární funkční symbol (označující součet) a $0$ je konstantní symbol.
 \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.
 % {\it (Nápověda: Axiomy rovnosti nejsou v tablu nezbytné.)}
-\item Rozhodněte, zda platí $T\models \varphi_5$ a zda platí $T\models M(f(0))$.
+\item Rozhodněte, zda platí $T\models \varphi_5$, a zda platí $T\models M(f(0))$.
 
 \item Pokud existují, uveďte alespoň dvě kompletní jednoduché extenze teorie $T$.
 \end{enumerate}
@@ -112,7 +109,7 @@ Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou nás
     \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Tablo může vyjít poměrně velké. Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je jejich důsledek.)
     \item Ukažte, že $\psi$ není důsledek teorie $T$, tím že najdete model $T$, ve kterém $\psi$ neplatí.
     \item Kolik kompletních jednoduchých extenzí (až na ekvivalenci) má teorie $T\cup \{\varphi\}$? Uveďte dvě.
-    \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností. Je $T$ konzervativní extenzí $S$?
+    \item Buď $S$ následující teorie v jazyce $L'=\langle R\rangle$ s rovností. Je $T$ konzervativní extenzí $S$?
      $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$     
 \end{enumerate}
 \end{problem}

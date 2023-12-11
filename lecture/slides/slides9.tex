@@ -212,6 +212,7 @@
     $T\models\varphi$? {\Large$\rightsquigarrow$} $T\cup\{\neg \varphi\}$ {\Large$\rightsquigarrow$} CNF formule $S$ {\Large$\rightsquigarrow$} rezoluční zamítnutí
 
     \begin{itemize}
+        \item[] (pozor: $\varphi$ musí být \alert{sentence}!)        
         \item \alert{literál} je \alert{atomická formule} $R(t_1,\dots,t_n)$ nebo její negace
         \item \alert{klauzule} je konečná množina literálů, \alert{formule} množina klauzulí
         \item otevřenou formuli snadno převedeme do CNF, i univerzální kvantifikátor na začátku:{\small\myexampleinline{
@@ -415,7 +416,7 @@
     \end{align*}
     
     \begin{itemize}
-        \item v prvím kroku přejmenujeme $z$ na $u$, \alert{nesmí být volná v $P(y,z)$}
+        \item v prvním kroku přejmenujeme $z$ na $u$, \alert{nesmí být volná v $P(y,z)$}
         \item podobně ve druhém kroku $x$ na $v$
         \item která pravidla používáme? sledujte postup na stromu formule
         \item chceme-li sentenci:

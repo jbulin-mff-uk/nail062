@@ -608,7 +608,7 @@ V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzen�
 Rezolventou dvojice klauzulí bude klauzule, kterou z nich lze odvodit aplikací \emph{(nejobecnější) unifikace}. Nejprve příklad:
 
 \begin{example}
-Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(v)),y/f(v),z/v,u/f(v)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(v))),Q(f(f(v)),f(v))\}$ a $C_2\sigma=\{\neg P(f(v)),\neg Q(f(f(v)),f(v))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(v))),\neg P(f(v))\}$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
+Mějme klauzule $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ a $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Vyberme z první \emph{oba} pozitivní literály začínající $Q$ a ze druhé negativní literál začínající $\neg Q$. Množinu výrazů $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ lze unifikovat pomocí nejobecnější unifikace $\sigma=\{x/f(f(z)),y/f(z),u/f(z)\}$. Po aplikaci této unifikace získáme klauzule $C_1\sigma=\{P(f(f(z))),Q(f(f(z)),f(z))\}$ a $C_2\sigma=\{\neg P(f(z)),\neg Q(f(f(z)),f(z))\}$, z nichž odvodíme klauzuli $C=\{P(f(f(z))),\neg P(f(z))\}$. Té budeme říkat \emph{rezolventa} původních klauzulí $C_1$ a $C_2$.
 \end{example}
 
 \begin{definition}[Rezoluční pravidlo]

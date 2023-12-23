@@ -330,7 +330,7 @@ Jak víme, kdy a jak toto můžeme provést, abychom zachovali význam, tj. aby 
 Pokud do formule $\varphi$ \emph{dosadíme} za volnou proměnnou $x$ term $t$, požadujeme, aby výsledná formule `říkala' o $t$ `totéž', co $\varphi$ o $x$. 
 
 \begin{example}
-    Například formule $\varphi(x)=(\exists y)(x+y=1)$ říká o $x$, že `existuje $x-1$'. Term $t=1$ lze dosadit, neboť $\varphi(x/t)=(\exists y)(1+y=1)$ říká `existuje 1-1'. Ale term $t=y$ dosadit nelze, $(\exists y)(y+y=1)$ říká `1 je dělitelné 2'. Problém spočívá v tom, že term $t=y$ obsahuje proměnnou $y$, jež bude nově vázaná kvantifikátorem $(\exists y)$. Takové situaci se musíme vyhnout.
+    Například formule $\varphi(x)=(\exists y)(x+y=1)$ říká o $x$, že `existuje $1-x$'. Term $t=1$ lze dosadit, neboť $\varphi(x/t)=(\exists y)(1+y=1)$ říká `existuje 1-1'. Ale term $t=y$ dosadit nelze, $(\exists y)(y+y=1)$ říká `1 je dělitelné 2'. Problém spočívá v tom, že term $t=y$ obsahuje proměnnou $y$, jež bude nově vázaná kvantifikátorem $(\exists y)$. Takové situaci se musíme vyhnout.
 \end{example}
 
 \begin{definition}[Substituovatelnost a instance]

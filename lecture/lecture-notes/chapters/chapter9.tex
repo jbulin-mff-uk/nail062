@@ -76,7 +76,7 @@ Teorie \emph{hustého lineárního uspořádání (DeLO*)}  je extenze teorie us
 Někdy se přidává i axiom \emph{netriviality} $(\exists x)(\exists y)(\neg\,x=y)$ zakazující jednoprvkový model. Tato teorie není kompletní, umíme ale popsat všechny její kompletní jednoduché extenze:
 
 \begin{proposition}
-Mějme sentence $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$ vyjadřující existenci minimálního resp. maximálního prvku. Následující čtyři teorie jsou právě všechny kompletní jednoduché extenze teorie DeLO*:
+Mějme sentence $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$ vyjadřující existenci minimálního resp. maximálního prvku. Následující čtyři teorie jsou právě všechny (až na ekvivalenci) kompletní jednoduché extenze teorie DeLO*:
 \begin{itemize}
     \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
     ,\neg\psi\}$
@@ -215,7 +215,7 @@ Pro konečné modely ale platí, že izomorfismus je totéž co elementární ek
 
     Stačí ukázat, že pro každé $c_a^{\A'}=a\in A$ existuje prvek $b\in B$ takový, že pro expanze o interpretaci konstantního symbolu $c_a$ platí $\langle  \A,a\rangle\equiv\langle\B,b\rangle$. Označme jako $\Omega$ množinu formulí $\varphi(x)$ takových, že $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná množina, existuje konečně mnoho formulí $\varphi_1(x),\dots,\varphi_m(x)$ takových, že pro každou formuli $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$ (neboť $\A\equiv\B$, stačí vzít generální uzávěr této formule, což je sentence).
     
-    Protože v $\A$ platí sentence $(\exists x)\bigwedge_{i=1}^m\varphi_i$ (je splněna díky prvku $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Jinými slovy, existuje $b\in B$ takové, že $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, což jsme chtěli dokázat.
+    Protože v $\A$ platí sentence $(\exists x)\bigwedge_{i=1}^m\varphi_i$ (je splněna díky prvku $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Jinými slovy, existuje $b\in B$ takové, že $\B\models\bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, což jsme chtěli dokázat.
 \end{proof}
 
 \begin{corollary}
@@ -388,11 +388,11 @@ Z věty o kompaktnosti snadno získáme následující tvrzení, pomocí kteréh
 \begin{proof}
     Je-li jazyk bez rovnosti, stačí vzít kanonický model pro některou bezespornou větev v tablu z $T$ pro položku $\F\bot$ ($T$ je bezesporná, neboť má model(y), tedy tablo není sporné).     
     
-    Mějme jazyk s rovností a označme jako $T'$ následující extenzi teorie $T'$ do jazyka rozšířeného o spočetně mnoho nových konstantních symbolů $c_i$:
+    Mějme jazyk s rovností a označme jako $T'$ následující extenzi teorie $T$ do jazyka rozšířeného o spočetně mnoho nových konstantních symbolů $c_i$:
     $$
     T'=T \cup \{\neg c_i = c_j \mid i\neq j\in\mathbb N\}
     $$
-    Každá konečná část teorie $T'$ má model: nechť $k$ je největší takové, že symbol $c_k$ se vyskytuje v $T'$. Potom stačí vzít libovolný alespoň $(k+1)$-prvkový model $T$ a interpretovat konstanty $c_0,\dots,c_k$ jako navzájem různé prvky tohoto modelu.
+    Každá konečná část teorie $T'$ má model: nechť $k$ je největší takové, že symbol $c_k$ se vyskytuje v této konečné části $T'$. Potom stačí vzít libovolný alespoň $(k+1)$-prvkový model $T$ a interpretovat konstanty $c_0,\dots,c_k$ jako navzájem různé prvky tohoto modelu.
 
     Dle věty o kompaktnosti má potom i $T'$ model. Ten je nutně nekonečný. Jeho redukt na původní jazyk (zapomenutí konstant $c_i^\A$) je nekonečným modelem $T$.
 \end{proof}

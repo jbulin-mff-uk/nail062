@@ -124,7 +124,7 @@
     
     Buď $\Omega$ množina `\alert{vlastností prvku $a$}', tj. formulí $\varphi(x)$ splňujících $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná, existuje \alert{konečně mnoho $\varphi_1(x),\dots,\varphi_m(x)$} tak, že pro každou $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$. %(neboť $\A\equiv\B$, stačí vzít generální uzávěr, což je sentence).
         
-        Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Neboli existuje $b\in B$ takové, že $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
+        Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Neboli existuje $b\in B$ takové, že $\B\models \bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
 
 \end{frame}
 
@@ -313,7 +313,11 @@
         $T'=T \cup \{\neg c_i = c_j \mid i\neq j\in\mathbb N\}$
     }
 
-    Každá \alert{konečná část} $T'$ má model: buď $k$ největší, že $c_k$ je v $T'$: lib. $\geq(k+1)$-prvkový model, interpretuj $c_0,\dots,c_k$ jako různé prvky.
+    \vspace{-2pt}
+
+    Každá \alert{konečná část} $T'$ má model: buď $k$ největší, že $c_k$ je v této konečné části: lib. $\geq(k+1)$-prvkový model,21 interpretuj $c_0,\dots,c_k$ jako různé prvky.
+
+    \vspace{-2pt}
 
     \alert{Věta o kompaktnosti} dává model $T'$, ten je nekonečný, redukt na původní jazyk (zapomenutí $c_i^\A$) je nekonečný model $T$.\hfill\qedsymbol
 

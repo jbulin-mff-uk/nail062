@@ -397,8 +397,8 @@ V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chcem
 \begin{definition}[Kongruence]
     Mějme ekvivalenci $\sim$ na množině $A$, funkci $f\colon A^n\to A$, a relaci $R\subseteq A^n$. Říkáme, že $\sim$ je
     \begin{itemize}
-        \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $f(x_1,\dots,x_n)\sim f(y_1,\dots,y_n)$,
-        \item \emph{kongruencí pro relaci $R$}, pokud pro všechna $x_i,y_i\in A$ taková, že $x_i\sim y_i$ ($1\leq i\leq n$) platí $R(x_1,\dots,x_n)$ právě když $R(y_1,\dots,y_n)$.
+        \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$,
+        \item \emph{kongruencí pro relaci $R$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $(a_1,\dots,a_n)\in R$ právě když $(b_1,\dots,b_n)\in R$.
     \end{itemize}    
     \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. 
 \end{definition}
@@ -406,8 +406,8 @@ V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chcem
 \begin{definition}[Faktorstruktura]
     Mějme strukturu $\A$ a její kongruenci $\sim$. \emph{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura $\A/_\sim$ v témž jazyce, jejíž univerzum $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, a jejíž funkce a relace jsou definované \emph{pomocí reprezentantů}, tj:
     \begin{itemize}
-        \item $f^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)=[f^\A(x_1,\dots,x_n)]_\sim$, pro každý ($n$-ární) funkční symbol $f$, a
-        \item $R^{\A/_\sim}([x_1]_\sim,\dots,[x_n]_\sim)$ právě když $R^\A(x_1,\dots,x_n)$, pro každý ($n$-ární) relační symbol~$R$.
+        \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$, pro každý ($n$-ární) funkční symbol $f$, a
+        \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ právě když $R^\A(a_1,\dots,a_n)$, pro každý ($n$-ární) relační symbol~$R$.
     \end{itemize} 
     
 \end{definition}

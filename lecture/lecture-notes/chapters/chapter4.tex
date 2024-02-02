@@ -534,7 +534,7 @@ Spočetně nekonečný graf je bipartitní, právě když je každý jeho koneč
 
     Sestrojíme výrokovou teorii $T$ v jazyce $\mathbb P=\{p_v\mid v\in V(G)\}$, kde hodnota výrokové proměnné $p_v$ reprezentuje barvu vrcholu $v$.
     $$  
-        T=\{p_u\limplies\neg p_v\mid \{u,v\}\in E(G)\}
+        T=\{p_u\liff\neg p_v\mid \{u,v\}\in E(G)\}
     $$
     Zřejmě platí, že $G$ je bipartitní, právě když $T$ má model. Podle Věty o kompaktnosti stačí ukázat, že každá konečná část $T$ má model. Vezměme tedy konečnou $T'\subseteq T$. Buď $G'$ podgraf $G$ indukovaný na množině vrcholů, o kterých se zmiňuje teorie $T'$, tj. $V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}$. Protože je $T'$ konečná, je $G'$ také konečný, a podle předpokladu je 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model teorie $T'$.
 \end{proof}

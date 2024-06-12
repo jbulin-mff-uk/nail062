@@ -421,9 +421,9 @@ Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl 
 
     Z Pozorování \ref{observation:horn-fact-goal} plyne, že $T$ obsahuje fakt $\{p\}$ pro nějakou výrokovou proměnnou $p$. Protože $T\cup\{G\}$ je nesplnitelná, je podle Lemmatu \ref{lemma:tree-of-reductions} nesplnitelná také $(T\cup\{G\})^p=T^p\cup\{G^p\}$, kde $G^p=G\setminus\{\neg p\}$.
     
-    Pokud $G^p=\square$, potom $G=\{\neg p\}$, $\square$ je rezolventa $G$ a $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T$ (to je báze indukce). 
+    Pokud $G^p=\square$, potom $G=\{\neg p\}$, $\square$ je rezolventa $G$ a $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T\cup\{G\}$ (to je báze indukce). 
     
-    Jinak je formule $T^p$ splnitelná (stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$) a má méně proměnných než $T$. Tedy podle indukčního předpokladu existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
+    Jinak využijeme indukčního předpokladu. Všimněte si, že formule $T^p$ je splnitelná (stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$) a má méně proměnných než $T$. Tedy podle indukčního předpokladu existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
 
     Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce) přidáním literálu $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (tedy vznikly odebráním $\neg p$), a do všech vrcholů nad nimi. Tím získáme $T\cup\{G\}\proves_{LI}\neg p$, na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.
 \end{proof}

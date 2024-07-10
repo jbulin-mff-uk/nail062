@@ -4,7 +4,9 @@
 \usepackage{amsthm}
 \usepackage[czech]{babel}
 \usepackage{bookmark}
-\usepackage{enumerate}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
@@ -13,10 +15,12 @@
 \usepackage{tikz}
 
 
-\theoremstyle{definition}
-    \newtheorem{problem}{Příklad}
-
-
 \DeclareRobustCommand\proves{\mathrel{|}\joinrel\mkern-.5mu\mathrel{-}}
+
+
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+\newtheorem*{ukol}{Domácí úkol}
 
 \DeclareMathOperator{\Conseq}{Csq}

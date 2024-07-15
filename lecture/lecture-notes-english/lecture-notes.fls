@@ -389,15 +389,25 @@ INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx10.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri9.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
 INPUT lecture-notes.aux
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi10.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr6.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr8.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmri10.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmri9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy9.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb

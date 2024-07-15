@@ -415,11 +415,11 @@ INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri9.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
 INPUT ./chapters/chapter2.tex
 INPUT ./chapters/chapter2.tex
 INPUT chapters/chapter2.tex
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri9.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmr8.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmr5.tfm

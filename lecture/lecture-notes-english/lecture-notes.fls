@@ -320,24 +320,19 @@ INPUT c:/Program Files/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.s
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-INPUT ./chapters/chapter1.tex
-INPUT ./chapters/chapter1.tex
-INPUT chapters/chapter1.tex
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr17.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm
-INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ts1-lmr10.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT c:/Program Files/texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
-INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
+INPUT ./chapters/chapter2.tex
+INPUT ./chapters/chapter2.tex
+INPUT chapters/chapter2.tex
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmr12.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ot1lmr.fd
 INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ot1lmr.fd
@@ -390,13 +385,15 @@ INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx10.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri9.tfm
-INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc
+INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT c:/Program Files/texlive/texmf-dist/tex/latex/lm/ts1lmr.fd
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ts1-lmr10.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 INPUT lecture-notes.aux
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
-INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi10.pfb
-INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr10.pfb

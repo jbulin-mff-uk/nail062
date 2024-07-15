@@ -10,7 +10,7 @@ Nejprve definujeme formální `nápisy', se kterými budeme v logice pracovat.
 
 \subsection{Jazyk}
 
-\emph{Jazyk} výrokové logiky je určený neprázdnou množinou \emph{výrokových proměnných} \( \mathbb P \) (také jim říkáme \emph{prvovýroky} nebo \emph{atomické výroky}). Tato množina může být konečná nebo i nekonečná, obvykle ale bude spočetná\footnote{To je důležité v mnoha aplikacích v informatice, nespočetné množiny se do počítače nevejdou.} (pokud neřekneme jinak), a bude mít dané uspořádání. Pro výrokové proměnné budeme obvykle používat označení \( p_i\) (od slova ``proposition''), ale pro lepší čitelnost, zejména je-li \( \mathbb P \) konečná, také \(p,q,r,\dots \) Například:
+\emph{Jazyk} výrokové logiky je určený neprázdnou množinou \emph{výrokových proměnných} \( \mathbb P \) (také jim říkáme \emph{prvovýroky} nebo \emph{atomické výroky}). Tato množina může být konečná nebo i nekonečná, obvykle ale bude spočetná\footnote{To je důležité v mnoha aplikacích v informatice, nespočetné množiny se do (ani nekonečného) počítače nevejdou.} (pokud neřekneme jinak), a bude mít dané uspořádání. Pro výrokové proměnné budeme obvykle používat označení \( p_i\) (od slova ``proposition''), ale pro lepší čitelnost, zejména je-li \( \mathbb P \) konečná, také \(p,q,r,\dots \) Například:
 \begin{align*}
     \mathbb P_1 &= \{ p, q, r\}\\
     \mathbb P_2 &= \{ p_0, p_1, p_2, p_3, \ldots \} = \{ p_i \mid i \in \mathbb N \}
@@ -107,13 +107,13 @@ V praktických aplikacích nevyjádříme požadované vlastnosti jediným výro
     \emph{Teorie} v jazyce $\mathbb P$ je libovolná množina výroků v $\mathbb P$, tedy libovolná podmnožina $T\subseteq\VF_\mathbb P$. Jednotlivým výrokům $\varphi\in T$ říkáme také \emph{axiomy}.
 \end{definition}
 
-\emph{Konečné} teorie by tedy bylo možné (byť ne praktické) nahradit jediným výrokem: konjunkcí všech jejich axiomů. Připouštíme ale i nekonečné teorie, triviálním příkladem je teorie $T=\VF_\mathbb P$, a prázdná teorie $T=\emptyset$.\footnote{Nekonečné teorie se hodí například pro popis vývoje nějakého systému v (diskrétním) čase $t=0,1,2,\dots$ Prázdná teorie se nehodí k ničemu, ale bylo by nešikovné formulovat věty o logice, pokud by teorie musely být neprázdné.}
+\emph{Konečné} teorie by tedy bylo možné (byť ne praktické) nahradit jediným výrokem: konjunkcí všech jejich axiomů. Připouštíme ale i nekonečné teorie (triviálním příkladem je teorie $T=\VF_\mathbb P$), a prázdnou teorii $T=\emptyset$.\footnote{Nekonečné teorie se hodí například pro popis vývoje nějakého systému v (diskrétním) čase $t=0,1,2,\dots$ Prázdná teorie se nehodí k ničemu, ale bylo by nešikovné formulovat věty o logice, pokud by teorie musely být neprázdné.}
 
 
 \section{Sémantika výrokové logiky}
 
 V naší logice je sémantika daná jednou ze dvou možných hodnot: \emph{pravda}, nebo \emph{nepravda}. (V jiných logických systémech může být sémantika zajímavější.)
-%, viz příloha~\ref{appendix:other-logics}.)
+
 
 \subsection{Pravdivostní hodnota}
 
@@ -122,7 +122,7 @@ Výrokům můžeme přiřadit jednu ze dvou možných pravdivostních hodnot: \e
 \begin{example}\label{example:truth-value}
 Spočtěme pravdivostní hodnotu výroku $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ při ohodnocení (a) $p=0$, $q=0$, $r=0$, (b) $p=1$, $q=0$, $r=1$. Postupujeme od listů směrem ke kořeni, podobně jako bychom vyhodnocovali např.\ aritmetický výraz. Výrok $\varphi$ \emph{platí} při ohodnocení z (a), \emph{neplatí} při ohodnocení z (b). Viz obrázek~\ref{figure:truth-value}.
 
-\begin{figure}\label{figure:truth-value}
+\begin{figure}
 \tikzset{every label/.style = {text=red}}
 \begin{minipage}{.49\textwidth}
     \centering
@@ -172,6 +172,7 @@ Spočtěme pravdivostní hodnotu výroku $\varphi = ((p\lor (\neg q)) \liff (r\l
     (b) $p=1$, $q=0$, $r=1$
 \end{minipage}
 \caption{Pravdivostní ohodnocení výroku}
+\label{figure:truth-value}
 \end{figure}
 \end{example}
         

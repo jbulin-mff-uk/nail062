@@ -281,18 +281,14 @@ Formally speaking, we identify the set $\{0,1\}^\mathbb{P}$ with the set $\{0,1\
 \end{remark}
 
 
-\end{document}
-
-
-
 \subsection{Validity}
 
-We can now define the key concept of logic, \emph{validity} of a proposition in a given model. Informally, a proposition is valid in a model (i.e., under a specific truth assignment of atomic propositions) if its truth value, as calculated in Example~\ref{example:truth-value}, equals 1. In the formal definition, we will use the truth function of the proposition (Definition~\ref{definition:truth-function}).\footnote{For \emph{satisfaction}, we use the symbol $\models$, which we read as `satisfies' or `models', in {\LaTeX} as {\textbackslash}models.}
+We are now ready to define the key concept of logic, \emph{validity} of a proposition in a given model. Informally, a proposition is valid in a model (i.e., under a specific truth assignment of atomic propositions) if its truth value, as calculated in Example~\ref{example:truth-value}, equals 1. In the formal definition, we will use the truth function of the proposition (Definition~\ref{definition:truth-function}).\footnote{For \emph{validity}, we use the symbol $\models$, which we read as `satisfies' or `models', in {\LaTeX} as {\textbackslash}models.}
 
-\begin{definition}[Satisfaction of a Proposition in a Model, Model of a Proposition]\label{definition:validity}
-    Given a proposition $\varphi$ in a language $\mathbb{P}$ and a model $v \in \M_\mathbb{P}$, if $f_{\varphi,\mathbb{P}}(v) = 1$, we say that the proposition $\varphi$ is \emph{satisfied} in the model~$v$, $v$ is a \emph{model} of~$\varphi$, and we write $v \models \varphi$. The set of all models of the proposition $\varphi$ is denoted by $\M_\mathbb{P}(\varphi)$.
+\begin{definition}[Validity of a Proposition in a Model, Model of a Proposition]\label{definition:validity}
+    Given a proposition $\varphi$ in a language $\mathbb{P}$ and a model $v \in \M_\mathbb{P}$, if $f_{\varphi,\mathbb{P}}(v) = 1$, we say that the proposition $\varphi$ is \emph{valid} in the model~$v$, $v$ is a \emph{model} of~$\varphi$, and we write $v \models \varphi$. The set of all models of the proposition $\varphi$ is denoted by $\M_\mathbb{P}(\varphi)$.
 \end{definition}
-Models of a language that are not models of $\varphi$ will sometimes be called \emph{non-models} of $\varphi$. They form the complement of the set of models of $\varphi$. Using notation for the inverse relation, we can write:
+Models of a language that are not models of $\varphi$ will sometimes be called \emph{non-models} of $\varphi$. They form the complement of the set of models of $\varphi$. Using the standard notation for function inverse, we can write:
 \begin{align*}
     \M_\mathbb{P}(\varphi) &= \{v \in \M_\mathbb{P} \mid v \models \varphi\} = f_{\varphi,\mathbb{P}}^{-1}[1]\\
     \overline{\M_\mathbb{P}(\varphi)} = \M_\mathbb{P} \setminus \M_\mathbb{P}(\varphi) &= \{v \in \M_\mathbb{P} \mid v \not\models \varphi\} = f_{\varphi,\mathbb{P}}^{-1}[0]
@@ -307,8 +303,8 @@ $$
 \M_{\mathbb{P}'}(p \limplies q) = \{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}.
 $$
 
-\begin{definition}[Satisfaction of a Theory, Model of a Theory]\label{definition:validity-of-theory}
-    Let $T$ be a theory in a language $\mathbb P$. The theory $T$ is \emph{satisfied} in a model $v$ if every axiom $\varphi \in T$ is satisfied in $v$. In this case, we also say that $v$ is a \emph{model} of $T$, and we write $v \models T$. The set of all models of the theory $T$ in a language $\mathbb P$ is denoted by $\M_\mathbb P(T)$.    
+\begin{definition}[Validity of a Theory, Model of a Theory]\label{definition:validity-of-theory}
+    Let $T$ be a theory in a language $\mathbb P$. The theory $T$ is \emph{valid} in a model $v$ if every axiom $\varphi \in T$ is valid in $v$. In this case, we also say that $v$ is a \emph{model} of $T$, and we write $v \models T$. The set of all models of the theory $T$ in a language $\mathbb P$ is denoted by $\M_\mathbb P(T)$.    
 \end{definition}
 
 When dealing with a finite theory, or adding a finite number of new axioms to a theory, we will use the following simplified notation:
@@ -328,30 +324,31 @@ We can use this when finding models by brute force.
     $$
     \M_\mathbb{P}(r) = \{(x, y, 0) \mid x, y \in \{0,1\}\} = \{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\},
     $$
-    then we determine in which of these models the proposition $q \limplies r$ holds: 
+    then we determine in which of these models the proposition $q \limplies r$ is valid: 
     \begin{itemize}
         \item $(0,0,0) \models q \limplies r$,
         \item $(0,1,0) \not\models q \limplies r$,
         \item $(1,0,0) \models q \limplies r$,
         \item $(1,1,0) \not\models q \limplies r$,
     \end{itemize}  
-    Thus $\M_\mathbb{P}(r, q \limplies r) = \{(0,0,0),(1,0,0)\}$. The proposition $p \lor q \lor r$ holds only in the second of these models, so we get
+    Thus $\M_\mathbb{P}(r, q \limplies r) = \{(0,0,0),(1,0,0)\}$. The proposition $p \lor q \lor r$ is valid only in the second of these models, so we get
     $$
     \M_\mathbb{P}(r, q \limplies r, p \lor q \lor r) = \M_\mathbb{P}(T) = \{(1,0,0)\}.
     $$
-    This method is more efficient than determining the sets of models of the individual axioms and taking their intersection. (But much less efficient than a method based on the tableau method, which we will see later.)
+    This procedure is more efficient than determining the sets of models of the individual axioms and taking their intersection. (But much less efficient than using a formal proof system, such as the tableau method, which we will see later.)
 \end{example}
 
-\subsection{Additional Semantic Concepts}
 
-Following the concept of satisfaction, we will use several other concepts. For some properties, there are different terms, depending on the context in which they appear.
+\subsection{Additional semantic notions}
 
-\begin{definition}[Semantic Concepts]\label{definition:semantic-notions}
+Following the notion of validity, we will use several other notions. For some properties, several different names are in use, depending on the context in which the property is discussed.
+
+\begin{definition}[Semantic notions]\label{definition:semantic-notions}
 We say that a proposition $\varphi$ (in a language $\mathbb{P}$) is
 \begin{itemize}
-    \item \emph{true}, \emph{tautology}, \emph{valid (in logic/logically)}, and we write $\models \varphi$, if it holds in every model (of the language $\mathbb{P}$), $\M_\mathbb{P}(\varphi) = \M_\mathbb{P}$,
+    \item \emph{true}, \emph{tautology}, \emph{valid (in logic/logically)}, and we write $\models \varphi$, if it is valid in every model (of the language $\mathbb{P}$), $\M_\mathbb{P}(\varphi) = \M_\mathbb{P}$,
     \item \emph{false}, \emph{contradictory}, if it has no model, $\M_\mathbb{P}(\varphi) = \emptyset$,\footnote{Note that being \emph{false} is not the same as not being \emph{true}!}
-    \item \emph{independent}, if it holds in some model, and does not hold in some other model, i.e., it is neither true nor false, $\emptyset \subsetneq \M_\mathbb{P}(\varphi) \subsetneq \M_\mathbb{P}$,
+    \item \emph{independent}, if it is valid in some model, and it is not valid in some other model, i.e., it is neither true nor false, $\emptyset \subsetneq \M_\mathbb{P}(\varphi) \subsetneq \M_\mathbb{P}$,
     \item \emph{satisfiable}, if it has some model, i.e., it is not false, $\M_\mathbb{P}(\varphi) \neq \emptyset$.
 \end{itemize}
 Furthermore, we say that propositions $\varphi, \psi$ (in the same language $\mathbb{P}$) are \emph{(logically) equivalent}, we write $\varphi \sim \psi$, if they have the same models, i.e.,
@@ -362,10 +359,10 @@ $$
 
 \begin{example} For example, the following hold:
     \begin{itemize}
-        \item Propositions $\top$, $p \lor q \liff q \lor p$ are true,
-        \item Propositions $\bot$, $(p \lor q) \land (p \lor \neg q) \land \neg p$ are false,
-        \item Propositions $p, p \land q$ are independent, and also satisfiable, and
-        \item The following propositions are equivalent: 
+        \item propositions $\top$, $p \lor q \liff q \lor p$ are true,
+        \item propositions $\bot$, $(p \lor q) \land (p \lor \neg q) \land \neg p$ are false,
+        \item propositions $p, p \land q$ are independent, and also satisfiable, and
+        \item the following propositions are equivalent: 
         \begin{itemize}
             \item $p \sim p \lor p \sim p \lor p \lor p$,
             \item $p \limplies q \sim \neg p \lor q$,
@@ -374,15 +371,15 @@ $$
     \end{itemize}      
 \end{example}
 
-The concepts from Definition \ref{definition:semantic-notions} can also be relativized with respect to a given theory. This means that we restrict the individual definitions to the models of this theory:
+The notions from Definition \ref{definition:semantic-notions} can also be relativized with respect to a given theory. This means that we restrict the individual definitions to the models of this theory:
 
-\begin{definition}[Semantic Concepts with Respect to a Theory]
+\begin{definition}[Semantic Notions Relative to a Theory]
     Let $T$ be a theory in a language $\mathbb{P}$. We say that a proposition $\varphi$ in the language $\mathbb{P}$ is
     \begin{itemize}
-        \item \emph{true in $T$}, \emph{consequence of $T$}, \emph{valid in $T$}, and we write $T \models \varphi$, if $\varphi$ holds in every model of the theory $T$, i.e., $\M_\mathbb{P}(T) \subseteq \M_\mathbb{P}(\varphi)$,
-        \item \emph{false in $T$}, \emph{contradictory in $T$}, if it does not hold in any model of $T$, i.e., $\M_\mathbb{P}(\varphi) \cap \M_\mathbb{P}(T) = \M_\mathbb{P}(T,\varphi) = \emptyset$.
-        \item \emph{independent in $T$}, if it holds in some model of $T$, and does not hold in some other model of $T$, i.e., it is neither true in $T$ nor false in $T$, $\emptyset \subsetneq \M_\mathbb{P}(T,\varphi) \subsetneq \M_\mathbb{P}(T)$,
-        \item \emph{satisfiable in $T$}, \emph{consistent with $T$}, if it holds in some model of $T$, i.e., it is not false in $T$, $\M_\mathbb{P}(T,\varphi) \neq \emptyset$.
+        \item \emph{true in $T$}, a \emph{consequence of $T$}, \emph{valid in $T$}, and we write $T \models \varphi$, if $\varphi$ is valid in every model of the theory $T$, i.e., $\M_\mathbb{P}(T) \subseteq \M_\mathbb{P}(\varphi)$,
+        \item \emph{false in $T$}, \emph{contradictory in $T$}, if it is not valid in any model of $T$, i.e., $\M_\mathbb{P}(\varphi) \cap \M_\mathbb{P}(T) = \M_\mathbb{P}(T,\varphi) = \emptyset$.
+        \item \emph{independent in $T$}, if it is valid in some model of $T$, and not valid in some other model of $T$, i.e., it is neither true in $T$ nor false in $T$, $\emptyset \subsetneq \M_\mathbb{P}(T,\varphi) \subsetneq \M_\mathbb{P}(T)$,
+        \item \emph{satisfiable in $T$}, \emph{consistent with $T$}, if it is valid in some model of $T$, i.e., it is not false in $T$, $\M_\mathbb{P}(T,\varphi) \neq \emptyset$.
     \end{itemize}
     And we say that propositions $\varphi, \psi$ (in the same language $\mathbb{P}$) are \emph{equivalent in $T$}, \emph{$T$-equivalent}, we write $\varphi \sim_T \psi$ if they hold in the same models of $T$, i.e.,
     $$
@@ -394,26 +391,26 @@ Note that for the empty theory $T = \emptyset$, we have $\M_\mathbb{P}(T) = \M_\
 
 \begin{example} Let $T = \{p \lor q, \neg r\}$. The following hold:
     \begin{itemize}
-        \item Propositions $q \lor p$, $\neg p \lor \neg q \lor \neg r$ are true in $T$,
-        \item The proposition $(\neg p \land \neg q) \lor r$ is false in $T$,
-        \item Propositions $p \liff q, p \land q$ are independent in $T$, and also satisfiable, and
-        \item It holds that $p \sim_T p \lor r$ (but $p \not\sim p \lor r$).
+        \item propositions $q \lor p$, $\neg p \lor \neg q \lor \neg r$ are true in $T$,
+        \item the proposition $(\neg p \land \neg q) \lor r$ is false in $T$,
+        \item propositions $p \liff q, p \land q$ are independent in $T$, and also satisfiable, and
+        \item $p$ and $p\lor r$ are $T$-equivalent, $p \sim_T p \lor r$ (but $p \not\sim p \lor r$).
     \end{itemize}      
 \end{example}
 
+
 \subsection{Universality of Logical Connectives}
 
-In the language of propositional logic, we use the following logical connectives: $\neg, \land, \lor, \limplies, \liff$. This is not the only possible choice; to build a complete logic, we could suffice, for example, with negation and implication,\footnote{Negation is needed to describe the state of a system, and implication to describe behavior over time.} or negation, conjunction, and disjunction.\footnote{These are sufficient to build logical circuits.} And as we will see below, we could use other logical connectives as well. Our choice is the golden mean between expressiveness on the one hand and the economy of syntactic rules on the other.
+In the language of propositional logic, we use the following logical connectives: $\neg, \land, \lor, \limplies, \liff$. This is not the only possible choice; to build a fully-fledged logic, we could make do, for example, only with negation and implication,\footnote{Negation is needed to describe the state of a system, and implication to describe behavior over time.} or negation, conjunction, and disjunction.\footnote{These are sufficient to build logical circuits.} And as we will see below, we could use other logical connectives as well. Our choice is the golden middle path between expressiveness on the one hand and succintness of syntactic definitions and proofs on the other.
 
-What do we mean by saying that logic is complete? 
-We say that a set of logical connectives $S$ is \emph{universal} if any Boolean function $f$ can be expressed as the truth function $f_{\varphi,\mathbb{P}}$ of some proposition $\varphi$ built from the logical connectives in $S$ (where $|\mathbb{P}|=n$ if $f$ is an $n$-ary function). Equivalently, for any finite language $\mathbb{P}$ (say $n$-element) and any set of models $M \subseteq \M_\mathbb{P}$, there must exist a proposition $\varphi$ such that $\M_\mathbb{P}(\varphi) = M$. (The equivalence of these two statements follows from the fact that if we have a Boolean function $f$ and choose $M = f^{-1}[1]$, then $f_{\varphi,\mathbb{P}} = f$ if and only if $\M_\mathbb{P}(\varphi) = M$.)
+What do we mean by saying that logic is fully-fledged? We say that a set of logical connectives $S$ is \emph{universal}\footnote{Some people would say \emph{[functionally] complete}.} if any Boolean function $f$ can be expressed as the truth function $f_{\varphi,\mathbb{P}}$ of some proposition $\varphi$ built from the logical connectives in $S$ (where $|\mathbb{P}|=n$ if $f$ is an $n$-ary function). Equivalently, for any finite language $\mathbb{P}$ (say $n$-element) and any set of models $M \subseteq \M_\mathbb{P}$, there must exist a proposition $\varphi$ such that $\M_\mathbb{P}(\varphi) = M$. (The equivalence of these two statements follows from the fact that if we have a Boolean function $f$ and choose $M = f^{-1}[1]$, then $f_{\varphi,\mathbb{P}} = f$ if and only if $\M_\mathbb{P}(\varphi) = M$.)
 
 \begin{proposition} \label{proposition:not-and-or-is-universal}
     The sets of logical connectives $\{\neg, \land, \lor\}$ and $\{\neg, \limplies\}$ are universal.
 \end{proposition}
 
 \begin{proof}
-Given a function $f\colon \{0,1\}^n\to \{0,1\}$, or equivalently a set of models $M = f^{-1}[1] \subseteq \{0,1\}^n$. Our language will be $\mathbb{P} = \{p_1, \dots, p_n\}$. If the set $M$ contained only one model, say $v = (1,0,1,0)$, we could represent it with the proposition $\varphi_v = p_1 \land \neg p_2 \land p_3 \land \neg p_4$, which says `I must be model $v$.' For a general model $v$, we would write the proposition $\varphi_v$ as follows:
+Let us have a function $f\colon \{0,1\}^n\to \{0,1\}$, or equivalently a set of models $M = f^{-1}[1] \subseteq \{0,1\}^n$. Our language will be $\mathbb{P} = \{p_1, \dots, p_n\}$. If the set $M$ contained only one model, say $v = (1,0,1,0)$, we could represent it with the proposition $\varphi_v = p_1 \land \neg p_2 \land p_3 \land \neg p_4$, which says `I must be the model $v$.' For a general model $v$, we would write the proposition $\varphi_v$ as follows:
 $$
 \varphi_v = p_1^{v_1} \land p_2^{v_2} \land \dots \land p_n^{v_n} = \bigwedge_{i=1}^n p_i^{v(p_i)} = \bigwedge_{p \in \mathbb{P}} p^{v(p)},
 $$
@@ -429,14 +426,14 @@ The universality of $\{\neg, \limplies\}$ follows from the universality of $\{\n
 \end{proof}
 
 \begin{remark}
-Note that in the construction of the proposition $\varphi_M$, it is crucial that the set $M$ is finite (it has at most $2^n$ elements). If it were infinite, the symbol `$\bigvee_{v \in M}$' would mean `disjunction' of infinitely many propositions, and thus the result would not be a finite string, i.e., `$\varphi_M$' would not be a proposition. (If we have a countably infinite language $\mathbb{P}'$, then not every subset $M \subseteq \M_{\mathbb{P}'}$ can be represented by a proposition---there are countably many such subsets, while propositions are only countably many.)
+Note that in the construction of the proposition $\varphi_M$, it is crucial that the set $M$ is finite (it has at most $2^n$ elements). If it were infinite, the symbol `$\bigvee_{v \in M}$' would mean `disjunction' of infinitely many propositions, and thus the result would not be a finite string, i.e., `$\varphi_M$' would not be a proposition. (If we have a countably infinite language $\mathbb{P}'$, then not every subset $M \subseteq \M_{\mathbb{P}'}$ can be represented by a proposition---there are uncountably many such subsets, while propositions are only countably many.)
 \end{remark}
 
-What other logical connectives could we use? Nullary Boolean functions,\footnote{In formalizing mathematics or computer science, a function of arity 0 means it has no inputs, so the output cannot depend on the input and is constant. Formally, these are functions $f\colon \emptyset\to \{0,1\}$. If this is confusing, assume that functions must have an arity of at least 1, and instead of `nullary function,' say `constant.'} or constants 0, 1, could be introduced as symbols TRUE and FALSE; we will suffice with propositions $\top, \bot$. There are four unary Boolean functions ($4 = 2^{2^1}$), but negation is the only `interesting' one: the others are $f(x) = x$, $f(x) = 0$, and $f(x) = 1$. There are more interesting binary logical connectives that occur naturally, for example:
+What other logical connectives could we use? Nullary Boolean functions,\footnote{In formalizing mathematics or computer science, a function of arity 0 means it has no inputs, so the output cannot depend on the input and is constant. Formally, these are functions $f\colon \emptyset\to \{0,1\}$. If this is confusing, assume that functions must have an arity of at least 1, and instead of `nullary function,' say `constant.'} i.e. constants 0, 1, could be introduced as symbols TRUE and FALSE; we will suffice with propositions $\top, \bot$. There are four unary Boolean functions ($4 = 2^{2^1}$), but negation is the only `interesting' one: the others are $f(x) = x$, $f(x) = 0$, and $f(x) = 1$. There are more interesting binary logical connectives that occur naturally, for example:
 \begin{itemize}
-    \item NAND or \emph{Sheffer's stroke}, sometimes denoted as $p \uparrow q$, holds if $p \uparrow q \sim \neg (p \land q)$,
-    \item NOR or \emph{Peirce's arrow}, sometimes denoted as $p \downarrow q$, holds if $p \downarrow q \sim \neg (p \lor q)$,
-    \item XOR, or \emph{exclusive-OR}, sometimes denoted as $\oplus$, holds if $p \oplus q \sim (p \lor q) \land \neg (p \land q)$, or the sum of truth values modulo 2.
+    \item NAND or \emph{Sheffer's stroke}, sometimes denoted as $p \uparrow q$, where $p \uparrow q \sim \neg (p \land q)$,
+    \item NOR or \emph{Peirce's arrow}, sometimes denoted as $p \downarrow q$, where $p \downarrow q \sim \neg (p \lor q)$,
+    \item XOR, or \emph{exclusive-OR}, sometimes denoted as $\oplus$, where $p \oplus q \sim (p \lor q) \land \neg (p \land q)$, i.e. the sum of truth values modulo 2.
 \end{itemize}
 
 \begin{exercise}
@@ -452,92 +449,150 @@ Consider the ternary logical connective $\mathrm{IFTE}$, where $IFTE(p,q,r)$ is 
 \end{exercise}
 
 
-\end{document}
+\section{Normal Forms}
 
+Let us recall that propositions are equivalent if they have the same set of models. For each proposition, there exist infinitely many equivalent propositions; it is often useful to express a proposition in a `nice' (useful) `shape', i.e., to find an equivalent proposition of that `shape'. This concept of `shape' in mathematics is called a \emph{normal form}. We will introduce two most common normal forms: \emph{conjunctive normal form (CNF)} and \emph{disjunctive normal form (DNF)}.
 
-
-\section{Normální formy}
-
-Připomeňme, že výroky jsou ekvivalentní, pokud mají stejnou množinu modelů. Pro každý výrok existuje nekonečně mnoho ekvivalentních výroků; často se hodí vyjádřit výrok v nějakém `hezkém' (užitečném) `tvaru', tj.\ najít ekvivalentní výrok v daném tvaru. Takovému konceptu tvaru se v matematice říká \emph{normální forma}. My si představíme dvě nejznámější: \emph{konjunktivní normální formu (conjunctive normal form, CNF)} a \emph{disjunktivní normální formu (DNF)}. 
-
-Používá se následující terminologie a značení:
+The following terminology and notation are needed:
 \begin{itemize}
-    \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
-    \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
-    \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
-    \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
+    \item A \emph{literal} $\ell$ is either a propositional variable $p$ or the negation of a propositional variable $\neg p$. For a propositional variable $p$, denote $p^0=\neg p$ and $p^1=p$. If $\ell$ is a literal, then $\bar{\ell}$ denotes the \emph{opposite literal} to $\ell$. If $\ell=p$ (a \emph{positive literal}), then $\bar{\ell}=\neg p$; if $\ell=\neg p$ (a \emph{negative literal}), then $\bar{\ell}=p$.
+    \item A \emph{clause} is a disjunction of literals $C=\ell_1 \lor \ell_2 \lor \dots \lor \ell_n$. A \emph{unit clause} is a single literal ($n=1$) and the \emph{empty clause} ($n=0$) is interpreted as $\bot$.
+    \item A proposition is in \emph{conjunctive normal form (CNF)} if it is a conjunction of clauses. The \emph{empty CNF proposition} is $\top$.
+    \item An \emph{elementary conjunction} is a conjunction of literals $E=\ell_1 \land \ell_2 \land \dots \land \ell_n$. A \emph{unit elementary conjunction} is a single literal ($n=1$). The \emph{empty elementary conjunction} ($n=0$) is $\top$.
+    \item A proposition is in \emph{disjunctive normal form (DNF)} if it is a disjunction of elementary conjunctions. The \emph{empty DNF proposition} is $\bot$.
 \end{itemize}
 
 \begin{example}
-    Výrok ${{p\lor q}\lor\neg r}$ je v CNF (je to jediná klauzule) a zároveň v DNF (je to disjunkce jednotkových elementárních konjunkcí). Výrok $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF, výrok $\neg p\lor (p\land q)$ je v DNF.
+    The proposition ${{p\lor q}\lor\neg r}$ is in CNF (it is a single clause) as well as in DNF (it is a disjunction of unit elementary conjunctions). The proposition $(p\lor q)\land (p\lor \neg q)\land \neg p$ is in CNF, while the proposition $\neg p\lor (p\land q)$ is in DNF.
 \end{example}
 
 \begin{example}
-    Výrok $\varphi_v$ z důkazu Tvrzení~\ref{proposition:not-and-or-is-universal} je v CNF (je to konjunkce jednotkových klauzulí, tj.\ literálů) a také v DNF (je to jediná elementární konjunkce). Výrok $\varphi_M$ je v DNF.
+    The proposition $\varphi_v$ from the proof of Proposition~\ref{proposition:not-and-or-is-universal} is in CNF (it is a conjunction of unit clauses, i.e., literals) and also in DNF (it is a single elementary conjunction). The proposition $\varphi_M$ is in DNF.
 \end{example}
 
 \begin{observation}
-Všimněte si, že výrok v CNF je pravdivý, právě když každá jeho klauzule obsahuje dvojici opačných literálů. Podobně, výrok v DNF je splnitelný, pokud ne každá elementární konjunkce obsahuje dvojici opačných literálů.
+    Note that a proposition in CNF is a tautology if and only if each of its clauses contains a pair of opposite literals. Similarly, a proposition in DNF is satisfiable if and only if not every elementary conjunction contains a pair of opposite literals.
 \end{observation}
 
-\subsection{O dualitě}
 
-Všimněte si, že pokud ve výrokové logice zaměníme hodnoty pro pravdu a nepravdu, tj.\ 0 a 1, pravdivostní tabulka negace zůstává stejná, z konjunkce se stává disjunkce, a naopak. Tomuto konceptu se říká \emph{dualita}; v logice uvidíme mnoho příkladů. 
+\subsection{On Duality}
 
-Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Neboť $p,q$ jsou proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí pokud $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
+Note that if we interchange the values for truth and falsehood in propositional logic, i.e., 0 and 1, the truth table for negation remains the same, while conjunction becomes disjunction, and vice versa. This concept is called \emph{duality}; we will see many examples of this in logic.
 
-Pojem DNF je duální k pojmu CNF, `je pravdivý' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ a $\lor$, pravdy a nepravdy.
+We have $\neg(p \land q) \sim (\neg p \lor \neg q)$, and from \emph{duality}, we also know that $\neg(\neg p \lor \neg q) \sim (\neg \neg p \land \neg \neg q)$, from which we can easily deduce $\neg(p \lor q) \sim (\neg p \land \neg q)$.\footnote{Since $p,q$ are propositional variables, they can be assigned both values 0 and 1, thus we can interchange them with their opposite literals.} More generally, $n$-ary Boolean functions $f, g$ are \emph{dual} to each other if $f(\neg x) = \neg g(x)$. If we have a proposition $\varphi$ built from $\{\neg, \land, \lor\}$ and we interchange $\land$ and $\lor$, and negate the propositional variables (i.e., interchange literals with their opposite literals), we obtain a proposition $\psi \sim \neg \varphi$ (i.e., the models of $\varphi$ are the non-models of $\psi$ and vice versa), and the functions $f_{\varphi, \mathbb{P}}$ and $f_{\psi, \mathbb{P}}$ are dual to each other.
+
+The notion of DNF is dual to the notion of CNF; `is a tautology' is dual to `is not satisfiable', thus the previous observation can be understood as an example of duality. For every statement in propositional logic, we obtain a \emph{dual} statement `for free', resulting from the interchange of $\land$ and $\lor$, truth and falsehood.
 
 
-\subsection{Převod do normální formy}\label{subsection:convert-to-normal-form}
+\subsection{Conversion to Normal Forms}\label{subsection:convert-to-normal-form}
 
-Disjunktivní normální formu jsme již potkali, v důkazu Tvrzení~\ref{proposition:not-and-or-is-universal}. Klíčovou část důkazu bychom mohli zformulovat takto: `Je-li jazyk konečný, lze každou množinu modelů \emph{axiomatizovat} výrokem v DNF'. Z duality dostáváme také axiomatizaci v CNF, neboť doplněk množiny modelů je také množina modelů:
+We have already encountered the disjunctive normal form in the proof of Proposition~\ref{proposition:not-and-or-is-universal}. The key part of the proof can be formulated as follows: `If the language is finite, any set of models can be \emph{axiomatized} by a proposition in DNF'. From duality, we also obtain axiomatization in CNF since the complement of a set of models is also a set of models:
 
 \begin{proposition} \label{proposition:axiomatize-in-DNF-CNF}
-    Mějme konečný jazyk $\mathbb P$ a libovolnou množinu modelů $M\subseteq\M_\mathbb P$. Potom existuje výrok $\varphi_{\mathrm{DNF}}$ v DNF a výrok $\varphi_{\mathrm{CNF}}$ v CNF takový, že $M=\M_\mathbb P(\varphi_{\mathrm{DNF}})=\M_\mathbb P(\varphi_{\mathrm{CNF}})$. Konkrétně:
+    Given a finite language $\mathbb{P}$ and any set of models $M \subseteq \M_\mathbb{P}$, there exists a proposition $\varphi_{\mathrm{DNF}}$ in DNF and a proposition $\varphi_{\mathrm{CNF}}$ in CNF such that $M = \M_\mathbb{P}(\varphi_{\mathrm{DNF}}) = \M_\mathbb{P}(\varphi_{\mathrm{CNF}})$. Specifically:
 \begin{align*}
-    \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}\\
-    \varphi_{\mathrm{CNF}} &= \bigwedge_{v\in \overline{M}}\bigvee_{p\in\mathbb P}\overline{p^{v(p)}}=\bigwedge_{v\notin M}\bigvee_{p\in\mathbb P}p^{1-v(p)}
+    \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v \in M} \bigwedge_{p \in \mathbb{P}} p^{v(p)} \\
+    \varphi_{\mathrm{CNF}} &= \bigwedge_{v \in \overline{M}} \bigvee_{p \in \mathbb{P}} \overline{p^{v(p)}} = \bigwedge_{v \notin M} \bigvee_{p \in \mathbb{P}} p^{1-v(p)}
 \end{align*}
 \end{proposition}
 
-
 \begin{proof}
-    Pro výrok $\varphi_{\mathrm{DNF}}$ viz důkaz Tvrzení~\ref{proposition:not-and-or-is-universal}, každá elementární konjunkce popisuje jeden model. Výrok $\varphi_{\mathrm{CNF}}$ je duální k výroku $\varphi'_{\mathrm{DNF}}$ sestrojenému pro doplněk $M'=\overline{M}$. Nebo můžeme dokázat přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou všechny modely kromě $v$, $\M_C=\M_\mathbb P\setminus\{v\}$, tedy každá klauzule v konjunkci zakazuje jeden nemodel.
+    For the proposition $\varphi_{\mathrm{DNF}}$, see the proof of Proposition~\ref{proposition:not-and-or-is-universal}, where each elementary conjunction describes one model. The proposition $\varphi_{\mathrm{CNF}}$ is dual to the proposition $\varphi'_{\mathrm{DNF}}$ constructed for the complement $M' = \overline{M}$. Alternatively, we can prove it directly: the models of the clause $C_v = \bigvee_{p \in \mathbb{P}} p^{1-v(p)}$ are all models except $v$, $\M_C = \M_\mathbb{P} \setminus \{v\}$, so each clause in the conjunction excludes one non-model.
 \end{proof}
 
-Tvrzení~\ref{proposition:axiomatize-in-DNF-CNF} dává návod, jak převádět výrok do disjunktivní nebo do konjunktivní normální formy:
+Proposition~\ref{proposition:axiomatize-in-DNF-CNF} provides a method for converting a proposition to disjunctive or conjunctive normal form:
 
 \begin{example}
-    Uvažme výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve najdeme množinu modelů: $M=\M(\varphi)=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Nyní najdeme výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$ podle Tvrzení \ref{proposition:axiomatize-in-DNF-CNF}, ty mají stejnou množinu modelů jako $\varphi$, jsou tedy ekvivalentní.
+    Consider the proposition $\varphi = p \liff (q \lor \neg r)$. First, we find the set of models: $M = \M(\varphi) = \{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Then, we find the propositions $\varphi_{\mathrm{DNF}}$ and $\varphi_{\mathrm{CNF}}$ according to Proposition \ref{proposition:axiomatize-in-DNF-CNF}. Those have the same models as $\varphi$ and are therefore equivalent with it.
 
-    Výrok $\varphi_{\mathrm{DNF}}$ najdeme tak, že pro každý model sestrojíme elementární konjunkci vynucující právě tento model:
+    We find the proposition $\varphi_{\mathrm{DNF}}$ by constructing an elementary conjunction for each model that enforces precisely that model:
     $$
-    \varphi_{\mathrm{DNF}}=(\neg p\land\neg q\land r)\lor (p\land\neg q\land\neg r) \lor (p\land q\land\neg r)\lor (p\land q\land r)
+    \varphi_{\mathrm{DNF}} = (\neg p \land \neg q \land r) \lor (p \land \neg q \land \neg r) \lor (p \land q \land \neg r) \lor (p \land q \land r)
     $$
-    Při konstrukci $\varphi_{\mathrm{CNF}}$ budeme potřebovat \emph{nemodely} $\varphi$, $\overline{M}=\{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$. Každá klauzule zakáže jeden nemodel:
+    For constructing $\varphi_{\mathrm{CNF}}$, we need the \emph{non-models} of $\varphi$, $\overline{M} = \{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$. Each clause excludes one non-model:
     $$
-    \varphi_{\mathrm{CNF}}=(p\lor q\lor r)\land (p\lor\neg q\lor r) \land (p\lor \neg q\lor\neg r)\land (\neg p\lor q\lor\neg r)
+    \varphi_{\mathrm{CNF}} = (p \lor q \lor r) \land (p \lor \neg q \lor r) \land (p \lor \neg q \lor \neg r) \land (\neg p \lor q \lor \neg r)
     $$   
 \end{example}
 
 \begin{corollary}
-    Každý výrok (v libovolném, i nekonečném jazyce $\mathbb P$) je ekvivalentní nějakému výroku v CNF a nějakému výroku v DNF.
+    Every proposition (in any, even infinite, language $\mathbb{P}$) is equivalent to some proposition in CNF and some proposition in DNF.
 \end{corollary}
 \begin{proof}
-I když je jazyk $\mathbb P$ nekonečný, výrok $\varphi$ obsahuje jen konečně mnoho výrokových proměnných, můžeme tedy použít Tvrzení \ref{proposition:axiomatize-in-DNF-CNF} pro jazyk $\mathbb P'=\Var(\varphi)$, a množinu modelů $M=\M_{\mathbb P'}(\varphi)$. Protože $M=\M_{\mathbb P'}(\varphi_{\mathrm{DNF}})=\M_{\mathbb P'}(\varphi_{\mathrm{CNF}})=M$, máme $\varphi\sim\varphi_{\mathrm{DNF}}\sim\varphi_{\mathrm{CNF}}$.
+Even if the language $\mathbb{P}$ is infinite, the proposition $\varphi$ contains only finitely many propositional variables, so we can use Proposition \ref{proposition:axiomatize-in-DNF-CNF} for the language $\mathbb{P}' = \Var(\varphi)$ and the set of models $M = \M_{\mathbb{P}'}(\varphi)$. Since $M = \M_{\mathbb{P}'}(\varphi_{\mathrm{DNF}}) = \M_{\mathbb{P}'}(\varphi_{\mathrm{CNF}})$, we have $\varphi \sim \varphi_{\mathrm{DNF}} \sim \varphi_{\mathrm{CNF}}$.
 \end{proof}
 
 \begin{exercise}
-Rozmyslete si, jak lze z DNF výroku snadno vygenerovat jeho modely, a z CNF výroku jeho nemodely.
+Describe how one can easily generate models from a DNF proposition and non-models from a CNF proposition.
 \end{exercise}
 
 \begin{remark}
-    Kdy lze axiomatizovat \emph{teorii} výrokem v DNF nebo výrokem v CNF? Mějme jazyk $\mathbb P'=\Var(T)$ (tj. všechny výrokové proměnné vyskytující se v axiomech $T$). Má-li $T$ v jazyce $\mathbb P'$ konečně mnoho modelů (tj.\ je-li $\M_{\mathbb P'}(T)$ konečná), můžeme sestrojit výrok v DNF, a má-li konečně mnoho \emph{nemodelů}, můžeme sestrojit výrok v CNF. Obecně ale ne každou teorii lze axiomatizovat \emph{jediným} výrokem v CNF nebo v DNF. Vždy můžeme převést jednotlivé axiomy do CNF (nebo DNF), a můžeme také axiomatizovat teorii jen pomocí (potenciálně nekonečně mnoha) klauzulí.
+    When can a \emph{theory} be axiomatized by a proposition in DNF or CNF? Consider the language $\mathbb{P}' = \Var(T)$ (i.e., all propositional variables occurring in the axioms of $T$). If $T$ in the language $\mathbb{P}'$ has finitely many models (i.e., $\M_{\mathbb{P}'}(T)$ is finite), we can construct a proposition in DNF, and if it has finitely many \emph{non-models}, we can construct a proposition in CNF. Generally, however, not every theory can be axiomatized by a \emph{single} proposition in CNF or DNF. We can always convert individual axioms to CNF (or DNF), and we can also axiomatize the theory using (potentially infinitely many) clauses.
 \end{remark}
 
-Tento způsob převodu do CNF resp. do DNF vyžaduje znalost množiny modelů výroku, je tedy poměrně neefektivní. A také výsledná normální forma může být velmi dlouhá. Ukážeme si ještě jeden postup.
+This method of conversion to CNF or DNF requires knowledge of the set of models of the proposition, so it is quite inefficient. Additionally, the resulting normal form can be very long. We will now show another method.
+
+\subsubsection{Conversion Using Equivalent Transformations}
+
+We use the following observation: If we replace some subproposition $\psi$ of a proposition $\varphi$ with an equivalent proposition $\psi'$, the resulting proposition $\varphi'$ will also be equivalent to $\varphi$. We will first demonstrate the method on an example:
+
+\begin{example}
+    Again, we will convert the proposition $\varphi = p \liff (q \lor \neg r)$. First, we eliminate the equivalence, expressing it as a conjunction of two implications. In the next step, we remove the implications using the rule $\varphi \limplies \psi \sim \neg \varphi \lor \psi$:
+    \begin{align*}
+        p \liff (q \lor \neg r) &\sim (p \limplies (q \lor \neg r)) \land ((q \lor \neg r) \limplies p)\\
+        &\sim (\neg p \lor q \lor \neg r) \land (\neg (q \lor \neg r) \lor p)
+    \end{align*}
+    Now, imagine the tree of the proposition; in the next step, we want to push the negations as low as possible in the tree, just above the leaves: we use $\neg (q \lor \neg r) \sim \neg q \land \neg \neg r$ and eliminate the double negation $\neg \neg r \sim r$. We obtain the proposition
+    $$
+    (\neg p \lor q \lor \neg r) \land ( (\neg q \land r) \lor p)
+    $$
+    At this point, we leave the literals untouched and apply the distributivity of $\landsymb$ over $\lorsymb$, or vice versa, depending on whether we want DNF or CNF. For conversion to CNF, we use the transformation $(\neg q \land r) \lor p \sim (\neg q \lor p) \land (r \lor p)$, which pushes the $\lorsymb$ symbol lower in the tree. (Draw the tree!) This gives us a proposition in CNF; for better readability, we sort the literals in the clauses:
+    $$
+    (\neg p \lor q \lor \neg r) \land (p \lor \neg q) \land (p \lor r)
+    $$
+    For conversion to DNF, we proceed similarly by repeatedly applying distributivity. Here, we start from the CNF form and combine each literal from the first clause with each literal from the second and each literal from the third clause. Note that the same literal does not need to be repeated twice in the elementary conjunction, and if the elementary conjunction contains a pair of opposite literals, it is contradictory and can be omitted in the DNF. We can also omit an elementary conjunction $E$ if we have another elementary conjunction $E'$ such that $E'$ contains all the literals contained in $E$, e.g., $E = (p \land \neg r)$ and $E' = (p \land q \land \neg r)$. (Think about why, and formulate the dual simplification when converting to CNF.) The resulting proposition in DNF is:
+    $$
+    (\neg p \land \neg q \land r) \lor (p \land q \land r) \lor (p \land \neg r)
+    $$
+\end{example}
+
+We now list all equivalent transformations needed for the method. The proof that every proposition can be converted to DNF and CNF can be easily carried out by induction on the structure of the proposition (depth of the proposition tree).
+
+\begin{tcolorbox}
+\begin{multicols}{2}
+\begin{itemize}
+    \item Implications and equivalences:
+    \begin{itemize}
+        \item[] $\varphi \limplies \psi \sim \neg \varphi \lor \psi$
+        \item[] $\varphi \liff \psi \sim (\neg \varphi \lor \psi) \land (\neg \psi \lor \varphi)$
+    \end{itemize}
+    \item Negations:
+    \begin{itemize}
+        \item[] $\neg (\varphi \land \psi) \sim \neg \varphi \lor \neg \psi$
+        \item[] $\neg (\varphi \lor \psi) \sim \neg \varphi \land \neg \psi$
+        \item[] $\neg \neg \varphi \sim \varphi$
+    \end{itemize}
+    \item Conjunctions (conversion to DNF):
+    \begin{itemize}
+        \item[] $\varphi \land (\psi \lor \chi) \sim (\varphi \land \psi) \lor (\varphi \land \chi)$
+        \item[] $(\varphi \lor \psi) \land \chi \sim (\varphi \land \chi) \lor (\psi \land \chi)$
+    \end{itemize}
+    \item Disjunctions (conversion to CNF):
+    \begin{itemize}
+        \item[] $\varphi \lor (\psi \land \chi) \sim (\varphi \lor \psi) \land (\varphi \lor \chi)$
+        \item[] $(\varphi \land \psi) \lor \chi \sim (\varphi \lor \chi) \land (\psi \lor \chi)$
+    \end{itemize}
+\end{itemize}
+\end{multicols}
+\end{tcolorbox}
+
+As we will see in the next chapter, CNF is much more important in practice than DNF (even though they are dual concepts). For describing a real system, it is more natural to express it as a conjunction of many simpler properties than as a single very long disjunction. There are many other forms of representing Boolean functions. Similar to data structures, we choose the appropriate form of representation depending on the operations we need to perform on the function.\footnote{See, for example, the course \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL031}{NAIL031 Representations of Boolean Functions}.}
+
+
+
+
+\end{document}
+
 
 \subsubsection{Převod pomocí ekvivalentních úprav}
 

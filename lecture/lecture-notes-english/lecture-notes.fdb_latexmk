@@ -1,6 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1721079332.10519 "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes-english/lecture-notes.tex" "lecture-notes.pdf" "lecture-notes" 1721079335.54414 0
+["pdflatex"] 1721223408.24281 "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes-english/lecture-notes.tex" "lecture-notes.pdf" "lecture-notes" 1721223412.11723 0
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1714678428 2375 baa924870cfb487815765f9094cf3728 ""
+  "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1714678428 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1714678428 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1714678428 2840 216e6e45ad352e2456e1149f28885bee ""
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc" 1714678428 2327 9d6df24f9c4f7368395224341a95523a ""
@@ -45,7 +46,9 @@
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1714675350 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx10.pfb" 1714678429 121021 836464b5fe0c782d94085eb083550ccc ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmbx12.pfb" 1714678429 116908 9a7a12d1e4df280ea0ab4aad83cdef88 ""
+  "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmex10.pfb" 1714678429 23055 2e5b42921de910eaa97b85df04ca4891 ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi10.pfb" 1714678429 30388 702fae6a5f0e6e9c48a1d872b442ffcf ""
+  "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi6.pfb" 1714678429 31113 04b711c9a4c7f8cb4ed784c6fc4cc1c5 ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi8.pfb" 1714678429 30635 833ec815d446ec453a4913fc26d24cbc ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmmi9.pfb" 1714678429 30698 e53a423459271d6c5cdd91f7559396af ""
   "c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmr10.pfb" 1714678429 119235 05e5c8d6d60439433e50047898c2c0e0 ""
@@ -230,9 +233,9 @@
   "c:/Program Files/texlive/texmf-var/web2c/pdftex/pdflatex.fmt" 1714682254 8225303 744c928c74513808c62eae66352e4bb0 ""
   "c:/Program Files/texlive/texmf.cnf" 1714682088 755 639003dd4ad18b875b8369800f2abbde ""
   "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes-english/lecture-notes.tex" 1721067347 609 9d4f695769706cce5103061864c3d900 ""
-  "chapters/chapter2.tex" 1721079327 68576 0cff9bc8391a7803b18954d0493be420 ""
+  "chapters/chapter2.tex" 1721223407 73956 31f09abeb61b67deb9322eaeada827c6 ""
   "header.tex" 1721072329 2353 bb3a088dd1e170d17f444fcfb271343e ""
-  "lecture-notes.aux" 1721079335 6678 4937a1c5ae83ba6e302ca9da033d3be4 "pdflatex"
+  "lecture-notes.aux" 1721223411 9945 d812c1b0649c84c6de1a8a3744bfbe13 "pdflatex"
   "lecture-notes.tex" 1721067347 609 9d4f695769706cce5103061864c3d900 ""
   (generated)
   "lecture-notes.aux"

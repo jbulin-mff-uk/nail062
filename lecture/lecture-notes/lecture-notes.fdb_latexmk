@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex lecture-notes"] 1721078312.88483 "lecture-notes.aux" "lecture-notes.bbl" "lecture-notes" 1721078325.87555 0
+["bibtex lecture-notes"] 1721078312.88483 "lecture-notes.aux" "lecture-notes.bbl" "lecture-notes" 1721223261.86922 0
   "./references.bib" 1718191143 6865 cb45e62df79386e025d7159b8954199e ""
   "c:/Program Files/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1714675715 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "lecture-notes.aux" 1721078323 88074 4e8a644f4a257bd721b23c9845dcd18e "pdflatex"
+  "lecture-notes.aux" 1721223259 88074 4e8a644f4a257bd721b23c9845dcd18e "pdflatex"
   (generated)
   "lecture-notes.bbl"
   "lecture-notes.blg"
   (rewritten before read)
-["pdflatex"] 1721078313.58956 "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes/lecture-notes.tex" "lecture-notes.pdf" "lecture-notes" 1721078325.87648 0
+["pdflatex"] 1721223248.86207 "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes/lecture-notes.tex" "lecture-notes.pdf" "lecture-notes" 1721223261.87029 0
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1714678428 2375 baa924870cfb487815765f9094cf3728 ""
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1714678428 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "c:/Program Files/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1714678428 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -278,7 +278,7 @@
   "c:/Users/jakub/Work/GitHub/nail062/lecture/lecture-notes/lecture-notes.tex" 1720702770 595 458137b912b5a6eba4fcf48bedd64f09 ""
   "chapters/chapter1.tex" 1721052135 35142 41f6d2647b86d2671beb6d1f2a08a200 ""
   "chapters/chapter10.tex" 1718193058 40441 2ef72e53076f9b5693da40e4c1258c0e ""
-  "chapters/chapter2.tex" 1721078297 67339 2dee78b483fdf78954916fbab59a34ef ""
+  "chapters/chapter2.tex" 1721223247 67368 97d59a9e4df7cca29660930e93bc6931 ""
   "chapters/chapter3.tex" 1720702529 30302 9005e2b26767d5bc6df93db002548579 ""
   "chapters/chapter4.tex" 1718191143 45326 cda7827a26efc2a95023c489fb382644 ""
   "chapters/chapter5.tex" 1718192346 34907 0f8eb8d7763588d73aaaa0693a69991e ""
@@ -288,10 +288,10 @@
   "chapters/chapter9.tex" 1718192141 33065 db6a6d2c3742bdf59594bdecf34645a0 ""
   "chapters/frontmatter.tex" 1720698687 812 454d50861e1c880aa09759e1c1196390 ""
   "header.tex" 1720702377 2319 a2474504365eb9c59d22da99acb29697 ""
-  "lecture-notes.aux" 1721078323 88074 4e8a644f4a257bd721b23c9845dcd18e "pdflatex"
+  "lecture-notes.aux" 1721223259 88074 4e8a644f4a257bd721b23c9845dcd18e "pdflatex"
   "lecture-notes.bbl" 1721078313 726 d396fb1b48f0d48e7fed537d0124131f "bibtex lecture-notes"
   "lecture-notes.tex" 1720702770 595 458137b912b5a6eba4fcf48bedd64f09 ""
-  "lecture-notes.toc" 1721078323 14974 9ab55d9dfb661a637df9e201dcd665f6 "pdflatex"
+  "lecture-notes.toc" 1721223260 14974 9ab55d9dfb661a637df9e201dcd665f6 "pdflatex"
   (generated)
   "lecture-notes.aux"
   "lecture-notes.log"

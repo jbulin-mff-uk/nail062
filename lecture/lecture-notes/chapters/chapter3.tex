@@ -1,12 +1,12 @@
 \chapter{Problém splnitelnosti}
 
-\emph{Problém splnitelnosti výrokových formulí}, známý také jako \emph{problém SAT}\footnote{Z anglického `Boolean satisfiability problem'.} je následující výpočetní problém: Vstupem je výrok $\varphi$ v CNF (v nějakém rozumném kódování\footnote{Např. formát \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS-CNF}.}), a úkolem je rozhodnout, zda je $\varphi$ \emph{splnitelný}.
+\emph{Problém splnitelnosti výrokových formulí}, známý také jako \emph{problém SAT}\footnote{Z anglického `Boolean satisfiability problem'.} je následující výpočetní problém: Vstupem je výrok $\varphi$ v CNF (v nějakém rozumném kódování\footnote{Např. formát \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS-CNF}.}), a úkolem je rozhodnout, zda je $\varphi$ \emph{splnitelný}. \footnote{Pozor, v některé literatuře se jako SAT označuje splnitelnost \emph{libovolného} výroku, a na CNF je potom omezen až problém $k$-SAT (viz níže).}
 
-Jak jsme si ukázali v předchozí kapitole, můžeme každý výrok, nebo i každou výrokovou teorii v konečném jazyce, převést do CNF. Problém SAT je tedy v jistém smyslu univerzální; odpovídá na otázku, zda existuje model.
+Jak jsme si ukázali v předchozí kapitole, můžeme každý výrok, nebo i každou výrokovou teorii v konečném jazyce, převést na CNF formuli. Problém SAT je tedy v jistém smyslu univerzální; odpovídá na otázku, zda existuje model.
 
-Známá Cook-Levinova věta říká, že problém SAT je \emph{NP-úplný}, tedy je v třídě NP (pokud nám orákulum prozradí správné ohodnocení proměnných, můžeme snadno ověřit, že všechny klauzule jsou splněny) a každý problém z třídy NP na něj lze převést v polynomiálním čase (konkrétně, výpočet Turingova stroje lze popsat pomocí CNF formule).\footnote{Viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN090}{NTIN090 Základy složitosti a vyčíslitelnosti}.}
+Známá Cook-Levinova věta říká, že problém SAT je \emph{NP-úplný}, tedy je v třídě NP (pokud nám orákulum prozradí správné ohodnocení proměnných, můžeme snadno ověřit, že všechny klauzule jsou splněny) a každý problém z třídy NP na něj lze převést v polynomiálním čase (konkrétně, výpočet Turingova stroje lze popsat pomocí výroku v CNF).\footnote{Viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN090}{NTIN090 Základy složitosti a vyčíslitelnosti}.}
 
-Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho (až desítky milionů) výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř) všech SAT solverů. (V pozdější kapitole uvidíme také souvislost s \emph{rezoluční metodou}.)
+Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho (až desítky milionů) výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř) všech SAT solverů. (Později, v Kapitole~\ref{chapter:tableau-method-propositional}, uvidíme také souvislost s \emph{rezoluční metodou}.)
 
 
 \section{SAT solvery}
@@ -55,7 +55,7 @@ Uvidíme, že takové instance problému SAT budou pro řešiče těžké a už 
 
 \section{2-SAT a implikační graf}
 
-Výrok $\varphi$ je v $k$-CNF, pokud je v CNF a každá klauzule má nejvýše $k$ literálů. Problému $k$-SAT se ptá, zda je daný $k$-CNF formule splnitelná. Pro $k\geq 3$ je $k$-SAT nadále NP-úplný, každou CNF formuli lze zakódovat do 3-CNF formule:
+Výrok $\varphi$ je v $k$-CNF, pokud je v CNF a každá klauzule má nejvýše $k$ literálů. Problému $k$-SAT se ptá, zda je daný $k$-CNF výrok splnitelná. Pro $k\geq 3$ je $k$-SAT nadále NP-úplný, každou CNF formuli lze zakódovat do 3-CNF výroku:
 
 \begin{exercise}
 Ukažte, že pro každý výrok $\varphi$ v CNF existuje \emph{ekvisplnitelný} výrok v $\varphi'$ 3-CNF (tj. $\varphi$ je splnitelný, právě když $\varphi'$ je splnitelný), který lze zkonstruovat v lineárním čase.
@@ -128,7 +128,7 @@ Výsledný graf je znázorněný na Obrázku \ref{figure:implication-graph}.
 
 Nyní musíme najít komponenty silné souvislosti\footnote{\emph{Silná souvislost} znamená, že existuje orientovaná cesta z $u$ do $v$ i z $v$ do $u$, neboli každé dva vrcholy v jedné komponentě leží v orientovaném cyklu. A naopak, každý orientovaný cyklus leží uvnitř nějaké komponenty.} tohoto grafu. V našem příkladě dostáváme následující komponenty: $C_1=\{p_4\}$, $C_2=\{\neg p_5\}$, $C_3=\{\neg p_1,\neg p_2,p_3\}$, $\overline{C_3}=\{p_1,p_2,\neg p_3\}$, $\overline{C_2}=\{p_5\}$, $\overline{C_1}=\{\neg p_4\}$.
 
-Všechny literály v jedné komponentě musí být ohodnoceny stejně. Pokud bychom tedy našli dvojici opačných literálů v jedné komponentě, znamená to, že výrok je nesplnitelný. V opačném případě vždy můžeme najít splňující ohodnocení, jak si dokážeme v Tvrzení \ref{proposition:2-sat-algorithm}. Potřebujeme zajistit, aby z žádné komponenty ohodnocené 1 nevedla hrana do komponenty ohodnocené 0. Provedeme-li kontrakci komponent, výsledný graf $\mathcal G_\varphi^\ast$ je acyklický (každý cyklus byl uvnitř nějaké komponenty), a můžeme ho tedy nakreslit v \emph{topologickém uspořádání} (tj.\ uspořádání na přímce, kde hrany vedou jen doprava), viz Obrázek \ref{figure:implication-graph-components}. 
+Všechny literály v jedné komponentě musí být ohodnoceny stejně. Pokud bychom tedy našli dvojici opačných literálů v jedné komponentě, znamená to, že výrok je nesplnitelný. V opačném případě vždy můžeme najít splňující ohodnocení, jak si dokážeme v Tvrzení \ref{proposition:2-sat-algorithm}. Potřebujeme zajistit, aby z žádné komponenty ohodnocené 1 nevedla hrana do komponenty ohodnocené 0. Provedeme-li kontrakci komponent (a odstraníme-li smyčky), výsledný graf $\mathcal G_\varphi^\ast$ je acyklický (každý cyklus byl uvnitř nějaké komponenty), viz Obrázek \ref{figure:implication-graph-components}. To znamená, že ho můžeme nakreslit v \emph{topologickém uspořádání} (tj.\ uspořádání na přímce, kde hrany vedou jen doprava), viz Obrázek \ref{figure:implication-graph-topological-order} níže. 
 
 \begin{figure} 
     \small   
@@ -190,7 +190,7 @@ Na závěr shrneme naše úvahy do následujícího tvrzení:
 \begin{proof}
     Každý model, neboli splňující ohodnocení, musí ohodnotit všechny literály ze stejné komponenty stejnou hodnotou. (V opačném případě by nutně existovala implikace $\ell_1\limplies\ell_2$, kde $\ell_1$ v modelu platí ale $\ell_2$ neplatí.) V jedné komponentě tedy nemohou být opačné literály.
 
-    Naopak předpokládejme, že žádná komponenta neobsahuje dvojici opačných literálů, a ukažme, že potom existuje model. Označme $\mathcal G_\varphi^\ast$ graf vzniklý z $\mathcal G_\varphi$ kontrakcí silně souvislých komponent. Tento graf je acyklický, zvolme nějaké topologické uspořádání. Model zkonstruujeme tak, že zvolíme první dosud neohodnocenou komponentu v našem topologickém uspořádání, všechny literály v ní obsažené ohodnotíme 0, a opačné literály ohodnotíme 1. Takto pokračujeme dokud nejsou všechny komponenty ohodnoceny.
+    Naopak předpokládejme, že žádná komponenta neobsahuje dvojici opačných literálů, a ukažme, že potom existuje model. Označme $\mathcal G_\varphi^\ast$ graf vzniklý z $\mathcal G_\varphi$ kontrakcí silně souvislých komponent (a odstraněním smyček). Tento graf je acyklický, zvolme nějaké topologické uspořádání. Model zkonstruujeme tak, že zvolíme první dosud neohodnocenou komponentu v našem topologickém uspořádání, všechny literály v ní obsažené ohodnotíme 0, a opačné literály ohodnotíme 1. Takto pokračujeme dokud nejsou všechny komponenty ohodnoceny.
 
     Proč v takto získaném modelu platí výrok $\varphi$? Kdyby ne, neplatila by některá z klauzulí. Jednotková klauzule $\ell$ musí platit, neboť v grafu $\mathcal G_\varphi$ máme hranu $\overline{\ell}\limplies\ell$. Stejná hrana je i v grafu komponent, tedy $\overline{\ell}$ předchází v topologickém uspořádání komponentu obsahující $\ell$. Při konstrukci modelu jsme museli ohodnotit $\overline{\ell}$ dříve než $\ell$, tedy $\overline{\ell}=0$ a $\ell=1$. Podobně, 2-klauzule $\ell_1\lor\ell_2$ také musí platit: máme hrany $\overline{\ell_1}\limplies\ell_2$ a $\overline{\ell_2}\limplies\ell_1$. Pokud jsme $\ell_1$ ohodnotili dříve než $\ell_2$, museli jsme kvůli hraně $\overline{\ell_1}\limplies\ell_2$ ohodnotit $\overline{\ell_1}=0$, tedy $\ell_1$ platí. Podobně pokud jsme ohodnotili nejdříve $\ell_2$, musí být $\overline{\ell_2}=0$ a $\ell_2=1$. 
 \end{proof}
@@ -221,7 +221,7 @@ Nyní si ukážeme další fragment SATu řešitelný v polynomiálním čase, t
 $$
 \neg p_1\lor \neg p_2\lor \dots \lor \neg p_n\lor q\ \sim\ (p_1\land p_2\land\dots \land p_n)\limplies q
 $$
-Hornovské formule tedy dobře modelují systémy, kde splnění určitých podmínek zaručuje splnění jiné podmínky. Upozorněme, že jednotková klauzule $\ell$ je také hornovská. V kontextu logického programování se jí říká \emph{fakt}, pokud je literál pozitivní, a \emph{cíl} pokud je negativní.\footnote{Neboť dokazujeme sporem, více v pozdější kapitole o rezoluci a Prologu.} Hornovské formule s alespoň jedním pozitivním a alespoň jedním negativním literálem jsou \emph{pravidla}. 
+Hornovské výroky tedy dobře modelují systémy, kde splnění určitých podmínek zaručuje splnění jiné podmínky. Upozorněme, že jednotková klauzule $\ell$ je také hornovská. V kontextu logického programování se jí říká \emph{fakt}, pokud je literál pozitivní, a \emph{cíl} pokud je negativní.\footnote{Neboť dokazujeme sporem, více v pozdější kapitole o rezoluci a Prologu.} Hornovské výroky s alespoň jedním pozitivním a alespoň jedním negativním literálem jsou \emph{pravidla}. 
 
 \begin{example}
     Příkladem výroku, který je v CNF, ale není hornovský, je třeba $(p_1\lor p_2\lor\neg p_3)\land (\neg p_1\lor p_3)$. Jako příklad, na kterém budeme ilustrovat algoritmus, nám poslouží následující hornovský výrok:

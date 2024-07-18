@@ -1,94 +1,89 @@
-\chapter{Problém splnitelnosti}
+\chapter{The Boolean Satisfiability Problem}
 
-\emph{Problém splnitelnosti výrokových formulí}, známý také jako \emph{problém SAT}\footnote{Z anglického `Boolean satisfiability problem'.} je následující výpočetní problém: Vstupem je výrok $\varphi$ v CNF (v nějakém rozumném kódování\footnote{Např. formát \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS-CNF}.}), a úkolem je rozhodnout, zda je $\varphi$ \emph{splnitelný}.
+\emph{The boolean satisfiability problem}, also known as the \emph{SAT problem}, is the following computational task: The input is a proposition $\varphi$ in CNF (in some reasonable encoding\footnote{For example, the \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS-CNF} format.}), and the goal is to decide whether $\varphi$ is \emph{satisfiable}.\footnote{Beware, in some literature SAT means satisfiability of an \emph{arbitrary} proposition, the restriction of inputs to CNF is done only for the problem $k$-SAT (see below).}
 
-Jak jsme si ukázali v předchozí kapitole, můžeme každý výrok, nebo i každou výrokovou teorii v konečném jazyce, převést do CNF. Problém SAT je tedy v jistém smyslu univerzální; odpovídá na otázku, zda existuje model.
+As we demonstrated in the previous chapter, we can convert every proposition, or even every propositional theory in a finite language, into a CNF formula. The SAT problem is thus, in a sense, universal; it answers the question of whether there exists a model.
 
-Známá Cook-Levinova věta říká, že problém SAT je \emph{NP-úplný}, tedy je v třídě NP (pokud nám orákulum prozradí správné ohodnocení proměnných, můžeme snadno ověřit, že všechny klauzule jsou splněny) a každý problém z třídy NP na něj lze převést v polynomiálním čase (konkrétně, výpočet Turingova stroje lze popsat pomocí CNF formule).\footnote{Viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN090}{NTIN090 Základy složitosti a vyčíslitelnosti}.}
+The well-known Cook-Levin theorem states that the SAT problem is \emph{NP-complete}, meaning it is in the NP class (if an oracle provides the right truth assignment, we can easily verify that all clauses are satisfied) and that every problem in the NP class can be reduced to it in polynomial time (specifically, the computation of a Turing machine can be described using a CNF formula).\footnote{See the course \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN090}{NTIN090 Introduction to Complexity and Computability}.}
 
-Praktické SAT solvery si ale umí poradit s instancemi obsahujícími mnoho (až desítky milionů) výrokových proměnných a klauzulí. V této kapitole si nejprve ukážeme praktickou aplikaci SAT solveru na problém `ze života', potom dva fragmenty problému SAT, tzv. \emph{2-SAT} a \emph{Horn-SAT}, pro které existují polynomiální algoritmy, a na závěr si ukážeme také algoritmus DPLL, který je základem (téměř) všech SAT solverů. (V pozdější kapitole uvidíme také souvislost s \emph{rezoluční metodou}.)
+However, practical SAT solvers can handle instances containing many (up to tens of millions) propositional variables and clauses. In this chapter, we will first demonstrate the practical application of a SAT solver to a `real-life' problem, then show two fragments of the SAT problem, namely \emph{2-SAT} and \emph{Horn-SAT}, for which there are polynomial algorithms, and finally, we will also present the DPLL algorithm, which is the basis of (almost) all SAT solvers. (Later, in Chapter~\ref{chapter:tableau-method-propositional}, we will also see the connection with the \emph{resolution method}.)
 
+\section{SAT Solvers}
 
-\section{SAT solvery}
+The first SAT solvers were developed in the 1960s. They are almost always based on the DPLL (Davis–Putnam–Logemann–Loveland) algorithm, which we will introduce in Section \ref{section:DPLL}, or some of its improvements. After 2000, there has been a somewhat surprising, dramatic development of technologies for SAT solvers, leading to a rapid increase in their utility in various areas of applied computer science.
 
-První řešiče SAT byly vyvinuty v 60. letech 20. století. Jejich základem je téměř vždy algoritmus DPLL (Davis–Putnam–Logemann–Loveland), který představíme v Sekci \ref{section:DPLL}, respektive některé z jeho vylepšení. Po roce 2000 dochází k poněkud překvapivému, dramatickému vývoji technologií pro řešiče SAT a tím i k rapidnímu růstu jejich užitečnosti v různých oblastech aplikované informatiky. 
+Modern SAT solvers use a range of technologies for efficiently solving typical instances from various application domains, strategies, and heuristics for exploring the solution space (including, for examle, the use of machine learning and neural networks), and other enhancements. These modern tools typically have several tens of thousands of lines of code. The availability of efficient SAT solvers has significantly impacted developments in areas such as software verification, program analysis, optimization, and artificial intelligence. The best SAT solvers regularly compete in the \href{http://www.satcompetition.org}{SAT competition}.
 
-Moderní SAT solvery používají celou řadu technologií pro efektivní řešení typických instancí pocházejících z různých aplikačních domén, strategií a heuristik pro exploraci prostoru řešení (například i za použití strojového učení a neuronových sítí), a dalších vylepšení. Tyto moderní nástroje mají typicky několik desítek tisíc řádků kódu. Dostupnost efektivních SAT solverů významně ovlivnila vývoj například v oblasti softwarové verifikace, analýzy programů, optimalizace, nebo umělé inteligence. Nejlepší SAT solvery spolu pravidelně soutěží v rámci \href{http://www.satcompetition.org}{SAT competition}.
-
-Pro vyzkoušení SAT solvingu nám poslouží řešič \href{https://github.com/mi-ki/glucose-syrup}{\texttt{Glucose}}. Ten přijímá vstup v jednoduchém formátu \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS CNF}. Ukažme si postup použití na následující hříčce zvané \emph{boardomino}:
+To try out SAT solving, we will use the solver \href{https://github.com/mi-ki/glucose-syrup}{\texttt{Glucose}}. It accepts input in the simple \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{DIMACS CNF} format. Let's demonstrate the usage on the following puzzle called \emph{boardomino}:
 
 \begin{example}[Boardomino]
-Lze pokrýt šachovnici s chybějícími dvěma protilehlými rohy perfektně pokrýt kostkami domina?    
+Can a chessboard with two opposite corners cut out be perfectly covered with domino tiles?    
 \end{example}
 
-Jak tento problém formalizovat? Zvolme výrokové proměnné $h_{i,j},v_{i,j}$ ($1\leq i,j\leq n$), kde $h_{i,j}$ znamená ``na pozici $(i,j)$ leží levá polovina horizontálně orientované kostky'' a podobně $v_{i,j}$ pro horní polovinu vertikální kostky. Zde $n=8$, ale můžeme vyzkoušet i pro jiné (sudé) rozměry šachovnice. Nyní axiomatizujeme všechny požadované vlastnosti:
+How to formalize this problem? Let us choose propositional variables $h_{i,j}, v_{i,j}$ ($1 \leq i,j \leq n$), where $h_{i,j}$ means ``the left half of a horizontally oriented domino lies at position $(i,j)$'' and similarly $v_{i,j}$ for the top half of a vertically oriented domino. Here $n=8$, but we can try it for other (even) dimensions of the chessboard. Now we axiomatize all required properties:
 \begin{itemize}
-    \item levý horní a pravý dolní roh chybí: $\neg h_{11},\neg v_{11},\neg h_{n,n-1},\neg v_{n-1,n}$
-    \item kostky nevyčnívají z šachovnice (vpravo ani dolů): $\neg h_{i,n},\neg v_{n,i}$ pro  $1\leq i\leq n$
-    \item každé políčko je pokryto alespoň jednou kostkou (první řádek a sloupec zvlášť):
+    \item the upper left and lower right corners are missing: $\neg h_{11}, \neg v_{11}, \neg h_{n,n-1}, \neg v_{n-1,n}$
+    \item dominos do not extend beyond the chessboard (to the right or down): $\neg h_{i,n}, \neg v_{n,i}$ for $1 \leq i \leq n$
+    \item each square is covered by at least one domino (the first row and column separately):
     \begin{align*}
-        h_{i,j-1}\lor h_{i,j}\lor v_{i-1,j}\lor v_{i,j}&\text{ pro }1<i,j\leq n\\
-        h_{1,j-1}\lor h_{1,j}\lor v_{1,j}&\text{ pro }1<j\leq n\\
-        h_{i,1}\lor v_{i-1,1}\lor v_{i,1}&\text{ pro }1<i\leq n
+        h_{i,j-1} \lor h_{i,j} \lor v_{i-1,j} \lor v_{i,j} &\text{ for } 1<i,j\leq n \\
+        h_{1,j-1} \lor h_{1,j} \lor v_{1,j} &\text{ for } 1<j\leq n \\
+        h_{i,1} \lor v_{i-1,1} \lor v_{i,1} &\text{ for } 1<i\leq n
     \end{align*}
-    \item každé políčko je pokryto nejvýše jednou kostkou (první řádek a sloupec zvlášť):
+    \item each square is covered by at most one domino (the first row and column separately):
     \begin{align*}
-        (\neg h_{i,j-1}\lor\neg h_{i,j})\land
-        (\neg h_{i,j-1}\lor\neg v_{i-1,j})\land        
-        (\neg h_{i,j-1}\lor\neg v_{i,j})\land&\\
-        (\neg h_{i,j}\lor\neg v_{i-1,j})\land
-        (\neg h_{i,j}\lor\neg v_{i,j})\land
-        (\neg v_{i-1,j}\lor\neg v_{i,j})
-        &\text{ pro }1<i,j\leq n\\
-        (\neg h_{1,j-1}\lor \neg h_{1,j})\land(\neg h_{1,j-1}\lor \neg v_{1,j})\land(\neg h_{1,j}\lor \neg v_{1,j})&\text{ pro }1<j\leq n\\
-        (\neg h_{i,1}\lor \neg v_{i-1,1})\land(\neg h_{i,1}\lor\neg v_{i,1})\land (\neg v_{i-1,1}\lor\neg v_{i,1})&\text{ pro }1<i\leq n
+        (\neg h_{i,j-1} \lor \neg h_{i,j}) \land
+        (\neg h_{i,j-1} \lor \neg v_{i-1,j}) \land        
+        (\neg h_{i,j-1} \lor \neg v_{i,j}) \land &\\
+        (\neg h_{i,j} \lor \neg v_{i-1,j}) \land
+        (\neg h_{i,j} \lor \neg v_{i,j}) \land
+        (\neg v_{i-1,j} \lor \neg v_{i,j}) &\text{ for } 1<i,j\leq n \\
+        (\neg h_{1,j-1} \lor \neg h_{1,j}) \land (\neg h_{1,j-1} \lor \neg v_{1,j}) \land (\neg h_{1,j} \lor \neg v_{1,j}) &\text{ for } 1<j\leq n \\
+        (\neg h_{i,1} \lor \neg v_{i-1,1}) \land (\neg h_{i,1} \lor \neg v_{i,1}) \land (\neg v_{i-1,1} \lor \neg v_{i,1}) &\text{ for } 1<i\leq n
     \end{align*}    
-
-
-
-
 \end{itemize}
 
-Výsledná teorie už je v CNF, snadno ji můžeme zapsat ve formátu DIMACS CNF, a vyřešit pomocí solveru Glucose. V praxi bychom mohli tento převod naprogramovat, nebo využít jednoho z mnoha vysokoúrovňových jazyků z oblasti \emph{constraint programming} umožňujících překlad do SATu.
+The resulting theory is already in CNF, and we can easily write it in the DIMACS CNF format and solve it using the Glucose solver. In practice, we might program this conversion or use one of the many high-level languages from the \emph{constraint programming} area that allow translation to SAT.
 
-Uvidíme, že takové instance problému SAT budou pro řešiče těžké a už pro poměrně malé rozměry šachovnice se řešení nedočkáme. Jako matematici snadno nahlédneme, že řešení neexistuje: Každá kostka domina pokrývá jedno bílé a jedno černé políčko, ale odebrali jsme dvě bílá, nutně tedy zbudou dvě černá. Tento pohled ale není v zakódování do CNF dostupný. Lze najít částečná ohodnocení téměř všech proměnných, aniž bychom nějakou podmínku porušili. Solver tedy bude muset prohledat téměř celý prostor řešení, než dokáže nesplnitelnost.\footnote{Podobné vlastnosti má také zakódování \emph{holubníkového principu} do SATu.} Klíčovým náhledem do SAT solvingu je fakt, že takové těžké instance se v praxi téměř nikdy nevyskytují.
+We will see that such instances of the SAT problem will be difficult for the solver, and for relatively small dimensions of the chessboard, we will not get a solution. As mathematicians, we can easily see that there is no solution: Each domino covers one white and one black square, but we removed two white squares, so necessarily two black squares will remain. However, this view is not available in the CNF encoding. It is possible to find partial truth assignments of almost all variables without violating any condition. The solver will have to search almost the entire solution space before proving unsatisfiability.\footnote{Similar properties also hold for the encoding of the \emph{pigeonhole principle} into SAT.} The key insight into SAT solving is that such difficult instances almost never occur in practice.
 
-\section{2-SAT a implikační graf}
 
-Výrok $\varphi$ je v $k$-CNF, pokud je v CNF a každá klauzule má nejvýše $k$ literálů. Problému $k$-SAT se ptá, zda je daný $k$-CNF formule splnitelná. Pro $k\geq 3$ je $k$-SAT nadále NP-úplný, každou CNF formuli lze zakódovat do 3-CNF formule:
+\section{2-SAT and Implication Graph}
+
+A proposition $\varphi$ is in $k$-CNF if it is in CNF and each clause has at most $k$ literals. The $k$-SAT problem asks whether a given $k$-CNF proposition is satisfiable. For $k \geq 3$, $k$-SAT remains NP-complete; any CNF proposition can be encoded into a 3-CNF proposition:
 
 \begin{exercise}
-Ukažte, že pro každý výrok $\varphi$ v CNF existuje \emph{ekvisplnitelný} výrok v $\varphi'$ 3-CNF (tj. $\varphi$ je splnitelný, právě když $\varphi'$ je splnitelný), který lze zkonstruovat v lineárním čase.
+Show that for any proposition $\varphi$ in CNF, there exists an \emph{equisatisfiable} proposition $\varphi'$ in 3-CNF (i.e., $\varphi$ is satisfiable if and only if $\varphi'$ is satisfiable), which can be constructed in linear time.
 \end{exercise}
 
-Pro problém 2-SAT ale existuje polynomiální (dokonce lineární) algoritmus, který si nyní představíme. Algoritmus využívá tzv.\ \emph{implikačního grafu}. Ukážeme si postup na příkladě:
+For the 2-SAT problem, however, there is a polynomial (linear, even) algorithm, which we will now introduce. The algorithm utilizes the notion of \emph{implication graph}. We will demonstrate the procedure with an example:
 \begin{example}
-    Mějme následující 2-CNF výrok $\varphi$:
+    Consider the following 2-CNF proposition $\varphi$:
     $$
     (\neg p_1 \lor p_2) \land (\neg p_2 \lor \neg p_3) \land (p_1\lor p_3) \land (p_3\lor \neg p_4)\land (\neg p_1\lor p_5)\land (p_2\lor p_5)\land p_1\land \neg p_4
     $$
 \end{example}
 
-\subsubsection{Implikační graf}
+\subsubsection{Implication Graph}
 
-Implikační graf 2-CNF výroku $\varphi$ je založený na myšlence, že 2-klauzuli $\ell_1\lor \ell_2$ (kde $\ell_1,\ell_2$ jsou literály) lze chápat jako dvojici implikací: $\overline{\ell_1}\limplies\ell_2$ a $\overline{\ell_2}\limplies \ell_1$.\footnote{V předchozí kapitole jsme vyjadřovali $p_1\limplies p_2$ jako $\neg p_1\lor p_2$, zde provádíme opačný postup.} Například, z klauzule $\neg p_1\lor p_2$ vzniknou implikace $p_1\limplies p_2$ a také $,\neg p_2\limplies \neg p_1$. Tedy pokud $p_1$ platí v nějakém modelu, musí platit i $p_2$, a pokud $p_2$ neplatí, nesmí platit ani $p_1$. Jednotkovou klauzuli $\ell$ můžeme také vyjádřit pomocí implikace jako $\overline{\ell}\limplies\ell$, např.\ z $p_1$ dostáváme $\neg p_1\limplies p_1$.
+The implication graph of a 2-CNF proposition $\varphi$ is based on the idea that a 2-clause $\ell_1 \lor \ell_2$ (where $\ell_1$ and $\ell_2$ are literals) can be viewed as a pair of implications: $\overline{\ell_1} \rightarrow \ell_2$ and $\overline{\ell_2} \rightarrow \ell_1$.\footnote{In the previous chapter, we expressed $p_1 \rightarrow p_2$ as $\neg p_1 \lor p_2$; here, we are performing the reverse procedure.} For example, from the clause $\neg p_1 \lor p_2$, we get the implications $p_1 \rightarrow p_2$ and $\neg p_2 \rightarrow \neg p_1$. Therefore, if $p_1$ holds in some model, $p_2$ must hold as well, and if $p_2$ does not hold, then $p_1$ must not hold either. A unit clause $\ell$ can also be expressed as an implication, namely $\overline{\ell} \rightarrow \ell$, e.g., from $p_1$ we get $\neg p_1 \rightarrow p_1$.
 
-Implikační graf $\mathcal G_\varphi$ je tedy orientovaný graf, jehož vrcholy jsou všechny literály (proměnné z $\Var(\varphi)$ a jejich negace) a hrany jsou dané implikacemi popsanými výše: 
+The implication graph $\mathcal{G}_\varphi$ is thus a directed graph, whose vertices are all the literals (variables from $\Var(\varphi)$ and their negations), and edges are given by the implications described above:
 \begin{itemize}
-    \item $V(\mathcal G_\varphi) = \{p, \neg p \mid p\in\Var(\varphi)\}$,
-    \item $E(\mathcal G_\varphi) = \{(\overline{\ell_1},\ell_2), (\overline{\ell_2},\ell_1)\mid \ell_1\lor \ell_2\text{ je klauzule }\varphi\}\union\{(\overline{\ell},\ell)\mid \ell \text{ je jednotková klauzule }\varphi\}$
-\end{itemize} 
+    \item $V(\mathcal{G}_\varphi) = \{p, \neg p \mid p \in \Var(\varphi)\}$,
+    \item $E(\mathcal{G}_\varphi) = \{(\overline{\ell_1}, \ell_2), (\overline{\ell_2}, \ell_1) \mid \ell_1 \lor \ell_2 \text{ is a clause in } \varphi\} \cup \{(\overline{\ell}, \ell) \mid \ell \text{ is a unit clause in } \varphi\}$
+\end{itemize}
 
-V našem příkladě máme množinu vrcholů 
+In our example, the set of vertices is
 $$
-V(\mathcal G_\varphi)=\{p_1,p_2,p_3,p_4,p_5,\neg p_1,\neg p_2,\neg p_3,\neg p_4,\neg p_5\}
-$$ 
-a hrany jsou:
+V(\mathcal{G}_\varphi) = \{p_1, p_2, p_3, p_4, p_5, \neg p_1, \neg p_2, \neg p_3, \neg p_4, \neg p_5\}
+$$
+and the edges are:
 \begin{align*}
-    E(\mathcal G_\varphi)=\{&(p_1,p_2),(\neg p_2,\neg p_1),(p_2,\neg p_3),(p_3,\neg p_2),(\neg p_1,p_3),(\neg p_3,p_1),(\neg p_3,\neg p_4),
-    \\&(p_4,p_3),(p_1,p_5),(\neg p_5,\neg p_1),(\neg p_2,p_5),(\neg p_5,p_2),(\neg p_1,p_1),(p_4,\neg p_4)\}
+    E(\mathcal{G}_\varphi) = \{&(p_1, p_2), (\neg p_2, \neg p_1), (p_2, \neg p_3), (p_3, \neg p_2), (\neg p_1, p_3), (\neg p_3, p_1), (\neg p_3, \neg p_4), \\
+    &(p_4, p_3), (p_1, p_5), (\neg p_5, \neg p_1), (\neg p_2, p_5), (\neg p_5, p_2), (\neg p_1, p_1), (p_4, \neg p_4)\}
 \end{align*}
-Výsledný graf je znázorněný na Obrázku \ref{figure:implication-graph}.
+The resulting graph is shown in Figure \ref{figure:implication-graph}.
 
 \begin{figure} 
     \small   
@@ -121,14 +116,14 @@ Výsledný graf je znázorněný na Obrázku \ref{figure:implication-graph}.
         \draw[-{Latex[length=2.5mm]}] (-2) edge[bend left=70] (5);
         \draw[-{Latex[length=2.5mm]}] (-3) -- (-4);
         \end{tikzpicture}
-        \caption{Implikační graf $\mathcal G_\varphi$. Komponenty silné souvislosti jsou odlišeny barevně.}\label{figure:implication-graph}
+        \caption{Implication graph $\mathcal{G}_\varphi$. Strongly connected components are distinguished by colors.}\label{figure:implication-graph}
 \end{figure}
 
-\subsection{Silně souvislé komponenty}
+\subsection{Strongly Connected Components}
 
-Nyní musíme najít komponenty silné souvislosti\footnote{\emph{Silná souvislost} znamená, že existuje orientovaná cesta z $u$ do $v$ i z $v$ do $u$, neboli každé dva vrcholy v jedné komponentě leží v orientovaném cyklu. A naopak, každý orientovaný cyklus leží uvnitř nějaké komponenty.} tohoto grafu. V našem příkladě dostáváme následující komponenty: $C_1=\{p_4\}$, $C_2=\{\neg p_5\}$, $C_3=\{\neg p_1,\neg p_2,p_3\}$, $\overline{C_3}=\{p_1,p_2,\neg p_3\}$, $\overline{C_2}=\{p_5\}$, $\overline{C_1}=\{\neg p_4\}$.
+We now need to find the strongly connected components\footnote{\emph{Strong connectivity} means that there is a directed path from $u$ to $v$ and from $v$ to $u$, i.e., every two vertices in one component lie in a directed cycle. Conversely, every directed cycle lies within some component.} of this graph. In our example, we get the following components: $C_1 = \{p_4\}$, $C_2 = \{\neg p_5\}$, $C_3 = \{\neg p_1, \neg p_2, p_3\}$, $\overline{C_3} = \{p_1, p_2, \neg p_3\}$, $\overline{C_2} = \{p_5\}$, $\overline{C_1} = \{\neg p_4\}$.
 
-Všechny literály v jedné komponentě musí být ohodnoceny stejně. Pokud bychom tedy našli dvojici opačných literálů v jedné komponentě, znamená to, že výrok je nesplnitelný. V opačném případě vždy můžeme najít splňující ohodnocení, jak si dokážeme v Tvrzení \ref{proposition:2-sat-algorithm}. Potřebujeme zajistit, aby z žádné komponenty ohodnocené 1 nevedla hrana do komponenty ohodnocené 0. Provedeme-li kontrakci komponent, výsledný graf $\mathcal G_\varphi^\ast$ je acyklický (každý cyklus byl uvnitř nějaké komponenty), a můžeme ho tedy nakreslit v \emph{topologickém uspořádání} (tj.\ uspořádání na přímce, kde hrany vedou jen doprava), viz Obrázek \ref{figure:implication-graph-components}. 
+All literals in one component must be assigned the same value. Therefore, if we find a pair of opposite literals in one component, it means that the proposition is unsatisfiable. Otherwise, we can always find a satisfying assignment, as we will prove in Proposition \ref{proposition:2-sat-algorithm}. We need to ensure that no component assigned 1 has an edge leading to a component assigned 0. If we contract the components (and remove loops), the resulting graph $\mathcal{G}_\varphi^\ast$ is acyclic (every cycle was within some component), see Figure~\ref{figure:implication-graph-components}. Thus we can draw it in a \emph{topological ordering} (i.e., an ordering on a line where edges only go to the right), see Figure \ref{figure:implication-graph-topological-order} below.
 
 \begin{figure} 
     \small   
@@ -151,10 +146,10 @@ Všechny literály v jedné komponentě musí být ohodnoceny stejně. Pokud byc
         \draw[-{Latex[length=2.5mm]}] (C3) edge[bend left] (barC1);
         \draw[-{Latex[length=2.5mm]}] (C2) edge[bend right] (barC2);
         \end{tikzpicture}
-        \caption{Implikační graf $\mathcal G_\varphi$. Graf silně souvislých komponent $\mathcal G_\varphi^\ast$.}\label{figure:implication-graph-components}
+        \caption{Implication graph $\mathcal{G}_\varphi$. Graph of strongly connected components $\mathcal{G}_\varphi^\ast$.}\label{figure:implication-graph-components}
 \end{figure}
 
-Při hledání splňujícího ohodnocení (pokud nám nestačí informace, že výrok je splnitelný) potom postupujeme tak, že vezmeme nejlevější dosud neohodnocenou komponentu, ohodnotíme ji 0, opačnou komponentu ohodnotíme 1, a postup opakujeme dokud zbývá nějaká neohodnocená komponenta. Například, topologické uspořádání na Obrázku \ref{figure:implication-graph-topological-order} odpovídá modelu $v=(1,1,0,0,1)$.
+When searching for a satisfying assignment (if we are not content with the information that the proposition is satisfiable), we proceed by taking the leftmost unassigned component, assigning it 0, assigning the opposite component 1, and repeating this process until no unassigned components remain. For example, the topological ordering in Figure \ref{figure:implication-graph-topological-order} corresponds to the model $v = (1,1,0,0,1)$.
 
 \begin{figure} 
     \small   
@@ -178,177 +173,176 @@ Při hledání splňujícího ohodnocení (pokud nám nestačí informace, že v
         \draw[-{Latex[length=2.5mm]}] (C3) edge[bend left] (barC1);
         \draw[-{Latex[length=2.5mm]}] (C2) edge[bend left] (barC2);
         \end{tikzpicture}
-        \caption{Implikační graf $\mathcal G_\varphi$. Topologické uspořádání grafu $\mathcal G_\varphi^\ast$ a splňující ohodnocení komponent.}\label{figure:implication-graph-topological-order}
+        \caption{Implication graph $\mathcal{G}_\varphi$. Topological ordering of the graph $\mathcal{G}_\varphi^\ast$ and satisfying assignment of the components.}\label{figure:implication-graph-topological-order}
 \end{figure}
 
-Na závěr shrneme naše úvahy do následujícího tvrzení:
+Finally, we summarize our reasoning in the following proposition:
 
 \begin{proposition}\label{proposition:2-sat-algorithm}
-    Výrok $\varphi$ je splnitelný, právě když žádná silně souvislá komponenta v $\mathcal G_\varphi$ neobsahuje dvojici opačných literálů $\ell,\overline{\ell}$.
+    A proposition $\varphi$ is satisfiable if and only if no strongly connected component in $\mathcal{G}_\varphi$ contains a pair of opposite literals $\ell, \overline{\ell}$.
 \end{proposition}
 
 \begin{proof}
-    Každý model, neboli splňující ohodnocení, musí ohodnotit všechny literály ze stejné komponenty stejnou hodnotou. (V opačném případě by nutně existovala implikace $\ell_1\limplies\ell_2$, kde $\ell_1$ v modelu platí ale $\ell_2$ neplatí.) V jedné komponentě tedy nemohou být opačné literály.
+    Every model, i.e., valid truth assignment, must assign all literals in the same component the same truth value. (Otherwise, there would necessarily be an implication $\ell_1 \rightarrow \ell_2$ where $\ell_1$ is valid in the model but $\ell_2$ is not.) Therefore, there cannot be opposite literals in one component.
 
-    Naopak předpokládejme, že žádná komponenta neobsahuje dvojici opačných literálů, a ukažme, že potom existuje model. Označme $\mathcal G_\varphi^\ast$ graf vzniklý z $\mathcal G_\varphi$ kontrakcí silně souvislých komponent. Tento graf je acyklický, zvolme nějaké topologické uspořádání. Model zkonstruujeme tak, že zvolíme první dosud neohodnocenou komponentu v našem topologickém uspořádání, všechny literály v ní obsažené ohodnotíme 0, a opačné literály ohodnotíme 1. Takto pokračujeme dokud nejsou všechny komponenty ohodnoceny.
+    Conversely, assume that no component contains a pair of opposite literals, and let us show that there exists a model. Let $\mathcal{G}_\varphi^\ast$ be the graph obtained from $\mathcal{G}_\varphi$ by contracting the strongly connected components. This graph is acyclic; choose a topological ordering. We construct a model by choosing the first unassigned component in our topological ordering, assigning all literals in it the value 0, and assigning the opposite literals the value 1. We continue this process until all components are assigned.
 
-    Proč v takto získaném modelu platí výrok $\varphi$? Kdyby ne, neplatila by některá z klauzulí. Jednotková klauzule $\ell$ musí platit, neboť v grafu $\mathcal G_\varphi$ máme hranu $\overline{\ell}\limplies\ell$. Stejná hrana je i v grafu komponent, tedy $\overline{\ell}$ předchází v topologickém uspořádání komponentu obsahující $\ell$. Při konstrukci modelu jsme museli ohodnotit $\overline{\ell}$ dříve než $\ell$, tedy $\overline{\ell}=0$ a $\ell=1$. Podobně, 2-klauzule $\ell_1\lor\ell_2$ také musí platit: máme hrany $\overline{\ell_1}\limplies\ell_2$ a $\overline{\ell_2}\limplies\ell_1$. Pokud jsme $\ell_1$ ohodnotili dříve než $\ell_2$, museli jsme kvůli hraně $\overline{\ell_1}\limplies\ell_2$ ohodnotit $\overline{\ell_1}=0$, tedy $\ell_1$ platí. Podobně pokud jsme ohodnotili nejdříve $\ell_2$, musí být $\overline{\ell_2}=0$ a $\ell_2=1$. 
+    Why does the proposition $\varphi$ hold in the model thus obtained? If it did not, some clause would not hold. A unit clause $\ell$ must hold because there is an edge $\overline{\ell} \rightarrow \ell$ in the graph $\mathcal{G}_\varphi$. The same edge is also in the graph of components, so $\overline{\ell}$ precedes the component containing $\ell$ in the topological ordering. In constructing the model, we must have assigned $\overline{\ell} = 0$, so $\ell = 1$. Similarly, a 2-clause $\ell_1 \lor \ell_2$ must also hold: there are edges $\overline{\ell_1} \rightarrow \ell_2$ and $\overline{\ell_2} \rightarrow \ell_1$. If we assigned $\ell_1$ first, we must have assigned $\overline{\ell_1} = 0$ due to the edge $\overline{\ell_1} \rightarrow \ell_2$, so $\ell_1$ holds. Similarly, if we assigned $\ell_2$ first, $\overline{\ell_2} = 0$ and $\ell_2 = 1$.
 \end{proof}
 
 \begin{corollary}
-    Problém 2-SAT je řešitelný v lineárním čase. V lineárním čase můžeme také zkonstruovat model, pokud existuje.
+    The 2-SAT problem is solvable in linear time. We can also construct a model in linear time, if one exists.
 \end{corollary}
 
 \begin{proof}
-Komponenty silné souvislosti lze snadno nalézt v čase $\mathcal O(|V|+|E|)$, topologické uspořádání můžeme také zkonstruovat v čase $\mathcal O(|V|+|E|)$.
+The strongly connected components can be found in $\mathcal{O}(|V| + |E|)$ time, and the topological ordering can also be constructed in $\mathcal{O}(|V| + |E|)$ time.
 \end{proof}
 
 \begin{exercise}
-    Najděte nějaký nesplnitelný 2-CNF výrok, sestrojte jeho implikační graf, a přesvědčete se, že existuje dvojice opačných literálů ve stejné komponentě silné souvislosti.
+    Find an unsatisfiable 2-CNF proposition, construct its implication graph, and verify that there is a pair of opposite literals in the same strongly connected component.
 \end{exercise}
 
 \begin{exercise}
-    Najděte všechna topologická uspořádání grafu $\mathcal G_\varphi^\ast$ z příkladu výše a jim odpovídající modely. Rozmyslete si, proč takto získáme právě všechny modely výroku $\varphi$.
+    Find all topological orderings of the graph $\mathcal{G}_\varphi^\ast$ from the example above and the corresponding models. Think about why we obtain exactly all models of the proposition $\varphi$ in this way.
 \end{exercise}
 
 \begin{exercise}
-    Rozmyslete si, proč lze komponenty i topologické uspořádání nalézt v čase $\mathcal O(|V|+|E|)$.
+    Explain how to find the components and topological ordering in $\mathcal{O}(|V| + |E|)$ time.
 \end{exercise}
 
-\section{Horn-SAT a jednotková propagace}\label{section:horn-sat}
 
-Nyní si ukážeme další fragment SATu řešitelný v polynomiálním čase, tzv.\ \emph{Horn-SAT} neboli problém splnitelnosti \emph{hornovských výroků}. Výrok je v \emph{hornovský (v Hornově tvaru)}\footnote{Matematik Alfred Horn objevil význam tohoto tvaru logických formulí (a položil tak základ logickému programování) v roce 1951.}, pokud je konjunkcí \emph{hornovských klauzulí}, tj. klauzulí obsahujících \emph{nejvýše jeden *pozitivní* literál}. Význam Hornovských klauzulí vyplývá z ekvivalentního vyjádření ve formě implikace:
+\section{Horn-SAT and Unit Propagation}\label{section:horn-sat}
+
+Next, we will introduce another fragment of SAT that can be solved in polynomial time, the so-called \emph{Horn-SAT}, the \emph{Horn satisfiability problem}. A propositional formula is \emph{Horn} (\emph{in Horn form})\footnote{Mathematician Alfred Horn discovered the significance of this form of logical formulas (thus laying the foundation for logic programming) in 1951.} if it is a conjunction of \emph{Horn clauses}, i.e., clauses containing \emph{at most one *positive* literal}. The significance of Horn clauses is evident from their equivalent expression in the form of an implication:
 $$
 \neg p_1\lor \neg p_2\lor \dots \lor \neg p_n\lor q\ \sim\ (p_1\land p_2\land\dots \land p_n)\limplies q
 $$
-Hornovské formule tedy dobře modelují systémy, kde splnění určitých podmínek zaručuje splnění jiné podmínky. Upozorněme, že jednotková klauzule $\ell$ je také hornovská. V kontextu logického programování se jí říká \emph{fakt}, pokud je literál pozitivní, a \emph{cíl} pokud je negativní.\footnote{Neboť dokazujeme sporem, více v pozdější kapitole o rezoluci a Prologu.} Hornovské formule s alespoň jedním pozitivním a alespoň jedním negativním literálem jsou \emph{pravidla}. 
+Horn formulas are thus well suited to model systems where the satisfaction of certain conditions guarantees the satisfaction of another condition. Note that a unit clause $\ell$ is also Horn. In the context of logic programming, it is called a \emph{fact} if the literal is positive, and a \emph{goal} if it is negative.\footnote{Because we are proving by contradiction, more on this in Chapter~\ref{chapter:tableau-method-propositional} and Section~\ref{subsection:resolution-in-prolog}.} Horn formulas with at least one positive and at least one negative literal are \emph{rules}.
 
 \begin{example}
-    Příkladem výroku, který je v CNF, ale není hornovský, je třeba $(p_1\lor p_2\lor\neg p_3)\land (\neg p_1\lor p_3)$. Jako příklad, na kterém budeme ilustrovat algoritmus, nám poslouží následující hornovský výrok:
+    An example of a proposition that is in CNF but not Horn is, for instance, $(p_1\lor p_2\lor\neg p_3)\land (\neg p_1\lor p_3)$. As an example to illustrate the algorithm, we will use the following Horn formula:
     $$
     \varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)\land(\neg p_5\lor \neg p_4)\land p_4
     $$
 \end{example}
 
-Polynomiální algoritmus pro řešení problému Horn-SAT je založený na jednoduché myšlence \emph{jednotkové propagace}: Pokud náš výrok obsahuje \emph{jednotkovou} klauzuli, víme, jak musí být ohodnocena výroková proměnná obsažená v této klauzuli. A tuto znalost můžeme \emph{propagovat}---využít k zjednodušení výroku. 
+The polynomial algorithm for solving the Horn-SAT problem is based on the simple idea of \emph{unit propagation}: If our proposition contains a \emph{unit} clause, we know how the propositional variable in this clause must be valued. And this knowledge can be \emph{propagated}---exploited to simplify the proposition.
 
-Náš výrok $\varphi$ obsahuje jednotkovou klauzuli $p_4$. Víme tedy, že v každém jeho modelu $v\in\M(\varphi)$ musí platit $v(p_4)=1$. To ale znamená, že v libovolném modelu výroku $\varphi$
+Our proposition $\varphi$ contains the unit clause $p_4$. We know, therefore, that every model $v\in\M(\varphi)$ must satisfy $v(p_4)=1$. This means that in any model of the proposition $\varphi$:
 \begin{itemize}
-    \item každá klauzule obsahující pozitivní literál $p_4$ je splněna, můžeme ji tedy z výroku odstranit,
-    \item negativní literál $\neg p_4$ nemůže být splněn, můžeme ho tedy odstranit ze všech klauzulí, které ho obsahují. 
+    \item Every clause containing the positive literal $p_4$ is satisfied, so we can remove it from the proposition,
+    \item The negative literal $\neg p_4$ cannot be satisfied, so we can remove it from all clauses that contain it.
 \end{itemize}
-Tomu kroku se říká \emph{jednotková propagace}. Výsledkem je následující zjednodušený výrok, který označíme $\varphi^{p_4}$ (obecně $\varphi^\ell$ máme-li jednotkovou klauzuli $\ell$):
+This step is called \emph{unit propagation}. The result is the following simplified proposition, denoted as $\varphi^{p_4}$ (in general $\varphi^\ell$ if we have a unit clause $\ell$):
 $$
 \varphi^{p_4}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land (\neg p_2\lor\neg p_3)\land\neg p_5
 $$
 \begin{observation}
-Všimněte si, že $\varphi^\ell$ už neobsahuje literál $\ell$ ani $\overline{\ell}$, a zřejmě platí, že modely $\varphi$ jsou právě modely $\{\varphi^{\ell},\ell\}$, neboli modely $\varphi^{\ell}$ v původním jazyce $\mathbb P$, ve kterých platí $\ell$.
+Note that $\varphi^\ell$ no longer contains the literal $\ell$ nor $\overline{\ell}$, and it is obvious that the models of $\varphi$ are exactly the models of $\{\varphi^{\ell},\ell\}$, i.e., the models of $\varphi^{\ell}$ in the original language $\mathbb P$, in which $\ell$ is valid.
 \end{observation}
 
-Jednotkovou propagací jsme získali ve výroku $\varphi^{p_4}$ novou jednotkovou klauzuli $\neg p_5$, můžeme tedy pokračovat nastavením $v(p_5)=0$ a další jednotkovou propagací:
+By unit propagation, we obtained a new unit clause $\neg p_5$ in the proposition $\varphi^{p_4}$, so we can continue by setting $v(p_5)=0$ and performing another unit propagation:
 $$
 (\varphi^{p_4})^{\neg p_5}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)
 $$
-Výsledný výrok už neobsahuje jednotkovou klauzuli. To ale znamená, že každá klauzule obsahuje alespoň dva literály, a nejvýše jeden z nich může být pozitivní! (Zde potřebujeme hornovskost výroku.) Protože každá klauzule obsahuje negativní literál, stačí ohodnotit všechny zbývající proměnné 0, a výrok bude splněn: $v(p_1)=v(p_2)=v(p_3)=0$. Dostáváme tedy model $v=(0,0,0,1,0)$.
+The resulting proposition no longer contains a unit clause. This means that each clause contains at least two literals, and at most one of them can be positive! (Here we need the `Horn property' of the proposition.) Because each clause contains a negative literal, it is sufficient to evaluate all remaining variables as 0, and the proposition will be satisfied: $v(p_1)=v(p_2)=v(p_3)=0$. Thus, we get the model $v=(0,0,0,1,0)$.
 
 \begin{example}
-    Co by se stalo, pokud by výrok nebyl splnitelný? Podívejme se na výrok 
+    What would happen if the proposition was not satisfiable? Let us look at the proposition 
     $$
     \psi=p\land (\neg p\lor q)\land (\neg q\lor r)\land\neg r
     $$ 
-    a provádějme jednotkovou propagaci jako v předchozím příkladě: máme $v(p)=1$ a 
-$\psi^p=q\land (\neg q\lor r)\land\neg r$, dále $v(q)=1$ a $(\psi^p)^q=r\land\neg r$. 
-Tento výrok je nesplnitelný, neboť obsahuje dvojici opačných jednotkových klauzulí. \footnote{Jinými slovy, v dalším kroku bychom provedli jednotkovou propagaci $r$, odstranili jednotkovou klauzuli $r$, a ze zbývající jednotkové klauzule $\neg r$ bychom odstranili literál $\neg r$, čímž by vznikla \emph{prázdná klauzule}, která je nesplnitelná.}
+    and perform unit propagation as in the previous example: we have $v(p)=1$ and 
+$\psi^p=q\land (\neg q\lor r)\land\neg r$, further $v(q)=1$ and $(\psi^p)^q=r\land\neg r$. 
+This proposition is unsatisfiable because it contains a pair of opposite unit clauses. \footnote{In other words, in the next step, we would perform unit propagation on $r$, remove the unit clause $r$, and from the remaining unit clause $\neg r$, we would remove the literal $\neg r$, resulting in an \emph{empty clause}, which is unsatisfiable.}
 \end{example}
 
-Shrňme si nyní algoritmus pro řešení problému Horn-SAT: 
+Let us summarize the algorithm for solving the Horn-SAT problem:
 
 \begin{algorithm}[Horn-SAT]
-\textbf{vstup}: výrok $\varphi$ v Hornově tvaru, \textbf{výstup}: model $\varphi$ nebo informace, že $\varphi$ není splnitelný
+\textbf{input}: a proposition $\varphi$ in Horn form, \textbf{output}: a model of $\varphi$ or information that $\varphi$ is unsatisfiable
 \begin{enumerate}
-    \item Pokud $\varphi$ obsahuje dvojici opačných jednotkových klauzulí $\ell,\overline{\ell}$, není splnitelný.
-    \item Pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnoť všechny zbývající proměnné 0.
-    \item Pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, nahraď $\varphi$ výrokem $\varphi^\ell$, a vrať se na začátek.
+    \item If $\varphi$ contains a pair of opposite unit clauses $\ell,\overline{\ell}$, it is unsatisfiable.
+    \item If $\varphi$ does not contain any unit clause, it is satisfiable, evaluate remaining variables to 0.
+    \item If $\varphi$ contains a unit clause $\ell$, evaluate the literal $\ell$ to 1, perform unit propagation, replace $\varphi$ with the proposition $\varphi^\ell$, and return to the beginning.
 \end{enumerate}
 \end{algorithm}
 
 \begin{proposition}
-Algoritmus je korektní.    
+The algorithm is correct.
 \end{proposition}
 \begin{proof}
-Korektnost plyne z Pozorování a z předchozí diskuze.
+Correctness follows from the Observation and the preceding discussion.
 \end{proof}
 
 \begin{corollary}
-    Horn-SAT lze řešit v lineárním čase.
+Horn-SAT can be solved in linear time.
 \end{corollary}
 
 \begin{proof}
-V každém kroku stačí projít výrok jednou, a jednotková propagace výrok vždy zkrátí. Z toho snadno plyne kvadratický horní odhad, ale při vhodné implementaci lze dosáhnout lineárního času vzhledem k délce $\varphi$.
+In each step, it is sufficient to traverse the proposition once, and unit propagation always shortens the proposition. This easily gives a quadratic upper bound, but with a suitable implementation, we can achieve linear time with respect to the length of $\varphi$.
 \end{proof}
 
-
 \begin{exercise}
-Navrhněte implementaci algoritmu pro Horn-SAT v lineárním čase.
+Propose an implementation of the algorithm for Horn-SAT in linear time.
 \end{exercise}
 
 \begin{exercise}
-Navrhněte modifikaci algoritmu pro Horn-SAT, která najde všechny modely.
+Propose a modification of the Horn-SAT algorithm that finds all models.
 \end{exercise}
 
 
-\section{DPLL algoritmus pro řešení problému SAT}\label{section:DPLL}
+\section{The DPLL Algorithm for Solving the SAT Problem}\label{section:DPLL}
 
-Na závěr kapitoly o problému splnitelnosti si představíme zdaleka nejpoužívanější algoritmus pro řešení obecného problému SAT, algoritmus DPLL.\footnote{Pojmenovaný po svých tvůrcích, Davis-Putnam-Logemann-Loveland, pochází z roku 1961.} Ačkoliv v nejhorším případě má exponenciální složitost, v praxi funguje velmi efektivně.
+To conclude the chapter on the satisfiability problem, we will introduce the most widely used algorithm, by far, for solving the general SAT problem: the DPLL algorithm.\footnote{Named after its creators, Davis-Putnam-Logemann-Loveland, it was invented in 1961.} Although it has exponential complexity in the worst case, it performs very efficiently in practice.
 
-Algoritmus používá jednotkovou propagaci spolu s následujícím pozorováním: Řekneme, že literál $\ell$ má \emph{čistý výskyt} v $\varphi$, pokud se vyskytuje ve $\varphi$, ale opačný literál $\overline{\ell}$ se ve $\varphi$ nevyskytuje. Máme-li literál s čistým výskytem, můžeme jeho hodnotu nastavit na 1, a splnit (a odstranit) tak všechny klauzule, které ho obsahují. Pokud výrok neumíme takto zjednodušit, rozvětvíme výpočet dosazením obou možných hodnot pro vybranou výrokovou proměnnou.
+The algorithm uses unit propagation along with the following observation: We say that a literal $\ell$ has \emph{pure occurrence} in $\varphi$ if it occurs in $\varphi$ but the opposite literal $\overline{\ell}$ does not occur in $\varphi$. If we have a literal with pure occurrence, we can set its value to 1, and thus satisfy (and remove) all clauses containing it. If the proposition cannot be simplified neither by unit propagation nor by pure literal, we branch the computation by assigning both possible values to a selected propositional variable.
 
 \begin{algorithm}[DPLL]
-    \textbf{vstup}: výrok $\varphi$ v CNF, \textbf{výstup}: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
+    \textbf{input}: a proposition $\varphi$ in CNF, \textbf{output}: a model of $\varphi$ or information that $\varphi$ is unsatisfiable
     \begin{enumerate}                
-        \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, a nahraď $\varphi$ výrokem $\varphi^\ell$.
-         \item Dokud existuje literál $\ell$, který má ve $\varphi$ čistý výskyt, ohodnoť $\ell$ hodnotou 1, a odstraň klauzule obsahující $\ell$.
-        \item Pokud $\varphi$ neobsahuje žádnou klauzuli, je splnitelný.
-        \item Pokud $\varphi$ obsahuje prázdnou klauzuli, není splnitelný.
-        \item Jinak zvol dosud neohodnocenou výrokovou proměnnou $p$, a zavolej algoritmus rekurzivně na $\varphi\land p$ a na $\varphi\land \neg p$.
+        \item While $\varphi$ contains a unit clause $\ell$, set the literal $\ell$ to 1, perform unit propagation, and replace $\varphi$ with the proposition $\varphi^\ell$.
+        \item While there is a literal $\ell$ with pure occurrence in $\varphi$, set $\ell$ to 1, and remove clauses containing $\ell$.
+        \item If $\varphi$ contains no clauses, it is satisfiable.
+        \item If $\varphi$ contains an empty clause, it is unsatisfiable.
+        \item Otherwise, choose an unassigned propositional variable $p$, and recursively call the algorithm on $\varphi\land p$ and on $\varphi\land \neg p$.
     \end{enumerate}
 \end{algorithm}
 
-Algoritmus běží v exponenciálním čase: počet větvení výpočtu nemůže být větší než počet proměnných. Lze ukázat, že v nejhorším případě je opravdu potřeba exponenciální čas. Korektnost algoritmu není těžké ověřit. 
+The algorithm runs in exponential time: the number of branching points in the computation cannot exceed the number of variables. It can be shown that in the worst case, exponential time is indeed needed. The correctness of the algorithm is not difficult to verify.
 
 \begin{proposition}
-    Algoritmus DPLL řeší problém SAT.
+    The DPLL algorithm solves the SAT problem.
 \end{proposition}
     
 \begin{example}
-    Ukážeme si běh algoritmu na následujícím příkladě:
+    We will demonstrate the algorithm on the following example:
     $$
     (\neg p\lor q\lor \neg r)\land(\neg p\lor\neg q\lor\neg s)\land(p\lor \neg r\lor \neg s)\land(q\lor \neg r\lor s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
     $$
-    Výrok nemá žádnou jednotkovou klauzuli. Literál $\neg r$ má čistý výskyt, nastavíme  $v(r)=0$ a odstraníme klauzule obsahující $\neg r$:
+    The proposition does not contain any unit clauses. The literal $\neg r$ has pure occurrence, so we set $v(r)=0$ and remove the clauses containing $\neg r$:
     $$
     (\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
     $$
-    Žádný další literál nemá čistý výskyt. Spustíme proto rekurzivně algoritmus:
+    No other literal has pure occurrence. We therefore recursively run the algorithm:
     \begin{itemize}
-        \item[(p=1)] Přidáme jednotkovou klauzuli $p$:
+        \item[(p=1)] Add the unit clause $p$:
         $$
         (\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\land p
         $$
-        Nastavíme $v(p)=1$ a provedeme jednotkovou propagaci: $(\neg q\lor\neg s)\land(q\lor s)$. Nyní rozvětvíme na proměnné $q$:
+        Set $v(p)=1$ and perform unit propagation: $(\neg q\lor\neg s)\land(q\lor s)$. Now we branch on the variable $q$:
         \begin{itemize}
-            \item[(q=1)] $(\neg q\lor\neg s)\land(q\lor s)\land q$. Po nastavení $v(q)=1$ a jednotkové propagaci dostáváme $\neg s$, po nastavení $v(s)=0$ a jednotkové propagaci dostáváme výrok neobsahující žádnou klauzuli, je tedy splnitelný ohodnocením $(1,1,0,0)$. Odpověď na problém splnitelnosti už máme, ostatní větve výpočtu nemusíme dokončovat. Pro ilustraci to ale provedeme.
-            \item[(q=0)] $(\neg q\lor\neg s)\land(q\lor s)\land \neg q$. Jednotkovou propagací s $v(q)=0$ dostáváme $s$, po nastavení $v(s)=1$ a jednotkové propagaci máme prázdnou množinu klauzulí. Dostáváme model $(1,0,0,1)$.
-            
+            \item[(q=1)] $(\neg q\lor\neg s)\land(q\lor s)\land q$. After setting $v(q)=1$ and unit propagation, we get $\neg s$, and after setting $v(s)=0$ and unit propagation, we get a proposition containing no clauses, which is thus satisfiable by the model $(1,1,0,0)$. We already have the answer to the satisfiability problem, so we do not need to complete the other branches of the computation. For illustration, we will do so.
+            \item[(q=0)] $(\neg q\lor\neg s)\land(q\lor s)\land \neg q$. By unit propagation with $v(q)=0$, we get $s$, and after setting $v(s)=1$ and unit propagation, we get an empty set of clauses. We obtain the model $(1,0,0,1)$.
         \end{itemize}
-        \item[(p=0)] Přidáme jednotkovou klauzuli $\neg p$:
+        \item[(p=0)] Add the unit clause $\neg p$:
         $$
         (\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\land \neg p
         $$
-        Po provedení jednotkové propagace $\neg p$ máme $s\land \neg s\land(q\lor s)$. Po provedení jednotkové propagace $s$ máme $\square\land q$, kde $\square$ je prázdná klauzule. Výrok je tedy nesplnitelný a v této větvi nedostaneme žádné modely. 
+        After performing unit propagation on $\neg p$, we have $s\land \neg s\land(q\lor s)$. After unit propagation on $s$, we have $\square\land q$, where $\square$ is an empty clause. The proposition is thus unsatisfiable, and we do not get any models in this branch. 
     \end{itemize}
 
-Zjistili jsme, že původní výrok je splnitelný. Našli jsme 2 modely: $(1,1,0,0)$ a $(1,0,0,1)$. Mohou ale existovat i další modely, ohodnocení $v(r)=0$ pro literál $\neg r$ s čistým výskytem nemusí být nutné pro splnění všech klauzulí; tento krok nezachovává množinu modelů, jen splnitelnost.    
+We found that the original proposition is satisfiable. We found 2 models: $(1,1,0,0)$ and $(1,0,0,1)$. However, there may be other models, the valuation $v(r)=0$ for the literal $\neg r$ with pure occurrence may not be necessary to satisfy all clauses; this step does not preserve the set of models, only satisfiability.
 \end{example}
 
-Co dále? Základní algoritmus DPLL, který systematicky prohledává prostor možných řešení, byl na konci 90. let 20. století různými způsoby doplněn a rozšířen. Zmiňme algoritmus zvaný \emph{Conflict-driven clause learning (CDCL)}. Ten je založený na myšlence, že ze selhání větve prohledávacího stromu se můžeme \emph{naučit} novou klauzuli, která tomuto konkrétnímu selhání (``konfliktu'') zabraňuje. Kromě toho se můžeme vrátit zpět ve stromu o více úrovní najednou (tzv. \emph{back-jumping}) na místo, kde jsme začali ohodnocovat proměnné v této nové klauzuli. Tím zabráníme opakovanému nalezení ``téhož'' konfliktu. Více o SAT solverech se dozvíte například v předmětu \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL094}{NAIL094 Decision procedures and SAT/SMT solvers}.
+What's next? The basic DPLL algorithm, which systematically explores the solution space, was enhanced and extended in various ways at the end of 1990s. Let us mention the algorithm called \emph{Conflict-driven clause learning (CDCL)}. It is based on the idea that we can \emph{learn} a new clause from the failure of a branch in the search tree, which prevents future repetitions of the same failure (``conflict''). Additionally, we can backtrack in the tree by more than one level at once (called \emph{back-jumping}) to the point where we started evaluating variables in this new clause. Thus we prevent repeatedly discovering the ``same'' conflict. You can learn much more about SAT solvers in the course \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL094}{NAIL094 Decision procedures and SAT/SMT solvers}.

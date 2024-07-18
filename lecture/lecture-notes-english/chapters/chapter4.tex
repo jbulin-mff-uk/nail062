@@ -1,58 +1,58 @@
-\chapter{Metoda analytického tabla}
+\chapter{The Method of Analytic Tableaux}
 \label{chapter:tableau-method-propositional}
 
-V této kapitole představíme \emph{Metodu analytického tabla}. Jde o syntaktickou proceduru, kterou můžeme použít pro zjištění, zda daný výrok platí v dané teorii, aniž bychom se museli zabývat sémantikou (např. hledat všechny modely, což je nepraktické). Dokážeme si její \emph{korektnost} (`dává správné odpovědi') a \emph{úplnost} (`funguje vždy'), a použijeme ji také k důkazu tzv.\ \emph{Věty o kompaktnosti} (`vlastnosti nekonečného objektu stačí ukázat pro jeho konečné části').
+%todo
 
-\section{Formální dokazovací systémy}
+In this chapter, we introduce the \emph{Method of Analytic Tableaux}. It is a syntactic procedure that we can use to determine whether a given statement is true in a given theory without having to deal with semantics (e.g., searching for all models, which is impractical). We will prove its \emph{correctness} ('it gives correct answers') and \emph{completeness} ('it always works'), and we will also use it to prove the so-called \emph{Compactness Theorem} ('properties of an infinite object can be shown for its finite parts').
 
-\emph{Formální dokazovací systém} formalizuje `dokazování' (např. v matematice) jako přesně (algoritmicky) danou syntaktickou proceduru. \emph{Důkaz} faktu, že v teorii $T$ platí výrok $\varphi$ (neboli $T\models\varphi$) je konečný syntaktický objekt vycházející z axiomů $T$ a výroku $\varphi$. Pokud důkaz existuje, lze ho nalézt `algoritmicky',\footnote{Zde ale musíme být opatrní v případě nekonečné teorie $T$, jak je zadaná? Algoritmus musí mít efektivní přístup ke všem axiomům.} a algoritmicky jsme také schopni ověřit, že je daný objekt opravdu důkaz.
+\section{Formal Proof Systems}
 
-Existuje-li důkaz, říkáme, že $\varphi$ je (v daném dokazovacím systému) \emph{dokazatelný} z $T$, a píšeme $T\proves\varphi$. Po dokazovacím systému požadujeme dvě vlastnosti:
+A \emph{formal proof system} formalizes 'proof' (e.g., in mathematics) as a precisely (algorithmically) given syntactic procedure. A \emph{proof} of the fact that a statement $\varphi$ holds in a theory $T$ (i.e., $T \models \varphi$) is a finite syntactic object derived from the axioms of $T$ and the statement $\varphi$. If a proof exists, it can be found 'algorithmically',\footnote{Here we must be cautious in the case of an infinite theory $T$, how is it given? The algorithm must have effective access to all axioms.} and we are also able to algorithmically verify that the given object is indeed a proof.
+
+If a proof exists, we say that $\varphi$ is (in the given proof system) \emph{provable} from $T$, and we write $T \proves \varphi$. We require two properties from a proof system:
 \begin{itemize}
-    \item \emph{korektnost}: je-li výrok dokazatelný z teorie, je v ní pravdivý ($T\proves\varphi\Rightarrow T\models\varphi$)
-    \item \emph{úplnost}: je-li výrok pravdivý v teorii, je z ní dokazatelný ($T\models\varphi\Rightarrow T\proves\varphi$)
+    \item \emph{correctness}: if a statement is provable from a theory, it is true in that theory ($T \proves \varphi \Rightarrow T \models \varphi$)
+    \item \emph{completeness}: if a statement is true in a theory, it is provable from that theory ($T \models \varphi \Rightarrow T \proves \varphi$)
 \end{itemize}
-(Přičemž korektnost vyžadujeme vždy, ale efektivní dokazovací systém může být praktický, i pokud není úplný, zejména pokud je úplný pro nějakou zajímavou třídu výroků resp. teorií.)
+(Although correctness is always required, an effective proof system can be practical even if it is not complete, especially if it is complete for some interesting class of statements or theories.)
 
-V této kapitole si ukážeme kromě \emph{tablo metody} také \emph{hilbertovský kalkulus}, a v příští kapitole představíme další dokazovací systém, tzv.\ \emph{rezoluční metodu}.
+In this chapter, besides the \emph{tableaux method}, we will also introduce the \emph{Hilbert calculus}, and in the next chapter, we will present another proof system, the so-called \emph{resolution method}.
 
+\section{Introduction to the Tableaux Method}
 
-\section{Úvod do tablo metody}
+For the rest of this chapter, we will assume that we have a given \emph{countable} language $\mathbb{P}$. This implies that any theory over $\mathbb{P}$ is also countable. We will first focus on the case where $T = \emptyset$, i.e., we are proving that a statement $\varphi$ is \emph{logically} valid (it is a \emph{tautology}). 
 
-Po zbytek této kapitoly budeme předpokládat, že máme daný \emph{spočetný} jazyk $\mathbb P$. Z toho plyne, že i každá teorie nad $\mathbb P$ je spočetná. Nejprve se soustředíme na případ, kdy $T=\emptyset$, tedy dokazujeme, že výrok $\varphi$ platí \emph{logicky} (je to \emph{tautologie}). 
-
-\emph{Tablo} je olabelovaný strom představující hledání protipříkladu, tj. modelu, ve kterém $\varphi$ neplatí. Labely na vrcholech, kterým budeme říkat \emph{položky}, sestávají ze symbolu $\mathrm{T}$ resp. $\mathrm{F}$ (`True'/`False') následovaného nějakým výrokem $\psi$ a představují předpoklad (požadavek), že v modelu výrok $\psi$ platí resp. neplatí. Do kořene tabla dáme položku $\mathrm{F}\varphi$, tj. hledáme model, ve kterém \emph{neplatí} $\varphi$. Dále budeme tablo rozvíjet pomocí pravidel pro \emph{redukci} položek. Tato pravidla zajišťují následující invariant: 
+A \emph{tableau} is a labeled tree representing the search for a counterexample, i.e., a model in which $\varphi$ does not hold. The labels on the nodes, which we will call \emph{entries}, consist of the symbol $\mathrm{T}$ or $\mathrm{F}$ ('True'/'False') followed by a statement $\psi$ and represent the assumption (requirement) that the statement $\psi$ holds or does not hold in a model, respectively. We place the entry $\mathrm{F}\varphi$ at the root of the tableau, i.e., we are looking for a model in which $\varphi$ \emph{does not hold}. We will then develop the tableau using rules for \emph{reducing} the entries. These rules ensure the following invariant:
 \begin{quote}
-    Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
+    Any model that \emph{matches} the entry at the root (i.e., in which $\varphi$ does not hold) must \emph{match} some branch of the tableau (i.e., satisfy all the requirements expressed by the entries on that branch).
 \end{quote}
-Pokud na některé větvi dostaneme položky tvaru $\mathrm{T}\psi$ a $\mathrm{F}\psi$, říkáme, že větev \emph{selhala} (je \emph{sporná}) a víme, že žádný model s ní nemůže souhlasit. Pokud selžou všechny větve, víme, že neexistuje žádný model, ve kterém by neplatilo $\varphi$, a máme tedy \emph{důkaz}, že $\varphi$ platí. (Všimněte si, že jde o \emph{důkaz sporem}.)
+If a branch contains entries of the form $\mathrm{T}\psi$ and $\mathrm{F}\psi$, we say that the branch \emph{fails} (is \emph{contradictory}) and we know that no model can match it. If all branches fail, we know that there is no model in which $\varphi$ does not hold, and thus we have a \emph{proof} that $\varphi$ holds. (Note that this is a \emph{proof by contradiction}.)
 
-Pokud nějaká větev neselhala, ale je \emph{dokončená}, tj. všechny položky jsou zredukované, víme, že $\varphi$ neplatí, a budeme z této větve schopni zkonstruovat konkrétní model, ve kterém neplatí.
-
+If a branch does not fail but is \emph{complete}, i.e., all entries are reduced, we know that $\varphi$ does not hold, and we will be able to construct a specific model from this branch in which it does not hold.
 
 \begin{example}\label{example:tableau-intro-examples}
-Ukažme si celý postup na dvou příkladech, viz Obrázek \ref{figure:tableau-proof-two-examples}.
+Let's illustrate the entire procedure with two examples, see Figure \ref{figure:tableau-proof-two-examples}.
 \begin{itemize}
-    \item[(a)] Nejprve sestrojme tablo důkaz výroku $\varphi=((p\limplies q)\limplies p)\limplies p$. Začneme kořenem s položkou $\mathrm{F}\varphi$. Tato položka je tvaru $\mathrm{F}\varphi_1\limplies\varphi_2$ (`neplatí implikace'), pokud se s ní shoduje nějaký model, musí splňovat $\mathrm{T}(p\limplies q)\limplies p$ a $\mathrm{F}p$, připojíme tedy tyto dvě položky. (Ve skutečnosti připojíme \emph{atomické tablo} pro tento případ, viz Tabulka \ref{table:atomic-tableaux}, kořen tohoto atomického tabla ale vynecháme, abychom zbytečně nezopakovali tutéž položku.) Tím jsme \emph{zredukovali} položku v kořeni. 
+    \item[(a)] First, let's construct a tableau proof of the statement $\varphi = ((p \limplies q) \limplies p) \limplies p$. We start with the root entry $\mathrm{F}\varphi$. This entry is of the form $\mathrm{F}\varphi_1 \limplies \varphi_2$ ('implication does not hold'), so if any model matches it, it must satisfy $\mathrm{T}(p \limplies q) \limplies p$ and $\mathrm{F}p$. We thus add these two entries. (We actually add the \emph{atomic tableau} for this case, see Table \ref{table:atomic-tableaux}, but we omit the root of this atomic tableau to avoid repeating the same entry.) This reduces the entry at the root.
     
-    Pokračujeme položkou $\mathrm{T}(p\limplies q)\limplies p$, ta je tvaru `platí implikace', rozvětvíme na dvě větve: model buď splňuje $\mathrm{F}(p\limplies q)$, nebo $\mathrm{T}p$. Pravá větev \emph{selhala} (je \emph{sporná}), neboť obsahuje položky $\mathrm{T}p$, $\mathrm{F}p$, neshoduje se tedy s žádným modelem, označíme ji symbolem~$\otimes$. V levé větvi ještě zredukujeme položku $\mathrm{F}p\limplies q$ a také dostaneme spornou větev. Všechny větve jsou sporné, neexistuje tedy žádný protipříklad a máme důkaz výroku $\varphi$. Píšeme $\proves\varphi$.
+    We continue with the entry $\mathrm{T}(p \limplies q) \limplies p$, which is of the form 'implication holds', branching into two branches: the model either satisfies $\mathrm{F}(p \limplies q)$ or $\mathrm{T}p$. The right branch \emph{fails} (is \emph{contradictory}) because it contains the entries $\mathrm{T}p$ and $\mathrm{F}p$, so no model matches it; we mark it with the symbol~$\otimes$. In the left branch, we further reduce the entry $\mathrm{F}p \limplies q$ and also get a contradictory branch. All branches are contradictory, so no counterexample exists, and we have a proof of the statement $\varphi$. We write $\proves \varphi$.
     
-    \item[(b)] Nyní sestrojíme tablo s položkou $\mathrm{F}(\neg q\lor p)\limplies p$. Snažíme se tedy najít protipříklad: model, ve kterém neplatí $(\neg q\lor p)\limplies p$. Nejprve jsme použili atomické tablo pro `neplatí implikace', a dále redukujeme položku $\mathrm{T}\neg q\lor p$ připojením atomického tabla pro `platí disjunkce'. Pravá větev selhala. V levé větvi ještě zredukujeme $\mathrm{T}\neg q$ na $\mathrm{F}q$ (atomické tablo pro `platí negace') tím dostáváme dokončenou větev, neboť všechny položky už jsme zredukovali. Tato dokončená větev ale není sporná (označíme ji tedy symbolem $\checkmark$). To znamená, že protipříklad existuje: máme položky $\mathrm{F}p$ a $\mathrm{F}q$, kterým odpovídá model $(0,0)$, ve kterém opravdu $(\neg q\lor p)\limplies p$ neplatí.
+    \item[(b)] Now let's construct a tableau with the entry $\mathrm{F}(\neg q \lor p) \limplies p$. We are trying to find a counterexample: a model in which $(\neg q \lor p) \limplies p$ does not hold. We first used the atomic tableau for 'implication does not hold' and then reduced the entry $\mathrm{T}\neg q \lor p$ by adding the atomic tableau for 'disjunction holds'. The right branch failed. In the left branch, we further reduced $\mathrm{T}\neg q$ to $\mathrm{F}q$ (the atomic tableau for 'negation holds'), obtaining a complete branch since all entries have been reduced. This complete branch is not contradictory (we mark it with the symbol $\checkmark$). This means that a counterexample exists: we have the entries $\mathrm{F}p$ and $\mathrm{F}q$, which correspond to the model $(0,0)$, where $(\neg q \lor p) \limplies p$ does not hold.
 
 \end{itemize}
 
-V následující sekci celý postup zformalizujeme a vysvětlíme, co dělat, když chceme dokazovat ne v logice, ale v nějaké teorii $T$ (spoiler alert: při konstrukci připojujeme položky $\mathrm{T}\alpha$ pro axiomy $\alpha\in T$). Také si ukážeme příklad s nekonečnou teorií, kde \emph{dokončená} větev někdy musí být nekonečná.
+In the next section, we will formalize the entire procedure and explain what to do when we want to prove statements not in logic, but in some theory $T$ (spoiler alert: we add the entries $\mathrm{T}\alpha$ for the axioms $\alpha \in T$ during the construction). We will also show an example with an infinite theory where a \emph{complete} branch sometimes needs to be infinite.
 
-Ve zbytku této sekce ale nejprve definujeme všechna \emph{atomická tabla} potřebná při konstrukci, a také formalizujeme pojem \emph{stromu}.
+In the rest of this section, however, we will first define all the \emph{atomic tableaux} needed for construction and formalize the concept of a \emph{tree}.
 
 \begin{figure}
 \begin{minipage}{.49\textwidth}
 \centering
 \begin{forest}
-[$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
-    [$\mathrm{T}(p\limplies q)\limplies p$
+[$\mathrm{F}((p \limplies q) \limplies p) \limplies p$
+    [$\mathrm{T}(p \limplies q) \limplies p$
         [$\mathrm{F}p$
-            [$\mathrm{F}p\limplies q$
+            [$\mathrm{F}p \limplies q$
                 [$\mathrm{T}p$ 
                     [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                 ]                
@@ -67,8 +67,8 @@ Ve zbytku této sekce ale nejprve definujeme všechna \emph{atomická tabla} pot
 \begin{minipage}{.49\textwidth}
 \centering
 \begin{forest}
-[$\mathrm{F}(\neg q\lor p)\limplies p$
-    [$\mathrm{T}\neg q\lor p$
+[$\mathrm{F}(\neg q \lor p) \limplies p$
+    [$\mathrm{T}\neg q \lor p$
         [$\mathrm{F}p$
             [$\mathrm{T}\neg q$
                 [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
@@ -81,13 +81,13 @@ Ve zbytku této sekce ale nejprve definujeme všechna \emph{atomická tabla} pot
 \end{forest}
 \end{minipage}
 \label{figure:tableau-proof-two-examples}
-\caption{Příklady tabel. (a) Tablo důkaz výroku $((p\limplies q)\limplies p)\limplies p$. (b) Tablo pro výrok $(\neg q\lor p)\limplies p$. Levá větev dává protipříklad, model $(0,0)$ ve kterém výrok neplatí.}
+\caption{Examples of tableaux. (a) Tableau proof of the statement $((p \limplies q) \limplies p) \limplies p$. (b) Tableau for the statement $(\neg q \lor p) \limplies p$. The left branch gives a counterexample, the model $(0,0)$ where the statement does not hold.}
 \end{figure}
 \end{example}
 
 
-\subsection{Atomická tabla}
-Atomická tabla představují pravidla, pomocí kterých redukujeme položky. Pro každou logickou spojku a každý ze dvou příznaků $\mathrm{T}$/ $\mathrm{F}$ máme jedno atomické tablo, znázorněné v Tabulce \ref{table:atomic-tableaux}.
+\subsection{Atomic Tableaux}
+Atomic tableaux represent the rules by which we reduce the entries. For each logical connective and each of the two signs $\mathrm{T}$/ $\mathrm{F}$, we have one atomic tableau, shown in Table \ref{table:atomic-tableaux}.
 
 \begin{table}[htbp]
 \centering
@@ -137,23 +137,23 @@ False
 [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
 \end{forest}
 \end{tabular}
-\caption{Atomická tabla}
+\caption{Atomic tableaux}
 \label{table:atomic-tableaux}
 \end{table}
 
-Tabla z Příkladu \ref{example:tableau-intro-examples} jsou zkonstruovaná postupným připojováním atomických tabel, viz Obrázek \ref{figure:tableau-proof-two-examples-construction}. Kořeny atomických tabel jsou označené modře, zavedeme konvenci, že je nebudeme zakreslovat.
+The tableaux from Example \ref{example:tableau-intro-examples} are constructed by sequentially adding atomic tableaux, see Figure \ref{figure:tableau-proof-two-examples-construction}. The roots of the atomic tableaux are marked in blue; we will adopt the convention of not drawing them.
 
 \begin{figure}
     \begin{minipage}{.49\textwidth}
     \centering
     \begin{forest}
-    [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
-        [\textcolor{blue}{$\mathrm{F}((p\limplies q)\limplies p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
-            [$\mathrm{T}(p\limplies q)\limplies p$
+    [$\mathrm{F}((p \limplies q) \limplies p) \limplies p$
+        [\textcolor{blue}{$\mathrm{F}((p \limplies q) \limplies p) \limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+            [$\mathrm{T}(p \limplies q) \limplies p$
                 [$\mathrm{F}p$
-                    [\textcolor{blue}{$\mathrm{T}(p\limplies q)\limplies p$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
-                        [$\mathrm{F}p\limplies q$
-                            [\textcolor{blue}{$\mathrm{F}p\limplies q$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [\textcolor{blue}{$\mathrm{T}(p \limplies q) \limplies p$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                        [$\mathrm{F}p \limplies q$
+                            [\textcolor{blue}{$\mathrm{F}p \limplies q$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
                                 [$\mathrm{T}p$ 
                                     [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                 ]
@@ -171,11 +171,11 @@ Tabla z Příkladu \ref{example:tableau-intro-examples} jsou zkonstruovaná post
     \begin{minipage}{.49\textwidth}
     \centering
     \begin{forest}
-    [$\mathrm{F}(\neg q\lor p)\limplies p$
-        [\textcolor{blue}{$\mathrm{F}(\neg q\lor p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
-            [$\mathrm{T}\neg q\lor p$
+    [$\mathrm{F}(\neg q \lor p) \limplies p$
+        [\textcolor{blue}{$\mathrm{F}(\neg q \lor p) \limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+            [$\mathrm{T}\neg q \lor p$
                 [$\mathrm{F}p$
-                    [\textcolor{blue}{$\mathrm{T}(\neg q\lor p)$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [\textcolor{blue}{$\mathrm{T}(\neg q \lor p)$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
                         [$\mathrm{T}\neg q$
                             [\textcolor{blue}{$\mathrm{T}\neg q$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
                                 [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
@@ -191,86 +191,86 @@ Tabla z Příkladu \ref{example:tableau-intro-examples} jsou zkonstruovaná post
     \end{forest}
     \end{minipage}
     \label{figure:tableau-proof-two-examples-construction}
-    \caption{Konstrukce tabel z Příkladu \ref{example:tableau-intro-examples}.}
+    \caption{Construction of tableaux from Example \ref{example:tableau-intro-examples}.}
 \end{figure}
 
 \begin{exercise}\label{exercise:construct-tableaux}
-    Pokuste se zkonstruovat tablo s položkou $\mathrm{F}((\neg p\land\neg q)\lor p)\limplies(\neg p\land\neg q)$ v kořeni a také tablo s položkou $\mathrm{T}(p\limplies q)\liff(p\land\neg q)$. Při konstrukci používejte jen atomická tabla (zkontrolujte, zda vaše konstrukce souhlasí s definicí tabla z následující sekce). Rozmyslete si, co tato tabla říkají o výrocích ve svých kořenech.
+    Try to construct a tableau with the entry $\mathrm{F}((\neg p \land \neg q) \lor p) \limplies (\neg p \land \neg q)$ at the root and also a tableau with the entry $\mathrm{T}(p \limplies q) \liff (p \land \neg q)$. When constructing, use only atomic tableaux (check if your construction matches the definition of a tableau from the following section). Think about what these tableaux say about the statements at their roots.
 \end{exercise}
 
 \begin{exercise}
-Ověřte, že všechna atomická tabla splňují invariant: shoduje-li se model s položkou v kořeni, shoduje se s některou z větví.
+Verify that all atomic tableaux satisfy the invariant: if a model matches the entry at the root, it matches some branch.
 \end{exercise}
 
 \begin{exercise}
-Navrhněte atomická tabla pro logické spojky NAND, NOR, XOR, IFTE.
+Propose atomic tableaux for the logical connectives NAND, NOR, XOR, IFTE.
 \end{exercise}
 
-\subsection{O stromech}
-Než se pustíme do formální definice a důkazů, specifikujme, co myslíme pojmem strom. V teorii grafů bychom stromem nazvali souvislý graf bez cyklů, naše stromy jsou ale zakořeněné, uspořádané (tzv. pravolevým uspořádáním množiny synů každého vrcholu), a označkované. A mohou, často i budou, nekonečné. Formálně:
+\subsection{On Trees}
+Before we proceed to the formal definition and proofs, let's specify what we mean by the term tree. In graph theory, a tree would be called a connected graph without cycles, but our trees are rooted, ordered (i.e., with left-right order among the children of each node), and labeled. They can, and often will, be infinite. Formally:
 
-\begin{definition}[Strom]
+\begin{definition}[Tree]
 \begin{itemize}
-\item \emph{Strom} je neprázdná množina $T$ s částečným uspořádáním $<_T$, které má (jediný) minimální prvek (\emph{kořen}) a ve kterém je množina předků libovolného vrcholu \emph{dobře uspořádaná}.\footnote{Tj. každá její neprázdná podmnožina má nejmenší prvek. (Tím zakážeme nekonečné klesající řetězce předků.)}
-\item \emph{Větev} stromu $T$ je maximální\footnote{Tj. nelze do ní přidat další vrcholy stromu.} lineárně uspořádaná podmnožina $T$.
-\item \emph{Uspořádaný strom} je strom $T$ spolu s lineárním uspořádáním $<_L$ množiny synů každého vrcholu. Uspořádání synů budeme říkat \emph{pravolevé} zatímco uspořádání $<_T$ je \emph{stromové}.
-\item \emph{Označkovaný strom} je strom spolu se značkovací funkcí $\mathrm{label}\colon V(T)\to\mathrm{Labels}$.
+\item A \emph{tree} is a non-empty set $T$ with a partial order $<_T$ that has a (single) minimal element (\emph{root}) and in which the set of ancestors of any node is \emph{well-ordered}.\footnote{That is, every non-empty subset has a least element. (This prevents infinite descending chains of ancestors.)}
+\item A \emph{branch} of a tree $T$ is a maximal\footnote{That is, it cannot be extended by adding more nodes from the tree.} linearly ordered subset of $T$.
+\item An \emph{ordered tree} is a tree $T$ along with a linear order $<_L$ on the set of children of each node. We call the order of children \emph{left-right} while the order $<_T$ is \emph{tree order}.
+\item A \emph{labeled tree} is a tree along with a labeling function $\mathrm{label}\colon V(T) \to \mathrm{Labels}$.
 \end{itemize}
 \end{definition}
 
-Budeme používat standardní terminologii o stromech, např. budeme mluvit o \emph{$n$-té úrovni stromu}, nebo o \emph{hloubce} stromu (ta je nekonečná, právě když máme nekonečnou větev). V jedné větě, kterou si níže dokážeme, budeme potřebovat následující slavné tvrzení, které je důsledkem axiomu výběru. 
+We will use standard terminology about trees, for example, we will talk about the \emph{$n$-th level of a tree} or the \emph{depth} of a tree (which is infinite if we have an infinite branch). In one of the theorems that we will prove below, we will need the following famous result, which is a consequence of the axiom of choice.
 
-\begin{lemma}[Königovo lemma]
-Nekonečný, konečně větvící strom má nekonečnou větev.
+\begin{lemma}[König's Lemma]
+An infinite, finitely branching tree has an infinite branch.
 \end{lemma}
-\noindent (Strom je \emph{konečně větvící}, pokud má každý vrchol konečně mnoho synů.)
+\noindent (A tree is \emph{finitely branching} if each node has finitely many children.)
 
 
-\section{Tablo důkaz}
+\section{Tableau Proof}
 
-Nyní uvedeme formální definici tabla. Do definice přidáme také teorii $T$, jejíž axiomy můžeme při konstrukci připojovat s příznakem $\mathrm{T}$ (``true''). Připomeňme, že \emph{položka} je nápis $\mathrm{T}\varphi$ nebo $\mathrm{F}\varphi$, kde $\varphi$ je nějaký výrok.
+We now present the formal definition of a tableau. We will also include the theory $T$ in the definition, whose axioms can be added during the construction with the sign $\mathrm{T}$ ("true"). Recall that an \emph{entry} is an expression $\mathrm{T}\varphi$ or $\mathrm{F}\varphi$, where $\varphi$ is some statement.
 
-\begin{definition}[Tablo]
-\emph{Konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+\begin{definition}[Tableau]
+A \emph{finite tableau from the theory $T$} is an ordered, labeled tree constructed by applying finitely many of the following rules:
 \begin{itemize}
-    \item jednoprvkový strom označkovaný libovolnou položkou je tablo z teorie $T$,
-    \item pro libovolnou položkou $P$ na libovolné větvi $V$, můžeme na konec větve $V$ připojit atomické tablo pro položku $P$,
-    \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom teorie $\alpha\in T$.
+    \item A single-node tree labeled with any entry is a tableau from the theory $T$.
+    \item For any entry $P$ on any branch $V$, we can attach the atomic tableau for the entry $P$ at the end of the branch $V$.
+    \item We can attach the entry $\mathrm{T}\alpha$ for any axiom $\alpha \in T$ at the end of any branch.
 \end{itemize}
-\emph{Tablo z teorie $T$} je buď konečné, nebo i \emph{nekonečné}: v tom případě vzniklo ve spočetně mnoha krocích. Můžeme ho formálně vyjádřit jako sjednocení $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_i$ jsou konečná tabla z $T$, $\tau_0$ je jednoprvkové tablo, a $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku.\footnote{Sjednocení proto, že v jednotlivých krocích přidáváme do tabla nové vrcholy, $\tau_i$ je tedy podstromem $\tau_{i+1}$.}
+A \emph{tableau from the theory $T$} can be either finite or \emph{infinite}: in the latter case, it is constructed in countably many steps. Formally, it can be expressed as the union $\tau = \bigcup_{i \geq 0} \tau_i$, where $\tau_i$ are finite tableaux from $T$, $\tau_0$ is a single-node tableau, and $\tau_{i+1}$ is obtained from $\tau_i$ in one step.\footnote{We take the union because, in each step, we add new nodes to the tableau, so $\tau_i$ is a subtree of $\tau_{i+1}$.}
 
-Tablo \emph{pro položku $P$} je tablo, které má položku $P$ v kořeni.
+A tableau \emph{for the entry $P$} is a tableau that has the entry $P$ at its root.
 \end{definition}
 
-Připomeňme konvenci, že kořen atomického tabla nebudeme zapisovat (neboť vrchol s položkou $P$ už v tablu je). V definici neurčujeme, v jakém pořadí provádět jednotlivé kroky, později ale specifikujeme konkrétní postup konstrukce (algoritmus), kterému budeme říkat \emph{systematické tablo}. 
+Recall the convention that we do not write the root of an atomic tableau (since the node with the entry $P$ is already in the tableau). The definition does not specify the order in which to perform the steps; however, later we will specify a concrete construction procedure (algorithm) that we will call the \emph{systematic tableau}.
 
-Abychom získali dokazovací systém, zbývá definovat pojem \emph{tablo důkazu} (a související pojmy). Připomeňme ještě jednou, že jde o důkaz sporem, tedy předpokládáme, že výrok neplatí, a najdeme spor(né tablo):
+To obtain a proof system, it remains to define the concept of a \emph{tableau proof} (and related terms). Recall once again that it is a proof by contradiction, i.e., we assume the statement does not hold and find a contradiction (a contradictory tableau):
 
-\begin{definition}[Tablo důkaz]
-\emph{Tablo důkaz} výroku $\varphi$ z teorie $T$ je \emph{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) dokazatelný} z $T$, píšeme $T\proves\varphi$. (Definujme také \emph{tablo zamítnutí} jako sporné tablo s $\mathrm{T}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) zamítnutelný} z $T$, tj. platí $T\proves\neg\varphi$.)  
+\begin{definition}[Tableau Proof]
+A \emph{tableau proof} of the statement $\varphi$ from the theory $T$ is a \emph{contradictory} tableau from the theory $T$ with the entry $\mathrm{F}\varphi$ at the root. If it exists, then $\varphi$ is \emph{(tableau) provable} from $T$, written as $T \proves \varphi$. (Also, define \emph{tableau refutation} as a contradictory tableau with the entry $\mathrm{T}\varphi$ at the root. If it exists, then $\varphi$ is \emph{(tableau) refutable} from $T$, i.e., $T \proves \neg \varphi$ holds.)
 \begin{itemize}
-    \item Tablo je \emph{sporné}, pokud je každá jeho větev sporná.
-    \item Větev je \emph{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \emph{bezesporná}.
-    \item Tablo je \emph{dokončené}, pokud je každá jeho větev dokončená.
-    \item Větev je \emph{dokončená}, pokud 
+    \item A tableau is \emph{contradictory} if every branch is contradictory.
+    \item A branch is \emph{contradictory} if it contains entries $\mathrm{T}\psi$ and $\mathrm{F}\psi$ for some statement $\psi$; otherwise, it is \emph{non-contradictory}.
+    \item A tableau is \emph{complete} if every branch is complete.
+    \item A branch is \emph{complete} if 
     \begin{itemize}
-        \item je sporná, nebo
-        \item je každá její položka na této větvi \emph{redukovaná} a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \item it is contradictory, or
+        \item every entry on this branch is \emph{reduced} and it contains the entry $\mathrm{T}\alpha$ for every axiom $\alpha \in T$.
     \end{itemize}
      
-    \item Položka $P$ je \emph{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+    \item An entry $P$ is \emph{reduced} on the branch $V$ passing through this entry if 
     \begin{itemize}
-        \item je tvaru $\mathrm{T}p$ resp. $\mathrm{F}p$ pro nějakou výrokovou proměnnou $p\in\mathbb P$, nebo
-        \item vyskytuje se na $V$ jako kořen atomického tabla\footnote{Byť podle konvence tento kořen nezapisujeme.} (tj., typicky, při konstrukci tabla již došlo k jejímu rozvoji na $V$).
+        \item it is of the form $\mathrm{T}p$ or $\mathrm{F}p$ for some propositional variable $p \in \mathbb{P}$, or
+        \item it appears on $V$ as the root of an atomic tableau\footnote{Although, by convention, we do not write this root.} (i.e., typically, during the construction of the tableau, it has already been developed on $V$).
     \end{itemize}
 \end{itemize}
 \end{definition}
 
 \begin{example}\label{example:tableaux-from-theory}
-    Ukážeme si dva příklady. Tabla jsou znázorněná na Obrázku \ref{figure:tableaux-from-theory-figure}. 
+    Let's illustrate two examples. The tableaux are shown in Figure \ref{figure:tableaux-from-theory-figure}. 
     \begin{itemize}
-        \item[(a)] Tablo důkaz výroku $\psi$ z teorie $T=\{\varphi,\varphi\limplies\psi\}$, tj. $T\proves\psi$ (kde $\varphi,\psi$ jsou nějaké pevně dané výroky). Tomuto faktu se říká \emph{Věta o dedukci}.
-        \item[(b)] Dokončené tablo pro výrok $p_0$ z teorie $T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$. Nejlevější větev je bezesporná dokončená. Obsahuje položky $\mathrm{T}p_{i+1}\limplies p_i$ a $\mathrm{F}p_i$ pro všechna $i\in\mathbb N$. Shoduje se tedy s modelem $v=(0,0,\dots)$, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro všechna $i$.
+        \item[(a)] Tableau proof of the statement $\psi$ from the theory $T = \{\varphi, \varphi \limplies \psi\}$, i.e., $T \proves \psi$ (where $\varphi, \psi$ are some fixed statements). This fact is called the \emph{Deduction Theorem}.
+        \item[(b)] Complete tableau for the statement $p_0$ from the theory $T = \{p_{n+1} \limplies p_n \mid n \in \mathbb{N}\}$. The leftmost branch is non-contradictory and complete. It contains the entries $\mathrm{T}p_{i+1} \limplies p_i$ and $\mathrm{F}p_i$ for all $i \in \mathbb{N}$. Thus, it matches the model $v = (0,0,\dots)$, i.e., $v: \mathbb{P} \to \{0,1\}$ where $v(p_i) = 0$ for all $i$.
     \end{itemize} 
 \end{example}
 
@@ -279,7 +279,7 @@ Abychom získali dokazovací systém, zbývá definovat pojem \emph{tablo důkaz
     \centering
     \begin{forest}
     [$\mathrm{F}\psi$
-        [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
+        [\textcolor{blue}{$\mathrm{T}\varphi \limplies \psi$}
             [$\mathrm{F}\varphi$
                 [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
             ]                
@@ -292,9 +292,9 @@ Abychom získali dokazovací systém, zbývá definovat pojem \emph{tablo důkaz
     \centering
     \begin{forest}
     [$\mathrm{F}p_0$
-        [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
-            [$\mathrm{F}p_1$                
-                [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
+        [\textcolor{blue}{$\mathrm{T}p_1 \limplies p_0$}
+            [$\mathrm{F}p_1$
+                [\textcolor{blue}{$\mathrm{T}p_2 \limplies p_1$}
                     [$\mathrm{F}p_2$ [$\vdots$]] 
                     [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
                 ]                
@@ -305,329 +305,318 @@ Abychom získali dokazovací systém, zbývá definovat pojem \emph{tablo důkaz
     \end{forest}
     \end{minipage}
     \label{figure:tableaux-from-theory-figure}
-    \caption{Tabla z Příkladu \ref{example:tableaux-from-theory}. Položky vycházející z axiomů jsou označeny modře.}
+    \caption{Tableaux from Example \ref{example:tableaux-from-theory}. Entries derived from axioms are marked in blue.}
 \end{figure}
 
-
 \begin{exercise}
-    Vraťme se k tablům z Cvičení \ref{exercise:construct-tableaux}. Jde o tablo důkazy nebo zamítnutí (z teorie $T=\emptyset$)? Které položky na kterých větvích jsou redukované? Které větve jsou sporné, které jsou dokončené?
+    Let's return to the tableaux from Exercise \ref{exercise:construct-tableaux}. Are they tableau proofs or refutations (from the theory $T = \emptyset$)? Which entries on which branches are reduced? Which branches are contradictory, and which are complete?
 \end{exercise}
 
-\section{Konečnost a systematičnost důkazů}\label{section:finiteness-and-systematicity-of-proofs}
+\section{Finiteness and Systematicity of Proofs}\label{section:finiteness-and-systematicity-of-proofs}
 
-V této sekci dokážeme, že pokud existuje tablo důkaz, existuje vždy také \emph{konečný} tablo důkaz. Představíme také algoritmus, kterým nějaký tablo důkaz můžeme vždy najít, pro důkaz tohoto faktu ale budeme potřebovat Věty o korektnosti a úplnosti z následující sekce. Prozatím ukážeme, že tento algoritmus nám umožní vždy sestrojit dokončené tablo.
+In this section, we will prove that if a tableau proof exists, there is always also a \emph{finite} tableau proof. We will also present an algorithm by which a tableau proof can always be found; however, we will need the Theorems of Correctness and Completeness from the next section to prove this fact. For now, we will show that this algorithm will always allow us to construct a complete tableau.
 
-Všimněte si, že při redukci položky přidáváme do tabla pouze položky obsahující kratší výroky. Pokud tedy máme konečnou teorii, a neděláme zbytečné kroky (například nepřidáváme opakovaně tentýž axiom, nebo totéž atomické tablo), je snadné sestrojit dokončené tablo, které bude konečné.
+Note that when reducing an entry, we only add entries containing shorter statements to the tableau. Therefore, if we have a finite theory and do not make unnecessary steps (e.g., repeatedly adding the same axiom or the same atomic tableau), it is easy to construct a complete tableau that will be finite.
 
-Je-li teorie $T$ nekonečná, musíme ale být opatrnější. Mohli bychom nekonečně dlouho konstruovat tablo, a přitom se nikdy nedostat k redukci určité položky, nebo nikdy nepoužít některý z axiomů. Definujeme tedy konkrétní algoritmus pro konstrukci tabla, výsledku budeme říkat \emph{systematické tablo}. Myšlenka konstrukce je jednoduchá: střídáme krok redukce položky (zároveň na všech bezesporných větvích, které jí procházejí) a krokem použití axiomu. Položky procházíme po úrovních, a v rámci úrovně v pravolevém uspořádání. A axiomy teorie ve zvoleném očíslování.
+If the theory $T$ is infinite, we must be more careful. We could construct the tableau indefinitely without ever reducing a particular entry or using any of the axioms. Therefore, we define a specific algorithm for constructing a tableau, and the resulting tableau will be called a \emph{systematic tableau}. The idea of the construction is simple: we alternate between reducing an entry (simultaneously on all non-contradictory branches passing through it) and using an axiom. We traverse the entries by levels, and within a level in left-right order. We traverse the axioms of the theory in the chosen numbering.
 
 \begin{definition}
-Mějme položku $R$ a (konečnou nebo nekonečnou\footnote{Připomeňme, že $T$ je spočetná, neboť jazyk je (v celé kapitole) spočetný.}) teorii $T=\{\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+Let $R$ be an entry and (a finite or infinite\footnote{Recall that $T$ is countable since the language is (in the entire chapter) countable.}) theory $T = \{\alpha_1, \alpha_2, \dots\}$. A \emph{systematic tableau} from the theory $T$ for the entry $R$ is a tableau $\tau = \bigcup_{i \geq 0} \tau_i$, where $\tau_0$ is a single-node tableau with the entry $R$, and for each $i \geq 0$:
 
 \begin{itemize}
-    \item Nechť $P$ je nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$. Definujeme nejprve tablo $\tau_i'$ jako tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$. (Pokud taková položka neexistuje, potom  $\tau_i'=\tau_i$.)
-    \item Následně, $\tau_{i+1}$ je tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_{i+1}$ na každou bezespornou větev $\tau_i'$. To v případě, že $i<|T|$, jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$.
+    \item Let $P$ be the leftmost entry at the smallest level that is not reduced on any non-contradictory branch passing through $P$. We first define the tableau $\tau_i'$ as the tableau obtained from $\tau_i$ by attaching the atomic tableau for $P$ to each non-contradictory branch passing through $P$. (If such an entry does not exist, then $\tau_i' = \tau_i$.)
+    \item Subsequently, $\tau_{i+1}$ is the tableau obtained from $\tau_i'$ by attaching $\mathrm{T}\alpha_{i+1}$ to each non-contradictory branch of $\tau_i'$. If $i < |T|$, otherwise (if $T$ is finite and we have already used all the axioms) skip this step and define $\tau_{i+1} = \tau_i'$.
 \end{itemize}    
 \end{definition}
 
 \begin{lemma}\label{lemma:systematic-is-finished}
-    Systematické tablo je dokončené.
+    A systematic tableau is complete.
 \end{lemma}
 \begin{proof}
-    Ukážeme, že každá větev je dokončená. Sporné větve jsou dokončené. Bezesporné větve obsahují položky $\mathrm{T}\alpha_i$ (ty jsme připojili v $i$-tém kroku) a každá položka na nich je redukovaná. Vskutku, kdyby $P$ byla neredukovaná na bezesporné větvi $V$, přišla by na ni v nějakém kroku řada, neboť v úrovních nad $P$ a vlevo od $P$ existuje jen konečně mnoho položek. (Používáme zjevného faktu, že každý prefix bezesporné větve je také bezesporná větev, tedy během konstrukce $V$ nikdy není sporná.)
+    We will show that each branch is complete. Contradictory branches are complete. Non-contradictory branches contain entries $\mathrm{T}\alpha_i$ (which we added in the $i$-th step), and every entry on them is reduced. Indeed, if $P$ were not reduced on a non-contradictory branch $V$, it would be addressed in some step since there are only finitely many entries above $P$ and to the left of $P$. (We use the obvious fact that any prefix of a non-contradictory branch is also a non-contradictory branch, so during the construction, $V$ is never contradictory.)
 \end{proof}
 
-Nyní se vraťme k otázce konečnosti důkazů:
+Now, let's return to the question of the finiteness of proofs:
 
-\begin{theorem}[Konečnost sporu]\label{theorem:finiteness-of-contradiction}
-    Je-li $\tau=\bigcup_{i\geq 0}\tau_i$ sporné tablo, potom existuje $n\in\mathbb N$ takové, že $\tau_n$ je sporné konečné tablo.
+\begin{theorem}[Finiteness of Contradiction]\label{theorem:finiteness-of-contradiction}
+    If $\tau = \bigcup_{i \geq 0} \tau_i$ is a contradictory tableau, then there exists $n \in \mathbb{N}$ such that $\tau_n$ is a finite contradictory tableau.
 \end{theorem}
 \begin{proof}
-    Uvažme množinu $S$ všech vrcholů stromu $\tau$, které nad sebou (ve stromovém uspořádání) neobsahují spor, tj. dvojici položek $\mathrm{T}\psi$, $\mathrm{F}\psi$.
+    Consider the set $S$ of all nodes of the tree $\tau$ that do not contain a contradiction above them (in the tree order), i.e., a pair of entries $\mathrm{T}\psi$, $\mathrm{F}\psi$.
 
-    Kdyby množina $S$ byla nekonečná, podle Königova lemmatu použitého na podstrom $\tau$ na množině $S$ bychom měli nekonečnou, bezespornou větev v $S$. To by ale znamenalo, že máme i bezespornou větev v $\tau$, což je ve sporu s tím, že $\tau$ je sporné. (Podrobněji: Větev na $S$ by byla podvětví nějaké větve $V$ v $\tau$, která je sporná, tj. obsahuje nějakou (konkrétní) spornou dvojici položek, která ale existuje už v nějakém konečném prefixu $V$.)
+    If the set $S$ were infinite, by König's lemma applied to the subtree $\tau$ on the set $S$, we would have an infinite, non-contradictory branch in $S$. However, this would mean that we have a non-contradictory branch in $\tau$, which contradicts the fact that $\tau$ is contradictory. (In detail: The branch on $S$ would be a sub-branch of some branch $V$ in $\tau$, which is contradictory, i.e., it contains some (specific) contradictory pair of entries, which exists already in some finite prefix of $V$.)
 
-    Množina $S$ je tedy konečná. To znamená, že existuje $d\in\mathbb N$ takové, že celá $S$ leží v hloubce nejvýše $d$. Každý vrchol na úrovni $d+1$ má tedy nad sebou spor. Zvolme $n$ tak, že $\tau_n$ už obsahuje všechny vrcholy $\tau$ z prvních $d+1$ úrovní: každá větev $\tau_n$ je tedy sporná.
+    Therefore, the set $S$ is finite. This means that there exists $d \in \mathbb{N}$ such that the entire $S$ lies at a depth of at most $d$. Thus, every node at level $d+1$ has a contradiction above it. Choose $n$ such that $\tau_n$ already contains all the nodes of $\tau$ from the first $d+1$ levels: each branch of $\tau_n$ is therefore contradictory.
 \end{proof}
 
 \begin{corollary}\label{corollary:systematic-contradictory-is-finite}
-    Pokud při konstrukci tabla nikdy neprodlužujeme sporné větve, např. pro systematické tablo, potom sporné tablo je konečné.
+    If we never extend contradictory branches during the construction of the tableau, e.g., for a systematic tableau, then a contradictory tableau is finite.
 \end{corollary}
 \begin{proof}
-Použijeme Větu \ref{theorem:finiteness-of-contradiction}, máme $\tau=\tau_n$ neboť sporné tablo už neměníme.    
+We use Theorem \ref{theorem:finiteness-of-contradiction}, and we have $\tau = \tau_n$ since we do not extend a contradictory tableau.    
 \end{proof}
 
-\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness-of-proofs}
-    Pokud $T\proves\varphi$, potom existuje i \emph{konečný} tablo důkaz $\varphi$ z $T$.
+\begin{corollary}[Finiteness of Proofs]\label{corollary:finiteness-of-proofs}
+    If $T \proves \varphi$, then there exists a \emph{finite} tableau proof of $\varphi$ from $T$.
 \end{corollary}
 \begin{proof}
-Snadno plyne z Důsledku \ref{corollary:systematic-contradictory-is-finite}: stačí při konstrukci $\tau$ ignorovat kroky, které by prodloužily spornou větev.
+It easily follows from Corollary \ref{corollary:systematic-contradictory-is-finite}: during the construction of $\tau$, we ignore steps that would extend a contradictory branch.
 \end{proof}
 
-Vyslovíme zde také následující důsledek. Dokážeme ho ale až v příští sekci.
+We also state the following consequence. We will prove it in the next section.
 
-\begin{corollary}[Systematičnost důkazů]\label{corollary:systematicity-of-proofs}
-    Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+\begin{corollary}[Systematicity of Proofs]\label{corollary:systematicity-of-proofs}
+    If $T \proves \varphi$, then the systematic tableau is a (finite) tableau proof of $\varphi$ from $T$.
 \end{corollary}
 
-K důkazu budeme potřebovat dvě fakta: pokud je $\varphi$ dokazatelná z $T$, potom v $T$ platí (Věta o korektnosti), tj. nemůže existovat protipříklad. A dále pokud by systematické tablo mělo bezespornou větev, znamenalo by to, že existuje protipříklad (to je klíčem k Větě o úplnosti).
+To prove this, we will need two facts: if $\varphi$ is provable from $T$, then it holds in $T$ (Correctness Theorem), i.e., no counterexample can exist. And if the systematic tableau had a non-contradictory branch, it would mean that a counterexample exists (which is the key to the Completeness Theorem).
 
 
-\section{Korektnost a úplnost}
+\section{Correctness and Completeness}
 
-V této sekci dokážeme, že je tablo metoda \emph{korektní} a \emph{úplný} dokazovací systém, tj. že $T\proves\varphi$ platí právě když $T\models\varphi$.
+In this section, we will prove that the tableau method is a \emph{correct} and \emph{complete} proof system, i.e., that $T \proves \varphi$ holds if and only if $T \models \varphi$.
 
-\subsection{Věta o korektnosti}
+\subsection{Correctness Theorem}
 
-Řekneme, model $v$ se \emph{shoduje} s položkou $P$, pokud
-$P=\mathrm{T}\varphi$ a $v\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $v\not\models\varphi$. Dále $v$ se shoduje s větví $V$, pokud se shoduje s každou položkou na této větvi.
+We say that a model $v$ \emph{agrees} with an entry $P$ if $P = \mathrm{T}\varphi$ and $v \models \varphi$, or $P = \mathrm{F}\varphi$ and $v \not\models \varphi$. Furthermore, $v$ agrees with a branch $V$ if it agrees with every entry on that branch.
 
-Jak už jsme zmínili, design atomických tabel zaručuje, že shoduje-li se model s položkou v kořeni tabla, shoduje se s některou větví. Není těžké indukcí podle konstrukce tabla ukázat následující lemma:
+As mentioned, the design of atomic tableaux ensures that if a model agrees with the entry at the root of the tableau, it agrees with some branch. It is not difficult to show the following lemma by induction on the construction of the tableau:
 \begin{lemma}\label{lemma:agrees-with-branch}
-    Shoduje-li se model teorie $T$ s položkou v kořeni tabla z teorie $T$, potom se shoduje s některou větví.
+    If a model of the theory $T$ agrees with the entry at the root of a tableau from theory $T$, then it agrees with some branch.
 \end{lemma}
 \begin{proof}
-    Mějme tablo $\tau=\bigcup_{i\geq 0}\tau_i$ z teorie $T$ a model $v\in\M(T)$ shodující se s kořenem $\tau$, tedy s (jednoprvkovou) větví $V_0$ v (jednoprvkovém) $\tau_0$.
+    Consider a tableau $\tau = \bigcup_{i \geq 0} \tau_i$ from theory $T$ and a model $v \in \M(T)$ that agrees with the root of $\tau$, i.e., with the (single-element) branch $V_0$ in the (single-element) $\tau_0$.
     
-    Indukcí podle $i$ (podle kroků v při konstrukci tabla) najdeme posloupnost $V_0\subseteq V_1\subseteq\dots$ takovou, že $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $v$, a $V_{i+1}$ je prodloužením $V_i$. Požadovaná větev tabla $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$.
+    By induction on $i$ (on the steps in the construction of the tableau), we find a sequence $V_0 \subseteq V_1 \subseteq \dots$ such that $V_i$ is a branch in the tableau $\tau_i$ agreeing with the model $v$, and $V_{i+1}$ extends $V_i$. The required branch of the tableau $\tau$ is then $V = \bigcup_{i \geq 0} V_i$.
     
     \begin{itemize}
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení větve $V_i$, definujeme $V_{i+1}=V_i$.
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ připojením položky $\mathrm{T}\alpha$ (pro nějaký axiom $\alpha\in T$) na konec větve  $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev. Protože $v$ je model $T$, platí v něm axiom $\alpha$, tedy shoduje se i s novou položkou $\mathrm{T}\alpha$.
-        \item Nechť $\tau_{i+1}$ vzniklo z $\tau_i$ připojením atomického tabla pro nějakou položku $P$ na konec větve $V_i$. Protože se model $v$ shoduje s položkou $P$ (která leží na větvi $V_i$), shoduje se i s kořenem připojeného atomického tabla, a proto se shoduje i s některou z jeho větví. (Tuto vlastnost snadno ověříme pro všechna atomická tabla.) Definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev atomického tabla.\footnote{Resp. o libovolnou takovou větev: model $v$ se může shodovat s více větvemi atomického tabla.}
+        \item If $\tau_{i+1}$ is obtained from $\tau_i$ without extending the branch $V_i$, we define $V_{i+1} = V_i$.
+        \item If $\tau_{i+1}$ is obtained from $\tau_i$ by adding the entry $\mathrm{T}\alpha$ (for some axiom $\alpha \in T$) to the end of the branch $V_i$, we define $V_{i+1}$ as this extended branch. Since $v$ is a model of $T$, it satisfies the axiom $\alpha$, so it agrees with the new entry $\mathrm{T}\alpha$.
+        \item Let $\tau_{i+1}$ be obtained from $\tau_i$ by adding the atomic tableau for some entry $P$ to the end of the branch $V_i$. Since the model $v$ agrees with the entry $P$ (which is on the branch $V_i$), it agrees with the root of the added atomic tableau and thus with some branch of the atomic tableau. (This property is easily verified for all atomic tableaux.) We define $V_{i+1}$ as the extension of $V_i$ by this branch of the atomic tableau.\footnote{Or by any such branch: the model $v$ may agree with multiple branches of the atomic tableau.}
     \end{itemize}
 \end{proof}
 
-Nyní už můžeme dokázat Větu o korektnosti. Zkráceně řečeno, pokud by existoval důkaz a zároveň protipříklad, protipříklad by se musel shodovat s některou větví důkazu, ty jsou ale všechny sporné.
+We can now prove the Correctness Theorem. In short, if a proof and a counterexample exist simultaneously, the counterexample would have to agree with some branch of the proof, but all branches are contradictory.
 
-\begin{theorem}[O korektnosti]
-Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravdivý v $T$, tj. $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
+\begin{theorem}[Correctness]
+If the statement $\varphi$ is tableau provable from the theory $T$, then $\varphi$ is true in $T$, i.e., $T \proves \varphi \Rightarrow T \models \varphi$.    
 \end{theorem}
 
 \begin{proof}
-Dokážeme sporem. Předpokládejme, že $\varphi$ v $T$ neplatí, tj. existuje protipříklad: model $v\in\M(T)$, ve kterém $\varphi$ neplatí.
+We will prove by contradiction. Assume that $\varphi$ is not true in $T$, i.e., there is a counterexample: a model $v \in \M(T)$ in which $\varphi$ does not hold.
 
-Protože je $\varphi$ dokazatelná z $T$, existuje tablo důkaz $\varphi$ z $T$, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Model $v$ se shoduje s položkou $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch} se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné, včetně $V$. Takže $V$ obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme tedy $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.
-
+Since $\varphi$ is provable from $T$, there exists a tableau proof of $\varphi$ from $T$, which is a contradictory tableau from $T$ with the entry $\mathrm{F}\varphi$ at the root. The model $v$ agrees with the entry $\mathrm{F}\varphi$, so by Lemma \ref{lemma:agrees-with-branch}, it agrees with some branch $V$. However, all branches are contradictory, including $V$. Therefore, $V$ contains the entries $\mathrm{T}\psi$ and $\mathrm{F}\psi$ (for some statement $\psi$), and the model $v$ agrees with these entries. Thus, we have $v \models \psi$ and simultaneously $v \not\models \psi$, which is a contradiction.
 \end{proof}
 
-\subsection{Věta o úplnosti}
+\subsection{Completeness Theorem}
 
-Ukážeme, že pokud selže dokazování, tj. pokud dostaneme \emph{bezespornou} větev v \emph{dokončeném} tablu z teorie $T$ pro položku $\mathrm{F}\varphi$, potom tato větev poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto jeden konkrétní:
+We will show that if the proof fails, i.e., if we obtain a \emph{non-contradictory} branch in a \emph{complete} tableau from theory $T$ for the entry $\mathrm{F}\varphi$, then this branch provides a counterexample: a model of the theory $T$ that agrees with the entry $\mathrm{F}\varphi$ at the root of the tableau, i.e., $\varphi$ does not hold in it. There may be multiple such models; we will define a specific one:
 
-\begin{definition}[Kanonický model]\label{definition:canonical-model}
-Je-li $V$ bezesporná větev dokončeného tabla, potom \emph{kanonický model} pro $V$ je model definovaný předpisem (pro $p\in\mathbb P$):
+\begin{definition}[Canonical Model]\label{definition:canonical-model}
+If $V$ is a non-contradictory branch of a complete tableau, then the \emph{canonical model} for $V$ is a model defined by the rule (for $p \in \mathbb{P}$):
 $$
 v(p)=\begin{cases}
-    1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$,}\\
-    0 \text{ jinak.}
+    1 \text{ if the entry $\mathrm{T}p$ appears on $V$,}\\
+    0 \text{ otherwise.}
 \end{cases}
 $$  
 \end{definition}
 \begin{lemma}\label{lemma:canonical-model-agrees}
-    Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
+    The canonical model for a (non-contradictory complete) branch $V$ agrees with $V$.
 \end{lemma}
 \begin{proof}
-Ukážeme, že kanonický model $v$ se shoduje se všemi položkami $P$ na větvi $V$, a to indukcí podle struktury výroku v položce.\footnote{Připomeňme, že to znamená indukci podle hloubky stromu výroku.} Nejprve základ indukce:
+We will show that the canonical model $v$ agrees with all entries $P$ on the branch $V$ by induction on the structure of the statement in the entry.\footnote{Recall that this means induction on the depth of the statement tree.} First, the base case of the induction:
 \begin{itemize}
-    \item Je-li $P=\mathrm{T}p$ pro nějaký prvovýrok $p\in\mathbb P$, máme podle definice $v(p)=1$; $v$ se s $P$ shoduje.
-    \item Je-li $P=\mathrm{F}p$, potom se na větvi $V$ nemůže vyskytovat položka $\mathrm{T}p$, jinak by $V$ byla sporná. Podle definice máme $v(p)=0$ a $v$ se s $P$ opět shoduje.
+    \item If $P = \mathrm{T}p$ for some atomic statement $p \in \mathbb{P}$, we have $v(p) = 1$ by definition; $v$ agrees with $P$.
+    \item If $P = \mathrm{F}p$, then the entry $\mathrm{T}p$ cannot appear on the branch $V$, otherwise $V$ would be contradictory. By definition, we have $v(p) = 0$, and $v$ again agrees with $P$.
 \end{itemize}
-Nyní indukční krok. Rozebereme dva případy, ostatní se dokáží obdobně.
+Now, the induction step. We will cover two cases; the others are proved similarly.
 \begin{itemize}
-    \item Nechť $P=\mathrm{T}\varphi\land\psi$. Protože je $V$ dokončená větev, je na ní položka $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi model $v$ shoduje, tedy $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
-    \item Nechť $P=\mathrm{F}\varphi\land\psi$. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.
+    \item Let $P = \mathrm{T}\varphi \land \psi$. Since $V$ is a complete branch, the entry $P$ is reduced on it. This means that the entries $\mathrm{T}\varphi$ and $\mathrm{T}\psi$ appear on $V$. By the induction hypothesis, the model $v$ agrees with these entries, so $v \models \varphi$ and $v \models \psi$. Thus, $v \models \varphi \land \psi$ holds, and $v$ agrees with $P$.
+    \item Let $P = \mathrm{F}\varphi \land \psi$. Since $P$ is reduced on $V$, the entry $\mathrm{F}\varphi$ or the entry $\mathrm{F}\psi$ appears on $V$. Therefore, $v \not\models \varphi$ or $v \not\models \psi$, from which it follows that $v \not\models \varphi \land \psi$, and $v$ agrees with $P$.
 \end{itemize}
 \end{proof}
 
-\begin{theorem}[O úplnosti]
-    Je-li výrok $\varphi$ pravdivý v teorii $T$, potom je tablo dokazatelný z $T$, tj. $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
+\begin{theorem}[Completeness]
+    If the statement $\varphi$ is true in theory $T$, then it is tableau provable from $T$, i.e., $T \models \varphi \Rightarrow T \proves \varphi$.    
 \end{theorem}
 
 \begin{proof}
-Ukážeme, že libovolné \emph{dokončené} (tedy např. i \emph{systematické}) tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $v$ pro tuto větev. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $v$ se podle Lemmatu \ref{lemma:canonical-model-agrees} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme $v\models T$. Protože se ale $v$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, máme $v\not\models\varphi$, což znamená, že $T\not\models\varphi$, spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
+We will show that any \emph{complete} (thus, for example, \emph{systematic}) tableau from $T$ with the entry $\mathrm{F}\varphi$ at the root must be contradictory. We will prove by contradiction: if such a tableau were not contradictory, it would contain a non-contradictory (complete) branch $V$. Consider the canonical model $v$ for this branch. Since $V$ is complete, it contains the entry $\mathrm{T}\alpha$ for all axioms $\alpha \in T$. By Lemma \ref{lemma:canonical-model-agrees}, the model $v$ agrees with all entries on $V$, thus satisfying all the axioms and we have $v \models T$. However, since $v$ also agrees with the entry $\mathrm{F}\varphi$ at the root, we have $v \not\models \varphi$, which means $T \not\models \varphi$, a contradiction. Thus, the tableau must have been contradictory, i.e., a tableau proof of $\varphi$ from $T$.
 \end{proof}
 
-\begin{proof}[Důkaz Důsledku \ref{corollary:systematicity-of-proofs}]
-Z předchozího důkazu také dostáváme `systematičnost důkazů', tj. že důkaz můžeme vždy hledat konstrukcí systematického tabla: Pokud $T\models\varphi$, tak je i systematické tablo pro položku $\mathrm{F}\varphi$ nutně sporné, a je tedy tablo důkazem $\varphi$ z $T$.
+\begin{proof}[Proof of Corollary \ref{corollary:systematicity-of-proofs}]
+From the previous proof, we also obtain the `systematicity of proofs,' i.e., that a proof can always be found by constructing a systematic tableau: If $T \models \varphi$, then the systematic tableau for the entry $\mathrm{F}\varphi$ must be contradictory, and thus it is a tableau proof of $\varphi$ from $T$.
 \end{proof}
 
 \begin{exercise}
-    Ověřte zbývající případy v důkazu Lemmatu \ref{lemma:canonical-model-agrees}.
+    Verify the remaining cases in the proof of Lemma \ref{lemma:canonical-model-agrees}.
 \end{exercise}
 
 \begin{exercise}
-    Popište, jak vypadají \emph{všechny} modely shodující se s danou bezespornou dokončenou větví.
+    Describe what \emph{all} models agreeing with a given non-contradictory complete branch look like.
 \end{exercise}
 
 \begin{exercise}
-    Navrhněte postup, kterým můžeme za použití tablo metody najít všechny modely dané teorie $T$.
+    Suggest a method to use the tableau method to find all models of a given theory $T$.
 \end{exercise}
 
+\section{Consequences of Correctness and Completeness}
 
-\section{Důsledky korektnosti a úplnosti}
+The Correctness and Completeness Theorems together state that \emph{provability} is the same as \emph{truth}. This allows us to formulate syntactic analogs of semantic concepts and properties.
 
-Věty o korektnosti a úplnosti dohromady říkají, že \emph{dokazatelnost} je totéž, co \emph{platnost}. To nám umožňuje zformulovat syntaktické analogie sémantických pojmů a vlastností.
-
-Analogií \emph{důsledků} jsou \emph{teorémy} teorie $T$:
+The analog of \emph{consequences} are \emph{theorems} of the theory $T$:
 $$
-\Thm_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid T\proves\varphi\}
+\Thm_\mathbb{P}(T) = \{\varphi \in \VF_\mathbb{P} \mid T \proves \varphi\}
 $$
 
-\begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness}
-    Pro libovolnou teorii $T$ a výroky $\varphi,\psi$ platí:
+\begin{corollary}[Provability = Truth]\label{corollary:corollary-of-soundness-and-completeness}
+    For any theory $T$ and statements $\varphi, \psi$, the following hold:
     \begin{itemize}
-        \item $T\proves\varphi$ právě když $T\models\varphi$
-        \item $\Thm_\mathbb P(T)=\Conseq_\mathbb P(T)$
+        \item $T \proves \varphi$ if and only if $T \models \varphi$
+        \item $\Thm_\mathbb{P}(T) = \Conseq_\mathbb{P}(T)$
     \end{itemize}
 \end{corollary}
 \begin{proof}
-    Plyne okamžitě z Věty o korektnosti a z Věty o úplnosti.
+    This immediately follows from the Correctness Theorem and the Completeness Theorem.
 \end{proof}
 
-
-Ve všech definicích a větách můžeme tedy nahradit pojem `\emph{platnost}' pojmem `\emph{dokazatelnost}' (tj. symbol `$\models$' symbolem `$\proves$') a  pojem `\emph{důsledek}' pojmem `\emph{teorém}'. Například:
+In all definitions and theorems, we can therefore replace the concept of `\emph{truth}' with the concept of `\emph{provability}' (i.e., the symbol `$\models$' with the symbol `$\proves$') and the concept of `\emph{consequence}' with the concept of `\emph{theorem}'. For example:
 \begin{itemize}
-    \item Teorie je \emph{sporná}, jestliže je v ní dokazatelný spor (tj. $T\proves\bot$).
-    \item Teorie je \emph{kompletní}, jestliže pro každý výrok $\varphi$ je buď $T\proves\varphi$ nebo $T\proves\neg\varphi$ (ale ne obojí, jinak by byla sporná).
+    \item A theory is \emph{contradictory} if it proves a contradiction (i.e., $T \proves \bot$).
+    \item A theory is \emph{complete} if for every statement $\varphi$, either $T \proves \varphi$ or $T \proves \neg \varphi$ (but not both, otherwise it would be contradictory).
 \end{itemize}
 
-Uveďme ještě jeden snadný důsledek:
+Let us state one more easy consequence:
 
-\begin{theorem}[O dedukci]
-Pro teorii $T$ a výroky $\varphi,\psi$ platí:
-$T,\varphi\proves\psi\text{ právě když }T\proves\varphi\to\psi$.
+\begin{theorem}[Deduction Theorem]
+For a theory $T$ and statements $\varphi, \psi$, we have:
+$T, \varphi \proves \psi$ if and only if $T \proves \varphi \to \psi$.
 \end{theorem}
 \begin{proof}
-    Stačí dokázat $T,\varphi\models\psi\Leftrightarrow T\models\varphi\to\psi$, což je snadné.
+    It suffices to prove that $T, \varphi \models \psi \Leftrightarrow T \models \varphi \to \psi$, which is straightforward.
 \end{proof}
 
 \begin{exercise}
-Dokažte Větu o dedukci přímo, pomocí transformace tablo důkazů.
+Prove the Deduction Theorem directly using the transformation of tableau proofs.
 \end{exercise}
 
+\section{Compactness Theorem}
 
-\section{Věta o kompaktnosti}
+An important consequence of the Correctness and Completeness Theorems is the so-called \emph{Compactness Theorem}.\footnote{The word \emph{compactness} comes from compact (i.e., bounded and closed) sets in Euclidean spaces, where one can select a convergent subsequence from every sequence. You can imagine a sequence of increasing finite parts `converging' to the infinite whole.} This principle allows converting statements about infinite objects/processes into statements about (all) their finite parts.
 
-Důležitým důsledkem vět o korektnosti a úplnosti je také tzv. \emph{Věta o kompaktnosti}.\footnote{Slovo \emph{kompaktnost} pochází z kompaktních (tj. omezených a uzavřených) množin v Euklidovských prostorech, ve kterých lze z každé posloupnosti vybrat konvergentní podposloupnost. Můžete si představit posloupnost zvětšujících se konečných částí `konvergující' k nekonečnému celku.} Tento princip umožňuje převádět tvrzení o nekonečných objektech/procesech na tvrzení o (všech) jejich konečných částech.
-
-\begin{theorem}[O kompaktnosti]\label{theorem:compactness-theorem}
-Teorie má model, právě když každá její konečná část má model.    
+\begin{theorem}[Compactness Theorem]\label{theorem:compactness-theorem}
+A theory has a model if and only if every finite part of it has a model.    
 \end{theorem}
 
 \begin{proof}
-Každý model teorie $T$ je zjevně modelem každé její části. Druhou implikaci dokážeme nepřímým důkazem: Předpokládejme, že $T$ nemá model, tj. je sporná, a najděme konečnou část $T'\subseteq T$, která je také sporná.
+Every model of a theory $T$ is evidently a model of each of its parts. We will prove the other implication by contradiction: Assume that $T$ has no model, i.e., it is contradictory, and find a finite part $T' \subseteq T$ that is also contradictory.
 
-Protože je $T$ sporná, platí $T\proves\bot$ (zde potřebujeme Větu o úplnosti). Podle Důsledku \ref{corollary:finiteness-of-proofs} potom existuje \emph{konečný} tablo důkaz $\tau$ výroku $\bot$ z $T$. Konstrukce tohoto důkazu má jen konečně mnoho kroků, použili jsme tedy jen konečně mnoho axiomů z $T$. Definujeme-li $T'=\{\alpha\in T\mid \mathrm{T}\alpha\text{ je položka v tablu $\tau$}\}$, potom $\tau$ je také tablo důkaz sporu z teorie $T'$. Teorie $T'$ je tedy sporná konečná část $T$.
+Since $T$ is contradictory, we have $T \proves \bot$ (here we need the Completeness Theorem). According to Corollary \ref{corollary:finiteness-of-proofs}, there exists a \emph{finite} tableau proof $\tau$ of the contradiction from $T$. The construction of this proof involves only finitely many steps, so we used only finitely many axioms from $T$. If we define $T' = \{\alpha \in T \mid \mathrm{T}\alpha \text{ is an entry in the tableau $\tau$}\}$, then $\tau$ is also a tableau proof of the contradiction from the theory $T'$. Therefore, $T'$ is a finite contradictory part of $T$.
 \end{proof}
 
-\subsection{Aplikace kompaktnosti}
+\subsection{Applications of Compactness}
 
-Následující jednoduchou aplikaci Věty o kompaktnosti můžete chápat jako šablonu, kterou následuje i mnoho dalších, složitějších aplikací této věty. 
+The following simple application of the Compactness Theorem can be seen as a template followed by many other, more complex applications of this theorem. 
 
 \begin{corollary}\label{corollary:infinite-bipartite-compactness}
-Spočetně nekonečný graf je bipartitní, právě když je každý jeho konečný podgraf bipartitní.    
+A countably infinite graph is bipartite if and only if every finite subgraph of it is bipartite.    
 \end{corollary}
 
 \begin{proof}
-    Každý podgraf bipartitního grafu je zjevně také bipartitní. Ukažme opačnou implikaci. Graf je bipartitní, právě když je obarvitelný 2 barvami. Označme barvy $0,1$.
+    Every subgraph of a bipartite graph is evidently also bipartite. We will prove the other implication. A graph is bipartite if and only if it is 2-colorable. Let the colors be 0 and 1.
 
-    Sestrojíme výrokovou teorii $T$ v jazyce $\mathbb P=\{p_v\mid v\in V(G)\}$, kde hodnota výrokové proměnné $p_v$ reprezentuje barvu vrcholu $v$.
+    We will construct a propositional theory $T$ in the language $\mathbb{P} = \{p_v \mid v \in V(G)\}$, where the value of the propositional variable $p_v$ represents the color of the vertex $v$.
     $$  
-        T=\{p_u\liff\neg p_v\mid \{u,v\}\in E(G)\}
+        T = \{p_u \liff \neg p_v \mid \{u, v\} \in E(G)\}
     $$
-    Zřejmě platí, že $G$ je bipartitní, právě když $T$ má model. Podle Věty o kompaktnosti stačí ukázat, že každá konečná část $T$ má model. Vezměme tedy konečnou $T'\subseteq T$. Buď $G'$ podgraf $G$ indukovaný na množině vrcholů, o kterých se zmiňuje teorie $T'$, tj. $V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}$. Protože je $T'$ konečná, je $G'$ také konečný, a podle předpokladu je 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model teorie $T'$.
+    Clearly, $G$ is bipartite if and only if $T$ has a model. According to the Compactness Theorem, it suffices to show that every finite part of $T$ has a model. Consider a finite $T' \subseteq T$. Let $G'$ be the subgraph of $G$ induced by the set of vertices mentioned in the theory $T'$, i.e., $V(G') = \{v \in V(G) \mid p_v \in \Var(T')\}$. Since $T'$ is finite, $G'$ is also finite, and by assumption, it is 2-colorable. Any 2-coloring of $V(G')$ determines a model of the theory $T'$.
 \end{proof}
 
-Základem této techniky je popis požadované vlastnosti nekonečného objektu pomocí (nekonečné) výrokové teorie. Dále si všimněte, jak z konečné části teorie sestrojíme konečný podobjekt mající danou vlastnost (v našem případě konečný podgraf, který je bipartitní).
+The essence of this technique is to describe the desired property of an infinite object using an (infinite) propositional theory. Additionally, note how we construct a finite subobject having the given property from a finite part of the theory (in our case, a finite subgraph that is bipartite).
 
 \begin{exercise}
-    Zobecněte Důsledek \ref{corollary:infinite-bipartite-compactness} pro více barev, tj. ukažte, že spočetně nekonečný graf je $k$-obarvitelný, právě když je každý jeho konečný podgraf $k$-obarvitelný. (Viz Sekce \ref{subsection:example-graph-coloring}.)
+    Generalize Corollary \ref{corollary:infinite-bipartite-compactness} for more colors, i.e., show that a countably infinite graph is $k$-colorable if and only if every finite subgraph of it is $k$-colorable. (See Section \ref{subsection:example-graph-coloring}.)
 \end{exercise}
 
 \begin{exercise}
-    Ukažte, že každé částečné uspořádání na spočetné množině lze rozšířit na lineární uspořádání.
+    Show that every partial order on a countable set can be extended to a linear order.
 \end{exercise}
 
 \begin{exercise}
-    Vyslovte a dokažte `spočetně nekonečnou' analogii Hallovy věty.
+    State and prove the `countably infinite' analog of Hall's theorem.
 \end{exercise}
 
-\section{Hilbertovský kalkulus}\label{section:hilbert-calculus-propositional}
+\section{Hilbert Calculus}\label{section:hilbert-calculus-propositional}
 
-Na závěr kapitoly o tablo metodě si pro srovnání ukážeme jiný dokazovací systém, tzv. \emph{hilbertovský deduktivní systém} neboli \emph{hilbertovský kalkulus}. Jde o nejstarší dokazovací systém, modelovaný podle matematických důkazů. Jak uvidíme na příkladě, dokazování je v něm poměrně pracné, hodí se tedy spíše pro teoretické účely. Jde také o korektní a úplný dokazovací systém. (Korektnost ukážeme, úplnost ale necháme bez důkazu.)
+At the end of the chapter on the tableau method, we will show another proof system for comparison, the so-called \emph{Hilbert deductive system} or \emph{Hilbert calculus}. This is the oldest proof system, modeled after mathematical proofs. As we will see from the example, proving in it is quite laborious, so it is more suitable for theoretical purposes. It is also a correct and complete proof system. (We will show correctness, but leave completeness without proof.)
 
-Hilbertovský kalkulus používá jen dvě základní logické spojky: negaci a implikaci. (Připomeňme, že ostatní logické spojky z nich lze odvodit.) Systém sestává z logických axiomů daných následujícími \emph{schématy}, a z jednoho \emph{odvozovacího pravidla}, tzv. \emph{modus ponens}: 
+The Hilbert calculus uses only two basic logical connectives: negation and implication. (Recall that other logical connectives can be derived from these.) The system consists of logical axioms given by the following \emph{schemes} and a single \emph{derivation rule}, the so-called \emph{modus ponens}: 
 
-\begin{definition}[Schémata axiomů v hilbertovském kalkulu]
-Pro libovolné výroky $\varphi,\psi,\chi$ jsou následující výroky logickými axiomy:
+\begin{definition}[Axiom Schemes in Hilbert Calculus]
+For any statements $\varphi, \psi, \chi$, the following statements are logical axioms:
 \begin{enumerate}[(i)]
     \item $\varphi \limplies (\psi \limplies \varphi)$
-    \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
-    \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
+    \item $(\varphi \limplies (\psi \limplies \chi)) \limplies ((\varphi \limplies \psi) \limplies (\varphi \limplies \chi))$
+    \item $(\neg \varphi \limplies \neg \psi) \limplies (\psi \limplies \varphi)$
 \end{enumerate}        
 \end{definition}
 
-Všimněte si, že všechny logické axiomy jsou opravdu tautologie. Poznamenejme, že lze zvolit i jiný systém logických axiomů, existuje jich celá řada, viz článek \href{https://en.wikipedia.org/wiki/List_of_Hilbert_systems}{List of Hilbert systems} na Wikipedii.
+Note that all logical axioms are indeed tautologies. It should be noted that other systems of logical axioms can be chosen; there are many, see the article \href{https://en.wikipedia.org/wiki/List_of_Hilbert_systems}{List of Hilbert systems} on Wikipedia.
 
-\begin{definition}[Modus ponens]
-Odvozovací pravidlo \emph{modus ponens} říká, že pokud jsme již dokázali výrok $\varphi$ a také výrok $\varphi\limplies\psi$, můžeme odvodit i výrok $\psi$. Zapisujeme ho následovně:
+\begin{definition}[Modus Ponens]
+The \emph{modus ponens} derivation rule states that if we have already proved the statement $\varphi$ and also the statement $\varphi \limplies \psi$, we can derive the statement $\psi$. We write it as follows:
 $$
 \frac{\varphi, \varphi \limplies \psi}{\psi}
 $$ 
 \end{definition}
 
-Všimněte si, že modus ponens je \emph{korektní}, tj. platí-li v nějaké teorii $T\models\varphi$ a $T\models\varphi\limplies\psi$, máme i $T\models\psi$.
+Note that modus ponens is \emph{correct}, i.e., if $T \models \varphi$ and $T \models \varphi \limplies \psi$ hold in some theory, we also have $T \models \psi$.
 
-Nyní jsme již připraveni definovat \emph{důkaz}. Půjde o konečnou posloupnost výroků, ve které každý nově napsaný výrok je buď axiomem (logickým nebo z teorie, ve které dokazujeme), nebo lze odvodit z předchozích pomocí modus ponens:
+We are now ready to define a \emph{proof}. It will be a finite sequence of statements, in which each newly written statement is either an axiom (logical or from the theory in which we are proving), or can be derived from the previous ones using modus ponens:
 
-\begin{definition}[Hilbertovský důkaz]
-    \emph{Hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \emph{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$ platí:
+\begin{definition}[Hilbert Proof]
+    A \emph{Hilbert proof} of a statement $\varphi$ from theory $T$ is a \emph{finite} sequence of statements $\varphi_0, \dots, \varphi_n = \varphi$, in which for each $i \leq n$, the following holds:
     \begin{itemize}
-    \item $\varphi_i$ je logický axiom, nebo
-    \item $\varphi_i$ je axiom teorie ($\varphi_i \in T$), nebo
-    \item $\varphi_i$ lze odvodit z nějakých předchozích výroků $\varphi_j,\varphi_k$ (kde $j,k<i$) pomocí modus ponens.
+    \item $\varphi_i$ is a logical axiom, or
+    \item $\varphi_i$ is an axiom of the theory ($\varphi_i \in T$), or
+    \item $\varphi_i$ can be derived from some previous statements $\varphi_j, \varphi_k$ (where $j, k < i$) using modus ponens.
     \end{itemize}
-    Existuje-li hilbertovský důkaz, říkáme, že je $\varphi$ \emph{(hilbertovsky) dokazatelný}, a píšeme $T\proves_H\varphi$.           
+    If a Hilbert proof exists, we say that $\varphi$ is \emph{(Hilbert) provable}, and we write $T \proves_H \varphi$.           
 \end{definition}
 
-Pojem hilbertovského důkazu si ilustrujeme na jednoduchém příkladě:
+We will illustrate the concept of a Hilbert proof with a simple example:
 
 \begin{example}
-Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí $T\proves_H\varphi\limplies\psi$. Hilbertovským důkazem je následující posloupnost výroků:
+Let us show that for the theory $T = \{\neg \varphi\}$ and for any statement $\psi$, we have $T \proves_H \varphi \limplies \psi$. The Hilbert proof is the following sequence of statements:
 \begin{enumerate}\it
-    \item $\neg\varphi$\hfill axiom teorie
-    \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom dle (i)
-    \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
-    \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom dle (iii)
-    \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4. 
+    \item $\neg \varphi$ \hfill axiom of the theory
+    \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$ \hfill logical axiom by (i)
+    \item $\neg \psi \limplies \neg \varphi$ \hfill modus ponens on 1 and 2
+    \item $(\neg \psi \limplies \neg \varphi) \limplies (\varphi \limplies \psi)$ \hfill logical axiom by (iii)
+    \item $\varphi \limplies \psi$ \hfill modus ponens on 3 and 4 
 \end{enumerate}
 \end{example}
 
-Jak jsme již zmínili, hilbertovský kalkulus je korektní a úplný dokazovací systém.
+As mentioned earlier, the Hilbert calculus is a correct and complete proof system.
 
-\begin{theorem}[O korektnosti hilbertovského kalkulu]
-Pro každou teorii $T$ a výrok $\varphi$ platí: 
+\begin{theorem}[Correctness of Hilbert Calculus]
+For any theory $T$ and statement $\varphi$, we have: 
 $$
-T\proves_H \varphi\ \Rightarrow\ T\models\varphi
+T \proves_H \varphi \Rightarrow T \models \varphi
 $$ 
 \end{theorem}
 \begin{proof}
-Indukcí dle indexu $i$ ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+By induction on the index $i$, we will show that every statement $\varphi_i$ in the proof (thus also $\varphi_n = \varphi$) holds in $T$.
 
-Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie. Je-li $\varphi_i\in T$, také jistě platí $T \models \varphi_i$. Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale z korektnosti modus ponens platí i $T \models \varphi_i$.
+If $\varphi_i$ is a logical axiom, $T \models \varphi_i$ holds because logical axioms are tautologies. If $\varphi_i \in T$, then clearly $T \models \varphi_i$ also holds. If $\varphi_i$ is obtained using modus ponens from $\varphi_j$ and $\varphi_k = \varphi_j \limplies \varphi_i$ (for some $j, k < i$), we know from the induction hypothesis that $T \models \varphi_j$ and $T \models \varphi_j \limplies \varphi_i$. Then, by the correctness of modus ponens, $T \models \varphi_i$ also holds.
 \end{proof}
 
-Pro úplnost ještě vyslovme úplnost, důkaz ale neuvedeme.
+For completeness, we will state the completeness theorem but leave it without proof.
 
-\begin{theorem}[O úplnosti hilbertovského kalkulu]
-Pro každou teorii $T$ a výrok $\varphi$ platí: 
+\begin{theorem}[Completeness of Hilbert Calculus]
+For any theory $T$ and statement $\varphi$, we have: 
 $$
-T\models\varphi\ \Rightarrow\ T\proves_H\varphi
+T \models \varphi \Rightarrow T \proves_H \varphi
 $$
 \end{theorem}
-
-
-
-
-

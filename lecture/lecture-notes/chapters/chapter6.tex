@@ -1084,12 +1084,14 @@ Nyní si ukážeme, jak lze výrokovou logiku `simulovat' v logice predikátové
 
         \end{itemize}
     \end{multicols}
-    Nejmenším modelem je \emph{2-prvková Booleova algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Konečné Booleovy algebry jsou (až na \emph{izomorfismus}) právě $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, kde $f^n$ znamená, že funkci $f$ aplikujeme po složkách.\footnote{Tyto Booleovy algebry jsou izomorfní \emph{potenčním algebrám} $\mathcal P(\{1,\dots,n\})$, izomorfismus je daný bijekcí mezi podmnožinami a jejich charakteristickými vektory.}
-
-    Výroky tedy můžeme chápat jako \emph{Booleovské termy} (a konstanty $\bot,\top$ představují pravdu a lež), pravdivostní hodnota výroku při daném ohodnocení prvovýroků je potom dána hodnotou odpovídajícího termu v 2-prvkové Booleově algebře.   Kromě toho, \emph{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (to platí i pro nekonečné jazyky).
-
-    Na druhou stranu, máme-li \emph{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické výroky pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$. Více o tomto směru se dozvíme v Kapitole \ref{chapter:predicate-resolution} (o rezoluci v predikátové logice), kde se nejprve zbavíme kvantifikátorů pomocí tzv. \emph{Skolemizace}.
-
-    Výrokovou logiku bychom také mohli zavést jako fragment logiky predikátové, pokud bychom povolili \emph{nulární relace} (a nulární relační symboly v jazyce): $A^0=\{\emptyset\}$, tedy na libovolné množině jsou právě dvě nulární relace $R^A\subseteq A^0$: $R^A=\emptyset=0$ a $R^A=\{\emptyset\}=\{0\}=1$. To ale dělat nebudeme. 
-    
 \end{definition}
+    
+Nejmenším modelem je \emph{2-prvková Booleova algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Konečné Booleovy algebry jsou (až na \emph{izomorfismus}) právě $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, kde $f^n$ znamená, že funkci $f$ aplikujeme po složkách.\footnote{Tyto Booleovy algebry jsou izomorfní \emph{potenčním algebrám} $\mathcal P(\{1,\dots,n\})$, izomorfismus je daný bijekcí mezi podmnožinami a jejich charakteristickými vektory.}
+
+Výroky tedy můžeme chápat jako \emph{Booleovské termy} (a konstanty $\bot,\top$ představují pravdu a lež), pravdivostní hodnota výroku při daném ohodnocení prvovýroků je potom dána hodnotou odpovídajícího termu v 2-prvkové Booleově algebře.   Kromě toho, \emph{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (to platí i pro nekonečné jazyky).
+
+Na druhou stranu, máme-li \emph{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické výroky pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$. Více o tomto směru se dozvíme v Kapitole \ref{chapter:predicate-resolution} (o rezoluci v predikátové logice), kde se nejprve zbavíme kvantifikátorů pomocí tzv. \emph{Skolemizace}.
+
+Výrokovou logiku bychom také mohli zavést jako fragment logiky predikátové, pokud bychom povolili \emph{nulární relace} (a nulární relační symboly v jazyce): $A^0=\{\emptyset\}$, tedy na libovolné množině jsou právě dvě nulární relace $R^A\subseteq A^0$: $R^A=\emptyset=0$ a $R^A=\{\emptyset\}=\{0\}=1$. To ale dělat nebudeme. 
+ 
+

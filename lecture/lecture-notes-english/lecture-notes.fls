@@ -492,6 +492,15 @@ INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmtt10.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmbx10.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/rm-lmbx7.tfm
 INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmbx9.tfm
+INPUT ./chapters/chapter4.tex
+INPUT ./chapters/chapter4.tex
+INPUT chapters/chapter4.tex
+INPUT ./chapters/chapter5.tex
+INPUT ./chapters/chapter5.tex
+INPUT chapters/chapter5.tex
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri8.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmri7.tfm
+INPUT c:/Program Files/texlive/texmf-dist/fonts/tfm/public/lm/ec-lmtt9.tfm
 INPUT ./lecture-notes.bbl
 INPUT ./lecture-notes.bbl
 INPUT lecture-notes.bbl
@@ -519,6 +528,7 @@ INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy6.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy8.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmsy9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmtt10.pfb
+INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/lm/lmtt9.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT c:/Program Files/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm5.pfb

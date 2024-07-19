@@ -1,110 +1,107 @@
-\chapter{Rezoluční metoda}\label{chapter:propositional-resolution}
+\chapter{Resolution Method}\label{chapter:propositional-resolution}
 
-V této kapitole představíme jiný dokazovací systém, vhodnější pro praktické aplikace,  tzv. \emph{rezoluční metodu}. Tato metoda je základem např. \emph{logického programování} nebo systémů \emph{automatického dokazování} a \emph{softwarové verifikace}. V této kapitole se omezíme na rezoluční metodu ve výrokové logice, ale v pozdější kapitole si ukážeme koncept \emph{unifikace}, který umožňuje hledat rezoluční důkazy v logice predikátové.
+In this chapter, we introduce another proof system more suitable for practical applications, called the \emph{resolution method}. This method is the foundation of \emph{logical programming}, \emph{automated theorem proving}, and \emph{software verification} systems. In this chapter, we limit ourselves to the resolution method in propositional logic, but in a later chapter, we will introduce the concept of \emph{unification}, which allows for resolution proofs in predicate logic.
 
-Rezoluční metoda pracuje s výroky v \emph{konjunktivní normální formě (CNF)}. Připomeňme, že každý výrok lze převést do CNF. Tento převod je v nejhorším případě v exponenciálním čase (dokonce existují výroky jejichž nejkratší CNF ekvivalent je exponenciálně delší), v praxi to ale není problém.
+The resolution method works with statements in \emph{conjunctive normal form (CNF)}. Recall that every statement can be converted to CNF. This conversion is, in the worst case, exponential in time (there are even statements whose shortest CNF equivalent is exponentially longer), but in practice, this is not an issue.
 
-Podobně jako tablo metoda je založena na důkazu sporem, tj. přidáme k teorii, ve které dokazujeme, \emph{negaci} výroku, který chceme dokázat (obojí převedené do CNF), a ukážeme, že to vede ke sporu.
+Similar to the tableau method, the resolution method is based on proof by contradiction, i.e., we add the \emph{negation} of the statement we want to prove to the theory in which we are proving (both converted to CNF), and show that this leads to a contradiction.
 
-K hledání sporu používá rezoluční metoda jediné inferenční pravidlo, tzv. \emph{rezoluční pravidlo}. To je speciálním případem \emph{pravidla řezu}, které říká: \emph{``z výroků $\varphi\lor\psi$ a $\neg\varphi\lor\chi$ lze odvodit výrok $\psi\lor\chi$,''} píšeme:
+To find the contradiction, the resolution method uses a single inference rule called the \emph{resolution rule}. This is a special case of the \emph{cut rule}, which states: \emph{``From the statements $\varphi \lor \psi$ and $\neg \varphi \lor \chi$, we can infer the statement $\psi \lor \chi$,''} written as:
 $$
-\frac{\varphi\lor\psi,\neg\varphi\lor\chi}{\psi\lor\chi}
+\frac{\varphi \lor \psi, \neg \varphi \lor \chi}{\psi \lor \chi}
 $$
-V \emph{rezolučním pravidle}, které si ukážeme za chvíli, bude $\varphi$ \emph{literál}, a $\psi,\chi$ budou {klauzule}. 
+In the \emph{resolution rule}, which we will demonstrate shortly, $\varphi$ is a \emph{literal}, and $\psi, \chi$ are \emph{clauses}.
 
 \begin{exercise}
-Rozmyslete si, že pravidlo řezu je \emph{korektní}. (Co to znamená, a proč to platí?)
+Consider why the cut rule is \emph{correct}. (What does it mean, and why does it hold?)
 \end{exercise}
 
-\section{Množinová reprezentace}
+\section{Set Representation}
 
-Nejprve představíme úspornější zápis CNF výroků, tzv. \emph{množinový zápis}. Bylo by totiž nepraktické zapisovat výroky včetně závorek a logických symbolů.
+First, we introduce a more compact notation for CNF statements, called \emph{set notation}. It would be impractical to write statements including brackets and logical symbols.
 \begin{itemize}
-    \item Připomeňme, že \emph{Literál} $\ell$ je prvovýrok nebo negace prvovýroku  a že $\bar \ell$ označuje \emph{opačný literál} k $\ell$.
-    \item \emph{Klauzule} $C$ je konečná množina literálů. \emph{Prázdnou klauzuli}, která není nikdy splněna,\footnote{Reprezentuje disjunkci prázdné množiny literálů, žádný z disjunktů tedy není splněný.} označíme $\square$.
-    \item \emph{(CNF) formule} $S$ je (konečná, nebo i nekonečná) množina klauzulí. \emph{Prázdná formule} $\emptyset$ je vždy splněna.\footnote{Reprezentuje konjunkci prázdné množiny klauzulí, všechny klauzule v $S$ jsou tedy splněny.}
+    \item Recall that a \emph{literal} $\ell$ is a propositional variable or its negation, and that $\bar{\ell}$ denotes the \emph{opposite literal} to $\ell$.
+    \item A \emph{clause} $C$ is a finite set of literals. The \emph{empty clause}, which is never satisfied,\footnote{It represents the disjunction of an empty set of literals, meaning none of the disjuncts are satisfied.} is denoted by $\square$.
+    \item A \emph{(CNF) formula} $S$ is a (finite, or even infinite) set of clauses. The \emph{empty formula} $\emptyset$ is always satisfied.\footnote{It represents the conjunction of an empty set of clauses, meaning all clauses in $S$ are satisfied.}
 \end{itemize}
 
 \begin{remark}
-    Všimněte si, že \emph{formule} může být i \emph{nekonečná} množina klauzulí. Pokud tedy převádíme nekonečnou výrokovou teorii do CNF, zapíšeme v množinové reprezentaci všech nekonečně mnoho klauzulí jako prvky jediné formule (množiny). V praktických aplikacích je samozřejmě formule (téměř vždy) konečná.
+    Note that a \emph{formula} can also be an \emph{infinite} set of clauses. If we convert an infinite propositional theory to CNF, we write all infinitely many clauses as elements of a single formula (set). In practical applications, the formula is (almost always) finite.
 \end{remark}
 
-V množinové reprezentaci odpovídají modely množinám literálů, které obsahují pro každou výrokovou proměnnou $p$ právě jeden z literálů $p,\neg p$:
+In set notation, models correspond to sets of literals that contain exactly one of the literals $p, \neg p$ for each propositional variable $p$:
 \begin{itemize}
-    \item \emph{(Částečné) ohodnocení $\mathcal V$} je libovolná množina literálů, která je \emph{konzistentní}, tj. neobsahuje dvojici opačných literálů. 
-    \item Ohodnocení je \emph{úplné}, pokud obsahuje pozitivní nebo negativní literál pro každou výrokovou proměnnou.
-    \item Ohodnocení $\mathcal V$ \emph{splňuje} formuli $S$, píšeme $\mathcal V\models S$, pokud $\mathcal V$ obsahuje nějaký literál z každé klauzule v $S$, tj.:
+    \item A \emph{(partial) valuation $\mathcal{V}$} is any set of literals that is \emph{consistent}, i.e., it does not contain both a literal and its negation.
+    \item A valuation is \emph{complete} if it contains either the positive or negative literal for each propositional variable.
+    \item A valuation $\mathcal{V}$ \emph{satisfies} a formula $S$, written $\mathcal{V} \models S$, if $\mathcal{V}$ contains some literal from each clause in $S$, i.e.,
     $$
-    \mathcal V\cap C\neq\emptyset\text{ pro každou }C\in S
+    \mathcal{V} \cap C \neq \emptyset \text{ for each } C \in S.
     $$
 \end{itemize}
 
 \begin{example}\label{example:set-representation}
-    Výrok $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ zapíšeme v množinové reprezentaci takto:
+    The statement $\varphi = (\neg p_1 \lor p_2) \land (\neg p_1 \lor \neg p_2 \lor p_3) \land (\neg p_3 \lor \neg p_4) \land (\neg p_4 \lor \neg p_5) \land p_4$ is written in set notation as:
     $$
-    S=\{\{\neg p_1,p_2\},\{\neg p_1,\neg p_2,p_3\},\{\neg p_3,\neg p_4\},\{\neg p_4,\neg p_5\},\{p_4\}\}
+    S = \{\{\neg p_1, p_2\}, \{\neg p_1, \neg p_2, p_3\}, \{\neg p_3, \neg p_4\}, \{\neg p_4, \neg p_5\}, \{p_4\}\}
     $$
-    Ohodnocení $\mathcal V=\{\neg p_1,\neg p_3,p_4,\neg p_5\}$ splňuje $S$, píšeme $\mathcal V\models S$. Není úplné, ale můžeme ho rozšířit libovolným literálem pro $p_2$: platí $\mathcal V\union\{p_2\}\models S$ i $\mathcal V\union\{\neg p_2\}\models S$. Tato dvě úplná ohodnocení odpovídají modelům $(0,1,0,1,0)$ a $(0,0,0,1,0)$.
+    The valuation $\mathcal{V} = \{\neg p_1, \neg p_3, p_4, \neg p_5\}$ satisfies $S$, written $\mathcal{V} \models S$. It is not complete, but we can extend it with any literal for $p_2$: both $\mathcal{V} \cup \{p_2\} \models S$ and $\mathcal{V} \cup \{\neg p_2\} \models S$ hold. These two complete valuations correspond to the models $(0,1,0,1,0)$ and $(0,0,0,1,0)$.
 \end{example}
 
+\section{Resolution Proof}
 
-\section{Rezoluční důkaz}
+First, we define a single inference step in the resolution proof, the \emph{resolution rule}, which we apply to a pair of clauses; the result is a clause called the \emph{resolvent}, which is a logical consequence of the original pair of clauses:
 
-Nejprve definujeme jeden krok inference v rezolučním důkazu, tzv. \emph{rezoluční pravidlo}, které aplikujeme na dvojici klauzulí; jeho výsledkem je klauzule, které říkáme \emph{rezolventa}, a která je logickým důsledkem původní dvojice klauzulí:
-
-
-\begin{definition}[Rezoluční pravidlo]
-    Mějme klauzule $C_1$ a $C_2$ a literál $\ell$ takový, že $\ell\in C_1$ a $\bar\ell\in C_2$. Potom \emph{rezolventa} klauzulí $C_1$ a $C_2$ \emph{přes literál} $\ell$ je klauzule
+\begin{definition}[Resolution Rule]
+    Given clauses $C_1$ and $C_2$ and a literal $\ell$ such that $\ell \in C_1$ and $\bar{\ell} \in C_2$, the \emph{resolvent} of the clauses $C_1$ and $C_2$ \emph{over the literal} $\ell$ is the clause
     $$
-    C=(C_1\setminus\{\ell\})\union (C_2\setminus\{\bar\ell\}).
+    C = (C_1 \setminus \{\ell\}) \cup (C_2 \setminus \{\bar{\ell}\}).
     $$
 \end{definition}
 
-Z první klauzule tedy odstraníme literál $\ell$ a z druhé literál $\bar\ell$ (které tam musely být!) a všechny zbylé literály sjednotíme do výsledné rezolventy. S pomocí symbolu $\disjointunion$ pro disjunktní sjednocení bychom také mohli psát:
+So, we remove the literal $\ell$ from the first clause and the literal $\bar{\ell}$ from the second clause (which had to be there!) and unite all remaining literals into the resulting resolvent. Using the symbol $\disjointunion$ for disjoint union, we could also write:
 $$
-C_1'\union C_2'\text{ je rezolventou klauzulí }C_1'\disjointunion\{\ell\}\text{ a }C_2'\disjointunion\{\bar \ell\}
+C_1' \cup C_2' \text{ is the resolvent of the clauses } C_1' \disjointunion \{\ell\} \text{ and } C_2' \disjointunion \{\bar{\ell}\}
 $$
 
 \begin{example}
-    Z klauzulí $C_1=\{\neg q,r\}$ a $C_2=\{\neg p,\neg q,\neg r\}$ lze odvodit rezolventu  $\{\neg p,\neg q\}$ přes literál $r$. Z klauzulí $\{p,q\}$ a $\{\neg p,\neg q\}$ lze odvodit $\{p,\neg p\}$ přes literál $q$ nebo $\{q,\neg q\}$ přes literál $p$ (obojí jsou ale tautologie).\footnote{Nelze ale odvodit $\square$ `rezolucí přes $p$ a $q$ najednou' (což je častá chyba). Všimněte si, že $\{\{p,q\},\{\neg p,\neg q\}\}$ není nesplnitelná, např. $(1,0)$ je modelem.}
+    From the clauses $C_1 = \{\neg q, r\}$ and $C_2 = \{\neg p, \neg q, \neg r\}$, we can derive the resolvent $\{\neg p, \neg q\}$ over the literal $r$. From the clauses $\{p, q\}$ and $\{\neg p, \neg q\}$, we can derive $\{p, \neg p\}$ over the literal $q$ or $\{q, \neg q\}$ over the literal $p$ (both of which are tautologies).\footnote{We cannot derive $\square$ `by resolving over $p$ and $q$ simultaneously' (a common mistake). Note that $\{\{p, q\}, \{\neg p, \neg q\}\}$ is not unsatisfiable, e.g., $(1,0)$ is a model.}
 \end{example}
 
-\begin{observation}[Korektnost rezolučního pravidla]
-Rezoluční pravidlo je korektní, tj. pro libovolné ohodnocení $\mathcal V$ platí:
+\begin{observation}[Correctness of the Resolution Rule]
+The resolution rule is correct, i.e., for any valuation $\mathcal{V}$, it holds that:
 $$
-\text{Pokud }\mathcal V\models C_1\text{ a }\mathcal V\models C_2\text{, potom }\mathcal V\models C.
+\text{If } \mathcal{V} \models C_1 \text{ and } \mathcal{V} \models C_2, \text{ then } \mathcal{V} \models C.
 $$
 \end{observation}
 
-Rezoluční důkaz definujeme podobně jako v Hilbertově kalkulu jako konečnou posloupnost klauzulí, kde je zaručena platnost každé klauzule v této posloupnosti: v každém kroku můžeme buď napsat `axiom' (klauzuli z $S$), nebo rezolventu nějakých dvou už napsaných klauzulí.
+A resolution proof is defined similarly to a Hilbert proof as a finite sequence of clauses, ensuring the validity of each clause in the sequence: at each step, we can either write an `axiom' (a clause from $S$) or a resolvent of some two previously written clauses.
 
-\begin{definition}[Rezoluční důkaz]
-    \emph{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
-    taková, že pro každé $i$ buď $C_i\in S$ nebo $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
+\begin{definition}[Resolution Proof]
+    A \emph{resolution proof (derivation)} of the clause $C$ from the formula $S$ is a \emph{finite} sequence of clauses $C_0, C_1, \dots, C_n = C$ such that for each $i$, either $C_i \in S$ or $C_i$ is the resolvent of some $C_j, C_k$ where $j < i$ and $k < i$.
 
-    Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.
+    If a resolution proof exists, we say that $C$ is \emph{resolution provable} from $S$, written $S \proves_R C$. A \emph{(resolution) refutation} of the formula $S$ is a resolution proof of $\square$ from $S$, in which case $S$ is \emph{(resolution) refutable}.
 \end{definition}
 
 \begin{example}\label{example:resolution-proof}
-    Formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$ je zamítnutelná, jedno z možných zamítnutí je:
+    The formula $S = \{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}\}$ is refutable, one possible refutation is:
     $$
-    \{p,\neg q,r\},\{q,r\},\{p,r\},\{\neg p,r\},\{r\},\{p,\neg r\},\{\neg p,\neg r\},\{\neg r\},\square
+    \{p, \neg q, r\}, \{q, r\}, \{p, r\}, \{\neg p, r\}, \{r\}, \{p, \neg r\}, \{\neg p, \neg r\}, \{\neg r\}, \square
     $$
 \end{example}
 
-Rezoluční důkaz má přirozenou stromovou strukturu: v listech jsou axiomy a vnitřní vrcholy představují jednotlivé rezoluční kroky.
+A resolution proof has a natural tree structure: the leaves are axioms and the internal nodes represent individual resolution steps.
 
-\begin{definition}[Rezoluční strom]
-Rezoluční strom klauzule $C$ z formule $S$ je \emph{konečný} binární strom s vrcholy označenými klauzulemi, kde
+\begin{definition}[Resolution Tree]
+A resolution tree of the clause $C$ from the formula $S$ is a \emph{finite} binary tree with nodes labeled with clauses, where:
 \begin{itemize}
-    \item v kořeni je $C$,
-    \item v listech jsou klauzule z $S$,
-    \item v každém vnitřním vrcholu je rezolventa klauzulí ze synů tohoto vrcholu.
+    \item The root is $C$,
+    \item The leaves are clauses from $S$,
+    \item Each internal node is the resolvent of its child nodes.
 \end{itemize}    
 \end{definition}
 
 \begin{example}\label{example:resolution-tree}
-Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{example:resolution-proof} je:
+The resolution tree of the empty clause $\square$ from the formula $S$ in Example \ref{example:resolution-proof} is:
 \begin{center}
     \begin{forest}
     for tree={grow=north}
@@ -117,7 +114,7 @@ Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{e
             [{$ \{\neg p, r\} $}]
             [{$ \{p,r\} $}
                 [{$ \{q, r\} $}]
-                [{$ \{p,\neg q, r\} $}]
+                [{$ \{p, \neg q, r\} $}]
             ]
         ]
     ]
@@ -125,147 +122,144 @@ Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{e
 \end{center}
 \end{example}
 
-Je snadné ukázat následující pozorování, indukcí podle hloubky stromu a délky rezolučního důkazu:
+It is easy to show the following observation, by induction on the depth of the tree and the length of the resolution proof:
 
-\begin{observation} Klauzule $C$ má rezoluční strom z formule $S$, právě když $S\proves_R C$.  
+\begin{observation} A clause $C$ has a resolution tree from the formula $S$ if and only if $S \proves_R C$.  
 \end{observation}
 
-Každému rezolučnímu důkazu odpovídá jednoznačný rezoluční strom. Naopak, z jednoho rezolučního stromu můžeme získat více rezolučních důkazů: jsou dané libovolnou procházkou po vrcholech stromu, při které navštívíme vnitřní vrchol až poté, co jsme navštívili oba jeho syny.
+Each resolution proof corresponds to a unique resolution tree. Conversely, from a single resolution tree, we can derive multiple resolution proofs: they are given by any traversal of the tree nodes where an internal node is visited only after both of its children have been visited.
 
-Zaveďme ještě jeden pojem, tzv. \emph{rezoluční uzávěr}, který obsahuje všechny klauzule, které se můžeme `naučit' rezolucí z dané formule. Jde spíše o užitečný teoretický pohled na rezoluci, v aplikacích by bylo nepraktické konstruovat celý rezoluční uzávěr
+We also introduce another concept, called the \emph{resolution closure}, which contains all clauses that can be `learned' by resolution from a given formula. It is a useful theoretical perspective on resolution; in applications, constructing the entire resolution closure would be impractical.
 
-\begin{definition}[Rezoluční uzávěr]
-\emph{Rezoluční uzávěr} $\mathcal R(S)$ formule $S$ je definován induktivně jako nejmenší množina klauzulí splňující:
+\begin{definition}[Resolution Closure]
+The \emph{resolution closure} $\mathcal{R}(S)$ of the formula $S$ is defined inductively as the smallest set of clauses satisfying:
 \begin{itemize}
-    \item $C\in\mathcal R(S)$ pro všechna $C\in S$,
-    \item jsou-li $C_1,C_2\in\mathcal R(S)$ a je-li $C$ rezolventa $C_1,C_2$, potom také $C\in\mathcal R(S)$.
+    \item $C \in \mathcal{R}(S)$ for all $C \in S$,
+    \item If $C_1, C_2 \in \mathcal{R}(S)$ and $C$ is the resolvent of $C_1, C_2$, then $C \in \mathcal{R}(S)$.
 \end{itemize}
 \end{definition}
 
 \begin{example}
-    Spočtěme rezoluční uzávěr formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
+    Let us compute the resolution closure of the formula $S = \{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}\}$. The clauses from $S$ are in \textcolor{blue}{blue}; additional clauses are obtained by resolving them in pairs (first with the first, second with the first, second with the second, etc., over all possible literals):
     \begin{align*}
-        \mathcal R(S)=\{&\textcolor{blue}{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}},\\&\{p,\neg q\},\{\neg q,r\},\{r,\neg r\},\{p,\neg p\},\{r,s\},\{p,r\},\{p,q\},\{r\},\{p\}\}
+        \mathcal{R}(S) = \{&\textcolor{blue}{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}},\\ &\{p, \neg q\}, \{\neg q, r\}, \{r, \neg r\}, \{p, \neg p\}, \{r, \neg s\}, \{p, r\}, \{p, q\}, \{r\}, \{p\}\}
     \end{align*}
 \end{example}
 
-\section{Korektnost a úplnost rezoluční metody}
+\section{Correctness and Completeness of the Resolution Method}
 
-Rezoluční metoda je také korektní i úplná. 
+The resolution method is also both correct and complete. 
 
-\subsection{Korektnost rezoluce}
+\subsection{Correctness of Resolution}
 
-Korektnost dokážeme snadno indukcí podle délky rezolučního důkazu.
+Correctness can be easily proved by induction on the length of the resolution proof.
 
-\begin{theorem}[O korektnosti rezoluce]\label{theorem:soundness-resolution}
-    
-Je-li formule $S$ rezolucí zamítnutelná, potom je $S$ nesplnitelná.
+\begin{theorem}[Soundness of Resolution]\label{theorem:soundness-resolution}
+If a formula $S$ is resolution refutable, then $S$ is unsatisfiable.
 \end{theorem}
 \begin{proof}
-    Nechť $S\proves_R\square$ a vezměme nějaký rezoluční důkaz $C_0,C_1,\dots,C_n=\square$. Předpokládejme pro spor, že $S$ je splnitelná, tedy $\mathcal V\models S$ pro nějaké ohodnocení $\mathcal V$. Indukcí podle $i$ dokážeme, že $\mathcal V\models C_i$. Pro $i=0$ to platí, neboť $C_0\in S$. Pro $i>0$ máme dva případy:
+    Suppose $S \proves_R \square$ and consider a resolution proof $C_0, C_1, \dots, C_n = \square$. Suppose, for a contradiction, that $S$ is satisfiable, i.e., $\mathcal{V} \models S$ for some valuation $\mathcal{V}$. By induction on $i$, we prove that $\mathcal{V} \models C_i$. For $i = 0$, this holds because $C_0 \in S$. For $i > 0$, there are two cases:
     \begin{itemize}
-        \item $C_i\in S$, v tom případě $\mathcal V\models C_i$ plyne z předpokladu, že $\mathcal V\models S$,
-        \item $C_i$ je rezolventou $C_j,C_k$, kde $j,k<i$: z indukčního předpokladu víme $\mathcal V\models C_j$ a $\mathcal V\models C_k$, $\mathcal V\models C_i$ plyne z korektnosti rezolučního pravidla.
+        \item $C_i \in S$, in which case $\mathcal{V} \models C_i$ follows from the assumption that $\mathcal{V} \models S$,
+        \item $C_i$ is the resolvent of $C_j, C_k$, where $j, k < i$: by the induction hypothesis, $\mathcal{V} \models C_j$ and $\mathcal{V} \models C_k$. $\mathcal{V} \models C_i$ follows from the correctness of the resolution rule.
     \end{itemize}
-    (Alternativně bychom mohli v důkazu postupovat indukcí podle hloubky rezolučního stromu.)
+    (Alternatively, we could proceed by induction on the depth of the resolution tree.)
 \end{proof}
 
+\subsection{Substitution Tree}
 
-\subsection{Strom dosazení}
+In the completeness proof, we need to construct a resolution tree, whose construction is based on the so-called \emph{substitution tree}. By \emph{substituting} a literal into a formula, we mean simplifying the formula under the assumption that the given literal is true. Substitution was already encountered in Section \ref{section:horn-sat} during \emph{unit propagation}: we remove clauses containing this literal and remove the opposite literal from the remaining clauses.
 
-V důkazu úplnosti budeme potřebovat zkonstruovat rezoluční strom, jeho konstrukce je založena na tzv. \emph{stromu dosazení}. \emph{Dosazením} literálu do formule myslíme zjednodušení formule za předpokladu, že daný literál platí. Dosazení jsme už potkali v Sekci \ref{section:horn-sat} při \emph{jednotkové propagaci}: odstraníme klauzule obsahující tento literál, a z ostatních klauzulí odstraníme literál opačný.
-
-\begin{definition}[Dosazení literálu]
-    Je-li $S$ formule a $\ell$ literál, potom \emph{dosazením} $\ell$ do $S$ myslíme formuli:
+\begin{definition}[Literal Substitution]
+    Given a formula $S$ and a literal $\ell$, the \emph{substitution} of $\ell$ into $S$ is the formula:
     $$
-        S^\ell=\{C\setminus\{\bar\ell\}\mid \ell\notin C\in S\}
+        S^\ell = \{C \setminus \{\bar{\ell}\} \mid \ell \notin C \in S\}
     $$    
 \end{definition}
 
-\begin{observation} Zde shrneme několik jednoduchých faktů o dosazení:
+\begin{observation} Here we summarize several simple facts about substitution:
 \begin{itemize}
-    \item $S^\ell$ je výsledkem \emph{jednotkové propagace} aplikované na $S\union\{\{\ell\}\}$.
-    \item $S^\ell$ neobsahuje v žádné klauzuli literál $\ell$ ani $\bar\ell$ (vůbec tedy neobsahuje prvovýrok z $\ell$)
-    \item Pokud $S$ neobsahovala literál $\ell$ ani $\bar\ell$, potom $S^\ell=S$.
-    \item Pokud $S$ obsahovala jednotkovou klauzuli $\{\bar\ell\}$, potom $\square\in S^\ell$, tedy $S^\ell$ je sporná.
+    \item $S^\ell$ is the result of \emph{unit propagation} applied to $S \cup \{\{\ell\}\}$.
+    \item $S^\ell$ does not contain the literal $\ell$ or its opposite $\bar{\ell}$ (it does not contain the propositional variable from $\ell$ at all).
+    \item If $S$ did not contain the literal $\ell$ or its opposite $\bar{\ell}$, then $S^\ell = S$.
+    \item If $S$ contained the unit clause $\{\bar{\ell}\}$, then $\square \in S^\ell$, meaning $S^\ell$ is unsatisfiable.
 \end{itemize}    
 \end{observation}
 
-Klíčovou vlastnost dosazení vyjadřuje následující lemma:
+The key property of substitution is expressed by the following lemma:
 
 \begin{lemma}\label{lemma:tree-of-reductions}
-$S$ je splnitelná, právě když je splnitelná $S^\ell$ nebo $S^{\bar\ell}$.    
+$S$ is satisfiable if and only if $S^\ell$ or $S^{\bar{\ell}}$ is satisfiable.    
 \end{lemma}
 \begin{proof}
-Mějme ohodnocení $\mathcal V\models S$, to  nemůže obsahovat $\ell$ i $\bar\ell$ (musí být konzistentní); bez újmy na obecnosti  předpokládejme, že $\bar\ell\notin\mathcal V$, a ukažme, že $\mathcal V\models S^\ell$. Vezměme libovolnou klauzuli v $S^\ell$. Ta je tvaru $C\setminus\{\bar\ell\}$ pro klauzuli $C\in S$ (neobsahující literál $\ell$). Víme, že $\mathcal V\models C$, protože ale $\mathcal V$ neobsahuje $\bar\ell$, muselo ohodnocení $\mathcal V$ splnit nějaký jiný literál $C$, takže platí i $\mathcal V\models C\setminus\{\bar\ell\}$.
+Let $\mathcal{V} \models S$, it cannot contain both $\ell$ and $\bar{\ell}$ (it must be consistent); without loss of generality, assume $\bar{\ell} \notin \mathcal{V}$, and show that $\mathcal{V} \models S^\ell$. Consider any clause in $S^\ell$. It is of the form $C \setminus \{\bar{\ell}\}$ for a clause $C \in S$ (not containing the literal $\ell$). We know that $\mathcal{V} \models C$, but since $\mathcal{V}$ does not contain $\bar{\ell}$, the valuation $\mathcal{V}$ must satisfy some other literal of $C$, so $\mathcal{V} \models C \setminus \{\bar{\ell}\}$.
 
-Naopak, předpokládejme že existuje ohodnocení $\mathcal V$ splňující $S^\ell$ (opět bez újmy na obecnosti). Protože se $\bar\ell$ (ani $\ell$) nevyskytuje v $S^\ell$, platí také $\mathcal V\setminus\{\bar\ell\}\models S^\ell$. Ohodnocení $\mathcal V'=(\mathcal V\setminus\{\bar\ell\})\union\{\ell\}$ potom splňuje každou klauzuli $C\in S$: pokud $\ell\in C$, potom $\ell\in C\cap\mathcal V'$ a $C\cap\mathcal V'\neq\emptyset$, jinak $C\cap\mathcal V'=(C\setminus\{\bar\ell\})\cap\mathcal V'\neq\emptyset$ neboť $\mathcal V\setminus\{\bar\ell\}\models C\setminus\{\bar\ell\}\in S^\ell$. Ověřili jsme, že $\mathcal V'\models S$, tedy $S$ je splnitelná.
+Conversely, suppose there exists a valuation $\mathcal{V}$ satisfying $S^\ell$ (again, without loss of generality). Since $\bar{\ell}$ (or $\ell$) does not appear in $S^\ell$, it holds that $\mathcal{V} \setminus \{\bar{\ell}\} \models S^\ell$. The valuation $\mathcal{V}' = (\mathcal{V} \setminus \{\bar{\ell}\}) \cup \{\ell\}$ then satisfies each clause $C \in S$: if $\ell \in C$, then $\ell \in C \cap \mathcal{V}'$ and $C \cap \mathcal{V}' \neq \emptyset$, otherwise $C \cap \mathcal{V}' = (C \setminus \{\bar{\ell}\}) \cap \mathcal{V}' \neq \emptyset$ because $\mathcal{V} \setminus \{\bar{\ell}\} \models C \setminus \{\bar{\ell}\} \in S^\ell$. We have verified that $\mathcal{V}' \models S$, so $S$ is satisfiable.
 \end{proof}
-%todo frozen bucket lemma
 
-Zda je daná \emph{konečná} formule splnitelná bychom tedy mohli zjišťovat rekurzivně (metodou \emph{rozděl a panuj}), dosazením obou možných literálů pro (nějakou, třeba první) výrokovou proměnnou vyskytující se ve formuli, a rozvětvením výpočtu. V zásadě jde o podobný princip jako v algoritmu DPLL (viz Sekce \ref{section:DPLL}). Výslednému stromu říkáme \emph{strom dosazení}. 
+Whether a given \emph{finite} formula is satisfiable can thus be determined recursively (using the \emph{divide and conquer} method) by substituting both possible literals for (some, say the first) propositional variable appearing in the formula and branching the computation. Essentially, this is a similar principle to the DPLL algorithm (see Section \ref{section:DPLL}). The resulting tree is called a \emph{substitution tree}. 
 
 \begin{example}
-Ilustrujme si tento koncept na příkladě, zkonstruujme strom dosazení pro formuli $S=\{\{p\},\{\neg q\},\{\neg p,\neg q\}\}$:
+Let's illustrate this concept with an example by constructing a substitution tree for the formula $S = \{\{p\}, \{\neg q\}, \{\neg p, \neg q\}\}$:
 \begin{center}
     \begin{forest}    
     [{$S$}
-        [{$S^p=\{\{\neg q\}\}$}
-            [{$S^{pq}=\{\square\}$}, tikz={\node[fit to=tree,label=below:\textcolor{red}{$\otimes$}] {};]}]
-            [{$S^{p\bar q}=\emptyset$}, tikz={\node[fit to=tree,label=below:\textcolor{blue}{\small $\mathcal V=\{p,\bar q\}$}] {};]}]
+        [{$S^p = \{\{\neg q\}\}$}
+            [{$S^{pq} = \{\square\}$}, tikz={\node[fit to=tree,label=below:\textcolor{red}{$\otimes$}] {};]}]
+            [{$S^{p\bar{q}} = \emptyset$}, tikz={\node[fit to=tree,label=below:\textcolor{blue}{\small $\mathcal{V} = \{p, \bar{q}\}$}] {};]}]
         ]
-        [{$S^{\bar p}=\{\square,\{\neg q\}\}$}, tikz={\node[fit to=tree,label=below:\textcolor{red}{$\otimes$}] {};]}]
+        [{$S^{\bar{p}} = \{\square, \{\neg q\}\}$}, tikz={\node[fit to=tree,label=below:\textcolor{red}{$\otimes$}] {};]}]
     ]
     \end{forest}
 \end{center}
-Jakmile větev obsahuje prázdnou klauzuli $\square$, je nesplnitelná a nemusíme v ní pokračovat. V listech jsou buď nesplnitelné teorie, nebo prázdná teorie: v tom případě z posloupnosti dosazení získáme splňující ohodnocení.    
+Once a branch contains the empty clause $\square$, it is unsatisfiable, and we need not continue in that branch. In the leaves, there are either unsatisfiable theories or empty theories: in the latter case, the sequence of substitutions gives us a satisfying valuation.    
 \end{example}
 
-Z konstrukce je vidět, jak postupovat v případě konečné formule. Strom dosazení ale dává smysl, a následující důsledek platí, i pro nekonečné formule:
-
+From the construction, it is evident how to proceed in the case of a finite formula. However, the substitution tree makes sense, and the following corollary holds, even for infinite formulas:
 
 \begin{corollary}
-    Formule $S$ (nad spočetným jazykem) je nesplnitelná, právě když každá větev stromu dosazení obsahuje prázdnou klauzuli $\square$.
+    A formula $S$ (over a countable language) is unsatisfiable if and only if every branch of the substitution tree contains the empty clause $\square$.
 \end{corollary}
 
 \begin{proof}
-    Pro konečnou formuli $S$ plyne z diskuze výše, můžeme snadno dokázat indukcí podle velikosti $\Var(S)$: 
+    For a finite formula $S$, this follows from the above discussion; it can be easily proved by induction on the size of $\Var(S)$: 
     \begin{itemize}
-        \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
-        \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma \ref{lemma:tree-of-reductions}.
+        \item If $|\Var(S)| = 0$, we have $S = \emptyset$ or $S = \{\square\}$, in both cases, the substitution tree is one node, and the statement holds. 
+        \item In the inductive step, we choose any literal $\ell \in \Var(S)$ and apply Lemma \ref{lemma:tree-of-reductions}.
     \end{itemize} 
-Je-li $S$ nekonečná a splnitelná, potom má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. Je-li nekonečná a nesplnitelná, potom podle Věty o kompaktnosti existuje konečná část $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
+If $S$ is infinite and satisfiable, it has a satisfying valuation, which `matches' the corresponding (infinite) branch in the substitution tree. If $S$ is infinite and unsatisfiable, then by the Compactness Theorem, there is a finite part $S' \subseteq S$ that is also unsatisfiable. Substitution for all variables from $\Var(S')$ will lead to $\square$ in each branch, which will happen after finitely many steps.
 \end{proof}
 
-\subsection{Úplnost rezoluce}
+\subsection{Completeness of Resolution}
 
-\begin{theorem}[O úplnosti rezoluce]
-Je-li $S$ nesplnitelná, je rezolucí zamítnutelná (tj. $S\proves_R\square$).
+\begin{theorem}[Completeness of Resolution]
+If $S$ is unsatisfiable, it is resolution refutable (i.e., $S \proves_R \square$).
 \end{theorem}   
 \begin{proof}
-Je-li $S$ nekonečná, má z Věty o kompaktnosti konečnou nesplnitelnou část $S'$. Rezoluční zamítnutí $S'$ je také rezolučním zamítnutím $S$. Předpokládejme tedy, že $S$ je konečná. 
+If $S$ is infinite, it has a finite unsatisfiable part $S'$ by the Compactness Theorem. A resolution refutation of $S'$ is also a resolution refutation of $S$. Suppose $S$ is finite.
 
-Důkaz provedeme indukcí podle počtu proměnných v $S$. Je-li $|\Var(S)|=0$, jediná možná nesplnitelná formule bez proměnných je $S=\{\square\}$ a máme jednokrokový důkaz $S\proves_R\square$. Jinak vyberme $p\in\Var(S)$. Podle Lemmatu \ref{lemma:tree-of-reductions} jsou $S^p$ i $S^{\bar p}$ nesplnitelné. Mají o jednu proměnnou méně, tedy podle indukčního předpokladu existují rezoluční stromy $T$ pro $S^p\proves_R\square$ a $T'$ pro $S^{\bar p}\proves_R\square$.
+The proof is by induction on the number of variables in $S$. If $|\Var(S)| = 0$, the only possible unsatisfiable formula without variables is $S = \{\square\}$, and we have a one-step proof $S \proves_R \square$. Otherwise, choose $p \in \Var(S)$. By Lemma \ref{lemma:tree-of-reductions}, both $S^p$ and $S^{\bar{p}}$ are unsatisfiable. They have one fewer variable, so by the induction hypothesis, there are resolution trees $T$ for $S^p \proves_R \square$ and $T'$ for $S^{\bar{p}} \proves_R \square$.
 
-Ukážeme, jak ze stromu $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. Analogicky vyrobíme $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. v posledním kroku rezolučního důkazu získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
+We show how to construct the resolution tree $\widehat{T}$ for $S \proves_R \neg p$. Similarly, we construct $\widehat{T'}$ for $S \proves_R p$, and then easily construct the resolution tree for $S \proves_R \square$: we attach the roots of the trees $\widehat{T}$ and $\widehat{T'}$ as the left and right children of the root $\square$ (i.e., in the last step of the resolution proof, we obtain $\square$ by resolving $\{\neg p\}$ and $\{p\}$).
 
-Zbývá ukázat konstrukci stromu $\widehat T$: množina vrcholů i uspořádání jsou stejné, změníme jen některé klauzule ve vrcholech, a to přidáním literálu $\neg p$. Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a buď je $C\in S$, nebo není, ale $C\cup\{\neg p\}\in S$. V prvním případě necháme label stejný. Ve druhém případě přidáme do $C$ \emph{a do všech klauzulí nad tímto listem} literál $\neg p$. V listech jsou nyní jen klauzule z $S$, v kořeni jsme $\square$ změnili na $\neg p$. A každý vnitřní vrchol je nadále rezolventou svých synů.
+It remains to show the construction of the tree $\widehat{T}$: the set of nodes and the order remain the same; we only change some clauses in the nodes by adding the literal $\neg p$. At each leaf of the tree $T$ is some clause $C \in S^p$, and either $C \in S$ or it is not, but $C \cup \{\neg p\} \in S$. In the first case, we leave the label unchanged. In the second case, we add the literal $\neg p$ to $C$ \emph{and to all clauses above this leaf}. In the leaves, there are now only clauses from $S$, in the root, we have changed $\square$ to $\neg p$. And each internal node remains the resolvent of its children.
 \end{proof}
 
 \begin{exercise}
-    Důkaz Věty o úplnosti rezoluce dává návod, jak rekurzivně `vypěstovat' rezoluční zamítnutí. Rozmyslete si jak a proveďte na nějakém příkladě nesplnitelné formule.
-\end{exercise} %\todo udělat příklad?
+    The proof of the Completeness Theorem for resolution gives a method for recursively `growing' a resolution refutation. Think about how to do this and apply it to an example of an unsatisfiable formula.
+\end{exercise} %\todo make example?
 
-\section{LI-rezoluce a Horn-SAT}
 
-Začneme jiným pohledem na rezoluční důkaz, tzv. \emph{lineárním důkazem}.
+\section{LI-Resolution and Horn-SAT}
 
-\subsection{Lineární důkaz}
+We begin with a different view of the resolution proof, called the \emph{linear proof}.
 
-Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve formě tzv. \emph{lineárního důkazu}, kde v každém kroku máme jednu \emph{centrální} klauzuli, kterou rezolvujeme s \emph{boční} (`side') klauzulí, která je buď jednou z předchozích centrálních klauzulí, nebo axiomem z $S$. Rezolventa je potom novou centrální klauzulí.\footnote{Zatímco konstrukci rezolučního stromu lze snadno popsat rekurzivně, lineární důkaz lépe odpovídá procedurálnímu výpočtu. Jde jen o to, jak najít vhodnou boční klauzuli.}
+\subsection{Linear Proof}
 
-\begin{definition}[Lineární důkaz]
-    \emph{Lineární důkaz} (rezolucí) klauzule $C$ z formule $S$ je konečná posloupnost
+In addition to the resolution tree, a resolution proof can also be organized as a \emph{linear proof}, where in each step we have one \emph{central} clause, which we resolve with a \emph{side} clause, which is either one of the previous central clauses or an axiom from $S$. The resolvent then becomes the new central clause.\footnote{While the construction of the resolution tree can be easily described recursively, the linear proof better corresponds to a procedural computation. It is only about finding a suitable side clause.}
+
+\begin{definition}[Linear Proof]
+    A \emph{linear proof} (by resolution) of a clause $C$ from a formula $S$ is a finite sequence
     $$
     \begin{bmatrix}
         C_0 \\
@@ -281,12 +275,12 @@ Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve fo
     \end{bmatrix},
     C_{n+1}
     $$
-    kde $C_i$ říkáme \emph{centrální} klauzule, $C_0$ je \emph{počáteční}, $C_{n+1}=C$ je \emph{koncová}, $B_i$ jsou \emph{boční} klauzule, a platí:
+    where $C_i$ are called \emph{central} clauses, $C_0$ is the \emph{initial} clause, $C_{n+1}=C$ is the \emph{final} clause, $B_i$ are \emph{side} clauses, and it holds that:
     \begin{itemize}
-        \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
-        \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
+        \item $C_0\in S$, for $i\leq n$, $C_{i+1}$ is the resolvent of $C_i$ and $B_i$,
+        \item $B_0\in S$, for $i\leq n$, $B_i\in S$ or $B_i=C_j$ for some $j<i$. 
     \end{itemize}
-    \emph{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$. Lineární důkaz můžeme znázornit takto:
+    A \emph{linear refutation} of $S$ is a linear proof of $\square$ from $S$. A linear proof can be illustrated as follows:
     \begin{center}
         \begin{forest}
             for tree={math content,grow=west,text height=2ex, text depth=1ex}
@@ -314,7 +308,7 @@ Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve fo
 \end{definition}
 
 \begin{example} \label{example:linear-proof}
-    Zkonstruujme lineární zamítnutí formule $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (tj. lineární důkaz $\square$ z $S$). Lineární důkaz může vypadat třeba takto:
+    Let's construct a linear refutation of the formula $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$ (i.e., a linear proof of $\square$ from $S$). A linear proof might look like this:
 
     \begin{center}
         \begin{forest}
@@ -338,33 +332,33 @@ Rezoluční důkaz můžeme kromě rezolučního stromu zorganizovat také ve fo
             ]
         \end{forest}  
     \end{center}
-    Poslední boční klauzule $\textcolor{red}{\{p\}}$ (červeně) není z $S$, ale je rovna předchozí centrální klauzuli (modře).
+    The last side clause $\textcolor{red}{\{p\}}$ (in red) is not from $S$, but is equal to the previous central clause (in blue).
 \end{example}
 
 \begin{exercise}
-    Převeďte lineární důkaz z Příkladu \ref{example:linear-proof} na rezoluční strom.
+    Convert the linear proof from Example \ref{example:linear-proof} into a resolution tree.
 \end{exercise}
 
 \begin{remark}\label{remark:linear-resolution}
-    $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
+    $C$ has a linear proof from $S$ if and only if $S\proves_R C$.
 \end{remark}
-Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí podle délky důkazu: základ indukce je zřejmý, a máme-li boční klauzuli $B_i$ která není axiomem z $S$, potom $B_i=C_j$ pro nějaké $j<i$ a stačí připojit místo $B_i$ rezoluční strom pro důkaz $C_j$ z $S$. Všimněte si, že z toho plyne i \emph{korektnost} lineární rezoluce.
+A resolution tree can easily be produced from a linear proof by induction on the length of the proof: the base case is obvious, and if there is a side clause $B_i$ that is not an axiom from $S$, then $B_i=C_j$ for some $j<i$ and we only need to attach the resolution tree for proving $C_j$ from $S$ instead of $B_i$. Notice that this also implies the \emph{correctness} of linear resolution.
 
-Důkaz opačné implikace neuvedeme. Plyne z \emph{úplnosti} lineární rezoluce, jejíž důkaz najdete v učebnici \emph{A. Nerode, R. Shore: Logic for Applications}~\cite{nerode_logic_2012}.
+We will not present the proof of the reverse implication. It follows from the \emph{completeness} of linear resolution, whose proof can be found in the textbook \emph{A. Nerode, R. Shore: Logic for Applications}~\cite{nerode_logic_2012}.
 
 
 
 % \begin{exercise}
-%     Dokažte podrobně obě implikace v Poznámce \ref{remark:linear-resolution}.
+%     Prove both implications in Remark \ref{remark:linear-resolution} in detail.
 % \end{exercise}
 
 
-\subsection{LI-rezoluce}
+\subsection{LI-Resolution}
 
-V obecném lineárním důkazu může být každá následující boční klauzule buď axiom z $S$ nebo jedna z předchozích centrálních klauzulí. Pokud zakážeme druhou možnost, budeme-li tedy požadovat, aby všechny boční klauzule byly z $S$, dostaneme tzv. \emph{LI (linear-input)} rezoluci:
+In a general linear proof, each subsequent side clause can either be an axiom from $S$ or one of the previous central clauses. If we forbid the latter option and require that all side clauses must be from $S$, we get the so-called \emph{LI (linear-input) resolution}:
     
-\begin{definition}[LI-důkaz]
-    \emph{LI-důkaz} (rezolucí) klauzule $C$ z formule $S$ je lineární důkaz 
+\begin{definition}[LI-Proof]
+    An \emph{LI-proof} (by resolution) of a clause $C$ from a formula $S$ is a linear proof 
     $$
     \begin{bmatrix}
         C_0 \\
@@ -380,59 +374,59 @@ V obecném lineárním důkazu může být každá následující boční klauzu
     \end{bmatrix},
     C
     $$
-    ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud LI-důkaz existuje, říkáme, že je $C$ \emph{LI-dokazatelná} z $S$, a píšeme $S\proves_{LI}C$. Pokud $S\proves_{LI}\square$, je $S$ \emph{LI-zamítnutelná}.
+    in which each side clause $B_i$ is an axiom from $S$. If an LI-proof exists, we say that $C$ is \emph{LI-provable} from $S$, and we write $S\proves_{LI}C$. If $S\proves_{LI}\square$, then $S$ is \emph{LI-refutable}.
 \end{definition}
 
 \begin{remark}
-    LI-důkaz přímo dává rezoluční strom (všechny listy jsou axiomy), a to ve speciálním tvaru, kterému bychom mohli říkat `chlupatá cesta'. A naopak, z rezolučního stromu ve tvaru chlupaté cesty okamžitě získáme LI-důkaz: vrcholy na cestě jsou centrální klauzule, chlupy jsou boční klauzule.
+    An LI-proof directly gives a resolution tree (all leaves are axioms) in a special form that we might call a `hairy path'. Conversely, from a resolution tree in the form of a hairy path, we immediately obtain an LI-proof: the vertices on the path are central clauses, the hairs are side clauses.
 \end{remark}
 
-Zatímco \emph{lineární rezoluce}\footnote{Tj. dokazovací systém založený na hledání \emph{lineárních} důkazů resp. zamítnutí.} je jen jiný pohled na obecný rezoluční důkaz, \emph{LI-rezoluce} přináší zásadní omezení: ztrácíme \emph{úplnost} (ne každá nesplnitelná formule má LI-zamítnutí). Na druhou stranu, LI-důkazy je jednodušší konstruovat.\footnote{V každém kroku máme k volbě jen klauzule z $S$, nikoliv předchozí dokázané centrální klauzule.} 
+While \emph{linear resolution}\footnote{That is, a proof system based on finding \emph{linear} proofs or refutations.} is just another view of the general resolution proof, \emph{LI-resolution} introduces a significant restriction: we lose \emph{completeness} (not every unsatisfiable formula has an LI-refutation). On the other hand, LI-proofs are simpler to construct.\footnote{In each step, we only have to choose from clauses in $S$, not from previously proven central clauses.} 
 
-\subsection{Úplnost LI-rezoluce pro Hornovy formule}
+\subsection{Completeness of LI-Resolution for Horn Formulas}
 
-Jak si nyní ukážeme, LI-rezoluce je \emph{úplná pro Hornovy formule}. A jak uvidíme v následující sekci, je základem interpreterů jazyka Prolog, který s Hornovými formulemi pracuje. Nejprve připomeňme terminologii týkající se hornovskosti a také programů, a to v množinové reprezentaci:
+As we will now show, LI-resolution is \emph{complete for Horn formulas}. As we will see in the next section, it is the basis of Prolog interpreters, which work with Horn formulas. First, let us recall the terminology related to hornness and also programs, in set representation:
 
 \begin{itemize}
-    \item \emph{Hornova klauzule} je klauzule obsahující nejvýše jeden pozitivní literál.
-    \item \emph{Hornova formule} je (konečná, nebo i nekonečná) množina Hornových klauzulí.
-    \item \emph{Fakt} je pozitivní jednotková (Hornova) klauzule, tj. $\{p\}$, kde $p$ je výroková proměnná.
-    \item \emph{Pravidlo} je (Hornova) klauzule s právě jedním pozitivním a alespoň jedním negativním literálem.
-    \item Pravidlům a faktům říkáme \emph{programové klauzule}.
-    \item \emph{Cíl} je neprázdná (Hornova) klauzule bez pozitivního literálu.\footnote{Připomeňme, že dokazujeme \emph{sporem}, tedy \emph{cíl} je negací toho, co bychom chtěli dokázat.}
+    \item A \emph{Horn clause} is a clause containing at most one positive literal.
+    \item A \emph{Horn formula} is (finite or even infinite) a set of Horn clauses.
+    \item A \emph{fact} is a positive unit (Horn) clause, i.e., $\{p\}$, where $p`$ is a propositional variable.
+    \item A \emph{rule} is a (Horn) clause with exactly one positive and at least one negative literal.
+    \item Rules and facts are called \emph{program clauses}.
+    \item A \emph{goal} is a non-empty (Horn) clause without a positive literal.\footnote{Recall that we prove by \emph{contradiction}, so the \emph{goal} is the negation of what we want to prove.}
 \end{itemize}
 
-Bude se nám hodit následující jednoduché pozorování:
+We will find the following simple observation useful:
 
 \begin{observation}\label{observation:horn-fact-goal}
-    Je-li Hornova formule $S$ nesplnitelná a $\square\notin S$, potom obsahuje fakt i cíl.
+    If a Horn formula $S$ is unsatisfiable and $\square\notin S$, then it contains a fact and a goal.
 \end{observation}
 \begin{proof}
-    Neobsahuje-li fakt, můžeme ohodnotit všechny proměnné 0; neobsahuje-li cíl, ohodnotíme 1.
+    If it does not contain a fact, we can evaluate all variables to 0; if it does not contain a goal, we evaluate to 1.
 \end{proof}
 
-Nyní vyslovíme a dokážeme Větu o úplnosti LI-rezoluce pro Hornovské formule. Důkaz dává také návod, jak LI-zamítnutí zkonstruovat, a to na základě průběhu jednotkové propagace. Tento postup ilustrujeme na příkladu níže, který můžete sledovat souběžně s čtením důkazu.
+Now we will state and prove the Completeness Theorem for LI-Resolution for Horn formulas. The proof also provides a guide on how to construct an LI-refutation, based on the process of unit propagation. This procedure is illustrated in the example below, which you can follow along with the reading of the proof.
 
-\begin{theorem}[O úplnosti LI-rezoluce pro Hornovy formule]\label{theorem:completeness-of-li-resolution-for-horn}
-Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.   
+\begin{theorem}[Completeness of LI-Resolution for Horn Formulas]\label{theorem:completeness-of-li-resolution-for-horn}
+If a Horn formula $T$ is satisfiable, and $T\cup\{G\}$ is unsatisfiable for a goal $G$, then $T\cup\{G\}\proves_{LI}\square$, by an LI-refutation that starts with the goal $G$.   
 \end{theorem}
 \begin{proof}
-    Podobně jako ve Větě o úplnosti rezoluce můžeme díky Větě o kompaktnosti předpokládat, že $T$ je konečná. Důkaz (konstrukci LI-zamítnutí) provedeme indukcí podle počtu proměnných v $T$.
+    Similarly to the Completeness Theorem for Resolution, we can assume by the Compactness Theorem that $T$ is finite. The proof (construction of the LI-refutation) will be done by induction on the number of variables in $T$.
 
-    Z Pozorování \ref{observation:horn-fact-goal} plyne, že $T$ obsahuje fakt $\{p\}$ pro nějakou výrokovou proměnnou $p$. Protože $T\cup\{G\}$ je nesplnitelná, je podle Lemmatu \ref{lemma:tree-of-reductions} nesplnitelná také $(T\cup\{G\})^p=T^p\cup\{G^p\}$, kde $G^p=G\setminus\{\neg p\}$.
+    By Observation \ref{observation:horn-fact-goal}, $T$ contains a fact $\{p\}$ for some propositional variable $p$. Since $T\cup\{G\}$ is unsatisfiable, according to Lemma \ref{lemma:tree-of-reductions}, $(T\cup\{G\})^p=T^p\cup\{G^p\}$ is also unsatisfiable, where $G^p=G\setminus\{\neg p\}$.
     
-    Pokud $G^p=\square$, potom $G=\{\neg p\}$, $\square$ je rezolventa $G$ a $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T\cup\{G\}$ (to je báze indukce). 
+    If $G^p=\square$, then $G=\{\neg p\}$, $\square$ is the resolvent of $G$ and $\{p\}\in T$, and we have a one-step LI-refutation of $T\cup\{G\}$ (this is the base case of the induction). 
     
-    Jinak využijeme indukčního předpokladu. Všimněte si, že formule $T^p$ je splnitelná (stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$) a má méně proměnných než $T$. Tedy podle indukčního předpokladu existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
+    Otherwise, we use the induction hypothesis. Note that the formula $T^p$ is satisfiable (by the same valuation as $T$, because it must contain $p$ due to the fact $\{p\}$, so it does not contain $\neg p$) and has fewer variables than $T$. Thus, by the induction hypothesis, there exists an LI-derivation of $\square$ from $T^p\cup\{G^p\}$ starting with $G^p=G\setminus\{\neg p\}$.
 
-    Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce) přidáním literálu $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (tedy vznikly odebráním $\neg p$), a do všech vrcholů nad nimi. Tím získáme $T\cup\{G\}\proves_{LI}\neg p$, na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.
+    We construct the required LI-refutation of $T\cup\{G\}$ starting with $G$ (similarly to the proof of the Completeness Theorem for Resolution) by adding the literal $\neg p$ to all leaves that are not already in $T\cup\{G\}$ (i.e., they were created by removing $\neg p$), and to all vertices above them. This gives us $T\cup\{G\}\proves_{LI}\neg p$, and finally we add the side clause $\{p\}$ and derive $\square$.
 \end{proof}
 %todo: another potential frozen bucket, restructure the induction proof?
 
 \begin{example}\label{example:linear-input-resolution}
-Mějme (splnitelnou, hornovskou) teorii $T$, kterou zapíšeme v množinové reprezentaci jako formuli $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$. Představte si, že chceme dokázat, že v teorii $T$ platí $p\land q$.\footnote{Tj. v Prologu bychom položili `dotaz' (`query'): \texttt{?-p,q.}} V rezoluční metodě uvážíme cíl $G=\{\neg p,\neg q\}$ a ukážeme, že $T\cup\{G\}\proves_{LI}\square$. 
+Consider a (satisfiable, Horn) theory $T$, written in set representation as the formula $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$. Suppose we want to prove that $p\land q$ holds in the theory $T$.\footnote{In Prolog, we would pose the `query': \texttt{?-p,q.}} In the resolution method, we consider the goal $G=\{\neg p,\neg q\}$ and show that $T\cup\{G\}\proves_{LI}\square$. 
 
-Dle návodu z důkazu najdeme ve formuli $T$ fakt, a provedeme pomocí něho jednotkovou propagaci v $T$ i v cíli $G$. Postup opakujeme, dokud není formule prázdná:
+Following the guide from the proof, we find a fact in the formula $T$, and perform unit propagation in both $T$ and the goal $G$. We repeat the process until the formula is empty:
 \begin{itemize}
     \item $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, $G=\{\neg p,\neg q\}$
     \item $T^s=\{\{p,\neg r\},\{\neg q,r\},\{q\}\}$, $G^s=\{\neg p,\neg q\}$
@@ -440,7 +434,7 @@ Dle návodu z důkazu najdeme ve formuli $T$ fakt, a provedeme pomocí něho jed
     \item $T^{sqr}=\{\{p\}\}$, $G^{sqr}=\{\neg p\}$
     \item $T^{sqrp}=\emptyset$, $G^{sqrp}=\square$
 \end{itemize}
-Nyní zpětným postupem sestrojíme rezoluční zamítnutí:
+Now, we construct the resolution refutation in reverse:
 \begin{itemize}
     \item $T^{sqrp},G^{sqrp}\proves_{LI}\square$:
     \begin{center}
@@ -525,34 +519,34 @@ Nyní zpětným postupem sestrojíme rezoluční zamítnutí:
 
 %\section{Rezoluce v Prologu}
 
-\subsection{Program v Prologu}
+\subsection{Prolog Program}
 
-Ačkoliv skutečná síla Prologu vychází z tzv. \emph{unifikace} a z rezoluce v predikátové logice, ukážeme si jak Prolog využívá rezoluční metodu na příkladě \emph{výrokového} programu. Adaptace na predikáty bude později přímočará.
+Although the real power of Prolog comes from \emph{unification} and resolution in predicate logic, we will show how Prolog uses the resolution method with a \emph{propositional} program. Adaptation to predicates will be straightforward later.
 
-\emph{Program} v Prologu je Hornova formule obsahující pouze \emph{programové klauzule}, tj. \emph{fakta} nebo \emph{pravidla}. \emph{Dotaz} je konjunkce faktů, negace dotazu je \emph{cíl}.
+A \emph{program} in Prolog is a Horn formula containing only \emph{program clauses}, i.e., \emph{facts} or \emph{rules}. A \emph{query} is a conjunction of facts, the negation of the query is the \emph{goal}.
 
 \begin{example}
-Jako příklad programu v Prologu využijeme teorii (formuli) $T$ a dotaz $p\land q$ z Příkladu \ref{example:linear-input-resolution}. Například klauzuli $\{p,\neg r,\neg s\}$, která je ekvivalentní $r\land s\limplies p$, zapíšeme v Prologu jako: \texttt{p:-r,s.}
+As an example of a Prolog program, we will use the theory (formula) $T$ and the query $p\land q$ from Example \ref{example:linear-input-resolution}. For instance, the clause $\{p,\neg r,\neg s\}$, which is equivalent to $r\land s\limplies p$, is written in Prolog as: \texttt{p:-r,s.}
 \begin{verbatim}
     p:-r,s.
     r:-q.
     q:-s.
     s.    
 \end{verbatim}
-A programu položíme dotaz:
+And we pose the query to the program:
 \begin{verbatim}
     ?-p,q.    
 \end{verbatim}
 \end{example}
 
 \begin{corollary}\label{corollary:propositional-prolog}
-    Mějme program $P$ a dotaz $Q=p_1\land\dots\land p_n$, a označme $G=\{\neg p_1,\dots,\neg p_n\}$ (tj. $G\sim \neg Q$). Následující podmínky jsou ekvivalentní:
+    Let $P$ be a program and $Q=p_1\land\dots\land p_n$, and denote $G=\{\neg p_1,\dots,\neg p_n\}$ (i.e., $G\sim \neg Q$). The following conditions are equivalent:
     \begin{itemize}
         \item $P\models Q$,
-        \item $P\cup\{G\}$ je nesplnitelná,
-        \item $P\cup\{G\}\proves_{LI}\square$, a existuje LI-zamítnutí začínající cílem $G$.
+        \item $P\cup\{G\}$ is unsatisfiable,
+        \item $P\cup\{G\}\proves_{LI}\square$, and there is an LI-refutation starting with the goal $G$.
     \end{itemize}
 \end{corollary}
 \begin{proof}
-    Ekvivalence prvních dvou podmínek je důkaz sporem, ekvivalence druhé a třetí je Věta o úplnosti LI-rezoluce pro Hornovy formule. (Všimněte si, že Program je vždy splnitelný.)
+    The equivalence of the first two conditions is by contradiction, and the equivalence of the second and third is by the Completeness Theorem for LI-Resolution for Horn formulas. (Note that the Program is always satisfiable.)
 \end{proof}

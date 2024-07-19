@@ -5,9 +5,9 @@ V této kapitole představíme \emph{Metodu analytického tabla}. Jde o syntakti
 
 \section{Formální dokazovací systémy}
 
-\emph{Formální dokazovací systém} formalizuje `dokazování' (např. v matematice) jako přesně (algoritmicky) danou syntaktickou proceduru. \emph{Důkaz} faktu, že v teorii $T$ platí výrok $\varphi$ (neboli $T\models\varphi$) je konečný syntaktický objekt vycházející z axiomů $T$ a výroku $\varphi$. Pokud důkaz existuje, lze ho nalézt `algoritmicky',\footnote{Zde ale musíme být opatrní v případě nekonečné teorie $T$, jak je zadaná? Algoritmus musí mít efektivní přístup ke všem axiomům.} a algoritmicky jsme také schopni ověřit, že je daný objekt opravdu důkaz.
+\emph{Formální dokazovací systém} formalizuje `dokazování' (např. v matematice) jako přesně (algoritmicky) danou syntaktickou proceduru. \emph{Důkaz} faktu, že v teorii $T$ platí výrok $\varphi$ (neboli $T\models\varphi$) je konečný syntaktický objekt vycházející z axiomů $T$ a výroku $\varphi$. Pokud důkaz existuje, lze ho nalézt `algoritmicky'.\footnote{Zde ale musíme být opatrní v případě nekonečné teorie $T$, jak je zadaná? Algoritmus musí mít efektivní přístup ke všem axiomům.} Navíc musíme být schopni algoritmicky (a rozumně efektivně) ověřit, že je daný objekt opravdu korektní důkaz.
 
-Existuje-li důkaz, říkáme, že $\varphi$ je (v daném dokazovacím systému) \emph{dokazatelný} z $T$, a píšeme $T\proves\varphi$. Po dokazovacím systému požadujeme dvě vlastnosti:
+Existuje-li důkaz, říkáme, že $\varphi$ je [v daném dokazovacím systému] \emph{dokazatelný} z $T$, a píšeme $T\proves\varphi$. Po dokazovacím systému požadujeme dvě vlastnosti:
 \begin{itemize}
     \item \emph{korektnost}: je-li výrok dokazatelný z teorie, je v ní pravdivý ($T\proves\varphi\Rightarrow T\models\varphi$)
     \item \emph{úplnost}: je-li výrok pravdivý v teorii, je z ní dokazatelný ($T\models\varphi\Rightarrow T\proves\varphi$)
@@ -25,9 +25,9 @@ Po zbytek této kapitoly budeme předpokládat, že máme daný \emph{spočetný
 \begin{quote}
     Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
 \end{quote}
-Pokud na některé větvi dostaneme položky tvaru $\mathrm{T}\psi$ a $\mathrm{F}\psi$, říkáme, že větev \emph{selhala} (je \emph{sporná}) a víme, že žádný model s ní nemůže souhlasit. Pokud selžou všechny větve, víme, že neexistuje žádný model, ve kterém by neplatilo $\varphi$, a máme tedy \emph{důkaz}, že $\varphi$ platí. (Všimněte si, že jde o \emph{důkaz sporem}.)
+Pokud na některé větvi dostaneme položky tvaru $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro totéž $\psi$), říkáme, že větev \emph{selhala} (je \emph{sporná}) a víme, že žádný model s ní nemůže souhlasit. Pokud selžou všechny větve, víme, že neexistuje žádný model, ve kterém by neplatilo $\varphi$, a máme tedy \emph{důkaz}, že $\varphi$ platí. (Všimněte si, že jde o \emph{důkaz sporem}.)
 
-Pokud nějaká větev neselhala, ale je \emph{dokončená}, tj. všechny položky jsou zredukované, víme, že $\varphi$ neplatí, a budeme z této větve schopni zkonstruovat konkrétní model, ve kterém neplatí.
+Pokud nějaká větev neselhala, a je \emph{dokončená}, tj. všechny položky jsou zredukované, víme, že $\varphi$ neplatí, a budeme z této větve schopni zkonstruovat konkrétní model, ve kterém neplatí.
 
 
 \begin{example}\label{example:tableau-intro-examples}
@@ -35,15 +35,15 @@ Ukažme si celý postup na dvou příkladech, viz Obrázek \ref{figure:tableau-p
 \begin{itemize}
     \item[(a)] Nejprve sestrojme tablo důkaz výroku $\varphi=((p\limplies q)\limplies p)\limplies p$. Začneme kořenem s položkou $\mathrm{F}\varphi$. Tato položka je tvaru $\mathrm{F}\varphi_1\limplies\varphi_2$ (`neplatí implikace'), pokud se s ní shoduje nějaký model, musí splňovat $\mathrm{T}(p\limplies q)\limplies p$ a $\mathrm{F}p$, připojíme tedy tyto dvě položky. (Ve skutečnosti připojíme \emph{atomické tablo} pro tento případ, viz Tabulka \ref{table:atomic-tableaux}, kořen tohoto atomického tabla ale vynecháme, abychom zbytečně nezopakovali tutéž položku.) Tím jsme \emph{zredukovali} položku v kořeni. 
     
-    Pokračujeme položkou $\mathrm{T}(p\limplies q)\limplies p$, ta je tvaru `platí implikace', rozvětvíme na dvě větve: model buď splňuje $\mathrm{F}(p\limplies q)$, nebo $\mathrm{T}p$. Pravá větev \emph{selhala} (je \emph{sporná}), neboť obsahuje položky $\mathrm{T}p$, $\mathrm{F}p$, neshoduje se tedy s žádným modelem, označíme ji symbolem~$\otimes$. V levé větvi ještě zredukujeme položku $\mathrm{F}p\limplies q$ a také dostaneme spornou větev. Všechny větve jsou sporné, neexistuje tedy žádný protipříklad a máme důkaz výroku $\varphi$. Píšeme $\proves\varphi$.
+    Pokračujeme položkou $\mathrm{T}(p\limplies q)\limplies p$, ta je tvaru `platí implikace', rozvětvíme na dvě větve: model souhlasí s $\mathrm{F}(p\limplies q)$ nebo s $\mathrm{T}p$ (nebo s oběma). Pravá větev \emph{selhala} (je \emph{sporná}), neboť obsahuje položky $\mathrm{T}p$, $\mathrm{F}p$, neshoduje se tedy s žádným modelem, označíme ji symbolem~$\otimes$. V levé větvi ještě zredukujeme položku $\mathrm{F}p\limplies q$ a také dostaneme spornou větev. Všechny větve jsou sporné, neexistuje tedy žádný protipříklad a máme důkaz výroku $\varphi$. Píšeme $\proves\varphi$.
     
-    \item[(b)] Nyní sestrojíme tablo s položkou $\mathrm{F}(\neg q\lor p)\limplies p$. Snažíme se tedy najít protipříklad: model, ve kterém neplatí $(\neg q\lor p)\limplies p$. Nejprve jsme použili atomické tablo pro `neplatí implikace', a dále redukujeme položku $\mathrm{T}\neg q\lor p$ připojením atomického tabla pro `platí disjunkce'. Pravá větev selhala. V levé větvi ještě zredukujeme $\mathrm{T}\neg q$ na $\mathrm{F}q$ (atomické tablo pro `platí negace') tím dostáváme dokončenou větev, neboť všechny položky už jsme zredukovali. Tato dokončená větev ale není sporná (označíme ji tedy symbolem $\checkmark$). To znamená, že protipříklad existuje: máme položky $\mathrm{F}p$ a $\mathrm{F}q$, kterým odpovídá model $(0,0)$, ve kterém opravdu $(\neg q\lor p)\limplies p$ neplatí.
+    \item[(b)] Nyní sestrojíme tablo s položkou $\mathrm{F}(\neg q\lor p)\limplies p$ v kořeni. Snažíme se tedy najít protipříklad: model, ve kterém neplatí $(\neg q\lor p)\limplies p$. Nejprve jsme použili atomické tablo pro `neplatí implikace', a dále redukujeme položku $\mathrm{T}\neg q\lor p$ připojením atomického tabla pro `platí disjunkce'. Pravá větev selhala. V levé větvi ještě zredukujeme $\mathrm{T}\neg q$ na $\mathrm{F}q$ (atomické tablo pro `platí negace') tím dostáváme dokončenou větev, neboť všechny položky už jsme zredukovali. Tato dokončená větev ale není sporná (označíme ji tedy symbolem $\checkmark$). To znamená, že protipříklad existuje: máme položky $\mathrm{F}p$ a $\mathrm{F}q$, kterým odpovídá model $(0,0)$, ve kterém opravdu $(\neg q\lor p)\limplies p$ neplatí.
 
 \end{itemize}
 
 V následující sekci celý postup zformalizujeme a vysvětlíme, co dělat, když chceme dokazovat ne v logice, ale v nějaké teorii $T$ (spoiler alert: při konstrukci připojujeme položky $\mathrm{T}\alpha$ pro axiomy $\alpha\in T$). Také si ukážeme příklad s nekonečnou teorií, kde \emph{dokončená} větev někdy musí být nekonečná.
 
-Ve zbytku této sekce ale nejprve definujeme všechna \emph{atomická tabla} potřebná při konstrukci, a také formalizujeme pojem \emph{stromu}.
+Ve zbytku této sekce představíme všechna \emph{atomická tabla} potřebná při konstrukci, a také formalizujeme pojem \emph{stromu}.
 
 \begin{figure}
 \begin{minipage}{.49\textwidth}
@@ -394,7 +394,7 @@ Jak už jsme zmínili, design atomických tabel zaručuje, že shoduje-li se mod
     \begin{itemize}
         \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení větve $V_i$, definujeme $V_{i+1}=V_i$.
         \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ připojením položky $\mathrm{T}\alpha$ (pro nějaký axiom $\alpha\in T$) na konec větve  $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev. Protože $v$ je model $T$, platí v něm axiom $\alpha$, tedy shoduje se i s novou položkou $\mathrm{T}\alpha$.
-        \item Nechť $\tau_{i+1}$ vzniklo z $\tau_i$ připojením atomického tabla pro nějakou položku $P$ na konec větve $V_i$. Protože se model $v$ shoduje s položkou $P$ (která leží na větvi $V_i$), shoduje se i s kořenem připojeného atomického tabla, a proto se shoduje i s některou z jeho větví. (Tuto vlastnost snadno ověříme pro všechna atomická tabla.) Definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev atomického tabla.\footnote{Resp. o libovolnou takovou větev: model $v$ se může shodovat s více větvemi atomického tabla.}
+        \item Nechť $\tau_{i+1}$ vzniklo z $\tau_i$ připojením atomického tabla pro nějakou položku $P$ na konec větve $V_i$. Protože se model $v$ shoduje s položkou $P$ (která leží už na větvi $V_i$), shoduje se i s kořenem připojeného atomického tabla, a proto se shoduje i s některou z jeho větví. (Tuto vlastnost snadno ověříme pro všechna atomická tabla.) Definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev atomického tabla.\footnote{Resp. o libovolnou takovou větev: model $v$ se může shodovat s více větvemi atomického tabla.}
     \end{itemize}
 \end{proof}
 

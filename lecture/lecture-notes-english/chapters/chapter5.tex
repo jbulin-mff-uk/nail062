@@ -1,24 +1,24 @@
 \chapter{Resolution Method}\label{chapter:propositional-resolution}
 
-In this chapter, we introduce another proof system more suitable for practical applications, called the \emph{resolution method}. This method is the foundation of \emph{logical programming}, \emph{automated theorem proving}, and \emph{software verification} systems. In this chapter, we limit ourselves to the resolution method in propositional logic, but in a later chapter, we will introduce the concept of \emph{unification}, which allows for resolution proofs in predicate logic.
+In this chapter, we introduce another proof system more suitable for practical applications, called the \emph{resolution method}. This method is the foundation of, among others, \emph{logical programming}, \emph{automated theorem proving}, or \emph{software verification}. In this chapter, we limit ourselves to the resolution method in propositional logic, but later, in Chapter~\ref{chapter:prpredicate-resolution}, we will introduce the concept of \emph{unification}, which allows us to search for resolution proofs in predicate logic.
 
-The resolution method works with statements in \emph{conjunctive normal form (CNF)}. Recall that every statement can be converted to CNF. This conversion is, in the worst case, exponential in time (there are even statements whose shortest CNF equivalent is exponentially longer), but in practice, this is not an issue.
+The resolution method works with propositions in \emph{conjunctive normal form (CNF)}. Recall that every proposition can be converted to CNF. This conversion is, in the worst case, of exponential time copmlexity (there are even propositions whose shortest CNF equivalent is exponentially longer), but in practice, this is not an issue.
 
-Similar to the tableau method, the resolution method is based on proof by contradiction, i.e., we add the \emph{negation} of the statement we want to prove to the theory in which we are proving (both converted to CNF), and show that this leads to a contradiction.
+Similar to the tableau method, the resolution method is based on proof by contradiction, i.e., we add the \emph{negation} of the proposition we want to prove to the theory in which we are proving (both converted to CNF), and show that this leads to a contradiction.
 
-To find the contradiction, the resolution method uses a single inference rule called the \emph{resolution rule}. This is a special case of the \emph{cut rule}, which states: \emph{``From the statements $\varphi \lor \psi$ and $\neg \varphi \lor \chi$, we can infer the statement $\psi \lor \chi$,''} written as:
+To find the contradiction, the resolution method uses a single inference rule called the \emph{resolution rule}. This is a special case of the \emph{cut rule}, which states: \emph{``From the propositions $\varphi \lor \psi$ and $\neg \varphi \lor \chi$, we can infer the proposition $\psi \lor \chi$,''} written as:
 $$
 \frac{\varphi \lor \psi, \neg \varphi \lor \chi}{\psi \lor \chi}
 $$
 In the \emph{resolution rule}, which we will demonstrate shortly, $\varphi$ is a \emph{literal}, and $\psi, \chi$ are \emph{clauses}.
 
 \begin{exercise}
-Consider why the cut rule is \emph{correct}. (What does it mean, and why does it hold?)
+Show that the cut rule is \emph{sound}. (What does it mean?)
 \end{exercise}
 
 \section{Set Representation}
 
-First, we introduce a more compact notation for CNF statements, called \emph{set notation}. It would be impractical to write statements including brackets and logical symbols.
+First, we introduce a more compact notation for CNF propositions, called \emph{set notation}. For it would be impractical to represent CNF propositions as strings including brackets and logical symbols.
 \begin{itemize}
     \item Recall that a \emph{literal} $\ell$ is a propositional variable or its negation, and that $\bar{\ell}$ denotes the \emph{opposite literal} to $\ell$.
     \item A \emph{clause} $C$ is a finite set of literals. The \emph{empty clause}, which is never satisfied,\footnote{It represents the disjunction of an empty set of literals, meaning none of the disjuncts are satisfied.} is denoted by $\square$.
@@ -26,30 +26,30 @@ First, we introduce a more compact notation for CNF statements, called \emph{set
 \end{itemize}
 
 \begin{remark}
-    Note that a \emph{formula} can also be an \emph{infinite} set of clauses. If we convert an infinite propositional theory to CNF, we write all infinitely many clauses as elements of a single formula (set). In practical applications, the formula is (almost always) finite.
+    Note that a \emph{CNF formula} can also be an \emph{infinite} set of clauses. If we convert an infinite propositional theory to CNF, we take (in set representation) all infinitely many clauses as elements of a single formula (set). In practical applications, the formula is (almost always) finite.
 \end{remark}
 
 In set notation, models correspond to sets of literals that contain exactly one of the literals $p, \neg p$ for each propositional variable $p$:
 \begin{itemize}
-    \item A \emph{(partial) valuation $\mathcal{V}$} is any set of literals that is \emph{consistent}, i.e., it does not contain both a literal and its negation.
-    \item A valuation is \emph{complete} if it contains either the positive or negative literal for each propositional variable.
-    \item A valuation $\mathcal{V}$ \emph{satisfies} a formula $S$, written $\mathcal{V} \models S$, if $\mathcal{V}$ contains some literal from each clause in $S$, i.e.,
+    \item A \emph{(partial) assignment $\mathcal{V}$} is any set of literals that is \emph{consistent}, i.e., it does not contain both a literal and its negation.
+    \item An assignment is \emph{complete} if it contains either the positive or negative literal for each propositional variable.
+    \item An assignment $\mathcal{V}$ \emph{satisfies} a formula $S$, written $\mathcal{V} \models S$, if $\mathcal{V}$ contains some literal from each clause in $S$, i.e.,
     $$
     \mathcal{V} \cap C \neq \emptyset \text{ for each } C \in S.
     $$
 \end{itemize}
 
 \begin{example}\label{example:set-representation}
-    The statement $\varphi = (\neg p_1 \lor p_2) \land (\neg p_1 \lor \neg p_2 \lor p_3) \land (\neg p_3 \lor \neg p_4) \land (\neg p_4 \lor \neg p_5) \land p_4$ is written in set notation as:
+    The proposition $\varphi = (\neg p_1 \lor p_2) \land (\neg p_1 \lor \neg p_2 \lor p_3) \land (\neg p_3 \lor \neg p_4) \land (\neg p_4 \lor \neg p_5) \land p_4$ is written in set notation as:
     $$
     S = \{\{\neg p_1, p_2\}, \{\neg p_1, \neg p_2, p_3\}, \{\neg p_3, \neg p_4\}, \{\neg p_4, \neg p_5\}, \{p_4\}\}
     $$
-    The valuation $\mathcal{V} = \{\neg p_1, \neg p_3, p_4, \neg p_5\}$ satisfies $S$, written $\mathcal{V} \models S$. It is not complete, but we can extend it with any literal for $p_2$: both $\mathcal{V} \cup \{p_2\} \models S$ and $\mathcal{V} \cup \{\neg p_2\} \models S$ hold. These two complete valuations correspond to the models $(0,1,0,1,0)$ and $(0,0,0,1,0)$.
+    The assignment $\mathcal{V} = \{\neg p_1, \neg p_3, p_4, \neg p_5\}$ satisfies $S$, written $\mathcal{V} \models S$. It is not complete, but we can extend it with any literal for $p_2$: both $\mathcal{V} \cup \{p_2\} \models S$ and $\mathcal{V} \cup \{\neg p_2\} \models S$ hold. These two complete assignments correspond to the models $(0,1,0,1,0)$ and $(0,0,0,1,0)$.
 \end{example}
 
 \section{Resolution Proof}
 
-First, we define a single inference step in the resolution proof, the \emph{resolution rule}, which we apply to a pair of clauses; the result is a clause called the \emph{resolvent}, which is a logical consequence of the original pair of clauses:
+First, we define one inference step in the resolution proof, the \emph{resolution rule}, which we apply to a pair of clauses; the result is a clause called the \emph{resolvent}, which is a logical consequence of the original pair of clauses:
 
 \begin{definition}[Resolution Rule]
     Given clauses $C_1$ and $C_2$ and a literal $\ell$ such that $\ell \in C_1$ and $\bar{\ell} \in C_2$, the \emph{resolvent} of the clauses $C_1$ and $C_2$ \emph{over the literal} $\ell$ is the clause
@@ -58,17 +58,17 @@ First, we define a single inference step in the resolution proof, the \emph{reso
     $$
 \end{definition}
 
-So, we remove the literal $\ell$ from the first clause and the literal $\bar{\ell}$ from the second clause (which had to be there!) and unite all remaining literals into the resulting resolvent. Using the symbol $\disjointunion$ for disjoint union, we could also write:
+So, we remove the literal $\ell$ from the first clause and the literal $\bar{\ell}$ from the second clause (both had to be there!) and take the union of all remaining literals to be the resulting resolvent. Using the symbol $\disjointunion$ for disjoint union, we could also write:
 $$
 C_1' \cup C_2' \text{ is the resolvent of the clauses } C_1' \disjointunion \{\ell\} \text{ and } C_2' \disjointunion \{\bar{\ell}\}
 $$
 
 \begin{example}
-    From the clauses $C_1 = \{\neg q, r\}$ and $C_2 = \{\neg p, \neg q, \neg r\}$, we can derive the resolvent $\{\neg p, \neg q\}$ over the literal $r$. From the clauses $\{p, q\}$ and $\{\neg p, \neg q\}$, we can derive $\{p, \neg p\}$ over the literal $q$ or $\{q, \neg q\}$ over the literal $p$ (both of which are tautologies).\footnote{We cannot derive $\square$ `by resolving over $p$ and $q$ simultaneously' (a common mistake). Note that $\{\{p, q\}, \{\neg p, \neg q\}\}$ is not unsatisfiable, e.g., $(1,0)$ is a model.}
+    From the clauses $C_1 = \{\neg q, r\}$ and $C_2 = \{\neg p, \neg q, \neg r\}$, we can derive the resolvent $\{\neg p, \neg q\}$ over the literal $r$. From the clauses $\{p, q\}$ and $\{\neg p, \neg q\}$, we can derive $\{p, \neg p\}$ over the literal $q$ or $\{q, \neg q\}$ over the literal $p$ (both of which are tautologies).\footnote{We cannot, however, derive $\square$ `by resolving over $p$ and $q$ simultaneously' (a common mistake). Note that $\{\{p, q\}, \{\neg p, \neg q\}\}$ is not unsatisfiable, e.g., $(1,0)$ is a model.}
 \end{example}
 
-\begin{observation}[Correctness of the Resolution Rule]
-The resolution rule is correct, i.e., for any valuation $\mathcal{V}$, it holds that:
+\begin{observation}[Soundness of the Resolution Rule]
+The resolution rule is sound, i.e., for any assignment $\mathcal{V}$, the following holds:
 $$
 \text{If } \mathcal{V} \models C_1 \text{ and } \mathcal{V} \models C_2, \text{ then } \mathcal{V} \models C.
 $$
@@ -77,31 +77,31 @@ $$
 A resolution proof is defined similarly to a Hilbert proof as a finite sequence of clauses, ensuring the validity of each clause in the sequence: at each step, we can either write an `axiom' (a clause from $S$) or a resolvent of some two previously written clauses.
 
 \begin{definition}[Resolution Proof]
-    A \emph{resolution proof (derivation)} of the clause $C$ from the formula $S$ is a \emph{finite} sequence of clauses $C_0, C_1, \dots, C_n = C$ such that for each $i$, either $C_i \in S$ or $C_i$ is the resolvent of some $C_j, C_k$ where $j < i$ and $k < i$.
+    A \emph{resolution proof} of a clause $C$ from a CNF formula $S$ is a \emph{finite} sequence of clauses $C_0, C_1, \dots, C_n = C$ such that for each $i$, either $C_i \in S$ or $C_i$ is the resolvent of some $C_j, C_k$ where $j < i$ and $k < i$.
 
-    If a resolution proof exists, we say that $C$ is \emph{resolution provable} from $S$, written $S \proves_R C$. A \emph{(resolution) refutation} of the formula $S$ is a resolution proof of $\square$ from $S$, in which case $S$ is \emph{(resolution) refutable}.
+    If a resolution proof exists, we say that $C$ is \emph{resolution provable} from $S$, written $S \proves_R C$. A \emph{(resolution) refutation} of the CNF formula $S$ is a resolution proof of $\square$ from $S$, in which case $S$ is \emph{(resolution) refutable}.
 \end{definition}
 
 \begin{example}\label{example:resolution-proof}
-    The formula $S = \{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}\}$ is refutable, one possible refutation is:
+    The CNF formula $S = \{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}\}$ is (resolution) refutable, one possible refutation is:
     $$
     \{p, \neg q, r\}, \{q, r\}, \{p, r\}, \{\neg p, r\}, \{r\}, \{p, \neg r\}, \{\neg p, \neg r\}, \{\neg r\}, \square
     $$
 \end{example}
 
-A resolution proof has a natural tree structure: the leaves are axioms and the internal nodes represent individual resolution steps.
+A resolution proof has a natural tree structure: the leaves are labeled by axioms and the inner nodes represent individual resolution steps.
 
 \begin{definition}[Resolution Tree]
-A resolution tree of the clause $C$ from the formula $S$ is a \emph{finite} binary tree with nodes labeled with clauses, where:
+A resolution tree of a clause $C$ from a CNF formula $S$ is a \emph{finite} binary tree with nodes labeled by clauses, where:
 \begin{itemize}
-    \item The root is $C$,
-    \item The leaves are clauses from $S$,
-    \item Each internal node is the resolvent of its child nodes.
+    \item The root is labeled $C$,
+    \item The leaves are labeled by clauses from $S$,
+    \item Each inner node is labeled by a resolvent of its child nodes.
 \end{itemize}    
 \end{definition}
 
 \begin{example}\label{example:resolution-tree}
-The resolution tree of the empty clause $\square$ from the formula $S$ in Example \ref{example:resolution-proof} is:
+The resolution tree of the empty clause $\square$ from the CNF formula $S$ from Example \ref{example:resolution-proof} is:
 \begin{center}
     \begin{forest}
     for tree={grow=north}
@@ -122,12 +122,16 @@ The resolution tree of the empty clause $\square$ from the formula $S$ in Exampl
 \end{center}
 \end{example}
 
-It is easy to show the following observation, by induction on the depth of the tree and the length of the resolution proof:
+It is easy to prove the following observation, by induction on the depth of the tree and the length of the resolution proof:
 
-\begin{observation} A clause $C$ has a resolution tree from the formula $S$ if and only if $S \proves_R C$.  
+\begin{observation} A clause $C$ has a resolution tree from a CNF formula $S$ if and only if $S \proves_R C$.  
 \end{observation}
 
-Each resolution proof corresponds to a unique resolution tree. Conversely, from a single resolution tree, we can derive multiple resolution proofs: they are given by any traversal of the tree nodes where an internal node is visited only after both of its children have been visited.
+
+%todo
+
+
+Each resolution proof corresponds to a unique resolution tree. Conversely, from a single resolution tree, we can derive multiple resolution proofs: they are given by any traversal of the tree nodes where an inner node is visited only after both of its children have been visited.
 
 We also introduce another concept, called the \emph{resolution closure}, which contains all clauses that can be `learned' by resolution from a given formula. It is a useful theoretical perspective on resolution; in applications, constructing the entire resolution closure would be impractical.
 
@@ -146,22 +150,22 @@ The \emph{resolution closure} $\mathcal{R}(S)$ of the formula $S$ is defined ind
     \end{align*}
 \end{example}
 
-\section{Correctness and Completeness of the Resolution Method}
+\section{Soundness and Completeness of the Resolution Method}
 
-The resolution method is also both correct and complete. 
+The resolution method is also both sound and complete. 
 
-\subsection{Correctness of Resolution}
+\subsection{Soundness of Resolution}
 
-Correctness can be easily proved by induction on the length of the resolution proof.
+Soundness can be easily proved by induction on the length of the resolution proof.
 
 \begin{theorem}[Soundness of Resolution]\label{theorem:soundness-resolution}
 If a formula $S$ is resolution refutable, then $S$ is unsatisfiable.
 \end{theorem}
 \begin{proof}
-    Suppose $S \proves_R \square$ and consider a resolution proof $C_0, C_1, \dots, C_n = \square$. Suppose, for a contradiction, that $S$ is satisfiable, i.e., $\mathcal{V} \models S$ for some valuation $\mathcal{V}$. By induction on $i$, we prove that $\mathcal{V} \models C_i$. For $i = 0$, this holds because $C_0 \in S$. For $i > 0$, there are two cases:
+    Suppose $S \proves_R \square$ and consider a resolution proof $C_0, C_1, \dots, C_n = \square$. Suppose, for a contradiction, that $S$ is satisfiable, i.e., $\mathcal{V} \models S$ for some assignment $\mathcal{V}$. By induction on $i$, we prove that $\mathcal{V} \models C_i$. For $i = 0$, this holds because $C_0 \in S$. For $i > 0$, there are two cases:
     \begin{itemize}
         \item $C_i \in S$, in which case $\mathcal{V} \models C_i$ follows from the assumption that $\mathcal{V} \models S$,
-        \item $C_i$ is the resolvent of $C_j, C_k$, where $j, k < i$: by the induction hypothesis, $\mathcal{V} \models C_j$ and $\mathcal{V} \models C_k$. $\mathcal{V} \models C_i$ follows from the correctness of the resolution rule.
+        \item $C_i$ is the resolvent of $C_j, C_k$, where $j, k < i$: by the induction hypothesis, $\mathcal{V} \models C_j$ and $\mathcal{V} \models C_k$. $\mathcal{V} \models C_i$ follows from the soundness of the resolution rule.
     \end{itemize}
     (Alternatively, we could proceed by induction on the depth of the resolution tree.)
 \end{proof}
@@ -192,9 +196,9 @@ The key property of substitution is expressed by the following lemma:
 $S$ is satisfiable if and only if $S^\ell$ or $S^{\bar{\ell}}$ is satisfiable.    
 \end{lemma}
 \begin{proof}
-Let $\mathcal{V} \models S$, it cannot contain both $\ell$ and $\bar{\ell}$ (it must be consistent); without loss of generality, assume $\bar{\ell} \notin \mathcal{V}$, and show that $\mathcal{V} \models S^\ell$. Consider any clause in $S^\ell$. It is of the form $C \setminus \{\bar{\ell}\}$ for a clause $C \in S$ (not containing the literal $\ell$). We know that $\mathcal{V} \models C$, but since $\mathcal{V}$ does not contain $\bar{\ell}$, the valuation $\mathcal{V}$ must satisfy some other literal of $C$, so $\mathcal{V} \models C \setminus \{\bar{\ell}\}$.
+Let $\mathcal{V} \models S$, it cannot contain both $\ell$ and $\bar{\ell}$ (it must be consistent); without loss of generality, assume $\bar{\ell} \notin \mathcal{V}$, and show that $\mathcal{V} \models S^\ell$. Consider any clause in $S^\ell$. It is of the form $C \setminus \{\bar{\ell}\}$ for a clause $C \in S$ (not containing the literal $\ell$). We know that $\mathcal{V} \models C$, but since $\mathcal{V}$ does not contain $\bar{\ell}$, the assignment $\mathcal{V}$ must satisfy some other literal of $C$, so $\mathcal{V} \models C \setminus \{\bar{\ell}\}$.
 
-Conversely, suppose there exists a valuation $\mathcal{V}$ satisfying $S^\ell$ (again, without loss of generality). Since $\bar{\ell}$ (or $\ell$) does not appear in $S^\ell$, it holds that $\mathcal{V} \setminus \{\bar{\ell}\} \models S^\ell$. The valuation $\mathcal{V}' = (\mathcal{V} \setminus \{\bar{\ell}\}) \cup \{\ell\}$ then satisfies each clause $C \in S$: if $\ell \in C$, then $\ell \in C \cap \mathcal{V}'$ and $C \cap \mathcal{V}' \neq \emptyset$, otherwise $C \cap \mathcal{V}' = (C \setminus \{\bar{\ell}\}) \cap \mathcal{V}' \neq \emptyset$ because $\mathcal{V} \setminus \{\bar{\ell}\} \models C \setminus \{\bar{\ell}\} \in S^\ell$. We have verified that $\mathcal{V}' \models S$, so $S$ is satisfiable.
+Conversely, suppose there exists an assignment $\mathcal{V}$ satisfying $S^\ell$ (again, without loss of generality). Since $\bar{\ell}$ (or $\ell$) does not appear in $S^\ell$, it holds that $\mathcal{V} \setminus \{\bar{\ell}\} \models S^\ell$. The assignment $\mathcal{V}' = (\mathcal{V} \setminus \{\bar{\ell}\}) \cup \{\ell\}$ then satisfies each clause $C \in S$: if $\ell \in C$, then $\ell \in C \cap \mathcal{V}'$ and $C \cap \mathcal{V}' \neq \emptyset$, otherwise $C \cap \mathcal{V}' = (C \setminus \{\bar{\ell}\}) \cap \mathcal{V}' \neq \emptyset$ because $\mathcal{V} \setminus \{\bar{\ell}\} \models C \setminus \{\bar{\ell}\} \in S^\ell$. We have verified that $\mathcal{V}' \models S$, so $S$ is satisfiable.
 \end{proof}
 
 Whether a given \emph{finite} formula is satisfiable can thus be determined recursively (using the \emph{divide and conquer} method) by substituting both possible literals for (some, say the first) propositional variable appearing in the formula and branching the computation. Essentially, this is a similar principle to the DPLL algorithm (see Section \ref{section:DPLL}). The resulting tree is called a \emph{substitution tree}. 
@@ -212,7 +216,7 @@ Let's illustrate this concept with an example by constructing a substitution tre
     ]
     \end{forest}
 \end{center}
-Once a branch contains the empty clause $\square$, it is unsatisfiable, and we need not continue in that branch. In the leaves, there are either unsatisfiable theories or empty theories: in the latter case, the sequence of substitutions gives us a satisfying valuation.    
+Once a branch contains the empty clause $\square$, it is unsatisfiable, and we need not continue in that branch. In the leaves, there are either unsatisfiable theories or empty theories: in the latter case, the sequence of substitutions gives us a satisfying assignment.    
 \end{example}
 
 From the construction, it is evident how to proceed in the case of a finite formula. However, the substitution tree makes sense, and the following corollary holds, even for infinite formulas:
@@ -227,7 +231,7 @@ From the construction, it is evident how to proceed in the case of a finite form
         \item If $|\Var(S)| = 0$, we have $S = \emptyset$ or $S = \{\square\}$, in both cases, the substitution tree is one node, and the statement holds. 
         \item In the inductive step, we choose any literal $\ell \in \Var(S)$ and apply Lemma \ref{lemma:tree-of-reductions}.
     \end{itemize} 
-If $S$ is infinite and satisfiable, it has a satisfying valuation, which `matches' the corresponding (infinite) branch in the substitution tree. If $S$ is infinite and unsatisfiable, then by the Compactness Theorem, there is a finite part $S' \subseteq S$ that is also unsatisfiable. Substitution for all variables from $\Var(S')$ will lead to $\square$ in each branch, which will happen after finitely many steps.
+If $S$ is infinite and satisfiable, it has a satisfying assignment, which `matches' the corresponding (infinite) branch in the substitution tree. If $S$ is infinite and unsatisfiable, then by the Compactness Theorem, there is a finite part $S' \subseteq S$ that is also unsatisfiable. Substitution for all variables from $\Var(S')$ will lead to $\square$ in each branch, which will happen after finitely many steps.
 \end{proof}
 
 \subsection{Completeness of Resolution}
@@ -242,12 +246,12 @@ The proof is by induction on the number of variables in $S$. If $|\Var(S)| = 0$,
 
 We show how to construct the resolution tree $\widehat{T}$ for $S \proves_R \neg p$. Similarly, we construct $\widehat{T'}$ for $S \proves_R p$, and then easily construct the resolution tree for $S \proves_R \square$: we attach the roots of the trees $\widehat{T}$ and $\widehat{T'}$ as the left and right children of the root $\square$ (i.e., in the last step of the resolution proof, we obtain $\square$ by resolving $\{\neg p\}$ and $\{p\}$).
 
-It remains to show the construction of the tree $\widehat{T}$: the set of nodes and the order remain the same; we only change some clauses in the nodes by adding the literal $\neg p$. At each leaf of the tree $T$ is some clause $C \in S^p$, and either $C \in S$ or it is not, but $C \cup \{\neg p\} \in S$. In the first case, we leave the label unchanged. In the second case, we add the literal $\neg p$ to $C$ \emph{and to all clauses above this leaf}. In the leaves, there are now only clauses from $S$, in the root, we have changed $\square$ to $\neg p$. And each internal node remains the resolvent of its children.
+It remains to show the construction of the tree $\widehat{T}$: the set of nodes and the order remain the same; we only change some clauses in the nodes by adding the literal $\neg p$. At each leaf of the tree $T$ is some clause $C \in S^p$, and either $C \in S$ or it is not, but $C \cup \{\neg p\} \in S$. In the first case, we leave the label unchanged. In the second case, we add the literal $\neg p$ to $C$ \emph{and to all clauses above this leaf}. In the leaves, there are now only clauses from $S$, in the root, we have changed $\square$ to $\neg p$. And each inner node remains the resolvent of its children.
 \end{proof}
 
 \begin{exercise}
     The proof of the Completeness Theorem for resolution gives a method for recursively `growing' a resolution refutation. Think about how to do this and apply it to an example of an unsatisfiable formula.
-\end{exercise} %\todo make example?
+\end{exercise}
 
 
 \section{LI-Resolution and Horn-SAT}
@@ -342,15 +346,9 @@ In addition to the resolution tree, a resolution proof can also be organized as 
 \begin{remark}\label{remark:linear-resolution}
     $C$ has a linear proof from $S$ if and only if $S\proves_R C$.
 \end{remark}
-A resolution tree can easily be produced from a linear proof by induction on the length of the proof: the base case is obvious, and if there is a side clause $B_i$ that is not an axiom from $S$, then $B_i=C_j$ for some $j<i$ and we only need to attach the resolution tree for proving $C_j$ from $S$ instead of $B_i$. Notice that this also implies the \emph{correctness} of linear resolution.
+A resolution tree can easily be produced from a linear proof by induction on the length of the proof: the base case is obvious, and if there is a side clause $B_i$ that is not an axiom from $S$, then $B_i=C_j$ for some $j<i$ and we only need to attach the resolution tree for proving $C_j$ from $S$ instead of $B_i$. Notice that this also implies the \emph{soundness} of linear resolution.
 
 We will not present the proof of the reverse implication. It follows from the \emph{completeness} of linear resolution, whose proof can be found in the textbook \emph{A. Nerode, R. Shore: Logic for Applications}~\cite{nerode_logic_2012}.
-
-
-
-% \begin{exercise}
-%     Prove both implications in Remark \ref{remark:linear-resolution} in detail.
-% \end{exercise}
 
 
 \subsection{LI-Resolution}
@@ -417,7 +415,7 @@ If a Horn formula $T$ is satisfiable, and $T\cup\{G\}$ is unsatisfiable for a go
     
     If $G^p=\square$, then $G=\{\neg p\}$, $\square$ is the resolvent of $G$ and $\{p\}\in T$, and we have a one-step LI-refutation of $T\cup\{G\}$ (this is the base case of the induction). 
     
-    Otherwise, we use the induction hypothesis. Note that the formula $T^p$ is satisfiable (by the same valuation as $T$, because it must contain $p$ due to the fact $\{p\}$, so it does not contain $\neg p$) and has fewer variables than $T$. Thus, by the induction hypothesis, there exists an LI-derivation of $\square$ from $T^p\cup\{G^p\}$ starting with $G^p=G\setminus\{\neg p\}$.
+    Otherwise, we use the induction hypothesis. Note that the formula $T^p$ is satisfiable (by the same assignment as $T$, because it must contain $p$ due to the fact $\{p\}$, so it does not contain $\neg p$) and has fewer variables than $T$. Thus, by the induction hypothesis, there exists an LI-derivation of $\square$ from $T^p\cup\{G^p\}$ starting with $G^p=G\setminus\{\neg p\}$.
 
     We construct the required LI-refutation of $T\cup\{G\}$ starting with $G$ (similarly to the proof of the Completeness Theorem for Resolution) by adding the literal $\neg p$ to all leaves that are not already in $T\cup\{G\}$ (i.e., they were created by removing $\neg p$), and to all vertices above them. This gives us $T\cup\{G\}\proves_{LI}\neg p$, and finally we add the side clause $\{p\}$ and derive $\square$.
 \end{proof}

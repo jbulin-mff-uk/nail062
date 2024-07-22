@@ -1,12 +1,12 @@
-\chapter{Tablo metoda v predikátové logice}
+\chapter{Tableau Method in Predicate Logic}
 
-V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z výrokové na predikátovou logiku.\footnote{Na tomto místě je dobré připomenout si tablo metodu ve výrokové logice, viz Kapitola \ref{chapter:tableau-method-propositional}.} Metoda funguje velmi podobně, musíme si ale poradit \emph{kvantifikátory}.
+In this chapter, we will demonstrate how to generalize the \emph{analytic tableau method} from propositional logic to predicate logic.\footnote{At this point, it is helpful to revisit the tableau method in propositional logic, see Chapter \ref{chapter:tableau-method-propositional}.} The method operates similarly but must handle \emph{quantifiers}.
 
-\section{Neformální úvod}
+\section{Informal Introduction}
 
-V této sekci tablo metodu neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
+In this section, we will informally introduce the tableau method. Formal definitions will follow later. We will start with two examples illustrating how the tableau method works in predicate logic and how it deals with quantifiers.
 
-\begin{example} Na Obrázku \ref{figure:predicate-tableau-intro-examples} jsou znázorněna dvě tabla. Jsou to tablo důkazy (v logice, tj. z prázdné teorie) \emph{sentencí} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (vpravo) a $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (vlevo) jazyka $L=\langle P\rangle$ (bez rovnosti), kde $P$ je unární relační symbol. Symbol $c_0$ je \emph{pomocný konstantní symbol}, který do jazyka při konstrukci tabla přidáváme.
+\begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from an empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relational symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
 
 \begin{figure}[htbp]
 \begin{minipage}{.49\textwidth}
@@ -52,62 +52,62 @@ V této sekci tablo metodu neformálně představíme. K formálním definicím 
 \end{forest}
 \end{minipage}
 \label{figure:predicate-tableau-intro-examples}
-\caption{Příklady tabel. Položky typu `svědek' jsou znázorněny červeně, položky typu `všichni' modře.}
+\caption{Example tableaux. Items of the `witness' type are shown in red, items of the `all' type in blue.}
 \end{figure}
 \end{example}
 
 
-\subsubsection{Položky}
-Formule v položkách musí být vždy \emph{sentence}, neboť potřebujeme, aby měly v daném modelu \emph{pravdivostní hodnotu} (nezávisle na ohodnocení proměnných). To ale není zásadní omezení, chceme-li dokázat, že formule $\varphi$ platí v teorii $T$, můžeme nejprve nahradit formuli $\varphi$ a všechny axiomy $T$ jejich \emph{generálními uzávěry} (tj. univerzálně kvantifikujeme všechny volné proměnné). Získáme tak \emph{uzavřenou} teorii $T'$ a sentenci $\varphi'$ a platí: $T'\models\varphi'$ právě když $T\models\varphi$.
+\subsubsection{Items}
+Formulas in items must always be \emph{sentences} because we need them to have a \emph{truth value} in a given model (independently of the variable assignment). This is not a significant restriction; if we want to prove that a formula $\varphi$ holds in a theory $T$, we can first replace the formula $\varphi$ and all the axioms of $T$ with their \emph{general closures} (i.e., universally quantify all free variables). This yields a \emph{closed} theory $T'$ and a sentence $\varphi'$, and it holds that $T'\models\varphi'$ if and only if $T\models\varphi$.
 
-\subsubsection{Kvantifikátory}
-Redukce položek funguje stejně, použijeme tatáž atomická tabla pro logické spojky (viz Tabulka \ref{table:atomic-tableaux}, kde místo výroků jsou $\varphi,\psi$ sentence). Musíme ale přidat 4 nová atomická tabla pro $\mathrm T/\mathrm F$ a univerzální/existenční kvantifikátor. Tyto položky dělíme na dva typy:
+\subsubsection{Quantifiers}
+The reduction of items works the same way, using the same atomic tableaux for logical connectives (see Table \ref{table:atomic-tableaux}, where instead of propositions, $\varphi,\psi$ are sentences). However, we must add four new atomic tableaux for $\mathrm T/\mathrm F$ and universal/existential quantifiers. These items are divided into two types:
 \begin{itemize}
-    \item typ ``\emph{svědek}'': položky tvaru $\mathrm{T}(\exists x)\varphi(x)$ a $\mathrm{F}(\forall x)\varphi(x)$
-    \item typ ``\emph{všichni}'': položky tvaru $\mathrm{T}(\forall x)\varphi(x)$ a $\mathrm{F}(\exists x)\varphi(x)$    
+    \item Type ``\emph{witness}'': items of the form $\mathrm{T}(\exists x)\varphi(x)$ and $\mathrm{F}(\forall x)\varphi(x)$
+    \item Type ``\emph{all}'': items of the form $\mathrm{T}(\forall x)\varphi(x)$ and $\mathrm{F}(\exists x)\varphi(x)$    
 \end{itemize}
-Příklady vidíme v tablech na Obrázku \ref{figure:predicate-tableau-intro-examples} (`svědci' jsou červeně, `všichni' modře).
+Examples can be seen in the tableaux in Figure \ref{figure:predicate-tableau-intro-examples} (`witnesses' are in red, `all' in blue).
 
-Kvantifikátor nemůžeme pouze odstranit, neboť výsledná formule $\varphi(x)$ by nebyla sentencí. Místo toho současně s odstraněním kvantifikátoru \emph{substituujeme} za $x$ nějaký \emph{konstantní term}, v nové položce tedy bude \emph{sentence} $\varphi(x/t)$. Jaký konstantní term $t$ substituujeme záleží na tom, zda jde o položku typu ``svědek'' nebo ``všichni''. 
+We cannot simply remove the quantifier because the resulting formula $\varphi(x)$ would not be a sentence. Instead, simultaneously with removing the quantifier, we \emph{substitute} a \emph{constant term} for $x$, resulting in the new item being the \emph{sentence} $\varphi(x/t)$. The constant term $t$ we substitute depends on whether it is a ``witness'' or ``all'' type item.
 
-\subsubsection{Pomocné konstantní symboly}
-Jazyk $L$ teorie $T$, ve které dokazujeme, rozšíříme o spočetně mnoho \emph{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$ (ale budeme psát i $c,d,\dots$), výsledný rozšířený jazyk označíme $L_C$. Konstantní termy v jazyce $L_C$ tedy existují, i pokud původní jazyk $L$ nemá žádné konstanty. A vždy při konstrukci tabla máme k dispozici nějaký \emph{nový}, dosud \emph{nepoužitý} (ani v teorii, ani v konstruovaném tablu) pomocný konstantní symbol $c\in C$.
+\subsubsection{Auxiliary Constant Symbols}
+The language $L$ of the theory $T$ in which we are proving is extended with a countable number of \emph{new (auxiliary) constant symbols} $C=\{c_0,c_1,c_2,\dots\}$ (but we will also write $c,d,\dots$), and the resulting extended language is denoted $L_C$. Thus, constant terms in the language $L_C$ exist even if the original language $L$ has no constants. When constructing the tableau, we always have some \emph{new}, previously \emph{unused} (in the theory or in the constructed tableau) auxiliary constant symbol $c\in C$ available.
 
-\subsubsection{Svědci}
-Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Srovnej s Větou o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
+\subsubsection{Witnesses}
+When reducing a ``witness'' type item, we substitute for the variable one of these new, auxiliary symbols that \emph{has not yet been used on the given branch}. For an item $\T(\exists x)\varphi(x)$, we thus get $\T\varphi(x/c)$. This constant symbol $c$ will represent (some) element that satisfies the formula (or refutes it, in the case of an item of the form $\F(\forall x)\varphi(x)$). Compare this with the Constant Theorem (Theorem \ref{theorem:on-constants}). It is important that the symbol $c$ has not yet been used on the branch or in the theory. Typically, we then use ``all'' type items to learn what must \emph{hold about this witness}.
 
-Na Obrázku \ref{figure:predicate-tableau-intro-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
+In Figure \ref{figure:predicate-tableau-intro-examples}, we see an example: the item $\T(\exists x)\neg P(x)$ in the left tableau is reduced, with its reduction resulting in the item $\T\neg P(c_0)$; $c_0\in C$ is an auxiliary symbol that has not yet appeared on the branch (and is the first such). Similarly for the item $\F(\forall x)P(x)$ and $\F P(c_0)$ in the right tableau.
 
-\subsubsection{Všichni}
-Při redukci položky typu ``všichni'' substituujeme za proměnnou $x$ libovolný \emph{konstantní term} $t$ rozšířeného jazyka $L_C$. Z položky tvaru $\T(\forall x)\varphi(x)$ tedy získáme položku $\T\varphi(x/t)$. 
+\subsubsection{All}
+When reducing an ``all'' type item, we substitute for the variable $x$ any \emph{constant term} $t$ of the extended language $L_C$. From an item of the form $\T(\forall x)\varphi(x)$, we thus get the item $\T\varphi(x/t)$.
 
-Aby byla bezesporná větev \emph{dokončená}, budou na ní ale muset být položky $\T\varphi(x/t)$ pro \emph{všechny} konstantní $L_C$-termy $t$. (Musíme `použít' vše, co položka $\T(\forall x)\varphi(x)$ `říká'.) A stejně pro položku tvary $\mathrm{F}(\exists x)\varphi(x)$.
+However, for a branch to be \emph{completed}, it must contain items $\T\varphi(x/t)$ for \emph{all} constant $L_C$-terms $t$. (We must `use' everything the item $\T(\forall x)\varphi(x)$ `says'.) The same applies for an item of the form $\mathrm{F}(\exists x)\varphi(x)$.
 
-Ve výrokové logice jsme používali konvenci, že při připojování atomických tabel vynecháváme jejich kořeny (jinak bychom opakovali na větvi tutéž položku dvakrát). V predikátové logice použijeme stejnou konvenci, ale \emph{s výjimkou položek typu `všichni'}. U těch zapíšeme i kořen připojovaného atomického tabla. Proč to děláme? Abychom si připomněli, že s touto položkou ještě nejsme hotovi, že musíme připojit atomická tabla s jinými konstantními termy.
+In propositional logic, we used the convention of omitting the roots of atomic tableaux when connecting them (otherwise, we would repeat the same item twice on the branch). In predicate logic, we will use the same convention but \emph{with the exception of `all' type items}. We will write the root of the connected atomic tableau as well. Why do we do this? To remind ourselves that we are not yet finished with this item and that we must connect atomic tableaux with other constant terms.
 
-Na Obrázku \ref{figure:predicate-tableau-intro-examples} v levém tablu \emph{není} položka $\T(\forall x)P(x)$ \emph{redukovaná}. Její \emph{první výskyt} (4. vrchol shora) jsme zredukovali, substituujeme term $t=c_0$, máme tedy $\varphi(x/t)=P(c_0)$. Připojili jsme atomické tablo v sestávající z téže položky v kořeni $\T(\forall x)P(x)$, kterou do tabla \emph{zapíšeme}, a z položky $\T P(c_0)$ pod ní. Zatímco \emph{první výskyt} položky $\T(\forall x)P(x)$ je tímto redukovaný, \emph{druhý výskyt} (7. vrchol shora) redukovaný není. Podobně pro položku $\F(\exists x)\neg P(x)$ v pravém tablu.
+In Figure \ref{figure:predicate-tableau-intro-examples}, the item $\T(\forall x)P(x)$ in the left tableau is \emph{not} \emph{reduced}. Its \emph{first occurrence} (4th node from the top) has been reduced, substituting the term $t=c_0$, resulting in $\varphi(x/t)=P(c_0)$. We have connected an atomic tableau consisting of the same item at the root $\T(\forall x)P(x)$, which we \emph{write} in the tableau, and the item $\T P(c_0)$ below it. While the \emph{first occurrence} of the item $\T(\forall x)P(x)$ is thus reduced, the \emph{second occurrence} (7th node from the top) is not. Similarly for the item $\F(\exists x)\neg P(x)$ in the right tableau.
 
-Tento poněkud technický přístup k definici \emph{redukovanosti} (výskytů) položek typu `všichni' se nám bude hodit v definici \emph{systematického tabla}.
+This somewhat technical approach to defining the \emph{reducedness} of (occurrences of) `all' type items will be useful in defining a \emph{systematic tableau}.
 
-\subsubsection{Jazyk}
+\subsubsection{Language}
 
-Nadále budeme předpokládat, že jazyk $L$ je \emph{spočetný}.\footnote{Z hlediska výpočetní logiky to není velké omezení.} Z toho plyne, že každá $L$-teorie $T$ má jen spočetně mnoho axiomů, a také že konstantních termů v jazyce $L_C$ je jen spočetně mnoho. Toto omezení potřebujeme, neboť každé, i nekonečné tablo má jen spočetně mnoho položek, a musíme být schopni použít všechny axiomy dané teorie, a substituovat všechny konstantní termy jazyka $L_C$.
+We will assume that the language $L$ is \emph{countable}.\footnote{This is not a significant limitation from the perspective of computational logic.} As a result, any $L$-theory $T$ has only countably many axioms, and there are also only countably many constant terms in the language $L_C$. This restriction is necessary because every tableau, even an infinite one, has only countably many items, and we must be able to use all the axioms of the given theory and substitute all the constant terms of the language $L_C$.
 
-Nejprve také budeme předpokládat, že jde o jazyk \emph{bez rovnosti}, což je jednodušší. Problémem je, že \emph{tablo} je čistě syntaktický objekt, ale \emph{rovnost} má speciální sémantický význam, totiž musí být v každém modelu interpretována relací identity. Jak adaptovat metodu pro jazyky s rovností si ukážeme později. 
+We will also initially assume that it is a language \emph{without equality}, which is simpler. The problem is that \emph{the tableau} is a purely syntactic object, but \emph{equality} has a special semantic meaning: it must be interpreted as the identity relation in every model. How to adapt the method for languages with equality will be shown later.
 
-\section{Formální definice}
+\section{Formal Definitions}
 
-V této sekci definujeme všechny pojmy potřebné pro tablo metodu pro jazyky bez rovnosti. K jazykům s rovností se vrátíme v Sekci \ref{section:tableaux-equality}. 
+In this section, we will define all the concepts needed for the tableau method for languages without equality. We will return to languages with equality in Section \ref{section:tableaux-equality}.
 
-Buď $L$ \emph{spočetný} jazyk bez rovnosti. Označme jako $L_C$ rozšíření jazyka $L$ o spočetně mnoho nových \emph{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$. Zvolme nějaké očíslování konstantních termů jazyka $L_C$, označme tyto termy $\{t_i\mid i\in\mathbb N\}$.
+Let $L$ be a \emph{countable} language without equality. Denote by $L_C$ the extension of the language $L$ with countably many new \emph{auxiliary} constant symbols $C=\{c_i\mid i\in \mathbb N\}$. Let us choose some numbering of the constant terms of the language $L_C$, denoted by $\{t_i\mid i\in\mathbb N\}$.
 
-Mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$.
+Let $T$ be some $L$-theory and $\varphi$ an $L$-sentence.
 
-\subsection{Atomická tabla}
+\subsection{Atomic Tableaux}
 
-\emph{Položka} je nápis $\T\varphi$ nebo $\F\varphi$, kde $\varphi$ je nějaká $L_C$-sentence. Položky tvaru $\T(\exists x)\varphi(x)$ a $\F(\forall x)\varphi(x)$ jsou \emph{typu `svědek'}, položky tvaru $\T(\forall x)\varphi(x)$ a $\F(\exists x)\varphi(x)$ jsou \emph{typu `všichni'}
+An \emph{item} is a label $\T\varphi$ or $\F\varphi$, where $\varphi$ is some $L_C$-sentence. Items of the form $\T(\exists x)\varphi(x)$ and $\F(\forall x)\varphi(x)$ are of the \emph{`witness' type}, while items of the form $\T(\forall x)\varphi(x)$ and $\F(\exists x)\varphi(x)$ are of the \emph{`all' type}.
 
-\emph{Atomická tabla} jsou položkami označkované stromy znázorněné v Tabulkách \ref{table:predicate-atomic-tableaux-logical} a \ref{table:predicate-atomic-tableaux-quantifiers}.
+\emph{Atomic tableaux} are labeled trees shown in Tables \ref{table:predicate-atomic-tableaux-logical} and \ref{table:predicate-atomic-tableaux-quantifiers}.
 
 \begin{table}[htbp]
 \centering
@@ -157,7 +157,7 @@ False
 [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
 \end{forest}
 \end{tabular}
-\caption{Atomická tabla pro logické spojky; $\varphi$ a $\psi$ jsou libovolné $L_C$-sentence.}
+\caption{Atomic tableaux for logical connectives; $\varphi$ and $\psi$ are any $L_C$-sentences.}
 \label{table:predicate-atomic-tableaux-logical}
 \end{table}
 
@@ -186,67 +186,67 @@ False
         [$\F(\exists x)\varphi(x)$ [$\F\varphi(x/t_i)$]]
     \end{forest} 
     \end{tabular}
-    \caption{Atomická tabla pro kvantifikátory; $\varphi$ je $L_C$-sentence, $x$ proměnná, $t_i$ libovolný konstantní $L_C$-term, $c_i\in C$ je nový pomocný konstantní symbol (který se dosud nevyskytuje na dané větvi konstruovaného tabla).}
+    \caption{Atomic tableaux for quantifiers; $\varphi$ is an $L_C$-sentence, $x$ a variable, $t_i$ any constant $L_C$-term, $c_i\in C$ is a new auxiliary constant symbol (not yet occurring on the given branch of the constructed tableau).}
     \label{table:predicate-atomic-tableaux-quantifiers}
 \end{table}
 
-\subsection{Tablo důkaz}
+\subsection{Tableau Proof}
 
-Definice v této části jsou téměř identické odpovídajícím definicím z výrokové logiky. Hlavní technický problém je jak definovat redukovanost položek typu `všichni' na větvi tabla: chceme aby za proměnnou byly substituovány \emph{všechny} konstantní $L_C$-termy $t_i$. 
+The definitions in this section are almost identical to the corresponding definitions from propositional logic. The main technical problem is how to define the reducedness of `all' type items on a branch of the tableau: we want all \emph{constant} $L_C$ terms $t_i$ to be substituted for the variable.
 
-\begin{definition}[Tablo]
-    \emph{Konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+\begin{definition}[Tableau]
+    A \emph{finite tableau from theory $T$} is an ordered, labeled tree constructed by applying finitely many of the following rules:
     \begin{itemize}
-        \item jednoprvkový strom označkovaný libovolnou položkou je tablo z teorie $T$,
-        \item pro libovolnou položkou $P$ na libovolné větvi $V$, můžeme na konec větve $V$ připojit atomické tablo pro položku $P$, přičemž je-li $P$ typu `svědek', můžeme použít jen pomocný konstantní symbol $c_i\in C$, který se na větvi $V$ dosud nevyskytuje (pro položky typu `všichni' můžeme použít libovolný konstantní $L_C$-term $t_i$),
-        \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom teorie $\alpha\in T$.
+        \item A single-node tree labeled with any item is a tableau from theory $T$,
+        \item For any item $P$ on any branch $V$, we can attach an atomic tableau for item $P$ to the end of branch $V$, provided that if $P$ is a `witness' type, we use only an auxiliary constant symbol $c_i\in C$ not yet appearing on branch $V$ (for `all' type items, we can use any constant $L_C$-term $t_i$),
+        \item We can attach the item $\mathrm{T}\alpha$ for any axiom $\alpha\in T$ to the end of any branch.
     \end{itemize}
-    \emph{Tablo z teorie $T$} je buď konečné, nebo i \emph{nekonečné}: v tom případě vzniklo ve spočetně mnoha krocích. Můžeme ho formálně vyjádřit jako sjednocení $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_i$ jsou konečná tabla z $T$, $\tau_0$ je jednoprvkové tablo, a $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku.\footnote{Sjednocení proto, že v jednotlivých krocích přidáváme do tabla nové vrcholy, $\tau_i$ je tedy podstromem $\tau_{i+1}$.}
+    A \emph{tableau from theory $T$} can be either finite or \emph{infinite}: in which case it is constructed in countably many steps. It can be formally expressed as the union $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_i$ are finite tableaux from $T$, $\tau_0$ is a single-node tableau, and $\tau_{i+1}$ is constructed from $\tau_i$ in one step.\footnote{Union because in each step, we add new nodes to the tableau, so $\tau_i$ is a subtree of $\tau_{i+1}$.}
     
-    Tablo \emph{pro položku $P$} je tablo, které má položku $P$ v kořeni.
-    \end{definition}
+    A tableau \emph{for item $P$} is a tableau with item $P$ at the root.
+\end{definition}
     
-    Připomeňme konvenci, že pokud $P$ \emph{není} typu `všichni', potom kořen atomického tabla nebudeme zapisovat (neboť vrchol s položkou $P$ už v tablu je).
+Recall the convention that if $P$ is \emph{not} of the `all' type, we omit the root of the atomic tableau (since the node with item $P$ is already in the tableau).
 
 \begin{exercise}
-    Ukažte v jednotlivých krocích jak byla tabla z Obrázku \ref{figure:predicate-tableau-intro-examples} zkonstruována.
+    Show step-by-step how the tableaux from Figure \ref{figure:predicate-tableau-intro-examples} were constructed.
 \end{exercise}
 
 
-\begin{definition}[Tablo důkaz]
-    \emph{Tablo důkaz} sentence $\varphi$ z teorie $T$ je \emph{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) dokazatelná} z $T$, píšeme $T\proves\varphi$. (Definujme také \emph{tablo zamítnutí} jako sporné tablo s $\mathrm{T}\varphi$ v kořeni. Pokud existuje, je $\varphi$ \emph{(tablo) zamítnutelná} z $T$, tj. platí $T\proves\neg\varphi$.)  
+\begin{definition}[Tableau Proof]
+    A \emph{tableau proof} of a sentence $\varphi$ from a theory $T$ is a \emph{contradictory} tableau from theory $T$ with the item $\mathrm{F}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) provable} from $T$, denoted by $T\proves\varphi$. (We also define a \emph{tableau refutation} as a contradictory tableau with $\mathrm{T}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) refutable} from $T$, i.e., $T\proves\neg\varphi$ holds.)  
     \begin{itemize}
-        \item Tablo je \emph{sporné}, pokud je každá jeho větev sporná.
-        \item Větev je \emph{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějakou sentenci $\psi$, jinak je \emph{bezesporná}.
-        \item Tablo je \emph{dokončené}, pokud je každá jeho větev dokončená.
-        \item Větev je \emph{dokončená}, pokud 
+        \item A tableau is \emph{contradictory} if each of its branches is contradictory.
+        \item A branch is \emph{contradictory} if it contains items $\mathrm{T}\psi$ and $\mathrm{F}\psi$ for some sentence $\psi$, otherwise it is \emph{consistent}.
+        \item A tableau is \emph{completed} if each of its branches is completed.
+        \item A branch is \emph{completed} if 
         \begin{itemize}
-            \item je sporná, nebo
-            \item je každá položka na této větvi \emph{redukovaná} a zároveň větev obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+            \item it is contradictory, or
+            \item each item on this branch is \emph{reduced} and the branch contains the item $\mathrm{T}\alpha$ for each axiom $\alpha\in T$.
         \end{itemize}
          
-        \item Položka $P$ je \emph{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+        \item An item $P$ is \emph{reduced} on a branch $V$ passing through this item if 
         \begin{itemize}
-            \item je tvaru $\mathrm{T}\psi$ resp. $\mathrm{F}\psi$ pro \emph{atomickou sentenci} $\psi$ (tj. $R(t_1,\dots,t_n)$, kde $t_i$ jsou \emph{konstantní} $L_C$-termy), nebo
-            \item není typu `všichni' a vyskytuje se na $V$ jako kořen atomického tabla\footnote{Byť podle konvence tento kořen nezapisujeme.} (tj., typicky, při konstrukci tabla již došlo k jejímu rozvoji na $V$), nebo
-            \item je typu `všichni' a všechny její \emph{výskyty} na $V$ jsou na větvi $V$ \emph{redukované}.
+            \item it is of the form $\mathrm{T}\psi$ or $\mathrm{F}\psi$ for an \emph{atomic sentence} $\psi$ (i.e., $R(t_1,\dots,t_n)$, where $t_i$ are \emph{constant} $L_C$-terms), or
+            \item it is not of the `all' type and appears on $V$ as the root of an atomic tableau\footnote{Even though by convention we do not write this root.} (i.e., typically, the item has already been developed on $V$ during the tableau construction), or
+            \item it is of the `all' type and all its \emph{occurrences} on $V$ are reduced on the branch $V$.
         \end{itemize}
-        \item Výskyt položky $P$ typu `všichni' na větvi $V$ je \emph{$i$-tý}, pokud má na $V$ právě $i-1$ předků označených touto položkou, a $i$-tý výskyt je \emph{redukovaný} na $V$, pokud
+        \item An occurrence of an `all' type item $P$ on branch $V$ is \emph{$i$-th} if it has exactly $i-1$ predecessors labeled with this item on $V$, and the $i$-th occurrence is \emph{reduced} on $V$ if
         \begin{itemize}
-            \item položka $P$ má $(i+1)$-ní výskyt na $V$, a zároveň
-            \item na $V$ se vyskytuje položka $\T\varphi(x/t_i)$ (je-li $P=\T(\forall x)\varphi(x)$) resp. $\F\varphi(x/t_i)$ (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term.\footnote{Tj. (typicky) už jsme za $x$ substituovali term $t_i$.}
+            \item the item $P$ has the $(i+1)$-th occurrence on $V$, and simultaneously
+            \item the branch $V$ contains the item $\T\varphi(x/t_i)$ (if $P=\T(\forall x)\varphi(x)$) or $\F\varphi(x/t_i)$ (if $P=\F(\exists x)\varphi(x)$), where $t_i$ is the $i$-th constant $L_C$-term.\footnote{I.e., (typically) we have already substituted the term $t_i$ for $x$.}
         \end{itemize} 
     \end{itemize}
 \end{definition}
-Všimněte si, že je-li položka typu `všichni' na nějaké větvi redukovaná, musí mít na této větvi nekonečně mnoho výskytů, a museli jsme v nich použít při substituci všechny možnosti, tj. všechny konstantní $L_C$-termy.
-    
+Note that if an `all' type item is reduced on some branch, it must have infinitely many occurrences on that branch, and we must have used all possibilities, i.e., all constant $L_C$ terms, in the substitutions.
+
 \begin{example}\label{example:tableau-proofs}
-Jako příklad sestrojme tablo důkazy \emph{v logice} (z prázdné teorie) následujících sentencí: 
+As an example, let us construct tableau proofs \emph{in logic} (from an empty theory) of the following sentences: 
         \begin{enumerate}[(a)]
-            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, kde $P,Q$ jsou unární relační symboly.
-            \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, kde $\varphi(x),\psi(x)$ jsou libovolné formule s jedinou volnou proměnnou $x$.
+            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, where $P,Q$ are unary relational symbols.
+            \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, where $\varphi(x),\psi(x)$ are arbitrary formulas with the single free variable $x$.
         \end{enumerate}
-Výsledná tabla jsou na Obrázcích \ref{figure:predicate-tableau-more-examples-a} a \ref{figure:predicate-tableau-more-examples-b}. Dvojice sporných položek jsou znázorněny červeně. Rozmyslete si, jak byla tabla po krocích zkonstruována.
+The resulting tableaux are in Figures \ref{figure:predicate-tableau-more-examples-a} and \ref{figure:predicate-tableau-more-examples-b}. The pairs of contradictory items are shown in red. Consider how the tableaux were constructed step-by-step.
 \begin{figure}[htbp]
 \centering
 \begin{forest}
@@ -274,7 +274,7 @@ Výsledná tabla jsou na Obrázcích \ref{figure:predicate-tableau-more-examples
         ]
     ]
 \end{forest}
-\caption{Tablo důkaz z Příkladu \ref{example:tableau-proofs} (a).}
+\caption{Tableau proof from Example \ref{example:tableau-proofs} (a).}
 \label{figure:predicate-tableau-more-examples-a}
 \end{figure} 
 
@@ -331,156 +331,157 @@ for tree={math content}
     ]
 ]
 \end{forest}
-\caption{Tablo důkaz z Příkladu \ref{example:tableau-proofs} (b). Konstantu $c_0$ můžeme použít jako \emph{novou} ve všech třech případech. Stačí, že se zatím nevyskytuje \emph{na dané větvi}.}
+\caption{Tableau proof from Example \ref{example:tableau-proofs} (b). The constant $c_0$ can be used as \emph{new} in all three cases. It is sufficient that it does not yet occur \emph{on the given branch}.}
 \label{figure:predicate-tableau-more-examples-b}
 \end{figure} 
 \end{example}
 
 
-\subsection{Systematické tablo a konečnost důkazů}
+\subsection{Systematic Tableau and Finiteness of Proofs}
 
-V Sekci \ref{section:finiteness-and-systematicity-of-proofs} jsme ukázali, že neprodlužujeme-li sporné větve (což nemusíme dělat), potom sporné tablo, speciálně tablo důkaz, bude vždy konečný. Stejný důkaz funguje i v logice predikátové.
+In Section \ref{section:finiteness-and-systematicity-of-proofs}, we showed that if we do not extend contradictory branches (which we do not have to do), then a contradictory tableau, especially a tableau proof, will always be finite. The same proof applies to predicate logic.
 
-\begin{corollary}[Konečnost důkazů]\label{corollary:finiteness-of-proofs-predicate}
-    Pokud $T\proves\varphi$, potom existuje i \emph{konečný} tablo důkaz $\varphi$ z $T$.
+\begin{corollary}[Finiteness of Proofs]\label{corollary:finiteness-of-proofs-predicate}
+    If $T\proves\varphi$, then there also exists a \emph{finite} tableau proof of $\varphi$ from $T$.
 \end{corollary}
 \begin{proof}
-Stejný jako ve ve výrokové logice, viz důkaz Důsledku \ref{corollary:finiteness-of-proofs}.
+The same as in propositional logic, see the proof of Corollary \ref{corollary:finiteness-of-proofs}.
 \end{proof}
 
-Ve stejné sekci jsme si ukázali konstrukci \emph{systematického tabla}. Tu lze také snadno adaptovat na predikátovou logiku. Musíme zajistit, abychom někdy zredukovali každou položku, použili každý axiom, a nově v predikátové logice také substituovali každý $L_C$ term $t_i$ za proměnnou v položkách typu `všichni'.
+In the same section, we also showed the construction of a \emph{systematic tableau}. This can also be easily adapted to predicate logic. We must ensure that we eventually reduce each item, use every axiom, and now, in predicate logic, also substitute every $L_C$ term $t_i$ for the variable in `all' type items.
 
 \begin{definition}
-Mějme položku $R$ a teorii $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$. \emph{Systematické tablo} z teorie $T$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+Let $R$ be an item and $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$ a theory. A \emph{systematic tableau} from theory $T$ for item $R$ is a tableau $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_0$ is a single-node tableau with item $R$, and for each $i\geq 0$:
 
-Buď $P$ položka v nejlevějším vrcholu $v$ na co nejmenší úrovni tabla $\tau_i$, která není redukovaná na nějaké bezesporné větvi procházející $P$ (resp. jde-li o položku typu `všichni', její \emph{výskyt} v tomto vrcholu není redukovaný). Potom $\tau_i'$ je tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $v$, kde
+Let $P$ be an item at the leftmost node $v$ at the smallest level of the tableau $\tau_i$ that is not reduced on some consistent branch passing through $P$ (or, if the item is of the `all' type, its \emph{occurrence} in this node is not reduced). Then $\tau_i'$ is the tableau constructed from $\tau_i$ by attaching an atomic tableau for $P$ to each consistent branch passing through $v$, where
 \begin{itemize}
-    \item je-li $P$ typu `všichni' a má-li ve vrcholu $v$ $k$-tý výskyt, potom za proměnnou substituujeme $k$-tý $L_C$-term $t_k$,
-    \item je-li $P$ typu `svědek', potom na dané větvi $V$ za proměnnou substituujeme $c_i\in C$ s nejmenším možným $i$ (takovým, že na $V$ se $c_i$ dosud nevyskytuje).
+    \item If $P$ is of the `all' type and has the $k$-th occurrence in node $v$, then we substitute the $k$-th $L_C$ term $t_k$ for the variable.
+    \item If $P$ is of the `witness' type, then on the given branch $V$, we substitute $c_i\in C$ with the smallest possible $i$ (such that $c_i$ does not yet occur on $V$).
 \end{itemize}
-Jinak, pokud taková položka $P$ a vrchol $v$ neexistují, tj. všechny položky jsou redukované, definujeme $\tau_i'=\tau_i$.
+Otherwise, if such an item $P$ and node $v$ do not exist, i.e., all items are reduced, we define $\tau_i'=\tau_i$.
 
-Tablo $\tau_{i+1}$ je potom tablo vzniklé z $\tau_i'$ připojením $\mathrm{T}\alpha_i$ na každou bezespornou větev $\tau_i'$, pokud $i\leq |T|$. Jinak (je-li $T$ konečná a už jsme použili všechny axiomy) tento krok přeskočíme a definujeme $\tau_{i+1}=\tau_i'$. 
+The tableau $\tau_{i+1}$ is then the tableau constructed from $\tau_i'$ by attaching $\mathrm{T}\alpha_i$ to each consistent branch of $\tau_i'$, if $i\leq |T|$. Otherwise (if $T$ is finite and we have used all the axioms), we skip this step and define $\tau_{i+1}=\tau_i'$. 
 \end{definition}
 
-Stejně jako ve výrokové logice platí, že systematické tablo je vždy dokončené, a poskytuje konečný důkaz:
+Just as in propositional logic, it holds that the systematic tableau is always completed and provides a finite proof:
 
 \begin{lemma}\label{lemma:systematic-is-finished-predicate}
-    Systematické tablo je dokončené.
+    The systematic tableau is completed.
 \end{lemma}
 \begin{proof}
-    Obdobný jako důkaz ve výrokové logice (Lemma \ref{lemma:systematic-is-finished}). Pro položky typu `všichni' si všimněte, že $k$-tý výskyt redukujeme v momentě, kdy na něj při konstrukci narazíme: připojením vrcholu s $(k+1)$-ním výskytem a substitucí $k$-tého $L_C$-termu $t_k$.
+    Similar to the proof in propositional logic (Lemma \ref{lemma:systematic-is-finished}). For `all' type items, note that we reduce the $k$-th occurrence when we encounter it in the construction: by attaching a node with the $(k+1)$-th occurrence and substituting the $k$-th $L_C$ term $t_k$.
 \end{proof}
 
-\begin{corollary}[Systematičnost důkazů]\label{corollary:systematicity-of-proofs-predicate}
-    Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+\begin{corollary}[Systematicity of Proofs]\label{corollary:systematicity-of-proofs-predicate}
+    If $T\proves\varphi$, then the systematic tableau is (a finite) tableau proof of $\varphi$ from $T$.
 \end{corollary}
 \begin{proof}
-    Stejný jako důkaz ve výrokové logice (Důsledek \ref{corollary:systematicity-of-proofs}).
+    The same as the proof in propositional logic (Corollary \ref{corollary:systematicity-of-proofs}).
 \end{proof}
 
 
-\section{Jazyky s rovností} \label{section:tableaux-equality}
+\section{Languages with Equality} \label{section:tableaux-equality}
 
-Nyní si ukážeme, jak aplikovat tablo metodu na jazyky s rovností. Co je to rovnost? V matematice může v různém kontextu znamenat různé relace. Platí $1+0=0+1$? Mluvíme-li o celých číslech, pak ano, ale máme-li na mysli aritmetické výrazy (nebo např. termy v jazyce těles), potom si levá a pravá strana nejsou rovny: jde o jiné výrazy. \footnote{Podobně např. $t_1=t_2$ v Prologu neznamená, že jde o tentýž term, ale že termy $t_1$ a $t_2$ jsou \emph{unifikovatelné}, viz kapitola o rezoluci v predikátové logice.}
+Now we will show how to apply the tableau method to languages with equality. What is equality? In mathematics, it can mean different relations in different contexts. Does $1+0=0+1$ hold? If we are talking about integers, then yes, but if we mean arithmetic expressions (or e.g., terms in the language of fields), then the left and right sides are not equal: they are different expressions. \footnote{Similarly, $t_1=t_2$ in Prolog does not mean they are the same term but that the terms $t_1$ and $t_2$ are \emph{unifiable}, see the chapter on resolution in predicate logic.}
 
-Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstantní symboly $c_1,c_2$, unární funkční symbol $f$ a unární relační symbol $P$. Mějme nějaké dokončené tablo z této teorie, a v něm bezespornou větev, na kterém najdeme položku $\T c_1=c_2$. Budeme chtít sestrojit \emph{kanonický model} $\A$ pro tuto větev, podobně jako ve výrokové logice. Položka bude znamenat, že v kanonickém modelu platí $c_1^\A =^\A c_2^\A$, tj. $(c_1^\A,c_2^\A)\in {=^\A}$. To nám ale nestačí, chceme také, aby platilo také např.:
+Imagine we have a theory $T$ in a language with equality containing constant symbols $c_1,c_2$, a unary function symbol $f$, and a unary relation symbol $P$. Let us have some completed tableau from this theory, and in it an open branch, on which we find the entry $\T c_1=c_2$. We will want to construct a \emph{canonical model} $\A$ for this branch, similar to propositional logic. The entry will mean that in the canonical model it holds $c_1^\A =^\A c_2^\A$, i.e., $(c_1^\A,c_2^\A)\in {=^\A}$. But this is not enough, we also want, for example:
 \begin{itemize}
     \item $c_2^\A =^\A c_1^\A$,
     \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$,
-    \item $c_1^\A\in P^\A$, právě když $c_2^\A\in P^\A$.
+    \item $c_1^\A \in P^\A$ if and only if $c_2^\A \in P^\A$.
 \end{itemize}
-Obecně tedy chceme, aby relace $=^\A$ byla tzv. \emph{kongruencí},\footnote{Název pochází z kongruence modulo $n$, která je kongruencí v tomto smyslu na množině všech celých čísel, např. splňuje: $a+b\equiv c+d\pmod n$ kdykoliv $a\equiv c\pmod n$ a $b\equiv d\pmod n$.} tj. ekvivalencí, která se chová `dobře' vůči funkcím a relacím struktury $\A$. Toho docílíme tak, že k teorii $T$ přidáme tzv. \emph{axiomy rovnosti}, které tyto vlastnosti vynutí, a tablo sestrojíme z výsledné teorie $T^*$.
+In general, we want the relation $=^\A$ to be a so-called \emph{congruence},\footnote{The name comes from congruence modulo $n$, which is a congruence in this sense on the set of all integers, e.g., it satisfies: $a+b\equiv c+d\pmod n$ whenever $a\equiv c\pmod n$ and $b\equiv d\pmod n$.} i.e., an equivalence that behaves 'well' with respect to the functions and relations of the structure $\A$. We achieve this by adding so-called \emph{axioms of equality} to the theory $T$, which enforce these properties, and construct the tableau from the resulting theory $T^*$.
 
-V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chceme, aby rovnost byla \emph{identita}, tj. aby $(a,b)\in=^\A$ platilo jedině když $a$ a $b$ jsou týmž prvkem univerza. Toho docílíme identifikací všech $=^\A$-ekvivalentních prvků do jediného prvku. Této konstrukci se říká \emph{faktorstruktura} podle kongruence $=^\A$.\footnote{Stejně jako grupa $\mathbb Z_n$ je faktorstrukturou grupy $\mathbb Z$ podle $\equiv\pmod n$; např. prvek $2\in\mathbb Z_n$ představuje množinu všech celých čísel, jejichž zbytek po dělení $n$ je roven 2.} Nyní tyto pojmy formalizujeme.
+In the model $\A$, the relation $=^\A$ will then be a congruence. But this is not enough for us; we want equality to be \emph{identity}, i.e., $(a,b)\in=^\A$ only if $a$ and $b$ are the same element of the universe. We achieve this by identifying all $=^\A$-equivalent elements into a single element. This construction is called a \emph{factor structure} according to the congruence $=^\A$.\footnote{Just as the group $\mathbb Z_n$ is a factor structure of the group $\mathbb Z$ according to $\equiv\pmod n$; for example, the element $2\in\mathbb Z_n$ represents the set of all integers whose remainder after division by $n$ is 2.} Now we formalize these concepts.
 
-\begin{definition}[Kongruence]
-    Mějme ekvivalenci $\sim$ na množině $A$, funkci $f\colon A^n\to A$, a relaci $R\subseteq A^n$. Říkáme, že $\sim$ je
+\begin{definition}[Congruence]
+    Let $\sim$ be an equivalence on the set $A$, $f\colon A^n\to A$ be a function, and $R\subseteq A^n$ be a relation. We say that $\sim$ is
     \begin{itemize}
-        \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$,
-        \item \emph{kongruencí pro relaci $R$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $(a_1,\dots,a_n)\in R$ právě když $(b_1,\dots,b_n)\in R$.
+        \item \emph{a congruence for the function $f$} if for all $a_i,b_i\in A$ such that $a_i\sim b_i$ ($1\leq i\leq n$) it holds that $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$,
+        \item \emph{a congruence for the relation $R$} if for all $a_i,b_i\in A$ such that $a_i\sim b_i$ ($1\leq i\leq n$) it holds that $(a_1,\dots,a_n)\in R$ if and only if $(b_1,\dots,b_n)\in R$.
     \end{itemize}    
-    \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. 
+    \emph{A congruence of the structure} $\A$ is an equivalence $\sim$ on the set $A$ that is a congruence for all functions and relations of $\A$. 
 \end{definition}
 
-\begin{definition}[Faktorstruktura]
-    Mějme strukturu $\A$ a její kongruenci $\sim$. \emph{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura $\A/_\sim$ v témž jazyce, jejíž univerzum $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, a jejíž funkce a relace jsou definované \emph{pomocí reprezentantů}, tj:
+\begin{definition}[Factor Structure]
+    Let $\A$ be a structure and $\sim$ be its congruence. The \emph{factor structure} $\A$ according to $\sim$ is the structure $\A/_\sim$ in the same language, whose universe $A/_\sim$ is the set of all equivalence classes of $A$ according to $\sim$, and whose functions and relations are defined \emph{using representatives}, i.e.:
     \begin{itemize}
-        \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$, pro každý ($n$-ární) funkční symbol $f$, a
-        \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ právě když $R^\A(a_1,\dots,a_n)$, pro každý ($n$-ární) relační symbol~$R$.
+        \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$, for each ($n$-ary) function symbol $f$, and
+        \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ if and only if $R^\A(a_1,\dots,a_n)$, for each ($n$-ary) relation symbol~$R$.
     \end{itemize} 
     
 \end{definition}
 
 
-\begin{definition}[Axiomy rovnosti]
-    \emph{Axiomy rovnosti} pro jazyk $L$ s rovností jsou následující:
+\begin{definition}[Axioms of Equality]
+    The \emph{axioms of equality} for a language $L$ with equality are as follows:
     \begin{enumerate}[(i)]
         \item $x=x$,
-        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ pro každý $n$-ární funkční symbol $f$ jazyka $L$,
-        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ pro každý $n$-ární relační symbol $R$ jazyka $L$ \emph{včetně rovnosti}.
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ for every $n$-ary function symbol $f$ of the language $L$,
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ for every $n$-ary relation symbol $R$ of the language $L$ \emph{including equality}.
     \end{enumerate}
 \end{definition}
 
 \begin{exercise}
-    První z axiomů rovnosti znamená reflexivitu relace $=^\A$. Kam se poděly symetrie a tranzitivita? Ukažte, že plynou z axiomu (iii) pro symbol rovnosti $=$.
+    The first of the axioms of equality means the reflexivity of the relation $=^\A$. What about symmetry and transitivity? Show that they follow from axiom (iii) for the equality symbol $=$.
 \end{exercise}
 
-Z axiomů $(i)$ a $(iii)$ tedy plyne, že relace $=^\A$ je ekvivalence na $A$, a axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruencí $\A$. V tablo metodě v případě jazyka s rovností implicitně přidáme všechny axiomy rovnosti:
+Thus, from axioms $(i)$ and $(iii)$ it follows that the relation $=^\A$ is an equivalence on $A$, and axioms $(ii)$ and $(iii)$ express that $=^\A$ is a congruence of $\A$. In the tableau method in the case of a language with equality, we implicitly add all the axioms of equality:
 
-\begin{definition}[Tablo důkaz s rovností]
-    Je-li $T$ teorie v jazyce $L$ s rovností, potom označme jako $T^*$ rozšíření teorie $T$ o generální uzávěry\footnote{Neboť v tablo metodě potřebujeme \emph{sentence}.} axiomů rovnosti pro jazyk $L$. \emph{Tablo důkaz} z teorie $T$ je \emph{tablo důkaz} z $T^*$, podobně pro tablo zamítnutí (a obecně jakékoliv tablo).    
+\begin{definition}[Tableau Proof with Equality]
+    If $T$ is a theory in a language $L$ with equality, then denote as $T^*$ the extension of the theory $T$ by the general closures\footnote{Because in the tableau method we need \emph{sentences}.} of the axioms of equality for the language $L$. A \emph{tableau proof} from the theory $T$ is a \emph{tableau proof} from $T^*$, similarly for tableau refutation (and generally any tableau).    
 \end{definition}
 
-Platí následující jednoduché pozorování:
+The following simple observation holds:
 \begin{observation}
-    Jestliže $\A\models T^*$, potom platí i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita. Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
+    If $\A\models T^*$, then it holds that $\A/_{=^\A}\models T^*$, and in the structure $\A/_{=^\A}$ the equality symbol is interpreted as identity. On the other hand, in any model where the equality symbol is interpreted as identity, the axioms of equality hold.
 \end{observation}
 
-Toto pozorování využijeme při konstrukci \emph{kanonického modelu}, který budeme potřebovat v důkazu Věty o úplnosti. Nejprve ale dokážeme Větu o korektnosti.
+We will use this observation in constructing the \emph{canonical model}, which we will need in the proof of the Completeness Theorem. But first, we will prove the Soundness Theorem.
 
-\section{Korektnost a úplnost}
+\section{Soundness and Completeness}
 
-V této sekci dokážeme, že tablo metoda je i v predikátové logice korektní a úplná. Důkazy obou vět mají stejnou strukturu jako ve výrokové logice, liší se jen v implementačních detailech.
+In this section, we will prove that the tableau method is sound and complete even in predicate logic. The proofs of both theorems have the same structure as in propositional logic, differing only in the implementation details.
 
-\subsection{Věta o korektnosti}
+\subsection{Soundness Theorem}
 
-Model (struktura) $\A$ se \emph{shoduje} s položkou $P$, pokud
-$P=\mathrm{T}\varphi$ a $\A\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $\A\not\models\varphi$. Dále $\A$ se shoduje s větví $V$, pokud se shoduje s každou položkou na této větvi.
+A model (structure) $\A$ \emph{agrees} with an entry $P$ if
+$P=\mathrm{T}\varphi$ and $\A\models\varphi$, or $P=\mathrm{F}\varphi$ and $\A\not\models\varphi$. Further, $\A$ agrees with a branch $V$ if it agrees with every entry on that branch.
 
-Ukážeme nejprve pomocné lemma analogické Lemmatu \ref{lemma:agrees-with-branch}:
+First, we show an auxiliary lemma analogous to Lemma \ref{lemma:agrees-with-branch}:
 \begin{lemma}\label{lemma:agrees-with-branch-predicate}
-    Shoduje-li se model $\A$ teorie $T$ s položkou v kořeni tabla z teorie $T$ (v jazyce $L$), potom lze $\A$ expandovat do jazyka $L_C$ tak, že se shoduje s některou větví v tablu.
+    If a model $\A$ of the theory $T$ agrees with the entry at the root of the tableau from the theory $T$ (in the language $L$), then $\A$ can be expanded to the language $L_C$ such that it agrees with some branch in the tableau.
 \end{lemma}
-Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytující se na větvi $V$. Ostatní konstantní symboly lze interpretovat libovolně.
+Note that it suffices to expand $\A$ by new constants $c^\A$ appearing on the branch $V$. Other constant symbols can be interpreted arbitrarily.
 
 \begin{proof}
-    Mějme tablo $\tau=\bigcup_{i\geq 0}\tau_i$ z teorie $T$ a model $\A\in\M_L(T)$ shodující se s kořenem $\tau$, tedy s (jednoprvkovou) větví $V_0$ v (jednoprvkovém) $\tau_0$.
+    Let $\tau=\bigcup_{i\geq 0}\tau_i$ be a tableau from the theory $T$ and a model $\A\in\M_L(T)$ agreeing with the root $\tau$, i.e., with the (single-element) branch $V_0$ in the (single-element) $\tau_0$.
     
-    Indukcí podle $i$ najdeme posloupnost větví $V_i$ a expanzí $\A_i$ modelu $\A$ o konstanty $c^\A\in C$ vyskytující se na $V_i$ takových, že $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $\A_i$, $V_{i+1}$ je prodloužením $V_i$, a $\A_{i+1}$ je expanzí $\A_i$ (mohou si být i rovny). Požadovaná větev tabla $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$. Expanzi modelu $\A$ do jazyka $L_C$ získáme jako `limitu' expanzí $\A_i$, tj. vyskytuje-li se symbol $c\in C$ na $V$, vyskytuje se na nějaké z větví $V_i$ a interpretujeme ho stejně jako v $\A_i$ (ostatní pomocné symboly interpretujeme libovolně).
+    By induction on $i$, we find a sequence of branches $V_i$ and expansions $\A_i$ of the model $\A$ by constants $c^\A\in C$ appearing on $V_i$ such that $V_i$ is a branch in the tableau $\tau_i$ agreeing with the model $\A_i$, $V_{i+1}$ is an extension of $V_i$, and $\A_{i+1}$ is an expansion of $\A_i$ (they may even be equal). The desired branch of the tableau $\tau$ is then $V=\bigcup_{i\geq 0}V_i$. The expansion of the model $\A$ to the language $L_C$ is obtained as the `limit' of the expansions $\A_i$, i.e., if a symbol $c\in C$ appears on $V$, it appears on some branch $V_i$ and we interpret it the same as in $\A_i$ (other auxiliary symbols are interpreted arbitrarily).
     \begin{itemize}
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení větve $V_i$, definujeme $V_{i+1}=V_i$ a $\A_{i+1}=\A_{i}$.
-        \item Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ připojením položky $\mathrm{T}\alpha$ (pro nějaký axiom $\alpha\in T$) na konec větve  $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev a $\A_{i+1}=\A_i$ (nepřidali jsme žádný nový pomocný konstantní symbol). Protože $\A_{i+1}$ je modelem $T$, platí v něm axiom $\alpha$, tedy shoduje se i s novou položkou $\mathrm{T}\alpha$.
-        \item Nechť $\tau_{i+1}$ vzniklo z $\tau_i$ připojením atomického tabla pro nějakou položku $P$ na konec větve $V_i$. Protože se model $\A_i$ shoduje s položkou $P$ (která leží na větvi $V_i$), shoduje se i s kořenem připojeného atomického tabla.
+        \item If $\tau_{i+1}$ was created from $\tau_i$ without extending the branch $V_i$, we define $V_{i+1}=V_i$ and $\A_{i+1}=\A_{i}$.
+        \item If $\tau_{i+1}$ was created from $\tau_i$ by adding the entry $\mathrm{T}\alpha$ (for some axiom $\alpha\in T$) to the end of the branch $V_i$, we define $V_{i+1}$ as this extended branch and $\A_{i+1}=\A_i$ (we did not add any new auxiliary constant symbol). Since $\A_{i+1}$ is a model of $T$, the axiom $\alpha$ holds in it, so it agrees with the new entry $\mathrm{T}\alpha$.
+        \item Suppose $\tau_{i+1}$ was created from $\tau_i$ by attaching an atomic tableau for some entry $P$ to the end of the branch $V_i$. Since the model $\A_i$ agrees with the entry $P$ (which lies on the branch $V_i$), it also agrees with the root of the attached atomic tableau.
         \begin{itemize}
-            \item Pokud jsme připojili atomické tablo pro logickou spojku, položíme $\A_{i+1}=\A_i$ (nepřidali jsme nový pomocný symbol). Protože $\A_{i+1}$ se shoduje s kořenem atomického tabla, shoduje se i s některou z jeho větví (stejně jako ve výrokové logice); definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev.
-            \item Je-li položka $P$ typu `svědek': Pokud je $P=\T(\exists x)\varphi(x)$, potom $\A_i\models(\exists x)\varphi(x)$, tedy existuje $a\in A$ takové, že $\A_i\models\varphi(x)[e(x/a)]$. Větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o nově přidanou položku $\T\varphi(x/c)$ a model $\A_{i+1}$ jako expanzi $\A_i$ o konstantu $c^A=a$. Případ $P=\F(\forall x)\varphi(x)$ je obdobný.
-            \item Je-li položka $P$ typu `všichni', větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o atomické tablo. Nově přidaná položka je $\T\varphi(x/t)$ nebo $\F\varphi(x/t)$ pro nějaký $L_C$-term $t$. Předpokládejme, že jde o první z těchto dvou možností, pro druhou je důkaz analogický. 
-            Model $\A_{i+1}$ definujeme jako \emph{libovolnou} expanzi $\A_i$ o nové konstanty vyskytující se v $t$.    
-            Protože $\A_i\models(\forall x)\varphi(x)$, platí i $\A_{i+1}\models(\forall x)\varphi(x)$ a tedy i $\A_{i+1}\models\varphi(x/t)$; model $\A_{i+1}$ se tedy shoduje s větví $V_i$.
+            \item If we attached an atomic tableau for a logical connective, we set $\A_{i+1}=\A_i$ (we did not add a new auxiliary symbol). Since $\A_{i+1}$ agrees with the root of the atomic tableau, it also agrees with one of its branches (just as in propositional logic); we define $V_{i+1}$ as the extension of $V_i$ by this branch.
+            \item If the entry $P$ is of the type `witness': If $P=\T(\exists x)\varphi(x)$, then $\A_i\models(\exists x)\varphi(x)$, so there exists $a\in A$ such that $\A_i\models\varphi(x)[e(x/a)]$. We define the branch $V_{i+1}$ as the extension of $V_i$ by the newly added entry $\T\varphi(x/c)$ and the model $\A_{i+1}$ as the expansion of $\A_i$ by the constant $c^A=a$. The case $P=\F(\forall x)\varphi(x)$ is analogous.
+            \item If the entry $P$ is of the type `all', we define the branch $V_{i+1}$ as the extension of $V_i$ by the atomic tableau. The newly added entry is $\T\varphi(x/t)$ or $\F\varphi(x/t)$ for some $L_C$ term $t$. Suppose it is the first of these two possibilities, for the second the proof is analogous. 
+            We define the model $\A_{i+1}$ as \emph{any} expansion of $\A_i$ by the new constants appearing in $t$.    
+            Since $\A_i\models(\forall x)\varphi(x)$, it also holds $\A_{i+1}\models(\forall x)\varphi(x)$ and thus $\A_{i+1}\models\varphi(x/t)$; the model $\A_{i+1}$ thus agrees with the branch $V_i$.
         \end{itemize}       
     \end{itemize}
 \end{proof}
 
-Připomeňme stručně myšlenku důkazu Věty o korektnosti: Pokud by existoval důkaz a zároveň protipříklad, protipříklad by se musel shodovat s některou větví důkazu, ty jsou ale všechny sporné. Důkaz je tedy téměř stejný jako ve výrokové logice.
+Let's briefly recall the idea of the proof of the Soundness Theorem: If there existed a proof and at the same time a counterexample, the counterexample would have to agree with some branch of the proof, but they are all contradictory. The proof is thus almost the same as in propositional logic.
 
-\begin{theorem}[O korektnosti]
-Je-li sentence $\varphi$ tablo dokazatelná z teorie $T$, potom je $\varphi$ pravdivá v $T$, tj. $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
+\begin{theorem}[On Soundness]
+If a sentence $\varphi$ is tableau provable from a theory $T$, then $\varphi$ is true in $T$, i.e., $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
 \end{theorem}
 
 \begin{proof}
-Předpokládejme pro spor, že $T\not\models\varphi$, tj. existuje $\A\in\M(T)$ takový, že $\A\not\models\varphi$. Protože $T\proves\varphi$,  existuje sporné tablo z $T$ s $\mathrm{F}\varphi$ v kořeni. Model $\A$ se shoduje s $\mathrm{F}\varphi$, tedy podle Lemmatu \ref{lemma:agrees-with-branch-predicate} lze expandovat do jazyka $L_C$ tak, že se expanze shoduje s nějakou větví $V$. Všechny větve jsou ale sporné.
+Assume for contradiction that $T\not\models\varphi$, i.e., there exists $\A\in\M(T)$ such that $\A\not\models\varphi$. Since $T\proves\varphi$, there exists a contradictory tableau from $T$ with $\mathrm{F}\varphi$ at the root. The model $\A$ agrees with $\mathrm{F}\varphi$, so by Lemma \ref{lemma:agrees-with-branch-predicate} it can be expanded to the language $L_C$ such that the expansion agrees with some branch $V$. But all branches are contradictory.
 \end{proof}
+
 
 \subsection{Věta o úplnosti}
 

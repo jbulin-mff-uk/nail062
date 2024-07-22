@@ -1,6 +1,6 @@
 \chapter{Rezoluční metoda}\label{chapter:propositional-resolution}
 
-V této kapitole představíme jiný dokazovací systém, vhodnější pro praktické aplikace,  tzv. \emph{rezoluční metodu}. Tato metoda je základem např. \emph{logického programování} nebo systémů \emph{automatického dokazování} a \emph{softwarové verifikace}. V této kapitole se omezíme na rezoluční metodu ve výrokové logice, ale v pozdější kapitole si ukážeme koncept \emph{unifikace}, který umožňuje hledat rezoluční důkazy v logice predikátové.
+V této kapitole představíme jiný dokazovací systém, vhodnější pro praktické aplikace,  tzv. \emph{rezoluční metodu}. Tato metoda je základem např. \emph{logického programování} nebo systémů \emph{automatického dokazování} a \emph{softwarové verifikace}. V této kapitole se omezíme na rezoluční metodu ve výrokové logice, ale později, v Kapitole~\ref{chapter:prpredicate-resolution}, si ukážeme koncept \emph{unifikace}, který umožňuje hledat rezoluční důkazy v logice predikátové.
 
 Rezoluční metoda pracuje s výroky v \emph{konjunktivní normální formě (CNF)}. Připomeňme, že každý výrok lze převést do CNF. Tento převod je v nejhorším případě v exponenciálním čase (dokonce existují výroky jejichž nejkratší CNF ekvivalent je exponenciálně delší), v praxi to ale není problém.
 
@@ -26,7 +26,7 @@ Nejprve představíme úspornější zápis CNF výroků, tzv. \emph{množinový
 \end{itemize}
 
 \begin{remark}
-    Všimněte si, že \emph{formule} může být i \emph{nekonečná} množina klauzulí. Pokud tedy převádíme nekonečnou výrokovou teorii do CNF, zapíšeme v množinové reprezentaci všech nekonečně mnoho klauzulí jako prvky jediné formule (množiny). V praktických aplikacích je samozřejmě formule (téměř vždy) konečná.
+    Všimněte si, že \emph{CNF formule} může být i \emph{nekonečná} množina klauzulí. Pokud tedy převádíme nekonečnou výrokovou teorii do CNF, zapíšeme v množinové reprezentaci všech nekonečně mnoho klauzulí jako prvky jediné formule (množiny). V praktických aplikacích je samozřejmě formule (téměř vždy) konečná.
 \end{remark}
 
 V množinové reprezentaci odpovídají modely množinám literálů, které obsahují pro každou výrokovou proměnnou $p$ právě jeden z literálů $p,\neg p$:
@@ -79,14 +79,14 @@ $$
 Rezoluční důkaz definujeme podobně jako v Hilbertově kalkulu jako konečnou posloupnost klauzulí, kde je zaručena platnost každé klauzule v této posloupnosti: v každém kroku můžeme buď napsat `axiom' (klauzuli z $S$), nebo rezolventu nějakých dvou už napsaných klauzulí.
 
 \begin{definition}[Rezoluční důkaz]
-    \emph{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
+    \emph{Rezoluční důkaz (odvození)} klauzule $C$ z CNF formule $S$ je \emph{konečná} posloupnost klauzulí $C_0,C_1,\dots,C_n=C$
     taková, že pro každé $i$ buď $C_i\in S$ nebo $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j<i$ a $k<i$.
 
-    Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.
+    Pokud rezoluční důkaz existuje, říkáme, že $C$ je \emph{rezolucí dokazatelná} z $S$, a píšeme $S\proves_R C$. \emph{(Rezoluční) zamítnutí} CNF formule $S$ je rezoluční důkaz $\square$ z $S$, v tom případě je $S$ \emph{(rezolucí) zamítnutelná}.
 \end{definition}
 
 \begin{example}\label{example:resolution-proof}
-    Formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$ je zamítnutelná, jedno z možných zamítnutí je:
+    CNF formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$ je (rezolucí) zamítnutelná, jedno z možných zamítnutí je:
     $$
     \{p,\neg q,r\},\{q,r\},\{p,r\},\{\neg p,r\},\{r\},\{p,\neg r\},\{\neg p,\neg r\},\{\neg r\},\square
     $$
@@ -95,7 +95,7 @@ Rezoluční důkaz definujeme podobně jako v Hilbertově kalkulu jako konečnou
 Rezoluční důkaz má přirozenou stromovou strukturu: v listech jsou axiomy a vnitřní vrcholy představují jednotlivé rezoluční kroky.
 
 \begin{definition}[Rezoluční strom]
-Rezoluční strom klauzule $C$ z formule $S$ je \emph{konečný} binární strom s vrcholy označenými klauzulemi, kde
+Rezoluční strom klauzule $C$ z CNF formule $S$ je \emph{konečný} binární strom s vrcholy označenými klauzulemi, kde
 \begin{itemize}
     \item v kořeni je $C$,
     \item v listech jsou klauzule z $S$,
@@ -104,7 +104,7 @@ Rezoluční strom klauzule $C$ z formule $S$ je \emph{konečný} binární strom
 \end{definition}
 
 \begin{example}\label{example:resolution-tree}
-Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{example:resolution-proof} je:
+Rezoluční strom prázdné klauzule $\square$ z CNF formule $S$ z Příkladu \ref{example:resolution-proof} je:
 \begin{center}
     \begin{forest}
     for tree={grow=north}
@@ -127,7 +127,7 @@ Rezoluční strom prázdné klauzule $\square$ z formule $S$ z Příkladu \ref{e
 
 Je snadné ukázat následující pozorování, indukcí podle hloubky stromu a délky rezolučního důkazu:
 
-\begin{observation} Klauzule $C$ má rezoluční strom z formule $S$, právě když $S\proves_R C$.  
+\begin{observation} Klauzule $C$ má rezoluční strom z CNF formule $S$, právě když $S\proves_R C$.  
 \end{observation}
 
 Každému rezolučnímu důkazu odpovídá jednoznačný rezoluční strom. Naopak, z jednoho rezolučního stromu můžeme získat více rezolučních důkazů: jsou dané libovolnou procházkou po vrcholech stromu, při které navštívíme vnitřní vrchol až poté, co jsme navštívili oba jeho syny.

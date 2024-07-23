@@ -1,181 +1,191 @@
-\chapter{Nerozhodnutelnost a neúplnost}
+\chapter{Undecidability and Incompleteness}
 
-V této, závěrečné kapitole se budeme zabývat tím, jak lze s teoriemi pracovat algoritmicky. Zlatým hřebem budou \emph{Gödelovy věty o neúplnosti} z roku 1931, které ukazují limity formálního přístupu, a které zastavily desetiletí trvající program formalizace matematiky. Nemáme zde dostatek prostoru k uvedení formálních definic a úplných důkazů, proto se místy budeme pohybovat na poněkud intuitivní úrovni. Zaměříme se na pochopení smyslu tvrzení a myšlenek důkazů.
+In this final chapter, we will explore how theories can be worked with algorithmically. The highlight will be the \emph{Gödel's Incompleteness Theorems} from 1931, which show the limits of the formal approach and halted the decades-long program of formalizing mathematics. We do not have enough space to provide formal definitions and complete proofs here, so we will sometimes operate on a somewhat intuitive level. We will focus on understanding the meaning of the statements and the ideas of the proofs.
 
-Pojem \emph{algoritmu} budeme chápat také jen intuitivně. Pokud bychom ho chtěli formalizovat, potom nejběžnější (ale zdaleka ne jedinou) volbou je koncept \emph{Turingova stroje}.\footnote{Viz přednáška NTIN090 Základy složitosti a vyčíslitelnosti.}
+We will understand the concept of an \emph{algorithm} intuitively as well. If we wanted to formalize it, the most common (but by no means the only) choice would be the concept of a \emph{Turing machine}.\footnote{See the lecture NTIN090 Foundations of Complexity and Computability.}
 
-\section{Rekurzivní axiomatizace a rozhodnutelnost}
+\section{Recursive Axiomatization and Decidability}
 
-V dokazovacích systémech, kterými jsme se zabývali (tablo metoda, rezoluce, hilbertův kalkulus) jsme povolili, aby teorie $T$, ve které dokazujeme, byla nekonečná. Vůbec jsme se ale zatím nezabývali tím, jak je zadaná. Pokud chceme ověřit, že je daný objekt (tablo, rezoluční strom, posloupnost formulí) korektním důkazem, potřebujeme nějaký algoritmický přístup ke všem axiomům $T$. 
+In the proof systems we have discussed (the tableau method, resolution, Hilbert calculus), we allowed the theory $T$ in which we prove to be infinite. However, we have not yet considered how it is given. If we want to verify that a given object (tableau, resolution tree, sequence of formulas) is a correct proof, we need some algorithmic access to all axioms of $T$.
 
-Jednou z možností by bylo požadovat \emph{enumerátor} $T$, tj. algoritmus, který vypisuje na výstup axiomy z $T$, a každý axiom někdy vypíše.\footnote{Nutným předpokladem je, aby $T$ byla spočetná. K tomu stačí předpokládat, že jazyk je spočetný.} Potom by bylo snadné potvrdit, že je daný důkaz korektní. Pokud bychom ale dostali důkaz, který použil chybný axiom, který v $T$ není, nikdy bychom se to nedozvěděli: nekonečně dlouho bychom čekali, zda jej enumerátor přeci jen nevypíše. Požadujeme proto silnější vlastnost, která umožňuje rozpoznat i chybné důkazy \emph{rekurzivní axiomatizaci}:\footnote{Slovo \emph{rekurzivní} zde neznamená běžně známou rekurzi, ale odkazuje na formalizaci algoritmu pomocí `rekurzivních funkcí' od Gödela. Rekurzivní funkce zde znamená totéž, co vyčíslitelná nějakým Turingovým strojem, a teorii vyčíslitelnosti (\emph{computability theory}) se někdy také říká \emph{recursion theory}.}
+One possibility would be to require an \emph{enumerator} for $T$, i.e., an algorithm that lists the axioms of $T$ on the output, and each axiom is eventually listed.\footnote{A necessary condition is that $T$ is countable. It suffices to assume that the language is countable.} Then it would be easy to confirm that a given proof is correct. However, if we received a proof that used an incorrect axiom that is not in $T$, we would never know: we would wait infinitely long to see if the enumerator lists it. Therefore, we require a stronger property that allows recognizing incorrect proofs as well: \emph{recursive axiomatization}.\footnote{The word \emph{recursive} here does not mean the commonly known recursion, but refers to the formalization of an algorithm using `recursive functions' by Gödel. Recursive functions here mean the same as computable by some Turing machine, and the theory of computability is sometimes called \emph{recursion theory}.}
 
-\begin{definition}[Rekurzivní axiomatizace]
-    Teorie $T$ je \emph{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
+\begin{definition}[Recursive Axiomatization]
+    A theory $T$ is \emph{recursively axiomatized} if there is an algorithm that, for every input formula $\varphi$, halts and answers whether $\varphi \in T$.
 \end{definition}
 
 \begin{remark}
-    Ve skutečnosti by nám stačil enumerátor pro $T$, pokud by bylo garantováno, že vypisuje axiomy v lexikografickém uspořádání. To už je ekvivalentní rekurzivní axiomatizaci. (Rozmyslete si proč.)
+    In fact, an enumerator for $T$ would suffice if it is guaranteed to list the axioms in lexicographic order. That is equivalent to recursive axiomatization. (Think about why.)
 \end{remark}
 
-Zaměříme se na otázku, zda můžeme v dané teorii $T$ `algoritmicky rozhodovat pravdu' (tj. platnost vstupní formule). Pokud ano, říkáme, že je teorie \emph{rozhodnutelná}. To je ale poměrně silná vlastnost, definujeme proto také \emph{částečnou rozhodnutelnost}, která znamená, že pokud formule platí, algoritmus nám to řekne, ale pokud neplatí, nikdy se nemusíme dočkat odpovědi.
+We focus on the question of whether we can `algorithmically decide the truth' in a given theory $T$ (i.e., the validity of an input formula). If so, we say the theory is \emph{decidable}. This is quite a strong property, so we also define \emph{partial decidability}, which means that if the formula is valid, the algorithm will tell us, but if it is not, we may never get an answer.
 
-\begin{definition}[Rozhodnutelnost]
-O teorii $T$ říkáme, že je
+\begin{definition}[Decidability]
+A theory $T$ is said to be
 \begin{itemize}
-    \item \emph{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,
-    \item \emph{částečně rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli:
+    \item \emph{decidable} if there is an algorithm that, for every input formula $\varphi$, halts and answers whether $T \models \varphi$,
+    \item \emph{partially decidable} if there is an algorithm that, for every input formula:
     \begin{itemize}
-        \item pokud $T\models\varphi$, doběhne a odpoví ``ano'',
-        \item pokud $T\not\models\varphi$, buď nedoběhne, nebo doběhne a odpoví ``ne''.
+        \item if $T \models \varphi$, halts and answers "yes",
+        \item if $T \not\models \varphi$, either does not halt or halts and answers "no".
     \end{itemize}
 \end{itemize}
 \end{definition}
-Můžeme jako obvykle předpokládat, že $\varphi$ v definici je sentence. Ukážeme si jednoduché tvrzení:
+We can usually assume that $\varphi$ in the definition is a sentence. Let us show a simple proposition:
 
 \begin{proposition}
-    Nechť $T$ je rekurzivně axiomatizovaná. Potom:
+    Let $T$ be recursively axiomatized. Then:
     \begin{enumerate}[(i)]
-        \item $T$ je částečně rozhodnutelná,
-        \item je-li $T$ navíc kompletní, potom je rozhodnutelná.
+        \item $T$ is partially decidable,
+        \item if $T$ is also complete, then it is decidable.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
-Algoritmem ukazujícím částečnou rozhodnutelnost je konstrukce systematického tabla pro $\F\varphi$.\footnote{Zde nám stačí enumerátor axiomů $T$, nebo postupně generujeme všechny sentence (např. v lexikografickém pořadí) a pro každou testujeme, zda je axiomem.} Pokud $\varphi$ v $T$ platí, konstrukce skončí v konečně mnoha krocích a snadno ověříme, že je tablo sporné, jinak ale skončit nemusí.
+An algorithm showing partial decidability is the construction of a systematic tableau for $\F \varphi$.\footnote{Here, an enumerator of the axioms of $T$ suffices, or we can systematically generate all sentences (e.g., in lexicographic order) and test whether they are axioms.} If $\varphi$ is valid in $T$, the construction will end in finitely many steps and we can easily verify that the tableau is contradictory; otherwise, it may not halt.
 
-Je-li $T$ kompletní, víme, že platí právě jedna z následujících možností: buď $T\proves\varphi$ nebo $T\proves\neg\varphi$. Budeme tedy paralelně konstruovat tablo pro $\F\varphi$ a tablo pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$): jedna z konstrukcí po konečně mnoha krocích skončí.
+If $T$ is complete, we know that exactly one of the following holds: either $T \proves \varphi$ or $T \proves \neg \varphi$. We will then construct parallel tableaux for $\F \varphi$ and $\T \varphi$ (proof and refutation of $\varphi$ from $T$): one of the constructions will halt after finitely many steps.
 \end{proof}
 
 
-\subsection{Rekurzivně spočetná kompletace}
+\subsection{Recursively Enumerable Completion}
 
-Požadavek kompletnosti je příliš silný, ukážeme, že stačí pokud jsme schopni efektivně popsat všechny kompletní jednoduché extenze.\footnote{Tj. `všechny modely až na elementární ekvivalenci'.}
+The requirement of completeness is too strong; we will show that it suffices if we can effectively describe all complete simple extensions.\footnote{I.e., `all models up to elementary equivalence'.}
 
-\begin{definition}[Rekurzivně spočetná kompletace]
-Řekneme, že teorie $T$ má \emph{rekurzivně spočetnou kompletaci}, pokud (nějaká) množina až na ekvivalenci všech jednoduchých kompletních extenzí teorie $T$ je \emph{rekurzivně spočetná}, tj. existuje algoritmus, který pro danou vstupní dvojici přirozených čísel $(i,j)$ vypíše na výstup $i$-tý axiom $j$-té extenze (v nějakém pevně daném uspořádání\footnote{Zde potřebujeme, aby byl jazyk spočetný.}), nebo odpoví, že takový axiom už neexistuje.\footnote{Jeli extenzí méně než $j$, nebo má-li $j$-tá extenze méně než $i$ axiomů.}
+\begin{definition}[Recursively Enumerable Completion]
+We say that a theory $T$ has a \emph{recursively enumerable completion} if (some) set up to equivalence of all simple complete extensions of the theory $T$ is \emph{recursively enumerable}, i.e., there is an algorithm that, for a given pair of natural numbers $(i,j)$, outputs the $i$-th axiom of the $j$-th extension (in some fixed order\footnote{Here, we need the language to be countable.}), or answers that such an axiom does not exist.\footnote{If there are fewer than $j$ extensions or if the $j$-th extension has fewer than $i$ axioms.}
 \end{definition}
 
 \begin{proposition}\label{propositon:recursively-enumerable-completion}    
-    Pokud je teorie $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je $T$ rozhodnutelná.
+    If a theory $T$ is recursively axiomatized and has a recursively enumerable completion, then $T$ is decidable.
 \end{proposition}
 \begin{proof}
-Pro danou sentenci $\varphi$ buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tedy kompletní jednoduchá extenze $T_i$ teorie $T$ taková, že $T_i\not\proves\varphi$. Z kompletnosti ale plyne, že $T_i\proves\neg\varphi$. Náš algoritmus bude paralelně konstruovat tablo důkaz $\varphi$ z $T$ a (postupně) tablo důkazy $\neg\varphi$ ze všech kompletních jednoduchých extenzí $T_1,T_2,\dots$ teorie $T$.\footnote{Nevadí, že je jich nekonečně mnoho, můžeme využít tzv. \emph{dovetailing}: Provedeme 1. krok konstrukce 1. tabla, potom 2. krok 1. tabla a 1. krok 2. tabla, 3. krok 1. tabla, 2. krok 2. tabla, 1. krok 3. tabla, atd.} Víme, že alespoň jedno z paralelně konstruovaných tabel je sporné, a můžeme předpokládat, že konečné (neprodlužujeme-li sporné větve tabla), tedy algoritmus ho po konečně mnoha krocích zkonstruuje.
+For a given sentence $\varphi$, either $T \proves \varphi$, or there is a counterexample $\A \not\models \varphi$, i.e., a complete simple extension $T_i$ of the theory $T$ such that $T_i \not\proves \varphi$. From completeness, it follows that $T_i \proves \neg \varphi$. Our algorithm will construct in parallel the tableau proof of $\varphi$ from $T$ and (sequentially) the tableau proofs of $\neg \varphi$ from all complete simple extensions $T_1, T_2, \dots$ of the theory $T$.\footnote{It does not matter that there are infinitely many of them; we can use so-called \emph{dovetailing}: Perform the 1st step of constructing the 1st tableau, then the 2nd step of the 1st tableau and the 1st step of the 2nd tableau, the 3rd step of the 1st tableau, the 2nd step of the 2nd tableau, the 1st step of the 3rd tableau, etc.} We know that at least one of the parallel constructed tableaux is contradictory, and we can assume it is finite (if we do not extend contradictory branches of the tableau), so the algorithm will construct it after finitely many steps.
 \end{proof}
 
 \begin{exercise}
-Ukažte, že následující teorie mají rekurzivně spočetnou kompletaci:
+Show that the following theories have a recursively enumerable completion:
 \begin{itemize}
-\item Teorie čisté rovnosti (prázdná teorie v jazyce $L=\langle \rangle$ s rovností),
-\item Teorie unárního predikátu (prázdná teorie v jazyce $L=\langle U \rangle$ s rovností, kde $U$ je unární relační symbol),
-\item Teorie hustých lineárních uspořádání DeLO* (kompletní jednoduché extenze jsou popsané v Důsledku \ref{corollary:complete-simple-extensions-of-delo}),
+\item The theory of pure equality (the empty theory in the language $L = \langle \rangle$ with equality),
+\item The theory of a unary predicate (the empty theory in the language $L = \langle U \rangle$ with equality, where $U$ is a unary relational symbol),
+\item The theory of dense linear orders DeLO* (the complete simple extensions are described in Corollary \ref{corollary:complete-simple-extensions-of-delo}),
 \end{itemize}
-Jde o rekurzivně axiomatizované teorie (neboť jsou konečné), jsou tedy rozhodnutelné.
+These are recursively axiomatized theories (as they are finite), so they are decidable.
 \end{exercise}
 
 \begin{example}
-    Na závěr uveďme bez důkazu několik dalších příkladů rozhodnutelných teorií:
+    Finally, without proof, let us mention a few more examples of decidable theories:
     \begin{itemize}  
-        \item Teorie Booleových algeber (Alfred Tarski 1940),
-        \item Teorie algebraicky uzavřených těles (Tarski 1949),
-        \item Teorie komutativních grup (Wanda Szmielew 1955).
+        \item The theory of Boolean algebras (Alfred Tarski 1940),
+        \item The theory of algebraically closed fields (Tarski 1949),
+        \item The theory of commutative groups (Wanda Szmielew 1955).
     \end{itemize}
-    Tyto teorie jsou také nekompletní, ale rekurzivně axiomatizované a mají rekurzivně spočetnou kompletaci.    
+    These theories are also incomplete, but recursively axiomatized and have a recursively enumerable completion.    
 \end{example}
 
  
-\subsection{Rekurzivní axiomatizovatelnost}
+\subsection{Recursive Axiomatizability}
 
-V předchozí kapitole, konkrétně v Sekci \ref{section:axiomatizability}, jsme se zabývali otázkou, kdy lze popsat nějakou třídu struktur [resp. teorii] pomocí axiomů [určitého tvaru]. Nyní se zaměřme na otázku, kdy to lze udělat \emph{algoritmicky}.
+In the previous chapter, specifically in Section \ref{section:axiomatizability}, we addressed the question of when a class of structures [or a theory] can be described using axioms [of a certain form]. Now, let us focus on the question of when this can be done \emph{algorithmically}.
 
-\begin{definition}[Rekurzivní axiomatizovatelnost]
-Třída $L$-struktur $K\subseteq\M_L$ je \emph{rekurzivně axiomatizovatelná}, pokud existuje rekurzivně axiomatizovaná $L$-teorie $T$ taková, že $K=M_L(T)$. Teorie $T'$ je \emph{rekurzivně axiomatizovatelná}, pokud je rekurzivně axiomatizovatelná třída jejích modelů, neboli pokud je $T'$ ekvivalentní nějaké rekurzivně axiomatizované teorii.
+\begin{definition}[Recursive Axiomatizability]
+A class of $L$-structures $K \subseteq \M_L$ is \emph{recursively axiomatizable} if there is a recursively axiomatized $L$-theory $T$ such that $K = \M_L(T)$. A theory $T'$ is \emph{recursively axiomatizable} if the class of its models is recursively axiomatizable, i.e., if $T'$ is equivalent to some recursively axiomatized theory.
 \end{definition}
 \begin{remark}
-    Podobně bychom mohli definovat \emph{rekurzivně spočetnou axiomatizovatelnost}.
+    Similarly, we could define \emph{recursively enumerable axiomatizability}.
 \end{remark}
 
-Ukažme si následující jednoduché tvrzení:
+Let us show the following simple proposition:
 
 \begin{proposition}
-    Je-li $\A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\Th(\A)$ rekurzivně axiomatizovatelná.
+    If $\A$ is a finite structure in a finite language with equality, then the theory $\Th(\A)$ is recursively axiomatizable.
 \end{proposition}
 \begin{remark}
-    Z toho plyne i že $\Th(\A)$ je rozhodnutelná, což ale není překvapivé: platnost sentence $\varphi$ v konečné struktuře $\A$ můžeme snadno ověřit.
+    It follows that $\Th(\A)$ is decidable, which is not surprising: the validity of a sentence $\varphi$ in a finite structure $\A$ can be easily verified.
 \end{remark}
 \begin{proof}
-    Očíslujme prvky domény jako $A=\{a_1,\dots,a_n\}$. Teorii $\Th(\A)$ lze axiomatizovat jedinou sentencí, která je tvaru ``existuje právě $n$ prvků $a_1,\dots,a_n$ splňujících právě ty \emph{základní vztahy} o funkčních hodnotách a relacích, které platí ve struktuře $\A$''.\footnote{Například, pokud $f^\A(a_4, a_2)=a_{17}$, přidáme do konjunkce atomickou formuli $f(x_{a_4},x_{a_2})=x_{a_{17}}$ (kde $x_{a_i}$ jsou proměnné odpovídající jednotlivým prvkům). A pokud $(a_3,a_3,a_1)\notin R^\A$, přidáme $\neg R(x_{a_3},x_{a_3},x_{a_1})$.}    
+    Let us enumerate the elements of the domain as $A = \{a_1, \dots, a_n\}$. The theory $\Th(\A)$ can be axiomatized by a single sentence of the form ``there exist exactly $n$ elements $a_1, \dots, a_n$ satisfying precisely those \emph{basic relations} on function values and relations that hold in the structure $\A$''.\footnote{For example, if $f^\A(a_4, a_2) = a_{17}$, we add the atomic formula $f(x_{a_4}, x_{a_2}) = x_{a_{17}}$ to the conjunction (where $x_{a_i}$ are variables corresponding to the individual elements). And if $(a_3, a_3, a_1) \notin R^\A$, we add $\neg R(x_{a_3}, x_{a_3}, x_{a_1})$.}    
 \end{proof}
  
-Uveďme několik standardních příkladů struktur, které lze `algoritmicky popsat':
+Let us give some standard examples of structures that can be `described algorithmically':
 
 \begin{example}\label{example:structures-recursively-axiomatizable}
-Pro následující struktury je $\Th(\A)$ rekurzivně axiomatizovatelná, a tedy i rozhodnutelná:
+For the following structures, $\Th(\A)$ is recursively axiomatizable and thus decidable:
 
 \begin{itemize}
-    \item $\langle\mathbb Z,\leq\rangle$, jde o tzv.teorii \emph{diskrétních lineárních uspořádání},        
-    \item $\langle\mathbb Q,\leq\rangle$, jde o teorii DeLO,
-    \item $\langle\mathbb N,S,0\rangle$, teorie \emph{následníka s nulou},
-    \item $\langle\mathbb N,S,+,0\rangle$, \emph{Presburgerova aritmetika},
-    \item $\langle\mathbb R,+,-,\cdot,0,1\rangle$, teorie \emph{reálně uzavřených těles},\footnote{Tento významný výsledek A. Tarského (1949) také znamená, že lze algoritmicky rozhodovat, které vlastnosti platí v Euklidovské geometrii.}
-    \item $\langle \mathbb C,+,-,\cdot,0,1 \rangle$, teorie \emph{algebraicky uzavřených těles charakteristiky 0}.
+    \item $\langle \mathbb{Z}, \leq \rangle$, this is the so-called theory of \emph{discrete linear orders},        
+    \item $\langle \mathbb{Q}, \leq \rangle$, this is the theory DeLO,
+    \item $\langle \mathbb{N}, S, 0 \rangle$, the theory of \emph{successor with zero},
+    \item $\langle \mathbb{N}, S, +, 0 \rangle$, \emph{Presburger arithmetic},
+    \item $\langle \mathbb{R}, +, -, \cdot, 0, 1 \rangle$, the theory of \emph{real closed fields},\footnote{This significant result by A. Tarski (1949) also means that it is possible to algorithmically decide which properties hold in Euclidean geometry.}
+    \item $\langle \mathbb{C}, +, -, \cdot, 0, 1 \rangle$, the theory of \emph{algebraically closed fields of characteristic 0}.
 \end{itemize}
 \end{example}
    
 \begin{corollary}
-    Pro struktury uvedené v Příkladu \ref{example:structures-recursively-axiomatizable} platí, že $\Th(\A)$ je rozhodnutelná.
+    For the structures listed in Example \ref{example:structures-recursively-axiomatizable}, it holds that $\Th(\A)$ is decidable.
 \end{corollary}
 
 
 \begin{remark}\label{remark:std-arithmetic-not-recursively-axiomatizable}
-    Jak ale vyplývá z První Gödelovy věty o neúplnosti (viz níže), \emph{standardní model aritmetiky}, tj. struktura $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$, \emph{nemá} rekurzivně axiomatizovatelnou teorii.
+    As follows from Gödel's First Incompleteness Theorem (see below), the \emph{standard model of arithmetic}, i.e., the structure $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$, does \emph{not} have a recursively axiomatizable theory.
 \end{remark}
 
 
-\section{Aritmetika}
+\section{Arithmetic}
 
-Vlastnosti přirozených čísel hrají důležitou roli nejen v matematice, ale například také v kryptografii. Připomeňme, že jazyk aritmetiky je jazyk $L=\langle S,+,\cdot,0,\leq\rangle$ s rovností. Jak jsme zmínili v Poznámce \ref{remark:std-arithmetic-not-recursively-axiomatizable}, tzv. \emph{standardní model aritmetiky} $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ nemá rekurzivně axiomatizovatelnou teorii. Proto používáme rekurzivně axiomatizované teorie, které se snaží vlastnosti $\underline{\mathbb N}$ popsat částečně; těmto teoriím říkáme \emph{aritmetiky}.
+The properties of natural numbers play an important role not only in mathematics but also in cryptography, for example. Recall that the language of arithmetic is the language $L = \langle S, +, \cdot, 0, \leq \rangle$ with equality. As mentioned in Remark \ref{remark:std-arithmetic-not-recursively-axiomatizable}, the so-called \emph{standard model of arithmetic} $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$ does not have a recursively axiomatizable theory. Therefore, we use recursively axiomatized theories that attempt to describe the properties of $\underline{\mathbb{N}}$ partially; these theories are called \emph{arithmetics}.
 
-\subsection{Robinsonova a Peanova aritmetika}
+\subsection{Robinson and Peano Arithmetic}
 
-Uvedeme jen dva nejdůležitější příklady aritmetik: \emph{Robinsonovu} a \emph{Peanovu}.
+We will mention only the two most important examples of arithmetics: \emph{Robinson arithmetic} and \emph{Peano arithmetic}.
 
-\begin{definition}[Robinsonova aritmetika]
-\emph{Robinsonova aritmetika} je teorie $Q$ v jazyce aritmetiky sestávající z následujících (konečně mnoha) axiomů:
+\begin{definition}[Robinson Arithmetic]
+\emph{Robinson arithmetic} is the theory $Q$ in the language of arithmetic consisting of the following (finite) axioms:
 \begin{align*}
-    &\neg S(x) = 0& &x\cdot 0=0\\
-    &S(x)=S(y)\rightarrow x=y& &x\cdot S(y)=x\cdot y+x\\
-    &x+0=x& &\neg x=0 \rightarrow (\exists y)(x=S(y))\\
-    &x+S(y)=S(x+y)& &x\le y \leftrightarrow (\exists z)(z+x=y)\qquad
+    &\neg S(x) = 0& &x \cdot 0 = 0\\
+    &S(x) = S(y) \rightarrow x = y& &x \cdot S(y) = x \cdot y + x\\
+    &x + 0 = x& &\neg x = 0 \rightarrow (\exists y)(x = S(y))\\
+    &x + S(y) = S(x + y)& &x \le y \leftrightarrow (\exists z)(z + x = y)\qquad
 \end{align*}
 \end{definition}
 
-Robinsonova aritmetika je velmi slabá, nelze v ní dokázat například komutativitu ani asociativitu sčítání či násobení, nebo tranzitivitu uspořádání.
+Robinson arithmetic is very weak; it cannot prove, for example, the commutativity or associativity of addition or multiplication, or the transitivity of order.
 
-Na druhou stranu v ní lze dokázat všechna \emph{existenční tvrzení o numerálech}, která jsou pravdivá v $\underline{\mathbb N}$. Tím myslíme formule, které v prenexním tvaru mají pouze existenční kvantifikátory, a do kterých jsme za volné proměnné substituovali \emph{numerály} $\underline{n}=S(\dots S(0)\dots)$. 
+On the other hand, it can prove all \emph{existential statements about numerals} that are true in $\underline{\mathbb{N}}$. By this, we mean formulas that, in prenex form, have only existential quantifiers, and into which we have substituted \emph{numerals} $\underline{n} = S(\dots S(0) \dots)$ for the free variables.
 
 \begin{example}
-Například, pro formuli $\varphi(x,y)$ tvaru $(\exists z)(x+z=y)$ je $Q\proves\varphi(\underline{1},\underline{2})$, kde $\underline{1}=S(0)$ a $\underline{2}=S(S(0))$.    
+For instance, for the formula $\varphi(x,y)$ of the form $(\exists z)(x + z = y)$, $Q \proves \varphi(\underline{1}, \underline{2})$, where $\underline{1} = S(0)$ and $\underline{2} = S(S(0))$.    
 \end{example}
 
-Platí tedy následující tvrzení, které ponecháme bez důkazu.
+Thus, the following proposition holds, which we will leave without proof.
 
 \begin{proposition}\label{proposition:robinson-satisfies-existence-about-numerals}
-    Je-li $\varphi(x_1,\dots,x_n)$ existenční formule a $a_1,\dots,a_n\in\mathbb N$, potom platí:
+    If $\varphi(x_1, \dots, x_n)$ is an existential formula and $a_1, \dots, a_n \in \mathbb{N}$, then it holds that:
     $$
-    Q\proves\varphi(x_1/\underline{a_1},\dots,x_n/\underline{a_n})\text{ právě když }\underline{\mathbb{N}}\models \varphi[e(x_1/a_1,\dots,x_n/a_n)]
+    Q \proves \varphi(x_1 / \underline{a_1}, \dots, x_n / \underline{a_n}) \text{ if and only if } \underline{\mathbb{N}} \models \varphi[e(x_1 / a_1, \dots, x_n / a_n)]
     $$
 \end{proposition}
 
-Užitečným rozšířením Robinsonovy aritmetiky je tzv. Peanova aritmetika, ve které lze \emph{dokazovat indukcí}:
+A useful extension of Robinson arithmetic is the so-called Peano arithmetic, in which \emph{induction} can be proved:
 
-\begin{definition}[Peanova aritmetika]
-\emph{Peanova aritmetika} $\text{\it PA}$ je extenze Robinsonovy  aritmetiky $Q$ o \emph{schéma indukce}, tj. pro každou $L$-formuli $\varphi(x,\overline{y})$ přidáme následující axiom:
+\begin{definition}[Peano Arithmetic]
+\emph{Peano arithmetic} $\text{\it PA}$ is an extension of Robinson arithmetic $Q$ with the \emph{induction schema}, i.e., for each $L$-formula $\varphi(x, \overline{y})$, the following axiom is added:
 $$
-(\varphi(0,\overline{y}) \land (\forall x)(\varphi(x,\overline{y})\limplies \varphi(S(x),\overline{y}))) \limplies (\forall x)\varphi(x,\overline{y})
+(\varphi(0, \overline{y}) \land (\forall x)(\varphi(x, \overline{y}) \limplies \varphi(S(x), \overline{y}))) \limplies (\forall x)\varphi(x, \overline{y})
 $$
 \end{definition}
 
-Peanova aritmetika je mnohem lepší aproximací teorie $\Th(\underline{\mathbb N})$, lze v ní dokázat všechny `základní' vlastnosti platné v $\underline{\mathbb N}$ (například komutativitu a asociativitu sčítání). Stále ale existují sentence v jazyce aritmetiky, které platí v $\underline{\mathbb N}$, ale v Peanově aritmetice jsou nezávislé.\footnote{Jak si ukážeme v Gödelově První větě o neúplnosti.} 
+Peano arithmetic is a much better approximation of the theory $\Th(\underline{\mathbb{N}})$; it can prove all `basic' properties valid in $\underline{\mathbb{N}}$ (such as the commutativity and associativity of addition). However, there are still sentences in the language of arithmetic that are valid in $\underline{\mathbb{N}}$ but are independent in Peano arithmetic.\footnote{As we will show in Gödel's First Incompleteness Theorem.} 
+
+
+
+%todo
+
+
+
+
+
+
 
 \begin{remark}
 Pokud bychom se přesunuli do logiky \emph{2. řádu}, potom bychom už mohli strukturu $\underline{\mathbb N}$ axiomatizovat (až na izomorfismus), a to extenzí Peanovy aritmetiky o následující formuli 2. řádu, tzv. \emph{axiom indukce}:

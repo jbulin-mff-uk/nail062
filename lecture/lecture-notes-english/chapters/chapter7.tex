@@ -483,264 +483,262 @@ Assume for contradiction that $T\not\models\varphi$, i.e., there exists $\A\in\M
 \end{proof}
 
 
-\subsection{Věta o úplnosti}
+\subsection{Completeness Theorem}
 
-Stejně jako ve výrokové logice ukážeme, že \emph{bezesporná} větev v \emph{dokončeném} tablo důkazu poskytuje protipříklad: model teorie $T$, který se shoduje s položkou $\mathrm{F}\varphi$ v kořeni tabla, tj. neplatí v něm $\varphi$. Takových modelů může být více, definujeme proto opět jeden konkrétní, \emph{kanonický}.
+Just as in propositional logic, we will show that an \emph{open} branch in a \emph{completed} tableau proof provides a counterexample: a model of the theory $T$ that agrees with the entry $\mathrm{F}\varphi$ at the root of the tableau, i.e., $\varphi$ does not hold in it. There can be more such models, so we again define one specific, \emph{canonical} model.
 
-Model musí mít nějakou doménu. Jak ji získat z tabla, což je čistě syntaktický objekt? Využijeme standardní (v matematice) trik: ze syntaktických objektů uděláme sémantické. Konkrétně, za doménu zvolíme množinu všech \emph{konstantních termů} jazyka $L_C$.\footnote{Tj. termů zbudovaných aplikací funkčních symbolů jazyka $L$ na konstantní symboly jazyka $L$ (má-li nějaké) a pomocné konstantní symboly z $C$.} Ty chápeme jako konečné řetězce. V následujícím výkladu budeme někdy (neformálně) místo termu $t$ psát ``$t$'', abychom zdůraznili, že v daném místě chápeme $t$ jako řetězec znaků, a ne např. jako termovou funkci, kterou je třeba vyhodnotit.\footnote{Srovnejte aritmetický výraz ``1+1'' a 1+1=2.}
+The model must have some domain. How do we obtain it from the tableau, which is purely a syntactic object? We use a standard trick in mathematics: we turn syntactic objects into semantic ones. Specifically, we choose the set of all \emph{constant terms} of the language $L_C$ as the domain.\footnote{That is, terms constructed by applying the function symbols of the language $L$ to the constant symbols of the language $L$ (if it has any) and auxiliary constant symbols from $C$.} We understand these as finite strings. In the following exposition, we will sometimes (informally) write ``$t$'' instead of the term $t$ to emphasize that in the given place we understand $t$ as a string of characters, not e.g., as a term function to be evaluated.\footnote{Compare the arithmetic expression ``1+1'' and 1+1=2.}
 
-\begin{definition}[Kanonický model]\label{definition:canonical-model-predicate}
-Mějme teorii $T$ v jazyce $L=\langle\mathcal F,\mathcal R\rangle$ a nechť $V$ je bezesporná větev nějakého dokončeného tabla z teorie $T$. Potom \emph{kanonický model} pro $V$ je $L_C$-struktura $\A=\langle A,\mathcal F^\mathcal A\cup C^\mathcal A,\mathcal R^\mathcal A\rangle$ definovaná následovně:
+\begin{definition}[Canonical Model]\label{definition:canonical-model-predicate}
+Let $T$ be a theory in a language $L=\langle\mathcal F,\mathcal R\rangle$ and let $V$ be an open branch of some completed tableau from the theory $T$. Then the \emph{canonical model} for $V$ is the $L_C$ structure $\A=\langle A,\mathcal F^\mathcal A\cup C^\mathcal A,\mathcal R^\mathcal A\rangle$ defined as follows:
 
-Je-li jazyk $L$ bez rovnosti, potom:
+If the language $L$ is without equality, then:
 \begin{itemize}
-    \item Doména $A$ je množina všech konstantních $L_C$-termů.
-    \item Pro každý $n$-ární relační symbol $R\in\mathcal R$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:
+    \item The domain $A$ is the set of all constant $L_C$ terms.
+    \item For each $n$-ary relation symbol $R\in\mathcal R$ and ``$s_1$'', \dots, ``$s_n$'' from $A$:
     $$
-    (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\text{ právě když na větvi $V$ je položka $\T R(s_1,\dots,s_n)$}
+    (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\text{ if and only if the entry $\T R(s_1,\dots,s_n)$ is on the branch $V$}
     $$
-    \item Pro každý $n$-ární funkční symbol $f\in\mathcal F$ a ``$s_1$'', \dots, ``$s_n$'' z $A$:
+    \item For each $n$-ary function symbol $f\in\mathcal F$ and ``$s_1$'', \dots, ``$s_n$'' from $A$:
     $$
     f^\mathcal A(\text{``$s_1$''},\dots,\text{``$s_n$''})=\text{``$f(s_1,\dots,s_n)$''}
     $$
-    Speciálně, pro konstantní symbol $c$ máme $c^\mathcal A=\text{``$c$''}$.
+    Specifically, for a constant symbol $c$, we have $c^\mathcal A=\text{``$c$''}$.
 \end{itemize}
-Funkci $f^\mathcal A$ tedy interpretujeme jako `vytvoření' nového termu ze symbolu $f$ a vstupních termů (řetězců). 
+Thus, we interpret the function $f^\mathcal A$ as the `creation' of a new term from the symbol $f$ and input terms (strings). 
 
-Nechť je $L$ jazyk s rovností. Připomeňme, že naše tablo je nyní z teorie $T^*$, tj. z rozšíření~$T$ o axiomy rovnosti pro $L$. Nejprve vytvoříme kanonický model $\mathcal B$ pro $V$ jako by byl $L$ bez rovnosti (jeho doména $B$ je tedy množina všech konstantních $L_C$-termů). Dále definujeme relaci $=^B$ stejně jako pro ostatní relační symboly:
+Let $L$ be a language with equality. Recall that our tableau is now from the theory $T^*$, i.e., from the extension of $T$ by the axioms of equality for $L$. First, we create a canonical model $\mathcal B$ for $V$ as if $L$ were without equality (its domain $B$ is thus the set of all constant $L_C$ terms). Then we define the relation $=^B$ just like for other relation symbols:
 $$
-\text{``$s_1$''}=^B\text{``$s_2$''}\text{ právě když na větvi $V$ je položka $\T s_1=s_2$}
+\text{``$s_1$''}=^B\text{``$s_2$''}\text{ if and only if the entry $\T s_1=s_2$ is on the branch $V$}
 $$
-\emph{Kanonický model} pro $V$ potom definujeme jako faktorstrukturu $\A=\B/_{=^B}$.
+The \emph{canonical model} for $V$ is then defined as the factor structure $\A=\B/_{=^B}$.
 \end{definition}
 
-Jak plyne z diskuze v Sekci \ref{section:tableaux-equality}, relace $=^B$ je opravdu kongruence struktury $\B$, definice je tedy korektní, a relace $=^\A$ je identita na $A$. Platí následující jednoduché pozorování:
-
+As follows from the discussion in Section \ref{section:tableaux-equality}, the relation $=^B$ is indeed a congruence of the structure $\B$, so the definition is correct, and the relation $=^\A$ is identity on $A$. The following simple observation holds:
 
 \begin{observation}\label{canonical-with-equality-satisfies-the-same}
-    Pro každou formuli $\varphi$ máme $\B\models\varphi$ (kde symbol $=$ je interpretován jako binární relace $=^B$), právě když $\A=\B/_{=^B}\models\varphi$ (kde $=$ je interpretován jako identita).    
+    For any formula $\varphi$ we have $\B\models\varphi$ (where the symbol $=$ is interpreted as the binary relation $=^B$) if and only if $\A=\B/_{=^B}\models\varphi$ (where $=$ is interpreted as identity).    
 \end{observation}
 
-
-Všimněte si, že v jazyce bez rovnosti je kanonický model vždy spočetně nekonečný. V jazyce s rovností může ale být konečný, jak uvidíme v následujících příkladech.
+Note that in a language without equality, the canonical model is always countably infinite. In a language with equality, it can be finite, as we will see in the following examples.
 
 \begin{example}
-    Nejprve si ukažme příklad kanonického modelu v jazyce bez rovnosti. Mějme teorii $T=\{(\forall x)R(f(x))\}$ v jazyce $L=\langle R,f,d \rangle$ bez rovnosti, kde $R$ je unární relační, $f$ unární funkční, a $d$ konstantní symbol. Najděme protipříklad ukazující, že $T\not\models\neg R(d)$. 
+    First, let's show an example of a canonical model in a language without equality. Let $T=\{(\forall x)R(f(x))\}$ in the language $L=\langle R,f,d \rangle$ without equality, where $R$ is a unary relation, $f$ a unary function, and $d$ a constant symbol. Let's find a counterexample showing that $T\not\models\neg R(d)$. 
     
-    Systematické tablo z $T$ s položkou $\F\neg R(d)$ v kořeni není sporné, obsahuje jedinou větev $V$, která je bezesporná. (Sestrojte si tablo sami!) Kanonický model pro $V$ je $L_C$-struktura $\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$, jejíž doména je
+    A systematic tableau from $T$ with the entry $\F\neg R(d)$ at the root is not contradictory; it contains a single branch $V$, which is open. (Construct the tableau yourself!) The canonical model for $V$ is the $L_C$ structure $\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$, whose domain is
     $$
     A=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$c_0$''},\text{``$f(c_0)$''},\text{``$f(f(c_0))$''},\dots,\text{``$c_1$''},\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}
     $$
-    a interpretace symbolů jsou následující:
+    and the interpretations of the symbols are as follows:
     \begin{itemize}
         \item $d^\A=\text{``$d$''}$,
-        \item $c^\A_i=\text{``$c_i$''}$ pro všechna $i\in \mathbb N$,
+        \item $c^\A_i=\text{``$c_i$''}$ for all $i\in \mathbb N$,
         \item $f^\A(\text{``$d$''})=\text{``$f(d)$''}$, $f^\A(\text{``$f(d)$''})=\text{``$f(f(d))$''}$, \dots
         \item $R^\A=A\setminus C=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$f(c_0)$''},\text{``$f(f(c_0))$''},\dots,\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}$.
     \end{itemize}
-    Redukt kanonického modelu $\A$ na původní jazyk $L$ je potom $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
+    The reduct of the canonical model $\A$ to the original language $L$ is then $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
 \end{example}
 
 \begin{example}
-    Nyní příklad v jazyce s rovností: Mějme teorii $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$ v jazyce $L=\langle R,f,d \rangle$ s rovností. Opět najděme protipříklad ukazující, že $T\not\models\neg R(d)$. 
+    Now an example in a language with equality: Let $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$ in the language $L=\langle R,f,d \rangle$ with equality. Again, let's find a counterexample showing that $T\not\models\neg R(d)$. 
 
-    Systematické tablo z teorie $T^*$ (tj. z $T$ rozšířené o axiomy rovnosti pro $L$) s položkou $\F\neg R(d)$ v kořeni obsahuje bezespornou větev $V$. (Sestrojte si tablo sami!) Nejprve sestrojíme kanonický model $\B$ pro tuto větev, jako by byl jazyk bez rovnosti:
+    A systematic tableau from the theory $T^*$ (i.e., from $T$ extended by the axioms of equality for $L$) with the entry $\F\neg R(d)$ at the root contains an open branch $V$. (Construct the tableau yourself!) First, we construct the canonical model $\B$ for this branch as if the language were without equality:
     $$
     \B=\langle B,R^\B,f^\B,d^\B,c_0^\B,c_1^\B,c_2^\B,\dots\rangle
     $$
-    kde $B$ je množina všech konstantních $L_C$-termů. Relace $=^B$ je definovaná, jako by symbol `$=$' byl `obyčejným' relačním symbolem v $L$. Je to kongruence struktury $\B$, a platí pro ni, že $s_1=^B s_2$ právě když $s_1=f(\cdots (f(s_2))\cdots)$ nebo $s_2=f(\cdots (f(s_1))\cdots)$ pro sudý počet aplikací $f$. Jako reprezentanty jednotlivých tříd tedy můžeme vybrat termy s žádným nebo jedním výskytem symbolu $f$:
+    where $B$ is the set of all constant $L_C$ terms. The relation $=^B$ is defined as if the symbol `$=$' were an `ordinary' relation symbol in $L$. It is a congruence of the structure $\B$, and it holds that $s_1=^B s_2$ if and only if $s_1=f(\cdots (f(s_2))\cdots)$ or $s_2=f(\cdots (f(s_1))\cdots)$ for an even number of applications of $f$. Thus, we can choose terms with none or one occurrence of the symbol $f$ as representatives of individual classes:
     $$
         B/_{=^B} = \{[\text{``$d$''}]_{=^B},[\text{``$f(d)$''}]_{=^B},[\text{``$c_0$''}]_{=^B},[\text{``$f(c_0)$''}]_{=^B},[\text{``$c_1$''}]_{=^B},[\text{``$f(c_1)$''}]_{=^B},\dots\}
     $$
-    Kanonický model pro větev $V$ je potom $L_C$-struktura 
+    The canonical model for the branch $V$ is then the $L_C$ structure 
     $$
     \A=\B/_{=^B}=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle
     $$
-    kde $A=B/_{=^B}$ a interpretace symbolů jsou následující:
+    where $A=B/_{=^B}$ and the interpretations of the symbols are as follows:
     \begin{itemize}
         \item $d^\A=[\text{``$d$''}]_{=^B}$,
-        \item $c^\A_i=[\text{``$c_i$''}]_{=^B}$ pro všechna $i\in \mathbb N$,
+        \item $c^\A_i=[\text{``$c_i$''}]_{=^B}$ for all $i\in \mathbb N$,
         \item $f^\A([\text{``$d$''}]_{=^B})=[\text{``$f(d)$''}]_{=^B}$, $f^\A([\text{``$f(d)$''}]_{=^B})=[\text{``$f(f(d))$''}]_{=^B}=[\text{``$d$''}]_{=^B}$, \dots
         \item $R^\A=A=B/_{=^B}$.
     \end{itemize}
-    Redukt kanonického modelu $\A$ na původní jazyk $L$ je opět $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
+    The reduct of the canonical model $\A$ to the original language $L$ is again $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
 \end{example}
 
 \begin{exercise}
     \begin{enumerate}[(a)]
-        \item Sestrojte dokončené tablo s položkou $\T (\forall x)(\forall y)(x=y)$ v kořeni. Sestrojte kanonický model pro (jedinou, bezespornou) větev tohoto tabla.
-        \item Sestrojte dokončené tablo s položkou $\T (\forall x)(\forall y)(\forall z)(x=y\lor x=z \lor y=z)$ v kořeni. Sestrojte kanonické modely pro několik bezesporných větví a porovnejte je.
+        \item Construct a completed tableau with the entry $\T (\forall x)(\forall y)(x=y)$ at the root. Construct the canonical model for the (only, open) branch of this tableau.
+        \item Construct a completed tableau with the entry $\T (\forall x)(\forall y)(\forall z)(x=y\lor x=z \lor y=z)$ at the root. Construct canonical models for several open branches and compare them.
     \end{enumerate}
 \end{exercise} 
 
-Nyní jsme připraveni dokázat Větu o úplnosti. Použijeme opět následující pomocné lemma, jehož znění je zcela stejné, jako znění Lemmatu \ref{lemma:canonical-model-agrees} a důkaz se liší jen v technických detailech.
+We are now ready to prove the Completeness Theorem. We again use the following auxiliary lemma, whose wording is exactly the same as Lemma \ref{lemma:canonical-model-agrees} and whose proof differs only in technical details.
 
 \begin{lemma}\label{lemma:canonical-model-agrees-predicate}
-    Kanonický model pro (bezespornou dokončenou) větev $V$ se shoduje s $V$.
+    The canonical model for an (open completed) branch $V$ agrees with $V$.
 \end{lemma}
 \begin{proof}
-Nejprve uvažme jazyky bez rovnosti. Ukážeme indukcí podle struktury sentencí v položkách, že kanonický model $\A$ se shoduje se všemi položkami $P$ na větvi $V$. 
+First, consider languages without equality. We will show by induction on the structure of sentences in the entries that the canonical model $\A$ agrees with all entries $P$ on the branch $V$. 
 
-Základ indukce, tj. případ, kdy $\varphi=R(s_1,\dots,s_n)$ je atomická sentence, je jednoduchý: Je-li na $V$ položka $\T\varphi$, potom $(s_1,\dots,s_n)\in R^\A$ plyne přímo z definice kanonického modelu, máme tedy $\A\models\varphi$.  Je-li na $V$ položka $\F\varphi$, potom na $V$ není položka $\T\varphi$ ($V$ je bezesporná), $(s_1,\dots,s_n)\not\in R^\A$, a $\A\not\models\varphi$
+The base case, i.e., when $\varphi=R(s_1,\dots,s_n)$ is an atomic sentence, is simple: If there is an entry $\T\varphi$ on $V$, then $(s_1,\dots,s_n)\in R^\A$ directly follows from the definition of the canonical model, so we have $\A\models\varphi$. If there is an entry $\F\varphi$ on $V$, then there is no entry $\T\varphi$ on $V$ (since $V$ is open), $(s_1,\dots,s_n)\not\in R^\A$, and $\A\not\models\varphi$.
 
-Nyní indukční krok. Rozebereme jen několik případů, ostatní se dokáží obdobně. 
+Now the induction step. We will discuss only a few cases, others can be proved similarly. 
 
-Pro logické spojky je důkaz zcela stejný jako ve výrokové logice, například je-li $P=\mathrm{F}\varphi\land\psi$, potom protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $\A\not\models\varphi$ nebo $\A\not\models\psi$, z čehož plyne $\A\not\models\varphi\land\psi$ a $\A$ se shoduje s $P$.
+For logical connectives, the proof is exactly the same as in propositional logic, for example, if $P=\mathrm{F}\varphi\land\psi$, then since $P$ on $V$ is reduced, there is an entry $\mathrm{F}\varphi$ or an entry $\mathrm{F}\psi$ on $V$. Thus, $\A\not\models\varphi$ or $\A\not\models\psi$, from which it follows that $\A\not\models\varphi\land\psi$ and $\A$ agrees with $P$.
 
-Máme-li položku typu ``všichni'', například $P=\T(\forall x)\varphi(x)$ 
-(případ $P=\F(\exists x)\varphi(x)$ je obdobný), potom jsou na $V$ i položky $T\varphi(x/t)$ pro každý konstantní $L_C$-term, tj. pro každý prvek $\text{``$t$''}\in A$. Dle indukčního předpokladu je $\A\models\varphi(x/t)$ pro každé $\text{``$t$''}\in A$, tedy $\A\models(\forall x)\varphi(x)$.
+If we have an entry of the type "all", for example, $P=\T(\forall x)\varphi(x)$ 
+(the case $P=\F(\exists x)\varphi(x)$ is similar), then there are entries $\T\varphi(x/t)$ for each constant $L_C$ term, i.e., for each element $\text{``$t$''}\in A$ on $V$. By the induction hypothesis, $\A\models\varphi(x/t)$ for each $\text{``$t$''}\in A$, so $\A\models(\forall x)\varphi(x)$.
 
-Máme-li položku typu ``svědek'', například $P=\T(\exists x)\varphi(x)$ 
-(případ $P=\F(\forall x)\varphi(x)$ je obdobný), potom je na $V$ i položka $T\varphi(x/c)$ pro nějaké $\text{``$c$''}\in A$. Dle indukčního předpokladu je $\A\models\varphi(x/c)$, tedy i $\A\models(\exists x)\varphi(x)$.
+If we have an entry of the type "witness", for example, $P=\T(\exists x)\varphi(x)$ 
+(the case $P=\F(\forall x)\varphi(x)$ is similar), then there is an entry $\T\varphi(x/c)$ for some $\text{``$c$''}\in A$ on $V$. By the induction hypothesis, $\A\models\varphi(x/c)$, so $\A\models(\exists x)\varphi(x)$.
 
-Je-li jazyk s rovností, máme kanonický model $\A=\B/_{=^B}$, důkaz výše platí pro $\B$, a zbytek plyne z Pozorování \ref{canonical-with-equality-satisfies-the-same}.
+If the language has equality, we have the canonical model $\A=\B/_{=^B}$, the proof above applies to $\B$, and the rest follows from Observation \ref{canonical-with-equality-satisfies-the-same}.
 \end{proof}
 
 \begin{exercise}
-    Ověřte zbývající případy v důkazu Lemmatu \ref{lemma:canonical-model-agrees-predicate}.
+    Verify the remaining cases in the proof of Lemma \ref{lemma:canonical-model-agrees-predicate}.
 \end{exercise}
 
-Důkaz Věty o úplnosti je také analogický její verzi pro výrokovou logiku:
+The proof of the Completeness Theorem is also analogous to its version for propositional logic:
 
-\begin{theorem}[O úplnosti]\label{theorem:completeness-theorem-predicate}
-    Je-li sentence $\varphi$ pravdivá v teorii $T$, potom je tablo dokazatelná z $T$, tj. $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
+\begin{theorem}[On Completeness]\label{theorem:completeness-theorem-predicate}
+    If a sentence $\varphi$ is true in a theory $T$, then it is tableau provable from $T$, i.e., $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
 \end{theorem} 
 
 \begin{proof}
-Ukážeme, že libovolné \emph{dokončené} tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni je nutně sporné. Důkaz provedeme sporem: kdyby takové tablo nebylo sporné, existovala by v něm bezesporná (dokončená) větev $V$. Uvažme kanonický model $\A$ pro tuto větev, a označme jako $\A'$ jeho redukt na jazyk $L$. Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $\alpha\in T$. Model $\A$ se podle Lemmatu \ref{lemma:canonical-model-agrees-predicate} shoduje se všemi položkami na $V$, splňuje tedy všechny axiomy a máme i $\A'\models T$. Protože se ale $\A$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, platí i $\A'\not\models\varphi$, což znamená, že $\A'\in \M_L(T)\setminus\M_L(\varphi)$, tedy $T\not\models\varphi$, a to je spor. Tablo tedy muselo být sporné, tj. být tablo důkazem $\varphi$ z $T$.
+We will show that any \emph{completed} tableau from $T$ with the entry $\mathrm{F}\varphi$ at the root must be contradictory. We prove this by contradiction: if such a tableau were not contradictory, there would be an open (completed) branch $V$ in it. Consider the canonical model $\A$ for this branch and denote its reduct to the language $L$ as $\A'$. Since $V$ is completed, it contains $\mathrm{T}\alpha$ for all axioms $\alpha\in T$. The model $\A$ agrees with all entries on $V$ by Lemma \ref{lemma:canonical-model-agrees-predicate}, so it satisfies all axioms, and we have $\A'\models T$. But since $\A$ also agrees with the entry $\mathrm{F}\varphi$ at the root, it holds that $\A'\not\models\varphi$, which means that $\A'\in \M_L(T)\setminus\M_L(\varphi)$, thus $T\not\models\varphi$, and this is a contradiction. Therefore, the tableau must have been contradictory, i.e., it must have been a tableau proof of $\varphi$ from $T$.
 \end{proof}
 
 
-\section{Důsledky korektnosti a úplnosti}
+\section{Consequences of Soundness and Completeness}
 
-Stejně jako ve výrokové logice, Věty o korektnosti a úplnosti dohromady říkají, že \emph{dokazatelnost} je totéž, co \emph{platnost}. To nám umožňuje obdobně zformulovat syntaktické analogie sémantických pojmů a vlastností.
+Just as in propositional logic, the Soundness and Completeness Theorems together state that \emph{provability} is the same as \emph{truth}. This allows us to similarly formulate syntactic analogs of semantic concepts and properties.
 
-Analogií \emph{důsledků} jsou \emph{teorémy} teorie $T$:
+The analogs of \emph{consequences} are \emph{theorems} of the theory $T$:
 $$
-\Thm_L(T)=\{\varphi\mid \varphi\text{ je $L$-sentence a } T\proves\varphi\}
+\Thm_L(T)=\{\varphi\mid \varphi\text{ is an $L$ sentence and } T\proves\varphi\}
 $$
 
-\begin{corollary}[Dokazatelnost = platnost]\label{corollary:corollary-of-soundness-and-completeness-predicate}
-    Pro libovolnou teorii $T$ a sentence $\varphi,\psi$ platí:
+\begin{corollary}[Provability = Truth]\label{corollary:corollary-of-soundness-and-completeness-predicate}
+    For any theory $T$ and sentences $\varphi,\psi$, the following holds:
     \begin{itemize}
-        \item $T\proves\varphi$ právě když $T\models\varphi$
+        \item $T\proves\varphi$ if and only if $T\models\varphi$
         \item $\Thm_L(T)=\Conseq_L(T)$
     \end{itemize}
 \end{corollary}
 
-Platí například:
+For example, it holds that:
 \begin{itemize}
-    \item Teorie je \emph{sporná}, jestliže je v ní dokazatelný spor (tj. $T\proves\bot$).
-    \item Teorie je \emph{kompletní}, jestliže pro každou sentenci $\varphi$ je buď $T\proves\varphi$ nebo $T\proves\neg\varphi$ (ale ne obojí, jinak by byla sporná).
-    \item Věta o dedukci: Pro teorii $T$ a sentence $\varphi,\psi$ platí $T,\varphi\proves\psi$, právě když $T\proves\varphi\to\psi$.
+    \item A theory is \emph{contradictory} if a contradiction is provable in it (i.e., $T\proves\bot$).
+    \item A theory is \emph{complete} if for every sentence $\varphi$ either $T\proves\varphi$ or $T\proves\neg\varphi$ (but not both, otherwise it would be contradictory).
+    \item Deduction Theorem: For a theory $T$ and sentences $\varphi,\psi$, $T,\varphi\proves\psi$ if and only if $T\proves\varphi\to\psi$.
 \end{itemize}
 
-Na závěr této sekce si ukážeme několik aplikací Vět o úplnosti a korektnosti.
+At the end of this section, we will show some applications of the Soundness and Completeness Theorems.
 
-\subsection{Löwenheim-Skolemova věta}\label{subsection:loewenheim-skolem-theorem}
+\subsection{Löwenheim-Skolem Theorem}\label{subsection:loewenheim-skolem-theorem}
 
-\begin{theorem}[Löwenheim-Skolemova]
-    Je-li $L$ spočetný jazyk bez rovnosti, potom každá bezesporná $L$-teorie má spočetně nekonečný model.
+\begin{theorem}[Löwenheim-Skolem]
+    If $L$ is a countable language without equality, then every open $L$ theory has a countably infinite model.
 \end{theorem}
 
 \begin{proof}
-Vezměme nějaké dokončené (např. systematické) tablo z teorie $T$ s položkou $\F\bot$ v kořeni. Protože $T$ je bezesporná, není v ní dokazatelný spor, tedy tablo musí obsahovat bezespornou větev. Hledaný spočetně nekonečný model je $L$-redukt kanonického modelu pro tuto větev.
+Take any completed (e.g., systematic) tableau from the theory $T$ with the entry $\F\bot$ at the root. Since $T$ is open, a contradiction is not provable in it, so the tableau must contain an open branch. The desired countably infinite model is the $L$ reduct of the canonical model for this branch.
 \end{proof}
 
-K této větě se ještě vrátíme v Kapitole \ref{chapter:model-theory}, kde si ukážeme silnější verzi zahrnující i jazyky s rovností (v nich je kanonický model spočetný, ale může být i konečný).
+We will return to this theorem in Chapter \ref{chapter:model-theory}, where we will show a stronger version including languages with equality (in which the canonical model is countable but can also be finite).
 
-\subsection{Věta o kompaktnosti}
+\subsection{Compactness Theorem}
 
-Stejně jako ve výrokové logice platí Věta o kompaktnosti, stejný je i její důkaz:
+Just as in propositional logic, the Compactness Theorem holds, and its proof is the same:
 
-\begin{theorem}[O kompaktnosti]\label{theorem:compactness-theorem-predicate}
-    Teorie má model, právě když každá její konečná část má model.    
+\begin{theorem}[On Compactness]\label{theorem:compactness-theorem-predicate}
+    A theory has a model if and only if every finite part of it has a model.    
 \end{theorem}
 \begin{proof}
-Model teorie je zřejmě modelem každé její části. Naopak, pokud $T$ nemá model, je sporná, tedy $T\proves\bot$. Vezměme nějaký \emph{konečný} tablo důkaz $\bot$ z $T$. K jeho konstrukci stačí konečně mnoho axiomů $T$, ty tvoří konečnou podteorii $T'\subseteq T$, která nemá model.
+A model of a theory is obviously a model of each of its parts. Conversely, if $T$ has no model, it is contradictory, so $T\proves\bot$. Take any \emph{finite} tableau proof of $\bot$ from $T$. To construct it, finitely many axioms of $T$ suffice, and they form a finite subtheory $T'\subseteq T$, which has no model.
 \end{proof}
 
 
-\subsection{Nestandardní model přirozených čísel}
+\subsection{Nonstandard Model of Natural Numbers}
 
-Na závěr této sekce si ukážeme, že existuje tzv. \emph{nestandardní model} přirozených čísel. Klíčem je Věta o kompaktnosti.
+At the end of this section, we will show that there exists a so-called \emph{nonstandard model} of natural numbers. The key is the Compactness Theorem.
     
-Nechť $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ je standardní model přirozených čísel. Označme $\Th(\underline{\mathbb N})$ množinu všech sentencí \emph{pravdivých} ve struktuře $\underline{\mathbb N}$ (tzv. \emph{teorii struktury} $\underline{\mathbb N}$). Pro $n\in \mathbb N$ definujme \emph{$n$-tý numerál} jako term $\underline n=S(S(\cdots (S(0)\cdots))$, kde $S$ je aplikováno $n$-krát.
+Let $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ be the standard model of natural numbers. Denote by $\Th(\underline{\mathbb N})$ the set of all sentences \emph{true} in the structure $\underline{\mathbb N}$ (the so-called \emph{theory of the structure} $\underline{\mathbb N}$). For $n\in \mathbb N$, define the \emph{$n$-th numeral} as the term $\underline n=S(S(\cdots (S(0)\cdots))$, where $S$ is applied $n$ times.
 
-Vezměme nový konstantní symbol $c$ a vyjádřeme, že je ostře větší než každý $n$-tý numerál:
+Let's take a new constant symbol $c$ and express that it is strictly greater than each $n$-th numeral:
 $$
 T=\Th(\underline{\mathbb N})\cup\{\underline n<c\mid n\in \mathbb N\}
 $$
-Všimněte si, že každá konečná část teorie $T$ má model. Z věty o kompaktnosti tedy plyne, že i teorie $T$ má model. Říkáme mu \emph{nestandardní model} (označme ho $\A$). Platí v něm tytéž sentence, které platí ve standardním modelu, ale zároveň obsahuje prvek $c^\A$, který je větší než každé $n\in \mathbb N$ (čímž zde myslíme hodnotu termu $\underline n$ v nestandardním modelu $\A$).
+Note that every finite part of the theory $T$ has a model. Thus, it follows from the Compactness Theorem that the theory $T$ also has a model. We call it a \emph{nonstandard model} (denote it by $\A$). It satisfies the same sentences as the standard model but also contains an element $c^\A$ that is greater than every $n\in \mathbb N$ (by which we mean here the value of the term $\underline n$ in the nonstandard model $\A$).
     
 
-\section{Hilbertovský kalkulus v predikátové logice}
+\section{Hilbert Calculus in Predicate Logic}
 
-Na závěr kapitoly si ukážeme, jak lze adaptovat Hilbertův kalkulus, představený v Sekci \ref{section:hilbert-calculus-propositional}, pro použití v predikátové logice. To není těžké, abychom se vypořádali s kvantifikátory, stačí přidat dvě nová schémata logických axiomů a jedno nové inferenční pravidlo. Opět si ukážeme korektnost tohoto dokazovacího systému, a jen zmíníme, že je také úplný.
+At the end of the chapter, we will show how Hilbert's calculus, introduced in Section \ref{section:hilbert-calculus-propositional}, can be adapted for use in predicate logic. This is not difficult; to deal with quantifiers, it is sufficient to add two new schemes of logical axioms and one new inference rule. We will again show the soundness of this proof system and only mention that it is also complete.
 
-Důkazy budou sestávat z libovolných formulí, nejen sentencí. Připomeňme, že Hilbertovský kalkulus používá jen spojky $\neg$ a $\limpliessymb$. Budeme mít obdobné logické axiomy, jako ve výrokové logice; v případě jazyka s rovností navíc přidáme \emph{axiomy rovnosti}. 
+Proofs will consist of arbitrary formulas, not just sentences. Recall that Hilbert's calculus uses only the connectives $\neg$ and $\limpliessymb$. We will have similar logical axioms as in propositional logic; in the case of a language with equality, we will additionally add \emph{axioms of equality}. 
 
-\begin{definition}[Schémata axiomů v hilbertovském kalkulu v predikátové logice]
-Pro libovolné formule $\varphi,\psi,\chi$, term $t$, a proměnnou $x$ jsou následující formule logickými axiomy:
+\begin{definition}[Axiom Schemes in Hilbert Calculus in Predicate Logic]
+For any formulas $\varphi,\psi,\chi$, term $t$, and variable $x$, the following formulas are logical axioms:
 \begin{enumerate}[(i)]
     \item $\varphi \limplies (\psi \limplies \varphi)$
     \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
     \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
-    \item $(\forall x)\varphi \limplies \varphi(x/t)$, je-li $t$ substituovatelný za $x$ do $\varphi$
-    \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$, není-li $x$ volná ve $\varphi$
+    \item $(\forall x)\varphi \limplies \varphi(x/t)$, if $t$ is substitutable for $x$ in $\varphi$
+    \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$, if $x$ is not free in $\varphi$
 \end{enumerate}
-Je-li jazyk s rovností, potom jsou logickými axiomy také \emph{axiomy rovnosti} pro daný jazyk.       
+If the language has equality, then the logical axioms also include the \emph{axioms of equality} for the given language.       
 \end{definition}
 
-Všimněte si, že všechny logické axiomy jsou opravdu tautologie. Jako odvozovací pravidla nám poslouží \emph{modus ponens} a dále \emph{pravidlo generalizace}: 
+Note that all logical axioms are indeed tautologies. The inference rules are \emph{modus ponens} and \emph{generalization}: 
 
-\begin{definition}[Modus ponens]
-\emph{Modus ponens} říká, že pokud jsme již dokázali $\varphi$ a také  $\varphi\limplies\psi$, můžeme odvodit i formuli $\psi$:
+\begin{definition}[Modus Ponens]
+\emph{Modus ponens} states that if we have already proved $\varphi$ and also $\varphi\limplies\psi$, we can derive the formula $\psi$:
 $$
 \frac{\varphi, \varphi \limplies \psi}{\psi}
 $$ 
 \end{definition}
 
-\begin{definition}[Pravidlo generalizace]
-    \emph{Pravidlo generalizace} říká, že pokud jsme dokázali $\varphi$, lze odvodit i formuli $(\forall x)\varphi$ (pro libovolnou proměnnou $x$):
+\begin{definition}[Generalization Rule]
+    The \emph{generalization rule} states that if we have proved $\varphi$, we can derive the formula $(\forall x)\varphi$ (for any variable $x$):
     $$
     \frac{\varphi}{(\forall x)\varphi}
     $$ 
 \end{definition}
 
-Všimněte si, že obě odvozovací pravidla jsou \emph{korektní}, tj. platí-li v nějaké teorii $T\models\varphi$ a $T\models\varphi\limplies\psi$, máme i $T\models\psi$, a podobně platí-li $T\models\varphi$, platí i $T\models(\forall x)\varphi$.
+Note that both inference rules are \emph{sound}, i.e., if $T\models\varphi$ and $T\models\varphi\limplies\psi$ in some theory, we also have $T\models\psi$, and similarly if $T\models\varphi$, then $T\models(\forall x)\varphi$.
 
-Stejně jako ve výrokové logice, \emph{důkaz} bude konečná posloupnost formulí, ve které je každá nově napsaná formule buď axiomem (logickým, vč. axiomu rovnosti, nebo z teorie, ve které dokazujeme), nebo lze odvodit z předchozích pomocí jednoho z odvozovacích pravidel:
+Just as in propositional logic, a \emph{proof} will be a finite sequence of formulas, in which each newly written formula is either an axiom (logical, including the axiom of equality, or from the theory we are proving in), or can be derived from previous ones using one of the inference rules:
 
-\begin{definition}[Hilbertovský důkaz]
-    \emph{Hilbertovský důkaz} formule $\varphi$ z teorie $T$ je \emph{konečná} posloupnost formulí $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$ platí:
+\begin{definition}[Hilbert Proof]
+    A \emph{Hilbert proof} of the formula $\varphi$ from the theory $T$ is a \emph{finite} sequence of formulas $\varphi_0, \dots, \varphi_n=\varphi$, in which for each $i\le n$ it holds:
     \begin{itemize}
-    \item $\varphi_i$ je logický axiom (včetně axiomu rovnosti, je-li jazyk s rovností), nebo
-    \item $\varphi_i$ je axiom teorie ($\varphi_i \in T$), nebo
-    \item $\varphi_i$ lze odvodit z nějakých předchozích formulí $\varphi_j,\varphi_k$ (kde $j,k<i$) pomocí modus ponens, nebo
-    \item $\varphi_i$ lze odvodit z nějaké předchozí formule $\varphi_j$ (kde $j<i$) pomocí pravidla generalizace.
+    \item $\varphi_i$ is a logical axiom (including the axiom of equality, if the language has equality), or
+    \item $\varphi_i$ is an axiom of the theory ($\varphi_i \in T$), or
+    \item $\varphi_i$ can be derived from some previous formulas $\varphi_j,\varphi_k$ (where $j,k<i$) using modus ponens, or
+    \item $\varphi_i$ can be derived from some previous formula $\varphi_j$ (where $j<i$) using the generalization rule.
     \end{itemize}
-    Existuje-li hilbertovský důkaz, je $\varphi$ \emph{(hilbertovsky) dokazatelná}, píšeme $T\proves_H\varphi$.           
+    If there is a Hilbert proof, $\varphi$ is \emph{(Hilbert) provable}, and we write $T\proves_H\varphi$.           
 \end{definition}
 
-I v predikátové logice je hilbertovský kalkulus korektní a úplný dokazovací systém.
+Even in predicate logic, Hilbert's calculus is a sound and complete proof system.
 
-\begin{theorem}[O korektnosti hilbertovského kalkulu]
-Pro každou teorii $T$ a formuli $\varphi$ platí: 
+\begin{theorem}[On the Soundness of Hilbert Calculus]
+For any theory $T$ and formula $\varphi$, the following holds: 
 $$
 T\proves_H \varphi\ \Rightarrow\ T\models\varphi
 $$ 
 \end{theorem}
 \begin{proof}
-Indukcí dle indexu $i$ ukážeme, že každá formule $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+By induction on the index $i$, we show that each formula $\varphi_i$ in the proof (and thus $\varphi_n=\varphi$) is true in $T$.
 
-Je-li $\varphi_i$ logický axiom (včetně axiomu rovnosti), $T \models \varphi_i$ platí protože logické axiomy jsou tautologie. Je-li $\varphi_i\in T$, také jistě platí $T \models \varphi_i$. Zbytek plyne z korektnosti odvozovacích pravidel.
+If $\varphi_i$ is a logical axiom (including the axiom of equality), $T \models \varphi_i$ holds because logical axioms are tautologies. If $\varphi_i\in T$, it is also certain that $T \models \varphi_i$. The rest follows from the soundness of the inference rules.
 \end{proof}
 
-Pro úplnost ještě vyslovme úplnost, důkaz ale neuvedeme.
+For completeness, we state completeness, but we will not provide the proof.
 
-\begin{theorem}[O úplnosti hilbertovského kalkulu]
-Pro každou teorii $T$ a formuli $\varphi$ platí: 
+\begin{theorem}[On the Completeness of Hilbert Calculus]
+For any theory $T$ and formula $\varphi$, the following holds: 
 $$
 T\models\varphi\ \Rightarrow\ T\proves_H\varphi
 $$

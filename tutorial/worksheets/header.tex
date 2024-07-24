@@ -12,11 +12,33 @@
 \usepackage{multicol}
 \usepackage{tikz}
 
-
 \theoremstyle{definition}
     \newtheorem{problem}{Příklad}
 
+% \theoremstyle{remark}
+%     \newtheorem*{steps}{Postup řešení}
+
+\theoremstyle{plain}
+    \newtheorem*{solution}{Řešení}
+    
 
 \DeclareRobustCommand\proves{\mathrel{|}\joinrel\mkern-.5mu\mathrel{-}}
-
 \DeclareMathOperator{\Conseq}{Csq}
+
+% hide solutions
+\newif\ifhidesolutions
+    \hidesolutionstrue
+    % \hidesolutionsfalse
+
+\ifhidesolutions
+    \usepackage{environ}
+    \NewEnviron{hide}{}
+    \let\solution\hide
+    \let\endsolution\endhide
+\fi
+
+
+
+
+
+

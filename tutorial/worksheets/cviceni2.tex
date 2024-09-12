@@ -4,10 +4,8 @@
 
 \begin{document}
 
-\section*{NAIL062 V\&P Logika: 2. cvičení}
-% po 1. přednášce
-
-
+\section*{NAIL062 V\&P Logika: Cvičení 2}
+% po 2. přednášce
 
 \subsection*{Výukové cíle:} Po absolvování cvičení student
 
@@ -22,4 +20,222 @@
     \end{itemize}
 
 
+\section*{Příklady na cvičení}
+
+
+\begin{problem}
+
+    Uveďte příklad výroku v jazyce $\mathbb P=\{p,q,r\}$, který je (a) pravdivý, (b) sporný, (c) nezávislý, (d) ekvivalentní s $(p\wedge q)\to\neg r$, (e) má za modely právě $\{(1,0,0),(1,0,1),(0,0,1)\}$.
+
+
+    \begin{solution}
+            
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Jsou tyto množiny logických spojek univerzální? (a) $\{\vee, \rightarrow, \leftrightarrow\}$, (b) $\{\vee, \wedge, \rightarrow\}$    
+
+    \begin{solution}
+            
+    \end{solution}
+
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Převeďte následující výrok do CNF a DNF. Proveďte to (a) sémanticky (pomocí pravdivostní tabulky), (b) ekvivalentními úpravami:
+    $$
+    (\neg p \vee q)\to (\neg q \wedge r)
+    $$
+
+    \begin{solution}
+            
+    \end{solution}
+        
+\end{problem}
+
+
+\begin{problem}\label{problem:properties-of-theories}
+
+    Mějme teorii $T=\{p\wedge q,p\to\neg q,q\}$ v jazyce $\mathbb P=\{p,q\}$.
+    \begin{enumerate}[(a)]
+        \item Rozhodněte, zda je teorie $T$ [konzistentní/splnitelná/kompletní]. %(konzistentní=bezesporná, kompletní=úplná)
+        \item Uveďte příklad výroku $\varphi$, který je [platný/nesplnitelný/nezávislý] v $T$
+        \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní/kompletní/konzervativní jednoduchá/kompletní jednoduchá/kompletní konzervativní].
+        \item Na příkladech extenzí ukažte, že platí sémantické kritérium.
+    \end{enumerate}
+
+    \begin{solution}
+            
+    \end{solution}
+    
+\end{problem}
+
+
+\begin{problem}
+
+    Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro každou teorii $T$ a výroky $\varphi$, $\psi$ v jazyce $\mathbb{P}$ platí:
+    \begin{enumerate}[(a)]
+        \item $T \models \varphi$,\ \  právě když \ \ $T \not\models \neg \varphi$
+        \item $T \models \varphi$ a $T \models \psi$,\ \ právě když \ \ $T \models \varphi \wedge \psi$
+        \item $T \models \varphi$ nebo $T \models \psi$,\ \ právě když \ \ $T \models \varphi \vee \psi$
+        \item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
+    \end{enumerate}
+
+    \begin{solution}
+            
+    \end{solution}
+    
+\end{problem}
+
+
+\section*{Další příklady k procvičení}
+
+
+\begin{problem}
+        
+    Mějme teorii $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ v jazyce $\{p, q, r\}$.
+    \begin{enumerate}[(a)]
+        \item Uveďte příklad následujícího: výrok pravdivý v $T$, lživý v $T$, nezávislý v $T$, splnitelný v $T$, a dvojice $T$-ekvivalentních výroků.
+        \item Které z následujících výroků jsou pravdivé, lživé, nezávislé, splnitelné v $T$? $T$-ekvivalentní? 
+        $$
+        p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r
+        $$
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Jsou následující množiny logických spojek univerzální? Zdůvodněte.
+    \begin{enumerate}[(a)]
+        \item $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR),
+        \item $\{\uparrow\}$ kde $\uparrow$ je Sheffer stroke (NAND),
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+        
+    Určete množinu modelů dané formule. Využijte toho, že je v DNF resp. v CNF.
+    \begin{enumerate}[(a)]
+        \item $(\neg p_1 \wedge \neg p_2)\vee( \neg p_1 \wedge p_2)\vee( p_1 \wedge \neg p_2)\vee( p_2 \wedge \neg p_3)$
+        \item $(\neg p_1 \vee \neg p_2)\wedge( \neg p_1 \vee p_2)\wedge( p_1 \vee \neg p_2)\wedge( p_2 \vee \neg p_3)$
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Převeďte do CNF a DNF oběma metodami: $(\neg p \to (\neg q \to r))\to p$
+    
+\end{problem}
+
+
+\begin{problem} 
+    
+    Najděte (co nejkratší) CNF a DNF reprezentace Booleovské funkce $\mathrm{maj}\colon\{0,1\}^3\to \{0,1\}$, která vrací převládající hodnotu mezi 3 vstupy.
+
+\end{problem}
+
+
+\begin{problem}
+    
+    Stejné zadání, jako Příklad~\ref{problem:properties-of-theories}, ale pro teorii $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ v jazyce $\mathbb P=\{p,q,r\}$.
+    
+\end{problem}
+
+
+\begin{problem}
+    
+    Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro libovolné teorie $T$, $S$ nad~$\mathbb{P}$ platí:
+    \begin{enumerate}[(a)]
+        \item $S\subseteq T \Rightarrow \Conseq(T) \subseteq \Conseq(S)$
+        \item $\Conseq(S\cup T)=\Conseq(S) \cup \Conseq(T)$
+        \item $\Conseq(S\cap T)=\Conseq(S) \cap \Conseq(T)$
+    \end{enumerate}
+
+\end{problem}
+
+
+\section*{K zamyšlení}
+
+
+\begin{problem}
+    
+    Ukažte, že $\wedge$ a $\vee$ nestačí k definování všech Booleovských operátorů, tj. že $\{\wedge,\vee\}$ není \emph{univerzální} množina logických spojek.
+
+\end{problem}
+
+
+\begin{problem}
+    
+    Uvažte Booleovský operátor $\mathrm{IFTE}(p, q, r)$ definovaný jako `if $p$ then $q$ else $r$'. 
+    \begin{enumerate}[(a)]
+        \item Zkonstruujte pravdivostní tabulku.
+        \item Ukažte, že všechny základní Booleovské operátory ($\neg, \to, \wedge,\vee,\dots$) lze vyjádřit pomocí IFTE a konstant TRUE a FALSE.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Buď $\mathbb P$ spočetně nekonečná množina prvovýroků.    
+    \begin{enumerate}[(a)]
+        \item Ukažte, že již neplatí, že každou $K\subseteq \mathrm{M}_\mathbb P$ lze axiomatizovat výrokem v CNF i výrokem v DNF.
+        \item  Uveďte příklad množiny modelů $K$, kterou nelze axiomatizovat ani výrokem v CNF, ani výrokem v DNF.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Najděte CNF a DNF reprezentaci $n$-ární parity, tj. Booleovské funkce $\mathrm{par}\colon\{0,1\}^n\to \{0,1\}$,
+    která vrací XOR všech vstupních hodnot:
+    $$
+    \mathrm{par}(x_1,\dots,x_n)=(x_1+\dots+x_n)\bmod 2
+    $$
+    Zkuste to pro malé hodnoty $n$.
+
+\end{problem}
+
+
+\begin{problem}
+
+    Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$. 
+    \begin{enumerate}[(a)]
+        \item Najděte všechny modely $T$.
+        \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$?        
+    \end{enumerate}
+
+\end{problem}
+
+
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,6 @@
+TODO aktualizovat pro ZS 2024
+
+
 K získání zápočtu je třeba získat celkem 120 bodů.
 
 V průběhu semestru budou dva zápočtové testy (na 45 minut). První (zhruba v polovině semestru) bude pokrývat část přednášky "Výroková logika", druhý (ke konci semestru) část přednášky "Predikátová logika". (Předběžné termíny najdete na webu cvičení.) Za každý z testů lze získat maximálně 100 bodů. 

@@ -1,0 +1,134 @@
+\documentclass[a4paper]{article}
+
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+    \setlist[enumerate]{label=(\alph*),itemsep=3pt,topsep=6pt}
+    \setlist[itemize]{itemsep=3pt,topsep=6pt}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+
+
+\theoremstyle{definition}
+\newtheorem{problem}{Příklad}
+\newtheorem*{ukol}{Domácí úkol}
+
+
+\begin{document}
+
+\section*{NAIL062 V\&P Logika: 11. cvičení}
+
+
+\textbf{Témata:}
+Unifikace. Rezoluce v predikátové logice.
+
+
+\medskip\begin{problem} Víme, že platí následující:
+    \begin{itemize}\it
+        \item Je-li cihla na (jiné) cihle, potom není na zemi.
+        \item Každá cihla je na (jiné) cihle nebo na zemi.
+        \item Žádná cihla není na cihle, která by byla na (jiné) cihle.
+    \end{itemize}
+    Vyjádřete tato fakta ve vhodném jazyce logiky prvního řádu a dokažte rezolucí následující tvrzení: {\it ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''}
+\end{problem}
+        
+    
+\medskip\begin{problem} Víme, že platí následující:
+    \begin{itemize}\it
+        \item Každý holič holí všechny, kdo neholí sami sebe
+        \item Žádný holič neholí nikoho, kdo holí sám sebe.
+    \end{itemize}
+    Formalizujte ve vhodném jazyce predikátové logiky a dokažte rezolucí, že: {\it Neexistují žádní holiči.}
+\end{problem}
+
+
+\medskip\begin{problem}
+Jsou dána následující tvrzení o~proběhlém genetickém experimentu:
+\begin{enumerate}[label=(\roman*)]\it
+    \item Každá ovce byla buď porozena jinou ovcí, nebo byla naklonována (avšak nikoli oboje zároveň).
+    \item Žádná naklonovaná ovce neporodila.
+\end{enumerate}
+Chceme ukázat rezolucí, že pak: {\it (iii) Pokud ovce porodila, byla sama porozena.} Konkrétně:
+\begin{enumerate}
+    \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti, kde $P$ je binární relační symbol, $K$ je unární relační symbol a $P(x,y)$, $K(x)$ značí, že \emph{``ovce $x$ porodila ovci $y$''} a \emph{``ovce $x$ byla naklonována''}.    
+    \item S využitím Skolemizace těchto formulí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. Zapište ji v množinové reprezentaci.
+    \item Najděte rezoluční zamítnutí $S$, znázorněte je rezolučním stromem. U každého kroku uveďte použitou unifikaci.
+\end{enumerate}
+\end{problem}
+        
+
+\medskip\begin{problem}
+Mějme jazyk $L=\langle <, j, h, s\rangle$ bez rovností, kde $j,h,q$ jsou konstantní symboly značící (po řadě) jablka, hrušky, švestky, dále $<$ je binarní relační symbol a $x < y$ značí, že {\it ``ovoce $y$ je lepší než ovoce $x$''}. Víme, že:
+\begin{enumerate}[label=(\roman*)]\it
+    \item Relace ``být lepší'' je ostré částečné uspořádání (ireflexivní, asymetrická, tranzitivní relace).
+    \item Hrušky jsou lepší než jablka.
+\end{enumerate}
+Chceme rezolucí dokázat následující tvrzení.
+\begin{enumerate}[label=(\roman*)]\it
+    \setcounter{enumi}{2}
+    \item Jsou-li švestky lepší než hrušky, nejsou jablka lepší než švestky.
+\end{enumerate}
+\smallskip
+
+Konkrétně:
+\begin{enumerate}
+\item Tvrzení $(i)$, $(ii)$, $(iii)$ vyjádřete otevřenými formulemi jazyka $L$.
+\item Pomocí předchozích formulí či jejich negací nalezněte otevřenou teorii $T$ nad $L$ axiomatizovanou klauzulemi, která je nesplnitelná, právě když z $(i)$, $(ii)$ vyplývá $(iii)$. Napište $T$ v množinové reprezentaci.
+\item Rezolucí dokažte, že $T$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci. {\it Nápověda: stačí čtyři rezoluční kroky.}
+\item Nalezněte konjunkci základních instancí axiomů $T$, která je nesplnitelná. {\it Nápověda: využijte unifikace z (c).}
+\item Je $T$ zamítnutelná LI-rezolucí? Uveďte zdůvodnění.
+\end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem}
+Nechť $T=\{\neg(\exists x) R(x), (\exists x)(\forall y)(P(x,y)\to P(y,x)), (\forall x)((\exists y)(P(x,y)\wedge P(y,x))\to R(x)),$ $(\forall x)(\exists y)P(x,y)\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti.
+\begin{enumerate}
+\item Skolemizací nalezněte k $T$ otevřenou ekvisplnitelnou teorii $T'$ (nad vhodně rozšířeným jazykem).
+\item Převeďte $T'$ na ekvivalentní teorii $S$ v CNF. Zapište $S$ v množinové reprezentaci.
+\item Nalezněte rezoluční zamítnutí teorie $S$. U každého kroku uveďte použitou unifikaci.
+\item Nalezněte konjunkci základních instancí axiomů $S$, která je nesplnitelná.
+\item Má teorie $T$ jednoduchou kompletní extenzi? Uveďte zdůvodnění.
+\end{enumerate}
+\end{problem}
+
+
+\medskip\begin{problem}
+    Ukažte, že daná množina klauzulí je zamítnutelná (rezolucí). Popište zamítnutí pomocí rezolučního stromu. V každém kroku rezoluce napište použitou unifikaci a podtrhněte rezolvované literály.
+    \begin{align*}
+        S=\{
+            &\{P(a,x,f(y)),P(a,z,f(h(b))),\neg Q(y,z)\},\\
+            &\{\neg Q(h(b),w),H(w,a)\},\\
+            &\{\neg P(a,w,f(h(b))),H(x,a)\},\\
+            &\{P(a,u,f(h(u))),H(u,a),Q(h(b),b)\},\\
+            &\{\neg H(v,a)\}
+        \}
+    \end{align*}
+\end{problem}
+
+
+\medskip\begin{ukol}[3 body]
+Známe následující informace o zadávání zakázek:
+\begin{enumerate}[label=(\roman*)] \it
+    \item Každý úředník, který je odpovědný za nějakou zakázku a vezme od nějaké společnosti úplatek, je kriminálník.
+    \item Zakázku vyhraje pouze společnost, která podplatí všechny úředníky odpovědné za tuto zakázku.
+    \item Pan Lubor je úředník.
+    \item Nějaká společnost vyhrála nějakou zakázku, za kterou je pan Lubor odpovědný.
+\end{enumerate}
+Pomocí rezoluce dokažte, že: {\it (v) Pan Lubor je kriminálník.}
+\begin{enumerate}
+    \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1, \dots, \varphi_5$ v jazyce $L=\langle U, Z, S, K, P, V, O, l \rangle$ bez rovnosti, kde $U, Z, S$ a $K$ jsou unární relační symboly a $U(x), Z(x), S(x), K(x)$ znamenají (po řadě) ``$x$ je úředník / zakázka / společnost / kriminálník'', $P, V, O$ jsou binární relační symboly, kde $P(x,y), V(x,y), O(x,y)$ značí (po řadě) ``$x$ podplatil $y$'', ``$x$ vyhrál $y$'' a ``$x$ je odpovědný za $y$'' a $l$ je konstanta označující pana Lubora.
+    \item Pomocí skolemizace předchozích formulí nalezněte otevřenou teorii $T$ (případně ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$.
+    \item Převedením axiomů $T$ do CNF nalezněte teorii $T'$ ekvivalentní $T$ a axiomatizovanou klauzulemi. Napište $T'$ v množinové reprezentaci.
+    \item Rezolucí dokažte, že $T'$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci.
+    \item Nalezněte konjunkci základních instancí axiomů $T'$, která je nesplnitelná.
+    \end{enumerate}
+
+
+
+Kromě tohoto úkolu se připravte na zápočtový test. Vyřešte vzorový test (na webu).
+\end{ukol}
+
+\end{document}

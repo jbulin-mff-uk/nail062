@@ -1,0 +1,135 @@
+\section*{NAIL062 V\&P Logika: 5. sada příkladů}
+% po 5. přednášce
+
+
+\subsection*{Výukové cíle:} Po absolvování cvičení student
+
+    \begin{itemize}\setlength{\itemsep}{0pt}
+        \item zná potřebné pojmy z rezoluční metody (rezoluční pravidlo, rezolventa, rezoluční důkaz/zamítnutí, rezoluční strom), umí je formálně definovat, uvést příklady
+        \item umí pracovat s výroky v CNF a jejich modely v množinové reprezentaci
+        \item umí sestrojit rezoluční zamítnutí dané (i nekonečné) CNF formule (existuje-li), a také nakreslit příslušný rezoluční strom
+        \item zná pojem stromu dosazení, umí ho formálně definovat a pro konkrétní CNF formuli sestrojit
+        \item umí aplikovat rezoluční metodu k řešení daného problému (slovní úlohy, aj.)
+    \end{itemize}
+    
+
+\section*{Příklady na cvičení}
+
+
+\begin{problem}
+
+    Označme jako $\varphi$ výrok $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Ukažte, že $\varphi$ je tautologie:
+    \begin{enumerate}[(a)]
+        \item Převeďte $\neg \varphi$ do CNF a zapište výsledný výrok jako formuli $S$ v množinové reprezentaci.
+        \item Najděte rezoluční zamítnutí $S$.
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Dokažte rezolucí, že v $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem}
+    
+    Nechť prvovýroky $r$, $s$, $t$  reprezentují (po řadě), že \emph{``Radka / Sára / Tom je ve škole''} a označme $\mathbb{P}=\{r,s,t\}$. Víme, že:
+    \begin{itemize}\it
+        \item Není-li Tom ve škole, není tam ani Sára.
+        \item Radka bez Sáry do školy nechodí.
+        \item Není-li Radka ve škole, je tam Tom.
+    \end{itemize}
+    \begin{enumerate}[(a)]
+        \item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P$.
+        \item Rezoluční metodou dokažte, že z $T$ vyplývá, že \emph{Tom je ve škole}: Napište formuli $S$ v množinové reprezentaci, která je nesplnitelná, právě když to platí, a najděte rezoluční zamítnutí $S$. Nakreslete rezoluční strom.
+        \item Určete množinu modelů teorie $T$.
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem}
+        
+    Zkonstruujte \emph{strom dosazení} pro následující formuli. Na základě tohoto stromu sestrojte rezoluční zamítnutí, dle postupu z důkazu Věty o úplnosti rezoluce.
+    $$
+    S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}
+    $$
+
+    \begin{solution}
+                    
+    \end{solution}
+    
+\end{problem}
+        
+        
+\section*{Další příklady k procvičení}
+        
+
+\begin{problem}
+    
+    Najděte rezoluční zamítnutí následujících výroků:
+    \begin{enumerate}[(a)]
+        \item $\neg(((p\to q)\to \neg q)\to \neg q)$
+        \item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$        
+    \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+
+    Tonia a Fabio nám popisují svůj nejnovější recept na nejlepší pizzu na světě.
+    \begin{itemize}
+        \item Tonia řekla: ``Do receptu patří ančovičky nebo bazalka nebo česnek.''
+        \item Tonia také řekla: ``Jestli tam nepatří dušená šunka, nepatří tam ani bazalka.''
+        \item Fabio řekl: ``Do receptu patří dušená šunka.'' 
+        \item Fabio dále řekl: ``Nepatří tam ančovičky ani bazalka, ale patří tam česnek.''
+    \end{itemize}
+    Víme, že Tonia vždy mluví pravdu, zatímco Fabio vždy lže.
+
+    \begin{enumerate}[(a)]
+        \item Vyjádřete naše znalosti jako výrokovou teorii $T$ v jazyce $\mathbb P=\{a,b,c,d\}$, kde výrokové proměnné mají po řadě význam ``do receptu patří ančovičky/bazalka/česnek/dušená šunka''.
+        \item Pomocí rezoluční metody dokažte, že z teorie $T$ vyplývá, že ``do receptu patří ančovičky''. Nakreslete rezoluční strom.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Celá čísla postihla záhadná nemoc šířící se (v diskrétních krocích) dle následujících pravidel (platících pro všechna čísla ve všech krocích).
+    \begin{enumerate}[(i)]\it
+        \item Zdravé číslo onemocní, právě když je právě jedno číslo nemocné (v předchozím čase).
+        \item Nemocné číslo se uzdraví, právě když je předchozí číslo nemocné (v předchozím čase).
+        \item V čase $0$ bylo nemocné číslo $0$, ostatní čísla byla zdravá.
+    \end{enumerate}
+        %(Sousedními čísly čísla $i$ myslíme $i-1$ a $i+1$, předchozím číslem myslíme $i-1$.)
+    \begin{enumerate}[(a)]
+        \item Napište teorie $T_1, T_2, T_3$ vyjadřující (po řadě) tvrzení $(i), (ii), (iii)$ nad množinou prvovýroků $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, kde prvovýrok $p_i^t$ vyjadřuje, že ``{\it číslo $i$ je v čase $t$ nemocné.}''
+        \item Převeďte axiomy z $T_1, T_2, T_3$ do CNF a napište teorii $S$ v množinové reprezentaci, která je nesplnitelná, právě když $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, tj.: ``{\it Číslo $1$ je zdravé v čase $2$.}'' (Stačí převést jen konkrétní axiomy z $T_1,T_2,T_3$, ze kterých plyne $\neg p_1^2$, a do $S$ uvést jen příslušné klauzule.)
+        \item Rezolucí dokažte, že $S$ je nesplnitelná. Zamítnutí znázorněte rezolučním stromem.
+    \end{enumerate}
+
+\end{problem}
+
+        
+\section*{K zamyšlení}
+
+
+\begin{problem}
+    Dokažte podrobně, že je-li $S=\{C_1,C_2\}$ splnitelná a $C$ je rezolventa $C_1$ a $C_2$, potom je i $C$ splnitelná.
+\end{problem}

@@ -20,6 +20,50 @@
 
 \begin{problem}
 
+    Uvažme $\underline{\mathbb{Z}}_4=\langle\{0,1,2,3\},+,-,0 \rangle$ kde $+$ je binární sčítání modulo $4$ a $-$ je unární funkce, která vrací \emph{inverzní} prvek $+$ vzhledem k \emph{neutrálnímu} prvku $0$.
+    \begin{enumerate}[(a)]      
+        \item Je $\underline{\mathbb{Z}}_4$ model teorie grup (tj. je to \emph{grupa})?
+        \item Určete všechny podstruktury $\underline{\mathbb{Z}}_4\langle a\rangle$ generované nějakým $a\in \mathbb{Z}_4$.
+        \item Obsahuje $\underline{\mathbb{Z}}_4$ ještě nějaké další podstruktury?
+        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ modelem teorie grup?
+        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ elementárně ekvivalentní $\underline{\mathbb{Z}}_4$?
+        \item Je každá podstruktura \emph{komutativní} grupy (tj. grupy, která splňuje $x+y=y+x$) také komutativní grupa?
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Buď $\underline{\mathbb{Q}}=\langle\mathbb{Q},+,-,\cdot,0,1 \rangle$ těleso racionálních čísel se standardními operacemi.
+    \begin{enumerate}[(a)]                
+        \item Existuje redukt $\underline{\mathbb{Q}}$, který je modelem teorie grup?
+        \item Lze redukt $\langle\mathbb{Q},\cdot,1\rangle$ rozšířit na model teorie grup?
+        \item Obsahuje $\underline{\mathbb{Q}}$ podstrukturu, která není elementárně ekvivalentní $\underline{\mathbb{Q}}$?
+        \item Označme $Th(\underline{\mathbb{Q}})$ množinu všech sentencí pravdivých v $\underline{\mathbb{Q}}$. Je $Th(\underline{\mathbb{Q}})$ úplná teorie?
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+
+\begin{problem}
+
+    Mějme teorii $T=\{x=c_1 \vee x=c_2 \vee x=c_3\}$ v jazyce $L=\langle c_1,c_2,c_3\rangle$ s rovností.
+    \begin{enumerate}[(a)]     
+        \item Je $T$ konzistentní?
+        \item Jsou všechny modely $T$ elementárně ekvivalentní? Tj. je $T$ kompletní?
+        \item Najděte všechny jednoduché úplné extenze $T$.
+        \item Je teorie $T'=T\cup\{x=c_1 \vee x=c_4\}$ v jazyce $L=\langle c_1,c_2,c_3,c_4\rangle$ extenzí $T$? Je $T'$ jednoduchá extenze $T$? Je $T'$ konzervativní extenze $T$?
+    \end{enumerate}
 
     \begin{solution}
                     
@@ -31,7 +75,87 @@
         
 \section*{Další příklady k procvičení}
 
+
+\begin{problem}
+
+    Buď $T=\{\neg E(x,x), E(x,y)\to E(y,x), (\exists x)(\exists y)(\exists z)(E(x,y)\wedge E(y,z)\wedge E(x,z)\wedge \neg(x=y\vee y=z\vee x=z)),\varphi\}$ teorie v jazyce $L=\langle E\rangle$ s rovností, kde $E$ je binární relační symbol a $\varphi$ vyjadřuje, že ``existují právě čtyři prvky''.
+    \begin{enumerate}[(a)]
+        \item Uvažme rozšíření $L'=\langle E,c\rangle$ jazyka o nový konstantní symbol $c$. Určete počet (až na ekvivalenci) teorií $T'$ v jazyce $L'$, které jsou extenzemi teorie $T$. 
+        \item Má $T$ nějakou \emph{konzervativní} extenzi v jazyce $L'$? Zdůvodněte.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Nechť $T=\{x=f(f(x)),\varphi, c_1 \ne c_2\}$ je teorie jazyka $L=\langle f,c_1,c_2\rangle$ s rovností, kde $f$ je unární funkční, $c_1,c_2$ jsou konstantní symboly a axiom $\varphi$ vyjadřuje, že ``existují právě $3$ prvky''.
+    \begin{enumerate}    
+        \item Určete, kolik má teorie $T$ navzájem neekvivalentních jednoduchých kompletních extenzí. Napište dvě z nich. {\it (3b)}
+        \item Nechť $T'=\{x=f(f(x)),\varphi,f(c_1)\ne f(c_2)\}$ je teorie stejného jazyka, axiom $\varphi$ je stejný jako výše. Je $T'$ extenze $T$? Je $T$ extenze $T'$? Pokud ano, jde o konzervativní extenzi? Uveďte zdůvodnění. {\it (2b)}
+    \end{enumerate}
+    
+\end{problem}
+
+
+\begin{problem}
+
+    Buď $T'$ extenze teorie $T=\{(\exists y)(x+y=0),(x+y=0)\wedge (x+z=0)\rightarrow y=z\}$ v jazyce $L=\langle +,0,\le\rangle$ s rovností o definice $<$ a unárního $-$ s axiomy
+    \begin{align*}
+        -x=y\ \ &\leftrightarrow\ \ x+y=0\\
+        x<y\ \ &\leftrightarrow\ \ x\le y\ \wedge\ \neg(x=y)
+    \end{align*}
+    Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následujícími formulemi.
+    
+    
+    (a) $x+(-x)=0$ \hfill (b) $x+(-y)<x$ \hfill (c) $-(x+y)<-x$\hfill{}
+    
+\end{problem}
+    
+    
+\begin{problem}
+
+    Mějme jazyk $L=\langle F \rangle$ s rovností, kde $F$ je binární funkční symbol. Najděte formule definující následující množiny (bez parametrů):
+    \begin{enumerate}
+        \item interval $(0,\infty)$ v $\mathcal A=\langle\mathbb R, \cdot\rangle$ kde $\cdot$ je násobení reálných čísel,
+        \item množina $\{(x, 1/x)\mid x\neq 0\}$ ve stejné struktuře $\mathcal A$,
+        \item množina všech nejvýše jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$,
+        \item množina všech prvočísel v $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$.
+    \end{enumerate}
+    
+\end{problem}
+
+
+\begin{problem}
+
+    Nechť $T=\{R(x,x),\ R(x,y) \wedge R(y,x) \to x=y,\ R(x,y) \wedge R(y,z) \to R(x,z),\ R(x,y) \vee R(y,x), c\ne d, \varphi,\psi\}$ je teorie jazyka $L=\langle P,R,f,c,d\rangle$ s rovností a $\varphi$, $\psi$ jsou
+    \begin{align*}
+        \varphi:\quad P(x,y) &\leftrightarrow R(x,y) \wedge x\ne y\\
+        \psi:\quad P(x,y) &\to P(x,f(x,y)) \wedge P(f(x,y),y)
+    \end{align*}
+    \begin{enumerate}[(a)]
+        \item Nalezněte expanzi struktury $\langle \mathbb{Q},\le \rangle$ do jazyka $L$ na model teorie $T$.
+        \item Je sentence $(\forall x)R(c,x)$ pravdivá/lživá/nezávislá v $T$? Zdůvodněte všechny tři odpovědi.
+        \item Nalezněte dvě neekvivalentní kompletní jednoduché extenze $T$ nebo zdůvodněte, proč neexistují.
+        \item Nechť $T'=T\setminus\{\varphi,\psi\}$ je jazyka $L'=\langle R,f,c,d\rangle$. Je teorie $T$ konzervativní extenzí teorie $T'$? Uveďte zdůvodnění.
+    \end{enumerate}
+
+\end{problem}
+
         
 \section*{K zamyšlení}
+
+
+\begin{problem}
+
+    Nechť $T_n = \{c_i \neq c_j | 1 \leq i < j \leq n\}$ označuje teorii jazyka $L_n = \langle c_1, \dots, c_n \rangle$ s rovností, kde $c_1, \dots, c_n$ jsou konstantní symboly.
+    \begin{enumerate}[(a)]   
+        \item Pro dané konečné $n \geq 1$ určete počet modelů konečné velikosti $k$ teorie $T_n$ až na izomorfismus. 
+        \item Určete počet spočetných modelů teorie $T_n$ až na izomorfismus. 
+        \item Pro jaké dvojice hodnot $n$ a $m$ je $T_n$ extenzí $T_m$? Pro jaké je konzervativní extenzí? Zdůvodněte.
+    \end{enumerate}
+
+\end{problem}
+
 
 

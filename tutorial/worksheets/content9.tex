@@ -9,15 +9,81 @@
         \item rozumí pojmu Skolemova varianta, umí skolemizovat danou teorii
         \item umí převést danou otevřenou teorii do CNF, zapsat v množinové reprezentaci
         \item zná Herbrandovu větu, umí ji demonstrovat na příkladě, popsat Herbrandův model
-        \item rozumí pojmu unifikace, umí provádět Unifikační algoritmus
     \end{itemize}
     
 
 \section*{Příklady na cvičení}
 
 
+\begin{problem} 
+    
+    Převeďte následující formule do PNF. Poté najděte jejich Skolemovy varianty.
+    \begin{enumerate}[(a)]
+        \item $(\forall y)((\exists x)P(x,y)\to Q(y,z))\wedge (\exists y)((\forall x)R(x,y)\vee Q(x,y))$
+        \item $(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)$
+        \item $\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)$
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Převeďte na ekvisplnitelnou CNF formuli, zapište v množinové reprezentaci.
+
+    \begin{enumerate}[(a)]
+        \item $(\forall y)(\exists x)P(x,y)$
+        \item $\neg (\forall y)(\exists x)P(x,y)$
+        \item $\neg (\exists x)((P(x)\to P(c))\wedge (P(x)\to P(d)))$
+        \item $(\exists x)(\forall y)(\exists z)(P(x,z)\wedge P(z,y) \to R(x,y))$
+    \end{enumerate}
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+      
+\begin{problem}
+    
+    Nechť $T=\{(\exists x)R(x), (\exists y)\neg P(x,y), (\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti. Najděte otevřenou teorii $T'$ ekvisplnitelnou s $T$. Převeďte $T'$ do CNF a výslednou formuli $S$ zapište v množinové reprezentaci.
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
+
+
 \begin{problem}
 
+    Nechť $T=\{\varphi_1,\varphi_2\}$ je teorie v jazyce $L=\langle R\rangle$ s~rovností, kde:
+    \begin{align*}
+    \varphi_1=&\quad (\exists y)R(y,x)\\
+    \varphi_2=&\quad (\exists z)(R(z,x)\wedge R(z,y)\wedge (\forall w)(R(w,x) \wedge R(w,y)\to R(w,z)))
+    \end{align*}
+    \begin{enumerate}[(a)]
+        \item Pomocí skolemizace sestrojte otevřeně axiomatizovanou teorii $T'$ (případně v širším jazyce $L'$) ekvisplnitelnou s $T$.
+        \item Buď $\mathcal{A}=\langle\mathbb{N}\cup\{0\},R^A\rangle$, kde $(n,m)\in R^A$ právě když $n$ dělí $m$.  Nalezněte expanzi $\mathcal{A}'$ $L$-struktury $\mathcal{A}$ do jazyka $L'$ takovou, že $\mathcal{A}'\models T'$.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem} 
+    
+    Sestrojte Herbrandův model dané teorie, nebo najděte nesplnitelnou konjunkci základních instancí jejích axiomů ($a,b$ jsou konstantní symboly v daném jazyce).    
+    \begin{enumerate}[(a)]
+        \item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,b), P(a)\}$
+        \item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,b), P(a)\}$
+        \item $T=\{P(x,f(x)),\neg P(x,g(x))\}$
+        \item $T=\{P(x,f(x)),\neg P(x,g(x)), P(g(x),f(y)) \to P(x,y)\}$
+    \end{enumerate}
 
     \begin{solution}
                     
@@ -26,10 +92,67 @@
 \end{problem}
 
         
-        
 \section*{Další příklady k procvičení}
+
+
+\begin{problem}
+
+    Teorie těles $T$ jazyka $L=\langle +,-,\cdot,0,1\rangle$ obsahuje jeden axiom $\varphi$, který není otevřený: $x\neq 0\ \to\ (\exists y)(x\cdot y=1)$. Víme, že $T\models 0\cdot y=0$ a $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
+    \begin{enumerate}[(a)]
+        \item Najděte Skolemovu variantu $\varphi_S$ formule $\varphi$ s novým funkčním symbolem $f$.
+        \item Uvažme teorii $T'$ vzniklou z $T$ nahrazením $\varphi$ za $\varphi_S$. Platí $\varphi$ v $T'$?
+        \item Lze každý model $T$ \emph{jednoznačně} rozšířit na model $T'$?
+    \end{enumerate}
+    Nyní uvažme formuli $\psi=x\cdot y=1\vee  (x=0 \wedge y=0)$.
+    \begin{enumerate}[(a)]
+        \setcounter{enumi}{3}
+        \item Platí v $T$ axiomy existence a jednoznačnosti pro $\psi(x,y)$ a proměnnou $y$?
+        \item Sestrojte extenzi $T''$ teorie $T$ o definici symbolu $f$ formulí $\psi$.
+        \item Je $T''$ ekvivalentní teorii $T'$?
+        \item Najděte $L$-formuli, která je v $T''$-ekvivalentní s formulí:
+        $f(x\cdot y)=f(x)\cdot f(y)$
+    \end{enumerate}
+
+\end{problem}
+
+
+\medskip\begin{problem} Víme, že platí následující:
+    \begin{itemize}\it
+        \item Je-li cihla na (jiné) cihle, potom není na zemi.
+        \item Každá cihla je na (jiné) cihle nebo na zemi.
+        \item Žádná cihla není na cihle, která by byla na (jiné) cihle.
+    \end{itemize}
+    Chceme dokázat rezolucí následující tvrzení: {\it ``Je-li cihla na (jiné) cihle, spodní cihla je na zemi.''}. Sestrojte příslušnou CNF formuli $S$, a pokuste se najít i její rezoluční zamítnutí.)
+\end{problem}
 
         
 \section*{K zamyšlení}
+
+    
+\begin{problem} 
+    
+    Skolemova varianta nemusí být ekvivalentní původní formuli, ověřte, že platí:
+    \begin{enumerate}[(a)]
+        \item $\models (\forall x)P(x,f(x)) \to (\forall x)(\exists y)P(x,y)$
+        \item $\not\models (\forall x)(\exists y)P(x,y)\to (\forall x)P(x,f(x))$
+    \end{enumerate}
+
+\end{problem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 

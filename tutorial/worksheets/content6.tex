@@ -18,6 +18,46 @@
 
 
 \begin{problem}
+    
+    Jsou následující formule variantami formule $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
+    \begin{enumerate}
+        \item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
+        \item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
+        \item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
+    \end{enumerate}
+
+    \begin{solution}
+        
+    \end{solution}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Mějme strukturu $\mathcal{A}=(\{a,b,c,d\},\vartriangleright^{A})$ v jazyce s jediným binárním relačním symbolem $\vartriangleright$, kde $\vartriangleright^{A}=\{(a,c), (b,c), (c,c), (c,d)\}$. 
+    \begin{enumerate}[I.]
+        \item Které z následujících formulí jsou pravdivé v $\mathcal A$? 
+        \item Pro každou z nich najděte strukturu $\mathcal{B}$ (existuje-li) takovou, že $\mathcal{B}\models \varphi$ právě když $\mathcal{A}\not\models \varphi$.
+    \end{enumerate}    
+    \begin{enumerate}[(a)]
+       \item $x \vartriangleright y$
+       \item $(\exists x)(\forall y)(y \vartriangleright x)$
+       \item $(\exists x)(\forall y)((y \vartriangleright x) \to (x \vartriangleright x))$
+       \item $(\forall x)(\forall y)(\exists z)((x \vartriangleright z)\wedge(z \vartriangleright y))$
+       \item $(\forall x)(\exists y)((x \vartriangleright z)\vee(z \vartriangleright y))$
+    \end{enumerate}
+
+    \begin{solution}
+        
+    \end{solution}
+
+\end{problem}
+
+
+
+
+\begin{problem}
 
 
     \begin{solution}
@@ -25,12 +65,97 @@
     \end{solution}
 
 \end{problem}
-
         
         
 \section*{Další příklady k procvičení}
 
-        
+
+\begin{problem}
+
+    Určete volné a vázané výskyty proměnných v následujících formulích. Poté je převeďte na varianty, ve kterých nebudou proměnné s volným i vázaným výskytem zároveň.
+    \begin{enumerate}
+        \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
+        \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
+        \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+    
+    Označme $\varphi$ formuli $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Které z následujících termů jsou substituovatelné do $\varphi$?
+    \begin{enumerate}
+        \item term $z$ za proměnnou $x$, term $y$ za proměnnou $x$,
+        \item term $z$ za proměnnou $y$, term $2+y$ za proměnnou $y$,
+        \item term $x$ za proměnnou $z$, term $y$ za proměnnou $z$,
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
+    \begin{enumerate}[(a)]
+    \item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
+    \item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
+    \end{enumerate}
+    Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
+
+\end{problem}
+
+
+\begin{problem}
+
+    Jsou následující sentence pravdivé / lživé / nezávislé (v logice)?
+
+    \begin{enumerate}[(a)]
+        \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
+        \item $(\forall x)(P(x)\to Q(f(x))) \wedge (\forall x)P(x) \wedge (\exists x)\neg Q(x)$
+        \item $(\forall x)(P(x) \vee Q(x)) \to ((\forall x)P(x) \vee (\forall x)Q(x))$
+        \item $(\forall x)(P(x)\to Q(x)) \to ((\exists x)P(x)\to(\exists x)Q(x))$
+        \item $(\exists x)(\forall y)P(x,y) \to (\forall y)(\exists x)P(x,y)$
+    \end{enumerate}
+
+\end{problem}
+
+
 \section*{K zamyšlení}
+
+
+\begin{problem}
+    
+    Rozhodněte, zda následující platí pro každou formuli $\varphi$. Dokažte (sémanticky, z definic) nebo najděte protipříklad.
+    \begin{enumerate}[(a)]
+       \item $\varphi \models (\forall x)\varphi$
+       \item $\models \varphi \to (\forall x)\varphi$
+       \item $\varphi \models (\exists x)\varphi$
+       \item $\models \varphi \to (\exists x)\varphi$
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Buď $L=\langle +, -, 0\rangle$ jazyk teorie grup (s rovností). Teorie grup $T$ sestává z těchto axiomů:
+    \begin{align*}
+    x+(y+z)&=(x+y)+z\\
+    0+x&=x=x+0\\
+    x+(-x)&=0=(-x)+x
+    \end{align*}
+    Rozhodněte, zda jsou následující formule pravdivé / lživé / nezávislé v $T$. Zdůvodněte.
+    \begin{enumerate}[(a)]
+        \item $x+y=y+x$
+        \item $x+y=x\ \rightarrow\ y=0$
+        \item $x+y=0\ \rightarrow\ y=-x$
+        \item $-(x+y)=(-y)+(-x)$
+    \end{enumerate}
+
+\end{problem}
+
 
 

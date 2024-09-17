@@ -20,7 +20,7 @@
 \begin{problem}
     
     Jsou následující formule variantami formule $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
-    \begin{enumerate}
+    \begin{enumerate}[(a)]
         \item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
         \item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
         \item $(\forall u)(u<y \vee (\exists z)(z=y \wedge z\ne u))$
@@ -55,9 +55,33 @@
 \end{problem}
 
 
+\begin{problem}
+
+    Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
+    \begin{enumerate}[(a)]
+    \item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
+    \item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
+    \item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
+    \end{enumerate}
+    Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
+
+    \begin{solution}
+                    
+    \end{solution}
+
+\end{problem}
 
 
 \begin{problem}
+
+    Rozhodněte, zda je $T$ (v jazyce $L = \langle U, f \rangle$ s rovností) kompletní. Existují-li, napište dva elementárně neekvivalentní modely, a dvě neekviv. kompletní jednoduché extenze:
+    \begin{enumerate}[(a)]
+        \item  $T = \{U(f(x)),\ \neg x=y,\ x =y\vee y=z\}$
+        \item $T = \{U(f(x)),\ \neg (\forall x)(\forall y)x=y,\ x =y\vee y=z\}$
+        \item  $T = \{U(f(x)),\ \neg x=f(x),\ \neg (\forall x)(\forall y)x=y,\ x =y\vee y=z\}$
+        \item  $T = \{U(f(x)),\ \neg (\forall x) x=f(x),\ \neg (\forall x)(\forall y)x=y,\ x =y\vee y=z\}$
+    \end{enumerate}
 
 
     \begin{solution}
@@ -73,7 +97,7 @@
 \begin{problem}
 
     Určete volné a vázané výskyty proměnných v následujících formulích. Poté je převeďte na varianty, ve kterých nebudou proměnné s volným i vázaným výskytem zároveň.
-    \begin{enumerate}
+    \begin{enumerate}[(a)]
         \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
         \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
         \item $(\exists x)(x>y) \wedge (\exists y)(y>x)$
@@ -85,25 +109,11 @@
 \begin{problem}
     
     Označme $\varphi$ formuli $(\forall x)((x=z) \vee (\exists y)(f(x)=y) \vee (\forall z)(y=f(z)))$. Které z následujících termů jsou substituovatelné do $\varphi$?
-    \begin{enumerate}
+    \begin{enumerate}[(a)]
         \item term $z$ za proměnnou $x$, term $y$ za proměnnou $x$,
-        \item term $z$ za proměnnou $y$, term $2+y$ za proměnnou $y$,
+        \item term $z$ za proměnnou $y$, term $g(f(y),w)$ za proměnnou $y$,
         \item term $x$ za proměnnou $z$, term $y$ za proměnnou $z$,
     \end{enumerate}
-
-\end{problem}
-
-
-\begin{problem}
-
-    Dokažte (sémanticky) nebo najděte protipříklad: Pro každou strukturu $\mathcal{A}$, formuli $\varphi$, a sentenci $\psi$,
-    \begin{enumerate}[(a)]
-    \item $\mathcal{A}\models (\psi \to (\exists x)\varphi) \Leftrightarrow \mathcal{A}\models (\exists x)(\psi \to \varphi)$
-    \item $\mathcal{A}\models (\psi \to (\forall x)\varphi) \Leftrightarrow \mathcal{A}\models (\forall x)(\psi \to \varphi)$
-    \item $\mathcal{A}\models ((\exists x)\varphi \to \psi) \Leftrightarrow \mathcal{A}\models (\forall x)(\varphi \to \psi)$
-    \item $\mathcal{A}\models ((\forall x)\varphi \to \psi ) \Leftrightarrow \mathcal{A}\models (\exists x)(\varphi \to \psi)$
-    \end{enumerate}
-    Platí to i pro každou formuli $\psi$ s volnou proměnnou $x$? A pro každou formuli $\psi$ ve které $x$ není volná?
 
 \end{problem}
 
@@ -123,9 +133,6 @@
 \end{problem}
 
 
-\section*{K zamyšlení}
-
-
 \begin{problem}
     
     Rozhodněte, zda následující platí pro každou formuli $\varphi$. Dokažte (sémanticky, z definic) nebo najděte protipříklad.
@@ -136,7 +143,14 @@
        \item $\models \varphi \to (\exists x)\varphi$
     \end{enumerate}
 
+    \begin{solution}
+                    
+    \end{solution}
+
 \end{problem}
+
+
+\section*{K zamyšlení}
 
 
 \begin{problem}

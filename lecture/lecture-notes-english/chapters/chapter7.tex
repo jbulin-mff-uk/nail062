@@ -6,7 +6,7 @@ In this chapter, we will demonstrate how to generalize the \emph{analytic tablea
 
 In this section, we will informally introduce the tableau method. Formal definitions will follow later. We will start with two examples illustrating how the tableau method works in predicate logic and how it deals with quantifiers.
 
-\begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from an empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relational symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
+\begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from an empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relation symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
 
 \begin{figure}[htbp]
 \begin{minipage}{.49\textwidth}
@@ -243,7 +243,7 @@ Note that if an `all' type item is reduced on some branch, it must have infinite
 \begin{example}\label{example:tableau-proofs}
 As an example, let us construct tableau proofs \emph{in logic} (from an empty theory) of the following sentences: 
         \begin{enumerate}[(a)]
-            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, where $P,Q$ are unary relational symbols.
+            \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, where $P,Q$ are unary relation symbols.
             \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, where $\varphi(x),\psi(x)$ are arbitrary formulas with the single free variable $x$.
         \end{enumerate}
 The resulting tableaux are in Figures \ref{figure:predicate-tableau-more-examples-a} and \ref{figure:predicate-tableau-more-examples-b}. The pairs of contradictory items are shown in red. Consider how the tableaux were constructed step-by-step.

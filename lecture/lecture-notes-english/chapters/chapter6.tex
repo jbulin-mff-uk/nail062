@@ -1,36 +1,35 @@
 \chapter{Syntax and Semantics of Predicate Logic}
 
-Courses on logic generally start with propositional logic, which is more suitable for initial acquaintance due to its simplicity. However, the full power of logic in computer science only manifests itself with the use of predicate logic.
-Let's begin with an informal introduction that illustrates the basic aspects of predicate logic. We will return to a formal exposition in the following sections.
+Courses on logic generally start with propositional logic, which is more suitable for initial exposition due to its simplicity. However, the full power of logic in computer science only manifests itself with the use of predicate logic. Let us begin with an informal introduction that illustrates the basic aspects of predicate logic. We will return to a formal exposition in the following sections.
 
 \section{Introduction}
-Recall that in propositional logic, we described the world using \emph{propositions} composed of \emph{atomic propositions}—answers to yes/no questions about the world. In predicate logic (first-order logic)\footnote{In second-order logic, we also have variables representing sets of individuals or even sets of $n$-tuples, i.e., relations on the set of individuals.} the basic building blocks are \emph{variables} representing \emph{individuals}—indivisible objects from some set: e.g., natural numbers, vertices of a graph, or states of a microprocessor.
+Recall that in propositional logic, we described the world using \emph{propositions} composed of \emph{atomic propositions}---answers to yes/no questions about the world. In (first-order\footnote{In second-order logic, we also have variables representing sets of individuals or even sets of $n$-tuples, i.e., relations on the set of individuals.}) predicate logic  the basic building blocks are \emph{variables} representing \emph{individuals}---indivisible objects from some set: e.g., natural numbers, vertices of a graph, or states of a microprocessor.
 
-These individuals can have certain properties and relationships, which we call \emph{predicates}, e.g., `$\mathrm{Leaf}(x)$' or `$Edge(x,y)$' when talking about a graph, or `$x\leq y$' in natural numbers. In addition, individuals can enter into functions, e.g., `$\mathrm{lowest\_common\_ancestor}(x,y)$' in a rooted tree, `$\mathrm{succ}(x)$' or `$x+y$' in natural numbers, and be \emph{constants} with special meanings, e.g., `$\mathrm{root}$' in a rooted tree, `$0$' in natural numbers.
+These individuals can have certain properties and relationships, which we call \emph{predicates}, e.g., `$\mathrm{Leaf}(x)$' or `$\mathrm{Edge}(x,y)$' when talking about a graph, or `$x\leq y$' in natural numbers. In addition, individuals can be passed into functions, e.g., `$\mathrm{lowest\_common\_ancestor}(x,y)$' in a rooted tree, `$\mathrm{succ}(x)$' or `$x+y$' in natural numbers, and they can be \emph{constants} with special meaning, e.g., `$\mathrm{root}$' in a rooted tree, `$0$' in natural numbers.
 
-\emph{Atomic formulas} describe a predicate (including the predicate of \emph{equality} $=$) about variables or \emph{terms} (`expressions' composed\footnote{Similarly to how we create arithmetic expressions.} of functions or constants). More complex statements (\emph{formulas}) are built from atomic formulas using logical connectives and two \emph{quantifiers}:
+\emph{Atomic formulas} describe a predicate (including \emph{equality} predicate $=$) about variables or \emph{terms} (`expressions' composed\footnote{Similarly to how we create arithmetic expressions.} of functions or constants). More complex statements (\emph{formulas}) are built from atomic formulas using logical connectives and two \emph{quantifiers}:
 \begin{itemize}
-    \item $\forall x$ "for all individuals (represented by variable $x$)," and
-    \item $\exists x$ "there exists an individual (represented by variable $x$)".
+    \item $\forall x$ ``for all individuals (represented by variable $x$),'' and
+    \item $\exists x$ ``there exists an individual (represented by variable $x$)''.
 \end{itemize}
-Let us provide an example: the statement \textit{``Everyone who has a child is a parent.''} could be formalized by the following formula:
+Let us look at an example: the statement \textit{``Everyone who has a child is a parent.''} could be formalized by the following formula:
 $$
 (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
 $$
 where $\mathrm{child\_of}(y,x)$ is a binary predicate expressing that the individual represented by variable $y$ is a child of the individual represented by variable $x$, and $\mathrm{is\_parent}(x)$ is a unary predicate (i.e., a `property') expressing that the individual represented by $x$ is a parent.
 
-What about the validity of this formula? That depends on the specific \emph{model} of the world/system we are interested in. A model is a (non-empty) set of objects together with a unary relation (i.e., a subset) \emph{interpreting} the \emph{unary relational symbol} $\mathrm{is\_parent}$ and a binary relation interpreting the \emph{binary relational symbol} $\mathrm{child\_of}$. These relations can generally be anything, and it is easy to construct a model where the formula does not hold.\footnote{For example, take a single-element set $A=\{a\}$, and the relations $\mathrm{child\_of}^A=\{a\}$, $\mathrm{parent}^A=\emptyset$, so the only object is its own child, but it is not a parent.} However, if we model, for example, all people in the world, and the relations have their natural meaning, then the formula will hold.\footnote{When formalizing, we must be very careful not to add additional assumptions that may not hold in the modeled system. Here, for example, there is an implicit assumption that if someone has a child, it must be their child.}
+What about the validity of this formula? That depends on the specific \emph{model} of the world/system we are interested in. A model is a (non-empty) set of objects together with a unary relation (i.e., a subset) \emph{interpreting} the \emph{unary relation symbol} $\mathrm{is\_parent}$ and a binary relation interpreting the \emph{binary relation symbol} $\mathrm{child\_of}$. These relations can generally be arbitrary, and it is easy to construct a model where the formula is not valid.\footnote{For example, take a single-element set $A=\{a\}$, and the relations $\mathrm{child\_of}^A=\{(a,a)\}$, $\mathrm{parent}^A=\emptyset$; here the only object is its own child, but it is not a parent.} However, if we model, for example, all people in the world, and the relations have their natural meaning, then the formula will be valid.\footnote{When formalizing, we must be very careful not to add additional assumptions that may not hold in the modeled system. Here, for example, there is an implicit assumption that if someone has a child, they must be the child's parent.}
 
-Let us look at another example, this time with function symbols and a constant symbol: ``If $x_1\leq y_1$ and $x_2\leq y_2$, then $(y_1 \cdot y_2)-(x_1\cdot x_2)\geq 0$ holds.'' The resulting formula could look like this:
+Let us look at another example, this time with function symbols and a constant symbol: ``If $x_1\leq y_1$ and $x_2\leq y_2$, then $(y_1 \cdot y_2)-(x_1\cdot x_2)$ is nonnegative.'' The resulting formula could look like this:
 $$
 \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
 $$
-We see two binary relational symbols ($\leq,\geq$), a binary function symbol $+$, a unary function symbol $-$, and a constant symbol $0$. 
+We see two binary relation symbols ($\leq,\geq$), a binary function symbol $+$, a unary function symbol $-$, and a constant symbol $0$.
 
-A model in which the formula holds is the set of natural numbers $\mathbb N$ with binary relations $\leq^\mathbb N,\geq^\mathbb N$, binary functions $+^\mathbb N,\cdot^\mathbb N$, unary function $-^\mathbb N$, and the constant $0^\mathbb N=0$. However, if we take the set of integers, the formula will no longer hold.
+An example of a model in which the formula is valid is the set of natural numbers $\mathbb N$ with binary relations $\leq^\mathbb N,\geq^\mathbb N$, binary functions $+^\mathbb N,\cdot^\mathbb N$, unary function $-^\mathbb N$, and the constant $0^\mathbb N=0$. However, if we similarly take the set of integers, the formula will no longer be valid.
 
 \begin{remark}
-We could understand the symbol $-$ as a binary operation, but it is usually introduced as unary. For the constant symbol $0$, we use (as customary) the same symbol as for the natural number 0. But note that in our model, this constant symbol could be interpreted as a different number, or our model might not consist of numbers at all!
+We could understand the symbol $-$ as a binary operation, but it is usually introduced as unary. For the constant symbol $0$, we use (as is customary) the same symbol as for the natural number 0. But note that in our model, this constant symbol could be interpreted as a different number, or our model might not consist of numbers at all!
 \end{remark}
 
 There are no quantifiers in the formula (such formulas are called \emph{open}), the variables $x_1,x_2,y_1,y_2$ are \emph{free variables} of this formula (they are not \emph{bound} by any quantifier), we write $\varphi(x_1,x_2,y_1,y_2)$. We understand the semantics of this formula in the same way as the formula
@@ -38,7 +37,7 @@ $$
 (\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)
 $$
 
-The expression $(y_1 \cdot y_2)+(-(x_1\cdot x_2))$ is an example of a \emph{term}, and the expressions $(x_1\leq y_1)$, $(x_2\leq y_2)$ and $((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$ are \emph{atomic (sub)formulas}. What is the difference? Given a specific model and a specific \emph{valuation of variables} by individuals (elements) of this model, atomic formulas can be assigned a truth value. Therefore, they can be combined with logical connectives into more complex `logical expressions', i.e., formulas. On the other hand, the `result' of a term (given a valuation) is some specific individual from the model.
+The expression $(y_1 \cdot y_2)+(-(x_1\cdot x_2))$ is an example of a \emph{term}, and the expressions $(x_1\leq y_1)$, $(x_2\leq y_2)$ and $((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$ are \emph{atomic (sub)formulas}. What is the difference? Given a specific model and a specific \emph{variable assignment} by individuals (elements) of this model, atomic formulas can be assigned a truth value. Therefore, they can be combined with logical connectives into more complex `logical expressions', i.e., formulas. On the other hand, the `result' of a term (under a given variable assignment) is some specific individual from the model.
 
 We also note that in the formula $\varphi$, we used infix notation for the function symbols $+,\cdot$ and for the relations $\leq,\geq$, and similar conventions for parentheses as in propositional logic. Otherwise, we would write the formula $\varphi$ as follows:
 $$
@@ -46,54 +45,54 @@ $$
 $$
 
 \begin{exercise}
-Find a suitable definition of the concept of a \emph{formula tree} (generalizing the \emph{propositional formula tree} from propositional logic) and draw the formula tree for $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)$.
+Find a suitable definition for the notion of a \emph{tree of a formula} (generalizing the \emph{tree of a proposition} from propositional logic). Draw the tree for the following formula from the above example: $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)$.
 \end{exercise}
 
-Now, let's start by formalizing the concept of a ``\emph{model}'', called a \emph{structure}. The rest of the chapter follows the outline of the exposition on propositional logic: we will introduce the syntax, then the semantics, and finally the more advanced properties of formulas, theories, and structures. At the end, we will show a simple but very useful application of predicate logic, called \emph{definability} of subsets and relations, which is the basis of \emph{relational databases} (e.g., SQL), and once again look at the relationship between propositional and predicate logic.
+Now, let us start by formalizing this notion of a ``\emph{model}'', a so-called \emph{structure}. The rest of the chapter follows the outline of the exposition on propositional logic: we will introduce the syntax, then the semantics, and finally the more advanced properties of formulas, theories, and structures. At the end, we will show a simple but very useful application of predicate logic, called \emph{definability} of subsets and relations, which is the basis of \emph{relational databases} (e.g., SQL), and once again look at the relationship between propositional and predicate logic.
 
 \section{Structures}
 
-First, we specify what \emph{type} the given structure will be, i.e., what relations, functions (of which arities), and constants it will have, and what symbols we will use for them. This formal specification is sometimes called a \emph{type}, but we will call it a \emph{signature}.\footnote{You can think of a signature similarly to the definition of a \emph{class} in OOP, and structures correspond to \emph{objects} of this class (in the `programming language' of set theory).} Recall that we can consider \emph{constants} as functions of arity 0 (i.e., functions without inputs).
+First, we specify what \emph{type} the given structure will be, i.e., what relations, functions (of which arities), and constants it will have, and what symbols we will use for them. This formal specification is sometimes called a \emph{type}, but we will call it a \emph{signature}.\footnote{You can think of a signature  as similar to the definition of a \emph{class} in OOP; structures then correspond to \emph{objects} of this class (in the `programming language' of set theory).} Recall that we can consider \emph{constants} as functions of arity 0 (i.e., functions without inputs).
 
 \begin{definition}
-    A \emph{signature} is a pair $\langle\mathcal R,\mathcal F\rangle$, where $\mathcal R,\mathcal F$ are disjoint sets of symbols (\emph{relational} and \emph{functional}, including \emph{constant} symbols) with given arities (i.e., given by a function $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) and not containing the symbol `$=$' (which is reserved for \emph{equality}).
+    A \emph{signature} is a pair $\langle\mathcal R,\mathcal F\rangle$, where $\mathcal R,\mathcal F$ are disjoint sets of symbols (\emph{relation} and \emph{function}, the latter include \emph{constant} symbols) with given arities (i.e., given by a function $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) and not containing the symbol `$=$' (which is reserved for \emph{equality}).
 \end{definition}
 
-However, we will often write a signature just by listing the symbols, where their arity and whether they are relational or functional will be clear from the context. Here are a few examples of signatures:
+However, we will often write a signature just by listing the symbols, where their arity and whether they are relation or function symbols will be clear from the context. Here are a few examples of signatures:
 \begin{itemize}
-    \item $\langle E \rangle$ the signature of \emph{graphs}: $E$ is a binary relational symbol (structures are directed graphs),
+    \item $\langle E \rangle$ the signature of \emph{graphs}: $E$ is a binary relation symbol (structures are directed graphs),
     \item $\langle \leq \rangle$ the signature of \emph{partial orders}: the same as the signature of graphs, just a different symbol,\footnote{Not every structure in this signature is a partial order; for that, it needs to satisfy the corresponding \emph{axioms}.}
     \item $\langle +, -, 0\rangle$ the signature of \emph{groups}: $+$ is a binary function, $-$ a unary function, $0$ a constant symbol
     \item $\langle +, -, 0,\cdot,1\rangle$ the signature of \emph{fields}: $\cdot$ is a binary function, $1$ a constant symbol
-    \item $\langle +, -, 0,\cdot,1,\leq\rangle$ the signature of \emph{ordered fields}: $\leq$ is a binary relational symbol,
+    \item $\langle +, -, 0,\cdot,1,\leq\rangle$ the signature of \emph{ordered fields}: $\leq$ is a binary relation symbol,
     \item $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ the signature of \emph{Boolean algebras}: $\landsymb,\lorsymb$ are binary function symbols, $\bot,\top$ are constant symbols,
     \item $\langle S,+,\cdot,0,\leq\rangle$ the signature of \emph{arithmetic}: $S$ is a unary function symbol (`successor').
 \end{itemize}
-In addition to common symbols of relations, functions, and constants (known from logic or arithmetic), we typically use $P,Q,R,\dots$ for relational symbols, $f,g,h,\dots$ for functional symbols, and $c,d,a,b,\dots$ for constant symbols.
+In addition to common symbols for relations, functions, and constants (familiar e.g. from arithmetic), we typically use $P,Q,R,\dots$ for relation symbols, $f,g,h,\dots$ for function symbols, and $c,d,a,b,\dots$ for constant symbols.
 
-A \emph{structure} of a given signature is obtained by choosing \emph{interpretations} (also called \emph{realizations}) of all relational and functional symbols (and constants) on some non-empty \emph{domain}, i.e., specific relations or functions of the appropriate arities. (In the case of a constant symbol, its interpretation is a chosen element from the domain.)\footnote{It does not matter what specific symbols we use in the signature; we can interpret them arbitrarily. For example, having the symbol $+$ does not mean that its interpretation must have anything to do with addition (other than being a binary function).}
+A \emph{structure} of a given signature is obtained by taking some non-empty \emph{domain} and choosing \emph{interpretations} (also called \emph{realizations}) of all relation and function symbols (and constants) on that domain, i.e., specific relations or functions of the appropriate arities. (In the case of a constant symbol, its interpretation is a chosen element from the domain.)\footnote{It does not matter what specific symbols we use in the signature; we can interpret them arbitrarily. For example, having the symbol $+$ does not mean that its interpretation must have anything to do with addition (other than being a binary function).}
 
 \begin{example} \label{example:signatures}
-    The formal definition of a \emph{structure} is given below; first, let's show a few examples:
+    The formal definition of a \emph{structure} is given below; first, let us show a few examples:
 \begin{itemize}
     \item A structure in the empty signature $\langle\ \rangle$ is any non-empty set.\footnote{As we will see in the definition below, formally, it is the triple $\langle A,\emptyset,\emptyset\rangle$, but we will ignore this distinction.} (It does not have to be finite, not even countable!)
     \item A structure in the signature of graphs is $\mathcal G=\langle V,E\rangle$, where $V\neq\emptyset$ and $E\subseteq V^2$, called a \emph{directed graph}. 
     \begin{itemize}
         \item If $E$ is irreflexive and symmetric, it is a \emph{simple} graph (i.e., undirected, without loops).
         \item If $E$ is reflexive, transitive, and antisymmetric, it is a \emph{partial order}.
-        \item If $E$ is reflexive, transitive, and symmetric, it is an \emph{equivalence}.
+        \item If $E$ is reflexive, transitive, and symmetric, it is an \emph{equivalence relation}.
     \end{itemize}
     \item Structures in the signature of partial orders are the same as in the signature of graphs, differing only by the symbol used. (Thus, not every structure in the signature of partial orders is a partial order!)
     \item Structures in the signature of groups are, for example, the following \emph{groups}:
     \begin{itemize}
-        \item $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$, the \emph{additive group of integers modulo $n$} (operations are modulo $n$).\footnote{Here, $\underline{\mathbb Z_n}$ denotes the structure, while $\mathbb Z_n=\{0,1,\dots,n-1\}$ denotes only its domain. Often, this distinction is not made, and the symbol $\mathbb Z_n$ is used for both the whole structure and its domain. Similarly, $+,-,0$ are both symbols and their interpretations. This is commonly used notation; it is crucial to always be aware of the meaning of the symbol in the given context.}
+        \item $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$, the \emph{additive group of integers modulo $n$} (operations are modulo $n$).\footnote{Here, $\underline{\mathbb Z_n}$ denotes the structure, while $\mathbb Z_n=\{0,1,\dots,n-1\}$ denotes only its domain. Often, this distinction is not made, and the symbol $\mathbb Z_n$ is used for both the whole structure and its domain. Similarly, $+,-,0$ are both symbols and their interpretations. This is a common abuse of notation; it is crucial to always be aware of the meaning of the symbol in the given context.}
         \item $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$ is the \emph{symmetric group} (the group of all permutations) on $n$ elements.
         \item $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$ is the \emph{multiplicative group of (non-zero) rational numbers}. Note that the interpretation of the \emph{symbol} $0$ is the \emph{number} $1$.
     \end{itemize}
     All these structures \emph{satisfy the axioms of group theory}, but we can easily find other structures that do not satisfy these axioms and are therefore not groups. For example, if we change the interpretation of the symbol $+$ in the structure $\mathbb Z_n$ to the function $\cdot$ (modulo $n$).
-    \item Structures $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ and $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$, with standard operations and ordering, are in the signature of ordered fields (but only the first one is an ordered field).
-    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, the so-called \emph{power set algebra} over a set $X$, is a structure in the signature of Boolean algebras. (\emph{Boolean algebra} if $X\neq\emptyset$.)
-    \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, where $S(x)=x+1$, and other symbols are interpreted standardly, is the \emph{standard model of arithmetic}.
+    \item Structures $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ and $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$, with the standard operations and the standard order relation, are in the signature of ordered fields (but only the first one is an ordered field).
+    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, the so-called \emph{power set algebra} over a set $X$, is a structure in the signature of Boolean algebras. (It is a \emph{Boolean algebra}, as long as $X\neq\emptyset$.)
+    \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, where $S(x)=x+1$, and other symbols are interpreted in the standard way, is the \emph{standard model of arithmetic}.
 \end{itemize}
 \end{example}
 
@@ -101,8 +100,8 @@ A \emph{structure} of a given signature is obtained by choosing \emph{interpreta
 A \emph{structure in the signature} $\langle\mathcal R,\mathcal F\rangle$ is a triple $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, where
 \begin{itemize}
    \item  $A$ is a non-empty set, called the \emph{domain} (also \emph{universe}),
-   \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ where $R^\A\subseteq A^{\mathrm{ar}(R)}$ is the \emph{interpretation} of the relational symbol $R$,
-   \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ where $f^\A\colon A^{\mathrm{ar}(f)}\to A$ is the \emph{interpretation} of the functional symbol $f$ (especially for a constant symbol $c\in\mathcal F$, we have $c^\A\in A$).
+   \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ where $R^\A\subseteq A^{\mathrm{ar}(R)}$ is the \emph{interpretation} of the relation symbol $R$,
+   \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ where $f^\A\colon A^{\mathrm{ar}(f)}\to A$ is the \emph{interpretation} of the function symbol $f$ (in particular, for a constant symbol $c\in\mathcal F$, we have $c^\A\in A$).
 \end{itemize}
 \end{definition}
 
@@ -114,23 +113,23 @@ And what about the case of the signature of \emph{countably many constants} $\la
 
 \section{Syntax}
 
-In this section, we introduce the syntax of predicate logic (first-order logic). Compare what the syntax has in common with, and how it differs from, the syntax of propositional logic.
+In this section, we introduce the syntax of predicate (first-order) logic. Compare what the syntax has in common with, and how it differs from, the syntax of propositional logic.
 
 
 \subsection{Language}
 
-When specifying a language, we first determine what type of structures we want to describe, i.e., we specify the \emph{signature}. Additionally, we include information on whether the language is \emph{with equality} or not, i.e., whether we can use the symbol `$=$' in formulas to express the equality (identity) of elements in the domain of structures.\footnote{In most applications, we will use languages with equality. However, in some special areas, it is useful not to have equality. For example, if we deal with very fast computational models: finding out which variables are equal requires finding the transitive closure of equalities given by formulas, which is a relatively computationally demanding problem.} The language includes the following:
+When specifying a language, we first determine what type of structures we want to describe, i.e., we specify the \emph{signature}. Additionally, we include the information on whether the language is \emph{with equality} or not, i.e., whether we can use the symbol `$=$' in formulas to express the equality (identity) of elements in the domain of structures.\footnote{In most applications, we will use languages with equality. However, in some special areas, it is useful to not have equality in the language. For example, if we deal with very fast models of computation: finding out which variables are equal requires finding the transitive closure of equality predicates given by formulas, which is already a relatively computationally demanding problem.} The language includes the following:
 \begin{itemize}
     \item countably many \emph{variables} $x_0,x_1,x_2,\dots$ (but we also write $x,y,z,\dots$; the set of all variables is denoted $\Var$),
-    \item \emph{relational}, \emph{functional}, and \emph{constant symbols} from the signature, and the symbol $=$ if it is a language with equality,
-    \item \emph{universal} and \emph{existential} \emph{quantifiers} $(\forall x),(\exists x)$ for each variable $x\in\Var$,\footnote{A quantifier is understood as a single symbol, so $(\forall x)$ \emph{does not include} the variable $x$. Sometimes the symbols $\forall_x,\exists_x$ are used.}
+    \item \emph{relation}, \emph{function}, and \emph{constant symbols} from the signature, and the symbol $=$ if the language is with equality,
+    \item \emph{universal} and \emph{existential} \emph{quantifiers} $(\forall x),(\exists x)$ for each variable $x\in\Var$,\footnote{A quantifier is understood as a single symbol, so $(\forall x)$ \emph{does not include} the variable $x$. Sometimes the symbols $\forall_x,\exists_x$ are used instead.}
     \item symbols for logical connectives \( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \) and parentheses \( (,) \).
 \end{itemize}
 Similarly to the symbol $\lbinsymb$ representing any binary logical connective, we will sometimes write $(Qx)$ for the quantifier $(\forall x)$ or $(\exists x)$.
 
-Symbols from the signature are called \emph{non-logical}, and the others are \emph{logical}. The language must contain at least one relational symbol (either equality or in the signature).\footnote{Otherwise, we could not build any `statements' (\emph{formulas}) in the language, see below.}
+Symbols from the signature, and $=$, are called \emph{non-logical}, and the other symbols are \emph{logical}. The language must contain at least one relation symbol (either equality, or in the signature).\footnote{Otherwise, we would not be able to build any `statements' (\emph{formulas}) in the language, see below.}
 
-Thus, we specify the language using the signature and the information `with equality' (or `without equality'). For example:
+Thus, we specify the language by giving a signature and the information `with equality' (or `without equality'). For example:
 \begin{itemize}
     \item The language $L=\langle\rangle$ with equality is the language of \emph{pure equality},
     \item the language $L=\langle c_0,c_1,c_2,\dots\rangle$ with equality is the language of \emph{countably many constants},
@@ -142,27 +141,27 @@ Thus, we specify the language using the signature and the information `with equa
 
 \subsection{Terms}
 
-Terms are syntactic `expressions' composed of variables, constant symbols, and functional symbols.
+Terms are syntactic `expressions' composed of variables, constant symbols, and function symbols.
 
 \begin{definition}[Terms]
     \emph{Terms} of the language $L$ are finite strings defined inductively:
     \begin{itemize}
         \item each variable and each constant symbol from $L$ is a term,
-        \item if $f$ is a functional symbol from $L$ of arity $n$ and $t_1,\dots,t_n$ are terms, then the string $f(t_1,t_2,\dots,t_n)$ is also a term.
+        \item if $f$ is a function symbol from $L$ of arity $n$ and $t_1,\dots,t_n$ are terms, then the string $f(t_1,t_2,\dots,t_n)$ is also a term.
     \end{itemize}
     The set of all \emph{terms} of the language $L$ is denoted $\Term_L$.
 \end{definition}
 
-When writing terms containing a binary functional symbol, we can use \emph{infix} notation, e.g., $(t_1+t_2)$ means $+(t_1,t_2)$. Parentheses are sometimes omitted if the structure of the term (`operator precedence') is clear.
+When writing terms containing a binary function symbol, we can use \emph{infix} notation, e.g., $(t_1+t_2)$ means $+(t_1,t_2)$. Parentheses are sometimes omitted if the structure of the term (`operator precedence') is clear.
 
 A \emph{subterm} is a substring of a term that is itself a term (it is either the whole term or it appeared as some $t_i$ in the construction of the term).
 
-If a term does not contain a variable, we call it \emph{ground} (constant), for example, $((S(0)+S(0))\cdot S(S(0)))$ is a ground term in the language of arithmetic.\footnote{Note that terms are purely syntactic; we can only use symbols from the language, not elements of the structure, so $(1+1)\cdot 2$ is \emph{not} a term in the language of arithmetic! (However, we could \emph{define} new constant symbols $1,2$ as abbreviations for $S(0)$ and $S(S(0))$ and \emph{extend} our language, see Section \ref{subsection:extension-by-definition}.)}
+If a term does not contain a variable, we call it \emph{ground} (also \emph{constant}), for example, $((S(0)+S(0))\cdot S(S(0)))$ is a ground term in the language of arithmetic.\footnote{Note that terms are purely syntactic; we can only use symbols from the language, not elements of the structure, so $(1+1)\cdot 2$ is \emph{not} a term in the language of arithmetic! (However, we could \emph{define} new constant symbols $1,2$ as abbreviations for $S(0)$ and $S(S(0))$ and \emph{extend} our language, see Section \ref{subsection:extension-by-definition}.)}
 
-The \emph{term tree of $t$}, denoted $\Tree(t)$, is defined similarly to a propositional formula tree: leaves are variables or constant symbols, internal nodes are functional symbols, and the arity of the functional symbol matches the number of its children.
+The \emph{tree of the term $t$}, denoted $\Tree(t)$, is defined similarly to a tree of a proposition: leaves are labeled by variables or constant symbols, inner nodes by function symbols whose arity matches the number of children.
 
 \begin{example}\label{example:terms}
-    Let's draw the trees of the terms (a) $(S(0) + x) \cdot y$ in the language of arithmetic, (b) $\neg (x\land y)\lor \bot$ in the language of Boolean algebras. Here, $\neg,\land,\lor$ are not logical connectives from the language but non-logical symbols from the signature of Boolean algebras (although we use the same symbols)! Terms in this language can be understood as propositional formulas (with constants for falsehood and tautology), see Section~\ref{section:relationship-propositional-predicate-logic}.
+    Let us draw the trees of the terms (a) $(S(0) + x) \cdot y$ in the language of arithmetic, (b) $-(x\land y)\lor \bot$ in the language of Boolean algebras. Here, $\land,\lor$ are not logical connectives from the language but non-logical symbols from the signature of Boolean algebras (although we use the same symbols)! Terms in this language can be understood as propositional formulas (with constants for falsity and truth), see Section~\ref{section:relationship-propositional-predicate-logic}.
     Figure~\ref{figure:trees-of-terms} shows the trees of these terms.
     
     \begin{figure}
@@ -189,7 +188,7 @@ The \emph{term tree of $t$}, denoted $\Tree(t)$, is defined similarly to a propo
         \begin{forest}
             for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
             [\lor 
-                [\neg 
+                [-
                     [\land
                         [x]
                         [y]                    
@@ -199,35 +198,35 @@ The \emph{term tree of $t$}, denoted $\Tree(t)$, is defined similarly to a propo
             ]
         \end{forest}
         
-        (b) $\neg (x\land y)\lor \bot$ in the language of Boolean algebras
+        (b) $-(x\land y)\lor \bot$ in the language of Boolean algebras
     \end{minipage}
     \caption{Term tree}
     \label{figure:trees-of-terms}
     \end{figure}
 \end{example}
 
-It is not hard to guess what the \emph{semantics} of terms will be. Given a specific structure, a term corresponds to a function on its domain: the input is an assignment of the variables to elements of the domain, the constant and functional symbols are replaced by their interpretations, and the output is the value (element of the domain) at the root. More formally, this will be covered in Section \ref{section:predicate-semantics}.
+It is not hard to guess what the \emph{semantics} of terms will be. Given a specific structure, a term corresponds to a function on its domain: the input is an assignment of the variables to elements of the domain, the constant and function symbols are replaced by their interpretations, and the output is the value (element of the domain) at the root. More formally, this will be covered in Section \ref{section:predicate-semantics}.
 
 
 \subsection{Formulas}
 
-Terms cannot be assigned a truth value in any sense; for that, we need a \emph{predicate} (a relational symbol or equality) that talks about the `relationship' between terms: in a specific structure with a specific assignment of variables to elements of the domain, this relationship is either satisfied or not.
+Terms cannot be assigned a truth value in any sense; for that, we need a \emph{predicate} (a relation symbol or equality) that talks about the `relationship' between terms: in a specific structure with a specific variable assignment to elements of the domain, this relationship is either satisfied or not.
 
 The simplest \emph{formulas} are \emph{atomic formulas}. We then build all formulas from them using logical connectives and quantifiers.
 
 \begin{definition}[Atomic Formula]
-    An \emph{atomic formula} of the language $L$ is a string $R(t_1,\dots,t_n)$, where $R$ is an $n$-ary relational symbol from $L$ (including $=$ if it is a language with equality) and $t_i\in\Term_L$. %The set of all \emph{atomic formulas} of the language $L$ is denoted $\AFm_L$. 
+    An \emph{atomic formula} of the language $L$ is a string $R(t_1,\dots,t_n)$, where $R$ is an $n$-ary relation symbol from $L$ (including $=$ if it is a language with equality) and $t_i\in\Term_L$. %The set of all \emph{atomic formulas} of the language $L$ is denoted $\AFm_L$. 
 \end{definition}
 
-For binary relational symbols, we often use infix notation, e.g., the atomic formula $\leq(x,y)$ is written as $x\leq y$, and (if the language has equality) instead of $=(t_1,t_2)$, we will write $t_1=t_2$.
+For binary relation symbols, we often use infix notation, e.g., the atomic formula $\leq(x,y)$ is written as $x\leq y$, and (if the language has equality) instead of $=(t_1,t_2)$, we will write $t_1=t_2$.
 
 \begin{example}
     Here are some examples of atomic formulas:
     \begin{itemize}
-        \item $R(f(f(x)),c, f(d))$ where $R$ is a ternary relational, $f$ a unary functional, $c,d$ are constant symbols,
+        \item $R(f(f(x)),c, f(d))$ where $R$ is a ternary relation symbol, $f$ a unary function symbol, $c,d$ are constant symbols,
         \item $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$ in the language of ordered fields,
         \item $x\cdot y\leq (S(0)+x)\cdot y$ in the language of arithmetic,
-        \item $\neg(x\land y)\lor\bot=\bot$ in the language of Boolean algebras        
+        \item $-(x\land y)\lor\bot=\bot$ in the language of Boolean algebras        
     \end{itemize}
 \end{example}
 
@@ -242,7 +241,7 @@ For binary relational symbols, we often use infix notation, e.g., the atomic for
     %The set of all \emph{formulas} of the language $L$ is denoted $\Fm_L$.
 \end{definition}
 
-A \emph{subformula} is a substring that is itself a formula. The \emph{formula tree}, denoted $\Tree(\varphi)$, is defined as follows: the tree of an atomic formula $\varphi=R(t_1,\dots,t_n)$ has the relational symbol $R$ at the root, and it is connected to the trees $\Tree(t_i)$. If $\varphi$ is not atomic, the tree is constructed similarly to a propositional formula tree.\footnote{Quantifiers, like negations, have a single child.} In writing formulas, we use similar conventions as in propositional logic, with quantifiers having the same precedence as $\neg$ (higher than other logical connectives). Therefore, instead of $((\forall x)\varphi)$ we can write $(\forall x)\varphi$.\footnote{Sometimes parentheses are not written in quantifiers, i.e., just $\forall x\varphi$, but we will write them for clarity.}
+A \emph{subformula} is a substring that is itself a formula. The \emph{tree of a formula}, denoted $\Tree(\varphi)$, is defined as follows: the tree of an atomic formula $\varphi=R(t_1,\dots,t_n)$ has the relation symbol~$R$ at the root, to which we append the trees $\Tree(t_i)$. If $\varphi$ is not atomic, the tree is constructed similarly to a propositional formula tree.\footnote{Quantifiers, like negations, have a single child.} When writing formulas, we use similar conventions as in propositional logic, with quantifiers having the same precedence as~$\neg$ (higher than other logical connectives). Therefore, instead of $((\forall x)\varphi)$ we can write $(\forall x)\varphi$.\footnote{Sometimes parentheses are not written in quantifiers, e.g., $\forall x\varphi$, but we will always include them, for better readability.}
 
 \begin{example}\label{example:formula} An example of a formula in the language of arithmetic is $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$. Its tree is shown in Figure \ref{figure:tree-of-formula}.
     \begin{figure}
@@ -261,6 +260,9 @@ A \emph{subformula} is a substring that is itself a formula. The \emph{formula t
 \end{example}
 
 
+%TODO
+
+
 \subsubsection{Free and Bound Variables}
 
 The meaning of a formula\footnote{More precisely, its \emph{truth value}, formally defined below in Section \ref{subsection:truth-value-of-formula}.} may or may not depend on the variables that appear in it: compare $x\leq 0$ and $(\exists x)(x\leq 0)$ (and what about $x\leq 0 \lor (\exists x)(x\leq 0)$). We now clarify this concept and introduce the necessary terminology.
@@ -272,7 +274,7 @@ An \emph{occurrence} of a variable $x$ in a formula $\varphi$ means a leaf in $\
 \end{example}
 
 \begin{remark}
-    As we will see below, the meaning (\emph{truth value}) of a formula depends only on the evaluation of free variables. Variables in quantifiers, along with their corresponding bound occurrences, can be renamed arbitrarily.
+    As we will see below, the meaning (\emph{truth value}) of a formula depends only on the assignment of free variables. Variables in quantifiers, along with their corresponding bound occurrences, can be renamed arbitrarily.
 \end{remark}
 
 
@@ -296,7 +298,7 @@ A formula is \emph{open} if it contains no quantifier, and \emph{closed} (or a \
 Every atomic formula is open, and open formulas are just combinations of atomic formulas using logical connectives. A formula can be both open and closed if all its terms are constant. A formula is closed if and only if it has no free variable.\footnote{It is not true that a formula is open if it has no bound variable, see the formula $(\forall x)0=1$.}
 
 \begin{remark}
-As we will see later, the \emph{truth value} of a formula depends only on the evaluation of its free variables. Specifically, a sentence has a truth value of 0 or 1 in a given structure (independently of variable evaluations). This is why sentences play an important role in logic.
+As we will see later, the \emph{truth value} of a formula depends only on the assignment of its free variables. Specifically, a sentence has a truth value of 0 or 1 in a given structure (independently of variable assignments). This is why sentences play an important role in logic.
 \end{remark}
 
 
@@ -363,7 +365,7 @@ This concludes the exposition on syntax; next is semantics.
 
 \section{Semantics}\label{section:predicate-semantics}
 
-Before we delve into a more formal exposition, let's briefly summarize the semantics as we have already hinted in previous sections:
+Before we delve into a more formal exposition, let us briefly summarize the semantics as we have already hinted in previous sections:
 
 \begin{itemize}
     \item Models are structures of the given signature,
@@ -391,7 +393,7 @@ The definition does not depend on whether the language is with or without equali
 
 \subsection{Term Value}
 
-Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (with or without equality), and an $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$. An \emph{assignment of variables} in the set $A$ is any function $e:\Var\to A$.
+Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (with or without equality), and an $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$. A \emph{variable assignment} in the set $A$ is any function $e:\Var\to A$.
 
 \begin{definition}[Term Value]
     The \emph{value of the term $t$ in the structure $\A$ under the assignment $e$}, denoted $t^\A[e]$, is defined inductively:
@@ -423,7 +425,7 @@ Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (wi
 We are now ready to define the \emph{truth value}. Locally, we introduce the notation $\mathrm{TV}$ for it.
 
 \begin{definition}[Truth Value]
-Given a formula $\varphi$ in the language $L$, a structure $\A\in\M_L$, and an assignment of variables $e:\Var\to A$. The \emph{truth value of $\varphi$ in $\A$ under the assignment $e$, $\mathrm{TV}^\A(\varphi)[e]$}, is defined inductively according to the structure of the formula:
+Given a formula $\varphi$ in the language $L$, a structure $\A\in\M_L$, and a variable assignment $e:\Var\to A$. The \emph{truth value of $\varphi$ in $\A$ under the assignment $e$, $\mathrm{TV}^\A(\varphi)[e]$}, is defined inductively according to the structure of the formula:
 
 For an atomic formula $\varphi=R(t_1,\dots,t_n)$, we have 
 $$
@@ -467,7 +469,7 @@ Consider the ordered field $\underline{\mathbb Q}$. Then:
 
 \subsection{Validity}
 
-Based on the truth value, we can now define the key concept of semantics, \emph{validity}.
+Based on the truth value, we can now define the key notion of semantics, \emph{validity}.
 
 \begin{definition}[Validity in a Structure]
 Given a formula $\varphi$ and a structure $\A$ (in the same language). 
@@ -478,7 +480,7 @@ Given a formula $\varphi$ and a structure $\A$ (in the same language).
 \end{itemize}    
 \end{definition}
 
-Let's summarize some simple properties, first concerning validity under an assignment. Let $\A$ be a structure, $\varphi,\psi$ be formulas, and $e$ be an assignment.
+Let us summarize some simple properties, first concerning validity under an assignment. Let $\A$ be a structure, $\varphi,\psi$ be formulas, and $e$ be an assignment.
 \begin{itemize}
     \item $\A\models\neg\varphi[e]$ if and only if $\A\not\models\varphi[e]$,
     \item $\A\models(\varphi\land\psi)[e]$ if and only if $\A\models\varphi[e]$ and $\A\models\psi[e]$,
@@ -498,7 +500,7 @@ Let's summarize some simple properties, first concerning validity under an assig
     Prove all the listed properties of validity under an assignment in detail.
 \end{exercise}
 
-And what about the concept of truth (validity) in a structure?
+And what about the notion of truth (validity) in a structure?
 \begin{itemize}
     \item If $\A\models\varphi$, then $\A\not\models\neg\varphi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., holds `if and only if').
     \item $\A\models\varphi\land\psi$ if and only if $\A\models\varphi$ and $\A\models\psi$,
@@ -523,7 +525,7 @@ The \emph{general closure} of a formula $\varphi(x_1,\dots,x_n)$ (i.e., $x_1,\do
 
 \section{Properties of Theories}
 
-Based on the concept of \emph{validity}, we will build syntactic terminology similar to that in propositional logic. A \emph{theory} of the language $L$ is any set $T$ of $L$-formulas, whose elements are called \emph{axioms}. A \emph{model} of the theory $T$ is an $L$-structure in which all axioms of the theory $T$ are valid, i.e., $\A\models\varphi$ for all $\varphi\in T$, which we denote by $\A\models T$. The \emph{class of models}\footnote{Recall that we cannot say `set'.} of the theory $T$ is:
+Based on the notion of \emph{validity}, we will build syntactic terminology similar to that in propositional logic. A \emph{theory} of the language $L$ is any set $T$ of $L$-formulas, whose elements are called \emph{axioms}. A \emph{model} of the theory $T$ is an $L$-structure in which all axioms of the theory $T$ are valid, i.e., $\A\models\varphi$ for all $\varphi\in T$, which we denote by $\A\models T$. The \emph{class of models}\footnote{Recall that we cannot say `set'.} of the theory $T$ is:
 $$
 \M_L(T)=\{\A\in\M_L\mid\A\models T\}
 $$
@@ -537,9 +539,9 @@ If $T$ is a theory in the language $L$ and $\varphi$ is an $L$-formula, then we 
     \item \emph{false in $T$}, if $T\models\neg\varphi$, i.e., if it is false in every model of $T$ (in other words: $\M(T)\cap\M(\varphi)=\emptyset$),
     \item \emph{independent in $T$}, if it is neither true in $T$ nor false in $T$.
 \end{itemize}
-If we have an empty theory $T=\emptyset$ (i.e., $\M(T)=\M_L$), then we omit the theory $T$, write $\models\varphi$, and say that $\varphi$ \emph{is true (in logic), (logically) valid, is a tautology}; similarly for other concepts.
+If we have an empty theory $T=\emptyset$ (i.e., $\M(T)=\M_L$), then we omit the theory $T$, write $\models\varphi$, and say that $\varphi$ \emph{is true (in logic), (logically) valid, is a tautology}; similarly for other notions.
 
-A theory is \emph{inconsistent} if it contains a \emph{contradiction} $\bot$, which in predicate logic can be defined as $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, where $R$ is any (say, the first) relational symbol from the language or equality (if the language has no relational symbol, it must be with equality). A theory is \emph{inconsistent} if and only if every formula is true in it, or equivalently, if and only if it has no model. Otherwise, we say that the theory is \emph{consistent} (if it does not contain a contradiction, equivalently, if it has at least one model).
+A theory is \emph{inconsistent} if it contains a \emph{contradiction} $\bot$, which in predicate logic can be defined as $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, where $R$ is any (say, the first) relation symbol from the language or equality (if the language has no relation symbol, it must be with equality). A theory is \emph{inconsistent} if and only if every formula is true in it, or equivalently, if and only if it has no model. Otherwise, we say that the theory is \emph{consistent} (if it does not contain a contradiction, equivalently, if it has at least one model).
 
 \emph{Sentences} true in $T$ are called \emph{consequences} of $T$; the \emph{set of all consequences} of $T$ in the language $L$ is:
 $$
@@ -547,13 +549,13 @@ $$
 $$
 
 \subsubsection{Completeness in Predicate Logic}
-How does the concept of \emph{completeness} of a theory stand?\footnote{Recall that a \emph{propositional} theory is complete if it is consistent and every proposition in it is either true or its negation is true. Equivalently, it has exactly one model.}
+How does the notion of \emph{completeness} of a theory stand?\footnote{Recall that a \emph{propositional} theory is complete if it is consistent and every proposition in it is either true or its negation is true. Equivalently, it has exactly one model.}
 
 \begin{definition}
     A theory is \emph{complete} if it is consistent and every \emph{sentence} in it is either true or false.
 \end{definition}
 
-However, we cannot say that a theory is complete if and only if it has a single model. If we have one model, we derive infinitely many others, but \emph{isomorphic} models, i.e., differing only by the naming of the elements of the universe.\footnote{Formally, the concept of \emph{isomorphism} is defined later in the part on \emph{model theory}, in Section \ref{section:isomorphism-of-structures}, but it is a generalization of the isomorphism known from graph theory.} Considering a single model `up to isomorphism' would not be sufficient. The correct concept is called \emph{elementary equivalence}:
+However, we cannot say that a theory is complete if and only if it has a single model. If we have one model, we derive infinitely many others, but \emph{isomorphic} models, i.e., differing only by the naming of the elements of the universe.\footnote{Formally, the notion of \emph{isomorphism} is defined later in the part on \emph{model theory}, in Section \ref{section:isomorphism-of-structures}, but it is a generalization of the isomorphism known from graph theory.} Considering a single model `up to isomorphism' would not be sufficient. The correct notion is called \emph{elementary equivalence}:
 
 \begin{definition}
     Structures $\A,\B$ (in the same language) are \emph{elementarily equivalent} if the same sentences are true in both of them. We denote this by $\A\equiv\B$.
@@ -580,7 +582,7 @@ The question of truth (validity) in a given theory can be reduced to the problem
     The following equivalences hold: $T\cup\{\neg\varphi\}$ has no model if and only if $\neg\varphi$ is not true in any model of $T$, if and only if (since it is a sentence) $\varphi$ is true in every model of $T$. 
 \end{proof}
 
-The assumption that $\varphi$ is a sentence is necessary: consider the theory $T=\{P(c)\}$ and the formula $\varphi=P(x)$ (which is not a sentence). Then $\{P(c),\neg P(x)\}$ has no model, but $P(c)\not\models P(x)$. (Here, $P$ is a unary relation and $c$ is a constant symbol.)
+The assumption that $\varphi$ is a sentence is necessary: consider the theory $T=\{P(c)\}$ and the formula $\varphi=P(x)$ (which is not a sentence). Then $\{P(c),\neg P(x)\}$ has no model, but $P(c)\not\models P(x)$. (Here, $P$ is a unary relation symbol and $c$ is a constant symbol.)
 
 \subsection{Examples of Theories}
 
@@ -652,14 +654,14 @@ In this section, we will look at ways to create new structures from existing one
 
 \subsubsection{Substructure}
 
-The concept of \emph{substructure} generalizes subgroups, subspaces of a vector space, and induced subgraphs of a graph: we select a subset $B$ of the universe of the structure $\A$ and create on it a structure $\B$ of the same signature, which `inherits' relations, functions, and constants. To do this, we need the set $B$ to be \emph{closed} under all functions and contain all constants.\footnote{Just as not every set of vectors is a subspace, it must contain the zero vector, contain all scalar multiples of each vector, and for any pair of vectors, contain their sum. In other words, only (non-empty) sets closed under \emph{linear combinations} of vectors form subspaces.}
+The notion of \emph{substructure} generalizes subgroups, subspaces of a vector space, and induced subgraphs of a graph: we select a subset $B$ of the universe of the structure $\A$ and create on it a structure $\B$ of the same signature, which `inherits' relations, functions, and constants. To do this, we need the set $B$ to be \emph{closed} under all functions and contain all constants.\footnote{Just as not every set of vectors is a subspace, it must contain the zero vector, contain all scalar multiples of each vector, and for any pair of vectors, contain their sum. In other words, only (non-empty) sets closed under \emph{linear combinations} of vectors form subspaces.}
 
 \begin{definition}[Substructure]
 Let $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ be a structure in the signature $\langle\mathcal R,\mathcal F\rangle$. A structure $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ is an \emph{(induced) substructure of $\A$}, denoted $\B\subseteq\A$, if
 \begin{itemize}
     \item $\emptyset\neq B\subseteq A$,
-    \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ for each relational symbol $R\in \mathcal R$,
-    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ for each functional symbol $f\in \mathcal F$ (i.e., the function $f^\B$ is the restriction of $f^\A$ to the set $B$, and its outputs are all also from $B$),
+    \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ for each relation symbol $R\in \mathcal R$,
+    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ for each function symbol $f\in \mathcal F$ (i.e., the function $f^\B$ is the restriction of $f^\A$ to the set $B$, and its outputs are all also from $B$),
     \item specifically, for each constant symbol $c\in\mathcal F$ we have $c^\B=c^\A\in B$.
 \end{itemize}
 \end{definition}
@@ -678,7 +680,7 @@ In that case, we call this substructure the \emph{restriction} of $\A$ to the se
 How does the validity of formulas in a substructure work? Here are some simple observations about \emph{open} formulas.
 
 \begin{observation}
-    If $\B\subseteq\A$, then for any \emph{open} formula $\varphi$ and assignment of variables $e\colon\Var\to B$, it holds: $\B\models\varphi[e]$ if and only if $\A\models\varphi[e]$.
+    If $\B\subseteq\A$, then for any \emph{open} formula $\varphi$ and variable assignment $e\colon\Var\to B$, it holds: $\B\models\varphi[e]$ if and only if $\A\models\varphi[e]$.
 \end{observation}
 \begin{proof}
     For atomic formulas, this is obvious; further, it can be easily proved by induction on the structure of the formula.
@@ -695,7 +697,7 @@ We say that a theory $T$ is \emph{open} if all its axioms are open formulas.
 \end{corollary}
 
 \begin{example}
-    The theory of graphs is open. Every substructure of a graph (a model of the theory of graphs) is also a graph, called an (induced) \emph{subgraph}.\footnote{The concept of a \emph{subgraph} in graph theory often means just $E^\B\subseteq B\times B$, not $E^\B=B\times B$. However, we will use the term \emph{subgraph} in the stricter sense, as an induced subgraph.} Similarly, for subgroups or Boolean subalgebras.
+    The theory of graphs is open. Every substructure of a graph (a model of the theory of graphs) is also a graph, called an (induced) \emph{subgraph}.\footnote{The notion of a \emph{subgraph} in graph theory often means just $E^\B\subseteq B\times B$, not $E^\B=B\times B$. However, we will use the term \emph{subgraph} in the stricter sense, as an induced subgraph.} Similarly, for subgroups or Boolean subalgebras.
 \end{example}
 
 \begin{example}
@@ -704,7 +706,7 @@ We say that a theory $T$ is \emph{open} if all its axioms are open formulas.
 
 \subsubsection{Generated Substructure}
 
-What to do if we have a subset of the universe that is \emph{not} closed under the functions of the structure? In that case, we consider the \emph{closure} of this set under the functions.\footnote{See the concept of \emph{linear span} of a set of vectors.}
+What to do if we have a subset of the universe that is \emph{not} closed under the functions of the structure? In that case, we consider the \emph{closure} of this set under the functions.\footnote{See the notion of \emph{linear span} of a set of vectors.}
 
 \begin{definition}
     Let $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ be a structure and a non-empty subset $X\subseteq A$. Let $B$ be the smallest subset of $A$ that contains the set $X$ and is closed under all functions of the structure $\A$ (i.e., it also contains all constants). Then the substructure $\A\restriction B$ is said to be \emph{generated} by the set $X$, and denoted by $\A\langle X\rangle$.
@@ -723,7 +725,7 @@ What to do if we have a subset of the universe that is \emph{not} closed under t
 So far, we have constructed new structures by changing the universe. However, we can also keep the universe the same and add or remove relations, functions, and constants. The result of such an operation is called an \emph{expansion} or a \emph{reduct}. Note that this is a structure in a different signature.
 
 \begin{definition}[Expansion and Reduct]
-    Let $L\subseteq L'$ be languages, $\A$ an $L$-structure, and $\A'$ an $L'$-structure on the same domain $A=A'$. If the interpretation of each symbol from $L$ [relational, functional, constant] is the same [relation, function, constant] in both $\A$ and $\A'$, then we say that the structure $\A'$ is an \emph{expansion} of the structure $\A$ to the language $L'$ (also called an \emph{$L'$-expansion}) and that the structure $\A$ is a \emph{reduct} of the structure $\A'$ to the language $L$ (also called an \emph{$L$-reduct}).    
+    Let $L\subseteq L'$ be languages, $\A$ an $L$-structure, and $\A'$ an $L'$-structure on the same domain $A=A'$. If the interpretation of each symbol from $L$ [relation, function, constant] is the same [relation, function, constant] in both $\A$ and $\A'$, then we say that the structure $\A'$ is an \emph{expansion} of the structure $\A$ to the language $L'$ (also called an \emph{$L'$-expansion}) and that the structure $\A$ is a \emph{reduct} of the structure $\A'$ to the language $L$ (also called an \emph{$L$-reduct}).    
 \end{definition}
 
 \begin{example}
@@ -760,7 +762,7 @@ The \emph{constant term theorem} states (informally) that satisfying a formula w
 
 \section{Extension of Theories}
 
-The concept of \emph{extension} of a theory is defined similarly as in propositional logic:
+The notion of \emph{extension} of a theory is defined similarly as in propositional logic:
 
 \begin{definition}[Extension of a Theory]
     Let $T$ be a theory in the language $L$.
@@ -772,7 +774,7 @@ The concept of \emph{extension} of a theory is defined similarly as in propositi
     \end{itemize}
 \end{definition}
 
-Similar to propositional logic, for theories in the same language, the following semantic description of these concepts holds:
+Similar to propositional logic, for theories in the same language, the following semantic description of these notions holds:
 
 \begin{observation}
 Let $T,T'$ be theories in the language $L$. Then:
@@ -782,7 +784,7 @@ Let $T,T'$ be theories in the language $L$. Then:
 \end{itemize}
 \end{observation}
 
-What about the case when the theory $T'$ is in a larger language than $T$? Recall the situation in propositional logic, described in Observation \ref{observation:extensions-semantic-description-propositional}. We will formulate and prove an analogous statement: While in propositional logic we added values for new atomic propositions or forgot them, in predicate logic we will expand or reduce structures, i.e., add or forget interpretations of relational, functional, and constant symbols. The principle of the statement remains the same.
+What about the case when the theory $T'$ is in a larger language than $T$? Recall the situation in propositional logic, described in Observation \ref{observation:extensions-semantic-description-propositional}. We will formulate and prove an analogous statement: While in propositional logic we added values for new atomic propositions or forgot them, in predicate logic we will expand or reduce structures, i.e., add or forget interpretations of relation, function, and constant symbols. The principle of the statement remains the same.
 
 \begin{proposition}\label{proposition:semantic-conditions-for-extensions}
     Let $L\subseteq L'$ be languages, $T$ a theory in the language $L$, and $T'$ a theory in the language $L'$.
@@ -795,7 +797,7 @@ What about the case when the theory $T'$ is in a larger language than $T$? Recal
     The reverse implication in part (ii) also holds, but the proof is not as simple as in propositional logic, so we will not present it. (The problem is how to obtain from a model of $T$ that cannot be expanded to a model of $T'$ an $L$-sentence that holds in $T$ but not in $T'$.)
 \end{remark}
 \begin{proof}
-    First, let's prove (i): Let $\A'$ be a model of the theory $T'$ and denote by $\A$ its reduct to the language $L$. Since $T'$ is an extension of the theory $T$, every axiom $\varphi\in T$ holds in $T'$, and thus in $\A'$. But then $\A\models\varphi$ (since $\varphi$ contains only symbols from the language $L$), hence $\A$ is a model of $T$.
+    First, let us prove (i): Let $\A'$ be a model of the theory $T'$ and denote by $\A$ its reduct to the language $L$. Since $T'$ is an extension of the theory $T$, every axiom $\varphi\in T$ holds in $T'$, and thus in $\A'$. But then $\A\models\varphi$ (since $\varphi$ contains only symbols from the language $L$), hence $\A$ is a model of $T$.
 
     Conversely, let $\varphi$ be an $L$-sentence such that $T\models\varphi$. We want to show that $T'\models\varphi$. For any model $\A'\in\M_{L'}(T')$ we know that its $L$-reduct $\A$ is a model of $T$, hence $\A\models\varphi$. Therefore, $\A'\models\varphi$ (again, since $\varphi$ is in the language $L$).
 
@@ -805,23 +807,23 @@ What about the case when the theory $T'$ is in a larger language than $T$? Recal
 
 \subsection{Extension by Definitions}\label{subsection:extension-by-definition}
 
-Now we will show a special kind of conservative extension, namely the extension \emph{by definitions} of new (relational, functional, constant) symbols.
+Now we will show a special kind of conservative extension, namely the extension \emph{by definitions} of new (relation, function, constant) symbols.
 
-\subsubsection*{Definition of a Relational Symbol}
+\subsubsection*{Definition of a Relation Symbol}
 
-The simplest case is defining a new relational symbol $R(x_1,\dots,x_n)$. Any formula with $n$ free variables $\psi(x_1,\dots,x_n)$ can serve as the definition.
+The simplest case is defining a new relation symbol $R(x_1,\dots,x_n)$. Any formula with $n$ free variables $\psi(x_1,\dots,x_n)$ can serve as the definition.
 
 \begin{example}
-First, let's provide some examples:
+First, let us provide some examples:
 \begin{itemize}
-    \item Any theory in a language with equality can be extended with the binary relational symbol $\neq$, which is \emph{defined} by the formula $\neg x_1=x_2$. This means that we require $x_1\neq x_2\liff\neg x_1=x_2$.
+    \item Any theory in a language with equality can be extended with the binary relation symbol $\neq$, which is \emph{defined} by the formula $\neg x_1=x_2$. This means that we require $x_1\neq x_2\liff\neg x_1=x_2$.
     \item The theory of order can be extended with the symbol $<$ for strict order, which is \emph{defined} by the formula $x_1\leq x_2\land \neg x_1=x_2$. This means that we require $x_1<x_2 \liff x_1\leq x_2\land \neg x_1=x_2$.
     \item In arithmetic, we can introduce the symbol $\leq$ using $x_1\leq x_2\liff(\exists y)(x_1+y=x_2)$.
 \end{itemize}
 \end{example}
 Now, we give the definition:
-\begin{definition}[Definition of a Relational Symbol]
-    Let $T$ be a theory and $\psi(x_1,\dots,x_n)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary relational symbol $R$. The \emph{extension of the theory $T$ by the definition of $R$ by the formula $\psi$} is the $L'$-theory:
+\begin{definition}[Definition of a Relation Symbol]
+    Let $T$ be a theory and $\psi(x_1,\dots,x_n)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary relation symbol $R$. The \emph{extension of the theory $T$ by the definition of $R$ by the formula $\psi$} is the $L'$-theory:
     $$
     T'=T\cup\{R(x_1,\dots,x_n)\ \liff\ \psi(x_1,\dots,x_n)\}
     $$
@@ -840,19 +842,19 @@ We will also show that the new symbol can be replaced in formulas by its definit
     It is necessary to replace atomic subformulas with the new symbol $R$, i.e., of the form $R(t_1,\dots,t_n)$. Such a subformula is replaced by the formula $\psi'(x_1/t_1,\dots,x_n/t_n)$, where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms, i.e., for example, renaming all bound variables of $\psi$ to entirely new ones (not appearing in the formula $\varphi'$).
 \end{proof}
 
-\subsubsection*{Definition of a Functional Symbol}
+\subsubsection*{Definition of a Function Symbol}
 
-We define a new functional symbol similarly, but we must ensure that the definition provides a unique way to interpret the new symbol.
+We define a new function symbol similarly, but we must ensure that the definition provides a unique way to interpret the new symbol.
 
 \begin{example}
     Again, we start with examples:
     \begin{itemize}
-        \item In the theory of groups, we can introduce a \emph{binary} functional symbol $-_b$ using $+$ and unary $-$ as follows:
+        \item In the theory of groups, we can introduce a \emph{binary} function symbol $-_b$ using $+$ and unary $-$ as follows:
         $$
         x_1 -_b x_2 = y\ \liff\ x_1 + (-x_2) = y
         $$
         It is clear that for every $x, y$, there \emph{exists} a \emph{unique} $z$ satisfying the definition.
-        \item Consider the theory of \emph{linear orders}, i.e., the theory of orders together with the linearity axiom $x\leq y\lor y\leq x$. Define the binary functional symbol $\min$ as follows:
+        \item Consider the theory of \emph{linear orders}, i.e., the theory of orders together with the linearity axiom $x\leq y\lor y\leq x$. Define the binary function symbol $\min$ as follows:
         $$
         \min(x_1,x_2)=y\ \liff\ y\leq x_1\land y\leq x_2\land (\forall z)(z\leq x_1\land z\leq x_2\limplies z\leq y)
         $$
@@ -860,8 +862,8 @@ We define a new functional symbol similarly, but we must ensure that the definit
     \end{itemize}
 \end{example}
 
-\begin{definition}[Definition of a Functional Symbol]
-    Let $T$ be a theory and $\psi(x_1,\dots,x_n,y)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary functional symbol $f$. Let the following hold in the theory $T$:
+\begin{definition}[Definition of a Function Symbol]
+    Let $T$ be a theory and $\psi(x_1,\dots,x_n,y)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary function symbol $f$. Let the following hold in the theory $T$:
     \begin{itemize}
         \item \emph{existence axiom} $(\exists y)\psi(x_1,\dots,x_n,y)$,
         \item \emph{uniqueness axiom} $\psi(x_1,\dots,x_n,y)\land \psi(x_1,\dots,x_n,z)\limplies y=z$.
@@ -900,10 +902,10 @@ And an analogous statement about unwinding definitions holds:
 
 \subsubsection*{Definition of a Constant Symbol}
 
-A constant symbol is a special case of a functional symbol of arity 0. Thus, the same statements hold. The existence and uniqueness axioms are: $(\exists y)\psi(y)$ and $\psi(y)\land\psi(z)\limplies y=z$. The extension by definition of a constant symbol $c$ by the formula $\psi(y)$ is the theory $T'=T\cup\{c=y\liff \psi(y)\}$.
+A constant symbol is a special case of a function symbol of arity 0. Thus, the same statements hold. The existence and uniqueness axioms are: $(\exists y)\psi(y)$ and $\psi(y)\land\psi(z)\limplies y=z$. The extension by definition of a constant symbol $c$ by the formula $\psi(y)$ is the theory $T'=T\cup\{c=y\liff \psi(y)\}$.
 
 \begin{example}
-    Let's show two examples:
+    Let us show two examples:
     \begin{itemize}
         \item Any theory in the language of arithmetic can be extended by defining the constant symbol $1$ with the formula $\psi(y)$ of the form $y=S(0)$, thus adding the axiom $1=y\ \liff\ y=S(0)$.
         \item Consider the theory of fields and a new symbol $\frac{1}{2}$, defined by the formula $y\cdot (1+1)=1$, i.e., adding the axiom:
@@ -920,7 +922,7 @@ A constant symbol is a special case of a functional symbol of arity 0. Thus, the
 
 \subsubsection*{Extension by Definitions}
 
-If we have an $L$-theory $T$ and an $L'$-theory $T'$, we say that $T'$ is an \emph{extension} of $T$ \emph{by definitions} if it is obtained from $T$ by a successive extension by definitions of relational and functional (or possibly constant) symbols. The properties we proved about extensions by one symbol (whether relational or functional) easily extend inductively to multiple symbols:
+If we have an $L$-theory $T$ and an $L'$-theory $T'$, we say that $T'$ is an \emph{extension} of $T$ \emph{by definitions} if it is obtained from $T$ by a successive extension by definitions of relation and function (or possibly constant) symbols. The properties we proved about extensions by one symbol (whether relation or function) easily extend inductively to multiple symbols:
 
 \begin{corollary}
    If $T'$ is an extension of the theory $T$ by definitions, then:
@@ -931,9 +933,9 @@ If we have an $L$-theory $T$ and an $L'$-theory $T'$, we say that $T'$ is an \em
    \end{itemize}
 \end{corollary}
 
-Finally, let's show one more example, illustrating also the unwinding of definitions:
+Finally, let us show one more example, illustrating also the unwinding of definitions:
 \begin{example}
-    In the theory $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ of the language $L=\langle +,0,\leq\rangle$ with equality, we can introduce $<$ and a unary functional symbol $-$ by adding axioms:
+    In the theory $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ of the language $L=\langle +,0,\leq\rangle$ with equality, we can introduce $<$ and a unary function symbol $-$ by adding axioms:
     \begin{align*}
         -x=y\ &\liff\ x+y=0\\
         x<y\ &\liff\ x\leq y\land\neg(x=y)
@@ -1068,8 +1070,8 @@ We will now demonstrate how propositional logic can be `simulated' in predicate 
 
 The smallest model is the \emph{2-element Boolean algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Finite Boolean algebras are (up to \emph{isomorphism}) precisely $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, where $f^n$ means that the function $f$ is applied component-wise.\footnote{These Boolean algebras are isomorphic to the \emph{power set algebras} $\mathcal P(\{1,\dots,n\})$, the isomorphism being given by the bijection between subsets and their characteristic vectors.}
 
-Propositions can thus be understood as \emph{Boolean terms} (and the constants $\bot,\top$ represent falsehood and truth), with the truth value of a proposition under a given assignment of propositional variables being given by the value of the corresponding term in the 2-element Boolean algebra. Moreover, the \emph{algebra of propositions} of a given propositional language or theory is a Boolean algebra (this holds even for infinite languages).
+Propositions can thus be understood as \emph{Boolean terms} (and the constants $\bot,\top$ represent falsity and truth), with the truth value of a proposition under a given assignment of propositional variables being given by the value of the corresponding term in the 2-element Boolean algebra. Moreover, the \emph{algebra of propositions} of a given propositional language or theory is a Boolean algebra (this holds even for infinite languages).
 
 On the other hand, if we have an \emph{open} formula $\varphi$ (without equality), we can represent atomic propositions using propositional variables and obtain a proposition that holds if and only if $\varphi$ holds. We will learn more about this direction in Chapter \ref{chapter:predicate-resolution} (on resolution in predicate logic), where we will first eliminate quantifiers using the so-called \emph{Skolemization}.
 
-Propositional logic could also be introduced as a fragment of predicate logic if we allowed \emph{nullary relations} (and nullary relational symbols in the language): $A^0=\{\emptyset\}$, thus on any set there are precisely two nullary relations $R^A\subseteq A^0$: $R^A=\emptyset=0$ and $R^A=\{\emptyset\}=\{0\}=1$. However, we will not do that.
+Propositional logic could also be introduced as a fragment of predicate logic if we allowed \emph{nullary relations} (and nullary relation symbols in the language): $A^0=\{\emptyset\}$, thus on any set there are precisely two nullary relations $R^A\subseteq A^0$: $R^A=\emptyset=0$ and $R^A=\{\emptyset\}=\{0\}=1$. However, we will not do that.

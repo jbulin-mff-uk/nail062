@@ -43,7 +43,7 @@ Notice first that if the theory $T$ and the sentence $\varphi$ are \emph{open} (
     which we can easily refute by resolution in two steps. (Imagine $P(x)$ as a propositional variable $p$ and $Q(x)$ as a propositional variable $q$.)
 \end{example}
 
-Generally, this won't be possible, particularly with existential quantifiers. Unlike in propositional logic, \emph{not} every theory is equivalent to a CNF formula. However, we can always find an \emph{equisatisfiable} CNF formula, i.e., one that is unsatisfiable \emph{if and only if} $T\cup\{\neg \varphi\}$ is unsatisfiable, which is sufficient for proof by contradiction. This construction is called \emph{Skolemization} and involves replacing existentially quantified variables with newly added constant or functional symbols.
+Generally, this won't be possible, particularly with existential quantifiers. Unlike in propositional logic, \emph{not} every theory is equivalent to a CNF formula. However, we can always find an \emph{equisatisfiable} CNF formula, i.e., one that is unsatisfiable \emph{if and only if} $T\cup\{\neg \varphi\}$ is unsatisfiable, which is sufficient for proof by contradiction. This construction is called \emph{Skolemization} and involves replacing existentially quantified variables with newly added constant or function symbols.
 
 For example, we replace the formula $(\exists x)\psi(x)$ with the formula $\psi(x/c)$, where $c$ is a new constant symbol representing a \emph{witness}, i.e., an element that satisfies the existential quantifier. Since there may be many such elements, we lose \emph{equivalence} of theories, but it holds that if the original formula is satisfiable, then the new formula is also satisfiable, and vice versa.
 
@@ -63,7 +63,7 @@ For example, we replace the formula $(\exists x)\psi(x)$ with the formula $\psi(
   It is not equivalent to the theory $T\cup\{\neg \varphi\}$, but it is \emph{equisatisfiable} (in this case, both are unsatisfiable).
 \end{example}
 
-Skolemization can be more complex; sometimes a constant symbol is not enough. If we have a formula of the form $(\forall x)(\exists y)\psi(x,y)$, the chosen witness for $y$ depends on the chosen value for $x$, so `$y$ is a function of $x$'. In this case, we must replace $y$ with $f(x)$, where $f$ is a new unary functional symbol. This gives the formula $(\forall x)\psi(x,y/f(x))$, and we can now remove the universal quantifier and write only $\psi(x,y/f(x))$, which is now an open formula, albeit in a different language (extended by the symbol $f$). Skolemization is formally described, and the necessary properties are proved in Section \ref{section:skolemization}. 
+Skolemization can be more complex; sometimes a constant symbol is not enough. If we have a formula of the form $(\forall x)(\exists y)\psi(x,y)$, the chosen witness for $y$ depends on the chosen value for $x$, so `$y$ is a function of $x$'. In this case, we must replace $y$ with $f(x)$, where $f$ is a new unary function symbol. This gives the formula $(\forall x)\psi(x,y/f(x))$, and we can now remove the universal quantifier and write only $\psi(x,y/f(x))$, which is now an open formula, albeit in a different language (extended by the symbol $f$). Skolemization is formally described, and the necessary properties are proved in Section \ref{section:skolemization}. 
 
 Now let's look at the \emph{resolution rule}. In predicate logic, it is more complex. Again, we will show just a few examples; the formal definition will come later (Section \ref{section:predicate-resolution-method}).
 
@@ -211,7 +211,7 @@ where $\varphi$ is open, we could simply replace it with its open kernel $\varph
 \begin{definition}[Skolem Form]
 Let $\varphi$ be an $L$-sentence in PNF, and let all its bound variables be different. Let the existential quantifiers from the prefix of $\varphi$ be $(\exists y_1),\dots,(\exists y_n)$ (in this order), and let for each $i$, $(\forall x_1),\dots,(\forall x_{n_i})$ be precisely all the universal quantifiers preceding the quantifier $(\exists y_i)$ in the prefix of $\varphi$. 
 
-Let $L'$ be the extension of $L$ with \emph{new} $n_i$-ary functional symbols $f_1,\dots,f_n$, where the symbol $f_i$ has arity $n_i$ for each $i$. The \emph{Skolem form} of the sentence $\varphi$ is the $L'$-sentence $\varphi_S$ obtained from $\varphi$ by, for each $i=1,\dots,n$:
+Let $L'$ be the extension of $L$ with \emph{new} $n_i$-ary function symbols $f_1,\dots,f_n$, where the symbol $f_i$ has arity $n_i$ for each $i$. The \emph{Skolem form} of the sentence $\varphi$ is the $L'$-sentence $\varphi_S$ obtained from $\varphi$ by, for each $i=1,\dots,n$:
 \begin{itemize}
     \item removing the quantifier $(\exists y_i)$ from the prefix, and
     \item substituting the variable $y_i$ with the term $f_i(x_1,\dots,x_{n_i})$.
@@ -226,7 +226,7 @@ This process is also called \emph{skolemization}.
     $$
     \varphi_S=(\forall x_1)(\forall x_2)(\forall x_3)R(f_1,x_1,x_2,f_2(x_1,x_2),x_3)
     $$
-    where $f_1$ is a new constant symbol, and $f_2$ is a new binary functional symbol.
+    where $f_1$ is a new constant symbol, and $f_2$ is a new binary function symbol.
 \end{example}
 
 \begin{remark}
@@ -241,7 +241,7 @@ In the following lemma, we show the key property of the Skolem form:
 Let $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ be an $L$-sentence, and let $\varphi'$ be the sentence 
 $$
 (\forall x_1)\dots(\forall x_n)\psi(y/f(x_1,\dots,x_n))$$
-where $f$ is a new functional symbol. Then:
+where $f$ is a new function symbol. Then:
 \begin{enumerate}[(i)]
     \item The $L$-reduct of every model of $\varphi'$ is a model of $\varphi$, and 
     \item Every model of $\varphi$ can be expanded to a model of $\varphi'$.
@@ -255,7 +255,7 @@ where $f$ is a new functional symbol. Then:
 \end{proof}
 
 \begin{remark}
-    The expansion of the model in the second part of the lemma need not be (and typically is not) unique, unlike the extension by defining a new functional symbol.
+    The expansion of the model in the second part of the lemma need not be (and typically is not) unique, unlike the extension by defining a new function symbol.
 \end{remark}
 
 Applying the previous lemma repeatedly (for all existential quantifiers in sequence) gives us the following corollary:
@@ -331,19 +331,19 @@ In this subsection, we state and prove Herbrand's theorem. We assume that the la
 Let $L=\langle\mathcal R,\mathcal F\rangle$ be a language with at least one constant symbol. An $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$ is a \emph{Herbrand model} if:
 \begin{itemize}
     \item $A$ is the set of all ground $L$-terms (the so-called \emph{Herbrand universe}), and
-    \item for each $n$-ary functional symbol $f\in\mathcal F$ and ground terms $\text{``$t_1$''},\dots,\text{``$t_n$''}\in A$,
+    \item for each $n$-ary function symbol $f\in\mathcal F$ and ground terms $\text{``$t_1$''},\dots,\text{``$t_n$''}\in A$,
     $$
     f^\A(\text{``$t_1$''},\dots,\text{``$t_n$''})=\text{``$f(t_1,\dots,t_n)$''}
     $$
     \item Specifically, for each constant symbol $c\in\mathcal F$, $c^\A=\text{``$c$''}$.
 \end{itemize}
-We do not impose any conditions on the interpretations of relational symbols.
+We do not impose any conditions on the interpretations of relation symbols.
 \end{definition}
 
 Recall that we use quotes around terms informally to clearly distinguish terms as syntactic objects (strings of symbols) from their interpretations (functions).
 
 \begin{example}
-Let $L=\langle P,f,c\rangle$ be a language where $P$ is a unary relational symbol, $f$ is a binary functional symbol, and $c$ is a constant symbol. The Herbrand universe for this language is the set
+Let $L=\langle P,f,c\rangle$ be a language where $P$ is a unary relation symbol, $f$ is a binary function symbol, and $c$ is a constant symbol. The Herbrand universe for this language is the set
 $$
 A=\{\text{``$c$''},\text{``$f(c,c)$''},\text{``$f(c,f(c,c))$''},\text{``$f(f(c,c),c)$''}\dots\}
 $$

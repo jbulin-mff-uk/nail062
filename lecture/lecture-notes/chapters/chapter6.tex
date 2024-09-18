@@ -6,7 +6,7 @@ Začněme neformálním úvodem, ve kterém ilustrujeme základní aspekty predi
 \section{Úvod}
 Připomeňme, že ve výrokové logice jsme popisovali svět pomocí \emph{výroků} složených z \emph{prvovýroků}---odpovědí na zjišťovací (ano/ne) otázky o světě. V predikátové logice (prvního řádu)\footnote{V logice druhého řádu máme také proměnné reprezentující množiny individuí nebo i množiny $n$-tic, tj. relace na množině individuí.} jsou základním stavebním kamenem \emph{proměnné} reprezentující \emph{individua}---nedělitelné objekty z nějaké množiny: např. přirozená čísla, vrcholy grafu, nebo stavy mikroprocesoru. 
 
-Tato individua mohou mít určité vlastnosti a vzájemné vztahy, kterým říkáme \emph{predikáty}, např. `$\mathrm{Leaf}(x)$' nebo `$Edge(x,y)$' mluvíme-li o grafu, nebo `$x\leq y$' v přirozených číslech. Kromě toho mohou individua vstupovat do funkcí, např. `$\mathrm{lowest\_common\_ancestor}(x,y)$' v zakořeněném stromu, `$\mathrm{succ}(x)$' nebo `$x+y$' v přirozených číslech, a být \emph{konstantami} se speciálním významem, např. `$\mathrm{root}$' v zakořeněném stromu, `$0$' v přirozených číslech. 
+Tato individua mohou mít určité vlastnosti a vzájemné vztahy, kterým říkáme \emph{predikáty}, např. `$\mathrm{Leaf}(x)$' nebo `$\mathrm{Edge}(x,y)$' mluvíme-li o grafu, nebo `$x\leq y$' v přirozených číslech. Kromě toho mohou individua vstupovat do funkcí, např. `$\mathrm{lowest\_common\_ancestor}(x,y)$' v zakořeněném stromu, `$\mathrm{succ}(x)$' nebo `$x+y$' v přirozených číslech, a být \emph{konstantami} se speciálním významem, např. `$\mathrm{root}$' v zakořeněném stromu, `$0$' v přirozených číslech. 
 
 \emph{Atomické formule} popisují predikát (včetně predikátu \emph{rovnosti} $=$) o proměnných nebo o \emph{termech} (`výrazech' složených\footnote{Podobně jako vytváříme aritmetické výrazy.} z funkcí popř. konstant). A složitější tvrzení (\emph{formule}) budujeme z atomických formulí pomocí logických spojek, a dvou \emph{kvantifikátorů}: 
 \begin{itemize}
@@ -19,15 +19,15 @@ $$
 $$
 kde $\mathrm{child\_of}(y,x)$ je binární predikát vyjadřující, že individuum reprezentované proměnnou $y$ je dítětem individua reprezentovaného proměnnou $x$, a $\mathrm{is\_parent}(x)$ je unární predikát (tj. `vlastnost') vyjadřující, že individuum reprezentované $x$ je rodič.
 
-Jak je to s platností této formule? To záleží na konkrétním \emph{modelu} světa/systému, který nás zajímá. Model je (neprázdná) množina objektů spolu s unární relací (tj. podmnožinou) \emph{interpretující} \emph{unární relační symbol} $\mathrm{is\_parent}$ a binární relací interpretující \emph{binární relační symbol} $\mathrm{child\_of}$. Tyto relace mohou být obecně jakékoliv a snadno sestrojíme model, kde formule neplatí.\footnote{Vezměme například jednoprvkovou množinu $A=\{a\}$, a relace $\mathrm{child\_of}^A=\{a\}$, $\mathrm{parent}^A=\emptyset$, tedy jediný objekt je svým vlastním dítětem, ale není rodičem.} Pokud ale modelujeme například všechny lidi na světě, a relace mají svůj přirozený význam, potom formule bude platit.\footnote{Při formalizaci musíme být velmi opatrní, abychom nepřidali dodatečné předpoklady, které v modelovaném systému nemusí platit. Zde se například schovává předpoklad, že má-li někdo dítě, musí to být jeho dítě.}
+Jak je to s platností této formule? To záleží na konkrétním \emph{modelu} světa/systému, který nás zajímá. Model je (neprázdná) množina objektů spolu s unární relací (tj. podmnožinou) \emph{interpretující} \emph{unární relační symbol} $\mathrm{is\_parent}$ a binární relací interpretující \emph{binární relační symbol} $\mathrm{child\_of}$. Tyto relace mohou být obecně jakékoliv a snadno sestrojíme model, kde formule neplatí.\footnote{Vezměme například jednoprvkovou množinu $A=\{a\}$, a relace $\mathrm{child\_of}^A=\{(a,a)\}$, $\mathrm{parent}^A=\emptyset$, tedy jediný objekt je svým vlastním dítětem, ale není rodičem.} Pokud ale modelujeme například všechny lidi na světě, a relace mají svůj přirozený význam, potom formule bude platit.\footnote{Při formalizaci musíme být velmi opatrní, abychom nepřidali dodatečné předpoklady, které v modelovaném systému nemusí platit. Zde se například schovává předpoklad, že má-li někdo dítě, musí být jeho rodičem.}
 
-Podívejme se na ještě jeden příklad, tentokrát i s funkčními symboly a s konstantním symbolem: ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom platí $(y_1 \cdot y_2)-(x_1\cdot x_2)\geq 0$.'' Výsledná formule by mohla vypadat takto:
+Podívejme se na ještě jeden příklad, tentokrát i s funkčními symboly a s konstantním symbolem: ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom $(y_1 \cdot y_2)-(x_1\cdot x_2)$ je nezáporné.'' Výsledná formule by mohla vypadat takto:
 $$
 \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
 $$
 Vidíme dva binární relační symboly ($\leq,\geq$), binární funkční symbol $+$, unární funkční symbol $-$, a konstantní symbol $0$. 
 
-Modelem, ve kterém formule platí, je množina přirozených čísel $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, binárními funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$. Vezmeme-li ale podobně množinu celých čísel, formule už platit nebude.
+Příkladem modelu, ve kterém formule platí, je množina přirozených čísel $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, binárními funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$. Vezmeme-li ale podobně množinu celých čísel, formule už platit nebude.
 
 \begin{remark}
 Mohli bychom chápat symbol $-$ jako binární operaci, obvykle se ale zavádí jako unární. Pro konstantní symbol $0$ používáme (jak je zvykem) stejný symbol, jako pro přirozené číslo 0. Ale pozor, v našem modelu může být tento konstantní symbol interpretován jako jiné číslo, nebo náš model vůbec nemusí sestávat z čísel!
@@ -51,7 +51,6 @@ Najděte vhodnou definici pojmu \emph{stromu formule} (zobecňující \emph{stro
 \end{exercise}
 
 
-
 Nyní začneme tím, že formalizujeme tento koncept ``\emph{modelu}'', tzv. \emph{strukturu}. Zbytek kapitoly sleduje osnovu výkladu o výrokové logice: představíme syntaxi, následně sémantiku, a nakonec pokročilejší vlastnosti formulí, teorií, a struktur. Na závěr si ukážeme jednu jednoduchou, ale velmi užitečnou aplikaci predikátové logiky, takzvanou \emph{definovatelnost} podmnožin a relací, která je základem \emph{relačních databází} (např. SQL), a ještě jednou se podíváme na vztah výrokové a predikátové logiky.
 
 \section{Struktury}
@@ -73,7 +72,7 @@ Nejprve specifikujeme, jakého \emph{typu} bude daná struktura, tj. jaké bude 
     \item $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ signatura \emph{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční symboly, $\bot,\top$ jsou konstantní symboly,
     \item $\langle S,+,\cdot,0,\leq\rangle$ signatura \emph{aritmetiky}: $S$ je unární funkční symbol (`successor').
 \end{itemize}
-Kromě běžných symbolů relací, funkcí a konstant (známých např. z logiky nebo z aritmetiky) typicky používáme pro relační symboly $P,Q,R,\dots$, pro funkční symboly $f,g,h,\dots$, a pro konstantní symboly $c,d,a,b,\dots$
+Kromě běžných symbolů relací, funkcí a konstant (známých např. z aritmetiky) typicky používáme pro relační symboly $P,Q,R,\dots$, pro funkční symboly $f,g,h,\dots$, a pro konstantní symboly $c,d,a,b,\dots$
 
 \emph{Strukturu} dané signatury získáme tak, že na nějaké neprázdné \emph{doméně} zvolíme \emph{realizace} (také říkáme \emph{interpretace}) všech relačních a funkčních symbolů (a konstant), tj. konkrétní relace resp. funkce příslušných arit. (V případě konstantního symbolu je jeho realizací zvolený prvek z domény.)\footnote{Na tom, jaké konkrétní symboly v signatuře použijeme, nezáleží, můžeme je interpretovat libovolně. Například to, že máme symbol $+$ neznamená, že by jeho interpretace musela mít cokoliv společného se sčítáním (tedy kromě toho, že to bude také binární funkce).}
 
@@ -100,7 +99,6 @@ Kromě běžných symbolů relací, funkcí a konstant (známých např. z logik
     \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, kde $S(x)=x+1$, a ostatní symboly jsou interpretovány standardně, je \emph{standardní model aritmetiky}.
 \end{itemize}
 \end{example}
-
 
 
 \begin{definition}[Struktura]
@@ -137,7 +135,7 @@ Při specifikaci jazyka nejprve stanovíme, v jakého typu jsou struktury, kter�
 \end{itemize}
 Podobně jako symbol $\lbinsymb$ zastupující libovolnou binární logickou spojku budeme někdy psát $(Qx)$ pro kvantifikátor $(\forall x)$ nebo $(\exists x)$.
 
-Symbolům ze signatury říkáme \emph{mimologické}, ostatní jsou \emph{logické}. Jazyk musí obsahovat alespoň jeden relační symbol (buď rovnost, nebo v signatuře).\footnote{Jinak bychom v jazyce nemohli vybudovat žádná `tvrzení' (\emph{formule}), viz níže.}
+Symbolům ze signatury, a $=$, říkáme \emph{mimologické}, ostatní jsou \emph{logické}. Jazyk musí obsahovat alespoň jeden relační symbol (buď rovnost, nebo v signatuře).\footnote{Jinak bychom v jazyce nemohli vybudovat žádná `tvrzení' (\emph{formule}), viz níže.}
 
 Jazyk tedy specifikujeme pomocí signatury a informace `s rovností' (popř. `bez rovnosti'). Například:
 \begin{itemize}

@@ -281,7 +281,7 @@ Význam formule\footnote{Přesněji, její \emph{pravdivostní hodnota}, kterou 
 \end{example}
 
 \begin{remark}
-    Jak uvidíme níže, význam (\emph{pravdivostní hodnota}) formule závisí pouze na ohodnocení volných proměnných. Proměnné v kvantifikátorech, spolu s příslušnými vázanými výskyty, můžeme libovolně přejmenovat.   
+    Jak uvidíme níže, význam (\emph{pravdivostní hodnota}) formule závisí pouze na ohodnocení volných proměnných. Proměnné v kvantifikátorech, spolu s příslušnými vázanými výskyty, můžeme přejmenovat (musíme ale být opatrní, viz níže).   
 \end{remark}
 
 \subsubsection{Otevřené a uzavřené formule}
@@ -383,7 +383,7 @@ Nyní formálněji:
 \subsection{Modely jazyka}
 
 \begin{definition}[Model jazyka]
-\emph{Model jazyka $L$}, nebo také $L$-struktura, je libovolná struktura v signatuře jazyka $L$. \emph{Třídu} všech modelů jazyka označíme $\M_L$.
+\emph{Model jazyka $L$}, nebo také \emph{$L$-struktura}, je libovolná struktura v signatuře jazyka $L$. \emph{Třídu všech modelů jazyka} označíme $\M_L$.
 \end{definition}
 
 \begin{remark}
@@ -469,7 +469,7 @@ Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:
     \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$,
     \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$,
     \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence), ale 
-    \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (pro každé $e$), je-li $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ se standardními operacemi a nerovností.
+    \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (pro každé $e$), je-li $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ se standardními operacemi a uspořádáním.
 \end{itemize}    
 \end{example}
 
@@ -532,7 +532,7 @@ A jak je tomu s pojmem pravdivosti (platnosti) ve struktuře?
 
 \section{Vlastnosti teorií}
 
-Na základě pojmu \emph{platnosti} vybudujeme syntaktickou terminologii obdobně jako ve výrokové logice. \emph{Teorie} jazyka $L$ je libovolná množina $T$ $L$-formulí, prvkům teorie říkáme \emph{axiomy}. \emph{Model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, což značíme $\A\models T$. \emph{Třída modelů}\footnote{Připomeňme, že nemůžeme říkat `množina'.} teorie $T$ je:
+Na základě pojmu \emph{platnosti} vybudujeme sémantickou terminologii obdobně jako ve výrokové logice. \emph{Teorie} jazyka $L$ je libovolná množina $T$ $L$-formulí, prvkům teorie říkáme \emph{axiomy}. \emph{Model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, což značíme $\A\models T$. \emph{Třída modelů}\footnote{Připomeňme, že nemůžeme říkat `množina'.} teorie $T$ je:
 $$
 \M_L(T)=\{\A\in\M_L\mid\A\models T\}
 $$
@@ -606,8 +606,8 @@ T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
 $$
 Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
 \begin{itemize}
-    \item Formule $\neg x=y\limplies E(x,y)$ platí v grafu, právě když je \emph{úplný}. Je tedy nezávislá v $T_\text{graph}$.
-    \item Formule $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$ vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
+    \item Formule $\neg x=y\limplies E(x,y)$ platí v grafu, právě když jde o \emph{úplný graf}. Je tedy nezávislá v $T_\text{graph}$.
+    \item Formule $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2))$ vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
 \end{itemize}
 
 
@@ -709,11 +709,11 @@ Jak je tomu s platností formulí v podstruktuře? Uveďme několik jednoduchýc
 \end{corollary}
 
 \begin{example}
-    Teorie grafů je otevřená. Každá podstruktura grafu (modelu teorie grafů) je také graf, říkáme mu (indukovaný) \emph{podgraf}.\footnote{Samotný pojem \emph{podgraf} v teorii grafů často znamená jen $E^\B\subseteq B\times B$, nikoliv $E^\B=B\times B$. My ale budeme používat slovo \emph{podgraf} ve striktnějším smyslu, jako indukovaný podgraf.} Podobně např. pro podgrupy nebo Booleovy podalgebry.
+    Teorie grafů je otevřená. Každá podstruktura grafu (modelu teorie grafů) je také graf, říkáme mu (indukovaný) \emph{podgraf}.\footnote{Samotný pojem \emph{podgraf} v teorii grafů často znamená jen $E^\B\subseteq E^\A\cap (B\times B)$, nikoliv $E^\B=E^\A\cap (B\times B)$. My ale budeme používat slovo \emph{podgraf} ve striktnějším smyslu, jako indukovaný podgraf.} Podobně např. pro podgrupy nebo Booleovy podalgebry.
 \end{example}
 
 \begin{example}
-    Teorie těles není otevřená. Jak si ukážeme později, není dokonce ani \emph{otevřeně axiomatizovatelná}, tj. neexistuje jí ekvivalentní otevřená teorie -- kvantifikátoru v axiomu o existenci inverzního prvku se nelze nijak zbavit. Podstruktura tělesa reálných čísel $\mathbb Q$ na množině všech celých čísel $\mathbb Q\restriction\mathbb Z$ není těleso. (Je to tzv. \emph{okruh}, ale nenulové prvky kromě $1,-1$ nemají multiplikativní inverz, např. rovnice $2\cdot x=1$ nemá v $\mathbb Z$ řešení).
+    Teorie těles není otevřená. Jak si ukážeme později, není dokonce ani \emph{otevřeně axiomatizovatelná}, tj. neexistuje jí ekvivalentní otevřená teorie---kvantifikátoru v axiomu o existenci inverzního prvku se nelze nijak zbavit. Podstruktura tělesa reálných čísel $\mathbb Q$ na množině všech celých čísel $\mathbb Q\restriction\mathbb Z$ není těleso. (Je to tzv. \emph{okruh}, ale nenulové prvky kromě $1,-1$ nemají multiplikativní inverz, např. rovnice $2\cdot x=1$ nemá v $\mathbb Z$ řešení).
 \end{example}
 
 \subsubsection{Generovaná podstruktura}
@@ -751,7 +751,7 @@ Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také
 
 \subsection{Věta o konstantách}
 
-\emph{Věta o konstantách} říká (neformálně), že splnit formuli s volnou proměnnou je totéž, co splnit sentenci, ve které je tato volná proměnná nahrazena (substituována) \emph{novým} konstantním symbolem (který není nijak svázaný žádnými axiomy). Klíčem je fakt, že tento nový symbol může být v modelech interpretován jako libovolný (tj. každý) prvek. Tento trik později využijeme v tablo metodě.
+\emph{Věta o konstantách} říká (neformálně), že splnit formuli s jednou volnou proměnnou je totéž, co splnit sentenci, ve které je tato volná proměnná nahrazena (substituována) \emph{novým} konstantním symbolem (který není nijak svázaný žádnými axiomy). Klíčem je fakt, že tento nový symbol může být v modelech interpretován jako libovolný (tj. každý) prvek. Tento trik později využijeme v tablo metodě.
 
 \begin{theorem}[O konstantách]\label{theorem:on-constants}
     Mějme formuli $\varphi$ v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$. Označme $L'$ rozšíření jazyka o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$ ale v jazyce $L'$. Potom platí:

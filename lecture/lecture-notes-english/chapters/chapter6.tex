@@ -260,27 +260,24 @@ A \emph{subformula} is a substring that is itself a formula. The \emph{tree of a
 \end{example}
 
 
-%TODO
-
-
 \subsubsection{Free and Bound Variables}
 
-The meaning of a formula\footnote{More precisely, its \emph{truth value}, formally defined below in Section \ref{subsection:truth-value-of-formula}.} may or may not depend on the variables that appear in it: compare $x\leq 0$ and $(\exists x)(x\leq 0)$ (and what about $x\leq 0 \lor (\exists x)(x\leq 0)$). We now clarify this concept and introduce the necessary terminology.
+The meaning of a formula\footnote{More precisely, its \emph{truth value}, formally defined below in Section \ref{subsection:truth-value-of-formula}.} may or may not depend on the variables that appear in it: compare $x\leq 0$ and $(\exists x)(x\leq 0)$ (and how about $x\leq 0 \lor (\exists x)(x\leq 0)$?). We now clarify this concept and introduce the necessary terminology.
 
-An \emph{occurrence} of a variable $x$ in a formula $\varphi$ means a leaf in $\Tree(\varphi)$ labeled $x$. \footnote{Thus, the variable $x$ does \emph{not occur} in the symbol for the quantifier $(Qx)$.} An occurrence is \emph{bound} if it is part of some subformula (subtree) starting with $(Qx)$. If an occurrence is not bound, it is \emph{free}. A variable is \emph{free} in $\varphi$ if it has a free occurrence in $\varphi$, and \emph{bound} in $\varphi$ if it has a bound occurrence in $\varphi$. The notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are all the free variables in the formula $\varphi$.
+An \emph{occurrence} of a variable $x$ in a formula $\varphi$ means a leaf in $\Tree(\varphi)$ labeled $x$. \footnote{Thus, the variable $x$ does \emph{not occur} in the symbol for the quantifier $(Qx)$.} An occurrence is \emph{bound} if it is a part of some subformula (subtree) starting with $(Qx)$. If an occurrence is not bound, it is \emph{free}. A variable is \emph{free} in $\varphi$ if it has a free occurrence in $\varphi$, and \emph{bound} in $\varphi$ if it has a bound occurrence in $\varphi$. The notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are all the free variables in the formula $\varphi$.
 
 \begin{example}
     A variable can be both free and bound, e.g., in the formula $\varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z$, the first occurrence of $x$ is bound and the second occurrence is free. (Draw the formula tree!) The variable $y$ is bound (its only occurrence is bound) and $z$ is free. Thus, we can write $\varphi(x,z)$.
 \end{example}
 
 \begin{remark}
-    As we will see below, the meaning (\emph{truth value}) of a formula depends only on the assignment of free variables. Variables in quantifiers, along with their corresponding bound occurrences, can be renamed arbitrarily.
+    As we will see below, the meaning (\emph{truth value}) of a formula depends only on the assignment of free variables. Variables in quantifiers, along with their corresponding bound occurrences, can be renamed (we have to be careful though, see below).
 \end{remark}
 
 
 \subsubsection{Open and Closed Formulas}
 
-We often talk about the following two important kinds of formulas:
+We often talk about the following two important properties of formulas:
 
 \begin{definition}[Open and Closed Formula]
 A formula is \emph{open} if it contains no quantifier, and \emph{closed} (or a \emph{sentence}) if it has no free variable.
@@ -298,13 +295,13 @@ A formula is \emph{open} if it contains no quantifier, and \emph{closed} (or a \
 Every atomic formula is open, and open formulas are just combinations of atomic formulas using logical connectives. A formula can be both open and closed if all its terms are constant. A formula is closed if and only if it has no free variable.\footnote{It is not true that a formula is open if it has no bound variable, see the formula $(\forall x)0=1$.}
 
 \begin{remark}
-As we will see later, the \emph{truth value} of a formula depends only on the assignment of its free variables. Specifically, a sentence has a truth value of 0 or 1 in a given structure (independently of variable assignments). This is why sentences play an important role in logic.
+As we will see later, the \emph{truth value} of a formula depends only on the assignment of its free variables. In particular, a sentence has a truth value of 0 or 1 in a given structure (independently of variable assignments). This is why sentences play an important role in logic.
 \end{remark}
 
 
 \subsection{Instances and Variants}
 
-As we have seen, one variable can appear in different `roles' in a formula. This is a very similar principle to programming, where one identifier can mean different variables in a program (either local or global). The term \emph{instance} can be understood as `substituting' (a term) into (a global) variable (or better, `replacing' a variable with some expression that computes it), and the term \emph{variant} as `renaming' (a local) variable. Consider, for example, the formula $\varphi(x)$:
+As we have seen, one variable can appear in different `roles' in a formula. This is a very similar principle to programming, where one identifier can mean different variables in a program (either local or global). The term \emph{instance} can be understood as `substituting' (a term) into a (global) variable (or better, `replacing' a variable with some expression that computes it), and the term \emph{variant} as `renaming' a (local) variable. Consider, for example, the formula $\varphi(x)$:
 $$
 P(x)\land (\forall x)(Q(x) \land (\exists x)R(x))
 $$
@@ -328,11 +325,11 @@ If we \emph{substitute} a term $t$ for a free variable $x$ in a formula $\varphi
 \end{example}
 
 \begin{definition}[Substitutability and Instance]
-    A term $t$ is \emph{substitutable} for a variable $x$ in a formula $\varphi$ if, after simultaneously replacing all free occurrences of $x$ in $\varphi$ with $t$, no bound occurrence of a variable from $t$ appears in $\varphi$. In that case, the resulting formula is called an \emph{instance} of $\varphi$ obtained by substituting $t$ for $x$, denoted $\varphi(x/t)$.
+    A term $t$ is \emph{substitutable} for a variable $x$ in a formula $\varphi$ if, after simultaneously replacing all free occurrences of $x$ in $\varphi$ with $t$, no new bound occurrence of a variable from $t$ arises in $\varphi$. In that case, the resulting formula is called an \emph{instance} of $\varphi$ obtained by substituting $t$ for $x$, denoted $\varphi(x/t)$.
 \end{definition}
 
 \begin{remark}
-    Note that a term $t$ is \emph{not} substitutable for $x$ in $\varphi$ if and only if $x$ has a free occurrence in some subformula $\varphi$ of the form $(Qy)\psi$ and the variable $y$ appears in $t$. Specifically, constant terms are always substitutable.
+    Note that a term $t$ is \emph{not} substitutable for $x$ in $\varphi$ if and only if $x$ has a free occurrence in some subformula $\varphi$ of the form $(Qy)\psi$ and the variable $y$ appears in $t$. In particular, ground terms are always substitutable.
 \end{remark}
 
 
@@ -380,22 +377,22 @@ Now more formally:
 \subsection{Models of the Language}
 
 \begin{definition}[Model of the Language]
-A \emph{model of the language $L$}, or an $L$-structure, is any structure in the signature of the language $L$. The \emph{class} of all models of the language is denoted $\M_L$.
+A \emph{model of the language $L$}, or an \emph{$L$-structure}, is any structure in the signature of the language $L$. The \emph{class of all models} of the language is denoted $\M_L$.
 \end{definition}
 
 \begin{remark}
-The definition does not depend on whether the language is with or without equality. And why can't we talk about the \emph{set} of all models $\M_L$, why do we have to say \emph{class}? Because the domain of a structure can be any non-empty set, and the `set of all sets' does not exist; it is a classic example of a so-called proper class. A class is the \emph{`collection'} of all sets satisfying a given property (describable in the \emph{language of set theory}).
+The definition does not care whether the language is with or without equality. And why can't we talk about the \emph{set} of all models $\M_L$, why do we have to say \emph{class}? Because the domain of a structure can be any non-empty set, and the `set of all sets' does not exist; it is a classic example of a so-called proper class. A class is the \emph{`collection'} of all sets satisfying a given property (describable in the \emph{language of set theory}).
 \end{remark}
 
 \begin{example}
     Among the models of the language of order $L=\langle \leq \rangle$ are the following structures: $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, any directed graph $G=\langle V,E\rangle$, $\langle \mathcal P(X),\subseteq\rangle$. But also, for instance, $\langle \mathbb C,R^\mathbb C\rangle$ where $(z_1,z_2)\in R^\mathbb C$ if and only if $|z_1|=|z_2|$ or $\langle \{0,1\},\emptyset\rangle$, which are \emph{not} partial orders.
 \end{example}
 
-\subsection{Term Value}
+\subsection{Value of a term}
 
 Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (with or without equality), and an $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$. A \emph{variable assignment} in the set $A$ is any function $e:\Var\to A$.
 
-\begin{definition}[Term Value]
+\begin{definition}[Value of a term]
     The \emph{value of the term $t$ in the structure $\A$ under the assignment $e$}, denoted $t^\A[e]$, is defined inductively:
     \begin{itemize}
         \item $x^\A[e]=e(x)$ for a variable $x\in\Var$,
@@ -408,7 +405,7 @@ Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (wi
 \end{definition}
 
 \begin{remark}
-    Note that the value of a term depends only on the assignment of the variables appearing in it. Specifically, if $t$ is a ground term, its value does not depend on the assignment.
+    Note that the value of a term depends only on the assignment of the variables appearing in it. In particular, if $t$ is a ground term, its value does not depend on the assignment.
     In general, each term $t$ represents a \emph{term function} $f_t^\A\colon A^k\to A$, where $k$ is the number of variables in $t$, and ground terms correspond to constant functions.
 \end{remark}
 
@@ -422,48 +419,48 @@ Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (wi
 
 \subsection{Truth Value of a Formula}\label{subsection:truth-value-of-formula}
 
-We are now ready to define the \emph{truth value}. Locally, we introduce the notation $\mathrm{TV}$ for it.
+We are now ready to define the \emph{truth value}. Locally, we introduce the notation $\mathrm{TVal}$ for it.
 
 \begin{definition}[Truth Value]
-Given a formula $\varphi$ in the language $L$, a structure $\A\in\M_L$, and a variable assignment $e:\Var\to A$. The \emph{truth value of $\varphi$ in $\A$ under the assignment $e$, $\mathrm{TV}^\A(\varphi)[e]$}, is defined inductively according to the structure of the formula:
+Given a formula $\varphi$ in the language $L$, a structure $\A\in\M_L$, and a variable assignment $e:\Var\to A$. The \emph{truth value of $\varphi$ in $\A$ under the assignment $e$, $\mathrm{TVal}^\A(\varphi)[e]$}, is defined inductively according to the structure of the formula:
 
 For an atomic formula $\varphi=R(t_1,\dots,t_n)$, we have 
 $$
-\mathrm{TV}^\A(\varphi)[e]=
+\mathrm{TVal}^\A(\varphi)[e]=
 \begin{cases}
     1 & \text{if }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A,\\
     0 & \text{otherwise.}    
 \end{cases}
 $$
-Specifically, if $\varphi$ is of the form $t_1=t_2$, then $\mathrm{TV}^\A(\varphi)[e]=1$ if and only if $(t_1^\A[e],t_2^\A[e])\in {=^\A}$, where $=^\A$ is the identity on $A$, i.e., if and only if $t_1^\A[e]=t_2^\A[e]$ (both sides of the equality are the same element $a\in A$).
+In particular, if $\varphi$ is of the form $t_1=t_2$, then $\mathrm{TVal}^\A(\varphi)[e]=1$ if and only if $(t_1^\A[e],t_2^\A[e])\in {=^\A}$, where $=^\A$ is the identity on $A$, i.e., if and only if $t_1^\A[e]=t_2^\A[e]$ (both sides of the equality are the same element $a\in A$).
 
 The truth value of a negation is defined as follows:
 $$
-\mathrm{TV}^\A(\neg \varphi)[e]=f_\neg(\mathrm{TV}^\A(\varphi)[e])=1-\mathrm{TV}^\A(\varphi)[e]
+\mathrm{TVal}^\A(\neg \varphi)[e]=f_\neg(\mathrm{TVal}^\A(\varphi)[e])=1-\mathrm{TVal}^\A(\varphi)[e]
 $$
 Similarly, for binary logical connectives, if $\varphi,\psi$ are formulas and $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, then:
 $$
-\mathrm{TV}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{TV}^\A(\varphi)[e],\mathrm{TV}^\A(\psi)[e])
+\mathrm{TVal}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{TVal}^\A(\varphi)[e],\mathrm{TVal}^\A(\psi)[e])
 $$
 It remains to define the truth value for quantifiers, i.e., formulas of the form $(Qx)\varphi$. We will need the following notation: If in the assignment $e:\Var\to A$ we change the value for the variable $x$ to $a$, the resulting assignment is written as $e(x/a)$. Thus, $e(x/a)(x)=a$. The truth value for $(Qx)\varphi$ is defined as follows:
 \begin{align*}
-    \mathrm{TV}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{TV}^\A(\varphi)[e(x/a)])\\ 
-    \mathrm{TV}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{TV}^\A(\varphi)[e(x/a)])
+    \mathrm{TVal}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{TVal}^\A(\varphi)[e(x/a)])\\ 
+    \mathrm{TVal}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{TVal}^\A(\varphi)[e(x/a)])
 \end{align*}
 Thus, under the assignment $e$, we set the value of the variable $x$ successively to all elements $a\in A$ and require that the truth value is 1 always (in the case of $\forall$) or at least once (in the case of $\exists$).\footnote{Recall that $f_\landsymb(x,y)=\min(x,y)$ and $f_\lorsymb(x,y)=\max(x,y)$. Thus, quantifiers play the role of `conjunction' ($\forall$) or `disjunction' ($\exists$) over all elements of the structure.}
 \end{definition}
 
 \begin{remark}
-    The truth value depends only on the assignment of free variables. Specifically, if $\varphi$ is a sentence, then its truth value does not depend on the assignment.
+    The truth value depends only on the assignment of free variables. In particular, if $\varphi$ is a sentence, then its truth value does not depend on the assignment.
 \end{remark}
 
 \begin{example}
 Consider the ordered field $\underline{\mathbb Q}$. Then:
 \begin{itemize}
-    \item $\mathrm{TV}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ if and only if $e(x)\in (0,1]$,
-    \item $\mathrm{TV}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ if and only if $e(y)=0$,
-    \item $\mathrm{TV}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ for any assignment $e$ (it is a sentence), but 
-    \item $\mathrm{TV}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (for any $e$), if $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ with standard operations and inequality.
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ if and only if $e(x)\in (0,1]$,
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ if and only if $e(y)=0$,
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ for any assignment $e$ (it is a sentence), but 
+    \item $\mathrm{TVal}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (for any $e$), if $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ with the standard operations and order.
 \end{itemize}    
 \end{example}
 
@@ -474,13 +471,13 @@ Based on the truth value, we can now define the key notion of semantics, \emph{v
 \begin{definition}[Validity in a Structure]
 Given a formula $\varphi$ and a structure $\A$ (in the same language). 
 \begin{itemize}
-    \item If $e$ is an assignment and $\mathrm{TV}^\A(\varphi)[e]=1$, we say that \emph{$\varphi$ is valid in $\A$ under the assignment $e$}, and write $\A\models\varphi[e]$. (Otherwise, we say that \emph{$\varphi$ is not valid in $\A$ under the assignment $e$}, and write $\A\not\models\varphi[e]$.)
-    \item If $\varphi$ is valid in $\A$ under every assignment $e:\Var\to A$, we say that \emph{$\varphi$ is true (valid) in $\A$}, and write $\A\models\varphi$.
-    \item If $\A\models\neg\varphi$, i.e., $\varphi$ is not valid in $\A$ under any assignment (for every $e$ we have $\A\not\models\varphi[e]$), then \emph{$\varphi$ is false in $\A$}.\footnote{Note that \emph{false} is not the same as \emph{not true}! This only applies to sentences.}
+    \item If $e$ is an assignment and $\mathrm{TVal}^\A(\varphi)[e]=1$, we say that \emph{$\varphi$ is valid in $\A$ under the assignment $e$}, and write $\A\models\varphi[e]$. (Otherwise, we say that \emph{$\varphi$ is not valid in $\A$ under the assignment $e$}, and write $\A\not\models\varphi[e]$.)
+    \item If $\varphi$ is valid in $\A$ under every assignment $e:\Var\to A$, we say that \emph{$\varphi$ is valid (true) in $\A$}, and write $\A\models\varphi$.
+    \item If $\A\models\neg\varphi$, i.e., $\varphi$ is not valid in $\A$ under any assignment (for every $e$ we have $\A\not\models\varphi[e]$), then \emph{$\varphi$ is contradictory in $\A$}.\footnote{Note that \emph{contradictory} is not the same as \emph{not valid}! This only holds for sentences.}
 \end{itemize}    
 \end{definition}
 
-Let us summarize some simple properties, first concerning validity under an assignment. Let $\A$ be a structure, $\varphi,\psi$ be formulas, and $e$ be an assignment.
+Let us summarize some simple properties, first concerning validity under an assignment. Let $\A$ be a structure, $\varphi,\psi$ formulas, and $e$ a variable assignment.
 \begin{itemize}
     \item $\A\models\neg\varphi[e]$ if and only if $\A\not\models\varphi[e]$,
     \item $\A\models(\varphi\land\psi)[e]$ if and only if $\A\models\varphi[e]$ and $\A\models\psi[e]$,
@@ -502,9 +499,9 @@ Let us summarize some simple properties, first concerning validity under an assi
 
 And what about the notion of truth (validity) in a structure?
 \begin{itemize}
-    \item If $\A\models\varphi$, then $\A\not\models\neg\varphi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., holds `if and only if').
+    \item If $\A\models\varphi$, then $\A\not\models\neg\varphi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., it is `if and only if').
     \item $\A\models\varphi\land\psi$ if and only if $\A\models\varphi$ and $\A\models\psi$,
-    \item If $\A\models\varphi$ or $\A\models\psi$, then $\A\models\varphi\lor\psi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., holds `if and only if').
+    \item If $\A\models\varphi$ or $\A\models\psi$, then $\A\models\varphi\lor\psi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., it is `if and only if').
     \item $\A\models\varphi$ if and only if $\A\models
     (\forall x)\varphi$.
 \end{itemize}
@@ -515,17 +512,17 @@ The \emph{general closure} of a formula $\varphi(x_1,\dots,x_n)$ (i.e., $x_1,\do
 \end{exercise}
 
 \begin{exercise}
-    Find an example of a structure $\A$ and a formula $\varphi$ such that $\A\not\models\varphi$ and yet $\A\not\models\neg\varphi$.
+    Give an example of a structure $\A$ and a formula $\varphi$ such that $\A\not\models\varphi$ and yet $\A\not\models\neg\varphi$.
 \end{exercise}
 
 \begin{exercise}
-    Find an example of a structure $\A$ and formulas $\varphi,\psi$ such that $\A\models\varphi\lor\psi$ but $\A\not\models\varphi$ and $\A\not\models\psi$.
+    Give an example of a structure $\A$ and formulas $\varphi,\psi$ such that $\A\models\varphi\lor\psi$ but $\A\not\models\varphi$ and $\A\not\models\psi$.
 \end{exercise}
 
 
 \section{Properties of Theories}
 
-Based on the notion of \emph{validity}, we will build syntactic terminology similar to that in propositional logic. A \emph{theory} of the language $L$ is any set $T$ of $L$-formulas, whose elements are called \emph{axioms}. A \emph{model} of the theory $T$ is an $L$-structure in which all axioms of the theory $T$ are valid, i.e., $\A\models\varphi$ for all $\varphi\in T$, which we denote by $\A\models T$. The \emph{class of models}\footnote{Recall that we cannot say `set'.} of the theory $T$ is:
+Based on the notion of \emph{validity}, we will build semantic terminology similar to that in propositional logic. A \emph{theory} of a language $L$ is any set $T$ of $L$-formulas, whose elements are called \emph{axioms}. A \emph{model} of the theory $T$ is an $L$-structure in which all axioms of the theory $T$ are valid, i.e., $\A\models\varphi$ for all $\varphi\in T$, which we denote by $\A\models T$. The \emph{class of models}\footnote{Recall that we cannot say `set'.} of the theory $T$ is:
 $$
 \M_L(T)=\{\A\in\M_L\mid\A\models T\}
 $$
@@ -535,30 +532,31 @@ As in propositional logic, we will often omit the language $L$ when it is clear 
 
 If $T$ is a theory in the language $L$ and $\varphi$ is an $L$-formula, then we say that $\varphi$ is: 
 \begin{itemize}
-    \item \emph{true (valid) in $T$}, denoted $T\models\varphi$, if $\A\models\varphi$ for all $\A\in\M(T)$ (in other words: $\M(T)\subseteq\M(\varphi)$),
-    \item \emph{false in $T$}, if $T\models\neg\varphi$, i.e., if it is false in every model of $T$ (in other words: $\M(T)\cap\M(\varphi)=\emptyset$),
-    \item \emph{independent in $T$}, if it is neither true in $T$ nor false in $T$.
+    \item \emph{valid (true) in $T$}, denoted $T\models\varphi$, if $\A\models\varphi$ for all $\A\in\M(T)$ (in other words: $\M(T)\subseteq\M(\varphi)$),
+    \item \emph{contradictory in $T$}, if $T\models\neg\varphi$, i.e., if it is contradictory in every model of $T$ (in other words: $\M(T)\cap\M(\varphi)=\emptyset$),
+    \item \emph{independent in $T$}, if it is neither valid in $T$ nor contradictory in $T$.
 \end{itemize}
-If we have an empty theory $T=\emptyset$ (i.e., $\M(T)=\M_L$), then we omit the theory $T$, write $\models\varphi$, and say that $\varphi$ \emph{is true (in logic), (logically) valid, is a tautology}; similarly for other notions.
+If we have an empty theory $T=\emptyset$ (i.e., $\M(T)=\M_L$), then we omit the theory $T$, write $\models\varphi$, and say that $\varphi$ \emph{is (universally) valid, (logically) valid, is a tautology}; similarly for other notions.
 
-A theory is \emph{inconsistent} if it contains a \emph{contradiction} $\bot$, which in predicate logic can be defined as $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, where $R$ is any (say, the first) relation symbol from the language or equality (if the language has no relation symbol, it must be with equality). A theory is \emph{inconsistent} if and only if every formula is true in it, or equivalently, if and only if it has no model. Otherwise, we say that the theory is \emph{consistent} (if it does not contain a contradiction, equivalently, if it has at least one model).
+A theory is \emph{inconsistent} if the \emph{contradiction} $\bot$ is valid in it; $\bot$ in predicate logic can be defined as $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, where $R$ is any (say, the first) relation symbol from the language or the equality symbol (recall: if the language has no relation symbol, it must be with equality). A theory is \emph{inconsistent} if and only if every formula is valid in it, or equivalently, if and only if it has no model. Otherwise, we say that the theory is \emph{consistent} (if the contradiction is not valid in it, equivalently, if it has at least one model).
 
-\emph{Sentences} true in $T$ are called \emph{consequences} of $T$; the \emph{set of all consequences} of $T$ in the language $L$ is:
+\emph{Sentences} valid in $T$ are called \emph{consequences} of $T$; the \emph{set of all consequences} of $T$ in the language $L$ is:
 $$
 \Conseq_L(T)=\{\varphi\mid\text{$\varphi$ is a sentence and }T\models \varphi\}
 $$
 
 \subsubsection{Completeness in Predicate Logic}
-How does the notion of \emph{completeness} of a theory stand?\footnote{Recall that a \emph{propositional} theory is complete if it is consistent and every proposition in it is either true or its negation is true. Equivalently, it has exactly one model.}
+
+How about the notion of \emph{completeness} of a theory?\footnote{Recall that a \emph{propositional} theory is complete if it is consistent and every proposition is either valid in it or its negation is valid in it. Equivalently, it has exactly one model.}
 
 \begin{definition}
-    A theory is \emph{complete} if it is consistent and every \emph{sentence} in it is either true or false.
+    A theory $T$ is \emph{complete} if it is consistent and every \emph{sentence} is either valid in $T$ or contradictory in $T$.
 \end{definition}
 
-However, we cannot say that a theory is complete if and only if it has a single model. If we have one model, we derive infinitely many others, but \emph{isomorphic} models, i.e., differing only by the naming of the elements of the universe.\footnote{Formally, the notion of \emph{isomorphism} is defined later in the part on \emph{model theory}, in Section \ref{section:isomorphism-of-structures}, but it is a generalization of the isomorphism known from graph theory.} Considering a single model `up to isomorphism' would not be sufficient. The correct notion is called \emph{elementary equivalence}:
+However, we cannot say that a theory is complete if and only if it has a single model. If we have one model, we derive infinitely many different, but \emph{isomorphic} models, i.e., differing only by the naming of the elements of the universe.\footnote{Formally, the notion of \emph{isomorphism} is defined later in the part on \emph{model theory}, in Section \ref{section:isomorphism-of-structures}, but it is a generalization of the isomorphism you know from graph theory.} Even considering a single model `up to isomorphism' would not be sufficient. The correct notion is called \emph{elementary equivalence}:
 
 \begin{definition}
-    Structures $\A,\B$ (in the same language) are \emph{elementarily equivalent} if the same sentences are true in both of them. We denote this by $\A\equiv\B$.
+    Structures $\A,\B$ (in the same language) are \emph{elementarily equivalent} if the same sentences are valid in both of them. We denote this by $\A\equiv\B$.
 \end{definition}
 
 \begin{example}\label{example:elementary-equivalence-of-orders-R-Q}
@@ -575,11 +573,11 @@ However, we cannot say that a theory is complete if and only if it has a single 
 \subsubsection{Validity by Unsatisfiability}
 
 The question of truth (validity) in a given theory can be reduced to the problem of the existence of a model:
-\begin{proposition}[On Unsatisfiability and Truth]
+\begin{proposition}[On Unsatisfiability and Validity]
     If $T$ is a theory and $\varphi$ is a \emph{sentence} (in the same language), then: $T\cup\{\neg\varphi\}$ has no model if and only if $T\models\varphi$.
 \end{proposition}
 \begin{proof}
-    The following equivalences hold: $T\cup\{\neg\varphi\}$ has no model if and only if $\neg\varphi$ is not true in any model of $T$, if and only if (since it is a sentence) $\varphi$ is true in every model of $T$. 
+    The following equivalences hold: $T\cup\{\neg\varphi\}$ has no model if and only if $\neg\varphi$ is not valid in any model of $T$, if and only if (since it is a sentence) $\varphi$ is valid in every model of $T$.
 \end{proof}
 
 The assumption that $\varphi$ is a sentence is necessary: consider the theory $T=\{P(c)\}$ and the formula $\varphi=P(x)$ (which is not a sentence). Then $\{P(c),\neg P(x)\}$ has no model, but $P(c)\not\models P(x)$. (Here, $P$ is a unary relation symbol and $c$ is a constant symbol.)
@@ -589,14 +587,15 @@ The assumption that $\varphi$ is a sentence is necessary: consider the theory $T
 Here are some examples of important theories.
 
 \subsubsection{Theory of Graphs}
+
 The \emph{theory of graphs} is a theory in the language $L=\langle E\rangle$ with equality, satisfying the axioms of \emph{irreflexivity} and \emph{symmetry}:
 $$
 T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
 $$
 The models of $T_\text{graph}$ are structures $\mathcal G=\langle G,E^\mathcal G\rangle$, where $E^\mathcal G$ is a symmetric irreflexive relation, i.e., so-called \emph{simple} graphs, where the edge $\{x,y\}$ is represented by the ordered pairs $(x,y),(y,x)$.
 \begin{itemize}
-    \item The formula $\neg x=y\limplies E(x,y)$ holds in a graph if and only if it is \emph{complete}. It is thus independent in $T_\text{graph}$.
-    \item The formula $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$ expresses that each vertex has degree exactly 2. It thus holds precisely in graphs that are disjoint unions of cycles and is independent in the theory $T_\text{graph}$.
+    \item The formula $\neg x=y\limplies E(x,y)$ holds in a graph if and only if the graph is a \emph{clique} (a \emph{complete} graph). The formula is thus independent in $T_\text{graph}$.
+    \item The formula $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2))$ expresses that each vertex has degree exactly 2. It thus holds precisely in graphs that are disjoint unions of cycles and is independent in the theory $T_\text{graph}$.
 \end{itemize}
 
 \subsubsection{Theory of Order}
@@ -607,11 +606,11 @@ The \emph{theory of order} is a theory in the language of order $L=\langle\leq\r
         & x\leq y\land y\leq x\limplies x=y,\\
         & x\leq y\land y\leq z\limplies x\leq z\}\\
 \end{align*}
-These axioms are called \emph{reflexivity}, \emph{antisymmetry}, and \emph{transitivity}. The models of $T$ are $L$-structures $\langle S,\leq^S\rangle$, in which the axioms $T$ hold, so-called \emph{(partially) ordered sets}. For example: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ for $X=\{0,1,2\}$.
+These axioms are called \emph{reflexivity}, \emph{antisymmetry}, and \emph{transitivity}. The models of $T$ are $L$-structures $\langle S,\leq^S\rangle$, in which the axioms $T$ are valid, so-called \emph{(partially) ordered sets}. For example: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ for $X=\{0,1,2\}$.
 \begin{itemize}
-    \item The formula $x\leq y\lor y\leq x$ (\emph{linearity}) holds in $\A$ but not in $\B$, because it does not hold, for example, under the assignment where $e(x)=\{0\}$, $e(y)=\{1\}$ (we write $\B\not\models\varphi[e]$). It is thus independent in $T$.
-    \item The sentence $(\exists x)(\forall y)(y\leq x)$ (denote it by $\psi$) is true in $\B$ and false in $\A$, we write $\B\models\psi$, $\A\models\neg\psi$. It is thus also independent in $T$.
-    \item The formula $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (denote it by $\chi$) is true in $T$, we write $T\models\chi$. The same applies to its \emph{general closure} $(\forall x)(\forall y)(\forall z)\chi$.
+    \item The formula $x\leq y\lor y\leq x$ (\emph{linearity}) is valid in $\A$ but not in $\B$, because it is not valid, for example, under the assignment where $e(x)=\{0\}$, $e(y)=\{1\}$ (we write $\B\not\models\varphi[e]$). It is thus independent in $T$.
+    \item The sentence $(\exists x)(\forall y)(y\leq x)$ (denote it by $\psi$) is valid in $\B$ and contradictory in $\A$, we write $\B\models\psi$, $\A\models\neg\psi$. It is thus also independent in $T$.
+    \item The formula $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (denote it by $\chi$) is valid in $T$, we write $T\models\chi$. The same applies to its \emph{general closure} $(\forall x)(\forall y)(\forall z)\chi$.
 \end{itemize}
 
 \subsubsection{Algebraic Theories}
@@ -624,11 +623,11 @@ These axioms are called \emph{reflexivity}, \emph{antisymmetry}, and \emph{trans
             & x + (-x) = 0,\ (-x) + x = 0\}\\
     \end{align*}
     These properties are called \emph{associativity of $+$}, \emph{neutrality of $0$ with respect to $+$}, and \emph{$-x$ is the inverse element of $x$ (with respect to $+$ and $0$)}.
-    \item The \emph{theory of commutative groups} additionally has the axiom $x+y=y+x$ (\emph{commutativity of $+$}), thus:
+    \item The \emph{theory of commutative groups} additionally contains the axiom $x+y=y+x$ (\emph{commutativity of $+$}), thus:
     $$
     T_2=T_1\cup\{x+y=y+x\}
     $$
-    \item The \emph{theory of rings} is in the language $L=\langle +,-,0,\cdot,1\rangle$ with equality and has additional axioms:
+    \item The \emph{theory of rings} is in the language $L=\langle +,-,0,\cdot,1\rangle$ with equality and adds the following axioms:
     \begin{align*}
         T_3=T_2\cup\{   & 1 \cdot x = x \cdot 1,\\
         & x \cdot (y \cdot z) = (x \cdot y) \cdot z,\\
@@ -654,15 +653,15 @@ In this section, we will look at ways to create new structures from existing one
 
 \subsubsection{Substructure}
 
-The notion of \emph{substructure} generalizes subgroups, subspaces of a vector space, and induced subgraphs of a graph: we select a subset $B$ of the universe of the structure $\A$ and create on it a structure $\B$ of the same signature, which `inherits' relations, functions, and constants. To do this, we need the set $B$ to be \emph{closed} under all functions and contain all constants.\footnote{Just as not every set of vectors is a subspace, it must contain the zero vector, contain all scalar multiples of each vector, and for any pair of vectors, contain their sum. In other words, only (non-empty) sets closed under \emph{linear combinations} of vectors form subspaces.}
+The notion of \emph{substructure} generalizes subgroups, subspaces of a vector space, and induced subgraphs of a graph: we select a subset $B$ of the universe of the structure $\A$ and create on it a structure $\B$ of the same signature, which `inherits' the relations, functions, and constants. To do this, we need the set $B$ to be \emph{closed} under all functions and contain all constants.\footnote{Just as not every set of vectors is a subspace, it must contain the zero vector, contain all scalar multiples of each vector, and for any pair of vectors, contain their sum. In other words, only (non-empty) sets closed under \emph{linear combinations} of vectors form subspaces.}
 
 \begin{definition}[Substructure]
 Let $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ be a structure in the signature $\langle\mathcal R,\mathcal F\rangle$. A structure $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ is an \emph{(induced) substructure of $\A$}, denoted $\B\subseteq\A$, if
 \begin{itemize}
     \item $\emptyset\neq B\subseteq A$,
     \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ for each relation symbol $R\in \mathcal R$,
-    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ for each function symbol $f\in \mathcal F$ (i.e., the function $f^\B$ is the restriction of $f^\A$ to the set $B$, and its outputs are all also from $B$),
-    \item specifically, for each constant symbol $c\in\mathcal F$ we have $c^\B=c^\A\in B$.
+    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ for each function symbol $f\in \mathcal F$ (i.e., the function $f^\B$ is the restriction of $f^\A$ to the set $B$, and also its outputs are all from $B$),
+    \item in particular, for each constant symbol $c\in\mathcal F$ we have $c^\B=c^\A\in B$.
 \end{itemize}
 \end{definition}
 A set $C\subseteq A$ is \emph{closed} under a function $f:A^n\to A$ if $f(x_1,\dots,x_n)\in C$ for all $x_i\in C$. We have:
@@ -677,10 +676,10 @@ In that case, we call this substructure the \emph{restriction} of $\A$ to the se
 
 \subsubsection{Validity in Substructure}
 
-How does the validity of formulas in a substructure work? Here are some simple observations about \emph{open} formulas.
+How is it with validity of formulas in a substructure? Here are some simple observations about \emph{open} formulas.
 
 \begin{observation}
-    If $\B\subseteq\A$, then for any \emph{open} formula $\varphi$ and variable assignment $e\colon\Var\to B$, it holds: $\B\models\varphi[e]$ if and only if $\A\models\varphi[e]$.
+    If $\B\subseteq\A$, then for any \emph{open} formula $\varphi$ and variable assignment $e\colon\Var\to B$, we have that: $\B\models\varphi[e]$ if and only if $\A\models\varphi[e]$.
 \end{observation}
 \begin{proof}
     For atomic formulas, this is obvious; further, it can be easily proved by induction on the structure of the formula.
@@ -697,11 +696,11 @@ We say that a theory $T$ is \emph{open} if all its axioms are open formulas.
 \end{corollary}
 
 \begin{example}
-    The theory of graphs is open. Every substructure of a graph (a model of the theory of graphs) is also a graph, called an (induced) \emph{subgraph}.\footnote{The notion of a \emph{subgraph} in graph theory often means just $E^\B\subseteq B\times B$, not $E^\B=B\times B$. However, we will use the term \emph{subgraph} in the stricter sense, as an induced subgraph.} Similarly, for subgroups or Boolean subalgebras.
+    The theory of graphs is open. Every substructure of a graph (a model of the theory of graphs) is also a graph, called an (induced) \emph{subgraph}.\footnote{The notion of a \emph{subgraph} in graph theory often means just $E^\B\subseteq E^\A\cap (B\times B)$, not $E^\B=E^\A\cap (B\times B)$. However, we will use the term \emph{subgraph} in the stricter sense, as an induced subgraph.} Similarly, for subgroups or Boolean subalgebras.
 \end{example}
 
 \begin{example}
-    The theory of fields is not open. As we will show later, it is not even \emph{openly axiomatizable}, i.e., there is no equivalent open theory -- the quantifier in the axiom of the existence of an inverse element cannot be eliminated. The substructure of the field of real numbers $\mathbb Q$ on the set of all integers $\mathbb Q\restriction\mathbb Z$ is not a field. (It is a so-called \emph{ring}, but non-zero elements other than $1,-1$ do not have a multiplicative inverse, e.g., the equation $2\cdot x=1$ has no solution in $\mathbb Z$).
+    The theory of fields is not open. As we will show later, it is not even \emph{openly axiomatizable}, i.e., there is no equivalent open theory---there is no way to get rid of the quantifier in the axiom of the existence of an inverse element. The substructure of the field of real numbers $\mathbb Q$ on the set of all integers $\mathbb Q\restriction\mathbb Z$ is not a field. (It is a so-called \emph{ring}, but non-zero elements other than $1,-1$ do not have a multiplicative inverse, e.g., the equation $2\cdot x=1$ has no solution in $\mathbb Z$).
 \end{example}
 
 \subsubsection{Generated Substructure}
@@ -725,7 +724,7 @@ What to do if we have a subset of the universe that is \emph{not} closed under t
 So far, we have constructed new structures by changing the universe. However, we can also keep the universe the same and add or remove relations, functions, and constants. The result of such an operation is called an \emph{expansion} or a \emph{reduct}. Note that this is a structure in a different signature.
 
 \begin{definition}[Expansion and Reduct]
-    Let $L\subseteq L'$ be languages, $\A$ an $L$-structure, and $\A'$ an $L'$-structure on the same domain $A=A'$. If the interpretation of each symbol from $L$ [relation, function, constant] is the same [relation, function, constant] in both $\A$ and $\A'$, then we say that the structure $\A'$ is an \emph{expansion} of the structure $\A$ to the language $L'$ (also called an \emph{$L'$-expansion}) and that the structure $\A$ is a \emph{reduct} of the structure $\A'$ to the language $L$ (also called an \emph{$L$-reduct}).    
+    Let $L\subseteq L'$ be languages, $\A$ an $L$-structure, and $\A'$ an $L'$-structure on the same domain $A=A'$. If the interpretation of each [relation, function, constant] symbol from $L$  is the same [relation, function, constant] in both $\A$ and $\A'$, then we say that the structure $\A'$ is an \emph{expansion} of the structure $\A$ to the language $L'$ (also called an \emph{$L'$-expansion}) and that the structure $\A$ is a \emph{reduct} of the structure $\A'$ to the language $L$ (also called an \emph{$L$-reduct}).    
 \end{definition}
 
 \begin{example}
@@ -737,11 +736,11 @@ So far, we have constructed new structures by changing the universe. However, we
 \end{example}
 
 
-\subsection{The Constant Term Theorem}
+\subsection{Theorem on Constants}
 
-The \emph{constant term theorem} states (informally) that satisfying a formula with a free variable is equivalent to satisfying a sentence in which this free variable is replaced (substituted) by a \emph{new} constant symbol (which is not bound by any axioms). The key is that this new symbol can be interpreted as any (i.e., each) element in the models. We will later use this trick in the tableau method.
+The \emph{theorem on constants} states (informally) that satisfying a formula with a single free variable is equivalent to satisfying a sentence in which this free variable is replaced (substituted) by a \emph{new} constant symbol (which is not bound by any axioms). The key fact is that this new symbol can be interpreted as any (hence each) element in each of the models. We will later use this trick in the tableau method.
 
-\begin{theorem}[Constant Term Theorem]\label{theorem:on-constants}
+\begin{theorem}[Theorem on Constants]\label{theorem:on-constants}
     Let $\varphi$ be a formula in the language $L$ with free variables $x_1,\dots,x_n$. Let $L'$ be the extension of the language with new constant symbols $c_1,\dots,c_n$ and let $T'$ be the same theory as $T$ but in the language $L'$. Then:
     $$
     T\models\varphi\text{ if and only if }T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
@@ -1028,7 +1027,7 @@ $$
 \section{Relationship Between Propositional and Predicate Logic}
 \label{section:relationship-propositional-predicate-logic}
 
-We will now demonstrate how propositional logic can be `simulated' in predicate logic, specifically in the theory of Boolean algebras. First, we introduce the axioms of this theory:
+We will now demonstrate how propositional logic can be `simulated' in predicate logic, in particular in the theory of Boolean algebras. First, we introduce the axioms of this theory:
 
 \begin{definition}[Boolean Algebras]
     The \emph{theory of Boolean algebras} is the theory of the language $L=\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ with equality consisting of the following axioms:\footnote{Note the \emph{duality}: by swapping $\land$ with $\lor$ and $\bot$ with $\top$, we obtain the same axioms.}

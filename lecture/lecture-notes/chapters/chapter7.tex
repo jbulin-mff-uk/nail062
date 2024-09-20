@@ -4,7 +4,7 @@ V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z
 
 \section{Neformální úvod}
 
-V této sekci tablo metodu neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
+V této sekci tablo metodu v predikátové logice neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
 
 \begin{example} Na Obrázku \ref{figure:predicate-tableau-intro-examples} jsou znázorněna dvě tabla. Jsou to tablo důkazy (v logice, tj. z prázdné teorie) \emph{sentencí} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (vpravo) a $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (vlevo) jazyka $L=\langle P\rangle$ (bez rovnosti), kde $P$ je unární relační symbol. Symbol $c_0$ je \emph{pomocný konstantní symbol}, který do jazyka při konstrukci tabla přidáváme.
 
@@ -192,7 +192,7 @@ False
 
 \subsection{Tablo důkaz}
 
-Definice v této části jsou téměř identické odpovídajícím definicím z výrokové logiky. Hlavní technický problém je jak definovat redukovanost položek typu `všichni' na větvi tabla: chceme aby za proměnnou byly substituovány \emph{všechny} konstantní $L_C$-termy $t_i$. 
+Definice v této části jsou téměř identické odpovídajícím definicím z výrokové logiky. Hlavní technický problém je jak definovat redukovanost položek typu `všichni' na větvi tabla: chceme aby za proměnnou byly substituovány \emph{všechny} konstantní $L_C$-termy $t_i$.
 
 \begin{definition}[Tablo]
     \emph{Konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
@@ -382,7 +382,7 @@ Stejně jako ve výrokové logice platí, že systematické tablo je vždy dokon
 
 \section{Jazyky s rovností} \label{section:tableaux-equality}
 
-Nyní si ukážeme, jak aplikovat tablo metodu na jazyky s rovností. Co je to rovnost? V matematice může v různém kontextu znamenat různé relace. Platí $1+0=0+1$? Mluvíme-li o celých číslech, pak ano, ale máme-li na mysli aritmetické výrazy (nebo např. termy v jazyce těles), potom si levá a pravá strana nejsou rovny: jde o jiné výrazy. \footnote{Podobně např. $t_1=t_2$ v Prologu neznamená, že jde o tentýž term, ale že termy $t_1$ a $t_2$ jsou \emph{unifikovatelné}, viz kapitola o rezoluci v predikátové logice.}
+Nyní si ukážeme, jak aplikovat tablo metodu na jazyky s rovností. Co je to rovnost? V matematice může v různém kontextu znamenat různé relace. Platí $1+0=0+1$? Mluvíme-li o celých číslech, pak ano, ale máme-li na mysli aritmetické výrazy (nebo např. termy v jazyce těles), potom si levá a pravá strana nejsou rovny: jde o jiné výrazy. \footnote{Podobně např. $t_1=t_2$ v Prologu neznamená, že jde o tentýž term, ale že termy $t_1$ a $t_2$ jsou \emph{unifikovatelné}, viz následující kapitola, Sekce~\ref{section:unification}.}
 
 Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstantní symboly $c_1,c_2$, unární funkční symbol $f$ a unární relační symbol $P$. Mějme nějaké dokončené tablo z této teorie, a v něm bezespornou větev, na kterém najdeme položku $\T c_1=c_2$. Budeme chtít sestrojit \emph{kanonický model} $\A$ pro tuto větev, podobně jako ve výrokové logice. Položka bude znamenat, že v kanonickém modelu platí $c_1^\A =^\A c_2^\A$, tj. $(c_1^\A,c_2^\A)\in {=^\A}$. To nám ale nestačí, chceme také, aby platilo také např.:
 \begin{itemize}
@@ -390,7 +390,7 @@ Představte si, že máme teorii $T$ v jazyce s rovností obsahujícím konstant
     \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$,
     \item $c_1^\A\in P^\A$, právě když $c_2^\A\in P^\A$.
 \end{itemize}
-Obecně tedy chceme, aby relace $=^\A$ byla tzv. \emph{kongruencí},\footnote{Název pochází z kongruence modulo $n$, která je kongruencí v tomto smyslu na množině všech celých čísel, např. splňuje: $a+b\equiv c+d\pmod n$ kdykoliv $a\equiv c\pmod n$ a $b\equiv d\pmod n$.} tj. ekvivalencí, která se chová `dobře' vůči funkcím a relacím struktury $\A$. Toho docílíme tak, že k teorii $T$ přidáme tzv. \emph{axiomy rovnosti}, které tyto vlastnosti vynutí, a tablo sestrojíme z výsledné teorie $T^*$.
+Obecně tedy chceme, aby relace $=^\A$ byla tzv. \emph{kongruencí},\footnote{Název pochází z \emph{kongruence modulo $n$}, která je kongruencí v tomto smyslu na množině všech celých čísel, např. splňuje: $a+b\equiv c+d\pmod n$ kdykoliv $a\equiv c\pmod n$ a $b\equiv d\pmod n$.} tj. ekvivalencí, která se chová `dobře' vůči funkcím a relacím struktury $\A$. Toho docílíme tak, že k teorii $T$ přidáme tzv. \emph{axiomy rovnosti}, které tyto vlastnosti vynutí, a tablo sestrojíme z výsledné teorie $T^*$.
 
 V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chceme, aby rovnost byla \emph{identita}, tj. aby $(a,b)\in=^\A$ platilo jedině když $a$ a $b$ jsou týmž prvkem univerza. Toho docílíme identifikací všech $=^\A$-ekvivalentních prvků do jediného prvku. Této konstrukci se říká \emph{faktorstruktura} podle kongruence $=^\A$.\footnote{Stejně jako grupa $\mathbb Z_n$ je faktorstrukturou grupy $\mathbb Z$ podle $\equiv\pmod n$; např. prvek $2\in\mathbb Z_n$ představuje množinu všech celých čísel, jejichž zbytek po dělení $n$ je roven 2.} Nyní tyto pojmy formalizujeme.
 
@@ -662,7 +662,7 @@ Model teorie je zřejmě modelem každé její části. Naopak, pokud $T$ nemá 
 
 \subsection{Nestandardní model přirozených čísel}
 
-Na závěr této sekce si ukážeme, že existuje tzv. \emph{nestandardní model} přirozených čísel. Klíčem je Věta o kompaktnosti.
+Na úplný závěr této sekce si ukážeme, že existuje tzv. \emph{nestandardní model} přirozených čísel. Klíčem je Věta o kompaktnosti.
     
 Nechť $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ je standardní model přirozených čísel. Označme $\Th(\underline{\mathbb N})$ množinu všech sentencí \emph{pravdivých} ve struktuře $\underline{\mathbb N}$ (tzv. \emph{teorii struktury} $\underline{\mathbb N}$). Pro $n\in \mathbb N$ definujme \emph{$n$-tý numerál} jako term $\underline n=S(S(\cdots (S(0)\cdots))$, kde $S$ je aplikováno $n$-krát.
 

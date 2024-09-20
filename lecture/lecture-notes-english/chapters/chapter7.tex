@@ -1,12 +1,12 @@
 \chapter{Tableau Method in Predicate Logic}
 
-In this chapter, we will demonstrate how to generalize the \emph{analytic tableau method} from propositional logic to predicate logic.\footnote{At this point, it is helpful to revisit the tableau method in propositional logic, see Chapter \ref{chapter:tableau-method-propositional}.} The method operates similarly but must handle \emph{quantifiers}.
+In this chapter, we will demonstrate how to generalize the \emph{method of analytic tableau} from propositional logic to predicate logic.\footnote{At this point, it is helpful to revisit the tableau method in propositional logic, see Chapter \ref{chapter:tableau-method-propositional}.} The method operates similarly but must be able to handle \emph{quantifiers}.
 
 \section{Informal Introduction}
 
-In this section, we will informally introduce the tableau method. Formal definitions will follow later. We will start with two examples illustrating how the tableau method works in predicate logic and how it deals with quantifiers.
+In this section, we will informally introduce the tableau method in predicate logic. Formal definitions will follow later. We will start with two examples illustrating how the tableau method works in predicate logic and how it deals with quantifiers.
 
-\begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from an empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relation symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
+\begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from the empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relation symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
 
 \begin{figure}[htbp]
 \begin{minipage}{.49\textwidth}
@@ -52,60 +52,60 @@ In this section, we will informally introduce the tableau method. Formal definit
 \end{forest}
 \end{minipage}
 \label{figure:predicate-tableau-intro-examples}
-\caption{Example tableaux. Items of the `witness' type are shown in red, items of the `all' type in blue.}
+\caption{Example tableaux. Entries of the `witness' type are shown in red, entries of the `everyone' type in blue.}
 \end{figure}
 \end{example}
 
 
-\subsubsection{Items}
-Formulas in items must always be \emph{sentences} because we need them to have a \emph{truth value} in a given model (independently of the variable assignment). This is not a significant restriction; if we want to prove that a formula $\varphi$ holds in a theory $T$, we can first replace the formula $\varphi$ and all the axioms of $T$ with their \emph{general closures} (i.e., universally quantify all free variables). This yields a \emph{closed} theory $T'$ and a sentence $\varphi'$, and it holds that $T'\models\varphi'$ if and only if $T\models\varphi$.
+\subsubsection{Entries}
+Formulas in entries must always be \emph{sentences} because we need them to have a \emph{truth value} in a given model (independently of a variable assignment). This is not a substantial restriction; if we want to prove that a formula $\varphi$ holds in a theory $T$, we can first replace the formula $\varphi$ and all the axioms of $T$ with their \emph{general closures} (i.e., universally quantify all free variables). This yields a \emph{closed} theory $T'$ and a sentence $\varphi'$, and it holds that $T'\models\varphi'$ if and only if $T\models\varphi$.
 
 \subsubsection{Quantifiers}
-The reduction of items works the same way, using the same atomic tableaux for logical connectives (see Table \ref{table:atomic-tableaux}, where instead of propositions, $\varphi,\psi$ are sentences). However, we must add four new atomic tableaux for $\mathrm T/\mathrm F$ and universal/existential quantifiers. These items are divided into two types:
+The reduction of entries works the same way, using the same atomic tableaux for logical connectives (see Table \ref{table:atomic-tableaux}, where instead of propositions, $\varphi,\psi$ are sentences). However, we must add four new atomic tableaux for $\mathrm T/\mathrm F$ and universal/existential quantifiers. These entries can be divided into two types:
 \begin{itemize}
-    \item Type ``\emph{witness}'': items of the form $\mathrm{T}(\exists x)\varphi(x)$ and $\mathrm{F}(\forall x)\varphi(x)$
-    \item Type ``\emph{all}'': items of the form $\mathrm{T}(\forall x)\varphi(x)$ and $\mathrm{F}(\exists x)\varphi(x)$    
+    \item Type ``\emph{witness}'': entries of the form $\mathrm{T}(\exists x)\varphi(x)$ and $\mathrm{F}(\forall x)\varphi(x)$
+    \item Type ``\emph{everyone}'': entries of the form $\mathrm{T}(\forall x)\varphi(x)$ and $\mathrm{F}(\exists x)\varphi(x)$    
 \end{itemize}
-Examples can be seen in the tableaux in Figure \ref{figure:predicate-tableau-intro-examples} (`witnesses' are in red, `all' in blue).
+Examples can be seen in the tableaux in Figure \ref{figure:predicate-tableau-intro-examples} (`witnesses' are in red, `everyone' in blue).
 
-We cannot simply remove the quantifier because the resulting formula $\varphi(x)$ would not be a sentence. Instead, simultaneously with removing the quantifier, we \emph{substitute} a \emph{constant term} for $x$, resulting in the new item being the \emph{sentence} $\varphi(x/t)$. The constant term $t$ we substitute depends on whether it is a ``witness'' or ``all'' type item.
+We cannot simply remove the quantifier because the resulting formula $\varphi(x)$ would not be a sentence. Instead, simultaneously with removing the quantifier, we \emph{substitute} a \emph{ground term} for $x$, resulting in the new entry being the \emph{sentence} $\varphi(x/t)$. The ground term $t$ we substitute depends on whether it is a ``witness'' or ``everyone'' type entry.
 
 \subsubsection{Auxiliary Constant Symbols}
-The language $L$ of the theory $T$ in which we are proving is extended with a countable number of \emph{new (auxiliary) constant symbols} $C=\{c_0,c_1,c_2,\dots\}$ (but we will also write $c,d,\dots$), and the resulting extended language is denoted $L_C$. Thus, constant terms in the language $L_C$ exist even if the original language $L$ has no constants. When constructing the tableau, we always have some \emph{new}, previously \emph{unused} (in the theory or in the constructed tableau) auxiliary constant symbol $c\in C$ available.
+The language $L$ of the theory $T$ in which we are proving is extended with a countable number of \emph{new (auxiliary) constant symbols} $C=\{c_0,c_1,c_2,\dots\}$ (but we will also write $c,d,\dots$), and the resulting extended language is denoted $L_C$. Thus, ground terms in the language $L_C$ exist even if the original language $L$ has no constants. When constructing the tableau, we always have some \emph{new}, previously \emph{unused} (neither in the theory nor in the constructed tableau) auxiliary constant symbol $c\in C$ available.
 
 \subsubsection{Witnesses}
-When reducing a ``witness'' type item, we substitute for the variable one of these new, auxiliary symbols that \emph{has not yet been used on the given branch}. For an item $\T(\exists x)\varphi(x)$, we thus get $\T\varphi(x/c)$. This constant symbol $c$ will represent (some) element that satisfies the formula (or refutes it, in the case of an item of the form $\F(\forall x)\varphi(x)$). Compare this with the Constant Theorem (Theorem \ref{theorem:on-constants}). It is important that the symbol $c$ has not yet been used on the branch or in the theory. Typically, we then use ``all'' type items to learn what must \emph{hold about this witness}.
+When reducing a ``witness'' type entry, we substitute for the variable one of these new, auxiliary symbols that \emph{has not yet been used on the given branch}. For an entry $\T(\exists x)\varphi(x)$, we thus get $\T\varphi(x/c)$. This constant symbol $c$ will represent (some) element that satisfies the formula (or refutes it, in the case of an entry of the form $\F(\forall x)\varphi(x)$). Compare this with the Theorem on Constants (Theorem \ref{theorem:on-constants}). It is important that the symbol $c$ has not yet been used on the branch or in the theory. Typically, we then use ``everyone'' type entries to learn what must \emph{hold about this witness}.
 
-In Figure \ref{figure:predicate-tableau-intro-examples}, we see an example: the item $\T(\exists x)\neg P(x)$ in the left tableau is reduced, with its reduction resulting in the item $\T\neg P(c_0)$; $c_0\in C$ is an auxiliary symbol that has not yet appeared on the branch (and is the first such). Similarly for the item $\F(\forall x)P(x)$ and $\F P(c_0)$ in the right tableau.
+In Figure \ref{figure:predicate-tableau-intro-examples}, we see an example: the entry $\T(\exists x)\neg P(x)$ in the left tableau is reduced, with its reduction resulting in the entry $\T\neg P(c_0)$; $c_0\in C$ is an auxiliary symbol that has not yet appeared on the branch (and is the first such). Similarly for the entry $\F(\forall x)P(x)$ and $\F P(c_0)$ in the right tableau.
 
-\subsubsection{All}
-When reducing an ``all'' type item, we substitute for the variable $x$ any \emph{constant term} $t$ of the extended language $L_C$. From an item of the form $\T(\forall x)\varphi(x)$, we thus get the item $\T\varphi(x/t)$.
+\subsubsection{Everyone}
+When reducing an ``everyone'' type entry, we substitute for the variable $x$ any \emph{ground term} $t$ of the extended language $L_C$. From an entry of the form $\T(\forall x)\varphi(x)$, we thus get the entry $\T\varphi(x/t)$.
 
-However, for a branch to be \emph{completed}, it must contain items $\T\varphi(x/t)$ for \emph{all} constant $L_C$-terms $t$. (We must `use' everything the item $\T(\forall x)\varphi(x)$ `says'.) The same applies for an item of the form $\mathrm{F}(\exists x)\varphi(x)$.
+However, for a branch to be \emph{finished}, it must contain entries $\T\varphi(x/t)$ for \emph{all} ground $L_C$-terms $t$. (We must `use' everything the entry $\T(\forall x)\varphi(x)$ `says'.) The same applies for an entry of the form $\mathrm{F}(\exists x)\varphi(x)$.
 
-In propositional logic, we used the convention of omitting the roots of atomic tableaux when connecting them (otherwise, we would repeat the same item twice on the branch). In predicate logic, we will use the same convention but \emph{with the exception of `all' type items}. We will write the root of the connected atomic tableau as well. Why do we do this? To remind ourselves that we are not yet finished with this item and that we must connect atomic tableaux with other constant terms.
+In propositional logic, we used the convention of omitting the roots of atomic tableaux when appending them (otherwise, we would repeat the same entry twice on the branch). In predicate logic, we will use the same convention but \emph{with the exception of `everyone' type entries}. For type `everyone', we will write the root of the appended atomic tableau as well. Why do we do this? To remind ourselves that we are not yet done with this entry and that we must append atomic tableaux with other ground terms.
 
-In Figure \ref{figure:predicate-tableau-intro-examples}, the item $\T(\forall x)P(x)$ in the left tableau is \emph{not} \emph{reduced}. Its \emph{first occurrence} (4th node from the top) has been reduced, substituting the term $t=c_0$, resulting in $\varphi(x/t)=P(c_0)$. We have connected an atomic tableau consisting of the same item at the root $\T(\forall x)P(x)$, which we \emph{write} in the tableau, and the item $\T P(c_0)$ below it. While the \emph{first occurrence} of the item $\T(\forall x)P(x)$ is thus reduced, the \emph{second occurrence} (7th node from the top) is not. Similarly for the item $\F(\exists x)\neg P(x)$ in the right tableau.
+In Figure \ref{figure:predicate-tableau-intro-examples}, the entry $\T(\forall x)P(x)$ in the left tableau is \emph{not} \emph{reduced}. Its \emph{first occurrence} (4th node from the top) has been reduced, substituting the term $t=c_0$, resulting in $\varphi(x/t)=P(c_0)$. We have appended an atomic tableau consisting of the same entry at the root $\T(\forall x)P(x)$, which we \emph{do write} in the tableau, and the entry $\T P(c_0)$ below it. While the \emph{first occurrence} of the entry $\T(\forall x)P(x)$ is thus reduced, the \emph{second occurrence} (7th node from the top) is not. Similarly for the entry $\F(\exists x)\neg P(x)$ in the right tableau.
 
-This somewhat technical approach to defining the \emph{reducedness} of (occurrences of) `all' type items will be useful in defining a \emph{systematic tableau}.
+This somewhat technical approach to defining the \emph{reducedness} of (occurrences of) `everyone' type entries will be useful in defining a \emph{systematic tableau}.
 
 \subsubsection{Language}
 
-We will assume that the language $L$ is \emph{countable}.\footnote{This is not a significant limitation from the perspective of computational logic.} As a result, any $L$-theory $T$ has only countably many axioms, and there are also only countably many constant terms in the language $L_C$. This restriction is necessary because every tableau, even an infinite one, has only countably many items, and we must be able to use all the axioms of the given theory and substitute all the constant terms of the language $L_C$.
+We will assume that the language $L$ is \emph{countable}.\footnote{This is not a significant limitation from the perspective of computational logic.} As a consequence, any $L$-theory $T$ has only countably many axioms, and there are also only countably many ground terms in the language $L_C$. This restriction is necessary because every tableau, even an infinite one, has only countably many entries, and we must be able to use all the axioms of the given theory and substitute all the ground terms of the language $L_C$.
 
-We will also initially assume that it is a language \emph{without equality}, which is simpler. The problem is that \emph{the tableau} is a purely syntactic object, but \emph{equality} has a special semantic meaning: it must be interpreted as the identity relation in every model. How to adapt the method for languages with equality will be shown later.
+Initially, we will also assume that the language is \emph{without equality}, which is the simpler case. The issue with equality is that \emph{the tableau} is a purely syntactic object, but \emph{equality} has a special semantic meaning: it must be interpreted as the identity relation in every model. How to adapt the method for languages with equality will be discussed later.
 
 \section{Formal Definitions}
 
-In this section, we will define all the concepts needed for the tableau method for languages without equality. We will return to languages with equality in Section \ref{section:tableaux-equality}.
+In this section, we define all the notions needed for the tableau method for languages without equality. We will return to languages with equality in Section \ref{section:tableaux-equality}.
 
-Let $L$ be a \emph{countable} language without equality. Denote by $L_C$ the extension of the language $L$ with countably many new \emph{auxiliary} constant symbols $C=\{c_i\mid i\in \mathbb N\}$. Let us choose some numbering of the constant terms of the language $L_C$, denoted by $\{t_i\mid i\in\mathbb N\}$.
+Let $L$ be a \emph{countable} language without equality. Denote by $L_C$ the extension of the language $L$ with countably many new \emph{auxiliary} constant symbols $C=\{c_i\mid i\in \mathbb N\}$. Let us choose some numbering of the ground terms of the language $L_C$, denoted by $\{t_i\mid i\in\mathbb N\}$.
 
 Let $T$ be some $L$-theory and $\varphi$ an $L$-sentence.
 
 \subsection{Atomic Tableaux}
 
-An \emph{item} is a label $\T\varphi$ or $\F\varphi$, where $\varphi$ is some $L_C$-sentence. Items of the form $\T(\exists x)\varphi(x)$ and $\F(\forall x)\varphi(x)$ are of the \emph{`witness' type}, while items of the form $\T(\forall x)\varphi(x)$ and $\F(\exists x)\varphi(x)$ are of the \emph{`all' type}.
+An \emph{entry} is a label $\T\varphi$ or $\F\varphi$, where $\varphi$ is some $L_C$-sentence. Entries of the form $\T(\exists x)\varphi(x)$ and $\F(\forall x)\varphi(x)$ are of the \emph{`witness' type}, while entries of the form $\T(\forall x)\varphi(x)$ and $\F(\exists x)\varphi(x)$ are of the \emph{`everyone' type}.
 
 \emph{Atomic tableaux} are labeled trees shown in Tables \ref{table:predicate-atomic-tableaux-logical} and \ref{table:predicate-atomic-tableaux-quantifiers}.
 
@@ -186,27 +186,27 @@ False
         [$\F(\exists x)\varphi(x)$ [$\F\varphi(x/t_i)$]]
     \end{forest} 
     \end{tabular}
-    \caption{Atomic tableaux for quantifiers; $\varphi$ is an $L_C$-sentence, $x$ a variable, $t_i$ any constant $L_C$-term, $c_i\in C$ is a new auxiliary constant symbol (not yet occurring on the given branch of the constructed tableau).}
+    \caption{Atomic tableaux for quantifiers; $\varphi$ is an $L_C$-sentence, $x$ a variable, $t_i$ any ground $L_C$-term, $c_i\in C$ is a new auxiliary constant symbol (not yet occurring on the given branch of the constructed tableau).}
     \label{table:predicate-atomic-tableaux-quantifiers}
 \end{table}
 
 \subsection{Tableau Proof}
 
-The definitions in this section are almost identical to the corresponding definitions from propositional logic. The main technical problem is how to define the reducedness of `all' type items on a branch of the tableau: we want all \emph{constant} $L_C$ terms $t_i$ to be substituted for the variable.
+The definitions in this section are almost identical to the corresponding definitions from propositional logic. The main technical issue is how to define the reducedness of `everyone' type entries on a branch of the tableau: we want \emph{all} ground $L_C$-terms $t_i$ to be substituted for the variable.
 
 \begin{definition}[Tableau]
     A \emph{finite tableau from theory $T$} is an ordered, labeled tree constructed by applying finitely many of the following rules:
     \begin{itemize}
-        \item A single-node tree labeled with any item is a tableau from theory $T$,
-        \item For any item $P$ on any branch $V$, we can attach an atomic tableau for item $P$ to the end of branch $V$, provided that if $P$ is a `witness' type, we use only an auxiliary constant symbol $c_i\in C$ not yet appearing on branch $V$ (for `all' type items, we can use any constant $L_C$-term $t_i$),
-        \item We can attach the item $\mathrm{T}\alpha$ for any axiom $\alpha\in T$ to the end of any branch.
+        \item A single-node tree labeled with any entry is a tableau from theory $T$,
+        \item For any entry $E$ on any branch $B$, we can append an atomic tableau for the entry $E$ to the end of branch $B$, provided that if $E$ is of `witness' type, we use only an auxiliary constant symbol $c_i\in C$ not yet appearing on branch $B$ (for `everyone' type entries, we can use any ground $L_C$-term $t_i$),
+        \item We can append the entry $\mathrm{T}\alpha$ for any axiom $\alpha\in T$ to the end of any branch.
     \end{itemize}
-    A \emph{tableau from theory $T$} can be either finite or \emph{infinite}: in which case it is constructed in countably many steps. It can be formally expressed as the union $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_i$ are finite tableaux from $T$, $\tau_0$ is a single-node tableau, and $\tau_{i+1}$ is constructed from $\tau_i$ in one step.\footnote{Union because in each step, we add new nodes to the tableau, so $\tau_i$ is a subtree of $\tau_{i+1}$.}
+    A \emph{tableau from theory $T$} can be either finite or \emph{infinite}: in that case it is constructed in countably many steps. It can be formally expressed as the union $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_i$ are finite tableaux from $T$, $\tau_0$ is a single-node tableau, and $\tau_{i+1}$ is constructed from $\tau_i$ in one step.\footnote{Union because in each step, we add new nodes to the tableau, so $\tau_i$ is a subtree of $\tau_{i+1}$.}
     
-    A tableau \emph{for item $P$} is a tableau with item $P$ at the root.
+    A tableau \emph{for entry $E$} is a tableau with the entry $E$ at its root.
 \end{definition}
     
-Recall the convention that if $P$ is \emph{not} of the `all' type, we omit the root of the atomic tableau (since the node with item $P$ is already in the tableau).
+Recall the convention that if $E$ is \emph{not} of the `everyone' type, we omit the root of the atomic tableau (since the node with entry $E$ is already in the tableau).
 
 \begin{exercise}
     Show step-by-step how the tableaux from Figure \ref{figure:predicate-tableau-intro-examples} were constructed.
@@ -214,39 +214,39 @@ Recall the convention that if $P$ is \emph{not} of the `all' type, we omit the r
 
 
 \begin{definition}[Tableau Proof]
-    A \emph{tableau proof} of a sentence $\varphi$ from a theory $T$ is a \emph{contradictory} tableau from theory $T$ with the item $\mathrm{F}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) provable} from $T$, denoted by $T\proves\varphi$. (We also define a \emph{tableau refutation} as a contradictory tableau with $\mathrm{T}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) refutable} from $T$, i.e., $T\proves\neg\varphi$ holds.)  
+    A \emph{tableau proof} of a sentence $\varphi$ from a theory $T$ is a \emph{contradictory} tableau from theory $T$ with the entry $\mathrm{F}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) provable} from $T$, denoted by $T\proves\varphi$. (We also define a \emph{tableau refutation} as a contradictory tableau with $\mathrm{T}\varphi$ at the root. If such a proof exists, then $\varphi$ is \emph{(tableau) refutable} from $T$, i.e., $T\proves\neg\varphi$ holds.)  
     \begin{itemize}
         \item A tableau is \emph{contradictory} if each of its branches is contradictory.
-        \item A branch is \emph{contradictory} if it contains items $\mathrm{T}\psi$ and $\mathrm{F}\psi$ for some sentence $\psi$, otherwise it is \emph{consistent}.
-        \item A tableau is \emph{completed} if each of its branches is completed.
-        \item A branch is \emph{completed} if 
+        \item A branch is \emph{contradictory} if it contains entries $\mathrm{T}\psi$ and $\mathrm{F}\psi$ for some sentence $\psi$, otherwise it is \emph{non-contradictory}.
+        \item A tableau is \emph{finished} if each of its branches is finished.
+        \item A branch is \emph{finished} if 
         \begin{itemize}
             \item it is contradictory, or
-            \item each item on this branch is \emph{reduced} and the branch contains the item $\mathrm{T}\alpha$ for each axiom $\alpha\in T$.
+            \item each entry on this branch is \emph{reduced} and the branch contains the entry $\mathrm{T}\alpha$ for each axiom $\alpha\in T$.
         \end{itemize}
          
-        \item An item $P$ is \emph{reduced} on a branch $V$ passing through this item if 
+        \item An entry $E$ is \emph{reduced} on a branch $B$ passing through this entry if 
         \begin{itemize}
-            \item it is of the form $\mathrm{T}\psi$ or $\mathrm{F}\psi$ for an \emph{atomic sentence} $\psi$ (i.e., $R(t_1,\dots,t_n)$, where $t_i$ are \emph{constant} $L_C$-terms), or
-            \item it is not of the `all' type and appears on $V$ as the root of an atomic tableau\footnote{Even though by convention we do not write this root.} (i.e., typically, the item has already been developed on $V$ during the tableau construction), or
-            \item it is of the `all' type and all its \emph{occurrences} on $V$ are reduced on the branch $V$.
+            \item it is of the form $\mathrm{T}\psi$ or $\mathrm{F}\psi$ for an \emph{atomic sentence} $\psi$ (i.e., $R(t_1,\dots,t_n)$, where $t_i$ are \emph{ground} $L_C$-terms), or
+            \item it is not of the `everyone' type and appears on $B$ as the root of an atomic tableau\footnote{Even though by convention we do not write this root.} (i.e., typically, the entry has already been `developed' on $B$ during the tableau construction), or
+            \item it is of the `everyone' type and all its \emph{occurrences} on $B$ are reduced on the branch $B$.
         \end{itemize}
-        \item An occurrence of an `all' type item $P$ on branch $V$ is \emph{$i$-th} if it has exactly $i-1$ predecessors labeled with this item on $V$, and the $i$-th occurrence is \emph{reduced} on $V$ if
+        \item An occurrence of an `everyone' type entry $E$ on branch $B$ is \emph{$i$-th} if it has exactly $i-1$ predecessors labeled with this entry on $B$, and the $i$-th occurrence is \emph{reduced} on $B$ if
         \begin{itemize}
-            \item the item $P$ has the $(i+1)$-th occurrence on $V$, and simultaneously
-            \item the branch $V$ contains the item $\T\varphi(x/t_i)$ (if $P=\T(\forall x)\varphi(x)$) or $\F\varphi(x/t_i)$ (if $P=\F(\exists x)\varphi(x)$), where $t_i$ is the $i$-th constant $L_C$-term.\footnote{I.e., (typically) we have already substituted the term $t_i$ for $x$.}
+            \item the entry $E$ has the $(i+1)$-th occurrence on $B$, and at the same time
+            \item the branch $B$ contains the entry $\T\varphi(x/t_i)$ (if $E=\T(\forall x)\varphi(x)$) or $\F\varphi(x/t_i)$ (if $E=\F(\exists x)\varphi(x)$), where $t_i$ is the $i$-th ground $L_C$-term.\footnote{I.e., (typically) we have already substituted the term $t_i$ for $x$.}
         \end{itemize} 
     \end{itemize}
 \end{definition}
-Note that if an `all' type item is reduced on some branch, it must have infinitely many occurrences on that branch, and we must have used all possibilities, i.e., all constant $L_C$ terms, in the substitutions.
+Note that if an `everyone' type entry is reduced on some branch, it must have infinitely many occurrences on that branch, and we must have used all possibilities, i.e., all ground $L_C$-terms, in the substitutions.
 
 \begin{example}\label{example:tableau-proofs}
-As an example, let us construct tableau proofs \emph{in logic} (from an empty theory) of the following sentences: 
+As an example, let us construct tableau proofs \emph{in logic} (from the empty theory) of the following sentences: 
         \begin{enumerate}[(a)]
             \item $(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))$, where $P,Q$ are unary relation symbols.
-            \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, where $\varphi(x),\psi(x)$ are arbitrary formulas with the single free variable $x$.
+            \item $(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))$, where $\varphi(x),\psi(x)$ are arbitrary formulas with a single free variable $x$.
         \end{enumerate}
-The resulting tableaux are in Figures \ref{figure:predicate-tableau-more-examples-a} and \ref{figure:predicate-tableau-more-examples-b}. The pairs of contradictory items are shown in red. Consider how the tableaux were constructed step-by-step.
+The resulting tableaux are in Figures \ref{figure:predicate-tableau-more-examples-a} and \ref{figure:predicate-tableau-more-examples-b}. The pairs of contradictory entries are shown in red. Consider how the tableaux were constructed step-by-step.
 \begin{figure}[htbp]
 \centering
 \begin{forest}
@@ -331,7 +331,7 @@ for tree={math content}
     ]
 ]
 \end{forest}
-\caption{Tableau proof from Example \ref{example:tableau-proofs} (b). The constant $c_0$ can be used as \emph{new} in all three cases. It is sufficient that it does not yet occur \emph{on the given branch}.}
+\caption{Tableau proof from Example \ref{example:tableau-proofs} (b). The constant $c_0$ can be used as \emph{new} in all three cases. It suffices that it does not yet occur \emph{on the given branch}.}
 \label{figure:predicate-tableau-more-examples-b}
 \end{figure} 
 \end{example}
@@ -339,7 +339,7 @@ for tree={math content}
 
 \subsection{Systematic Tableau and Finiteness of Proofs}
 
-In Section \ref{section:finiteness-and-systematicity-of-proofs}, we showed that if we do not extend contradictory branches (which we do not have to do), then a contradictory tableau, especially a tableau proof, will always be finite. The same proof applies to predicate logic.
+In Section \ref{section:finiteness-and-systematicity-of-proofs}, we showed that if we do not extend contradictory branches (and there is no reason to do that), then a contradictory tableau, in particular a tableau proof, will always be finite. The same argument applies to predicate logic.
 
 \begin{corollary}[Finiteness of Proofs]\label{corollary:finiteness-of-proofs-predicate}
     If $T\proves\varphi$, then there also exists a \emph{finite} tableau proof of $\varphi$ from $T$.
@@ -348,28 +348,28 @@ In Section \ref{section:finiteness-and-systematicity-of-proofs}, we showed that 
 The same as in propositional logic, see the proof of Corollary \ref{corollary:finiteness-of-proofs}.
 \end{proof}
 
-In the same section, we also showed the construction of a \emph{systematic tableau}. This can also be easily adapted to predicate logic. We must ensure that we eventually reduce each item, use every axiom, and now, in predicate logic, also substitute every $L_C$ term $t_i$ for the variable in `all' type items.
+In the same section, we also showed the construction of the \emph{systematic tableau}. This too can be easily adapted to predicate logic. We must ensure that we eventually reduce each entry, use every axiom, and now, in predicate logic, also substitute every $L_C$-term $t_i$ for the variable in entries of type `everyone'.
 
 \begin{definition}
-Let $R$ be an item and $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$ a theory. A \emph{systematic tableau} from theory $T$ for item $R$ is a tableau $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_0$ is a single-node tableau with item $R$, and for each $i\geq 0$:
+Let $R$ be an entry and $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$ a theory. The \emph{systematic tableau} from theory $T$ for entry $R$ is the tableau $\tau=\bigcup_{i\geq 0}\tau_i$, where $\tau_0$ is a single-node tableau with entry $R$, and for each $i\geq 0$:
 
-Let $P$ be an item at the leftmost node $v$ at the smallest level of the tableau $\tau_i$ that is not reduced on some consistent branch passing through $P$ (or, if the item is of the `all' type, its \emph{occurrence} in this node is not reduced). Then $\tau_i'$ is the tableau constructed from $\tau_i$ by attaching an atomic tableau for $P$ to each consistent branch passing through $v$, where
+Let $E$ be an entry at the leftmost node $v$ at the smallest level of the tableau $\tau_i$ that is not reduced on some non-contradictory branch passing through $E$ (or, if the entry is of the `everyone' type, its \emph{occurrence} in this node is not reduced). Then $\tau_i'$ is the tableau constructed from $\tau_i$ by appending an atomic tableau for $E$ to each non-contradictory branch passing through $v$, where
 \begin{itemize}
-    \item If $P$ is of the `all' type and has the $k$-th occurrence in node $v$, then we substitute the $k$-th $L_C$ term $t_k$ for the variable.
-    \item If $P$ is of the `witness' type, then on the given branch $V$, we substitute $c_i\in C$ with the smallest possible $i$ (such that $c_i$ does not yet occur on $V$).
+    \item If $E$ is of the type `everyone' and has its $k$-th occurrence in the node $v$, then we substitute the $k$-th $L_C$-term $t_k$ for the variable.
+    \item If $E$ is of the `witness' type, then on the given branch $B$, we substitute $c_i\in C$ with the smallest possible $i$ (such that $c_i$ does not yet occur on $B$).
 \end{itemize}
-Otherwise, if such an item $P$ and node $v$ do not exist, i.e., all items are reduced, we define $\tau_i'=\tau_i$.
+Otherwise, if such an entry $E$ and node $v$ do not exist, i.e., all entries are reduced, we define $\tau_i'=\tau_i$.
 
-The tableau $\tau_{i+1}$ is then the tableau constructed from $\tau_i'$ by attaching $\mathrm{T}\alpha_i$ to each consistent branch of $\tau_i'$, if $i\leq |T|$. Otherwise (if $T$ is finite and we have used all the axioms), we skip this step and define $\tau_{i+1}=\tau_i'$. 
+The tableau $\tau_{i+1}$ is then the tableau constructed from $\tau_i'$ by appending $\mathrm{T}\alpha_i$ to each non-contradictory branch of $\tau_i'$, if $i\leq |T|$. Otherwise (if $T$ is finite and we have used all the axioms), we skip this step and define $\tau_{i+1}=\tau_i'$. 
 \end{definition}
 
-Just as in propositional logic, it holds that the systematic tableau is always completed and provides a finite proof:
+Just as in propositional logic, it holds that the systematic tableau is always finished and provides a finite proof:
 
 \begin{lemma}\label{lemma:systematic-is-finished-predicate}
-    The systematic tableau is completed.
+    The systematic tableau is finished.
 \end{lemma}
 \begin{proof}
-    Similar to the proof in propositional logic (Lemma \ref{lemma:systematic-is-finished}). For `all' type items, note that we reduce the $k$-th occurrence when we encounter it in the construction: by attaching a node with the $(k+1)$-th occurrence and substituting the $k$-th $L_C$ term $t_k$.
+    Similar to the proof in propositional logic (Lemma \ref{lemma:systematic-is-finished}). For `everyone' type entries, note that we reduce the $k$-th occurrence when we encounter it in the construction: by appending a node with the $(k+1)$-th occurrence and substituting the $k$-th $L_C$-term $t_k$.
 \end{proof}
 
 \begin{corollary}[Systematicity of Proofs]\label{corollary:systematicity-of-proofs-predicate}
@@ -382,17 +382,17 @@ Just as in propositional logic, it holds that the systematic tableau is always c
 
 \section{Languages with Equality} \label{section:tableaux-equality}
 
-Now we will show how to apply the tableau method to languages with equality. What is equality? In mathematics, it can mean different relations in different contexts. Does $1+0=0+1$ hold? If we are talking about integers, then yes, but if we mean arithmetic expressions (or e.g., terms in the language of fields), then the left and right sides are not equal: they are different expressions. \footnote{Similarly, $t_1=t_2$ in Prolog does not mean they are the same term but that the terms $t_1$ and $t_2$ are \emph{unifiable}, see the chapter on resolution in predicate logic.}
+Now we will show how to apply the tableau method to languages with equality. What is equality? In mathematics, it can mean different relations in different contexts. Does $1+0=0+1$ hold? If we are talking about integers, then yes, but if we mean arithmetic expressions (or e.g., terms in the language of fields), then the left and right sides are not equal: they are different expressions. \footnote{Similarly, $t_1=t_2$ in Prolog does not mean they are the same term but that the terms $t_1$ and $t_2$ are \emph{unifiable}, see the next chapter, Section~\ref{section:unification}.}
 
-Imagine we have a theory $T$ in a language with equality containing constant symbols $c_1,c_2$, a unary function symbol $f$, and a unary relation symbol $P$. Let us have some completed tableau from this theory, and in it an open branch, on which we find the entry $\T c_1=c_2$. We will want to construct a \emph{canonical model} $\A$ for this branch, similar to propositional logic. The entry will mean that in the canonical model it holds $c_1^\A =^\A c_2^\A$, i.e., $(c_1^\A,c_2^\A)\in {=^\A}$. But this is not enough, we also want, for example:
+Imagine we have a theory $T$ in a language with equality containing constant symbols $c_1,c_2$, a unary function symbol $f$, and a unary relation symbol $P$. Let us have some finished tableau from this theory, and in it a non-contradictory branch, on which we find the entry $\T c_1=c_2$. We aim to construct a \emph{canonical model} $\A$ for this branch, similar to propositional logic. The entry will mean that in the canonical model we have $c_1^\A =^\A c_2^\A$, i.e., $(c_1^\A,c_2^\A)\in {=^\A}$. But this is not enough, we also want, for example:
 \begin{itemize}
     \item $c_2^\A =^\A c_1^\A$,
     \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$,
     \item $c_1^\A \in P^\A$ if and only if $c_2^\A \in P^\A$.
 \end{itemize}
-In general, we want the relation $=^\A$ to be a so-called \emph{congruence},\footnote{The name comes from congruence modulo $n$, which is a congruence in this sense on the set of all integers, e.g., it satisfies: $a+b\equiv c+d\pmod n$ whenever $a\equiv c\pmod n$ and $b\equiv d\pmod n$.} i.e., an equivalence that behaves 'well' with respect to the functions and relations of the structure $\A$. We achieve this by adding so-called \emph{axioms of equality} to the theory $T$, which enforce these properties, and construct the tableau from the resulting theory $T^*$.
+In general, we want the relation $=^\A$ to be a so-called \emph{congruence},\footnote{The name comes from \emph{congruence modulo $n$}, which is a congruence in this sense on the set of all integers, e.g., it satisfies: $a+b\equiv c+d\pmod n$ whenever $a\equiv c\pmod n$ and $b\equiv d\pmod n$.} i.e., an equivalence that behaves `well' with respect to the functions and relations of the structure $\A$. We achieve this by adding so-called \emph{axioms of equality} to the theory $T$, which enforce these properties, and construct the tableau from the resulting theory $T^*$.
 
-In the model $\A$, the relation $=^\A$ will then be a congruence. But this is not enough for us; we want equality to be \emph{identity}, i.e., $(a,b)\in=^\A$ only if $a$ and $b$ are the same element of the universe. We achieve this by identifying all $=^\A$-equivalent elements into a single element. This construction is called a \emph{factor structure} according to the congruence $=^\A$.\footnote{Just as the group $\mathbb Z_n$ is a factor structure of the group $\mathbb Z$ according to $\equiv\pmod n$; for example, the element $2\in\mathbb Z_n$ represents the set of all integers whose remainder after division by $n$ is 2.} Now we formalize these concepts.
+In the model $\A$, the relation $=^\A$ will then be a congruence. But this is not enough for us; we want equality to be \emph{identity}, i.e., $(a,b)\in=^\A$ only if $a$ and $b$ are the same element of the domain. We achieve this by identifying all $=^\A$-equivalent elements into a single element. This construction is called a \emph{quotient (structure)} by the congruence $=^\A$.\footnote{Just as the group $\mathbb Z_n$ is a quotient structure of the group $\mathbb Z$ over $\equiv\pmod n$; for example, the element $2\in\mathbb Z_n$ represents the set of all integers whose remainder after division by $n$ is 2.} Now we formalize these concepts.
 
 \begin{definition}[Congruence]
     Let $\sim$ be an equivalence on the set $A$, $f\colon A^n\to A$ be a function, and $R\subseteq A^n$ be a relation. We say that $\sim$ is
@@ -403,8 +403,8 @@ In the model $\A$, the relation $=^\A$ will then be a congruence. But this is no
     \emph{A congruence of the structure} $\A$ is an equivalence $\sim$ on the set $A$ that is a congruence for all functions and relations of $\A$. 
 \end{definition}
 
-\begin{definition}[Factor Structure]
-    Let $\A$ be a structure and $\sim$ be its congruence. The \emph{factor structure} $\A$ according to $\sim$ is the structure $\A/_\sim$ in the same language, whose universe $A/_\sim$ is the set of all equivalence classes of $A$ according to $\sim$, and whose functions and relations are defined \emph{using representatives}, i.e.:
+\begin{definition}[Quotient Structure]
+    Let $\A$ be a structure and $\sim$ be its congruence. The \emph{quotient structure} of $\A$ by $\sim$ is the structure $\A/_\sim$ in the same language, whose universe $A/_\sim$ is the set of all equivalence classes of $A$ by $\sim$, and whose functions and relations are defined \emph{using representatives}, i.e.:
     \begin{itemize}
         \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$, for each ($n$-ary) function symbol $f$, and
         \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ if and only if $R^\A(a_1,\dots,a_n)$, for each ($n$-ary) relation symbol~$R$.
@@ -418,18 +418,18 @@ In the model $\A$, the relation $=^\A$ will then be a congruence. But this is no
     \begin{enumerate}[(i)]
         \item $x=x$,
         \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ for every $n$-ary function symbol $f$ of the language $L$,
-        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ for every $n$-ary relation symbol $R$ of the language $L$ \emph{including equality}.
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ for every $n$-ary relation symbol~$R$ of the language $L$ \emph{including the equality symbol}.
     \end{enumerate}
 \end{definition}
 
 \begin{exercise}
-    The first of the axioms of equality means the reflexivity of the relation $=^\A$. What about symmetry and transitivity? Show that they follow from axiom (iii) for the equality symbol $=$.
+    The first of the axioms of equality expresses the reflexivity of the relation $=^\A$. What about symmetry and transitivity? Show that they follow from axiom (iii) for the equality symbol $=$.
 \end{exercise}
 
-Thus, from axioms $(i)$ and $(iii)$ it follows that the relation $=^\A$ is an equivalence on $A$, and axioms $(ii)$ and $(iii)$ express that $=^\A$ is a congruence of $\A$. In the tableau method in the case of a language with equality, we implicitly add all the axioms of equality:
+Thus, from axioms $(i)$ and $(iii)$ it follows that the relation $=^\A$ is an equivalence on $A$, and axioms $(ii)$ and $(iii)$ express that $=^\A$ is a congruence of $\A$. In the tableau method for a language with equality, we implicitly add all the axioms of equality:
 
 \begin{definition}[Tableau Proof with Equality]
-    If $T$ is a theory in a language $L$ with equality, then denote as $T^*$ the extension of the theory $T$ by the general closures\footnote{Because in the tableau method we need \emph{sentences}.} of the axioms of equality for the language $L$. A \emph{tableau proof} from the theory $T$ is a \emph{tableau proof} from $T^*$, similarly for tableau refutation (and generally any tableau).    
+    If $T$ is a theory in a language $L$ with equality, then denote as $T^*$ the extension of the theory $T$ by the general closures\footnote{Because for the tableau method we need to have \emph{sentences}.} of the axioms of equality for the language $L$. A \emph{tableau proof} from the theory $T$ is a \emph{tableau proof} from $T^*$, similarly for tableau refutation (and generally any tableau).    
 \end{definition}
 
 The following simple observation holds:
@@ -437,95 +437,95 @@ The following simple observation holds:
     If $\A\models T^*$, then it holds that $\A/_{=^\A}\models T^*$, and in the structure $\A/_{=^\A}$ the equality symbol is interpreted as identity. On the other hand, in any model where the equality symbol is interpreted as identity, the axioms of equality hold.
 \end{observation}
 
-We will use this observation in constructing the \emph{canonical model}, which we will need in the proof of the Completeness Theorem. But first, we will prove the Soundness Theorem.
+We will use this observation in the construction of the \emph{canonical model}, which we will need to prove the Completeness Theorem. But first, we will prove the Soundness Theorem.
 
 \section{Soundness and Completeness}
 
-In this section, we will prove that the tableau method is sound and complete even in predicate logic. The proofs of both theorems have the same structure as in propositional logic, differing only in the implementation details.
+In this section, we will prove that the tableau method is sound and complete in predicate logic as well. The proofs of both theorems have the same structure as in propositional logic, differing only in the implementation details.
 
 \subsection{Soundness Theorem}
 
-A model (structure) $\A$ \emph{agrees} with an entry $P$ if
-$P=\mathrm{T}\varphi$ and $\A\models\varphi$, or $P=\mathrm{F}\varphi$ and $\A\not\models\varphi$. Further, $\A$ agrees with a branch $V$ if it agrees with every entry on that branch.
+A model (structure) $\A$ \emph{agrees} with an entry $E$ if
+$E=\mathrm{T}\varphi$ and $\A\models\varphi$, or $E=\mathrm{F}\varphi$ and $\A\not\models\varphi$. Further, $\A$ agrees with a branch $B$ if it agrees with every entry on that branch.
 
 First, we show an auxiliary lemma analogous to Lemma \ref{lemma:agrees-with-branch}:
 \begin{lemma}\label{lemma:agrees-with-branch-predicate}
-    If a model $\A$ of the theory $T$ agrees with the entry at the root of the tableau from the theory $T$ (in the language $L$), then $\A$ can be expanded to the language $L_C$ such that it agrees with some branch in the tableau.
+    If a model $\A$ of the theory $T$ agrees with the entry at the root of a tableau from the theory $T$ (in the language $L$), then $\A$ can be expanded to the language $L_C$ such that it agrees with some branch in the tableau.
 \end{lemma}
-Note that it suffices to expand $\A$ by new constants $c^\A$ appearing on the branch $V$. Other constant symbols can be interpreted arbitrarily.
+Note that it suffices to expand $\A$ by those new constants $c^\A$ where $c$ appears on the branch~$B$. Other constant symbols can be interpreted arbitrarily.
 
 \begin{proof}
-    Let $\tau=\bigcup_{i\geq 0}\tau_i$ be a tableau from the theory $T$ and a model $\A\in\M_L(T)$ agreeing with the root $\tau$, i.e., with the (single-element) branch $V_0$ in the (single-element) $\tau_0$.
+    Let $\tau=\bigcup_{i\geq 0}\tau_i$ be a tableau from the theory $T$ and $\A\in\M_L(T)$ a model agreeing with the root of $\tau$, i.e., with the (single-element) branch $B_0$ in the (single-element) $\tau_0$.
     
-    By induction on $i$, we find a sequence of branches $V_i$ and expansions $\A_i$ of the model $\A$ by constants $c^\A\in C$ appearing on $V_i$ such that $V_i$ is a branch in the tableau $\tau_i$ agreeing with the model $\A_i$, $V_{i+1}$ is an extension of $V_i$, and $\A_{i+1}$ is an expansion of $\A_i$ (they may even be equal). The desired branch of the tableau $\tau$ is then $V=\bigcup_{i\geq 0}V_i$. The expansion of the model $\A$ to the language $L_C$ is obtained as the `limit' of the expansions $\A_i$, i.e., if a symbol $c\in C$ appears on $V$, it appears on some branch $V_i$ and we interpret it the same as in $\A_i$ (other auxiliary symbols are interpreted arbitrarily).
+    By induction on $i$, we find a sequence of branches $B_i$ and expansions $\A_i$ of the model $\A$ by constants $c^\A\in C$ appearing on $B_i$ such that $B_i$ is a branch in the tableau $\tau_i$ agreeing with the model $\A_i$, $B_{i+1}$ is an extension of $B_i$, and $\A_{i+1}$ is an expansion of $\A_i$ (they might be the same structure). The desired branch of the tableau $\tau$ is then $B=\bigcup_{i\geq 0}B_i$. The expansion of the model $\A$ to the language $L_C$ is obtained as the `limit' of the expansions $\A_i$, i.e., if a symbol $c\in C$ appears on $B$, it appears on some branch $B_i$ and we interpret it the same as in $\A_i$ (other auxiliary symbols are interpreted arbitrarily).
     \begin{itemize}
-        \item If $\tau_{i+1}$ was created from $\tau_i$ without extending the branch $V_i$, we define $V_{i+1}=V_i$ and $\A_{i+1}=\A_{i}$.
-        \item If $\tau_{i+1}$ was created from $\tau_i$ by adding the entry $\mathrm{T}\alpha$ (for some axiom $\alpha\in T$) to the end of the branch $V_i$, we define $V_{i+1}$ as this extended branch and $\A_{i+1}=\A_i$ (we did not add any new auxiliary constant symbol). Since $\A_{i+1}$ is a model of $T$, the axiom $\alpha$ holds in it, so it agrees with the new entry $\mathrm{T}\alpha$.
-        \item Suppose $\tau_{i+1}$ was created from $\tau_i$ by attaching an atomic tableau for some entry $P$ to the end of the branch $V_i$. Since the model $\A_i$ agrees with the entry $P$ (which lies on the branch $V_i$), it also agrees with the root of the attached atomic tableau.
+        \item If $\tau_{i+1}$ was created from $\tau_i$ without extending the branch $B_i$, we define $B_{i+1}=B_i$ and $\A_{i+1}=\A_{i}$.
+        \item If $\tau_{i+1}$ was created from $\tau_i$ by adding the entry $\mathrm{T}\alpha$ (for some axiom $\alpha\in T$) to the end of the branch $B_i$, we define $B_{i+1}$ as this extended branch and $\A_{i+1}=\A_i$ (we did not add any new auxiliary constant symbol). Since $\A_{i+1}$ is a model of $T$, the axiom $\alpha$ holds in it, so it agrees with the new entry $\mathrm{T}\alpha$.
+        \item Suppose $\tau_{i+1}$ was created from $\tau_i$ by appending an atomic tableau for some entry $E$ to the end of the branch $B_i$. Since the model $\A_i$ agrees with the entry $E$ (which lies on the branch $B_i$), it also agrees with the root of the appended atomic tableau.
         \begin{itemize}
-            \item If we attached an atomic tableau for a logical connective, we set $\A_{i+1}=\A_i$ (we did not add a new auxiliary symbol). Since $\A_{i+1}$ agrees with the root of the atomic tableau, it also agrees with one of its branches (just as in propositional logic); we define $V_{i+1}$ as the extension of $V_i$ by this branch.
-            \item If the entry $P$ is of the type `witness': If $P=\T(\exists x)\varphi(x)$, then $\A_i\models(\exists x)\varphi(x)$, so there exists $a\in A$ such that $\A_i\models\varphi(x)[e(x/a)]$. We define the branch $V_{i+1}$ as the extension of $V_i$ by the newly added entry $\T\varphi(x/c)$ and the model $\A_{i+1}$ as the expansion of $\A_i$ by the constant $c^A=a$. The case $P=\F(\forall x)\varphi(x)$ is analogous.
-            \item If the entry $P$ is of the type `all', we define the branch $V_{i+1}$ as the extension of $V_i$ by the atomic tableau. The newly added entry is $\T\varphi(x/t)$ or $\F\varphi(x/t)$ for some $L_C$ term $t$. Suppose it is the first of these two possibilities, for the second the proof is analogous. 
+            \item If we appended an atomic tableau for a logical connective, we set $\A_{i+1}=\A_i$ (we did not add a new auxiliary symbol). Since $\A_{i+1}$ agrees with the root of the atomic tableau, it also agrees with one of its branches (just as in propositional logic); we define $B_{i+1}$ as the extension of $B_i$ by this branch.
+            \item If the entry $E$ is of the type `witness': If $E=\T(\exists x)\varphi(x)$, then $\A_i\models(\exists x)\varphi(x)$, so there exists $a\in A$ such that $\A_i\models\varphi(x)[e(x/a)]$. We define the branch $B_{i+1}$ as the extension of $B_i$ by the newly added entry $\T\varphi(x/c)$ and the model $\A_{i+1}$ as the expansion of $\A_i$ by the constant $c^A=a$. The case $E=\F(\forall x)\varphi(x)$ is analogous.
+            \item If the entry $E$ is of the type `everyone', we define the branch $B_{i+1}$ as the extension of $B_i$ by the atomic tableau. The newly added entry is $\T\varphi(x/t)$ or $\F\varphi(x/t)$ for some $L_C$-term $t$. Suppose it is the first of these two possibilities, for the second the proof is analogous. 
             We define the model $\A_{i+1}$ as \emph{any} expansion of $\A_i$ by the new constants appearing in $t$.    
-            Since $\A_i\models(\forall x)\varphi(x)$, it also holds $\A_{i+1}\models(\forall x)\varphi(x)$ and thus $\A_{i+1}\models\varphi(x/t)$; the model $\A_{i+1}$ thus agrees with the branch $V_i$.
+            Since $\A_i\models(\forall x)\varphi(x)$, it also holds $\A_{i+1}\models(\forall x)\varphi(x)$ and thus $\A_{i+1}\models\varphi(x/t)$; the model $\A_{i+1}$ thus agrees with the branch $B_i$.
         \end{itemize}       
     \end{itemize}
 \end{proof}
 
-Let's briefly recall the idea of the proof of the Soundness Theorem: If there existed a proof and at the same time a counterexample, the counterexample would have to agree with some branch of the proof, but they are all contradictory. The proof is thus almost the same as in propositional logic.
+Let us briefly recall the idea of the proof of the Soundness Theorem: If there existed a proof and at the same time a counterexample, the counterexample would have to agree with some branch of the proof, but they are all contradictory. The proof is thus almost the same as in propositional logic.
 
 \begin{theorem}[On Soundness]
-If a sentence $\varphi$ is tableau provable from a theory $T$, then $\varphi$ is true in $T$, i.e., $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
+If a sentence $\varphi$ is tableau provable from a theory $T$, then $\varphi$ is valid in $T$, i.e., $T\proves\varphi\ \Rightarrow\ T\models\varphi$.    
 \end{theorem}
 
 \begin{proof}
-Assume for contradiction that $T\not\models\varphi$, i.e., there exists $\A\in\M(T)$ such that $\A\not\models\varphi$. Since $T\proves\varphi$, there exists a contradictory tableau from $T$ with $\mathrm{F}\varphi$ at the root. The model $\A$ agrees with $\mathrm{F}\varphi$, so by Lemma \ref{lemma:agrees-with-branch-predicate} it can be expanded to the language $L_C$ such that the expansion agrees with some branch $V$. But all branches are contradictory.
+Assume for contradiction that $T\not\models\varphi$, i.e., there exists $\A\in\M(T)$ such that $\A\not\models\varphi$. Since $T\proves\varphi$, there exists a contradictory tableau from $T$ with $\mathrm{F}\varphi$ at the root. The model $\A$ agrees with $\mathrm{F}\varphi$, so by Lemma \ref{lemma:agrees-with-branch-predicate} it can be expanded to the language $L_C$ such that the expansion agrees with some branch $B$. But all branches are contradictory.
 \end{proof}
 
 
 \subsection{Completeness Theorem}
 
-Just as in propositional logic, we will show that an \emph{open} branch in a \emph{completed} tableau proof provides a counterexample: a model of the theory $T$ that agrees with the entry $\mathrm{F}\varphi$ at the root of the tableau, i.e., $\varphi$ does not hold in it. There can be more such models, so we again define one specific, \emph{canonical} model.
+Same as in propositional logic, we will show that a \emph{non-contradictory} branch in a \emph{finished} tableau proof provides a counterexample: a model of the theory $T$ that agrees with the entry $\mathrm{F}\varphi$ at the root of the tableau, i.e., $\varphi$ does not hold in it. There can be more such models, so we again define one specific, \emph{canonical} model.
 
-The model must have some domain. How do we obtain it from the tableau, which is purely a syntactic object? We use a standard trick in mathematics: we turn syntactic objects into semantic ones. Specifically, we choose the set of all \emph{constant terms} of the language $L_C$ as the domain.\footnote{That is, terms constructed by applying the function symbols of the language $L$ to the constant symbols of the language $L$ (if it has any) and auxiliary constant symbols from $C$.} We understand these as finite strings. In the following exposition, we will sometimes (informally) write ``$t$'' instead of the term $t$ to emphasize that in the given place we understand $t$ as a string of characters, not e.g., as a term function to be evaluated.\footnote{Compare the arithmetic expression ``1+1'' and 1+1=2.}
+The model must have some domain. How do we obtain it from the tableau, which is a purely syntactic object? We use a standard trick in mathematics: we turn syntactic objects into semantic ones. In particular, we choose the set of all \emph{ground terms} of the language $L_C$ as the domain.\footnote{That is, terms constructed by applying the function symbols of the language $L$ to the constant symbols of the language $L$ (if it has any) and auxiliary constant symbols from $C$.} We understand these as finite strings. In the following exposition, we will sometimes (informally) write ``$t$'' instead of the term $t$ to emphasize that at that place we view $t$ as a string of characters, not e.g., as a term function to be evaluated.\footnote{Compare the arithmetic expression ``1+1'' and 1+1=2.}
 
 \begin{definition}[Canonical Model]\label{definition:canonical-model-predicate}
-Let $T$ be a theory in a language $L=\langle\mathcal F,\mathcal R\rangle$ and let $V$ be an open branch of some completed tableau from the theory $T$. Then the \emph{canonical model} for $V$ is the $L_C$ structure $\A=\langle A,\mathcal F^\mathcal A\cup C^\mathcal A,\mathcal R^\mathcal A\rangle$ defined as follows:
+Let $T$ be a theory in a language $L=\langle\mathcal F,\mathcal R\rangle$ and let $B$ be a non-contradictory branch of some finished tableau from the theory $T$. Then the \emph{canonical model} for $B$ is the $L_C$-structure $\A=\langle A,\mathcal F^\mathcal A\cup C^\mathcal A,\mathcal R^\mathcal A\rangle$ defined as follows:
 
 If the language $L$ is without equality, then:
 \begin{itemize}
-    \item The domain $A$ is the set of all constant $L_C$ terms.
+    \item The domain $A$ is the set of all ground $L_C$-terms.
     \item For each $n$-ary relation symbol $R\in\mathcal R$ and ``$s_1$'', \dots, ``$s_n$'' from $A$:
     $$
-    (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\text{ if and only if the entry $\T R(s_1,\dots,s_n)$ is on the branch $V$}
+    (\text{``$s_1$''},\dots,\text{``$s_n$''})\in R^\mathcal A\text{ if and only if the branch $B$ contains the entry $\T R(s_1,\dots,s_n)$}
     $$
     \item For each $n$-ary function symbol $f\in\mathcal F$ and ``$s_1$'', \dots, ``$s_n$'' from $A$:
     $$
     f^\mathcal A(\text{``$s_1$''},\dots,\text{``$s_n$''})=\text{``$f(s_1,\dots,s_n)$''}
     $$
-    Specifically, for a constant symbol $c$, we have $c^\mathcal A=\text{``$c$''}$.
+    In particular, for a constant symbol $c$, we have $c^\mathcal A=\text{``$c$''}$.
 \end{itemize}
-Thus, we interpret the function $f^\mathcal A$ as the `creation' of a new term from the symbol $f$ and input terms (strings). 
+Thus, we interpret the function $f^\mathcal A$ as the `creation' of a new term from the symbol $f$ and the input terms (strings). 
 
-Let $L$ be a language with equality. Recall that our tableau is now from the theory $T^*$, i.e., from the extension of $T$ by the axioms of equality for $L$. First, we create a canonical model $\mathcal B$ for $V$ as if $L$ were without equality (its domain $B$ is thus the set of all constant $L_C$ terms). Then we define the relation $=^B$ just like for other relation symbols:
+Let $L$ be a language with equality. Recall that our tableau is now from the theory $T^*$, i.e., from the extension of $T$ by the axioms of equality for $L$. First, we create the canonical model~$\mathcal D$ for the branch $B$ as if $L$ were without equality (its domain $D$ is thus the set of all ground $L_C$-terms). Then we define the relation $=^D$ just like for other relation symbols:
 $$
-\text{``$s_1$''}=^B\text{``$s_2$''}\text{ if and only if the entry $\T s_1=s_2$ is on the branch $V$}
+\text{``$s_1$''}=^D\text{``$s_2$''}\text{ if and only if the branch $B$ contains the entry $\T s_1=s_2$}
 $$
-The \emph{canonical model} for $V$ is then defined as the factor structure $\A=\B/_{=^B}$.
+The \emph{canonical model} for $B$ is then defined as the quotient structure $\A=\mathcal{D}/_{=^D}$.
 \end{definition}
 
-As follows from the discussion in Section \ref{section:tableaux-equality}, the relation $=^B$ is indeed a congruence of the structure $\B$, so the definition is correct, and the relation $=^\A$ is identity on $A$. The following simple observation holds:
+As follows from the discussion in Section \ref{section:tableaux-equality}, the relation $=^D$ is indeed a congruence of the structure $\mathcal D$, so the definition is sound, and the relation $=^\A$ is the identity on $A$. The following simple observation holds:
 
 \begin{observation}\label{canonical-with-equality-satisfies-the-same}
-    For any formula $\varphi$ we have $\B\models\varphi$ (where the symbol $=$ is interpreted as the binary relation $=^B$) if and only if $\A=\B/_{=^B}\models\varphi$ (where $=$ is interpreted as identity).    
+    For any formula $\varphi$ we have $\mathcal D\models\varphi$ (where the symbol $=$ is interpreted as the binary relation $=^D$) if and only if $\A=\mathcal D/_{=^D}\models\varphi$ (where $=$ is interpreted as identity).    
 \end{observation}
 
 Note that in a language without equality, the canonical model is always countably infinite. In a language with equality, it can be finite, as we will see in the following examples.
 
 \begin{example}
-    First, let's show an example of a canonical model in a language without equality. Let $T=\{(\forall x)R(f(x))\}$ in the language $L=\langle R,f,d \rangle$ without equality, where $R$ is a unary relation, $f$ a unary function, and $d$ a constant symbol. Let's find a counterexample showing that $T\not\models\neg R(d)$. 
+    First, let us show an example of a canonical model in a language without equality. Let $T=\{(\forall x)R(f(x))\}$ be a theory in the language $L=\langle R,f,d \rangle$ without equality, where $R$ is a unary relation, $f$ a unary function, and $d$ a constant symbol. Let us find a counterexample showing that $T\not\models\neg R(d)$. 
     
-    A systematic tableau from $T$ with the entry $\F\neg R(d)$ at the root is not contradictory; it contains a single branch $V$, which is open. (Construct the tableau yourself!) The canonical model for $V$ is the $L_C$ structure $\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$, whose domain is
+    The systematic tableau from $T$ with the entry $\F\neg R(d)$ at the root is not contradictory; it contains a single branch $B$, which is non-contradictory. (Construct the tableau yourself!) The canonical model for $B$ is the $L_C$-structure $\A=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle$, its domain is
     $$
     A=\{\text{``$d$''},\text{``$f(d)$''},\text{``$f(f(d))$''},\dots,\text{``$c_0$''},\text{``$f(c_0)$''},\text{``$f(f(c_0))$''},\dots,\text{``$c_1$''},\text{``$f(c_1)$''},\text{``$f(f(c_1))$''},\dots\}
     $$
@@ -540,58 +540,58 @@ Note that in a language without equality, the canonical model is always countabl
 \end{example}
 
 \begin{example}
-    Now an example in a language with equality: Let $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$ in the language $L=\langle R,f,d \rangle$ with equality. Again, let's find a counterexample showing that $T\not\models\neg R(d)$. 
+    Now an example in a language with equality: Let $T=\{(\forall x)R(f(x)),(\forall x)(x=f(f(x)))\}$ be in the language $L=\langle R,f,d \rangle$ with equality. Again, let us find a counterexample showing that $T\not\models\neg R(d)$. 
 
-    A systematic tableau from the theory $T^*$ (i.e., from $T$ extended by the axioms of equality for $L$) with the entry $\F\neg R(d)$ at the root contains an open branch $V$. (Construct the tableau yourself!) First, we construct the canonical model $\B$ for this branch as if the language were without equality:
+    The systematic tableau from the theory $T^*$ (i.e., from $T$ extended by the axioms of equality for $L$) with the entry $\F\neg R(d)$ at the root contains a non-contradictory branch $B$. (Construct the tableau yourself!) First, we construct the canonical model $\mathcal D$ for this branch as if the language were without equality:
     $$
-    \B=\langle B,R^\B,f^\B,d^\B,c_0^\B,c_1^\B,c_2^\B,\dots\rangle
+    \mathcal D=\langle D,R^\mathcal D,f^\mathcal D,d^\mathcal D,c_0^\mathcal D,c_1^\mathcal D,c_2^\mathcal D,\dots\rangle
     $$
-    where $B$ is the set of all constant $L_C$ terms. The relation $=^B$ is defined as if the symbol `$=$' were an `ordinary' relation symbol in $L$. It is a congruence of the structure $\B$, and it holds that $s_1=^B s_2$ if and only if $s_1=f(\cdots (f(s_2))\cdots)$ or $s_2=f(\cdots (f(s_1))\cdots)$ for an even number of applications of $f$. Thus, we can choose terms with none or one occurrence of the symbol $f$ as representatives of individual classes:
+    where $D$ is the set of all ground $L_C$-terms. The relation $=^D$ is defined as if the symbol `$=$' were an `ordinary' relation symbol in $L$. It is a congruence of the structure $\mathcal D$, and it holds that $s_1=^D s_2$ if and only if $s_1=f(\cdots (f(s_2))\cdots)$ or $s_2=f(\cdots (f(s_1))\cdots)$ for an even number of applications of $f$. Thus, we can choose terms with zero or one occurrence of the symbol $f$ as representatives of individual equivalence classes:
     $$
-        B/_{=^B} = \{[\text{``$d$''}]_{=^B},[\text{``$f(d)$''}]_{=^B},[\text{``$c_0$''}]_{=^B},[\text{``$f(c_0)$''}]_{=^B},[\text{``$c_1$''}]_{=^B},[\text{``$f(c_1)$''}]_{=^B},\dots\}
+        D/_{=^D} = \{[\text{``$d$''}]_{=^D},[\text{``$f(d)$''}]_{=^D},[\text{``$c_0$''}]_{=^D},[\text{``$f(c_0)$''}]_{=^D},[\text{``$c_1$''}]_{=^D},[\text{``$f(c_1)$''}]_{=^D},\dots\}
     $$
-    The canonical model for the branch $V$ is then the $L_C$ structure 
+    The canonical model for the branch $B$ is then the $L_C$-structure 
     $$
-    \A=\B/_{=^B}=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle
+    \A=\mathcal D/_{=^D}=\langle A,R^\A,f^\A,d^\A,c_0^\A,c_1^\A,c_2^\A,\dots\rangle
     $$
-    where $A=B/_{=^B}$ and the interpretations of the symbols are as follows:
+    where $A=D/_{=^D}$ and the interpretations of the symbols are as follows:
     \begin{itemize}
-        \item $d^\A=[\text{``$d$''}]_{=^B}$,
-        \item $c^\A_i=[\text{``$c_i$''}]_{=^B}$ for all $i\in \mathbb N$,
-        \item $f^\A([\text{``$d$''}]_{=^B})=[\text{``$f(d)$''}]_{=^B}$, $f^\A([\text{``$f(d)$''}]_{=^B})=[\text{``$f(f(d))$''}]_{=^B}=[\text{``$d$''}]_{=^B}$, \dots
-        \item $R^\A=A=B/_{=^B}$.
+        \item $d^\A=[\text{``$d$''}]_{=^D}$,
+        \item $c^\A_i=[\text{``$c_i$''}]_{=^D}$ for all $i\in \mathbb N$,
+        \item $f^\A([\text{``$d$''}]_{=^D})=[\text{``$f(d)$''}]_{=^D}$, $f^\A([\text{``$f(d)$''}]_{=^D})=[\text{``$f(f(d))$''}]_{=^D}=[\text{``$d$''}]_{=^D}$, \dots
+        \item $R^\A=A=D/_{=^D}$.
     \end{itemize}
     The reduct of the canonical model $\A$ to the original language $L$ is again $\A'=\langle A, R^\A, f^\A, d^\A\rangle$.
 \end{example}
 
 \begin{exercise}
     \begin{enumerate}[(a)]
-        \item Construct a completed tableau with the entry $\T (\forall x)(\forall y)(x=y)$ at the root. Construct the canonical model for the (only, open) branch of this tableau.
-        \item Construct a completed tableau with the entry $\T (\forall x)(\forall y)(\forall z)(x=y\lor x=z \lor y=z)$ at the root. Construct canonical models for several open branches and compare them.
+        \item Construct a finished tableau with the entry $\T (\forall x)(\forall y)(x=y)$ at the root. Construct the canonical model for the (only, non-contradictory) branch of this tableau.
+        \item Construct a finished tableau with the entry $\T (\forall x)(\forall y)(\forall z)(x=y\lor x=z \lor y=z)$ at the root. Construct canonical models for several of its non-contradictory branches, and compare them.
     \end{enumerate}
 \end{exercise} 
 
 We are now ready to prove the Completeness Theorem. We again use the following auxiliary lemma, whose wording is exactly the same as Lemma \ref{lemma:canonical-model-agrees} and whose proof differs only in technical details.
 
 \begin{lemma}\label{lemma:canonical-model-agrees-predicate}
-    The canonical model for an (open completed) branch $V$ agrees with $V$.
+    The canonical model for a (non-contradictory, finished) branch $B$ agrees with~$B$.
 \end{lemma}
 \begin{proof}
-First, consider languages without equality. We will show by induction on the structure of sentences in the entries that the canonical model $\A$ agrees with all entries $P$ on the branch $V$. 
+First, consider languages without equality. We will show by induction on the structure of sentences in the entries that the canonical model $\A$ agrees with all entries $E$ on the branch~$B$. 
 
-The base case, i.e., when $\varphi=R(s_1,\dots,s_n)$ is an atomic sentence, is simple: If there is an entry $\T\varphi$ on $V$, then $(s_1,\dots,s_n)\in R^\A$ directly follows from the definition of the canonical model, so we have $\A\models\varphi$. If there is an entry $\F\varphi$ on $V$, then there is no entry $\T\varphi$ on $V$ (since $V$ is open), $(s_1,\dots,s_n)\not\in R^\A$, and $\A\not\models\varphi$.
+The base case, i.e., when $\varphi=R(s_1,\dots,s_n)$ is an atomic sentence, is simple: If there is an entry $\T\varphi$ on $B$, then $(s_1,\dots,s_n)\in R^\A$ directly follows from the definition of the canonical model, so we have $\A\models\varphi$. If there is an entry $\F\varphi$ on $B$, then there is no entry $\T\varphi$ on $B$ (since $B$ is non-contradictory), $(s_1,\dots,s_n)\not\in R^\A$, and $\A\not\models\varphi$.
 
-Now the induction step. We will discuss only a few cases, others can be proved similarly. 
+Now the induction step. We will discuss only some of the cases, the remaining cases are proved similarly. 
 
-For logical connectives, the proof is exactly the same as in propositional logic, for example, if $P=\mathrm{F}\varphi\land\psi$, then since $P$ on $V$ is reduced, there is an entry $\mathrm{F}\varphi$ or an entry $\mathrm{F}\psi$ on $V$. Thus, $\A\not\models\varphi$ or $\A\not\models\psi$, from which it follows that $\A\not\models\varphi\land\psi$ and $\A$ agrees with $P$.
+For logical connectives, the proof is exactly the same as in propositional logic, for example, if $E=\mathrm{F}\varphi\land\psi$, then since $E$ on $B$ is reduced, there is an entry $\mathrm{F}\varphi$ or an entry $\mathrm{F}\psi$ on $B$. Thus, $\A\not\models\varphi$ or $\A\not\models\psi$, from which it follows that $\A\not\models\varphi\land\psi$ and $\A$ agrees with $E$.
 
-If we have an entry of the type "all", for example, $P=\T(\forall x)\varphi(x)$ 
-(the case $P=\F(\exists x)\varphi(x)$ is similar), then there are entries $\T\varphi(x/t)$ for each constant $L_C$ term, i.e., for each element $\text{``$t$''}\in A$ on $V$. By the induction hypothesis, $\A\models\varphi(x/t)$ for each $\text{``$t$''}\in A$, so $\A\models(\forall x)\varphi(x)$.
+If we have an entry of type `everyone', for example, $E=\T(\forall x)\varphi(x)$ 
+(the case $E=\F(\exists x)\varphi(x)$ is analogous), then there are entries $\T\varphi(x/t)$ for each ground $L_C$-term, i.e., for each element $\text{``$t$''}\in A$ on $B$. By the induction hypothesis, $\A\models\varphi(x/t)$ for each $\text{``$t$''}\in A$, so $\A\models(\forall x)\varphi(x)$.
 
-If we have an entry of the type "witness", for example, $P=\T(\exists x)\varphi(x)$ 
-(the case $P=\F(\forall x)\varphi(x)$ is similar), then there is an entry $\T\varphi(x/c)$ for some $\text{``$c$''}\in A$ on $V$. By the induction hypothesis, $\A\models\varphi(x/c)$, so $\A\models(\exists x)\varphi(x)$.
+If we have an entry of type `witness', for example, $E=\T(\exists x)\varphi(x)$ 
+(the case $E=\F(\forall x)\varphi(x)$ is agan analogous), then there is an entry $\T\varphi(x/c)$ for some $\text{``$c$''}\in A$ on $B$. By the induction hypothesis, $\A\models\varphi(x/c)$, so $\A\models(\exists x)\varphi(x)$.
 
-If the language has equality, we have the canonical model $\A=\B/_{=^B}$, the proof above applies to $\B$, and the rest follows from Observation \ref{canonical-with-equality-satisfies-the-same}.
+If the language is with equality, we have the canonical model $\A=\mathcal D/_{=^D}$; the proof above applies to $\mathcal D$, and the rest follows from Observation \ref{canonical-with-equality-satisfies-the-same}.
 \end{proof}
 
 \begin{exercise}
@@ -601,24 +601,24 @@ If the language has equality, we have the canonical model $\A=\B/_{=^B}$, the pr
 The proof of the Completeness Theorem is also analogous to its version for propositional logic:
 
 \begin{theorem}[On Completeness]\label{theorem:completeness-theorem-predicate}
-    If a sentence $\varphi$ is true in a theory $T$, then it is tableau provable from $T$, i.e., $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
+    If a sentence $\varphi$ is valid in a theory $T$, then it is tableau provable from $T$, i.e., $T\models\varphi\ \Rightarrow\ T\proves\varphi$.    
 \end{theorem} 
 
 \begin{proof}
-We will show that any \emph{completed} tableau from $T$ with the entry $\mathrm{F}\varphi$ at the root must be contradictory. We prove this by contradiction: if such a tableau were not contradictory, there would be an open (completed) branch $V$ in it. Consider the canonical model $\A$ for this branch and denote its reduct to the language $L$ as $\A'$. Since $V$ is completed, it contains $\mathrm{T}\alpha$ for all axioms $\alpha\in T$. The model $\A$ agrees with all entries on $V$ by Lemma \ref{lemma:canonical-model-agrees-predicate}, so it satisfies all axioms, and we have $\A'\models T$. But since $\A$ also agrees with the entry $\mathrm{F}\varphi$ at the root, it holds that $\A'\not\models\varphi$, which means that $\A'\in \M_L(T)\setminus\M_L(\varphi)$, thus $T\not\models\varphi$, and this is a contradiction. Therefore, the tableau must have been contradictory, i.e., it must have been a tableau proof of $\varphi$ from $T$.
+We will show that any \emph{finished} tableau from $T$ with the entry $\mathrm{F}\varphi$ at the root must be contradictory. We prove this by contradiction: if such a tableau were not contradictory, there would be an non-contradictory (finished) branch $B$ in it. Consider the canonical model $\A$ for this branch and denote its reduct to the language $L$ as $\A'$. Since $B$ is finished, it contains $\mathrm{T}\alpha$ for all axioms $\alpha\in T$. The model $\A$ agrees with all entries on $B$ by Lemma \ref{lemma:canonical-model-agrees-predicate}, so it satisfies all axioms, and we have $\A'\models T$. But since $\A$ also agrees with the entry $\mathrm{F}\varphi$ at the root, it holds that $\A'\not\models\varphi$, which means that $\A'\in \M_L(T)\setminus\M_L(\varphi)$, thus $T\not\models\varphi$, and this is a contradiction. Therefore, the tableau must have been contradictory, i.e., it must have been a tableau proof of $\varphi$ from $T$.
 \end{proof}
 
 
 \section{Consequences of Soundness and Completeness}
 
-Just as in propositional logic, the Soundness and Completeness Theorems together state that \emph{provability} is the same as \emph{truth}. This allows us to similarly formulate syntactic analogs of semantic concepts and properties.
+Same as in propositional logic, the Soundness and Completeness Theorems together state that \emph{provability} is the same as \emph{validity}. This allows us to similarly formulate syntactic analogs of semantic concepts and properties.
 
 The analogs of \emph{consequences} are \emph{theorems} of the theory $T$:
 $$
-\Thm_L(T)=\{\varphi\mid \varphi\text{ is an $L$ sentence and } T\proves\varphi\}
+\Thm_L(T)=\{\varphi\mid \varphi\text{ is an $L$-sentence and } T\proves\varphi\}
 $$
 
-\begin{corollary}[Provability = Truth]\label{corollary:corollary-of-soundness-and-completeness-predicate}
+\begin{corollary}[Provability = Validity]\label{corollary:corollary-of-soundness-and-completeness-predicate}
     For any theory $T$ and sentences $\varphi,\psi$, the following holds:
     \begin{itemize}
         \item $T\proves\varphi$ if and only if $T\models\varphi$
@@ -628,24 +628,24 @@ $$
 
 For example, it holds that:
 \begin{itemize}
-    \item A theory is \emph{contradictory} if a contradiction is provable in it (i.e., $T\proves\bot$).
-    \item A theory is \emph{complete} if for every sentence $\varphi$ either $T\proves\varphi$ or $T\proves\neg\varphi$ (but not both, otherwise it would be contradictory).
-    \item Deduction Theorem: For a theory $T$ and sentences $\varphi,\psi$, $T,\varphi\proves\psi$ if and only if $T\proves\varphi\to\psi$.
+    \item A theory is \emph{inconsistent} if the contradiction is provable in it (i.e., $T\proves\bot$).
+    \item A theory is \emph{complete} if for every sentence $\varphi$ either $T\proves\varphi$ or $T\proves\neg\varphi$ (but not both, otherwise it would be inconsistent).
+    \item Deduction Theorem: For a theory $T$ and sentences $\varphi,\psi$, it holds that $T,\varphi\proves\psi$ if and only if $T\proves\varphi\to\psi$.
 \end{itemize}
 
-At the end of this section, we will show some applications of the Soundness and Completeness Theorems.
+At the end of this section, we will look at several applications of the Soundness and Completeness Theorems.
 
 \subsection{Löwenheim-Skolem Theorem}\label{subsection:loewenheim-skolem-theorem}
 
 \begin{theorem}[Löwenheim-Skolem]
-    If $L$ is a countable language without equality, then every open $L$ theory has a countably infinite model.
+    If $L$ is a countable language without equality, then every consistent $L$-theory has a countably infinite model.
 \end{theorem}
 
 \begin{proof}
-Take any completed (e.g., systematic) tableau from the theory $T$ with the entry $\F\bot$ at the root. Since $T$ is open, a contradiction is not provable in it, so the tableau must contain an open branch. The desired countably infinite model is the $L$ reduct of the canonical model for this branch.
+Take any finished (e.g., systematic) tableau from the theory $T$ with the entry $\F\bot$ at the root. Since $T$ is consistent, a contradiction is not provable in it, so the tableau must contain a non-contradictory branch. The desired countably infinite model is the $L$-reduct of the canonical model for this branch.
 \end{proof}
 
-We will return to this theorem in Chapter \ref{chapter:model-theory}, where we will show a stronger version including languages with equality (in which the canonical model is countable but can also be finite).
+We will return to this theorem in Chapter \ref{chapter:model-theory}, where we will show a stronger version including languages with equality (for those, the canonical model is countable but it can also be finite).
 
 \subsection{Compactness Theorem}
 
@@ -661,22 +661,22 @@ A model of a theory is obviously a model of each of its parts. Conversely, if $T
 
 \subsection{Nonstandard Model of Natural Numbers}
 
-At the end of this section, we will show that there exists a so-called \emph{nonstandard model} of natural numbers. The key is the Compactness Theorem.
+At the very end of this section, we will show that there exists a so-called \emph{nonstandard model} of natural numbers. The key is the Compactness Theorem.
     
-Let $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ be the standard model of natural numbers. Denote by $\Th(\underline{\mathbb N})$ the set of all sentences \emph{true} in the structure $\underline{\mathbb N}$ (the so-called \emph{theory of the structure} $\underline{\mathbb N}$). For $n\in \mathbb N$, define the \emph{$n$-th numeral} as the term $\underline n=S(S(\cdots (S(0)\cdots))$, where $S$ is applied $n$ times.
+Let $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ be the standard model of natural numbers. Denote by $\Th(\underline{\mathbb N})$ the set of all sentences \emph{valid} in the structure $\underline{\mathbb N}$ (the so-called \emph{theory of the structure} $\underline{\mathbb N}$). For $n\in \mathbb N$, define the \emph{$n$-th numeral} as the term $\underline n=S(S(\cdots (S(0)\cdots))$, where $S$ is applied $n$ times.
 
-Let's take a new constant symbol $c$ and express that it is strictly greater than each $n$-th numeral:
+Let us take a new constant symbol $c$ and express that it is strictly greater than each $n$-th numeral:
 $$
 T=\Th(\underline{\mathbb N})\cup\{\underline n<c\mid n\in \mathbb N\}
 $$
-Note that every finite part of the theory $T$ has a model. Thus, it follows from the Compactness Theorem that the theory $T$ also has a model. We call it a \emph{nonstandard model} (denote it by $\A$). It satisfies the same sentences as the standard model but also contains an element $c^\A$ that is greater than every $n\in \mathbb N$ (by which we mean here the value of the term $\underline n$ in the nonstandard model $\A$).
+Note that every finite part of the theory $T$ has a model. Thus, it follows from the Compactness Theorem that the theory $T$ also has a model. We call it a \emph{nonstandard model} (denote it by $\A$). It satisfies the same sentences as the standard model but also contains an element $c^\A$ that is greater than every $n\in \mathbb N$ (by which we mean the value of the term $\underline n$ in the nonstandard model $\A$).
     
 
 \section{Hilbert Calculus in Predicate Logic}
 
-At the end of the chapter, we will show how Hilbert's calculus, introduced in Section \ref{section:hilbert-calculus-propositional}, can be adapted for use in predicate logic. This is not difficult; to deal with quantifiers, it is sufficient to add two new schemes of logical axioms and one new inference rule. We will again show the soundness of this proof system and only mention that it is also complete.
+At the end of the chapter, we will show how Hilbert's calculus, introduced in Section \ref{section:hilbert-calculus-propositional}, can be adapted for use in predicate logic. This is not difficult; to deal with quantifiers, it is sufficient to add two new schemes of logical axioms and one new inference rule. We will again show the soundness of this proof system and only state without proof that it is also complete.
 
-Proofs will consist of arbitrary formulas, not just sentences. Recall that Hilbert's calculus uses only the connectives $\neg$ and $\limpliessymb$. We will have similar logical axioms as in propositional logic; in the case of a language with equality, we will additionally add \emph{axioms of equality}. 
+Proofs will consist of arbitrary formulas, not just sentences. Recall that Hilbert's calculus uses only the connectives $\neg$ and $\limpliessymb$. We will have similar logical axioms as in propositional logic; in the case of a language with equality, we will additionally include the \emph{axioms of equality}. 
 
 \begin{definition}[Axiom Schemes in Hilbert Calculus in Predicate Logic]
 For any formulas $\varphi,\psi,\chi$, term $t$, and variable $x$, the following formulas are logical axioms:
@@ -687,7 +687,7 @@ For any formulas $\varphi,\psi,\chi$, term $t$, and variable $x$, the following 
     \item $(\forall x)\varphi \limplies \varphi(x/t)$, if $t$ is substitutable for $x$ in $\varphi$
     \item $(\forall x)(\varphi \to \psi) \limplies (\varphi \limplies (\forall x)\psi)$, if $x$ is not free in $\varphi$
 \end{enumerate}
-If the language has equality, then the logical axioms also include the \emph{axioms of equality} for the given language.       
+If the language is with equality, then the logical axioms also include the \emph{axioms of equality} for the given language.       
 \end{definition}
 
 Note that all logical axioms are indeed tautologies. The inference rules are \emph{modus ponens} and \emph{generalization}: 
@@ -710,18 +710,18 @@ Note that both inference rules are \emph{sound}, i.e., if $T\models\varphi$ and 
 
 Just as in propositional logic, a \emph{proof} will be a finite sequence of formulas, in which each newly written formula is either an axiom (logical, including the axiom of equality, or from the theory we are proving in), or can be derived from previous ones using one of the inference rules:
 
-\begin{definition}[Hilbert Proof]
-    A \emph{Hilbert proof} of the formula $\varphi$ from the theory $T$ is a \emph{finite} sequence of formulas $\varphi_0, \dots, \varphi_n=\varphi$, in which for each $i\le n$ it holds:
+\begin{definition}[Hilbert-style Proof]
+    A \emph{Hilbert-style proof} of the formula $\varphi$ from the theory $T$ is a \emph{finite} sequence of formulas $\varphi_0, \dots, \varphi_n=\varphi$, in which for each $i\le n$:
     \begin{itemize}
-    \item $\varphi_i$ is a logical axiom (including the axiom of equality, if the language has equality), or
+    \item $\varphi_i$ is a logical axiom (including axioms of equality, if the language is with equality), or
     \item $\varphi_i$ is an axiom of the theory ($\varphi_i \in T$), or
     \item $\varphi_i$ can be derived from some previous formulas $\varphi_j,\varphi_k$ (where $j,k<i$) using modus ponens, or
     \item $\varphi_i$ can be derived from some previous formula $\varphi_j$ (where $j<i$) using the generalization rule.
     \end{itemize}
-    If there is a Hilbert proof, $\varphi$ is \emph{(Hilbert) provable}, and we write $T\proves_H\varphi$.           
+    If there is a Hilbert-style proof, $\varphi$ is \emph{(Hilbert-style) provable}, and we write $T\proves_H\varphi$.           
 \end{definition}
 
-Even in predicate logic, Hilbert's calculus is a sound and complete proof system.
+In predicate logic, Hilbert's calculus is again a sound and complete proof system.
 
 \begin{theorem}[On the Soundness of Hilbert Calculus]
 For any theory $T$ and formula $\varphi$, the following holds: 
@@ -730,12 +730,12 @@ T\proves_H \varphi\ \Rightarrow\ T\models\varphi
 $$ 
 \end{theorem}
 \begin{proof}
-By induction on the index $i$, we show that each formula $\varphi_i$ in the proof (and thus $\varphi_n=\varphi$) is true in $T$.
+By induction on the index $i$, we show that each formula $\varphi_i$ in the proof (and thus also $\varphi_n=\varphi$) is true in $T$.
 
-If $\varphi_i$ is a logical axiom (including the axiom of equality), $T \models \varphi_i$ holds because logical axioms are tautologies. If $\varphi_i\in T$, it is also certain that $T \models \varphi_i$. The rest follows from the soundness of the inference rules.
+If $\varphi_i$ is a logical axiom (including the axioms of equality), $T \models \varphi_i$ holds because logical axioms are tautologies. If $\varphi_i\in T$, certainly also $T \models \varphi_i$. The rest follows from the soundness of the inference rules.
 \end{proof}
 
-For completeness, we state completeness, but we will not provide the proof.
+For the sake of completeness, we state completeness as well, but we will omit a proof.
 
 \begin{theorem}[On the Completeness of Hilbert Calculus]
 For any theory $T$ and formula $\varphi$, the following holds: 

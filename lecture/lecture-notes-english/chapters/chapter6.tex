@@ -783,7 +783,7 @@ Let $T,T'$ be theories in the language $L$. Then:
 \end{itemize}
 \end{observation}
 
-What about the case when the theory $T'$ is in a larger language than $T$? Recall the situation in propositional logic, described in Observation \ref{observation:extensions-semantic-description-propositional}. We will formulate and prove an analogous statement: While in propositional logic we added values for new atomic propositions or forgot them, in predicate logic we will expand or reduce structures, i.e., add or forget interpretations of relation, function, and constant symbols. The principle of the statement remains the same.
+What about the case when the theory $T'$ is in a larger language than $T$? Recall the situation in propositional logic, described in Observation \ref{observation:extensions-semantic-description-propositional}. We will formulate and prove an analogous statement: While in propositional logic we were adding values for new atomic propositions or forgetting them, in predicate logic we will expand or reduce structures, i.e., add or forget interpretations of relation, function, and constant symbols. The principle behind the two statements (and their proofs) is the same.
 
 \begin{proposition}\label{proposition:semantic-conditions-for-extensions}
     Let $L\subseteq L'$ be languages, $T$ a theory in the language $L$, and $T'$ a theory in the language $L'$.
@@ -793,7 +793,7 @@ What about the case when the theory $T'$ is in a larger language than $T$? Recal
     \end{enumerate}
 \end{proposition}
 \begin{remark}
-    The reverse implication in part (ii) also holds, but the proof is not as simple as in propositional logic, so we will not present it. (The problem is how to obtain from a model of $T$ that cannot be expanded to a model of $T'$ an $L$-sentence that holds in $T$ but not in $T'$.)
+    The reverse implication in part (ii) also holds, but the proof is not as simple as in propositional logic, so we will not present it. (The technical issue is how to obtain, from a model of $T$ that cannot be expanded to a model of $T'$, an $L$-sentence that holds in $T$ but not in $T'$.)
 \end{remark}
 \begin{proof}
     First, let us prove (i): Let $\A'$ be a model of the theory $T'$ and denote by $\A$ its reduct to the language $L$. Since $T'$ is an extension of the theory $T$, every axiom $\varphi\in T$ holds in $T'$, and thus in $\A'$. But then $\A\models\varphi$ (since $\varphi$ contains only symbols from the language $L$), hence $\A$ is a model of $T$.
@@ -806,7 +806,7 @@ What about the case when the theory $T'$ is in a larger language than $T$? Recal
 
 \subsection{Extension by Definitions}\label{subsection:extension-by-definition}
 
-Now we will show a special kind of conservative extension, namely the extension \emph{by definitions} of new (relation, function, constant) symbols.
+Now we will introduce a special kind of conservative extension, namely the \emph{extension by definitions} of new (relation, function, constant) symbols.
 
 \subsubsection*{Definition of a Relation Symbol}
 
@@ -838,12 +838,12 @@ We will also show that the new symbol can be replaced in formulas by its definit
     For every $L'$-formula $\varphi'$, there exists an $L$-formula $\varphi$ such that $T'\models\varphi'\liff\varphi$.
 \end{proposition}
 \begin{proof}
-    It is necessary to replace atomic subformulas with the new symbol $R$, i.e., of the form $R(t_1,\dots,t_n)$. Such a subformula is replaced by the formula $\psi'(x_1/t_1,\dots,x_n/t_n)$, where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms, i.e., for example, renaming all bound variables of $\psi$ to entirely new ones (not appearing in the formula $\varphi'$).
+    We need to replace atomic subformulas that use the new symbol $R$, i.e., of the form $R(t_1,\dots,t_n)$. Such a subformula is replaced by the formula $\psi'(x_1/t_1,\dots,x_n/t_n)$, where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms, i.e., for example, we rename all bound variables of $\psi$ to entirely new ones (not appearing in the formula $\varphi'$).
 \end{proof}
 
 \subsubsection*{Definition of a Function Symbol}
 
-We define a new function symbol similarly, but we must ensure that the definition provides a unique way to interpret the new symbol.
+We define a new function symbol similarly, but we must ensure that the definition provides a unique way to interpret the new symbol as a function.
 
 \begin{example}
     Again, we start with examples:
@@ -857,7 +857,7 @@ We define a new function symbol similarly, but we must ensure that the definitio
         $$
         \min(x_1,x_2)=y\ \liff\ y\leq x_1\land y\leq x_2\land (\forall z)(z\leq x_1\land z\leq x_2\limplies z\leq y)
         $$
-        Existence and uniqueness hold thanks to linearity. However, if we had only the theory of orders, such a formula would not be a good definition: in some models, $\min(x_1,x_2)$ for some elements would not exist, thus failing the required \emph{existence}.
+        Existence and uniqueness hold thanks to linearity. However, if we had only the theory of orders, such a formula would not be a good definition: in some models, $\min(x_1,x_2)$ would not exist for some elements, thus failing the required \emph{existence}.
     \end{itemize}
 \end{example}
 
@@ -871,14 +871,14 @@ We define a new function symbol similarly, but we must ensure that the definitio
     $$T'=T\cup\{f(x_1,\dots,x_n)=y\ \liff\ \psi(x_1,\dots,x_n,y)\}$$
 \end{definition}
 
-The formula $\psi$ thus defines in each model an $(n+1)$-ary relation, and by this relation, we require it to be a function, i.e., for each $n$-tuple of elements, there exists a unique way to extend it into an $(n+1)$-tuple that is an element of this relation. Note that if the defining formula $\psi$ is of the form $t(x_1,\dots,x_n)=y$, where $x_1,\dots,x_n$ are variables of the $L$-term $t$, then the existence and uniqueness axioms always hold.
+The formula $\psi$ thus defines in each model an $(n+1)$-ary relation, and we require that this relation be a function, i.e., that for each $n$-tuple of elements, there exists a unique way to extend it into an $(n+1)$-tuple that is an element of this relation. Note that if the defining formula $\psi$ is of the form $t(x_1,\dots,x_n)=y$, where $x_1,\dots,x_n$ are variables of the $L$-term $t$, then the existence and uniqueness axioms always hold.
 
-Again, it holds that every model of $T$ can be \emph{uniquely} expanded to a model of $T'$, hence:
+Again, we have that every model of $T$ can be \emph{uniquely} expanded to a model of $T'$, hence:
 \begin{corollary}
     $T'$ is a conservative extension of $T$.
 \end{corollary}
 
-And an analogous statement about unwinding definitions holds:
+And the same statement about unwinding definitions holds:
 
 \begin{proposition}
     For every $L'$-formula $\varphi'$, there exists an $L$-formula $\varphi$ such that $T'\models\varphi'\liff\varphi$.
@@ -892,11 +892,11 @@ And an analogous statement about unwinding definitions holds:
     $$
     where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms.
 
-    Let $\A$ be a model of the theory $T'$ and an assignment $e$. Denote $a=(f(t_1,\dots,t_n))^\A[e]$. Due to existence and uniqueness, it holds:
+    Let $\A$ be a model of the theory $T'$ and $e$ a variable assignment. Denote $a=(f(t_1,\dots,t_n))^\A[e]$. Due to existence and uniqueness, it holds:
     $$
     \A\models\psi'(x_1/t_1,\dots,x_n/t_n,y/z)[e]\ \text{ if and only if }\ e(z)=a 
     $$
-    Thus, $\A\models\varphi[e]$ if and only if $\A\models\varphi^*[e(z/a)]$, if and only if $\A\models\varphi'[e]$. This holds for any assignment $e$, hence $\A\models\varphi'\liff\varphi$ for every model $T'$, thus $T'\models\varphi'\liff\varphi$.
+    Thus, $\A\models\varphi[e]$ if and only if $\A\models\varphi^*[e(z/a)]$, if and only if $\A\models\varphi'[e]$. This holds for any variable assignment $e$, hence $\A\models\varphi'\liff\varphi$ for every model $T'$, thus $T'\models\varphi'\liff\varphi$.
 \end{proof}
 
 \subsubsection*{Definition of a Constant Symbol}
@@ -911,7 +911,7 @@ A constant symbol is a special case of a function symbol of arity 0. Thus, the s
         $$
         \frac{1}{2}=y\ \liff\ y\cdot (1+1)=1
         $$
-        This is not a correct extension by definition because the existence axiom does not hold. In the two-element field $\mathbb Z_2$ (and in every field \emph{of characteristic 2}), the equation $y\cdot (1+1)=1$ has no solution because $1+1=0$.
+        This is \emph{not} a correct extension by definition because the existence axiom does not hold. In the two-element field $\mathbb Z_2$ (and in every field \emph{of characteristic 2}), the equation $y\cdot (1+1)=1$ has no solution because $1+1=0$.
         
         
         However, if we take the theory of fields with characteristic not equal to 2, i.e., adding the axiom $\neg (1+1=0)$ to the theory of fields, it becomes a correct extension by definition. For example, in the field $\mathbb Z_3$, we have $\frac{1}{2}^{\mathbb Z_3}=2$.
@@ -934,12 +934,12 @@ If we have an $L$-theory $T$ and an $L'$-theory $T'$, we say that $T'$ is an \em
 
 Finally, let us show one more example, illustrating also the unwinding of definitions:
 \begin{example}
-    In the theory $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ of the language $L=\langle +,0,\leq\rangle$ with equality, we can introduce $<$ and a unary function symbol $-$ by adding axioms:
+    In the theory $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ of the language $L=\langle +,0,\leq\rangle$ with equality, we can introduce $<$ and a unary function symbol~$-$ by adding the following axioms:
     \begin{align*}
         -x=y\ &\liff\ x+y=0\\
         x<y\ &\liff\ x\leq y\land\neg(x=y)
     \end{align*}
-    The formula $-x<y$ (in the language $L'=\langle +,-,0,\leq,<\rangle$ with equality) in this extension by definitions is equivalent to the following formula:
+    The formula $-x<y$ (in the language $L'=\langle +,-,0,\leq,<\rangle$ with equality) is in this extension by definitions equivalent to the following formula:
     $$
     (\exists z)((z\leq y\land\neg(z=y))\land x+z=0)
     $$
@@ -948,7 +948,7 @@ Finally, let us show one more example, illustrating also the unwinding of defini
 
 \section{Definability in Structures}\label{section:definability}
 
-A formula with one free variable $x$ can be understood as a \emph{property} of elements. In a given structure, such a formula \emph{defines} the set of elements that satisfy this property, i.e., those for which the formula holds under an assignment $e$ where $e(x)=a$. If we have a formula with two free variables, it defines a binary relation, etc. We now formalize this concept. Recall that the notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are precisely all the free variables of the formula $\varphi$.
+A formula with one free variable $x$ can be understood as a \emph{property} of elements. In a given structure, such a formula \emph{defines} the set of elements that satisfy this property, i.e., those for which the formula is valid under an assignment $e$ where $e(x)=a$. If we have a formula with two free variables, it defines a binary relation, etc. We now formalize this concept. Recall that the notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are precisely all the free variables of the formula $\varphi$.
 
 \begin{definition}[Definable Sets]
     Let $\varphi(x_1,\dots,x_n)$ be a formula and $\A$ a structure in the same language. The \emph{set defined by the formula $\varphi(x_1,\dots,x_n)$ in the structure $\A$}, denoted by $\varphi^\A(x_1,\dots,x_n)$, is:
@@ -956,13 +956,13 @@ A formula with one free variable $x$ can be understood as a \emph{property} of e
     \varphi^\A(x_1,\dots,x_n)=\{(a_1,\dots,a_n)\in A^n\mid\A\models\varphi[e(x_1/a_1,\dots,x_n/a_n)]\}
     $$
 \end{definition}
-In short, we can also write $\varphi^\A(\bar x)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a)]\}$.
+For brevity, we can also write $\varphi^\A(\bar x)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a)]\}$.
 
 \begin{example} Here are some examples:
     \begin{itemize}
-        \item The formula $\neg(\exists y)E(x,y)$ defines the set of all \emph{isolated} vertices in a given graph.
-        \item Consider the field of real numbers $\underline{\mathbb R}$. The formula $(\exists y)(y\cdot y=x)\land\neg (x=0)$ defines the set of all positive real numbers.
-        \item The formula $x\leq y\land \neg (x=y)$ defines the relation of \emph{strict ordering} $<^S$ in a given ordered set $\langle S,\leq^S\rangle$.
+        \item The formula $\neg(\exists y)E(x,y)$ defines the set of all \emph{isolated} vertices in a given simple graph.
+        \item Consider the field of real numbers $\underline{\mathbb R}$. The formula $(\exists y)(y\cdot y=x)\land\neg x=0$ defines the set of all positive real numbers.
+        \item The formula $x\leq y\land \neg x=y$ defines the relation of \emph{strict ordering} $<^S$ in a given ordered set $\langle S,\leq^S\rangle$.
     \end{itemize}
 \end{example}
 
@@ -1027,7 +1027,7 @@ $$
 \section{Relationship Between Propositional and Predicate Logic}
 \label{section:relationship-propositional-predicate-logic}
 
-We will now demonstrate how propositional logic can be `simulated' in predicate logic, in particular in the theory of Boolean algebras. First, we introduce the axioms of this theory:
+We will now look at how propositional logic can be `simulated' in predicate logic, in particular in the theory of Boolean algebras. First, we introduce the axioms of this theory:
 
 \begin{definition}[Boolean Algebras]
     The \emph{theory of Boolean algebras} is the theory of the language $L=\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ with equality consisting of the following axioms:\footnote{Note the \emph{duality}: by swapping $\land$ with $\lor$ and $\bot$ with $\top$, we obtain the same axioms.}
@@ -1067,9 +1067,9 @@ We will now demonstrate how propositional logic can be `simulated' in predicate 
     \end{multicols}    
 \end{definition}
 
-The smallest model is the \emph{2-element Boolean algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Finite Boolean algebras are (up to \emph{isomorphism}) precisely $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, where $f^n$ means that the function $f$ is applied component-wise.\footnote{These Boolean algebras are isomorphic to the \emph{power set algebras} $\mathcal P(\{1,\dots,n\})$, the isomorphism being given by the bijection between subsets and their characteristic vectors.}
+The smallest model is the \emph{2-element Boolean algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Finite Boolean algebras are (up to \emph{isomorphism}) precisely $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, where $f^n$ means that the function $f$ is applied component-wise.\footnote{These Boolean algebras are isomorphic to the \emph{power set algebras} $\mathcal P(\{1,\dots,n\})$; the isomorphism is the bijection between subsets and their characteristic vectors.}
 
-Propositions can thus be understood as \emph{Boolean terms} (and the constants $\bot,\top$ represent falsity and truth), with the truth value of a proposition under a given assignment of propositional variables being given by the value of the corresponding term in the 2-element Boolean algebra. Moreover, the \emph{algebra of propositions} of a given propositional language or theory is a Boolean algebra (this holds even for infinite languages).
+Propositions can thus be understood as \emph{Boolean terms} (and the constants $\bot,\top$ represent falsity and truth). The truth value of a proposition (under a given assignment of propositional variables) is given by the value of the corresponding term in the 2-element Boolean algebra. Moreover, the \emph{algebra of propositions} of a given propositional language or theory is a Boolean algebra (this holds even for infinite languages).
 
 On the other hand, if we have an \emph{open} formula $\varphi$ (without equality), we can represent atomic propositions using propositional variables and obtain a proposition that holds if and only if $\varphi$ holds. We will learn more about this direction in Chapter \ref{chapter:predicate-resolution} (on resolution in predicate logic), where we will first eliminate quantifiers using the so-called \emph{Skolemization}.
 

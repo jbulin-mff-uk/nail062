@@ -796,7 +796,7 @@ Mějme teorie $T,T'$ v jazyce $L$. Potom:
 \end{itemize}
 \end{observation}
 
-Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Připomeňme situaci ve výrokové logice, popsanou v Pozorování \ref{observation:extensions-semantic-description-propositional}. Zformulujeme a dokážeme analogické tvrzení: Zatímco ve výrokové logice jsme přidávali hodnoty pro nové prvovýroky, resp. je zapomínali, v predikátové logice budeme expandovat resp. redukovat struktury, tj. přidávat nebo zapomínat interpretace relačních, funkčních, a konstantních symbolů. Princip tvrzení ale zůstává stejný.
+Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Připomeňme situaci ve výrokové logice, popsanou v Pozorování \ref{observation:extensions-semantic-description-propositional}. Zformulujeme a dokážeme analogické tvrzení: Zatímco ve výrokové logice jsme přidávali hodnoty pro nové prvovýroky, resp. je zapomínali, v predikátové logice budeme expandovat resp. redukovat struktury, tj. přidávat nebo zapomínat interpretace relačních, funkčních, a konstantních symbolů. Princip obou tvrzení (i jejich důkazů) je ale stejný.
 
 \begin{proposition}\label{proposition:semantic-conditions-for-extensions}
     Mějme jazyky $L\subseteq L'$, teorii $T$ v jazyce $L$, a teorii $T'$ v jazyce $L'$.
@@ -808,7 +808,7 @@ Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Př
 \begin{remark}
     V části (ii) platí i opačná implikace, důkaz ale není tak jednoduchý, jako ve výrokové logice, a proto ho neuvedeme. (Problémem je jak získat z modelu $T$ který nelze expandovat na model $T'$ $L$-sentenci, která platí v $T$ ale ne v $T'$.)
 \end{remark} 
-%\todo ukázat i opačnou implikaci?
+%todo ukázat i opačnou implikaci?
 %$T'$ je konzervativní extenzí teorie $T$, právě když je extenzí, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$.
 \begin{proof}
     Nejprve dokažme (i): Mějme model $\A'$ teorie $T'$ a označme jako $\A$ jeho redukt na jazyk $L$. Protože $T'$ je extenzí teorie $T$, platí v $T'$, a tedy i v $\A'$, každý axiom $\varphi\in T$. Potom ale i $\A\models\varphi$ ($\varphi$ obsahuje jen symboly z jazyka $L$), tedy $\A$ je modelem $T$.
@@ -822,7 +822,7 @@ Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Př
 
 \subsection{Extenze o definice}\label{subsection:extension-by-definition}
 
-Nyní si ukážeme speciální druh konzervativní extenze, tzv. extenzi \emph{o definice} nových (relačních, funkčních, konstantních) symbolů.
+Nyní si ukážeme speciální druh konzervativní extenze, tzv. \emph{extenzi o definice} nových (relačních, funkčních, konstantních) symbolů.
 
 
 \subsubsection*{Definice relačního symbolu}
@@ -860,7 +860,7 @@ Ukážeme si ještě, že nový symbol lze ve formulích nahradit jeho definicí
 
 \subsubsection*{Definice funkčního symbolu}
 
-Nový funkční symbol definujeme obdobným způsobem, musíme si ale být jisti, že definice dává jednoznačnou možnost, jak nový symbol interpretovat.
+Nový funkční symbol definujeme obdobným způsobem, musíme si ale být jisti, že definice dává jednoznačnou možnost, jak nový symbol interpretovat jako funkci.
 
 \begin{example}
     Opět začneme příklady:
@@ -895,7 +895,7 @@ Opět platí, že každý model $T$ lze \emph{jednoznačně} expandovat na model
     $T'$ je konzervativní extenze $T$.
 \end{corollary}
 
-A platí také analogické tvrzení o rozvádění definic:
+A platí také stejné tvrzení o rozvádění definic:
 
 \begin{proposition}
     Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
@@ -928,7 +928,7 @@ Konstantní symbol je speciálním případem funkčního symbolu arity $0$. Pla
         $$
         \frac{1}{2}=y\ \liff\ y\cdot (1+1)=1
         $$
-        Zde nejde o korektní extenzi o definici, neboť neplatí axiom existence. Ve dvouprvkovém tělese $\mathbb Z_2$ (a v každém tělese \emph{charakteristiky 2}) nemá rovnice $y\cdot (1+1)=1$ řešení, neboť $1+1=0$.
+        Zde \emph{nejde} o korektní extenzi o definici, neboť neplatí axiom existence. Ve dvouprvkovém tělese $\mathbb Z_2$ (a v každém tělese \emph{charakteristiky 2}) nemá rovnice $y\cdot (1+1)=1$ řešení, neboť $1+1=0$.
         
         
         Pokud ale vezmeme teorii těles charakteristiky různé od 2, tj. přidáme-li k teorii těles axiom $\neg (1+1=0)$, potom už půjde o korektní extenzi o definici. Například v tělese $\mathbb Z_3$ máme $\frac{1}{2}^{\mathbb Z_3}=2$.
@@ -978,8 +978,8 @@ Zkráceně totéž zapíšeme také jako $\varphi^\A(\bar x)=\{\bar a\in A^n\mid
 \begin{example} Uveďme několik příkladů:
     \begin{itemize}
         \item Formule $\neg(\exists y)E(x,y)$ definuje množinu všech \emph{izolovaných} vrcholů v daném grafu.
-        \item Uvažme těleso reálných čísel $\underline{\mathbb R}$. Formule $(\exists y)(y\cdot y=x)\land\neg (x=0)$ definuje množinu všech kladných reálných čísel.
-        \item Formule $x\leq y\land \neg (x=y)$ definuje v dané uspořádané množině $\langle S,\leq^S\rangle$ relaci \emph{ostrého uspořádání} $<^S$. 
+        \item Uvažme těleso reálných čísel $\underline{\mathbb R}$. Formule $(\exists y)(y\cdot y=x)\land\neg x=0$ definuje množinu všech kladných reálných čísel.
+        \item Formule $x\leq y\land \neg x=y$ definuje v dané uspořádané množině $\langle S,\leq^S\rangle$ relaci \emph{ostrého uspořádání} $<^S$. 
     \end{itemize}
 \end{example}
 
@@ -1086,7 +1086,7 @@ Nyní si ukážeme, jak lze výrokovou logiku `simulovat' v logice predikátové
     
 Nejmenším modelem je \emph{2-prvková Booleova algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Konečné Booleovy algebry jsou (až na \emph{izomorfismus}) právě $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, kde $f^n$ znamená, že funkci $f$ aplikujeme po složkách.\footnote{Tyto Booleovy algebry jsou izomorfní \emph{potenčním algebrám} $\mathcal P(\{1,\dots,n\})$, izomorfismus je daný bijekcí mezi podmnožinami a jejich charakteristickými vektory.}
 
-Výroky tedy můžeme chápat jako \emph{Booleovské termy} (a konstanty $\bot,\top$ představují pravdu a lež), pravdivostní hodnota výroku při daném ohodnocení prvovýroků je potom dána hodnotou odpovídajícího termu v 2-prvkové Booleově algebře.   Kromě toho, \emph{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (to platí i pro nekonečné jazyky).
+Výroky tedy můžeme chápat jako \emph{Booleovské termy} (a konstanty $\bot,\top$ představují pravdu a lež), pravdivostní hodnota výroku (při daném ohodnocení prvovýroků) je potom dána hodnotou odpovídajícího termu v 2-prvkové Booleově algebře. Kromě toho, \emph{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (to platí i pro nekonečné jazyky).
 
 Na druhou stranu, máme-li \emph{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické výroky pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$. Více o tomto směru se dozvíme v Kapitole \ref{chapter:predicate-resolution} (o rezoluci v predikátové logice), kde se nejprve zbavíme kvantifikátorů pomocí tzv. \emph{Skolemizace}.
 

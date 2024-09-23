@@ -1,7 +1,7 @@
 \chapter{Resolution in Predicate Logic} 
 \label{chapter:predicate-resolution}
 
-In this chapter, we will demonstrate how the resolution method introduced in Chapter \ref{chapter:propositional-resolution} can be adapted for predicate logic. This chapter, the last in the section on predicate logic, is quite extensive, so let's provide an overview of its structure:
+In this chapter, we will discuss how the resolution method introduced in Chapter \ref{chapter:propositional-resolution} can be adapted for predicate logic. This chapter, the last in the part of the lecture about predicate logic, is quite extensive, so let us provide an overview of its structure:
 
 \begin{itemize}
     \item We begin with an informal introduction (Section \ref{section:predicate-resolution-intro}).
@@ -9,8 +9,8 @@ In this chapter, we will demonstrate how the resolution method introduced in Cha
 In the following three sections, we introduce the tools that allow us to deal with the specifics of predicate logic: quantifiers, variables, and terms.
 \begin{itemize}
     \item In Section \ref{section:skolemization}, we show how to remove quantifiers using \emph{Skolemization}, to obtain open formulas that can be converted into CNF.
-    \item In Section \ref{section:grounding}, we explain that we could seek a resolution refutation 'at the propositional logic level' (so-called \emph{grounding}), if we first substitute 'suitable' constant terms for the variables.
-    \item In Section \ref{section:unification}, we show how to find such 'suitable' substitutions using the \emph{unification algorithm}.
+    \item In Section \ref{section:grounding}, we explain that we could seek a resolution refutation `at the propositional logic level' (so-called \emph{grounding}), if we first substituted `suitable' ground terms for the variables.
+    \item In Section \ref{section:unification}, we show how to find such `suitable' substitutions using the \emph{unification algorithm}.
 \end{itemize}
 This will give us all the necessary tools to present the resolution method itself. The rest of the chapter follows a similar structure to Chapter \ref{chapter:propositional-resolution}.
 \begin{itemize}
@@ -21,11 +21,11 @@ This will give us all the necessary tools to present the resolution method itsel
 
 \section{Introduction}\label{section:predicate-resolution-intro}
 
-Just as in propositional logic, the resolution method in predicate logic is based on proof by contradiction. To prove that a sentence $\varphi$ holds in a theory $T$ (i.e., $T\models\varphi$), we start with the theory $T\cup\{\neg \varphi\}$. We 'convert' this theory to CNF, and then reject the resulting set of clauses $S$ by resolution (i.e., show that $S\proves_R\square$), thereby showing that it is unsatisfiable.
+Just as in propositional logic, the resolution method in predicate logic is based on proof by contradiction. To prove that a sentence $\varphi$ holds in a theory $T$ (i.e., $T\models\varphi$), we start with the theory $T\cup\{\neg \varphi\}$. We `convert' this theory to CNF, and then reject the resulting set of clauses $S$ by resolution (i.e., show that $S\proves_R\square$), thereby showing that it is unsatisfiable.
 
-What do we mean by conjunctive normal form? The role of a \emph{literal} is played by an \emph{atomic formula}\footnote{I.e., $R(t_1,\dots,t_n)$ or $t_1=t_2$, where $t_i$ are $L$-terms and $R$ is an $n$-ary relation symbol from $L$.} or its negation. A \emph{clause} is (in set representation) a finite set of literals, and a \emph{formula} is a set of clauses.\footnote{As in propositional logic, we also allow infinite sets of clauses.} Otherwise, we use the same terminology, e.g., we talk about \emph{positive}, \emph{negative}, \emph{opposite} literals, $\square$ denotes an empty clause (which is unsatisfiable), etc.
+What do we mean by \emph{conjunctive normal form}? The role of a \emph{literal} is played by an \emph{atomic formula}\footnote{I.e., $R(t_1,\dots,t_n)$ or $t_1=t_2$, where $t_i$ are $L$-terms and $R$ is an $n$-ary relation symbol from $L$.} or its negation. A \emph{clause} (in set representation) is a finite set of literals, and a \emph{formula} is a set of clauses.\footnote{As in propositional logic, we also allow infinite sets of clauses.} Otherwise, we use the same terminology, e.g., we talk about \emph{positive}, \emph{negative}, \emph{opposite} literals, $\square$ denotes the empty clause (which is unsatisfiable), etc.
 
-First, let's informally demonstrate the specifics of resolution in predicate logic with a few very simple examples.
+First, let us informally demonstrate the specifics of resolution in predicate logic with a few simple examples.
 
 Notice first that if the theory $T$ and the sentence $\varphi$ are \emph{open} (do not contain quantifiers), we can easily construct a CNF formula $S$ \emph{equivalent} to the theory $T\cup\{\neg \varphi\}$ (i.e., having the same set of models). Even universal quantifiers at the beginning of the formula are not problematic; we can remove them without changing the meaning.\footnote{Any formula is equivalent to its \emph{general closure}, and the equivalence holds in both directions.}
 
@@ -63,18 +63,18 @@ For example, we replace the formula $(\exists x)\psi(x)$ with the formula $\psi(
   It is not equivalent to the theory $T\cup\{\neg \varphi\}$, but it is \emph{equisatisfiable} (in this case, both are unsatisfiable).
 \end{example}
 
-Skolemization can be more complex; sometimes a constant symbol is not enough. If we have a formula of the form $(\forall x)(\exists y)\psi(x,y)$, the chosen witness for $y$ depends on the chosen value for $x$, so `$y$ is a function of $x$'. In this case, we must replace $y$ with $f(x)$, where $f$ is a new unary function symbol. This gives the formula $(\forall x)\psi(x,y/f(x))$, and we can now remove the universal quantifier and write only $\psi(x,y/f(x))$, which is now an open formula, albeit in a different language (extended by the symbol $f$). Skolemization is formally described, and the necessary properties are proved in Section \ref{section:skolemization}. 
+Skolemization can be more complex; sometimes a constant symbol is not enough. If we have a formula of the form $(\forall x)(\exists y)\psi(x,y)$, the chosen witness for $y$ depends on the chosen value for $x$, so `$y$ is a function of $x$'. In this case, we must replace $y$ with $f(x)$, where $f$ is a new unary function symbol. This gives the formula $(\forall x)\psi(x,y/f(x))$, and we can now remove the universal quantifier and write only $\psi(x,y/f(x))$, which is now an open formula, albeit in a different language (extended by the symbol $f$). Skolemization is formally described, and the necessary properties are proved, in Section \ref{section:skolemization}. 
 
-Now let's look at the \emph{resolution rule}. In predicate logic, it is more complex. Again, we will show just a few examples; the formal definition will come later (Section \ref{section:predicate-resolution-method}).
+Now let us look at the \emph{resolution rule}. In predicate logic, it is more complex. Again, we will show just a few examples; the formal definition will come later (Section \ref{section:predicate-resolution-method}).
 
 \begin{example}
     In the previous example, we arrived at the following CNF formula $S$, which is unsatisfiable, and we want to refute it by resolution:    
     $$
     S = \{\{P(c)\},\{\neg P(x),Q(x)\},\{\neg Q(x),P(x)\},\{\neg Q(x)\}\}
     $$
-    If we look at it 'at the propositional logic level' (`ground level') and replace each atomic formula with a new propositional variable, we get $\{\{r\},\{\neg p,q\},\{\neg q,p\},\{\neg q\}\}$, which is not unsatisfiable. We need to use the fact that $P(c)$ and $P(x)$ have a 'similar structure' (they are \emph{unifiable}).
+    If we look at it `at the propositional logic level' (`ground level') and replace each atomic formula with a new propositional variable, we get $\{\{r\},\{\neg p,q\},\{\neg q,p\},\{\neg q\}\}$, which is not unsatisfiable. We need to use the fact that $P(c)$ and $P(x)$ have a `similar structure' (they are \emph{unifiable}).
 
-    Since the clause $\{\neg P(x),Q(x)\}$ holds, it also holds after performing \emph{any substitution}, i.e., the clause $\{\neg P(x/t),Q(x/t)\}$ is a consequence of $S$ for any term $t$. We might imagine that we 'add' all such clauses to $S$.\footnote{There are infinitely many such clauses; even just the \emph{variants} of one clause, i.e., clauses obtained by simply renaming variables, are infinite in number. This does not matter; a CNF formula can, by definition, be infinite.} The resulting CNF formula, when converted to the 'propositional logic level', would be unsatisfiable.
+    Since the clause $\{\neg P(x),Q(x)\}$ is valid in $S$ (it is an axiom), it is also valid after performing \emph{any substitution}, i.e., the clause $\{\neg P(x/t),Q(x/t)\}$ is a consequence of $S$ for any term $t$. We might imagine `adding' all such clauses to $S$.\footnote{There are infinitely many such clauses; even just the \emph{variants} of one clause, i.e., clauses obtained by simply renaming variables, are infinite in number. We are OK with that; a CNF formula can, by definition, be infinite.} The resulting CNF formula, when converted to the `propositional logic level', would be unsatisfiable.
 
     The \emph{unification algorithm} directly tells us that the correct substitution is $x/c$, and we include this already in the \emph{resolution rule}, i.e., the \emph{resolvent} of the clauses $\{P(c)\}$ and $\{\neg P(x),Q(x)\}$ will be the clause $\{Q(c)\}$.
 \end{example}
@@ -82,21 +82,21 @@ Now let's look at the \emph{resolution rule}. In predicate logic, it is more com
 Unification can be more complex, and we should also note another difference from propositional logic: we allow resolution over multiple literals at once if they are all \emph{unifiable} together:
 
 \begin{example}
-    From the clauses $\{R(x,f(x)),R(g(y),z)\}$ and $\{\neg R(g(c),u),P(u)\}$ (where $R$ is binary relational, $f$ and $g$ are unary functional, and $c$ is a constant symbol), it will be possible to derive the resolvent $\{P(f(g(c))\}$ using the \emph{substitution} (\emph{unification}) $\{x/g(c),y/c,z/f(g(c)),u/f(g(c))\}$, where we choose \emph{both} literals at once from the first clause.
+    From the clauses $\{R(x,f(x)),R(g(y),z)\}$ and $\{\neg R(g(c),u),P(u)\}$ (where $R$ is binary relational, $f$ and $g$ are unary functional, and $c$ is a constant symbol), it will be possible to derive the resolvent $\{P(f(g(c))\}$ using the following \emph{substitution} (\emph{unification}): $\{x/g(c),y/c,z/f(g(c)),u/f(g(c))\}$; here we select \emph{both} literals at once from the first clause.
 \end{example}
 
 \begin{remark}
-    The fact that variables have a 'local meaning' in individual clauses (i.e., we can substitute them in one clause without affecting other clauses) follows from the following simple tautology, which holds for any formulas $\psi,\chi$ (even if $x$ is free in both):
+    The fact that variables have a `local meaning' in individual clauses (i.e., we can substitute them in one clause without affecting other clauses) is due to the following simple tautology, which holds for any formulas $\psi,\chi$ (even if $x$ is free in both):
     $$
     \models(\forall x)(\psi \land \chi) \leftrightarrow (\forall x)\psi \land (\forall x)\chi
     $$
     
-    As seen in the previous example, we will also require that clauses in the resolution rule have disjoint sets of variables; this can be achieved by renaming variables, which is a special case of substitution.
+    As we have seen in the previous example, we will also require that clauses in the resolution rule have disjoint sets of variables; this can be achieved by renaming variables, which is a special case of substitution.
 \end{remark}
 
 \section{Skolemization}\label{section:skolemization}
 
-In this section, we will show how to reduce the question of the satisfiability of a given theory $T$ to the question of the satisfiability of an \emph{open} theory $T'$. Recall that $T$ and $T'$ will generally not be equivalent but will be \emph{equisatisfiable}:
+In this section, we will describe a procedure to reduce the question of the satisfiability of a given theory $T$ to the question of the satisfiability of an \emph{open} theory $T'$. Recall that $T$ and $T'$ will generally not be equivalent but will be \emph{equisatisfiable}:
 
 \begin{definition}[Equisatisfiability]
 Given a theory $T$ in language $L$ and a theory $T'$ in not necessarily the same language $L'$, we say that $T$ and $T'$ are \emph{equisatisfiable} if:
@@ -107,22 +107,22 @@ $$
 
 The entire construction consists of the following steps, which we will explain below:
 \begin{enumerate}
-    \item Conversion to \emph{prenex normal form} (bringing quantifiers to the front).
+    \item Conversion to \emph{prenex normal form} (pulling quantifiers to the front).
     \item Replacing formulas with their general closures (to obtain sentences).
-    \item Removing existential quantifiers (replacing sentences with \emph{Skolem forms}).
+    \item Removing existential quantifiers (replacing sentences with their \emph{Skolem variants}).
     \item Removing remaining universal quantifiers (resulting in open formulas).
 \end{enumerate}
 
 \subsection{Prenex Normal Form}
 
-First, we will show the process by which any formula can have its quantifiers 'brought to the front', i.e., converted to the so-called \emph{prenex normal form}, which begins with a sequence of quantifiers and continues with only the free formula.
+First, we will show the process by which any formula can have its quantifiers `pulled to the front', i.e., converted to the so-called \emph{prenex normal form}, which starts with a sequence of quantifiers and the rest is a free formula.
 
 \begin{definition}[PNF]
     A formula $\varphi$ is in \emph{prenex normal form (PNF)} if it is of the form
     $$
     (Q_1x_1)\dots(Q_nx_n)\varphi'
     $$
-    where $Q_i$ is a quantifier (either $\forall$ or $\exists$), and the formula $\varphi'$ is open. The formula $\varphi'$ is called the \emph{open kernel} of $\varphi$, and $(Q_1x_1)\dots(Q_nx_n)$ is the \emph{quantifier prefix}. 
+    where $Q_i$ is a quantifier (either $\forall$ or $\exists$), and the formula $\varphi'$ is open. The formula $\varphi'$ is called the \emph{matrix} of $\varphi$, and $(Q_1x_1)\dots(Q_nx_n)$ is the \emph{quantifier prefix}. 
     
     If $\varphi$ is a formula in PNF and all the quantifiers are universal, then we say that $\varphi$ is a \emph{universal} formula.
 \end{definition}
@@ -136,13 +136,13 @@ The goal of this subsection is to show the following proposition:
 The algorithm, like the conversion to CNF, will be based on replacing subformulas with \emph{equivalent} subformulas, aiming to move quantifiers closer to the root of the formula tree. What do we mean by the equivalence of formulas $\varphi\sim\varphi'$? That they have the same meaning, i.e., they have the same truth value in every model and for every variable assignment. Equivalently, that $\models\varphi\liff\varphi'$ holds. We will need the following simple observation:
 
 \begin{observation}\label{observation:pnf-one-step}
-    If we replace a subformula $\psi$ of a formula $\varphi$ with an equivalent formula $\psi'$, then the resulting formula $\varphi'$ is also equivalent to the formula $\varphi$.
+    If we replace a subformula $\psi$ of a formula $\varphi$ with an equivalent formula~$\psi'$, then the resulting formula $\varphi'$ is also equivalent to the formula $\varphi$.
 \end{observation}
 
 The conversion is based on repeated application of the following syntactic rules:
 
 \begin{lemma}\label{lemma:pnf-conversion-rules}
-    Let $\overline{Q}$ denote the quantifier opposite to $Q$. Let $\varphi$ and $\psi$ be formulas, and let the variable $x$ be free in $\varphi$ but not in $\psi$. Then the following hold:
+    Let $\overline{Q}$ denote the quantifier opposite to $Q$. Let $\varphi$ and $\psi$ be formulas, and let $x$ be a variable that is \emph{not} free in the formula $\psi$. Then the following hold:
     \begin{align*}
         \neg (Qx)\varphi\ &\sim\ (\overline{Q}x)\neg\varphi\\
         (Qx)\varphi \land \psi\ &\sim\ (Qx)(\varphi \land \psi)\\
@@ -152,10 +152,10 @@ The conversion is based on repeated application of the following syntactic rules
     \end{align*}
 \end{lemma}
 \begin{proof}
-    The rules can be easily verified semantically, or proved using the tableau method (if they are not sentences, we must replace them with their general closures).   
+    The rules can be easily verified semantically, or proved using the tableau method (in that case, if the formulas are not sentences, we must replace them with their general closures).   
 \end{proof}
 
-Note that in the rule $(Qx)\varphi \limplies \psi\sim(\overline{Q}x)(\varphi \limplies \psi)$ for bringing a quantifier out of the \emph{antecedent} of an implication, we must change the quantifier (from $\forall$ to $\exists$ and vice versa), whereas when bringing it out of the \emph{consequent}, the quantifier remains the same. Why is this so? This is best seen if we rewrite the implication using disjunction and negation:
+Note that in the rule $(Qx)\varphi \limplies \psi\sim(\overline{Q}x)(\varphi \limplies \psi)$ for pulling a quantifier out of the \emph{antecedent} of an implication, we must change the quantifier (from $\forall$ to $\exists$ and vice versa), whereas when pulling it out of the \emph{consequent}, the quantifier remains the same. Why is it so? This is best seen if we rewrite the implication using disjunction and negation:
 $$
 (Qx)\varphi \limplies \psi\sim\neg(Qx)\varphi \lor\psi\sim(\overline{Q}x)(\neg\varphi)\lor\psi\sim(\overline{Q}x)(\neg\varphi\lor\psi)\sim (\overline{Q}x)(\varphi \limplies \psi)
 $$
@@ -171,10 +171,10 @@ $$
     Prove Observation \ref{observation:pnf-one-step} and all the rules in Lemma \ref{lemma:pnf-conversion-rules}.
 \end{exercise}
 
-Let's demonstrate the process with an example:
+Let us demonstrate the process with an example:
 
 \begin{example}\label{example:convert-to-pnf}
-    Convert the formula $((\forall z)P(x,z)\land P(y,z))\ \limplies\ \neg(\exists x)P(x,y)$ to PNF. We will write only the individual steps. Note what rule was applied to which subformula (and also the renaming of the variable in the first step), and follow the process on the formula tree.
+    Convert the formula $((\forall z)P(x,z)\land P(y,z))\ \limplies\ \neg(\exists x)P(x,y)$ to PNF. We will only write out the intermediate steps. Note what rule was applied to which subformula (and also the renaming of the variable in the first step), and follow the process on the formula tree.
     \begin{align*}
         &\ (\forall z)P(x,z)\land P(y,z)\ \limplies\ \neg(\exists x)P(x,y)\\ \sim &\ 
         (\forall u) P(x,u)\land P(y,z)\ \limplies\ (\forall x)\neg P(x,y)\\ \sim &\ 
@@ -196,22 +196,22 @@ Since every formula $\varphi(x_1,\dots,x_n)$ is equivalent to its \emph{general 
     For every formula $\varphi$, there exists an equivalent \emph{sentence} in PNF.
 \end{corollary} 
 
-For example, in Example \ref{example:convert-to-pnf}, the resulting sentence is $(\forall x)(\forall y)(\forall z)(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))$.
+E.g., in Example \ref{example:convert-to-pnf}, the resulting sentence is $(\forall x)(\forall y)(\forall z)(\exists u)(\forall v)( P(x,u)\land P(y,z)\limplies\neg P(v,y))$.
 
 \begin{remark}
-    The prenex form is not unique; the rules for conversion can be applied in different orders. As we will see in the next subsection, it is advantageous to bring out quantifiers that become existential first: if we have a choice between $(\forall x)(\exists y)\varphi(x,y)$ and $(\exists y)(\forall x)\varphi(x,y)$, we choose the second option because, in the first case, '$y$ depends on $x$'.
+    The prenex form is not unique; the rules for conversion can be applied in different order. As we will see in the next subsection, it is advantageous to first pull out quantifiers that become existential: if we have a choice between $(\forall x)(\exists y)\varphi(x,y)$ and $(\exists y)(\forall x)\varphi(x,y)$, we choose the second option because, in the first case, `$y$ depends on $x$'.
 \end{remark}
 
-\subsection{Skolem Form}
+\subsection{Skolem Variant}
 
-Now we have converted our axioms to equivalent sentences in prenex form. If any sentence contained only universal quantifiers, i.e., it was of the form 
+Now we have converted our axioms to equivalent sentences in prenex form. If any sentence contained only universal quantifiers, i.e., if it was of the form 
 $$(\forall x_1)\dots(\forall x_n)\varphi(x_1,\dots,x_n)$$ 
-where $\varphi$ is open, we could simply replace it with its open kernel $\varphi$, which is equivalent in this case. But how do we deal with existential quantifiers, e.g., $(\exists x)\varphi(x)$, $(\forall x)(\exists y)\varphi(x,y)$, etc.? We first replace them with their \emph{Skolem form}.
+where $\varphi$ is open, we could simply replace it with its matrix $\varphi$, which is equivalent in this case. But how do we deal with existential quantifiers, e.g., $(\exists x)\varphi(x)$, $(\forall x)(\exists y)\varphi(x,y)$, etc.? We first replace them with their \emph{Skolem variant}.
 
-\begin{definition}[Skolem Form]
+\begin{definition}[Skolem Variant]
 Let $\varphi$ be an $L$-sentence in PNF, and let all its bound variables be different. Let the existential quantifiers from the prefix of $\varphi$ be $(\exists y_1),\dots,(\exists y_n)$ (in this order), and let for each $i$, $(\forall x_1),\dots,(\forall x_{n_i})$ be precisely all the universal quantifiers preceding the quantifier $(\exists y_i)$ in the prefix of $\varphi$. 
 
-Let $L'$ be the extension of $L$ with \emph{new} $n_i$-ary function symbols $f_1,\dots,f_n$, where the symbol $f_i$ has arity $n_i$ for each $i$. The \emph{Skolem form} of the sentence $\varphi$ is the $L'$-sentence $\varphi_S$ obtained from $\varphi$ by, for each $i=1,\dots,n$:
+Let $L'$ be the extension of $L$ with \emph{new} $n_i$-ary function symbols $f_1,\dots,f_n$, where the symbol $f_i$ has arity $n_i$ for each $i$. The \emph{Skolem variant} of the sentence $\varphi$ is the $L'$-sentence $\varphi_S$ obtained from $\varphi$ by, for each $i=1,\dots,n$:
 \begin{itemize}
     \item removing the quantifier $(\exists y_i)$ from the prefix, and
     \item substituting the variable $y_i$ with the term $f_i(x_1,\dots,x_{n_i})$.
@@ -220,7 +220,7 @@ This process is also called \emph{skolemization}.
 \end{definition}
 
 \begin{example}
-    The Skolem form of the sentence 
+    The Skolem variant of the sentence 
     $$\varphi=(\exists y_1)(\forall x_1)(\forall x_2)(\exists y_2)(\forall x_3)R(y_1,x_1,x_2,y_2,x_3)$$
     is the sentence
     $$
@@ -230,12 +230,12 @@ This process is also called \emph{skolemization}.
 \end{example}
 
 \begin{remark}
-    Note that when skolemizing, we must start from a sentence! For example, given the formula $(\exists y)E(x,y)$, $E(x,c)$ is not its Skolem form. We must first take the general closure $(\forall x)(\exists y)E(x,y)$, and then correctly skolemize it as $(\forall x)E(x,f(x))$, which is equivalent to the open formula $E(x,f(x))$ (which says something much weaker than $E(x,c)$).
+    Note that when skolemizing, we must start from a sentence! For example, given the formula $(\exists y)E(x,y)$, $E(x,c)$ is \emph{not} its Skolem variant. We must first take the general closure $(\forall x)(\exists y)E(x,y)$, and then correctly skolemize it as $(\forall x)E(x,f(x))$, which is equivalent to the open formula $E(x,f(x))$ (which says something much weaker than $E(x,c)$).
 
-    It is also important that each symbol used in skolemization is genuinely new; its only 'role' in the whole theory must be to represent the 'existing' elements in this formula.
+    It is also important that each symbol used in skolemization is genuinely new; its only `role' in the whole theory must be to represent the `existing' elements in this formula.
 \end{remark} 
 
-In the following lemma, we show the key property of the Skolem form:
+In the following lemma, we show the key property of the Skolem variant:
 
 \begin{lemma}\label{lemma:skolem-variant-conservative-extension}
 Let $\varphi=(\forall x_1)\dots(\forall x_n)(\exists y)\psi$ be an $L$-sentence, and let $\varphi'$ be the sentence 
@@ -255,13 +255,13 @@ where $f$ is a new function symbol. Then:
 \end{proof}
 
 \begin{remark}
-    The expansion of the model in the second part of the lemma need not be (and typically is not) unique, unlike the extension by defining a new function symbol.
+    The expansion of the model in the second part of the lemma need not be (and typically is not) unique, unlike the extension by definition of a new function symbol.
 \end{remark}
 
-Applying the previous lemma repeatedly (for all existential quantifiers in sequence) gives us the following corollary:
+Applying the previous lemma repeatedly (for all existential quantifiers, in sequence) gives us the following corollary:
 
 \begin{corollary}
-    A sentence $\varphi$ and its Skolem form $\varphi_S$ are equisatisfiable.
+    A sentence $\varphi$ and its Skolem variant $\varphi_S$ are equisatisfiable.
 \end{corollary}
 
 \subsection{Skolem's Theorem}
@@ -272,20 +272,21 @@ In this subsection, we summarize the entire process described in the previous su
     Every theory has an open conservative extension.
 \end{theorem}
 \begin{proof}
-    Let $T$ be an $L$-theory. Replace each axiom with its general closure (if it is not already a sentence) and convert it to PNF, obtaining an equivalent theory $T'$. Now replace each axiom of the theory $T'$ with its Skolem form. This gives us a theory $T''$ in the extended language $L'$. From Lemma \ref{lemma:skolem-variant-conservative-extension}, it follows that the $L$-reduct of each model of $T''$ is a model of $T'$, so $T''$ is an extension of $T'$, and that each model of $T'$ can be expanded to the language $L'$ to be a model of $T''$, so it is a conservative extension. The theory $T''$ is axiomatized by universal sentences; removing the quantifier prefixes (i.e., taking the kernels of the axioms) gives us the open theory $T'''$, which is equivalent to $T''$ and therefore also a conservative extension of $T$.
+    Let $T$ be an $L$-theory. Replace each axiom with its general closure (if it is not already a sentence) and convert it to PNF, obtaining an equivalent theory $T'$. Now replace each axiom of the theory $T'$ with its Skolem variant. This gives us a theory $T''$ in an expanded language $L'$. From Lemma \ref{lemma:skolem-variant-conservative-extension}, it follows that the $L$-reduct of each model of $T''$ is a model of $T'$, so $T''$ is an extension of $T'$, and that each model of $T'$ can be expanded to the language $L'$ to be a model of $T''$, so it is a conservative extension. The theory $T''$ is axiomatized by universal sentences; removing the quantifier prefixes (i.e., taking the matrices of the axioms) gives us the open theory $T'''$, which is equivalent to $T''$ and therefore also a conservative extension of~$T$.
 \end{proof}
 
 From the semantic characterization of conservative extension, the following corollary easily follows:
 
 \begin{corollary}
-    For every theory, we can find an equisatisfiable open theory using skolemization.
+    For any theory, using skolemization we can find an equisatisfiable open theory.
 \end{corollary}
 
 We can now easily convert an open theory to CNF (expressed as a \emph{formula} $S$ in set representation) using equivalent syntactic transformations, just as in propositional logic (see Section \ref{subsection:convert-to-normal-form}).
 
+
 \section{Grounding}\label{section:grounding}
 
-In this section, we show that if we have an open theory that is unsatisfiable, we can demonstrate its unsatisfiability 'on specific elements'. What do we mean by that? There exists a finite number of \emph{ground (basic) instances} of the axioms (instances where we substitute constant terms for the variables) such that their conjunction (which contains no variables) is unsatisfiable.
+In this section, we show that if we have an open theory that is unsatisfiable, we can demonstrate its unsatisfiability `on specific elements'. What do we mean by that? There exists a finite number of \emph{ground instances} of the axioms (instances where we substitute ground terms for the variables) such that their conjunction (which contains no variables) is unsatisfiable.
 
 \begin{definition}[Ground Instance]
     Let $\varphi$ be an open formula in free variables $x_1,\dots,x_n$. We say that the instance $\varphi(x_1/t_1,\dots,x_n/t_n)$ is a \emph{ground instance} if all terms $t_1,\dots,t_n$ are ground (constant).
@@ -297,15 +298,15 @@ $$
 (P(c,f(c))\lor R(c,f(c)))\ \land\ \neg P(c,f(c))\ \land\ \neg R(c,f(c))
 $$
 \end{example}
-This sentence is clearly unsatisfiable. Moreover, the ground atomic sentences $(P(c,f(c))$ and $R(c,f(c))$ can be understood (because they contain no variables) as propositional variables $p_1,p_2$, where $p_1$ means 'it holds that $P(c,f(c))$' and $p_2$ means 'it holds that $R(c,f(c))$'. We then get the following proposition, which can be easily refuted by resolution:
+This sentence is clearly unsatisfiable. Moreover, the ground atomic sentences $(P(c,f(c))$ and $R(c,f(c))$ can be understood (because they contain no variables) as propositional variables $p_1,p_2$, where $p_1$ means `$P(c,f(c))$ is valid' and $p_2$ means `$R(c,f(c))$ is valid'. We then get the following proposition, which can be easily refuted by resolution:
 $$
 (p_1 \lor p_2) \land \neg p_1 \land \neg p_2
 $$
-This process of converting to ground instances (and thus to propositional logic) is called 'grounding'. We will formalize it shortly and prove \emph{Herbrand's theorem},\footnote{French mathematician Jacques Herbrand worked at the end of the 1920s. During his short career (he tragically died at the age of 23), he discovered several other important results, and among other things, formalized the concept of a recursive function.} which states that such an unsatisfiable conjunction of ground instances of the axioms exists for every unsatisfiable theory.
+This process of converting to ground instances (and thus to propositional logic) is called `grounding'. We will formalize it shortly, and prove \emph{Herbrand's theorem},\footnote{French mathematician Jacques Herbrand worked at the end of the 1920s. During his short career (he tragically died at the age of 23), he discovered several other important results, and among other things, formalized the concept of a recursive function.} which states that such an unsatisfiable conjunction of ground instances of the axioms exists for every unsatisfiable theory.
 
 \subsection{Direct Reduction to Propositional Logic}
 
-Now realize that thanks to Herbrand's theorem, grounding allows the following (although inefficient) procedure for refuting formulas by resolution 'at the propositional logic level': In the input formula $S$, we replace each clause with the set of all its ground instances (if there are none, i.e., if the language does not contain a constant symbol, we add one constant symbol to the language). In the resulting set of clauses $S'$, we treat atomic sentences as propositional variables, and we refute $S'$ using propositional resolution (which we know is sound and complete).
+Let us now realize that thanks to Herbrand's theorem, grounding allows for the following (although inefficient) procedure for refuting formulas by resolution `at the propositional logic level': In the input formula $S$, we replace each clause with the set of all its ground instances (if there are none, i.e., if the language does not contain a constant symbol, we add one constant symbol to the language). In the resulting set of clauses $S'$, we treat atomic sentences as propositional variables, and we refute $S'$ using propositional resolution (which we know is sound and complete).
 
 The problem with this approach is that the number of clauses in $S'$ (ground instances of the clauses from $S$) can be large, even infinite, e.g., whenever the language contains at least one functional (non-constant) symbol.
 
@@ -325,7 +326,7 @@ In Section \ref{section:unification}, we will show an efficient procedure for fi
 
 \subsection{Herbrand's Theorem}
 
-In this subsection, we state and prove Herbrand's theorem. We assume that the language contains some constant symbol: if the language does not contain any, we add one. We need a constant symbol so that there are ground terms and we can create the so-called \emph{Herbrand model}. This is the construction of a semantic object (model) from syntactic objects (ground terms) very similar to the \emph{canonical model} (Definition \ref{definition:canonical-model-predicate}).\footnote{The difference is that we do not add countably many new constant symbols (we only use the constant symbols already in the language), and we do not prescribe how the model relations should look.}
+In this subsection, we state and prove Herbrand's theorem. We assume that the language contains some constant symbol: if the language does not contain any, we add one. We need a constant symbol so that there are ground terms and we can create the so-called \emph{Herbrand model}. This is the construction of a semantic object (model) from syntactic objects (ground terms) very similar to the \emph{canonical model} (Definition \ref{definition:canonical-model-predicate}).\footnote{The difference is that we do not add countably many new constant symbols (we only use the constant symbols already in the language), and we do not prescribe how the relations of the model should look.}
 
 \begin{definition}[Herbrand Model]
 Let $L=\langle\mathcal R,\mathcal F\rangle$ be a language with at least one constant symbol. An $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$ is a \emph{Herbrand model} if:
@@ -356,19 +357,19 @@ The structure $\A=\langle A,P^\A,f^\A,c^\A\rangle$ is a Herbrand model if $c^\A=
 The relation $P^\A$ can be any subset of $A$.
 \end{example}
 
-We are now ready to state Herbrand's theorem. Informally, it states that if a theory is satisfiable, i.e., has a model, then it even has a Herbrand model, and otherwise, we can find an unsatisfiable conjunction of ground instances of the axioms, which can be used for resolution refutation 'at the propositional logic level'.
+We are now ready to state Herbrand's theorem. Informally, it states that if a theory is satisfiable, i.e., has a model, then it even has a Herbrand model, and otherwise, we can find an unsatisfiable conjunction of ground instances of the axioms, which can be used for resolution refutation `at the propositional logic level'.
 
 \begin{theorem}[Herbrand's Theorem]
-Let $T$ be an open theory in a language $L$ without equality and with at least one constant symbol. Then $T$ either has a \emph{Herbrand model}, or there exist finitely many ground instances of the axioms of $T$ whose conjunction is unsatisfiable.
+Let $T$ be an open theory in a language $L$ without equality and with at least one constant symbol. Then either $T$ has a \emph{Herbrand model}, or there exist finitely many ground instances of axioms of $T$ whose conjunction is unsatisfiable.
 \end{theorem}
 \begin{proof}
-Let $T_\text{ground}$ denote the set of all ground instances of the axioms of the theory $T$. We construct a systematic\footnote{Or any complete tableau, but in such a way that we do not extend contradictory branches.} tableau from the theory $T_\text{ground}$ with the entry $\F\bot$ at the root, but in the language $L$, without extending it with auxiliary constant symbols to the language $L_C$.\footnote{Since there are no quantifiers in $T_\text{ground}$, auxiliary symbols are not used anywhere in the tableau.}
+Let $T_\text{ground}$ denote the set of all ground instances of the axioms of the theory $T$. We construct a systematic\footnote{Or any finished tableau, but in such a way that we do not extend contradictory branches.} tableau from the theory $T_\text{ground}$ with the entry $\F\bot$ at the root, but in the language $L$, without expanding it by auxiliary constant symbols to the language $L_C$.\footnote{Since there are no quantifiers in $T_\text{ground}$, auxiliary symbols are not used anywhere in the tableau.}
 
 If the tableau contains a non-contradictory branch, then the canonical model for this branch (again without adding auxiliary constant symbols) is a Herbrand model of $T$. Otherwise, we have a tableau proof of contradiction, so the theory $T_\text{ground}$, and therefore $T$, is unsatisfiable. Since the tableau proof is finite, we used only finitely many ground instances of the axioms $\alpha_\text{ground}\in T_\text{ground}$. Their conjunction is therefore unsatisfiable.
 \end{proof}
 
 \begin{remark}
-If the language includes equality, we first extend the theory $T$ with the axioms of equality to obtain the theory $T^*$, and if $T^*$ has a Herbrand model $\A$, we factorize it according to the congruence $=^A$, just as in the case of the canonical model.
+If the language is with equality, we first extend the theory $T$ with the axioms of equality to obtain the theory $T^*$, and if $T^*$ has a Herbrand model $\A$, we factorize it by the congruence $=^A$, just as in the case of the canonical model.
 \end{remark}
 
 To conclude this section, we state two corollaries of Herbrand's theorem.
@@ -383,11 +384,11 @@ To conclude this section, we state two corollaries of Herbrand's theorem.
     $$
 \end{corollary}
 \begin{proof}
-The sentence $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$ is true if and only if $(\forall x_1)\dots(\forall x_n)\neg\varphi$ is unsatisfiable, i.e., if $\neg\varphi$ is unsatisfiable. This follows from Herbrand's theorem applied to the theory $T=\{\neg\varphi\}$.
+The sentence $(\exists x_1)\dots(\exists x_n)\varphi(x_1,\dots,x_n)$ is true if and only if $(\forall x_1)\dots(\forall x_n)\neg\varphi$ is unsatisfiable, i.e., if $\neg\varphi$ is unsatisfiable. The claim follows from Herbrand's theorem applied to the theory $T=\{\neg\varphi\}$.
 \end{proof}
 
 \begin{corollary}\label{corollary:herbrands-theorem-corollary-ground}
-    Let $T$ be an open theory in a language with at least one constant symbol. The theory $T$ has a model if and only if the theory $T_\text{ground}$ consisting of all ground instances of the axioms of $T$ has a model.
+    Let $T$ be an open theory in a language with at least one constant symbol. The theory $T$ has a model if and only if the theory $T_\text{ground}$, consisting of all ground instances of the axioms of $T$, has a model.
 \end{corollary}
 \begin{proof}
 In a model of the theory $T$, all the axioms hold, and so do all their ground instances. Therefore, it is also a model of $T_\text{ground}$. If $T$ has no model, then by Herbrand's theorem, some finite subset of the theory $T_\text{ground}$ is unsatisfiable.
@@ -396,11 +397,11 @@ In a model of the theory $T$, all the axioms hold, and so do all their ground in
 
 \section{Unification}\label{section:unification}
 
-Instead of substituting \emph{all} ground terms and working with this new, huge, and typically infinite set of clauses, it is better to find a 'suitable' substitution in a specific resolution step and work only with it. In this section, we will explain what 'suitable' means (so-called \emph{unification}) and how to find it (using the \emph{unification algorithm}).
+Instead of substituting \emph{all} ground terms and working with this new, huge, and typically infinite set of clauses, it is better to find a substitution `suitable' for the specific resolution step, and work only with it. In this section, we will explain what `suitable' means (so-called \emph{unification}) and how to find it (using the \emph{unification algorithm}).
 
 \subsection{Substitution}
 
-First, let's provide a few examples of 'suitable' substitutions:
+First, let us provide a few examples of `suitable' substitutions:
 
 \begin{example}\label{example:substitutions}
 \begin{itemize}
@@ -408,17 +409,17 @@ First, let's provide a few examples of 'suitable' substitutions:
     \item Given the clauses $\{P(x),Q(x,a),Q(b,y)\}$ and $\{\neg P(v),\neg Q(u,v)\}$, a suitable substitution is $\{x/b,y/a,u/b,v/a\}$; we get $\{P(b),Q(b,a)\}$ and $\{\neg P(a),\neg Q(b,a)\}$, whose resolvent is $\{P(b),\neg P(a)\}$.
     \item Consider the clauses $\{P(x),Q(x,z)\}$ and $\{\neg P(y),\neg Q(f(y),y)\}$. We could use the substitution $\{x/f(a),y/a,z/a\}$ to obtain the pair of clauses $\{P(f(a)),Q(f(a),a)\}$ and $\{\neg P(a),\neg Q(f(a),a)\}$, resolving to $\{P(f(a)),\neg P(a)\}$.
 
-    However, it is better to use the substitution $\{x/f(z),y/z\}$, after which we have $\{P(f(z)),Q(f(z),z)\}$ and $\{\neg P(z),\neg Q(f(z),z)\}$, and the resolvent $\{P(f(z)),\neg P(z)\}$. This substitution is \emph{more general}, and the resulting resolvent 'says more' than $\{P(f(a)),\neg P(a)\}$ (the latter is its consequence, but not vice versa).
+    However, it is better to use the substitution $\{x/f(z),y/z\}$, after which we have the clauses $\{P(f(z)),Q(f(z),z)\}$ and $\{\neg P(z),\neg Q(f(z),z)\}$. Their resolvent is then the clause $\{P(f(z)),\neg P(z)\}$. This substitution is \emph{more general}; and the resulting resolvent `says more' than $\{P(f(a)),\neg P(a)\}$ (the latter is its consequence, but not vice versa).
 \end{itemize}
 \end{example}
 
 We now introduce the necessary terminology related to substitutions. Substitutions will be applied to terms or literals (atomic formulas or their negations), collectively referred to as \emph{expressions}.
 
 \begin{definition}[Substitution]
-    A \emph{substitution} is a finite set $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, where $x_i$ are distinct variables and $t_i$ are terms, with the requirement that term $t_i$ is not equal to variable $x_i$. The substitution $\sigma$ is 
+    A \emph{substitution} is a finite set $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$, where $x_i$ are distinct variables and $t_i$ are terms, with the requirement that term $t_i$ is not equal to the variable $x_i$. The substitution $\sigma$ is 
     \begin{itemize}
-        \item \emph{ground} if all terms $t_i$ are constant,
-        \item a \emph{variable renaming} if all terms $t_i$ are distinct variables.
+        \item \emph{ground} if all the terms $t_i$ are ground,
+        \item a \emph{renaming of variables} if all terms $t_i$ are distinct variables.
     \end{itemize}
     An \emph{instance} of an expression (term or literal) $E$ \emph{under the substitution $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$} is the expression obtained from $E$ by simultaneously replacing all occurrences of variables $x_i$ with terms $t_i$, denoted $E\sigma$. If $S$ is a set of expressions, we denote $S\sigma=\{E\sigma\mid E\in S\}$.
 \end{definition}
@@ -426,16 +427,16 @@ We now introduce the necessary terminology related to substitutions. Substitutio
 Since variables are replaced \emph{simultaneously} for all variables at once, any occurrence of variable $x_i$ in term $t_j$ will not lead to a chain of substitutions.
 
 \begin{example}
-For example, for $S=\{P(x),R(y,z)\}$ and substitution $\sigma=\{x/f(y,z),y/x,z/c\}$, we have:
+For $S=\{P(x),R(y,z)\}$ and substitution $\sigma=\{x/f(y,z),y/x,z/c\}$, we have:
 $$
 S\sigma=\{P(f(y,z)),R(x,c)\}
 $$
 \end{example}
 
-Substitutions can be naturally \emph{composed}. The composition of substitutions $\sigma$ and $\tau$, where $\sigma$ is applied first and then $\tau$, will be denoted as $\sigma\tau$. Thus, $E(\sigma\tau)=(E\sigma)\tau$ holds for any expression $E$.
+Substitutions can be naturally \emph{composed}. The composition of substitutions $\sigma$ and $\tau$, where $\sigma$ is applied first, and then $\tau$ is applied to the result, will be denoted as $\sigma\tau$. Thus, $E(\sigma\tau)=(E\sigma)\tau$ holds for any expression $E$.
 
 \begin{example}\label{example:compose-substitutions}
-    Let's start with an example. Given the expression $E=P(x,w,u)$ and the substitutions \begin{align*}
+    Let us start with an example. Given the expression $E=P(x,w,u)$ and the substitutions \begin{align*}
         \sigma&=\{x/f(y),w/v\}\\
         \tau&=\{x/a,y/g(x),v/w,u/c\}
     \end{align*}
@@ -465,7 +466,7 @@ Note that the composition of substitutions is not commutative; $\sigma\tau$ is t
     $$
 \end{example}
 
-We now show that this defined composition of substitutions satisfies the required properties and that it is also \emph{associative}. From associativity, it follows that we do not need to (and will not) write parentheses in the composition $\sigma\tau\varrho$, $\sigma_1\sigma_2\cdots\sigma_n$, etc.
+We now show that thus defined composition of substitutions satisfies the required properties and, moreover, that it is \emph{associative}. From associativity, it follows that we do not need to (and will not) write parentheses in the composition $\sigma\tau\varrho$, $\sigma_1\sigma_2\cdots\sigma_n$, etc.
 
 \begin{proposition}
 Let $\sigma$, $\tau$, and $\varrho$ be substitutions, and let $E$ be any expression. Then the following holds:
@@ -476,7 +477,7 @@ Let $\sigma$, $\tau$, and $\varrho$ be substitutions, and let $E$ be any express
 \end{proposition}
 
 \begin{proof}
-Let $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ and $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. It is sufficient to prove for the case when the expression $E$ is a single variable, the rest easily follows by induction. (Substitutions do not change other symbols.) We divide into three cases:
+Let $\sigma=\{x_1/t_1,\dots,x_n/t_n\}$ and $\tau=\{y_1/s_1,\dots,y_m/s_m\}$. It is sufficient to prove the case when the expression $E$ is a single variable, the rest easily follows by structural induction. (Substitutions do not change other symbols.) We split the argument into three cases:
 \begin{itemize}
     \item If $E=x_i$ for some $i$, then $E\sigma=t_i$ and $(E\sigma)\tau=t_i\tau=E(\sigma\tau)$, where the second equality is by definition of $\sigma\tau$.
     \item If $E=y_j$ for some $j$, where $y_j\notin\{x_1,\dots,x_n\}$, then $E\sigma=E$ and $(E\sigma)\tau=E\tau=s_j=E(\sigma\tau)$ again by definition of $\sigma\tau$.
@@ -491,21 +492,21 @@ It follows that $(\sigma\tau)\varrho$ and $\sigma(\tau\varrho)$ are the same sub
 
 \subsection{Unification Algorithm}
 
-Which substitutions are 'suitable'? Those that, after being performed, make the given expressions 'become the same', i.e., \emph{unified} (see Example \ref{example:substitutions}).
+Which substitutions are `suitable'? Those that, after being applied, cause the given expressions to `become the same', i.e., \emph{unified} (see Example \ref{example:substitutions}).
 
 \begin{definition}[Unification]
-    Let $S=\{E_1,\dots,E_n\}$ be a finite set of expressions. A substitution $\sigma$ is a \emph{unifier for $S$} if $E_1\sigma=E_2\sigma=\cdots =E_n\sigma$, i.e., $S\sigma$ contains a single expression. If it exists, we also say that $S$ is \emph{unifiable}. 
+    Let $S=\{E_1,\dots,E_n\}$ be a finite set of expressions. A substitution $\sigma$ is a \emph{unification of $S$} if $E_1\sigma=E_2\sigma=\cdots =E_n\sigma$, i.e., $S\sigma$ contains a single expression. If it exists, we also say that $S$ is \emph{unifiable}. 
     
-    A unifier for $S$ is \emph{most general} if for every unifier $\tau$ for $S$ there exists a substitution $\lambda$ such that $\tau=\sigma\lambda$. Note that there may be multiple most general unifiers for $S$, but they differ only by variable renaming.
+    A unification of $S$ is \emph{most general} if for every unification $\tau$ of $S$ there exists a substitution~$\lambda$ such that $\tau=\sigma\lambda$. Note that there may be multiple most general unifications of $S$, but they differ only by renaming of variables.
 \end{definition}
 
 \begin{example}
-   Consider the set of expressions $S=\{P(f(x),y),P(f(a),w)\}$. The most general unifier for $S$ is $\sigma=\{x/a,y/w\}$. Another unifier is, for example, $\tau=\{x/a,y/b,w/b\}$, but it is not most general because it cannot yield, for example, the unifier $\varrho=\{x/a, y/c, w/c\}$. The unifier $\tau$ can be obtained from the most general unifier $\sigma$ using the substitution $\lambda=\{w/b\}$: $\tau=\sigma\lambda$.
+   Consider the set of expressions $S=\{P(f(x),y),P(f(a),w)\}$. The most general unification of $S$ is $\sigma=\{x/a,y/w\}$. Another unification is, for example, $\tau=\{x/a,y/b,w/b\}$, but it is not most general because it cannot yield, for example, the unification $\varrho=\{x/a, y/c, w/c\}$. The unification $\tau$ can be obtained from the most general unification $\sigma$ using the substitution $\lambda=\{w/b\}$: $\tau=\sigma\lambda$.
 \end{example}
 
-We now introduce the \emph{unification algorithm}. Its input is a non-empty, finite set of expressions $S$, and its output is either the most general unifier for $S$ or information that $S$ is not unifiable. The algorithm proceeds from the beginning of the expressions, successively applying substitutions to make the expressions more similar. We need the following definition:
+We now introduce the \emph{unification algorithm}. Its input is a non-empty, finite set of expressions $S$, and its output is either the most general unification of $S$ or information that $S$ is not unifiable. The algorithm proceeds from the start of the expressions, successively applying substitutions to make the expressions more similar. We need the following definition:
 
-Let $p$ be the first (leftmost) position where some two expressions from $S$ differ. Then the \emph{disagreement set in $S$}, denoted $D(S)$, is the set of all subexpressions starting at position $p$ of expressions in $S$.
+Let $p$ be the first (leftmost) position where some two expressions from $S$ differ. Then the \emph{difference in $S$}, denoted $D(S)$, is the set of all subexpressions starting at position $p$ of expressions in $S$.
 
 \begin{example}
 For $S=\{P(x,y),P(f(x),z),P(z,f(x))\}$, $p=3$ and $D(S)=\{x,f(x),z\}$.  
@@ -514,25 +515,25 @@ For $S=\{P(x,y),P(f(x),z),P(z,f(x))\}$, $p=3$ and $D(S)=\{x,f(x),z\}$.
 \begin{algorithm}[Unification Algorithm]{\,}
 \begin{itemize}
     \item \textbf{Input}: a finite set of expressions $S\neq\emptyset$,
-    \item \textbf{Output:} the most general unifier $\sigma$ for $S$ or information that $S$ is not unifiable
+    \item \textbf{Output:} the most general unification $\sigma$ of $S$ or information that $S$ is not unifiable
 \end{itemize}
 \begin{enumerate}[(1)]\setcounter{enumi}{-1}
     \item set $S_0:=S$, $\sigma_0:=\emptyset$, $k:=0$
     \item if $|S_k|=1$, return $\sigma=\sigma_0\sigma_1\cdots \sigma_k$
-    \item determine if there is a variable $x$ and a term $t$ \emph{not containing} $x$ in $D(S_k)$
+    \item determine if $D(S_k)$ contains a variable $x$ and a term $t$ \emph{not containing} $x$ 
     \item if yes, set $\sigma_{k+1}:=\{x/t\}$, $S_{k+1}:=S_k\sigma_{k+1}$, $k:=k+1$, and go to (1)
     \item if no, report that $S$ is not unifiable
 \end{enumerate}
 \end{algorithm}
 
 \begin{remark}
-    Finding a variable $x$ and a term $t$ in step (2) can be computationally intensive.
+    Finding a variable $x$ and a term $t$ in step (2) can be computationally expensive.
 \end{remark}
 
-Before proving correctness, let's demonstrate the algorithm with an example.
+Before proving correctness, let us demonstrate the algorithm with an example.
 
 \begin{example}
-Let's apply the unification algorithm to the following set: 
+Let us apply the unification algorithm to the following set: 
 $$
 S=\{P(f(y,g(z)),h(b)),\ P(f(h(w),g(a)),t),\ P(f(h(b),g(z)),y)\}
 $$
@@ -553,7 +554,7 @@ $$
     
     $$S_4=\{P(f(h(b),g(a)),h(b))\}$$
 
-    \item[($k=4$)] $S_4$ is a singleton, the most general unifier for $S$ is the following:
+    \item[($k=4$)] $S_4$ is one-element, the most general unification of $S$ is the following:
     
     $$
     \sigma=\sigma_1\sigma_2\sigma_3\sigma_4=\{y/h(w)\}\{w/b\}\{z/a\}\{t/h(b)\}=\{y/h(b),w/b,z/a,t/h(b)\}
@@ -562,40 +563,40 @@ $$
 \end{example}
 
 \begin{proposition}\label{proposition:unification-algorithm}
-The unification algorithm is correct. For any input $S$, it terminates in a finite number of steps, and if $S$ is unifiable, it returns the most general unifier $\sigma$; otherwise, it reports that $S$ is not unifiable.
+The unification algorithm is correct. For any input $S$, it terminates in a finite number of steps, and if $S$ is unifiable, it returns the most general unification $\sigma$; otherwise, it reports that $S$ is not unifiable.
 
-If $S$ is unifiable, then for the constructed most general unifier $\sigma$, it additionally holds that if $\tau$ is any unifier, then $\tau=\sigma\tau$.
+Moreover, if $S$ is unifiable, then for the constructed most general unification $\sigma$, it additionally holds that if $\tau$ is any unification, then $\tau=\sigma\tau$.
 \end{proposition}
 \begin{proof}
 In each step $k$, we eliminate some variable, so the algorithm must terminate. If the algorithm terminates unsuccessfully in step $k$, then it is not possible to unify the set $S_k$. It is easy to see that in that case, it is not possible to unify $S$ either.
 
-If the algorithm returns $\sigma=\sigma_0\sigma_1\cdots\sigma_k$, it is evidently a unifier. It remains to prove that it is the most general, for which it suffices to prove the stronger property ('additionally') described in the proposition.
+If the algorithm returns $\sigma=\sigma_0\sigma_1\cdots\sigma_k$, it is evidently a unification. It remains to prove that it is most general, for which it suffices to prove the stronger property (`moreover') described in the proposition.
 
-Let $\tau$ be any unifier for $S$. We will show by induction that for every $0\leq i\leq k$, it holds:
+Let $\tau$ be any unification of $S$. We will show by induction that for every $0\leq i\leq k$:
 $$
 \tau=\sigma_0\sigma_1\cdots\sigma_i\tau
 $$
-For $i=0$, $\sigma_0=\emptyset$ and $\tau=\sigma_0\tau$ holds trivially. Assume it holds for some $i$, and prove it for $i+1$. Let $\sigma_{i+1}=\{x/t\}$. It suffices to prove that for any variable $u$, it holds: 
+For $i=0$, $\sigma_0=\emptyset$ and $\tau=\sigma_0\tau$ holds trivially. Assume it holds for some $i$, and prove it for $i+1$. Let $\sigma_{i+1}=\{x/t\}$. It suffices to prove that for any variable $u$, we have that 
 $$
 u\sigma_{i+1}\tau=u\tau
 $$
 From this, $\tau=\sigma_0\sigma_1\cdots\sigma_i\sigma_{i+1}\tau$ immediately follows.
 
-If $u\neq x$, then $u\sigma_{i+1}=u$, so $u\sigma_{i+1}\tau=u\tau$. In the case $u=x$, we have $u\sigma_{i+1}=x\sigma_{i+1}=t$. Since $\tau$ unifies the set $S_i=S\sigma_0\sigma_1\cdots\sigma_i$, and variable $x$ and term $t` are in the disagreement set $D(S_i)$, $\tau$ must unify $x` and $t$. In other words, $t\tau=x\tau`, or $u\sigma_{i+1}\tau=u\tau`, which we wanted to prove.
+If $u\neq x$, then $u\sigma_{i+1}=u$, so $u\sigma_{i+1}\tau=u\tau$. In the case $u=x$, we have $u\sigma_{i+1}=x\sigma_{i+1}=t$. Since $\tau$ unifies the set $S_i=S\sigma_0\sigma_1\cdots\sigma_i$, and the variable $x$ and the term $t$ are in the difference $D(S_i)$, $\tau$ must unify $x$ and $t$. In other words, $t\tau=x\tau$, i.e., $u\sigma_{i+1}\tau=u\tau$, which is what we wanted to prove.
 \end{proof}
 
 \section{Resolution Method}\label{section:predicate-resolution-method}
 
-To prove that $T\models\varphi$, we can find a CNF formula $S$ using skolemization that is unsatisfiable precisely when the theory $T\cup\{\neg\varphi\}$ is unsatisfiable, i.e., precisely when $T\models\varphi$. We then just need to find a resolution refutation of $S$.
+If we want to prove that $T\models\varphi$, we find (using skolemization) a CNF formula $S$ that is unsatisfiable if and only if the theory $T\cup\{\neg\varphi\}$ is unsatisfiable, i.e., if and only if $T\models\varphi$. Then, all we need to do is to find a resolution refutation of $S$.
 
-In this section, we describe the resolution method itself. Most concepts and theorems will be very similar to propositional logic. The only significant difference will be the \emph{resolution rule}.
+In this section, we describe the resolution method itself. Most notions and theorems will be very similar to their counterparts from propositional logic. The only significant difference will be the \emph{resolution rule}.
 
 \subsection{Resolution Rule}
 
-The resolvent of a pair of clauses will be a clause derived from them by applying \emph{(most general) unification}. First, an example:
+The resolvent of a pair of clauses will be a clause derived from them by applying a \emph{(most general) unification}. First, an example:
 
 \begin{example}
-Let $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ and $C_2=\{\neg P(u),\neg Q(f(u),u)\}$ be clauses. Select \emph{both} positive literals starting with $Q$ from the first clause and the negative literal starting with $\neg Q$ from the second. The set of expressions $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ can be unified using the most general unifier $\sigma=\{x/f(f(z)),y/f(z),u/f(z)\}$. After applying this unification, we get the clauses $C_1\sigma=\{P(f(f(z))),Q(f(f(z)),f(z))\}$ and $C_2\sigma=\{\neg P(f(z)),\neg Q(f(f(z)),f(z))\}$, from which we derive the clause $C=\{P(f(f(z))),\neg P(f(z))\}$. This will be called the \emph{resolvent} of the original clauses $C_1$ and $C_2$.
+Let $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ and $C_2=\{\neg P(u),\neg Q(f(u),u)\}$. Select \emph{both} positive literals starting with $Q$ from the first clause, and the negative literal starting with $\neg Q$ from the second clause. The set of expressions $S=\{Q(x,y),Q(x,f(z)),Q(f(u),u)\}$ can be unified using the most general unification $\sigma=\{x/f(f(z)),y/f(z),u/f(z)\}$. After applying this unification, we get the clauses $C_1\sigma=\{P(f(f(z))),Q(f(f(z)),f(z))\}$ and $C_2\sigma=\{\neg P(f(z)),\neg Q(f(f(z)),f(z))\}$, from which we derive the clause $C=\{P(f(f(z))),\neg P(f(z))\}$. This clause will be called the \emph{resolvent} of the original clauses $C_1$ and $C_2$.
 \end{example}
 
 \begin{definition}[Resolution Rule]
@@ -603,38 +604,38 @@ Let $C_1=\{P(x),Q(x,y),Q(x,f(z))\}$ and $C_2=\{\neg P(u),\neg Q(f(u),u)\}$ be cl
     $$
     C_1=C_1'\sqcup \{A_1,\dots,A_n\},\quad C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}
     $$
-    where $n,m\ge 1$ and the set of expressions $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ is unifiable.\footnote{The symbol $\sqcup$ denotes \emph{disjoint union}.} Let $\sigma$ be the most general unifier of $S$.\footnote{Recall that unification means that $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} The \emph{resolvent} of the clauses $C_1$ and $C_2$ is the following clause:
+    where $n,m\ge 1$ and the set of expressions $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$ is unifiable.\footnote{The symbol $\sqcup$ denotes \emph{disjoint union}.} Let $\sigma$ be the most general unification of $S$.\footnote{Recall that unification means that $A_1\sigma=A_2\sigma=\dots=B_1\sigma=\dots=B_m\sigma$.} The \emph{resolvent} of the clauses $C_1$ and $C_2$ is the following clause:
     $$
     C=C_1'\sigma \cup C_2'\sigma
     $$
 \end{definition}
 
 \begin{remark}\label{remark:resolution-step-rename}
-    The condition of disjoint sets of variables can always be met by renaming the variables in one of the clauses. Why is this necessary? For example, from the clauses $\{\{P(x)\},\{\neg P(f(x))\}\}$ we can obtain the empty clause $\square$ if we replace the clause $\{P(x)\}$ with the clause $\{P(y)\}$. However, the set of expressions $\{P(x),P(f(x))\}$ is not unifiable, so this would not work without renaming variables.
+    The condition about disjoint sets of variables can always be satisfied if we rename the variables in one of the clauses. Why is this necessary? For example, from the clauses $\{\{P(x)\},\{\neg P(f(x))\}\}$ we can obtain the empty clause $\square$ if we replace the clause $\{P(x)\}$ with the clause $\{P(y)\}$. However, the set of expressions $\{P(x),P(f(x))\}$ is not unifiable, so this would not work without renaming variables.
 \end{remark}
 
 \subsection{Resolution Proof}
 
-Once we have defined the resolution rule, we can introduce the \emph{resolution proof} and related concepts. The definitions will be the same as in propositional logic, with one difference: we allow renaming of variables in the clauses, see Remark \ref{remark:resolution-step-rename}.
+Once we have defined the resolution rule, we can introduce the \emph{resolution proof} and related notions. The definitions will be the same as in propositional logic, with one difference: we allow renaming of variables in the clauses, see Remark \ref{remark:resolution-step-rename}.
 
 \begin{definition}[Resolution Proof]
-    A \emph{resolution proof (derivation)} of a clause $C$ from a formula $S$ is a \emph{finite} sequence of clauses $C_0,C_1,\dots,C_n=C$
+    A \emph{resolution proof (derivation, deduction)} of a clause~$C$ from a formula $S$ is a \emph{finite} sequence of clauses $C_0,C_1,\dots,C_n=C$
     such that for each $i$,
     \begin{itemize}
-        \item either $C_i=C_i'\sigma$ for some clause $C'_i\in S$ and variable renaming $\sigma$, or
+        \item either $C_i=C_i'\sigma$ for some clause $C'_i\in S$ and renaming of variables $\sigma$, or
         \item $C_i$ is the resolvent of some $C_j,C_k$ where $j<i$ and $k<i$.
     \end{itemize}
-    If a resolution proof exists, we say that $C$ is \emph{resolutively derivable} from $S$, and we write $S\proves_R C$. A \emph{(resolution) refutation} of the formula $S$ is a resolution proof of $\square$ from $S$; in that case, $S$ is \emph{(resolutively) refutable}.
+    If a resolution proof exists, we say that $C$ is \emph{provable by resolution} from $S$, and we write $S\proves_R C$. A \emph{resolution refutation} of the formula $S$ is a resolution proof of $\square$ from $S$; in that case, $S$ is \emph{resolution refutable}.
 \end{definition}
 
 \begin{remark}
-    Why do we need to eliminate multiple literals from one clause at once in a resolution step? Consider the formula $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$. It is resolutively refutable, but there is no refutation that eliminates only one literal in each step.
+    Why do we need to eliminate multiple literals at once from one clause in the resolution step? Consider the formula $S=\{\{P(x),P(y)\},\{\neg P(x),\neg P(y)\}\}$. It is resolution refutable, but there is no refutation that eliminates only one literal in each step.
 \end{remark}
 
-Now we will show an example of using the resolution method to prove the validity of a sentence.
+Now we will show an example of application of the resolution method to prove the validity of a sentence.
 
 \begin{example}\label{example:resolution-proof-predicate}
-Let $T=\{\neg P(x,x),P(x,y) \limplies P(y,x), P(x,y)\land P(y,z)\to P(x,z)\}$ and let $\varphi$ be the sentence $(\exists x)\neg P(x,f(x))$. We want to show that $T\models\varphi$. The theory $T\cup\{\neg\varphi\}$ is equisatisfiable (in this case even equivalent) to the following CNF formula:
+Let $T=\{\neg P(x,x),P(x,y) \limplies P(y,x), P(x,y)\land P(y,z)\to P(x,z)\}$ and let $\varphi$ be the sentence $(\exists x)\neg P(x,f(x))$. We want to show that $T\models\varphi$. The theory $T\cup\{\neg\varphi\}$ is equisatisfiable (in this case, even equivalent) to the following CNF formula:
 $$S=\{\{\neg P(x,x)\},\{\neg P(x,y),P(y,x)\},\{\neg P(x,y),\neg P(y,z), P(x,z)\},\{P(x,f(x))\}\}$$
 We show that $S\proves_R\square$. The resolution proof is, for example, the following sequence:
 \begin{align*}
@@ -675,14 +676,14 @@ However, a resolution tree, as shown in Figure \ref{figure:resolution-tree-examp
 
 \section{Soundness and Completeness}\label{section:predicate-resolution-soundness-completeness}
 
-In this section, we will prove that the resolution method is both sound and complete in predicate logic.
+In this section, we will prove that the resolution method is both sound and complete in predicate logic, too.
 
 \subsection{Soundness Theorem}
 
-We begin with the proof of the soundness of the resolution rule. The principle is the same as the analogous observation in propositional logic. The proof is a bit more technical:
+We begin with the proof of soundness of the resolution rule. The principle is the same as the analogous observation in propositional logic. The proof is a bit more technical:
 
 \begin{proposition}[Soundness of the Resolution Step]
-Given clauses $C_1$, $C_2$, and let $C$ be their resolvent. If clauses $C_1$ and $C_2$ hold in some structure $\A$, then $C$ also holds in it.
+Let $C_1$, $C_2$ be clauses, and $C$ their resolvent. If the clauses $C_1$ and $C_2$ are valid in some structure $\A$, then $C$ is also valid in it.
 \end{proposition}
 \begin{proof}
 From the definition of the resolution rule, we know that the clauses and their resolvent can be expressed as $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, and $C=C_1'\sigma \cup C_2'\sigma$, where $\sigma$ is the most general unification of the set of expressions $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$, i.e., $S\sigma=\{A_1\sigma\}$.
@@ -695,29 +696,29 @@ Our goal is to show that $\A\models C[e]$ for any variable assignment $e$. If $\
 The statement and proof of the Soundness Theorem are now the same as in propositional logic:
 
 \begin{theorem}[Soundness of Resolution]\label{theorem:soundness-of-predicate-resolution}
-    If a CNF formula $S$ is refutable by resolution, then it is unsatisfiable.
+    If a CNF formula $S$ is resolution refutable, then it is unsatisfiable.
 \end{theorem}
 \begin{proof}
-    We know that $S\proves_R\square$, so let's take some resolution proof of $\square$ from $S$. If there existed a model $\A\models S$, due to the soundness of the resolution rule, we could prove by induction on the length of the proof that $\A\models\square$, which is impossible.
+    We know that $S\proves_R\square$, so let us take some resolution proof of $\square$ from $S$. If there existed a model $\A\models S$, due to the soundness of the resolution rule, we could prove by induction on the length of the proof that $\A\models\square$, which is impossible.
 \end{proof}
 
 \subsection{Completeness Theorem}
 
-The completeness theorem for resolution in predicate logic, i.e., that unsatisfiable formulas can be refuted by resolution, will be proved by reducing to the case of propositional logic. We will show that a resolution proof 'at the propositional logic level' can be 'lifted' to the predicate logic level.
+The completeness theorem for resolution in predicate logic, i.e., that unsatisfiable formulas are resolution refutable, will be proved by reducing to propositional logic. We will show that a resolution proof `at the propositional logic level' can be `lifted' to the predicate logic level.
 
-The key is the following lemma, which ensures such 'lifting' in one resolution step. Its proof is somewhat technical.
+The key is the following lemma, which provides such `lifting' of one resolution step. Its proof is somewhat technical.
 
 \begin{lemma}[Lifting Lemma]\label{lemma:lifting-lemma}
-Given clauses $C_1$ and $C_2$ with disjoint sets of variables. If $C^*_1$ and $C^*_2$ are ground instances of clauses $C_1$ and $C_2$, and $C^*$ is a resolvent of $C^*_1$ and $C^*_2$, then there exists a resolvent $C$ of clauses $C_1$ and $C_2$ such that $C^*$ is a ground instance of $C$.
+Let $C_1$ and $C_2$ be clauses with disjoint sets of variables. If $C^*_1$ and $C^*_2$ are ground instances of $C_1$ and $C_2$, respectively, and $C^*$ is a resolvent of $C^*_1$ and $C^*_2$, then there exists a resolvent $C$ of $C_1$ and $C_2$ such that $C^*$ is a ground instance of $C$.
 \end{lemma}
 \begin{proof}
 Let $C^*_1=C_1\tau_1$ and $C^*_2=C_2\tau_2$, where $\tau_1$ and $\tau_2$ are ground substitutions that share no variables. We find a resolvent $C$ such that $C^*=C\tau_1\tau_2$.
 
 Let $C^*$ be a resolvent of $C_1^*$ and $C_2^*$ over the literal $P(t_1,\dots,t_k)$. We know that the clauses $C_1$ and $C_2$ can be expressed as $C_1=C_1' \sqcup \{A_1,\dots,A_n\}$ and $C_2=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\}$, where $\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}$ and $\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}$.
 
-This means that $(\tau_1\tau_2)$ unifies the set of expressions $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Now, take the most general unification $\sigma$ for $S$ obtained using the Unification Algorithm. As $C$, choose the resolvent $C=C_1'\sigma \cup C_2'\sigma$.
+This means that $(\tau_1\tau_2)$ unifies the set of expressions $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Now, take the most general unification $\sigma$ of $S$ obtained from the Unification Algorithm. Define $C$ to be the resolvent $C=C_1'\sigma \cup C_2'\sigma$.
 
-It remains to show that $C^*=C\tau_1\tau_2$. Using the 'moreover' property from Proposition \ref{proposition:unification-algorithm} on the correctness of the Unification Algorithm, we know that $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, which we use in the third equality of the following calculation. In the fourth equality, we use the fact that $C_1'\tau_1\tau_2=C_1'\tau_1$, and $C_2'\tau_1=C_2'$, which follows from the fact that these are ground substitutions that share no variables, and that $C_1'\tau_1$ and $C_2'\tau_2$ are ground instances:
+It remains to show that $C^*=C\tau_1\tau_2$. Using the `moreover' property from Proposition \ref{proposition:unification-algorithm} on the correctness of the Unification Algorithm, we know that $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, which we use in the third equality of the following calculation. In the fourth equality, we use the fact that $C_1'\tau_1\tau_2=C_1'\tau_1$, and $C_2'\tau_1=C_2'$, which follows from the fact that these are ground substitutions that share no variables, and that $C_1'\tau_1$ and $C_2'\tau_2$ are ground instances:
 \begin{align*}
     C\tau_1\tau_2&= (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2\\
     &=C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2\\
@@ -731,16 +732,16 @@ It remains to show that $C^*=C\tau_1\tau_2$. Using the 'moreover' property from 
 By induction on the length of the resolution proof, we easily obtain the following corollary:
 
 \begin{corollary}\label{corollary:lifting}
-Given a CNF formula $S$, let $S^*$ denote the set of all its ground instances. If $S^*\proves_R C^*$ ('at the propositional logic level') for some ground clause $C^*$, then there exists a clause $C$ and a ground substitution $\sigma$ such that $C^*=C\sigma$ and $S\proves_R C$ ('at the predicate logic level').
+Given a CNF formula $S$, let $S^*$ denote the set of all its ground instances. If $S^*\proves_R C^*$ (`at the propositional logic level') for some ground clause $C^*$, then there exists a clause $C$ and a ground substitution $\sigma$ such that $C^*=C\sigma$ and $S\proves_R C$ (`at the predicate logic level').
 \end{corollary}
 
 Now it is easy to prove completeness:
 
 \begin{theorem}[Completeness of Resolution]\label{theorem:completeness-of-predicate-resolution}
-    If a CNF formula $S$ is unsatisfiable, then it is refutable by resolution.
+    If a CNF formula $S$ is unsatisfiable, then it is resolution refutable.
 \end{theorem}
 \begin{proof}
-Let $S^*$ denote the set of all ground instances of the clauses from $S$. Since $S$ is unsatisfiable, by Herbrand's theorem (specifically Corollary \ref{corollary:herbrands-theorem-corollary-ground}), $S^*$ is also unsatisfiable. From the completeness theorem of \emph{propositional} resolution, we know that $S^*\proves_R\square$ ('at the propositional logic level'). From the Lifting Lemma (or rather from Corollary \ref{corollary:lifting}), we get a clause $C$ and a ground substitution $\sigma$ such that $C\sigma=\square$ and $S\proves_R C$ ('at the predicate logic level'). But since the empty clause $\square$ is an instance of $C$, $C$ must be $\square$. Thus, we have found a resolution refutation $S\proves_R \square$.
+Let $S^*$ denote the set of all ground instances of clauses from $S$. Since $S$ is unsatisfiable, by Herbrand's theorem (specifically Corollary \ref{corollary:herbrands-theorem-corollary-ground}), $S^*$ is also unsatisfiable. From the completeness theorem for \emph{propositional} resolution, we know that $S^*\proves_R\square$ (`at the propositional logic level'). From the Lifting Lemma (or rather from Corollary \ref{corollary:lifting}), we get a clause $C$ and a ground substitution $\sigma$ such that $C\sigma=\square$ and $S\proves_R C$ (`at the predicate logic level'). But since the empty clause $\square$ is an instance of $C$, $C$ must be the empty clause $\square$ as well. Thus, we have found a resolution refutation $S\proves_R \square$.
 \end{proof}
 
 
@@ -775,7 +776,7 @@ In this section, we recall the concepts of \emph{linear and linear-input proofs}
     An \emph{LI-proof} is a linear proof in which each side clause $B_i$ is a variant of a clause from $S$. If there is an LI-proof, we say that $C$ is \emph{LI-provable} from $S$, and write $S\proves_{LI}C$. If $S\proves_{LI}\square$, then $S$ is \emph{LI-refutable}.
 \end{definition}
 
-In Remark \ref{remark:linear-resolution}, we noted that `linear' resolution (based on linear proofs) is complete. The proof was left as an exercise. The same statement holds for predicate resolution:
+In Remark \ref{remark:linear-resolution}, we noted that `linear' resolution (based on linear proofs) is complete.\footnote{The proof of the harder implication was omitted; it can be found in \emph{A. Nerode, R. Shore: Logic for Applications}~\cite{nerode_logic_2012}.} The same theorem holds for predicate resolution:
 
 \begin{theorem}[Completeness of Linear Resolution]
 A clause $C$ has a linear proof from a CNF formula $S$ if and only if it has a resolution proof from $S$ (i.e., $S\proves_R C$).
@@ -792,7 +793,7 @@ A \emph{fact} is a positive unit (Horn) clause, a \emph{rule} is a (Horn) clause
 As in propositional logic, LI-resolution is complete for Horn formulas:
 
 \begin{theorem}[Completeness of LI-resolution for Horn Formulas]\label{theorem:completeness-of-li-resolution-for-horn-predicate}
-If a Horn formula $T$ is satisfiable, and $T\cup\{G\}$ is unsatisfiable for a goal $G$, then $T\cup\{G\}\proves_{LI}\square$, by an LI-refutation that starts with the goal $G$.   
+If a Horn formula $T$ is satisfiable, and $T\cup\{G\}$ is unsatisfiable for some goal $G$, then $T\cup\{G\}\proves_{LI}\square$, by an LI-refutation that starts with the goal $G$.   
 \end{theorem}
 \begin{proof}
     It follows from the analogous theorem in propositional logic, from Herbrand's theorem, and from the Lifting Lemma.
@@ -804,7 +805,7 @@ If a Horn formula $T$ is satisfiable, and $T\cup\{G\}$ is unsatisfiable for a go
 Finally, we show the application of LI-resolution in the Prolog programming language. A \emph{program} in Prolog is a Horn formula containing only \emph{program clauses}, i.e., \emph{rules} and \emph{facts}.
 
 \begin{example}\label{example:predicate-prolog-program}
-As an example, consider a simple program describing the family relationships of three individuals, described in Table \ref{table:predicate-prolog-program}. On the left side, we see the Prolog syntax, and on the right is the set notation of the corresponding clauses; the respective CNF formula will be denoted $P$.
+As an example, consider a simple program describing the family relationships of three individuals, described in Table \ref{table:predicate-prolog-program}. On the left side, we see the Prolog syntax, and on the right is the set notation of the corresponding clauses; the corresponding CNF formula will be denoted $P$.
 
 \begin{table}[h]\centering   
     \begin{tabular}{lr}
@@ -837,11 +838,11 @@ As an example, consider a simple program describing the family relationships of 
     \caption{Example Prolog Program}    
 \end{table} 
 
-The last line in the table is not part of the program; it is an \emph{existential query}. We are interested in whether it holds in the Program P:
+The last line in the table is not a part of the program; it is an \emph{existential query}. We are interested to know whether it holds in the program:
 $P\models(\exists X)son(charlie,X)$? Note that by negating the query, we obtain the \emph{goal} $G=\{\neg son(charlie,X)\}$. Therefore, we want to \emph{refute} the CNF formula $P\cup\{G\}$. 
 \end{example}
 
-As in propositional logic (Corollary \ref{corollary:propositional-prolog}), the following simple corollary of the completeness of LI-resolution for Horn formulas holds.
+As in propositional logic (Corollary \ref{corollary:propositional-prolog}), the completeness of LI-resolution for Horn formulas has the following simple corollary.
 
 \begin{corollary}
 For a program $P$ and a goal $G=\{\neg A_1,\dots,\neg A_k\}$ in variables $X_1,\dots,X_n$, the following conditions are equivalent:
@@ -854,7 +855,7 @@ For a program $P$ and a goal $G=\{\neg A_1,\dots,\neg A_k\}$ in variables $X_1,\
 It is not hard to see that the program $P$ is always a satisfiable Horn formula. The first condition is equivalent to the unsatisfiability of $P\cup\{G\}$. The equivalence then follows from the completeness of LI-resolution for Horn formulas (Theorem \ref{theorem:completeness-of-li-resolution-for-horn-predicate}).
 \end{proof}
 
-If the answer to the query is positive, we want to know the \emph{output substitution} $\sigma$, i.e., the composition of unifications from individual resolution steps, restricted to the variables in $G$. It holds that:
+If the answer to the query is positive, we want to know the \emph{output substitution} $\sigma$, i.e., the composition of unifications from individual resolution steps, restricted to the variables in $G$. We have that:
     $$
     P\models(A_1\wedge\dots\wedge A_k)\sigma
     $$
@@ -871,7 +872,7 @@ Continuing Example \ref{example:predicate-prolog-program}, we find all output su
 
 \medskip
 
-It depends on which of the two rules we apply to the goal. The respective refutations are shown below. The output substitution is obtained by composing the substitutions from individual steps and restricting it to the variable $X$. (For lack of space, we have abbreviated the constant symbols to $a,b,c$.)
+Which substitution we get depends on which of the two rules we apply to the goal. The respective refutations are shown below. The output substitution is obtained by composing the substitutions from individual steps and restricting it to the variable $X$. (For lack of space, we have abbreviated the constant symbols to $a,b,c$.)
 
 \begin{enumerate}[(a)]
     \item Output substitution $\sigma=\{X/b\}$:

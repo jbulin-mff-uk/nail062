@@ -49,9 +49,9 @@ $$
 Máme-li teorii $T$, zajímá nás, jak vypadají její modely. Připomeňme, že:
 \begin{itemize}
     \item Teorie je \emph{kompletní}, právě když má jediný model až na elementární ekvivalenci.\footnote{Tedy všechny její modely jsou elementárně ekvivalentní.}
-    \item Modely teorie $T$ až na elementární ekvivalenci jednoznačně odpovídají kompletním jednoduchým extenzím $T$.
+    \item Modely teorie $T$, až na elementární ekvivalenci, jednoznačně odpovídají kompletním jednoduchým extenzím $T$, až na ekvivalenci.
 \end{itemize}
-Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
+Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy (až na ekvivalenci) tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
 
 \begin{remark}
     Jednou z motivací, proč se zabývat kompletními jednoduchými extenzemi, je Tvrzení \ref{propositon:recursively-enumerable-completion} z následující kapitoly, které říká, že pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který postupně vygeneruje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
@@ -232,7 +232,7 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
 \begin{proposition}
     Je-li $D\subseteq A^n$ definovatelná ve struktuře $\A$, potom pro každý automorfismus $h\in\Aut(\A)$ platí $h[D]=D$ (kde $h[D]$ značí $\{(h(\overline{a})\mid\overline{a}\in D\}$).
 
-    Je-li $D$ definovatelná s parametry $\overline{b}$, platí totéž pro automorfismy identické na $\overline{b}$, tj. takové, že $h(\overline{b})=\overline{b}$ (neboli $h(b_i)=b_i$ pro všechna $i$).
+    Je-li $D$ definovatelná s parametry $\overline{b}$, platí totéž pro automorfismy identické na $\overline{b}$ (\emph{fixující} $\overline{b}$), tj. takové, že $h(\overline{b})=\overline{b}$ (neboli $h(b_i)=b_i$ pro všechna $i$).
 \end{proposition}
 \begin{proof}
     Ukážeme jen verzi s parametry. Nechť $D=\varphi^{\A,\overline{b}}(\overline{x},\overline{y})$. Potom pro každé $\overline{a}\in A^n$ platí následující ekvivalence:
@@ -251,14 +251,14 @@ Nikoho nepřekvapí, že při automorfismu se musí izolovaný vrchol daného gr
     $\mathrm{Df}^1(\mathcal G,\{0\})$. 
     \begin{center}
         \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
-        \node (1) {$1$};
-        \node[below left of=1](0) {$0$};
-        \node[below right of=0] (4) {$4$};
-        \node[right of=4] (3) {$2$};
-        \node[right of=1] (2) {$3$};
-        \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
+            \node (1) {$1$};
+            \node[below left of=1](0) {$0$};
+            \node[below right of=0] (4) {$4$};
+            \node[right of=4] (3) {$2$};
+            \node[right of=1] (2) {$3$};
+            \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
         \end{tikzpicture}
-        \end{center}
+    \end{center}
     Tento graf má jediný netriviální automorfismus zachovávající vrchol $0$: $h(i)=(5-i) \bmod 5$. Jeho \emph{orbity} jsou $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:
     \begin{itemize}
         \item $\{0\}$ je definované formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$,
@@ -368,7 +368,7 @@ O $L$-teorii $T'$ říkáme, že je \emph{konečně} resp. \emph{otevřeně axio
     \begin{itemize}
         \item grafy nebo částečná uspořádání jsou konečně i otevřeně axiomatizovatelné,
         \item tělesa jsou konečně, ale ne otevřeně axiomatizovatelná,
-        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně,
+        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně axiomatizovatelné,
         \item konečné grafy nejsou axiomatizovatelné.
     \end{itemize}
     Proč tomu tak je ukážeme níže.

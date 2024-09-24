@@ -1,6 +1,6 @@
 \chapter{Model Theory}\label{chapter:model-theory}
 
-In this chapter, we will step away from the typical applications of logic in computer science\footnote{For example, using resolution to determine whether a given sentence $\varphi$ holds in a given finite theory $T$.} and look at a higher level of abstraction in the field of \emph{mathematical} logic. \emph{Model theory} seeks to describe the relationship between the general properties of theories (predicate logic) and the classes of their models. We will inevitably work with infinite theories and infinite structures. This is just a sample of some selected results that are accessible to us. We will not attempt to cover all the main areas of model theory, which is very rich and deep. We have also included material related to the properties of models in this chapter that did not fit elsewhere.
+In this chapter, we will step away from the typical applications of logic in computer science\footnote{For example, using resolution to determine whether a given sentence $\varphi$ holds in a given finite theory $T$.} and look at a higher level of abstraction in the field of \emph{mathematical} logic. \emph{Model theory} seeks to describe the relationship between general properties of theories (in predicate logic) and properties of classes of their models. We will inevitably work with infinite theories and infinite structures. We will only look at a sample of some selected results that are accessible to us. We will not attempt to cover all the main areas of model theory, which is very rich and deep. In this chapter, we also include material about properties of models that did not fit elsewhere.
 
 \section{Elementary Equivalence}
 
@@ -9,7 +9,7 @@ First, we will look at some properties related to the concept of \emph{elementar
 In model theory, we are often interested in what properties (sentences) hold in a given, specific structure:
 
 \begin{definition}[Theory of a Structure]
-Given an $L$-structure $\A$, the \emph{theory of the structure} $\A$, denoted $\Th(\A)$, is the set of all $L$-sentences that hold in $\A$:
+Given an $L$-structure $\A$, the \emph{theory of the structure} $\A$, denoted $\Th(\A)$, is the set of all $L$-sentences that are valid in $\A$:
 $$
 \Th(\A)=\{\varphi\mid\varphi \text{ is an $L$-sentence and } \A\models\varphi\}
 $$
@@ -19,7 +19,7 @@ $$
 As an important example, consider the \emph{standard model of arithmetic}, the structure $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$. The theory $\Th(\underline{\mathbb{N}})$ is called the \emph{arithmetic of natural numbers}. In the next chapter, we will show that it is \emph{(algorithmically) undecidable}.\footnote{A theory $T$ is \emph{(algorithmically) decidable} if there is an algorithm that, for every input sentence $\varphi$, terminates and answers whether $T\models\varphi$.}
 \end{example}
 
-We summarize several simple properties of the theory of a structure in the following observation:
+We summarize several basic properties of the theory of a structure in the following observation:
 
 \begin{observation}
     Let $\A$ be an $L$-structure and $T$ be an $L$-theory. Then:
@@ -30,13 +30,13 @@ We summarize several simple properties of the theory of a structure in the follo
     \end{enumerate}    
 \end{observation}
 
-Using the concept of the \emph{theory of a structure}, we can also express elementary equivalence. For $L$-structures $\A,\B$, it holds that:
+Using the notion of the \emph{theory of a structure}, we can also express elementary equivalence. For $L$-structures $\A,\B$, it holds that:
 $$
 \A\equiv\B \text{ if and only if }\Th(\A)=\Th(\B).
 $$
 
 \begin{example}
-   Consider the standard orderings of the reals, rationals, and integers, i.e., the structures $\langle\mathbb{R},\leq\rangle$, $\langle\mathbb{Q},\leq\rangle$, and $\langle\mathbb{Z},\leq\rangle$. As mentioned in Example \ref{example:elementary-equivalence-of-orders-R-Q}, it is not difficult to show that $\langle\mathbb{R},\leq\rangle\equiv\langle\mathbb{Q},\leq\rangle$ (using the \emph{density} of these orderings). However, the structures $\langle\mathbb{Q},\leq\rangle$ and $\langle\mathbb{Z},\leq\rangle$ are not elementarily equivalent: In $\langle\mathbb{Z},\leq\rangle$, every element has an immediate successor, which is not true in $\langle\mathbb{Q},\leq\rangle$. For the following sentence $\varphi$, we have $\varphi\in\Th(\langle\mathbb{Z},\leq\rangle)$ but $\varphi\not\in\Th(\langle\mathbb{Q},\leq\rangle)$:
+   Consider the standard orders of the reals, rationals, and integers, i.e., the structures $\langle\mathbb{R},\leq\rangle$, $\langle\mathbb{Q},\leq\rangle$, and $\langle\mathbb{Z},\leq\rangle$. As mentioned in Example \ref{example:elementary-equivalence-of-orders-R-Q}, it is not difficult to show that $\langle\mathbb{R},\leq\rangle\equiv\langle\mathbb{Q},\leq\rangle$ (using \emph{density} of these orders). However, the structures $\langle\mathbb{Q},\leq\rangle$ and $\langle\mathbb{Z},\leq\rangle$ are not elementarily equivalent: In $\langle\mathbb{Z},\leq\rangle$, every element has an immediate successor, which is not true in $\langle\mathbb{Q},\leq\rangle$. For the following sentence $\varphi$, we have $\varphi\in\Th(\langle\mathbb{Z},\leq\rangle)$ but $\varphi\not\in\Th(\langle\mathbb{Q},\leq\rangle)$:
    $$
    \varphi=(\forall x)(\exists y)(x\leq y \land \neg x=y \land (\forall z)(x\leq z \limplies z=x\lor y\leq z))
    $$
@@ -44,18 +44,18 @@ $$
 
 \subsection{Complete Simple Extensions}
 
-Given a theory $T$, we are interested in what its models look like. Recall that:
+Given a theory $T$, we want to know what its models look like. Recall that:
 \begin{itemize}
     \item A theory is \emph{complete} if it has a single model up to elementary equivalence.\footnote{That is, all its models are elementarily equivalent.}
-    \item The models of a theory $T$ up to elementary equivalence correspond uniquely to the complete simple extensions of $T$.
+    \item The models of a theory $T$, up to elementary equivalence, uniquely correspond to the complete simple extensions of $T$, up to equivalence.
 \end{itemize}
-The complete simple extensions of an $L$-theory $T$ are thus of the form $\Th(\A)$ for $\A\in\M_L(T)$, and (as mentioned above) $\A\equiv\B$ if and only if $\Th(\A)=\Th(\B)$. Instead of finding all models, it suffices to find all complete simple extensions.
+The complete simple extensions of an $L$-theory $T$ are thus (up to equivalence) of the form $\Th(\A)$ for $\A\in\M_L(T)$, and (as mentioned above) $\A\equiv\B$ if and only if $\Th(\A)=\Th(\B)$. Instead of finding all models, it suffices to find all complete simple extensions.
 
 \begin{remark}
-    One motivation for dealing with complete simple extensions is Proposition \ref{propositon:recursively-enumerable-completion} from the next chapter, which states that if we can \emph{effectively (algorithmically) describe} all complete simple extensions\footnote{Imagine an algorithm that, for given inputs $i,j$, returns the $j$-th axiom of the $i$-th complete simple extension (in some fixed numbering); such an algorithm does not always exist!} of a \emph{given} theory $T$,\footnote{$T$ can be infinite, but there must be an algorithm that gradually generates all axioms of $T$.} then $T$ is \emph{(algorithmically) decidable}.
+    One motivation for dealing with complete simple extensions is Proposition \ref{propositon:recursively-enumerable-completion} from the next chapter, which states that if we can \emph{effectively (algorithmically) describe} all complete simple extensions\footnote{Imagine an algorithm that, for given inputs $i,j$, returns the $j$-th axiom of the $i$-th complete simple extension (in some fixed numbering); such an algorithm does not always exist!} of a \emph{given} theory $T$,\footnote{$T$ can be infinite, but there must be an algorithm that generates axioms of $T$, and eventually outputs every one of them.} then $T$ is \emph{(algorithmically) decidable}.
 \end{remark}
 
-The ability to (effectively) describe all complete simple extensions is relatively rare and requires strong assumptions. However, it can be done for many important theories. Let's give one example: the \emph{theory of dense linear orders (dense linear order)}.
+The ability to (effectively) describe all complete simple extensions is relatively rare and requires strong assumptions. However, it can be done for many important theories. Let us give one example: the \emph{theory of dense linear order}.
 
 \subsubsection{Example: DeLO*}
 
@@ -73,7 +73,7 @@ The theory of \emph{dense linear order (DeLO*)} is an extension of the theory of
 Sometimes, the \emph{non-triviality} axiom $(\exists x)(\exists y)(\neg x = y)$ is added to exclude the one-element model. This theory is not complete, but we can describe all its complete simple extensions:
 
 \begin{proposition}
-Let $\varphi = (\exists x)(\forall y)(x \leq y)$ and $\psi = (\exists x)(\forall y)(y \leq x)$ express the existence of a minimal or maximal element, respectively. The following four theories are exactly all (up to equivalence) complete simple extensions of the DeLO* theory:
+Let $\varphi = (\exists x)(\forall y)(x \leq y)$ and $\psi = (\exists x)(\forall y)(y \leq x)$, expressing the existence of a minimal and maximal element, respectively. The following four theories are exactly all (up to equivalence) complete simple extensions of the theory DeLO*:
 \begin{itemize}
     \item $\DeLO = \DeLO^* \ \cup \ \{\neg\varphi, \neg\psi\}$
     \item $\DeLO^+ = \DeLO^* \ \cup \ \{\neg\varphi, \psi\}$
@@ -86,7 +86,7 @@ It suffices to show that these four theories are complete. Then it is clear that
 
 \subsection{Consequences of Löwenheim-Skolem Theorem}
 
-In Section \ref{subsection:loewenheim-skolem-theorem}, we proved the Löwenheim-Skolem theorem, specifically its variant for languages without equality:
+In Section \ref{subsection:loewenheim-skolem-theorem}, we proved the Löwenheim-Skolem theorem, in particular its variant for languages without equality:
 
 \begin{theorem-unnumbered}[Löwenheim-Skolem]
     If $L$ is a countable language without equality, then every consistent $L$-theory has a countably infinite model.
@@ -98,12 +98,12 @@ This theorem has the following simple corollary:
     If $L$ is a countable language without equality, then for every $L$-structure, there exists an elementarily equivalent countably infinite structure.
 \end{corollary}
 \begin{proof}
-    Given an $L$-structure $\A$. The theory $\Th(\A)$ is consistent (it has a model $\A$), so by the Löwenheim-Skolem theorem, it has a countably infinite model $\B\models\Th(\A)$. This means that $\B\equiv\A$.
+    Let $\A$ be an $L$-structure. The theory $\Th(\A)$ is consistent (it has $\A$ as its model), so by the Löwenheim-Skolem theorem, it has a countably infinite model $\B\models\Th(\A)$. This means that $\B\equiv\A$.
 \end{proof}
 
 In a language without equality, we cannot express, for example, that `the model has exactly 42 elements'.
 
-In the proof of the Löwenheim-Skolem theorem, we obtained the constructed model as the canonical model for the consistent branch of the tableau from $T$ for the entry $\F\bot$. The following version for languages with equality is proved in the same way, just by factoring through the relation $=^A$:
+In the proof of the Löwenheim-Skolem theorem, we obtained the constructed model as the canonical model for a non-contradictory branch of the tableau from $T$ for the entry $\F\bot$. The following version for languages with equality is proved in the same way, we just need to take the quotient by the relation $=^A$:
 
 \begin{theorem-unnumbered}[Löwenheim-Skolem with Equality]
     If $L$ is a countable language with equality, then every consistent $L$-theory has a countable model (i.e., finite or countably infinite).
@@ -115,14 +115,14 @@ This version also has an easy corollary for specific structures:
     If $L$ is a countable language with equality, then for every \emph{infinite} $L$-structure, there exists an elementarily equivalent countably infinite structure.
 \end{corollary}
 \begin{proof}
-    Given an infinite $L$-structure $\A$. As in the proof of Corollary \ref{corollary:loewenheim-skolem-without-equality} (but using the Löwenheim-Skolem theorem with equality), we find a countable structure $\B\equiv\A$. Since in $\A$ every $n\in\mathbb{N}$ satisfies sentences expressing `there exist at least $n$ elements' (which can be easily written using equality), these sentences hold in $\B$ as well, so $\B$ cannot be finite and must be countably infinite.
+    Let $\A$ be an infinite $L$-structure. As in the proof of Corollary \ref{corollary:loewenheim-skolem-without-equality} (but using the Löwenheim-Skolem theorem with equality), we find a countable structure $\B\equiv\A$. Since for every $n\in\mathbb{N}$, $\A$ satisfies the sentence expressing `there exist at least $n$ elements' (which can be easily written using equality), these sentences hold in $\B$ as well, so $\B$ cannot be finite and must be countably infinite.
 \end{proof}
 
 We will use this corollary to show that there exists a countable field that is algebraically closed:
 
 \subsubsection*{Countable Algebraically Closed Field}
 
-A field $\A$ is \emph{algebraically closed} if every non-zero degree polynomial has a root in it. The field of real numbers $\mathbb{R}$ is not algebraically closed because $x^2+1$ has no root in $\mathbb{R}$, and similarly, the field of rationals $\mathbb{Q}$ is not (as $x^2-2$ has no root in $\mathbb{Q}$). The field of complex numbers $\mathbb{C}$ is algebraically closed, but it is uncountable.
+A field $\A$ is \emph{algebraically closed} if every non-zero degree polynomial has a root in it. The field of real numbers $\mathbb{R}$ is not algebraically closed because $x^2+1$ has no root in $\mathbb{R}$, and similarly, the field of rationals $\mathbb{Q}$ is not (even $x^2-2$ has no root in $\mathbb{Q}$). The field of complex numbers~$\mathbb{C}$ is algebraically closed, but it is uncountable.
 
 Algebraic closure can be expressed using the following sentences $\psi_n$, for each $n>0$:
 $$
@@ -139,7 +139,7 @@ where $y^k$ is shorthand for the term $y \cdot y \cdot \cdots \cdot y$ (where $\
 
 \section{Isomorphism of Structures}\label{section:isomorphism-of-structures}
 
-Let's take a closer look at the concept of \emph{isomorphism of structures}, which generalizes the isomorphism of graphs, vector spaces, etc. Informally, structures are \emph{isomorphic} if they differ only in the naming of specific elements.
+Let us take a closer look at the concept of \emph{isomorphism of structures}, which generalizes the isomorphism of graphs, vector spaces, etc. Informally, structures are \emph{isomorphic} if they differ only in the naming of specific elements.
 
 \begin{definition}
 Given structures $\A, \B$ in a language $L = \langle\mathcal{R}, \mathcal{F}\rangle$, an \emph{isomorphism between $\A$ and $\B$} (or `from $\A$ to $\B$') is a bijection $h\colon A \to B$ satisfying the following properties:
@@ -148,7 +148,7 @@ Given structures $\A, \B$ in a language $L = \langle\mathcal{R}, \mathcal{F}\ran
     $$
     h(f^\A(a_1, \dots, a_n)) = f^\B(h(a_1), \dots, h(a_n))
     $$
-    (Specifically, if $c \in \mathcal{F}$ is a constant symbol, it holds that $h(c^\A) = c^\B$.)
+    (In particular, if $c \in \mathcal{F}$ is a constant symbol, we have $h(c^\A) = c^\B$.)
     \item For each ($n$-ary) relation symbol $R \in \mathcal{R}$ and for all $a_i \in A$, it holds that:
     $$
     R^\A(a_1, \dots, a_n)\ \text{ if and only if }\ R^\B(h(a_1), \dots, h(a_n))
@@ -157,7 +157,7 @@ Given structures $\A, \B$ in a language $L = \langle\mathcal{R}, \mathcal{F}\ran
 If an isomorphism exists, we say that $\A$ and $\B$ are \emph{isomorphic} (or `$\A$ is \emph{isomorphic to $\B$ via $h$}') and write $\A \simeq \B$ (or $\A \simeq_h \B$). An \emph{automorphism} of $\A$ is an isomorphism from $\A$ to $\A$.
 \end{definition}
 
-Note that the relation `being isomorphic' is an equivalence relation. Let's look at an example:
+Note that the relation of `being isomorphic' is an equivalence relation. Let us look at an example:
 
 \begin{example}
     If $|X| = n$, the power set algebra $\underline{\mathcal{P}(X)} = \langle \mathcal{P}(X), -, \cap, \cup, \emptyset, X\rangle$ is isomorphic to the Boolean algebra $\underline{2^n} = \langle \{0,1\}^n, -_n, \land_n, \lor_n, (0, \dots, 0), (1, \dots, 1)\rangle$ (where the operations are applied component-wise) via $h(A) = \chi_A$, where $\chi_A$ is the characteristic vector of the subset $A \subseteq X$.
@@ -166,7 +166,7 @@ Note that the relation `being isomorphic' is an equivalence relation. Let's look
 Now we show that an isomorphism is a bijection that `preserves semantics':
 
 \begin{proposition}
-Given structures $\A, \B$ in a language $L = \langle\mathcal{R}, \mathcal{F}\rangle$. A bijection $h\colon A \to B$ is an isomorphism between $\A$ and $\B$ if and only if the following hold:
+Let $\A, \B$ be structures in a language $L = \langle\mathcal{R}, \mathcal{F}\rangle$. A bijection $h\colon A \to B$ is an isomorphism between $\A$ and $\B$ if and only if the following hold:
 \begin{enumerate}[(i)]
     \item For every $L$-term $t$ and variable assignment $e\colon \Var \to A$:
     $$
@@ -189,10 +189,10 @@ As an immediate consequence, we get the fact that isomorphic structures are elem
 \end{corollary}
 
 \begin{remark}
-    The converse implication does not generally hold. For example, for ordered sets of rational and real numbers, $\langle\mathbb{Q}, \leq \rangle \equiv \langle\mathbb{R}, \leq \rangle$, but $\langle\mathbb{Q}, \leq \rangle \not\simeq \langle \mathbb{R}, \leq \rangle$ because $\mathbb{Q}$ is a countable set while $\mathbb{R}$ is not (so there is no bijection between them).
+    The converse implication does not hold in general. For example, for ordered sets of rational and real numbers, $\langle\mathbb{Q}, \leq \rangle \equiv \langle\mathbb{R}, \leq \rangle$, but $\langle\mathbb{Q}, \leq \rangle \not\simeq \langle \mathbb{R}, \leq \rangle$ because $\mathbb{Q}$ is a countable set while $\mathbb{R}$ is not (so there is no bijection between them).
 \end{remark}
 
-For finite models, however, isomorphism is the same as elementary equivalence if we have a language with equality, as we will prove in the following proposition:
+For finite models, however, isomorphism is the same as elementary equivalence if we have a language with equality, as we prove in the following proposition:
 
 \begin{proposition}
     If $L$ is a language with equality and $\A, \B$ are finite $L$-structures, then:
@@ -203,30 +203,30 @@ For finite models, however, isomorphism is the same as elementary equivalence if
 \begin{proof}
     We proved one implication in Corollary \ref{corollary:isomorphic-implies-elementarily-equivalent}. Suppose $\A \equiv \B$ and show that there is an isomorphism from $\A$ to $\B$. Since the language includes equality, we can express by a sentence that `there are exactly $n$ elements'. This implies that $|A| = |B|$.
 
-    Let $\A'$ be the expansion of $\A$ by names of elements from $A$; it is a structure in the language $L' = L \cup \{c_a \mid a \in A\}$. We will show that $\B$ can be expanded to an $L'$-structure $\B$ such that $\A' \equiv \B'$. Then, as can be easily verified, the mapping $h(a) = c_a^{\B'}$ is an isomorphism from $\A'$ to $\B'$, and thus also an isomorphism of their $L$-reducts and $\A \simeq \B$.
+    Let $\A'$ be the expansion of $\A$ by names of elements from $A$; it is a structure in the language $L' = L \cup \{c_a \mid a \in A\}$. We will show that $\B$ can be expanded to an $L'$-structure $\B$ such that $\A' \equiv \B'$. Then, as can be easily verified, the mapping $h(a) = c_a^{\B'}$ is an isomorphism from $\A'$ to $\B'$, and thus also an isomorphism of their $L$-reducts, and $\A \simeq \B$.
 
-    It suffices to show that for each $c_a^{\A'} = a \in A$, there exists an element $b \in B$ such that for expansions with the interpretation of the constant symbol $c_a$, it holds that $\langle \A, a \rangle \equiv \langle \B, b \rangle$. Let $\Omega$ be the set of formulas $\varphi(x)$ such that $\langle \A, a \rangle \models \varphi(x/c_a)$, i.e., $\A \models \varphi[e(x/a)]$. Since $A$ is a finite set, there are finitely many formulas $\varphi_1(x), \dots, \varphi_m(x)$ such that for each formula $\varphi \in \Omega$, there exists $i$ such that $\A \models \varphi \liff \varphi_i$. Then $\B \models \varphi \liff \varphi_i$ (since $\A \equiv \B$, just take the general closure of this formula, which is a sentence).
+    It suffices to show that for each $c_a^{\A'} = a \in A$, there exists an element $b \in B$ such that for expansions by the interpretation of the constant symbol $c_a$, it holds that $\langle \A, a \rangle \equiv \langle \B, b \rangle$. Let $\Omega$ be the set of formulas $\varphi(x)$ such that $\langle \A, a \rangle \models \varphi(x/c_a)$, i.e., $\A \models \varphi[e(x/a)]$. Since $A$ is a finite set, there are finitely many formulas $\varphi_1(x), \dots, \varphi_m(x)$ such that for each formula $\varphi \in \Omega$, there exists $i$ such that $\A \models \varphi \liff \varphi_i$. Then $\B \models \varphi \liff \varphi_i$ (this follows from $\A \equiv \B$, just take the general closure of this formula, which is a sentence).
     
     Since in $\A$ the sentence $(\exists x)\bigwedge_{i=1}^m \varphi_i$ holds (it is satisfied by the element $a \in A$), and $\B \equiv \A$, we also have $\B \models (\exists x)\bigwedge_{i=1}^m \varphi_i$. In other words, there exists $b \in B$ such that $\B \models \bigwedge_{i=1}^m \varphi_i[e(x/b)]$. Thus, for each $\varphi \in \Omega$, $\B \models \varphi[e(x/b)]$, i.e., $\langle \mathcal{B}, b \rangle \models \varphi(x/c_a)$, which is what we wanted to prove.
 \end{proof}
 
 \begin{corollary}
-    If a complete theory in a language with equality has a finite model, then all its models are isomorphic.
+    If a complete theory in a language with equality has a finite model, then all of its models are isomorphic.
 \end{corollary}
 
 \subsection{Definability and Automorphisms}
 
 Recall the concept of a definable set from Section \ref{section:definability}. We will show a useful property of definable sets: they are closed (`invariant') under automorphisms of the given structure.
 
-It should surprise no one that under an automorphism, an isolated vertex of a given graph must map to an isolated vertex, a vertex of degree 4 to a vertex of the same degree, or a triplet of vertices forming a triangle to a triangle. This can help us, for example, in finding automorphisms.
+It should surprise no one that under an automorphism, an isolated vertex of a given graph must map to an isolated vertex, a vertex of degree 4 to a vertex of the same degree, or a triple of vertices forming a triangle to a triangle. This can help us, for example, in finding automorphisms.
 
 \begin{proposition}
     If $D \subseteq A^n$ is definable in the structure $\A$, then for every automorphism $h \in \Aut(\A)$, it holds that $h[D] = D$ (where $h[D]$ denotes $\{h(\overline{a}) \mid \overline{a} \in D\}$).
 
-    If $D$ is definable with parameters $\overline{b}$, the same holds for automorphisms that are identical on $\overline{b}$, i.e., such that $h(\overline{b}) = \overline{b}$ (meaning $h(b_i) = b_i$ for all $i$).
+    If $D$ is definable with parameters $\overline{b}$, the same holds for automorphisms that are identical on $\overline{b}$ (\emph{fix} $\overline{b}$), i.e., such that $h(\overline{b}) = \overline{b}$ (meaning $h(b_i) = b_i$ for all $i$).
 \end{proposition}
 \begin{proof}
-    We will show only the version with parameters. Let $D = \varphi^{\A, \overline{b}}(\overline{x}, \overline{y})$. Then for every $\overline{a} \in A^n$, the following equivalence holds:
+    We will show only the version with parameters. Let $D = \varphi^{\A, \overline{b}}(\overline{x}, \overline{y})$. Then for every $\overline{a} \in A^n$, the following chain of equivalences holds:
 \begin{align*}
 \overline{a} \in D\ 
 &\Leftrightarrow\ \A \models \varphi[e(\overline{x}/\overline{a}, \overline{y}/\overline{b})] \\
@@ -241,21 +241,21 @@ It should surprise no one that under an automorphism, an isolated vertex of a gi
     Consider the following graph $\mathcal{G}$. Find all sets definable from $\mathcal{G}$ with parameter $0$, i.e., the set $\mathrm{Df}^1(\mathcal{G}, \{0\})$. 
     \begin{center}
         \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
-        \node (1) {$1$};
-        \node (0) {$0$};
-        \node[below right of=0] (4) {$4$};
-        \node[right of=4] (3) {$2$};
-        \node[right of=1] (2) {$3$};
-        \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
+            \node (1) {$1$};
+            \node[below left of=1](0) {$0$};
+            \node[below right of=0] (4) {$4$};
+            \node[right of=4] (3) {$2$};
+            \node[right of=1] (2) {$3$};
+            \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
         \end{tikzpicture}
-        \end{center}
+    \end{center}
     This graph has a single non-trivial automorphism preserving the vertex $0$: $h(i) = (5 - i) \bmod 5$. Its \emph{orbits} are $\{0\}$, $\{1, 4\}$, and $\{2, 3\}$. These sets are definable:
     \begin{itemize}
         \item $\{0\}$ is defined by the formula $x = y$, i.e., $(x = y)^{\mathcal{G}, \{0\}} = \{0\}$,
         \item $\{1, 4\}$ can be defined by the formula $E(x, y)$, and
         \item $\{2, 3\}$ by the formula $\neg E(x, y) \land \neg x = y$.
     \end{itemize}
-    The set $\mathrm{Df}^1(\mathcal{G}, \{0\})$ is a subalgebra of the power set algebra $\underline{\mathcal{P}(V(\mathcal{G}))}$, so it must be closed under complement, union, intersection, and contain $\emptyset$ and $V(\mathcal{G})$. The subalgebra generated by $\{\{0\}, \{1, 4\}, \{2, 3\}\}$, however, contains all the subsets preserving the automorphism $h$. We get:
+    The set $\mathrm{Df}^1(\mathcal{G}, \{0\})$ is a subalgebra of the power set algebra $\underline{\mathcal{P}(V(\mathcal{G}))}$, so it must be closed under complement, union, intersection, and contain $\emptyset$ and $V(\mathcal{G})$. The subalgebra generated by $\{\{0\}, \{1, 4\}, \{2, 3\}\}$, however, already contains all the subsets preserving the automorphism~$h$. We get:
     $$
     \mathrm{Df}^1(\mathcal{G}, \{0\}) = \{\emptyset, \{0\}, \{1, 4\}, \{2, 3\}, \{0, 1, 4\}, \{0, 2, 3\}, \{1, 2, 3, 4\}, \{0, 1, 2, 3, 4\}\}
     $$
@@ -287,7 +287,7 @@ Now we will look at theories that have a single countably infinite model (up to 
     I(\kappa,T)=1$.
 \end{definition}
 
-From now on, we will be interested only in the case $\kappa=\omega$, that is, theories with a single countably infinite model (up to isomorphism). As an example, consider the theory of dense linear orderings without endpoints:
+From now on, we will be interested only in the case $\kappa=\omega$, that is, theories with a single countably infinite model (up to isomorphism). As an example, consider the theory of dense linear orders without endpoints:
 
 \begin{proposition}
     The theory DeLO is $\omega$-categorical.
@@ -311,7 +311,7 @@ $$
 \end{corollary}
 
 \begin{proof}
-A dense order cannot be finite. An isomorphism must map the smallest element to the smallest element and the largest to the largest.
+A dense order obviously cannot be finite. An isomorphism must map the smallest element to the smallest element and the largest to the largest.
 \end{proof}
 
 The concept of \emph{$\omega$-categoricity} can be understood as a weakening of the concept of \emph{completeness}. The following useful criterion applies:
@@ -327,11 +327,11 @@ then the theory $T$ is complete.
 \begin{proof}
 For a language without equality, we know from Corollary \ref{corollary:loewenheim-skolem-without-equality} of the Löwenheim-Skolem theorem that every model is elementarily equivalent to some countably infinite model. However, that model is unique up to isomorphism, so all models are elementarily equivalent, which is the semantic definition of completeness.
 
-For a language with equality, we similarly use Corollary \ref{corollary:loewenheim-skolem-with-equality} and obtain that all infinite models are elementarily equivalent. There could exist elementarily nonequivalent finite models, but we have excluded that possibility.
+For a language with equality, we similarly use Corollary \ref{corollary:loewenheim-skolem-with-equality} and obtain that all infinite models are elementarily equivalent. There could exist elementarily inequivalent finite models, but we have excluded that possibility.
 \end{proof}
 
 \begin{corollary}\label{corollary:complete-simple-extensions-of-delo}
-    The theories $\DeLO$, $\DeLO^+$, $\DeLO^-$, and $\DeLO^\pm$ are complete. These are all (mutually nonequivalent) complete simple extensions of the theory $DeLO^*$.
+    The theories $\DeLO$, $\DeLO^+$, $\DeLO^-$, and $\DeLO^\pm$ are complete. These are all (mutually inequivalent) complete simple extensions of the theory $DeLO^*$.
 \end{corollary}
 
 \begin{remark}
@@ -340,7 +340,7 @@ An analogous criterion applies for cardinalities $\kappa$ greater than $\omega$.
 
 \section{Axiomatizability}\label{section:axiomatizability}
 
-Finally, in this chapter, we will look at the circumstances under which a class of models or a theory can be `described' (\emph{axiomatized}). We will also be interested in when we can manage with finitely many axioms and when it can be done with open axioms (which may be infinitely many). Compare with Proposition \ref{proposition:axiomatize-in-DNF-CNF} from propositional logic.
+Finally, in this chapter, we will look at the circumstances under which a class of models or a theory can be `described' (\emph{axiomatized}). We will also be interested in when we can manage with finitely many axioms, and when it can be done by (possibly infinitely many) open axioms. Compare with Proposition \ref{proposition:axiomatize-in-DNF-CNF} from propositional logic.
 
 \begin{definition}[Axiomatizability]
 Let $K \subseteq \M_L$ be a class of structures in some language $L$. We say that $K$ is
@@ -349,33 +349,33 @@ Let $K \subseteq \M_L$ be a class of structures in some language $L$. We say tha
     \item \emph{finitely axiomatizable} if it is axiomatizable by a finite theory, and
     \item \emph{openly axiomatizable} if it is axiomatizable by an open theory.
 \end{itemize}
-We say that an $L$-theory $T'$ is \emph{finitely} or \emph{openly axiomatizable} if this applies to the class of models $K=\M_L(T')$.
+We say that an $L$-theory $T'$ is \emph{finitely}, or \emph{openly axiomatizable}, if this is true of the class $K=\M_L(T')$ of its models.
 \end{definition}
 
 \begin{example}
     Here are some examples:
     \begin{itemize}
         \item Graphs or partial orders are both finitely and openly axiomatizable.
-        \item Fields are finitely but not openly axiomatizable.
-        \item Infinite groups are axiomatizable but not finitely.
+        \item Fields are finitely, but not openly axiomatizable.
+        \item Infinite groups are axiomatizable, but not finitely axiomatizable.
         \item Finite graphs are not axiomatizable.
     \end{itemize}
     We will explain why this is so below.
 \end{example}
 
-Let's start with a simple fact:
+Let us start with a simple fact:
 
 \begin{observation}
     If $K$ is axiomatizable, it must be closed under elementary equivalence.  
 \end{observation}
 
-From the compactness theorem, we easily obtain the following statement, which can be used to show the non-axiomatizability of, for example, finite graphs, finite groups, and finite fields.
+From the compactness theorem, we easily obtain the following statement, which can be used to show the non-axiomatizability of, for example, finite graphs, finite groups, or finite fields.
 
 \begin{theorem}
     If a theory has arbitrarily large finite models, then it also has an infinite model. In that case, the class of all its finite models is not axiomatizable.
 \end{theorem}
 \begin{proof}
-    If the language is without equality, it suffices to take the canonical model for some consistent branch in the tableau from $T$ for the entry $\F\bot$ ($T$ is consistent, as it has models, so the tableau is not inconsistent).     
+    If the language is without equality, it suffices to take the canonical model for some non-contradictory branch in the tableau from $T$ for the entry $\F\bot$ ($T$ is consistent, as it has models, so the tableau is not contradictory).     
     
     Suppose we have a language with equality, and let $T'$ be the following extension of the theory $T$ to the language expanded by countably many new constant symbols $c_i$:
     $$
@@ -398,13 +398,13 @@ We will show the following criterion for finite axiomatizability: both the class
     Let $K \subseteq \M_L$ be a class of structures and also consider its complement $\overline{K} = \M_L \setminus K$. Then $K$ is finitely axiomatizable if and only if both $K$ and $\overline{K}$ are axiomatizable.   
 \end{theorem}
 \begin{proof}
-If $K$ is finitely axiomatizable, then it is axiomatizable by finitely many sentences $\varphi_1, \dots, \varphi_n$ (we replace formulas with their general closures). To axiomatize $\overline{K}$, it suffices to take the sentence $\psi = \neg(\varphi_1 \land \varphi_2 \land \dots \land \varphi_n)$. Clearly, $\M(\psi) = \overline{K}$.
+If $K$ is finitely axiomatizable, then it is axiomatizable by finitely many sentences $\varphi_1, \dots, \varphi_n$ (we can replace formulas with their general closures). To axiomatize $\overline{K}$, it suffices to take the sentence $\psi = \neg(\varphi_1 \land \varphi_2 \land \dots \land \varphi_n)$. Clearly, $\M(\psi) = \overline{K}$.
 
 Conversely, suppose $T$ and $S$ are theories such that $\M(T) = K$ and $\M(S) = \overline{K}$. Consider the theory $T \cup S$. This theory is inconsistent, as:
 $$
 \M(T \cup S) = \M(T) \cap \M(S) = K \cap \overline{K} = \emptyset
 $$
-By the compactness theorem,\footnote{You can see how useful it is!} there exist finite subtheories $T' \subseteq T$ and $S' \subseteq S$ such that:
+By the compactness theorem,\footnote{See how useful it is!} there exist finite subtheories $T' \subseteq T$ and $S' \subseteq S$ such that:
 $$
 \emptyset = \M(T' \cup S') = \M(T') \cap \M(S')
 $$
@@ -439,23 +439,23 @@ The class $K$ of fields of characteristic $0$ is not finitely axiomatizable.
 \end{proposition}
 \begin{proof}
 Thanks to Theorem \ref{theorem:finite-axiomatizability}, it suffices to show that $\overline{K}$ (consisting of fields of non-zero characteristic and structures that are not fields) is not axiomatizable, which we will prove by contradiction. Suppose there exists a theory $S$ such that $\M(S) = \overline{K}$. Then the theory 
-$S' = S \cup T'$ has a model, as every finite part of it has a model: it suffices to take a field of prime characteristic greater than any $p$ from the axioms of $T'$ of the form $\neg\, p1 = 0$. Let $\A$ be a model of $S'$. Then $\A \in \M(S) = \overline{K}$. At the same time, $\A \in \M(T') = K$, which is a contradiction.
+$S' = S \cup T'$ has a model, as every finite part of it has a model: it suffices to take a field of prime characteristic greater than any $p$ appearing in the axioms of $T'$ of the form $\neg\, p1 = 0$. Let $\A$ be a model of $S'$. Then $\A \in \M(S) = \overline{K}$. At the same time, $\A \in \M(T') = K$, which is a contradiction.
 \end{proof}
 
 \subsection{Open Axiomatizability}
 
-For open axiomatizability, there is a simple semantic criterion: the class of its models must be closed under substructures. There is even an equivalence, but we will prove only one implication (the proof of the other is more difficult).
+For open axiomatizability, there is a simple semantic criterion: the class of its models must be closed under taking substructures. In fact, the two properties are equivalent, but we will prove only one implication (the proof of the other is more difficult).
 
 \begin{theorem}\label{theorem:open-axiomatizability}
 If a theory $T$ is openly axiomatizable, then every substructure of a model of $T$ is also a model of $T$.   
 \end{theorem}
 
 \begin{remark}
-    The converse implication also holds: If every substructure of a model of $T$ is also a model, then $T$ is openly axiomatizable. We will not provide the proof here.
+    The converse implication also holds: If every substructure of a model of $T$ is also a model, then $T$ is openly axiomatizable. We will omit the proof.
 \end{remark}
 
 \begin{proof}
-Suppose $T'$ is an open axiomatization of $T$. Let $\A \models T'$ be a model and $\B \subseteq \A$ be a substructure. For every formula $\varphi \in T'$, it holds that $\B \models \varphi$ (since $\varphi$ is open), thus $\B \models T'$.  
+Suppose $T'$ is an open axiomatization of $T$. Let $\A \models T'$ be a model and let $\B \subseteq \A$ be a substructure. For every formula $\varphi \in T'$, we have $\B \models \varphi$ (since $\varphi$ is open). Thus $\B \models T'$.  
 \end{proof}
 
 \begin{example}

@@ -1,24 +1,24 @@
 \chapter{Undecidability and Incompleteness}
 
-In this final chapter, we will explore how theories can be worked with algorithmically. The highlight will be the \emph{Gödel's Incompleteness Theorems} from 1931, which show the limits of the formal approach and halted the decades-long program of formalizing mathematics. We do not have enough space to provide formal definitions and complete proofs here, so we will sometimes operate on a somewhat intuitive level. We will focus on understanding the meaning of the statements and the ideas of the proofs.
+In this final chapter, we explore how we can work with theories algorithmically. The highlight will be \emph{Gödel's Incompleteness Theorems} from 1931, which show the limits of the formal approach and which halted the decades-long program of formalizing mathematics. We do not have enough space to provide formal definitions and complete proofs here, so we will sometimes operate on a somewhat intuitive level. We will focus on understanding the meaning of the statements and the ideas of the proofs.
 
-We will understand the concept of an \emph{algorithm} intuitively as well. If we wanted to formalize it, the most common (but by no means the only) choice would be the concept of a \emph{Turing machine}.\footnote{See the lecture NTIN090 Foundations of Complexity and Computability.}
+We will understand the concept of an \emph{algorithm} intuitively as well. If we wanted to formalize it, the most common (but by no means the only) choice would be the notion of a \emph{Turing machine}.\footnote{See the courses NTIN071 Automata and Grammars, NTIN090 Introduction to Complexity and Computability.}
 
 \section{Recursive Axiomatization and Decidability}
 
-In the proof systems we have discussed (the tableau method, resolution, Hilbert calculus), we allowed the theory $T$ in which we prove to be infinite. However, we have not yet considered how it is given. If we want to verify that a given object (tableau, resolution tree, sequence of formulas) is a correct proof, we need some algorithmic access to all axioms of $T$.
+In the proof systems we have discussed (the tableau method, resolution, Hilbert calculus), we allowed the theory $T$ in which we are proving to be infinite. However, we have not yet considered how it is given. If we want to verify that a given object (tableau, resolution tree, sequence of formulas) is a valid proof, we need some algorithmic access to all axioms of $T$.
 
-One possibility would be to require an \emph{enumerator} for $T$, i.e., an algorithm that lists the axioms of $T$ on the output, and each axiom is eventually listed.\footnote{A necessary condition is that $T$ is countable. It suffices to assume that the language is countable.} Then it would be easy to confirm that a given proof is correct. However, if we received a proof that used an incorrect axiom that is not in $T$, we would never know: we would wait infinitely long to see if the enumerator lists it. Therefore, we require a stronger property that allows recognizing incorrect proofs as well: \emph{recursive axiomatization}.\footnote{The word \emph{recursive} here does not mean the commonly known recursion, but refers to the formalization of an algorithm using `recursive functions' by Gödel. Recursive functions here mean the same as computable by some Turing machine, and the theory of computability is sometimes called \emph{recursion theory}.}
+One possibility would be to require an \emph{enumerator} for $T$, i.e., an algorithm that writes out the axioms of $T$ on the output, and each axiom is eventually written out.\footnote{A necessary condition is that $T$ is countable. It suffices to assume that the language is countable.} Then it would be easy to confirm that a given proof is correct. However, if we received a proof that used an incorrect axiom, one that is not in $T$, we would never know: we would wait infinitely long to see if the enumerator outputs it at some point. Therefore, we require a stronger property that allows recognizing incorrect proofs as well: a \emph{recursive axiomatization}.\footnote{The word \emph{recursive} here does not mean the commonly known recursion, but refers to the formalization of an algorithm using `recursive functions' by Gödel. Recursive functions here mean the same as computable by some Turing machine; the theory of computability is sometimes called \emph{recursion theory}.}
 
 \begin{definition}[Recursive Axiomatization]
     A theory $T$ is \emph{recursively axiomatized} if there is an algorithm that, for every input formula $\varphi$, halts and answers whether $\varphi \in T$.
 \end{definition}
 
 \begin{remark}
-    In fact, an enumerator for $T$ would suffice if it is guaranteed to list the axioms in lexicographic order. That is equivalent to recursive axiomatization. (Think about why.)
+    In fact, an enumerator for $T$ would suffice if it is guaranteed to output the axioms in lexicographic order. That would be equivalent to a recursive axiomatization. (Think about why.)
 \end{remark}
 
-We focus on the question of whether we can `algorithmically decide the truth' in a given theory $T$ (i.e., the validity of an input formula). If so, we say the theory is \emph{decidable}. This is quite a strong property, so we also define \emph{partial decidability}, which means that if the formula is valid, the algorithm will tell us, but if it is not, we may never get an answer.
+We focus on the question whether we can `algorithmically decide truth' in a given theory $T$ (i.e., the validity of an input formula). If so, we say the theory is \emph{decidable}. This is quite a strong property, so we also define \emph{partial decidability}, which means that if the input formula is valid, the algorithm will tell us, but if it is not valid, we may never get an answer.
 
 \begin{definition}[Decidability]
 A theory $T$ is said to be
@@ -26,12 +26,12 @@ A theory $T$ is said to be
     \item \emph{decidable} if there is an algorithm that, for every input formula $\varphi$, halts and answers whether $T \models \varphi$,
     \item \emph{partially decidable} if there is an algorithm that, for every input formula:
     \begin{itemize}
-        \item if $T \models \varphi$, halts and answers "yes",
-        \item if $T \not\models \varphi$, either does not halt or halts and answers "no".
+        \item if $T \models \varphi$, halts and answers ``yes'',
+        \item if $T \not\models \varphi$, either does not halt or halts and answers ``no''.
     \end{itemize}
 \end{itemize}
 \end{definition}
-We can usually assume that $\varphi$ in the definition is a sentence. Let us show a simple proposition:
+As usual, we can assume that $\varphi$ in the above definition is a sentence. Let us prove a simple proposition:
 
 \begin{proposition}
     Let $T$ be recursively axiomatized. Then:
@@ -41,45 +41,45 @@ We can usually assume that $\varphi$ in the definition is a sentence. Let us sho
     \end{enumerate}
 \end{proposition}
 \begin{proof}
-An algorithm showing partial decidability is the construction of a systematic tableau for $\F \varphi$.\footnote{Here, an enumerator of the axioms of $T$ suffices, or we can systematically generate all sentences (e.g., in lexicographic order) and test whether they are axioms.} If $\varphi$ is valid in $T$, the construction will end in finitely many steps and we can easily verify that the tableau is contradictory; otherwise, it may not halt.
+An algorithm showing partial decidability is the construction of a systematic tableau from $T$ for the entry $\F \varphi$.\footnote{Here, an enumerator of the axioms of $T$ suffices, or we can systematically generate all sentences (e.g., in lexicographic order) and test whether they are axioms.} If $\varphi$ is valid in $T$, the construction will end in finitely many steps and we can easily verify that the tableau is contradictory; otherwise, it may not halt.
 
-If $T$ is complete, we know that exactly one of the following holds: either $T \proves \varphi$ or $T \proves \neg \varphi$. We will then construct parallel tableaux for $\F \varphi$ and $\T \varphi$ (proof and refutation of $\varphi$ from $T$): one of the constructions will halt after finitely many steps.
+If $T$ is complete, we know that exactly one of the following holds: either $T \proves \varphi$ or $T \proves \neg \varphi$. We can therefore start constructing, in parallel, tableaux for $\F \varphi$ and for $\T \varphi$ (proof and refutation of $\varphi$ from $T$): one of the constructions will halt after finitely many steps.
 \end{proof}
 
 
 \subsection{Recursively Enumerable Completion}
 
-The requirement of completeness is too strong; we will show that it suffices if we can effectively describe all complete simple extensions.\footnote{I.e., `all models up to elementary equivalence'.}
+The requirement of completeness is too strong; we now show that it suffices to eb able to effectively describe all complete simple extensions.\footnote{I.e., `all models up to elementary equivalence'.}
 
 \begin{definition}[Recursively Enumerable Completion]
-We say that a theory $T$ has a \emph{recursively enumerable completion} if (some) set up to equivalence of all simple complete extensions of the theory $T$ is \emph{recursively enumerable}, i.e., there is an algorithm that, for a given pair of natural numbers $(i,j)$, outputs the $i$-th axiom of the $j$-th extension (in some fixed order\footnote{Here, we need the language to be countable.}), or answers that such an axiom does not exist.\footnote{If there are fewer than $j$ extensions or if the $j$-th extension has fewer than $i$ axioms.}
+We say that a theory $T$ has \emph{recursively enumerable completion} if (some) set of up to equivalence all complete simple extensions of the theory $T$ is \emph{recursively enumerable}, i.e., there is an algorithm that, for a given pair of natural numbers $(i,j)$, outputs the $i$-th axiom of the $j$-th extension (in some fixed order\footnote{Here, we need the language to be countable.}), or answers that such an axiom does not exist.\footnote{If there are fewer than $j$ extensions or if the $j$-th extension has fewer than $i$ axioms.}
 \end{definition}
 
 \begin{proposition}\label{propositon:recursively-enumerable-completion}    
     If a theory $T$ is recursively axiomatized and has a recursively enumerable completion, then $T$ is decidable.
 \end{proposition}
 \begin{proof}
-For a given sentence $\varphi$, either $T \proves \varphi$, or there is a counterexample $\A \not\models \varphi$, i.e., a complete simple extension $T_i$ of the theory $T$ such that $T_i \not\proves \varphi$. From completeness, it follows that $T_i \proves \neg \varphi$. Our algorithm will construct in parallel the tableau proof of $\varphi$ from $T$ and (sequentially) the tableau proofs of $\neg \varphi$ from all complete simple extensions $T_1, T_2, \dots$ of the theory $T$.\footnote{It does not matter that there are infinitely many of them; we can use so-called \emph{dovetailing}: Perform the 1st step of constructing the 1st tableau, then the 2nd step of the 1st tableau and the 1st step of the 2nd tableau, the 3rd step of the 1st tableau, the 2nd step of the 2nd tableau, the 1st step of the 3rd tableau, etc.} We know that at least one of the parallel constructed tableaux is contradictory, and we can assume it is finite (if we do not extend contradictory branches of the tableau), so the algorithm will construct it after finitely many steps.
+For a given sentence $\varphi$, either $T \proves \varphi$, or there is a counterexample $\A \not\models \varphi$, thus also a complete simple extension $T_i$ of the theory $T$ such that $T_i \not\proves \varphi$. From the completeness of $T_i$, it follows that $T_i \proves \neg \varphi$. Our algorithm will construct in parallel the tableau proof of~$\varphi$ from $T$ and (gradually) the tableau proofs of $\neg \varphi$ from all complete simple extensions $T_1, T_2, \dots$ of the theory $T$.\footnote{It does not matter that there are infinitely many of them; we can use so-called \emph{dovetailing}: Perform the 1st step of constructing the 1st tableau, then the 2nd step of the 1st tableau and the 1st step of the 2nd tableau, the 3rd step of the 1st tableau, the 2nd step of the 2nd tableau, the 1st step of the 3rd tableau, etc.} We know that at least one of the tableaux that we are constructing in parallel is contradictory, and we can assume it is finite (as long as we do not extend contradictory branches of the tableau), so the algorithm will finish constructing it after finitely many steps.
 \end{proof}
 
 \begin{exercise}
-Show that the following theories have a recursively enumerable completion:
+Show that the following theories have recursively enumerable completion:
 \begin{itemize}
 \item The theory of pure equality (the empty theory in the language $L = \langle \rangle$ with equality),
-\item The theory of a unary predicate (the empty theory in the language $L = \langle U \rangle$ with equality, where $U$ is a unary relation symbol),
-\item The theory of dense linear orders DeLO* (the complete simple extensions are described in Corollary \ref{corollary:complete-simple-extensions-of-delo}),
+\item The theory of unary predicate (the empty theory in the language $L = \langle U \rangle$ with equality, where $U$ is a unary relation symbol),
+\item The theory of dense linear order DeLO* (the complete simple extensions are described in Corollary \ref{corollary:complete-simple-extensions-of-delo}),
 \end{itemize}
 These are recursively axiomatized theories (as they are finite), so they are decidable.
 \end{exercise}
 
 \begin{example}
-    Finally, without proof, let us mention a few more examples of decidable theories:
+    Finally, let us mention without proof a few more examples of decidable theories:
     \begin{itemize}  
         \item The theory of Boolean algebras (Alfred Tarski 1940),
         \item The theory of algebraically closed fields (Tarski 1949),
         \item The theory of commutative groups (Wanda Szmielew 1955).
     \end{itemize}
-    These theories are also incomplete, but recursively axiomatized and have a recursively enumerable completion.    
+    These theories are also not complete, but recursively axiomatized and have recursively enumerable completion.    
 \end{example}
 
  
@@ -94,7 +94,7 @@ A class of $L$-structures $K \subseteq \M_L$ is \emph{recursively axiomatizable}
     Similarly, we could define \emph{recursively enumerable axiomatizability}.
 \end{remark}
 
-Let us show the following simple proposition:
+Let us prove the following simple proposition:
 
 \begin{proposition}
     If $\A$ is a finite structure in a finite language with equality, then the theory $\Th(\A)$ is recursively axiomatizable.
@@ -103,13 +103,13 @@ Let us show the following simple proposition:
     It follows that $\Th(\A)$ is decidable, which is not surprising: the validity of a sentence $\varphi$ in a finite structure $\A$ can be easily verified.
 \end{remark}
 \begin{proof}
-    Let us enumerate the elements of the domain as $A = \{a_1, \dots, a_n\}$. The theory $\Th(\A)$ can be axiomatized by a single sentence of the form ``there exist exactly $n$ elements $a_1, \dots, a_n$ satisfying precisely those \emph{basic relations} on function values and relations that hold in the structure $\A$''.\footnote{For example, if $f^\A(a_4, a_2) = a_{17}$, we add the atomic formula $f(x_{a_4}, x_{a_2}) = x_{a_{17}}$ to the conjunction (where $x_{a_i}$ are variables corresponding to the individual elements). And if $(a_3, a_3, a_1) \notin R^\A$, we add $\neg R(x_{a_3}, x_{a_3}, x_{a_1})$.}    
+    Let us enumerate the elements of the domain as $A = \{a_1, \dots, a_n\}$. The theory $\Th(\A)$ can be axiomatized by a single sentence of the form ``there exist exactly $n$ elements $a_1, \dots, a_n$ satisfying precisely those \emph{`basic relationships'} on function values and relation tuples that hold in the structure $\A$''.\footnote{For example, if $f^\A(a_4, a_2) = a_{17}$, we add the atomic formula $f(x_{a_4}, x_{a_2}) = x_{a_{17}}$ to the conjunction (where $x_{a_i}$ are variables corresponding to the individual elements). And if $(a_3, a_3, a_1) \notin R^\A$, we add $\neg R(x_{a_3}, x_{a_3}, x_{a_1})$.}    
 \end{proof}
  
 Let us give some standard examples of structures that can be `described algorithmically':
 
 \begin{example}\label{example:structures-recursively-axiomatizable}
-For the following structures, $\Th(\A)$ is recursively axiomatizable and thus decidable:
+For the following structures, $\Th(\A)$ is recursively axiomatizable, and thus decidable:
 
 \begin{itemize}
     \item $\langle \mathbb{Z}, \leq \rangle$, this is the so-called theory of \emph{discrete linear orders},        
@@ -127,20 +127,20 @@ For the following structures, $\Th(\A)$ is recursively axiomatizable and thus de
 
 
 \begin{remark}\label{remark:std-arithmetic-not-recursively-axiomatizable}
-    As follows from Gödel's First Incompleteness Theorem (see below), the \emph{standard model of arithmetic}, i.e., the structure $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$, does \emph{not} have a recursively axiomatizable theory.
+    As follows from Gödel's First Incompleteness Theorem (see below), the \emph{standard model of arithmetic}, i.e., the structure $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$, does \emph{not} have recursively axiomatizable theory.
 \end{remark}
 
 
 \section{Arithmetic}
 
-The properties of natural numbers play an important role not only in mathematics but also in cryptography, for example. Recall that the language of arithmetic is the language $L = \langle S, +, \cdot, 0, \leq \rangle$ with equality. As mentioned in Remark \ref{remark:std-arithmetic-not-recursively-axiomatizable}, the so-called \emph{standard model of arithmetic} $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$ does not have a recursively axiomatizable theory. Therefore, we use recursively axiomatized theories that attempt to describe the properties of $\underline{\mathbb{N}}$ partially; these theories are called \emph{arithmetics}.
+The properties of natural numbers play an important role not only in mathematics but also, for example, in cryptography. Recall that the language of arithmetic is the language $L = \langle S, +, \cdot, 0, \leq \rangle$ with equality. As mentioned in Remark \ref{remark:std-arithmetic-not-recursively-axiomatizable}, the so-called \emph{standard model of arithmetic} $\underline{\mathbb{N}} = \langle \mathbb{N}, S, +, \cdot, 0, \leq \rangle$ does not have a recursively axiomatizable theory. Therefore, we use recursively axiomatized theories that attempt to describe the properties of $\underline{\mathbb{N}}$ partially; these theories are called \emph{arithmetics}.
 
 \subsection{Robinson and Peano Arithmetic}
 
 We will mention only the two most important examples of arithmetics: \emph{Robinson arithmetic} and \emph{Peano arithmetic}.
 
 \begin{definition}[Robinson Arithmetic]
-\emph{Robinson arithmetic} is the theory $Q$ in the language of arithmetic consisting of the following (finite) axioms:
+\emph{Robinson arithmetic} is the theory $Q$ in the language of arithmetic consisting of the following (finite) set of axioms:
 \begin{align*}
     &\neg S(x) = 0& &x \cdot 0 = 0\\
     &S(x) = S(y) \rightarrow x = y& &x \cdot S(y) = x \cdot y + x\\
@@ -151,54 +151,54 @@ We will mention only the two most important examples of arithmetics: \emph{Robin
 
 Robinson arithmetic is very weak; it cannot prove, for example, the commutativity or associativity of addition or multiplication, or the transitivity of order.
 
-On the other hand, it can prove all \emph{existential statements about numerals} that are true in $\underline{\mathbb{N}}$. By this, we mean formulas that, in prenex form, have only existential quantifiers, and into which we have substituted \emph{numerals} $\underline{n} = S(\dots S(0) \dots)$ for the free variables.
+On the other hand, it can prove all \emph{existential statements about numerals} that are valid in $\underline{\mathbb{N}}$. By this, we mean formulas that, in prenex form, have only existential quantifiers, and into which we have substituted \emph{numerals} $\underline{n} = S(\dots S(0) \dots)$ for the free variables.
 
 \begin{example}
-For instance, for the formula $\varphi(x,y)$ of the form $(\exists z)(x + z = y)$, $Q \proves \varphi(\underline{1}, \underline{2})$, where $\underline{1} = S(0)$ and $\underline{2} = S(S(0))$.    
+For instance, for the formula $\varphi(x,y)$ of the form $(\exists z)(x + z = y)$, we have that $Q \proves \varphi(\underline{1}, \underline{2})$, where $\underline{1} = S(0)$ and $\underline{2} = S(S(0))$.    
 \end{example}
 
-Thus, the following proposition holds, which we will leave without proof.
+Thus, the following proposition holds; we will omit the proof.
 
 \begin{proposition}\label{proposition:robinson-satisfies-existence-about-numerals}
-    If $\varphi(x_1, \dots, x_n)$ is an existential formula and $a_1, \dots, a_n \in \mathbb{N}$, then it holds that:
+    If $\varphi(x_1, \dots, x_n)$ is an existential formula and $a_1, \dots, a_n \in \mathbb{N}$, then:
     $$
     Q \proves \varphi(x_1 / \underline{a_1}, \dots, x_n / \underline{a_n}) \text{ if and only if } \underline{\mathbb{N}} \models \varphi[e(x_1 / a_1, \dots, x_n / a_n)]
     $$
 \end{proposition}
 
-A useful extension of Robinson arithmetic is the so-called Peano arithmetic, in which \emph{induction} can be proved:
+A useful extension of Robinson arithmetic is the so-called Peano arithmetic, which allows for \emph{proof by induction}:
 
 \begin{definition}[Peano Arithmetic]
-\emph{Peano arithmetic} $\text{\it PA}$ is an extension of Robinson arithmetic $Q$ with the \emph{induction schema}, i.e., for each $L$-formula $\varphi(x, \overline{y})$, the following axiom is added:
+\emph{Peano arithmetic} $\text{\it PA}$ is an extension of Robinson arithmetic $Q$ with the \emph{axiom schema of induction}, i.e., for each $L$-formula $\varphi(x, \overline{y})$, the following axiom is added:
 $$
 (\varphi(0, \overline{y}) \land (\forall x)(\varphi(x, \overline{y}) \limplies \varphi(S(x), \overline{y}))) \limplies (\forall x)\varphi(x, \overline{y})
 $$
 \end{definition}
 
-Peano arithmetic is a much better approximation of the theory $\Th(\underline{\mathbb{N}})$; it can prove all `basic' properties valid in $\underline{\mathbb{N}}$ (such as the commutativity and associativity of addition). However, there are still sentences in the language of arithmetic that are valid in $\underline{\mathbb{N}}$ but are independent in Peano arithmetic.\footnote{As we will show in Gödel's First Incompleteness Theorem.} 
+Peano arithmetic is a much better approximation of the theory $\Th(\underline{\mathbb{N}})$; it can prove all `basic' properties valid in $\underline{\mathbb{N}}$ (such as the commutativity and associativity of addition). However, there are still sentences in the language of arithmetic that are valid in $\underline{\mathbb{N}}$ but independent in Peano arithmetic.\footnote{As we will show in Gödel's First Incompleteness Theorem.} 
 
 
 \begin{remark}
-    If we move to the logic of \emph{second order}, we could axiomatize the structure $\underline{\mathbb N}$ (up to isomorphism) by extending Peano's arithmetic with the following second-order formula, the so-called \emph{axiom of induction}:
+    If we moved up to \emph{second-order} logic, we could axiomatize the structure $\underline{\mathbb N}$ (up to isomorphism) by extending Peano's arithmetic with the following second-order formula, the so-called \emph{axiom of induction}:
     $$
     (\forall X)((X(0) \land (\forall x)(X(x) \limplies X(S(x)))) \limplies (\forall x)X(x))
     $$
-    Recall that $X$ represents (any) unary relation, or subset of the universe. By using the axiom of induction on the set of successors of 0, we obtain that every element (of the given model) is a successor of zero. Thus, we can construct an isomorphism with $\underline{\mathbb N}$.
+    Recall that $X$ represents (any) unary relation, i.e., subset of the universe. By applying the axiom of induction to the set of all successors of 0, we obtain that every element (of the given model) is a successor of zero. Thus, we can construct an isomorphism with $\underline{\mathbb N}$.
     \end{remark}
     
     \section{Undecidability of Predicate Logic}
     
-    In this section, we will show that it is not possible (algorithmically) to decide the logical validity of first-order formulas. (In other words, the undecidability of the empty theory over a given language.)
+    In this section, we will show that it is not possible to (algorithmically) decide the logical validity of first-order formulas. (In other words, the empty theory over a given language is undecidable.)
     
-    \begin{theorem}[On the undecidability of predicate logic]\label{theorem:undecidability-of-predicate-logic}
-    There is no algorithm that, given an input formula $\varphi$, decides whether it is logically valid.\footnote{That is, whether the formula $\varphi$ is a tautology, or whether $\models\varphi$. Here we are talking about first-order formulas, in any language.}
+    \begin{theorem}[On undecidability of predicate logic]\label{theorem:undecidability-of-predicate-logic}
+    There is no algorithm that, given an input formula $\varphi$, decides whether it is logically valid.\footnote{That is, whether the formula $\varphi$ is a tautology, i.e.,  whether $\models\varphi$. Here we are talking about first-order formulas, in any language.}
     \end{theorem}
     
-    Since we do not yet know the necessary formalism concerning algorithms, such as the concept of a Turing machine, we will choose another \emph{undecidable problem} as a starting point. The most well-known is the so-called \emph{Halting problem}, i.e., the question of whether a given program halts on a given input.\footnote{You will prove its undecidability in the courses NTIN071 Automata and Grammars and again in NTIN090 Foundations of Complexity and Computability.} We will simplify our task by choosing another undecidable problem, the so-called \emph{Hilbert's Tenth Problem}.\footnote{Hilbert posed it in 1900 and published it in 1902 along with 22 other problems, which significantly influenced 20th and 21st-century mathematics. Some remain unsolved, such as the Riemann hypothesis, \href{https://en.wikipedia.org/wiki/Riemann_hypothesis}{see Wikipedia}.}
+    Since we do not yet have the necessary formalism regarding algorithms, such as the notion of a Turing machine, we will choose another \emph{undecidable problem} as a starting point. The most well-known is the so-called \emph{Halting problem}, i.e., the question of whether a given program halts on a given input.\footnote{You will prove its undecidability in the courses NTIN071 Automata and Grammars and again in NTIN090 Foundations of Complexity and Computability.} We will make our task simpler by choosing another undecidable problem, the so-called \emph{Hilbert's Tenth Problem}.\footnote{Hilbert posed it in 1900 and published in 1902 along with 22 other problems; his problems significantly influenced 20th and 21st-century mathematics. Some remain unsolved, such as the Riemann hypothesis, \href{https://en.wikipedia.org/wiki/Riemann_hypothesis}{see Wikipedia}.}
     
     \subsection{Hilbert's Tenth Problem}
     
-    Given a polynomial $p(x_1,\dots,x_n)$ with integer coefficients. Hilbert's Tenth Problem asks for an algorithm that decides whether such an input polynomial has an integer root, or whether the \emph{Diophantine equation} $p(x_1,\dots,x_n)=0$ has an (integer) solution:
+    Let us have a polynomial $p(x_1,\dots,x_n)$ with integer coefficients. Hilbert's Tenth Problem asks for an algorithm that decides whether such an input polynomial has an integer root, or in other words whether the \emph{Diophantine equation} $p(x_1,\dots,x_n)=0$ has an (integer) solution:
     \begin{quote}
         ``Find an algorithm that, after finitely many steps, determines whether a given Diophantine equation with any number of variables and integer coefficients has an integer solution.''
     \end{quote}
@@ -206,26 +206,26 @@ Peano arithmetic is a much better approximation of the theory $\Th(\underline{\m
     If Hilbert had lived to see the resolution of his tenth problem in 1970, he would have been surprised that no such algorithm exists.
     
     \begin{theorem}[Matiyasevich, Davis, Putnam, Robinson]
-    The problem of the existence of an integer solution to a given Diophantine equation with integer coefficients is (algorithmically) undecidable.
+    The problem of existence of an integer solution to a given Diophantine equation with integer coefficients is (algorithmically) undecidable.
     \end{theorem}
     
-    We will not provide the proof here for lack of space. In fact, to prove undecidability, we will use the following corollary, which speaks about polynomials with natural coefficients and solutions in natural numbers.
+    We will not provide the proof here, for lack of space. Actually, to prove undecidability, we will use the following corollary, which talks about polynomials with natural coefficients and solutions in natural numbers.
     
     \begin{corollary}
-    There is no algorithm that, given a pair of polynomials $p(x_1,\dots,x_n)$ and $q(x_1,\dots,x_n)$ with \emph{natural} coefficients, decides whether they have a natural solution, i.e., whether:
+    There is no algorithm that, given a pair of polynomials $p(x_1,\dots,x_n)$ and $q(x_1,\dots,x_n)$ with \emph{natural} coefficients, decides whether they have a natural solution, i.e., whether it holds that
     $$
     \underline{\mathbb N}\models(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)
     $$
     \end{corollary}
     \begin{proof}[Proof of the corollary]
-    The proof is straightforward, utilizing the fact that every integer can be expressed as the difference of a pair of natural numbers, and conversely, every natural number can be expressed as the sum of four squares (of integers).\footnote{The so-called Lagrange's Four Square Theorem.} Thus, any Diophantine equation can be transformed into an equation from the corollary, and vice versa.
+    The proof is straightforward, utilizing the fact that every integer can be expressed as the difference of a pair of natural numbers, and conversely, every natural number can be expressed as the sum of four squares (of integers).\footnote{The so-called Lagrange's Four-Square Theorem.} Thus, any Diophantine equation can be transformed into an equation from the corollary, and vice versa.
     \end{proof}
     
     \subsection{Proof of Undecidability}
     
-    Recall that Robinson's arithmetic $Q$ has only finitely many axioms, $\underline{\mathbb N}$ is its model, and it can prove all \emph{existential statements about numerals} true in $\underline{\mathbb N}$. We are now ready to prove the theorem on the undecidability of predicate logic.
+    Recall that Robinson's arithmetic $Q$ has only finitely many axioms, $\underline{\mathbb N}$ is its model, and it can prove all \emph{existential statements about numerals} valid in $\underline{\mathbb N}$. We are now ready to prove the theorem on undecidability of predicate logic.
     
-    \begin{proof}[Proof of the theorem on the undecidability of predicate logic]
+    \begin{proof}[Proof of the theorem on undecidability of predicate logic]
     Consider a formula $\varphi$ of the form 
     $$(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)
     $$ 
@@ -314,11 +314,11 @@ Peano arithmetic is a much better approximation of the theory $\Th(\underline{\m
     \end{quote}
     In natural language, we easily express self-reference with the pronoun ``This'', from the context we know that it refers to the sentence itself. In formal systems, however, we typically do not have self-reference directly available. We usually have \emph{direct reference} available, as in the following example:
     \begin{quote}
-        \texttt{The following sentence has 29 characters. "The following sentence has 29 characters."}
+        \texttt{The following sentence has 29 characters. ``The following sentence has 29 characters.''}
     \end{quote}
     Here, however, there is no self-reference. We help ourselves with a trick we will call `doubling':
     \begin{quote}
-        \texttt{The following sentence, written once and again in quotes, has 149\\ characters. "The following sentence, written once and again in quotes\\ has 149 characters."}
+        \texttt{The following sentence, written once and again in quotes, has 149\\ characters. ``The following sentence, written once and again in quotes\\ has 149 characters.''}
     \end{quote}
     Using direct reference and doubling, we can obtain self-reference.
     \begin{remark}

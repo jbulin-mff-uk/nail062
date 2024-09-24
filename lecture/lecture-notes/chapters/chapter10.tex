@@ -2,13 +2,13 @@
 
 V této, závěrečné kapitole se budeme zabývat tím, jak lze s teoriemi pracovat algoritmicky. Zlatým hřebem budou \emph{Gödelovy věty o neúplnosti} z roku 1931, které ukazují limity formálního přístupu, a které zastavily desetiletí trvající program formalizace matematiky. Nemáme zde dostatek prostoru k uvedení formálních definic a úplných důkazů, proto se místy budeme pohybovat na poněkud intuitivní úrovni. Zaměříme se na pochopení smyslu tvrzení a myšlenek důkazů.
 
-Pojem \emph{algoritmu} budeme chápat také jen intuitivně. Pokud bychom ho chtěli formalizovat, potom nejběžnější (ale zdaleka ne jedinou) volbou je koncept \emph{Turingova stroje}.\footnote{Viz přednáška NTIN090 Základy složitosti a vyčíslitelnosti.}
+Pojem \emph{algoritmu} budeme chápat také jen intuitivně. Pokud bychom ho chtěli formalizovat, potom nejběžnější (ale zdaleka ne jedinou) volbou je koncept \emph{Turingova stroje}.\footnote{Viz přednášky NTIN071 Automaty a gramatiky, NTIN090 Základy složitosti a vyčíslitelnosti.}
 
 \section{Rekurzivní axiomatizace a rozhodnutelnost}
 
 V dokazovacích systémech, kterými jsme se zabývali (tablo metoda, rezoluce, hilbertův kalkulus) jsme povolili, aby teorie $T$, ve které dokazujeme, byla nekonečná. Vůbec jsme se ale zatím nezabývali tím, jak je zadaná. Pokud chceme ověřit, že je daný objekt (tablo, rezoluční strom, posloupnost formulí) korektním důkazem, potřebujeme nějaký algoritmický přístup ke všem axiomům $T$. 
 
-Jednou z možností by bylo požadovat \emph{enumerátor} $T$, tj. algoritmus, který vypisuje na výstup axiomy z $T$, a každý axiom někdy vypíše.\footnote{Nutným předpokladem je, aby $T$ byla spočetná. K tomu stačí předpokládat, že jazyk je spočetný.} Potom by bylo snadné potvrdit, že je daný důkaz korektní. Pokud bychom ale dostali důkaz, který použil chybný axiom, který v $T$ není, nikdy bychom se to nedozvěděli: nekonečně dlouho bychom čekali, zda jej enumerátor přeci jen nevypíše. Požadujeme proto silnější vlastnost, která umožňuje rozpoznat i chybné důkazy \emph{rekurzivní axiomatizaci}:\footnote{Slovo \emph{rekurzivní} zde neznamená běžně známou rekurzi, ale odkazuje na formalizaci algoritmu pomocí `rekurzivních funkcí' od Gödela. Rekurzivní funkce zde znamená totéž, co vyčíslitelná nějakým Turingovým strojem, a teorii vyčíslitelnosti (\emph{computability theory}) se někdy také říká \emph{recursion theory}.}
+Jednou z možností by bylo požadovat \emph{enumerátor} $T$, tj. algoritmus, který vypisuje na výstup axiomy z $T$, a každý axiom někdy vypíše.\footnote{Nutným předpokladem je, aby $T$ byla spočetná. K tomu stačí předpokládat, že jazyk je spočetný.} Potom by bylo snadné potvrdit, že je daný důkaz korektní. Pokud bychom ale dostali důkaz, který použil chybný axiom, který v $T$ není, nikdy bychom se to nedozvěděli: nekonečně dlouho bychom čekali, zda jej enumerátor přeci jen nevypíše. Požadujeme proto silnější vlastnost, která umožňuje rozpoznat i chybné důkazy: \emph{rekurzivní axiomatizaci}.\footnote{Slovo \emph{rekurzivní} zde neznamená běžně známou rekurzi, ale odkazuje na formalizaci algoritmu pomocí `rekurzivních funkcí' od Gödela. Rekurzivní funkce zde znamená totéž, co vyčíslitelná nějakým Turingovým strojem, a teorii vyčíslitelnosti (\emph{computability theory}) se někdy také říká \emph{recursion theory}.}
 
 \begin{definition}[Rekurzivní axiomatizace]
     Teorie $T$ je \emph{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
@@ -41,7 +41,7 @@ Můžeme jako obvykle předpokládat, že $\varphi$ v definici je sentence. Uká
     \end{enumerate}
 \end{proposition}
 \begin{proof}
-Algoritmem ukazujícím částečnou rozhodnutelnost je konstrukce systematického tabla pro $\F\varphi$.\footnote{Zde nám stačí enumerátor axiomů $T$, nebo postupně generujeme všechny sentence (např. v lexikografickém pořadí) a pro každou testujeme, zda je axiomem.} Pokud $\varphi$ v $T$ platí, konstrukce skončí v konečně mnoha krocích a snadno ověříme, že je tablo sporné, jinak ale skončit nemusí.
+Algoritmem ukazujícím částečnou rozhodnutelnost je konstrukce systematického tabla z teorie $T$ pro položku $\F\varphi$.\footnote{Zde nám stačí enumerátor axiomů $T$, nebo postupně generujeme všechny sentence (např. v lexikografickém pořadí) a pro každou testujeme, zda je axiomem.} Pokud $\varphi$ v $T$ platí, konstrukce skončí v konečně mnoha krocích a snadno ověříme, že je tablo sporné, jinak ale skončit nemusí.
 
 Je-li $T$ kompletní, víme, že platí právě jedna z následujících možností: buď $T\proves\varphi$ nebo $T\proves\neg\varphi$. Budeme tedy paralelně konstruovat tablo pro $\F\varphi$ a tablo pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$): jedna z konstrukcí po konečně mnoha krocích skončí.
 \end{proof}

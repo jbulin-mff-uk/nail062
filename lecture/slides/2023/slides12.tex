@@ -1,0 +1,599 @@
+\documentclass{beamer}
+
+\input{slides-header.tex}
+
+\title{Dvanáctá přednáška}
+\subtitle{NAIL062 Výroková a predikátová logika}
+\author{Jakub Bulín (KTIML MFF UK)}
+% \institute{KTIML MFF UK}
+\date{Zimní semestr 2023}
+
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}{Dvanáctá přednáška}
+
+    \textbf{Program}
+        \begin{itemize}
+            \item izomorfismus a konečné modely
+            \item definovatelnost a automorfismy
+            \item $\omega$-kategoricita a úplnost
+            \item axiomatizovatelnost
+            \item rekurzivní axiomatizace a rozhodnutelnost
+        \end{itemize}
+
+    \textbf{Materiály}
+
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 9.2-9.4 z Kapitoly 9, Sekce 10.1 z Kapitoly 10
+
+\end{frame}
+
+
+\section{9.2 Izomorfismus struktur}
+
+
+\begin{frame}{Definice izomorfismu}
+    
+    \myblock{
+        \alert{Izomorfismus} $\A$ a $\B$ (v $L=\langle\mathcal R,\mathcal F\rangle$) je bijekce $h\colon A\to B$ splňující:
+    \begin{itemize}
+        \item pro každý ($n$-ární) $f\in\mathcal F$ a pro všechna $a_i\in A$:
+        \vspace{-6pt}
+        $$
+        h(f^\A(a_1,\dots,a_n))=f^\B(h(a_1),\dots,h(a_n))
+        $$
+        \vspace{-24pt}
+        \item speciálně, je-li $c\in\mathcal F$ konstantní: $h(c^\A)=c^\B$
+        \item pro každý ($n$-ární) $R\in\mathcal R$ a pro všechna $a_i\in A$:
+        \vspace{-6pt}
+        $$
+        R^\A(a_1,\dots,a_n)\ \text{ právě když }\ R^\B(h(a_1),\dots,h(a_n))
+        $$
+        \vspace{-24pt}
+    \end{itemize}
+    Existuje-li, jsou \alert{izomorfní} (`\alert{via $h$}'), \alert{$\A\simeq\B$} (nebo \alert{$\A\simeq_h\B$}).\\
+    \alert{Automorfismus} $\A$ je izomorfismus $\A$ a $\A$.
+    }
+    \vspace{-6pt}
+    \begin{itemize}
+        \item tj. liší se jen `pojmenováním prvků'
+        \item relace `být izomorfní' je ekvivalence
+        \item např. potenční algebra \myexampleinline{\small
+            $\underline{\mathcal P(X)}=\langle \mathcal P(X),-,\cap,\cup,\emptyset,X\rangle$
+         }, $|X|=n$, je izomorfní s {\small $\underline{2^n}=\langle \{0,1\}^n,-_n,\land_n,\lor_n,(0,\dots,0),(1,\dots,1)\rangle$} (operace po složkách) via \alert{$h(A)=\chi_A$} (charakt. vektor $A\subseteq X$)
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Izomorfismus zachovává sémantiku \& vztah $\simeq$ a $\equiv$}
+        
+    \myblock{
+        \textbf{Tvrzení:} Bijekce $h\colon A\to B$ je izomorfismus $\A$ a $\B$, právě když:
+        \begin{enumerate}[(i)]
+            \item pro každý term $t$ a $e:\Var\to A$:\hfill
+            \alert{$h(t^\A[e])=t^\B[e\circ h]$}
+            \item pro každou $\varphi$ a $e:\Var\to A$:\hfill
+            \alert{$\A\models\varphi[e]\Leftrightarrow\B\models\varphi[e\circ h]$}
+        \end{enumerate}
+    }
+
+    \textbf{Důkaz:} \alert{\Large$\Rightarrow$} snadno indukcí podle struktury termu resp. formule
+
+    \alert{\Large$\Leftarrow$} je-li $h$ bijekce splňující (i)\&(ii), dosazení $t=f(x_1,\dots,x_n)$ resp. $\varphi=R(x_1,\dots,x_n)$ dává vlastnosti z definice izomorfismu \hfill\qedsymbol
+
+    \myblock{
+        \textbf{Důsledek:} 
+        $\A\simeq\B\ \Rightarrow\ \A\equiv\B$.
+    }
+    \textbf{Důkaz:} pro každou sentenci $\varphi$ máme z (ii) $\A\models\varphi\Leftrightarrow\B\models\varphi$\hfill\qedsymbol
+    
+    Naopak obecně ne, \myexampleinline{
+        $\langle\mathbb Q,\leq \rangle\equiv\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq \rangle\not\simeq \langle \mathbb R,\leq\rangle$
+    } Platí ale:
+
+    \myblock{\textbf{Tvrzení:}
+        Jsou-li $\A,\B$ konečné v jazyce s rovností, potom
+        \vspace{-9pt}
+        $$
+        \A\simeq\B\ \Leftrightarrow\ \A\equiv\B
+        $$
+        \vspace{-20pt}        
+    }
+
+    \myblock{
+        \textbf{Důsledek}
+        Pokud má kompletní teorie v jazyce s rovností konečný model, potom jsou všechny její modely izomorfní.
+    }   
+    
+\end{frame}
+
+
+\begin{frame}{Důkaz $\equiv\ \Rightarrow\ \simeq$ pro konečné struktury s rovností}
+    
+    \vspace{-6pt}
+    Díky $=$ vyjádříme ``existuje právě $n$ prvků'', z toho plyne \alert{$|A|=|B|$}.    
+    Buď $\A'$ expanze $\A$ o jména prvků, v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme, že $\B$ \alert{lze expandovat} na $L'$-strukturu $\B$ \alert{tak, že $\A'\equiv \B'$}.     
+    Potom je \alert{$h(a)= c_a^{\B'}$} izomorfismus $\A'$ a $\B'$, i pro $L$-redukty $\A\simeq\B$.
+    
+    Stačí ukázat, že \alert{pro $c_a^{\A'}=a\in A$ existuje $b\in B$} tak, že expanze o interpretaci konstantního symbolu $c_a$ splňují \alert{$\langle \A,a\rangle\equiv\langle\B,b\rangle$}. 
+    
+    Buď $\Omega$ množina `\alert{vlastností prvku $a$}', tj. formulí $\varphi(x)$ splňujících $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná, existuje \alert{konečně mnoho $\varphi_1(x),\dots,\varphi_m(x)$} tak, že pro každou $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$. %(neboť $\A\equiv\B$, stačí vzít generální uzávěr, což je sentence).
+        
+        Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Neboli existuje $b\in B$ takové, že $\B\models \bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Definovatelnost a automorfismy}
+
+    definovatelné množiny jsou \alert{invariantní} na automorfismy (např. automorfismus grafu musí zobrazit trojúhelník na trojúhelník):
+
+    \medskip
+
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $D\subseteq A^n$ definovatelná v $\A$, potom pro každý automorfismus $h\in\Aut(\A)$ platí $h[D]=D$ (kde $h[D]$ značí $\{(h(\overline{a})\mid\overline{a}\in D\}$).
+    
+        Je-li definovatelná s parametry $\overline{b}$, platí to pro automorfismy identické na $\overline{b}$ (tj. $h(\overline{b})=\overline{b}$ neboli $h(b_i)=b_i$ pro všechna $i$).
+    }
+
+    \textbf{Důkaz:}
+    Ukážeme jen verzi s parametry. Nechť $D=\varphi^{\A,\overline{b}}(\overline{x},\overline{y})$. Potom pro každé $\overline{a}\in A^n$ platí následující ekvivalence:
+    \begin{align*}
+    \overline{a}\in D\ 
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\  \A\models \varphi[(e\circ h)(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/h(\overline{b}))]\\
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\ h(\overline{a})\in D.
+    \end{align*}
+
+    \vspace{-0.85cm}
+    \hfill\qedsymbol    
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    \vspace{6pt}
+
+    \begin{columns}
+
+        \begin{column}{0.8\textwidth}            
+            Množiny definovatelné s parametrem $0$, $\mathrm{Df}^1(\mathcal G,\{0\})$? Jediný netriviální automorfismus zachovávající $0$: \alert{$h(i)=(5-i) \bmod 5$}, orbity $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:            
+        \end{column} 
+
+        \begin{column}{0.2\textwidth}            
+            \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.4cm,node distance=1cm}]
+                \node (1) {$1$};
+                \node[below left of=1](0) {$0$};
+                \node[below right of=0] (4) {$4$};
+                \node[right of=4] (3) {$2$};
+                \node[right of=1] (2) {$3$};
+                \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
+            \end{tikzpicture}                        
+        \end{column}
+
+    \end{columns}
+
+    \begin{itemize}
+        \item $\{0\}$ formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$
+        \item $\{1,4\}$ lze definovat pomocí $E(x,y)$
+        \item $\{2,3\}$ formulí $\neg E(x,y)\land \neg x=y$
+    \end{itemize}
+    $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra $\underline{\mathcal P(V(\mathcal G))}$, tedy uzavřená na doplněk, sjednocení, průnik, obsahuje $\emptyset$ a $V(\mathcal G)$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:
+    \begin{align*}        
+        \mathrm{Df}^1(\mathcal G,\{0\})=\{&\emptyset, \{0\}, \{1,4\}, \{2,3\}, \{0,1,4\}, \{0,2,3\}, \\ &\{1,4,2,3\}, \{0,1,2,3,4\}\}        
+    \end{align*}
+    
+\end{frame}
+
+
+\section{9.3 $\omega$-kategorické teorie}
+
+
+\begin{frame}{$\omega$-kategorické teorie}
+
+    \vspace{-8pt}
+    \alert{Izomorfní spektrum} $T$ je počet modelů $T$ kardinality $\kappa$ až na $\simeq$.\\
+    $T$ je \alert{$\kappa$-kategorická} pokud $I(\kappa,T)=1$, \alert{$\omega$-kategorická} má-li jediný spočetně nekonečný model až na izomorfismus.
+
+    \vspace{-3pt}
+    \myblock{
+        \textbf{Tvrzení:}
+        Teorie DeLO je $\omega$-kategorická.
+    }
+    \textbf{Důkaz:}
+    Buďte $\A,\B$ spočetně nekonečné modely, $A=\{a_i\mid i\in\mathbb N\}$, $B=\{b_i\mid i\in\mathbb N\}$. Z hustoty najdeme indukcí $h_0\subseteq h_1\subseteq h_2\subseteq\dots$ prosté parciální fce z $A$ do $B$ zach. usp., $\{a_0,\dots,a_{n-1}\}\subseteq\dom h_n$, $\{b_0,\dots,b_{n-1}\}\subseteq\rng h_n$. Potom $\A\simeq\B$ via $h=\bigcup_{n\in\mathbb N}h_n$.
+    \hfill\qedsymbol
+
+    \myblock{
+        \textbf{Důsledek:}
+        Izomorfní spektrum teorie DeLO*:
+        \vspace{-3pt}
+        \begin{itemize}
+            \item $I(\kappa,DeLO^*)=0$ pro $\kappa\in\mathbb{N}$
+            \item $I(\omega,DeLO^*)=4$
+        \end{itemize}      
+        \vspace{-3pt}
+        Spočetné modely až na izomorfismus jsou například:
+        \vspace{-9pt}
+        $$ 
+        \mathbb Q=\langle \mathbb Q,\leq\rangle\simeq\mathbb Q\upharpoonright(0,1), \ \mathbb Q\upharpoonright(0,1], \ \mathbb Q \upharpoonright [0,1), \ \mathbb Q \upharpoonright [0,1]
+        $$
+        \vspace{-20pt}
+    }
+    \textbf{Důkaz:}
+    Husté uspořádání nemůže být konečné. Izomorfismus zobrazí minimum na minimum a maximum na maximum.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{$\omega$-kategorické kritérium kompletnosti}
+
+    %\alert{$\omega$-kategoricita} je zeslabení pojmu \alert{kompletnosti}
+
+    \myblock{
+        \textbf{Věta:}
+        Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li
+        \begin{enumerate}[(i)]
+            \item $L$ bez rovnosti, nebo
+            \item $L$ s rovností a $T$ nemá konečné modely,
+        \end{enumerate}
+        potom je $T$ kompletní.
+    }
+
+    \textbf{Důkaz:}
+    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elementárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.
+    
+    \alert{(ii)} Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali. \hfill\qedsymbol
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        $\DeLO$, $\DeLO^+$, $\DeLO^-$, a $\DeLO^\pm$ jsou kompletní, jsou to všechny (navzájem neekvivalentní) kompletní jedn. extenze $DeLO^*$.
+    }
+
+    Analogické kritérium platí i pro kardinality $\kappa$ větší než $\omega$.
+
+\end{frame}
+
+
+\section{9.4 Axiomatizovatelnost}
+
+
+\begin{frame}{Axiomatizovatelnost}
+        
+    Třída struktur $K\subseteq\M_L$ je:
+    
+    \begin{itemize}
+        \item \alert{axiomatizovatelná}, existuje-li teorie $T$ taková, že $\M_L(T)=K$
+        \item \alert{konečně}/\alert{otevřeně} axiomatiz., je-li ax. konečnou/otevřenou $T$
+        \item teorie $T'$ je \alert{konečně}/\alert{otevřeně} axiomatizovatelná, platí-li to o třídě jejích modelů $K=\M_L(T')$
+    \end{itemize}
+
+    \textbf{Pozorování:} Je-li $K$ axiomatizovatelná, musí být uzavřená na $\equiv$.
+
+    \medskip
+    
+    \myexample{
+    Například, jak ukážeme:
+    \begin{itemize}
+        \item grafy a částečná uspořádání jsou konečně i otevřeně ax.
+        \item tělesa jsou konečně, ale ne otevřeně axiomatizovatelná
+        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně
+        \item konečné grafy nejsou axiomatizovatelné
+    \end{itemize}
+    }
+
+\end{frame}
+
+
+\begin{frame}{Neaxiomatizovatelnost konečných modelů}
+
+    \smallskip
+
+    \myblock{
+        \textbf{Věta:}
+        Má-li $T$ libovolně velké konečné modely, má i nekonečný model. Potom není třída jejích konečných modelů axiomatizovatelná.
+    }
+
+    \textbf{Důkaz:}
+    \alert{Je-li jazyk bez rovnosti,} vezmeme  kanonický model pro bezespornou větev v tablu z $T$ pro $\F\bot$ ($T$ je bezesporná).
+    
+    \alert{Je-li jazyk s rovností,} přidáme spočetně mnoho nových konst. symbolů $c_i$ a vezmeme extenzi: \myalertinline{
+        $T'=T \cup \{\neg c_i = c_j \mid i\neq j\in\mathbb N\}$
+    }
+
+    \vspace{-2pt}
+
+    Každá \alert{konečná část} $T'$ má model: buď $k$ největší, že $c_k$ je v této konečné části: lib. $\geq(k+1)$-prvkový model,21 interpretuj $c_0,\dots,c_k$ jako různé prvky.
+
+    \vspace{-2pt}
+
+    \alert{Věta o kompaktnosti} dává model $T'$, ten je nekonečný, redukt na původní jazyk (zapomenutí $c_i^\A$) je nekonečný model $T$.\hfill\qedsymbol
+
+    \begin{itemize}
+        \item např. \myexampleinline{konečné grafy} nejsou axiomatizovatelné
+        \item \alert{nekonečné modely} teorie jsou vždy axiomatizovatelné, máme-li rovnost: stačí přidat \myalertinline{`existuje alespoň $n$ prvků'} pro vš. $n\in\mathbb N$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Konečná axiomatizovatelnost}
+    
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (O konečné axiomatizovatelnosti):}
+        $K\subseteq \M_L$ je konečně axiomatizovatelná, právě když $K$ i $\overline{K}=\M_L\setminus K$ jsou axiomatizovatelné.
+    }
+
+    \textbf{Důkaz:} \alert{\Large$\Rightarrow$}
+    Je-li $K$ axiomatizovatelná \alert{sentencemi} $\varphi_1,\dots,\varphi_n$ (vezmi gen. uzávěry), potom $\neg(\varphi_1\land\varphi_2\land\dots\land\varphi_n)$ axiomatizuje $\overline{K}$.
+
+    \alert{\Large$\Leftarrow$} Buď $K=\M(T)$ a $\overline{K}=\M(S)$. Potom  \alert{$T\cup S$ je sporná}, neboť:
+    $$
+    \M(T\cup S)=\M(T)\cap \M(S)=K\cap\overline{K}=\emptyset
+    $$
+    \alert{Věta o kompaktnosti} dává konečné $T'\subseteq T$ a $S'\subseteq S$ takové, že:
+    $$
+    \emptyset = \M(T'\cup S')=\M(T')\cap \M(S')
+    $$
+    Nyní si všimněme, že platí:
+    $$
+    \M(T)\subseteq \M(T')\subseteq \overline{\M(S')}\subseteq \overline{\M(S)}=\M(T)
+    $$
+    Tím jsme dokázali, že \alert{$M(T)=M(T')$}, neboli $T'$ je konečná axiomatizace $K$. \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Tělesa charakteristiky 0 nejsou konečně axiomatizovatelná}
+
+    Buď $T$ teorie těles. Těleso $\A=\langle A,+,-,0,\cdot,1 \rangle$ je
+    \vspace{-6pt}
+    \begin{itemize}
+        \item \alert{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ je term $1+1+\dots+1$ (s $p$ jedničkami),
+        \item \alert{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné $p$.
+        \item Tělesa charakteristiky $p$ jsou konečně axiomatizovatelná: \myalertmath{\small
+            $$
+            T_p=T\cup \{p1=0\}
+            $$
+        }
+        \item Tělesa char. 0 jsou axiomatizovatelná, ale ne konečně: \myalertmath{\small
+            $$
+            T_0=T\cup \{\neg\, p1=0\mid p\text{ prvočíslo}\}
+            $$
+        }
+    \end{itemize}
+    \myblock{\vspace{2pt}
+        \textbf{Tvrzení:}
+        Třída $K$ těles char. $0$ není konečně axiomatizovatelná.
+        \vspace{2pt}
+    }
+    
+    \textbf{Důkaz:}
+    Stačí ukázat, že $\overline{K}$ (tělesa nenulové char. a netělesa) není axiomatizovatelná. \alert{Sporem: $\overline{K}=\M(S)$.} Potom  
+    $S'=S\cup T_0$ má model, neboť každá konečná část má model: těleso charakteristiky větší než jakékoliv $p$ z axiomu $T_0$ tvaru $\neg\, p1=0$. Je-li $\A$ je model $S'$, potom $\A\in\M(S)=\overline{K}$. Zároveň ale $\A\in\M(T_0)=K$, spor.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Otevřená axiomatizovatelnost}
+
+    \smallskip
+
+    \myblock{\vspace{2pt}
+        \textbf{Tvrzení:}
+        Je-li $T$ otevřeně axiomatizovatelná, potom je každá podstruktura modelu $T$ také modelem $T$.
+        \vspace{2pt}  
+    }
+    
+    \textbf{Důkaz:}
+    Buď $T'$ otevřená axiomatizace $T$, $\A$ model $T'$, $\B\subseteq\A$. Pro každou $\varphi\in T'$ platí $\B\models\varphi$ ($\varphi$ je otevřená), tedy i $\B\models T'$.  
+    \hfill\qedsymbol
+
+    \textbf{Poznámka:} Platí i obráceně, je-li každá podstruktura modelu také model, potom je otevřeně axiomatizovatelná. (Důkaz neuvedeme.)
+
+    \begin{itemize}
+        \item \myexampleinline{DeLO} není otevřeně axiomatizovatelná, např. žádná konečná podstruktura modelu DeLO není hustá
+        \item \myexampleinline{teorie těles} není otevřeně axiomatizovatelná, podstruktura $\mathbb Z\subseteq\mathbb Q$ není těleso, nemá inverzní prvek k $2$ vůči násobení
+        \item pro dané $n\in\mathbb N$ jsou \myexampleinline{nejvýše $n$-prvkové grupy} otevřeně axiomatizovatelné (i jejich podgrupy jsou nejvýše $n$-prvkové); k (otevřené) teorii grup stačí přidat: \myalertinline{
+            $\bigvee_{1\leq i<j\leq n+1}x_i=x_j$
+        }
+    \end{itemize}
+
+\end{frame}
+
+
+\section{\sc Kapitola 10: Nerozhodnutelnost a neúplnost}
+
+
+\begin{frame}{Nerozhodnutelnost a neúplnost}
+
+    Jak lze s teoriemi pracovat algoritmicky?
+
+    \medskip
+
+    + zlatý hřeb přednášky: \alert{Gödelovy věty o neúplnosti} (1931)
+    \begin{itemize}
+        \item ukazují limity formálního přístupu
+        \item zastavily program formalizace matematiky
+        \item pojem \alert{algoritmu} budeme chápat jen intuitivně
+        \item technické podrobnosti důkazů vynecháme
+        
+    \end{itemize}
+
+    Typicky potřebujeme spočetný jazyk.
+     
+\end{frame}
+
+
+\section{10.1 Rekurzivní axiomatizace a rozhodnutelnost}
+
+
+\begin{frame}{Rekurzivní axiomatizace}
+
+    \begin{itemize}
+        \item v dokazování povolujeme nekonečné teorie, jak jsou zadané?
+        \item pro ověření že daný důkaz (např. tablo, rezoluční zamítnutí) je korektní potřebujeme algoritmický přístup ke všem axiomům
+        \item mohli bychom požadovat \alert{enumerátor} pro $T$, tj. algoritmus, který vypisuje axiomy z $T$, a každý axiom někdy vypíše
+        \item ale kdyby byl v důkazu chybný axiom, nikdy bychom se to nedozvěděli: stále bychom čekali, zda ho enumerátor vypíše
+        \item proto požadujeme silnější vlastnost:
+    \end{itemize}
+
+    \myblock{
+        $T$ je \alert{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
+    }
+
+    (ekvivalentní enumerátoru vypisujícímu axiomy v lexikograf. pořadí)  
+
+\end{frame}
+
+
+\begin{frame}{Rozhodnutelnost}
+
+    \vspace{-3pt}
+    Můžeme v dané teorii \alert{`algoritmicky rozhodovat pravdu'}?
+
+    \vspace{-3pt}
+    \myblock{
+        \begin{itemize}
+            \item $T$ je \alert{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,
+            \item $T$ je \alert{částečně rozhodnutelná}, existuje-li algoritmus, který: %pro každou vstupní formuli:
+            \begin{itemize}
+                \item pokud $T\models\varphi$, doběhne a odpoví ``ano''
+                \item pokud $T\not\models\varphi$, buď nedoběhne, nebo doběhne a odpoví ``ne''
+            \end{itemize}
+        \end{itemize}
+    }
+
+    
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $T$ je rekurzivně axiomatizovaná, potom:
+                
+        (i) $T$ je část. rozhod. \hfill (ii) je-li navíc kompletní, je rozhodnutelná
+    }
+    
+    
+    \textbf{Důkaz:} \alert{(i)} Algoritmus konstruuje systematické tablo z $T$ pro $\F\varphi$; stačí enumerátor pro $T$, nebo postupně generovat vš. sentence a testovat, jsou-li v $T$. Je-li $T\models\varphi$, konstrukce skončí, ověříme, že je tablo sporné. (Jinak skončit nemusí.)
+    
+    \vspace{-3pt}  
+    \alert{(ii)}
+    Víme, že buď $T\proves\varphi$ nebo $T\proves\neg\varphi$. Paralelně konstruujeme tablo pro $\F\varphi$ a pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$). Jedna z konstrukcí po konečně mnoha krocích skončí.
+    \hfill\qedsymbol
+
+
+\end{frame}
+
+
+\begin{frame}{Rekurzivně spočetná kompletace}
+
+    \myblock{
+        $T$ má \alert{rekurzivně spočetnou kompletaci}, je-li (nějaká) množina až na $\sim$ všech jednoduchých kompletních extenzí $T$ \alert{rekurzivně spočetná}, tj. existuje algoritmus, který pro vstup $(i,j)$ vypíše $i$-tý axiom $j$-té extenze (v nějakém uspořádání), nebo odpoví, že už neexistuje.
+    }
+     
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je rozhodnutelná.
+    }
+        
+    \textbf{Důkaz:}
+    Buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tj. kompl. jedn. extenze $T_i$, že $T_i\not\proves\varphi$. Kompletnost $T_i$ dává $T_i\proves\neg\varphi$. 
+    
+    Algoritmus paralelně konstruuje tablo důkaz $\varphi$ z $T$ a (postupně) tablo důkazy $\neg\varphi$ ze všech kompletních jedn. extenzí $T_1,T_2,\dots$. (Je-li jich nekonečně mnoho, uděláme \alert{dovetailing}: 1. krok 1. tabla, potom 2. krok 1., 1. krok 2., 3. krok 1., 2. krok 2., 1. krok 3., atd.)
+    
+    Alespoň jedno z tabel je sporné, můžeme předpokládat konečné, algoritmus ho po konečně mnoha krocích zkonstruuje.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+    
+    Následující teorie jsou rekurzivně axiomatizované a mají rekurzivně spočetnou kompletaci, tedy jsou rozhodnutelné:
+
+    \myexample{
+    \begin{enumerate}[(a)]
+    \item Teorie čisté rovnosti
+    \item Teorie unárního predikátu ($T=\emptyset$, $L=\langle U \rangle$ s rovností)
+    \item Teorie hustých lineárních uspořádání DeLO*
+    \item Teorie Booleových algeber (Alfred Tarski 1940),
+    \item Teorie algebraicky uzavřených těles (Tarski 1949),
+    \item Teorie komutativních grup (Wanda Szmielew 1955).
+    \end{enumerate}
+    }
+
+\end{frame}
+
+
+\begin{frame}{Rekurzivní axiomatizovatelnost}
+
+    Kdy lze třídu struktur `efektivně (algoritmicky) popsat'?
+
+    \myblock{
+        $K\subseteq\M_L$ je \alert{rek. axiomatizovatelná}, pokud existuje rek. axiomatizovaná $T$, že $K=M_L(T)$. $T'$ je \alert{rek. axiomatizovatelná}, platí-li to pro třídu jejích modelů (tj. je-li ekvivalentní rek. axiomatizované teorii).
+    }
+
+    (podobně lze definovat \alert{rek. spočetnou axiomatizovatelnost})
+
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $\A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\Th(\A)$ rekurzivně axiomatizovatelná.
+    }
+        
+    (z toho plyne i rozhodnutelnost $\Th(\A)$, ale $\A\models\varphi$ lze ověřit přímo)
+
+    \textbf{Důkaz:}
+    Buď $A=\{a_1,\dots,a_n\}$. $\Th(\A)$ axiomatizujeme sentencí ``existuje právě $n$ prvků $a_1,\dots,a_n$ splňujících právě ty \alert{základní vztahy} o funkčních hodnotách a relacích, které platí v $\A$''.
+    
+    Např. je-li $f^\A(a_4, a_2)=a_{17}$, přidej atom. formuli $f(x_{a_4},x_{a_2})=x_{a_{17}}$, je-li $(a_3,a_3,a_1)\notin R^\A$ přidej $\neg R(x_{a_3},x_{a_3},x_{a_1})$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+
+    Pro následující struktury je $\Th(\A)$ rekurzivně axiomatizovatelná:
+
+    \myexample{
+        \begin{itemize}
+            \item $\langle\mathbb Z,\leq\rangle$, jde o tzv. teorii \alert{diskrétních lineárních uspořádání}        
+            \item $\langle\mathbb Q,\leq\rangle$, jde o teorii DeLO
+            \item $\langle\mathbb N,S,0\rangle$, teorie \alert{následníka s nulou}
+            \item $\langle\mathbb N,S,+,0\rangle$, \alert{Presburgerova aritmetika}
+            \item $\langle\mathbb R,+,-,\cdot,0,1\rangle$, teorie \alert{reálně uzavřených těles}, znamená že lze algoritmicky rozhodovat Euklid. geometrii (Tarski, 1949)
+            \item $\langle \mathbb C,+,-,\cdot,0,1 \rangle$, teorie \alert{algebraicky uzavřených těles char. 0}
+        \end{itemize}
+    }
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Pro struktury výše platí, že $\Th(\A)$ je rozhodnutelná.
+    }
+    \textbf{Důkaz:} $\Th(\A)$ je vždy kompletní.
+
+    \myexample{
+        Teorie \alert{standardního modelu aritmetiky} $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ ale \alert{není} rekurzivně axiomatizovatelná (viz První Gödelova věta o neúplnosti).
+    }
+
+\end{frame}
+
+
+
+\end{document}
+
+

@@ -1,0 +1,103 @@
+%% slide-specific
+
+\usetheme[progressbar=frametitle]{metropolis}
+%\usecolortheme{spruce}
+%\metroset{block=fill}
+
+% define Metropolis colors    
+\definecolor{mAlert}{HTML}{EB811B}
+\definecolor{mExample}{HTML}{14B03D}
+\definecolor{mBlock}{HTML}{23373b}
+
+% my blocks
+\setlength\fboxsep{0pt}%
+
+\newcommand{\myblock}[1]{\colorbox{mBlock!12}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myblockmath}[1]{\colorbox{mBlock!12}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myblockamsmath}[1]{\colorbox{mBlock!12}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myblockinline}[1]{\colorbox{mBlock!12}{#1}}
+\newcommand{\myexample}[1]{\colorbox{mExample!12}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myexamplemath}[1]{\colorbox{mExample!12}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myexampleamsmath}[1]{\colorbox{mExample!12}{\begin{minipage}{\linewidth}\vspace{-18pt}#1\end{minipage}}}
+\newcommand{\myexampleinline}[1]{\colorbox{mExample!12}{#1}}
+\newcommand{\myalert}[1]{\colorbox{mAlert!12}{\begin{minipage}{\linewidth}#1\end{minipage}}}
+\newcommand{\myalertmath}[1]{\colorbox{mAlert!12}{\begin{minipage}{\linewidth}\vspace{-6pt}#1\end{minipage}}}
+\newcommand{\myalertamsmath}[1]{\colorbox{mAlert!12}{\begin{minipage}{\linewidth}\vspace{-18pt}#1\end{minipage}}}
+\newcommand{\myalertinline}[1]{\colorbox{mAlert!12}{#1}}
+
+%% other
+\newcommand{\mystructure}[1]{\mathcal{#1}}
+
+
+%% packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bookmark}
+\usepackage{booktabs}
+\usepackage{cancel}
+\usepackage[czech]{babel}
+\usepackage{enumerate}
+\usepackage[T1]{fontenc}
+\usepackage{forest}
+\usepackage{lmodern}
+\usepackage{multicol}
+% \usepackage{tcolorbox}
+\usepackage{tikz}
+    \usetikzlibrary{arrows.meta}
+%\usepackage[unicode]{hyperref}
+\usepackage[utf8x]{inputenc}
+\usepackage{xfrac}
+
+
+% %% theorems
+% \theoremstyle{plain}
+%     \newtheorem{theorem}{Věta}[section]
+%     \newtheorem*{theorem-unnumbered}{Věta}
+%     \newtheorem{proposition}[theorem]{Tvrzení}
+%     \newtheorem{corollary}[theorem]{Důsledek}
+%     \newtheorem{lemma}[theorem]{Lemma}
+%     \newtheorem{observation}[theorem]{Pozorování}
+% \theoremstyle{definition}
+%     \newtheorem{definition}[theorem]{Definice}
+%     \newtheorem*{algorithm}{Algoritmus}
+% \theoremstyle{remark}
+%     \newtheorem{remark}[theorem]{Poznámka}
+%     \newtheorem{example}[theorem]{Příklad}
+%     \newtheorem{exercise}{Cvičení}[chapter]
+%     \newtheorem*{solution}{Řešení}
+
+%% macros and definitions
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Conseq}{Csq}
+\DeclareMathOperator{\DeLO}{DeLO}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\Fm}{Fm}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\MyProof}{Proof}
+\DeclareMathOperator{\rng}{rng}
+\DeclareMathOperator{\Term}{Term}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\Thm}{Thm}
+\DeclareMathOperator{\Tree}{Tree}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\VF}{VF}
+
+\newcommand{\A}{\mystructure{A}}
+\newcommand{\B}{\mystructure{B}}
+\newcommand{\Con}{\mathit{Con}}
+\newcommand{\disjointunion}{\mathbin{\dot{\sqcup}}}
+\newcommand{\F}{\ensuremath{\mathrm{F}}}
+\newcommand{\landsymb}{{\land}}
+\newcommand{\lbin}{\mathbin{\square}}
+\newcommand{\lbinsymb}{{\lbin}}
+\newcommand{\liff}{\mathbin{\leftrightarrow}}
+\newcommand{\liffsymb}{{\liff}}
+\newcommand{\limplies}{\mathbin{\rightarrow}}
+\newcommand{\limpliessymb}{{\limplies}}
+\newcommand{\lorsymb}{{\lor}}
+\newcommand{\Prf}{\mathit{Prf}}
+%\newcommand{\structure}[1]{\mathcal{#1}}
+\newcommand{\todo}{[TODO]}
+\newcommand{\T}{\ensuremath{\mathrm{T}}}
+\newcommand{\union}{\mathbin{\cup}}
+
+\DeclareRobustCommand\proves{\mathrel{|}\joinrel\mkern-.5mu\mathrel{-}}

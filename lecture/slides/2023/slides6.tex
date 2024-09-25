@@ -1,0 +1,1175 @@
+\documentclass{beamer}
+
+\input{slides-header.tex}
+
+\title{Šestá přednáška}
+\subtitle{NAIL062 Výroková a predikátová logika}
+\author{Jakub Bulín (KTIML MFF UK)}
+% \institute{KTIML MFF UK}
+\date{Zimní semestr 2023}
+
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}{Šestá přednáška}
+
+    \textbf{Program}
+        \begin{itemize}
+            \item úvod do predikátové logiky
+            \item syntaxe a sémantika predikátové logiky
+            \item vlastnosti teorií
+        \end{itemize}
+
+    \textbf{Materiály}
+
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.1-6.5 z Kapitoly 6
+
+\end{frame}
+
+
+\section{ČÁST II -- PREDIKÁTOVÁ LOGIKA}
+
+
+\section{\sc Kapitola 6: Syntaxe a sémantika predikátové logiky}
+
+
+\section{6.1 Úvod}
+
+
+\begin{frame}{Predikátová logika neformálně}
+
+    \textbf{Výroková logika:} popis světa pomocí \alert{výroků} složených z \alert{prvovýroků} (\alert{výrokových proměnných}) -- bitů informace
+    
+    \textbf{Predikátová logika [prvního řádu]:}
+    \begin{itemize}
+        \item základní stavební kámen jsou \alert{proměnné} reprezentující \alert{individua} -- nedělitelné objekty z nějaké množiny (např. přirozená čísla, vrcholy grafu, stavy mikroprocesoru)
+        \item tato individua mají určité vlastnosti a vzájemné vztahy (\alert{relace}), kterým říkáme \alert{predikáty}
+        \begin{itemize}
+            \item \myexampleinline{
+                $\mathrm{Leaf}(x)$
+                }nebo \myexampleinline{
+                    $\mathrm{Edge}(x,y)$
+                    } mluvíme-li o grafu
+            \item \myexampleinline{
+                $x\leq y$
+                } v přirozených číslech
+        \end{itemize}
+        \item a mohou vstupovat do \alert{funkcí}
+        \begin{itemize}
+            \item \myexampleinline{
+                $\mathrm{lowest\_common\_ancestor}(x,y)$
+                } v zakořeněném stromu
+            \item \myexampleinline{
+                $\mathrm{succ}(x)$
+                } nebo \myexampleinline{
+                    $x+y$
+                    } v přirozených číslech
+        \end{itemize}
+        \item a mohou být \alert{konstantami} se speciálním významem, např. \myexampleinline{
+            $\mathrm{root}$
+            } v zakořeněném stromu, 
+            \myexampleinline{
+                $0$
+            } v tělese. 
+    \end{itemize}    
+
+\end{frame}
+
+
+\begin{frame}{Syntaxe neformálně}
+
+    \begin{itemize}
+        \item \alert{atomické formule}: predikát (včetně \alert{rovnosti} $=$) o proměnných nebo o \alert{termech} (`výrazy' složené z funkcí popř. konstant)
+        \item \alert{formule} jsou složené z atomických formulí pomocí logických spojek, a dvou \alert{kvantifikátorů}:
+    \end{itemize}  
+
+    \medskip
+    \myalert{
+        $\forall x$ ``pro všechna individua (reprezentovaná proměnnou $x$)''
+            
+        $\exists x$ ``existuje individuum (reprezentované proměnnou $x$)''
+    }
+
+    \bigskip
+
+    Např. \myexampleinline{\textit{``Každý, kdo má dítě, je rodič.''}} lze formalizovat takto:
+    \myexamplemath{
+    $$
+    (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
+    $$
+    }
+
+    \begin{itemize}
+        \item \alert{$\mathrm{child\_of}(y,x)$} je binární predikát vyjadřující, že individuum reprezentované proměnnou $y$ je dítětem individua reprezentovaného proměnnou $x$
+        \item \alert{$\mathrm{is\_parent}(x)$} je unární predikát vyjadřující, že individuum reprezentované $x$ je rodič
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Sémantika neformálně}
+
+    \myexamplemath{
+    $$
+    (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
+    $$
+    }
+
+    Platnost? Záleží na \alert{modelu} světa/systému, který nás zajímá:
+    
+    \alert{Model} je\dots
+    \begin{itemize}
+        \item (neprázdná) množina individuí, spolu
+        \item s binární relací \alert{interpretující} binární relační symbol \alert{$\mathrm{child\_of}$}, a
+        \item s unární relací (tj. podmnožinou) interpretující unární relační symbol \alert{$\mathrm{is\_parent}$}        
+    \end{itemize}
+    Obecně mohou být relace jakékoliv, snadno sestrojíme model, ve kterém formule neplatí, např. 
+    $$
+    \mystructure{A}=\langle\{0,1\},\{(0,0),(0,1),(1,0),(1,1)\},\emptyset\rangle
+    $$
+
+\end{frame}
+
+
+\begin{frame}{Příklad s funkcemi a konstantami}
+
+    ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom platí $(y_1 \cdot y_2)-(x_1\cdot x_2)\geq 0$.''
+
+    \myexampleamsmath{
+        $$
+        \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
+        $$
+    }
+
+    \begin{itemize}
+        \item dva binární relační symboly ($\leq,\geq$), binární funkční symbol $+$, unární funkční symbol $-$, a konstantní symbol $0$
+        \item \alert{model, ve kterém $\varphi$ platí:} $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, bin. funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$ 
+        \item vezmeme-li ale podobně množinu $\mathbb Z$, $\varphi$ už platit nebude
+    \end{itemize}
+    Poznámky:
+    \begin{itemize}
+        \item mohli bychom chápat `$-$' jako binární, obvykle ale bývá unární
+        \item pro \alert{konstantní symbol} $0$ používáme (jak je zvykem) stejný symbol, jako pro přirozené číslo 0. Ale pozor, v našem modelu může být \alert{symbol} $0$ interpretován jako \alert{jiné číslo}, nebo náš model vůbec nemusí sestávat z čísel!
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Ještě o syntaxi}
+
+    \myexampleamsmath{
+        $$
+        \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
+        $$
+    }
+
+    \begin{itemize}
+        \item $\varphi$ nemá žádné kvantifikátory, tj. je \alert{otevřená}
+        \item $x_1,x_2,y_1,y_2$ jsou \alert{volné proměnné} této formule (nejsou \alert{vázané} žádným kvantifikátorem), píšeme $\varphi(x_1,x_2,y_1,y_2)$
+        \item sémantiku $\varphi$ chápeme stejně jako $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi$
+        \item používáme \alert{konvence} (infixový zápis, vynechání závorek), jinak:
+        $$
+        \varphi=((\leq (x_1,y_1) \land \leq(x_2,y_2))\limplies \leq(+(\cdot (y_1,y_2),-(\cdot(x_1,x_2))),0))
+        $$
+        \item cvičení: definujte \alert{strom formule}, nakreslete ho pro $\varphi$
+    \end{itemize}
+   
+\end{frame}
+
+
+\begin{frame}{Termy vs. atomické formule}
+    
+    \myexampleamsmath{
+        $$
+        \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
+        $$
+    }
+    
+    \begin{itemize}
+        \item výraz \alert{$(y_1 \cdot y_2)+(-(x_1\cdot x_2))$} je \alert{term}
+        \item výrazy \alert{$(x_1\leq y_1)$}, \alert{$(x_2\leq y_2)$} a \alert{$((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$} jsou (všechny) \alert{atomické (pod)formule} $\varphi$ 
+    \end{itemize}
+   
+    V čem je rozdíl? Máme-li konkrétní model, a konkrétní \alert{ohodnocení proměnných} individui (prvky) tohoto modelu:
+    
+    \begin{itemize}
+        \item výsledkem termu (při daném ohodnocení proměnných) je konkrétní \alert{individuum z modelu}, zatímco
+        \item atomickým formulí lze přiřadit \alert{pravdivostní hodnotu} (a tedy kombinovat je logickými spojkami)
+    \end{itemize}   
+
+\end{frame}
+
+
+\section{6.2 Struktury}
+
+
+\begin{frame}{Signatura}
+
+    \begin{itemize}
+        \item specifikuje jakého \alert{typu} bude daná struktura, tj. jaké  má relace, funkce (jakých arit) a konstanty, a symboly pro ně 
+        \item \alert{konstanty} lze chápat jako funkce arity 0, tj. funkce bez vstupů
+    \end{itemize}
+
+    \myblock{
+        \alert{Signatura} je dvojice $\langle\mathcal R,\mathcal F\rangle$, kde $\mathcal R,\mathcal F$ jsou disjunktní množiny symbolů (\alert{relační} a \alert{funkční}, ty zahrnují \alert{konstantní}) spolu s danými aritami (tj. danými funkcí $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) a neobsahující symbol `$=$' (ten je rezervovaný pro \alert{rovnost}). 
+    }
+
+    \bigskip
+
+    \begin{itemize}
+        \item často zapíšeme jen výčtem symbolů, jsou-li arity a zda jsou relační nebo funkční zřejmé
+        \item kromě běžně používaných symbolů typicky používáme:
+        \begin{itemize}
+            \item pro relační symboly $P,Q,R,\dots$
+            \item pro funkční (nekonstantní) symboly $f,g,h,\dots$
+            \item pro konstantní symboly $c,d,a,b,\dots$
+        \end{itemize}
+    \end{itemize}
+    
+
+\end{frame}
+
+
+\begin{frame}{Příklady signatur}
+
+    \begin{itemize}
+        \item \myexampleinline{
+        $\langle E \rangle$
+        } signatura \alert{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy)
+        \item \myexampleinline{
+        $\langle \leq \rangle$
+        } signatura \alert{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol (ne každá struktura v této signatuře je částečné uspořádání! k tomu musí splňovat příslušné \alert{axiomy})
+        \item \myexampleinline{
+        $\langle +, -, 0\rangle$
+        } signatura \alert{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol
+        \item \myexampleinline{
+        $\langle +, -, 0,\cdot,1\rangle$
+        } signatura \alert{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol
+        \item \myexampleinline{
+        $\langle +, -, 0,\cdot,1,\leq\rangle$
+        } signatura \alert{uspořádaných těles}: $\leq$ je binární relační symbol
+        \item \myexampleinline{
+        $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$
+        } signatura \alert{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční, $\bot,\top$ jsou konstantní symboly
+        \item \myexampleinline{
+        $\langle S,+,\cdot,0,\leq\rangle$
+        } signatura \alert{aritmetiky}: $S$ je unární funkční symbol
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Struktury}
+
+    \alert{Strukturu} dané signatury získáme tak, že:
+    \begin{itemize}
+        \item zvolíme neprázdnou \alert{doménu}, a na ní
+        \item zvolíme \alert{realizace} (také říkáme \alert{interpretace}) všech relačních a funkčních symbolů (včetně konstantních)
+        \item to znamená \alert{konkrétní} relace resp. funkce příslušných arit
+        \item realizací konstantního symbolu je zvolený prvek z domény
+        \item na tom, jaké konkrétní symboly jsou v signatuře nezáleží (např. $+$ neznamená, že realizace musí souviset se sčítáním)
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady struktur 1/3}
+    
+    \begin{itemize}
+        \item Struktura \alert{v prázdné signatuře} $\langle\ \rangle$ je libovolná neprázdná množina. (Nemusí být konečná, ani spočetná! Formálně to bude trojice $\langle A,\emptyset,\emptyset\rangle$, ale rozdíl zanedbáme.)            
+
+        \item Struktura \alert{v signatuře grafů} je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \alert{orientovaný graf}. 
+        \begin{itemize}
+            \item je-li $E$ ireflexivní a symetrická, je to \alert{jednoduchý} graf
+            \item je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \alert{částečné uspořádání}
+            \item je-li $E$ reflexivní, tranzitivní, a symetrická, je to \alert{ekvivalence}
+        \end{itemize}
+        \item Struktury \alert{v signatuře částečných uspořádání} jsou tytéž, jako v signatuře grafů, signatury se liší jen symbolem. (Ne každá struktura v signatuře částečných uspořádání je č. uspořádání!)
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady struktur 2/3}
+    
+    Struktury \alert{v signatuře grup} jsou například následující \alert{grupy}:
+        \begin{itemize}
+            \item \myexampleinline{
+                $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$
+            }, \alert{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$). 
+            
+            \smallskip
+            
+            \textbf{Poznámka:} $\underline{\mathbb Z_n}$ znamená strukturu, zatímco $\mathbb Z_n$ jen její doménu. Často se to ale nerozlišuje a $\mathbb Z_n$ se používá i pro strukturu. Podobně $+,-,0$ jsou jak symboly, tak interpretace.
+
+            \smallskip
+
+            \item \myexampleinline{
+                $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$
+             } je \alert{symetrická grupa} (grupa všech permutací) na $n$ prvcích.
+            \item \myexampleinline{
+                $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$
+                } je \alert{multiplikativní grupa (nenulových) racionálních čísel}. \myalertinline{(Interpretací \alert{symbolu} $0$ je \alert{číslo} $1$!)}
+        \end{itemize}
+        Všechny tyto struktury \alert{splňují axiomy teorie grup}, snadno ale najdeme jiné, které axiomy nesplňují, nejsou tedy grupami.
+    
+
+\end{frame}
+
+
+\begin{frame}{Příklady struktur 3/3}
+    
+    \begin{itemize}
+        \item Struktury \myexampleinline{
+            $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$
+         }a\myexampleinline{
+            $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$
+          } (se standardními operacemi a uspořádáním) jsou \alert{v signatuře uspořádaných těles} (ale jen první z nich je uspořádané těleso).
+        \item \myexampleinline{
+            $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$
+        }, tzv. \alert{potenční algebra} nad množinou $X$, je struktura \alert{v signatuře Booleových algeber}. (\alert{Booleova algebra} je to pokud $X\neq\emptyset$.)
+        \item \myexampleinline{
+            $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$
+        }, kde $S(x)=x+1$, a ostatní symboly jsou realizovány standardně, je \alert{standardní model aritmetiky}.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Definice struktury}
+    
+    \myblock{
+    \alert{Struktura v signatuře} $\langle\mathcal R,\mathcal F\rangle$ je trojice $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, kde
+    \begin{itemize}
+    \item  $A$ je neprázdná množina, říkáme jí \alert{doména} (také \alert{univerzum}),
+    \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ kde $R^\A\subseteq A^{\mathrm{ar}(R)}$ je \alert{interpretace} relačního symbolu $R$,
+    \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ kde $f^\A\colon A^{\mathrm{ar}(f)}\to A$ je \alert{interpretace} funkčního symbolu $f$ (speciálně pro konstantní symbol $c\in\mathcal F$ máme $c^\A\in A$).
+    \end{itemize}
+    }
+
+    \medskip
+
+    \myexampleinline{Příklad:} rozmyslete si, jak vypadají struktury v \alert{signatuře $n$ konstant} $\langle c_1,c_2,\dots,c_n\rangle$? Popište všechny 5-prvkové v signatuře 3 konstant. 
+
+\end{frame}
+
+
+\section{6.3 Syntaxe}
+
+
+\begin{frame}{Jazyk}
+
+    \myblock{
+    Jazyk je daný \alert{signaturou} a informací, zda je \alert{s rovností} nebo ne. 
+    }    
+
+    Tj. specifikujeme `typ' modelů a zda můžeme používat symbol `\alert{$=$}' interpretovaný jako \alert{identita} prvků z domény; většinou to dovolíme. (Je-li jazyk bez  rovnosti, musí mít signatura relační symbol. Proč?)
+    
+    Do jazyka patří:
+    \begin{itemize}
+        \item spočetně mnoho \alert{proměnných} $x_0,x_1,x_2,\dots$ (píšeme také $x,y,z,\dots$; množinu všech proměnných označíme \alert{$\Var$})
+        \item \alert{relační}, \alert{funkční} a \alert{konstantní symboly} ze signatury, symbol \alert{$=$} jde-li o jazyk s rovností (to jsou `\alert{mimologické}' symboly)
+        \item \alert{univerzální} a \alert{existenční} \alert{kvantifikátory} $(\forall x),(\exists x)$ pro každou proměnnou $x\in\Var$ (kvantifikátor `$(\forall x)$' chápeme jako jediný symbol, tj. \alert{neobsahuje} proměnnou $x$)
+        \item symboly pro log. spojky \alert{\( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \)}, závorky \alert{\( (,) \)}, a čárka `\alert{$,$}'
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Jazyk: příklady}
+
+    
+    \begin{itemize}
+        \item Jazyk \alert{$L=\langle\rangle$ s rovností} je jazyk \alert{čisté rovnosti}
+        \item jazyk $L=\langle c_0,c_1,c_2,\dots\rangle$ s rovností je jazyk \alert{spočetně mnoha konstant}
+        \item jazyk \alert{uspořádání} je $\langle \leq \rangle$ s rovností
+        \item jazyk \alert{teorie grafů} je $\langle E \rangle$ s rovností
+        \item jazyky \alert{teorie grup, teorie těles, teorie uspořádaných těles, Booleových algeber, aritmetiky} jsou jazyky \alert{s rovností} odpovídající daným signaturám
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Termy}
+
+    \vspace{-6pt}
+    \alert{čistě syntaktické} `výrazy' z proměnných, konstantních symbolů, funkčních symbolů, závorek a čárek
+    
+    \myblock{
+        \alert{Termy} jazyka $L$ jsou konečné nápisy definované induktivně:
+        \begin{itemize}
+            \item každá proměnná a každý konstantní symbol z $L$ je term,
+            \item je-li $f$ funkční symbol z $L$ arity $n$ a jsou-li $t_1,\dots,t_n$ termy, potom nápis $f(t_1,t_2,\dots,t_n)$ je také term.
+        \end{itemize}
+        Množinu všech \alert{termů} jazyka $L$ označíme $\Term_L$. 
+    }
+
+    \begin{itemize}
+        \item \alert{podterm} je podřetězec, který je sám termem
+        \item term bez proměnných je \alert{konstantní (ground)}, např. \myexampleinline{$((S(0)+S(0))\cdot S(S(0)))$} v jazyce aritmetiky
+        \item \myalertinline{termy nesmí obsahovat prvky struktury, jen symboly z jazyka}
+        \item \myexampleinline{$(1+1)\cdot 2$} \alert{není} term, ledaže rozšíříme jazyk o \alert{symboly} $1$ a $2$
+        \item jako lidé můžeme použít \alert{infixový} zápis, např. $(t_1+t_2)$ místo $+(t_1,t_2)$, vynechat závorky je-li struktura termu zřejmá
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Strom termu}
+    
+    \vspace{-3pt}
+    \alert{Strom termu} $t$, \alert{$\Tree(t)$}: v listech proměnné nebo konst. symboly, ve vnitřních vrcholech funkční symboly (arita je rovna počtu synů)
+
+    \begin{center}
+
+    \scalebox{0.8}{
+        \tikzset{every label/.style = {text=red}}
+        \begin{minipage}{.49\textwidth}
+            \centering
+            \begin{forest}
+                for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
+                [\cdot 
+                    [+ 
+                        [S
+                            [0]                    
+                        ] 
+                        [x]
+                    ]
+                    [y]
+                ]
+            \end{forest}
+    
+            (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky
+        \end{minipage}
+        \begin{minipage}{.49\textwidth}
+            \centering
+            \begin{forest}
+                for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
+                [\lor 
+                    [\neg 
+                        [\land
+                            [x]
+                            [y]                    
+                        ]
+                    ]
+                    [\bot]
+                ]
+            \end{forest}
+            
+            (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber 
+        \end{minipage}
+    }
+    \end{center}
+
+    \begin{itemize}
+        \item symboly $\neg,\land,\lor$ nejsou logické, ale mimologické ze signatury
+        \item \alert{sémantika}: proměnné ohodnotíme prvky, konst. a funkční symboly nahradíme interpretacemi, výsledek je prvek z domény
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Atomické formule}
+    Termům nelze přiřadit \alert{pravdivostní hodnotu}, potřebujeme \alert{predikát} (relační symbol nebo $=$), který mluví \alert{o `vztahu' termů}: v dané struktuře při ohodnocení proměnných prvky je buď splněn, nebo ne.
+
+    \medskip
+
+    \alert{Formule} (`tvrzení o strukturách') skládáme z \alert{atomických formulí} pomocí  logických spojek a kvantifikátorů:  
+
+    \medskip
+
+    \myblock{
+        \alert{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$. %Množinu všech \alert{atomických formulí} jazyka $L$ označíme $\AFm_L$. 
+    }
+
+    \medskip
+
+    \begin{itemize}
+        \item \myexampleinline{
+            $R(f(f(x)),c, f(d))$
+            } kde $R$ je ternární relační, $f$ unární funkční, $c,d$ konstantní symboly
+            \item \myalertinline{ infixový zápis } $\leq(x,y)$, $=(t_1,t_2)$ píšeme jako $x\leq y$, $t_1=t_2$
+        \item \myexampleinline{
+            $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$
+            } v jazyce uspořád. těles
+        \item \myexampleinline{
+            $x\cdot y\leq (S(0)+x)\cdot y$
+            } v jazyce aritmetiky
+        \item \myexampleinline{
+            $\neg(x\land y)\lor\bot=\bot$
+            } v jazyce Booleových algeber        
+    \end{itemize} 
+    
+\end{frame}
+
+
+\begin{frame}{Formule}
+    
+    \myblock{
+        \alert{Formule} jazyka $L$ jsou konečné nápisy definované induktivně: 
+        \begin{itemize}
+            \item každá \alert{atomická formule} jazyka $L$ je formule,
+            \item je-li $\varphi$ formule, potom \alert{$(\neg\varphi)$} je také formule
+            \item jsou-li $\varphi,\psi$ formule, potom \alert{$(\varphi\lbin\psi)$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$} jsou také formule
+            \item je-li $\varphi$ formule a $x$ proměnná, potom \alert{$((Q x)\varphi)$ pro $Q\in\{\forall,\exists\}$} jsou také formule
+            \end{itemize}    
+        %Množinu všech \alert{formulí} jazyka $L$ označíme $\Fm_L$.
+    }
+    \begin{itemize}
+        \item \alert{podformule} je podřetězec, který je sám formulí
+        \item při zápisu formulí jako lidé používáme obvyklé konvence
+        \item kvantifikátory mají stejnou prioritu jako $\neg$, vyšší než ostatní logické spojky! místo $((\forall x)\varphi$) píšeme $(\forall x)\varphi$
+        \item \myalertinline{pozor, 
+        $(\forall x)\varphi\land\psi$ neznamená totéž, co $(\forall x)(\varphi\land\psi)$!}
+        \item někde uvidíte $\forall x\varphi$ nebo $\forall_ x\varphi$, my ale budeme psát jen $(\forall x)\varphi$
+    
+    \end{itemize}
+    
+
+\end{frame}
+
+
+\begin{frame}{Strom formule}
+
+    \begin{columns}
+        
+        \column{0.65\textwidth}
+
+        Příklad: \myexampleinline{
+        $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$
+        }
+
+        \bigskip
+
+        \alert{Strom formule}, \alert{$\Tree(\varphi)$}:
+        
+        \begin{itemize}
+            \item strom atomické formule $R(t_1,\dots,t_n)$: v kořeni $R$, připojíme stromy $\Tree(t_i)$
+            \item pro složené formule podobně jako ve výrokové logice
+            \item kvantifikátory mají jediného syna
+        \end{itemize}
+
+        \vspace{1.5cm}
+
+        \column{0.3\textwidth}
+
+        \begin{center}
+            \scalebox{0.9}{        
+                \begin{forest}
+                    for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
+                    [\forall x
+                        [\leq 
+                            [\cdot [x] [y]] 
+                            [\cdot [+ [S [0]] [x]] [y]]
+                        ]
+                    ]
+                \end{forest}        
+            }
+        \end{center}
+
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Volné a vázané proměnné}
+
+    Význam formule (\alert{pravdivostní hodnota}) může/nemusí záviset na proměnných~v~ní:\myexampleinline{
+            $x\leq 0$
+        }vs.\myexampleinline{
+            $(\exists x)(x\leq 0)$
+         }vs.\myexampleinline{
+            $x\leq 0 \lor (\exists x)(x\leq 0)$
+         }
+
+    \begin{itemize}
+        \item \alert{výskyt $x$ ve $\varphi$:} list $\Tree(\varphi)$ označený $x$ [v $(Qx)$ nemá výskyt!]
+        \item \alert{vázaný}: součástí podformule začínající $(Qx)$, jinak \alert{volný}
+        \item $x$ je \alert{volná} ve $\varphi$ má-li volný výskyt, \alert{vázaná} má-li vázaný výskyt
+        \item zápis \alert{$\varphi(x_1,\dots,x_n)$} znamená, že mezi $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$
+    \end{itemize}
+
+    Proměnná může být \alert{volná i vázaná}, např.:
+    \myexamplemath{
+    $$
+    \varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z
+    $$
+    }
+
+    \begin{itemize}
+        \item první výskyt $x$ je vázaný a druhý volný (nakreslete si strom!) 
+        \item $y$ je vázaná a $z$ je volná, můžeme tedy psát $\varphi(x,z)$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Otevřené a uzavřené formule}
+
+    \alert{otevřená formule:} nemá žádný kvantifikátor\\
+    \alert{uzavřená formule (sentence):} nemá žádnou volnou proměnnou  
+
+     \begin{itemize}
+        \item \myexampleinline{
+            $x+y\leq 0$
+        } je otevřená formule
+        \item \myexampleinline{
+            $(\forall x)(\forall y)(x+y\leq 0)$
+        } je uzavřená formule  neboli sentence
+        \item \myexampleinline{
+            $(\forall x)(x+y\leq 0)$
+         } není ani otevřená, ani uzavřená
+        \item \myexampleinline{
+            $(0+1=1)\land (1+1=0)$
+         } je otevřená i uzavřená
+        \item atomické formule je otevřená, otevřené formule jsou kombinace atomických pomocí logických spojek
+        \item je-li formule otevřená i uzavřená potom nemá žádné proměnné (všechny termy v ní jsou konstantní)
+        \item formule bez vázané proměnné není nutně otevřená!\myexampleinline{
+            $(\forall x)0=1$
+        }
+    \end{itemize}
+
+    Uvidíme, že \alert{pravdivostní hodnota} závisí jen na ohodnocení volných proměnných; \alert{sentence} mají ve struktuře pravdiv. hodnotu 0 nebo 1
+    
+\end{frame}
+
+
+\begin{frame}{Instance a varianty: neformálně}
+
+    \begin{itemize}
+        \item proměnná může hrát různé \myalertinline{`role'} (\myalertinline{`lokální'} vs. \myalertinline{`globální'})
+        \item \alert{instance}: \myalertinline{`dosazení'} do \myalertinline{`globální'} proměnné (lépe \myalertinline{`nahrazení'} proměnné nějakým termem, který ji počítá, čistě syntaktické!)
+        \item \alert{varianta}: \myalertinline{`přejmenování'} \myalertinline{`lokální'} proměnné
+    \end{itemize}
+    
+    \myexamplemath{
+    $$
+    P(x)\land (\forall x)(Q(x) \land (\exists x)R(x))
+    $$
+    }
+
+    \begin{itemize}
+        \item první výskyt $x$ je volný, 2. je vázaný $(\forall x)$, 3. je vázaný  $(\exists x)$
+        \item pokud \alert{substituujeme} za proměnnou $x$ term $t=1+1$, dostáváme \alert{instanci} formule $\varphi$, kterou označíme \alert{$\varphi(x/t)$}:
+        \myexamplemath{
+        $$
+        P(1+1)\land (\forall x)(Q(x) \land (\exists x)R(x))
+        $$
+        }
+        \item přejmenujeme-li kvantifikátory, získáme \alert{variantu} formule $\varphi$:
+        \myexamplemath{
+        $$
+        P(x)\land (\forall y)(Q(y) \land (\exists z)R(z))
+        $$
+        }
+    \end{itemize}
+
+    \myalert{Kdy a jak to lze, aby instance byla \alert{důsledek} a varianta \alert{ekvivalentní}?}    
+
+\end{frame}
+
+
+\begin{frame}{Instance}
+    
+    Substituujeme-li do $\varphi$ za $x$ term $t$, chceme aby výsledná formule \myalertinline{`říkala o $t$ totéž, co $\varphi$ o $x$'}. Např. \myexampleinline{
+        $\varphi(x)=(\exists y)(x+y=1)$
+        }
+    \begin{itemize}
+        \item říká o $x$, že \myalertinline{`existuje $1-x$'}
+        \item term $t=1$ lze: \myexampleinline{\small
+            $\varphi(x/t)=(\exists y)(1+y=1)$} říká \myalertinline{`existuje {\small $1-1$}'}
+        \item term $t=y$ nelze: \myexampleinline{
+            $(\exists y)(y+y=1)$} říká \myalertinline{`1 je dělitelné 2'}\\
+        \textbf{problém:} obsahuje $y$, po nahrazení bude nově vázané $(\exists y)$
+    \end{itemize}
+    \myblock{
+    Term $t$ je \alert{substituovatelný} za proměnnou $x$ ve formuli $\varphi$, pokud po simultánním nahrazení všech volných výskytů $x$ za $t$ nevznikne žádný vázaný výskyt proměnné z $t$. Potom je vzniklá formule \alert{instance} $\varphi$ vzniklá substitucí $t$ za $x$, \alert{$\varphi(x/t)$}.
+    }
+    \begin{itemize}
+        \item $t$ \alert{není} substituovatelný za $x$ do $\varphi$, právě když $x$ má volný výskyt v nějaké podformuli $\varphi$ tvaru $(Qy)\psi$ a $y$ se vyskytuje v $t$
+        \item speciálně: konstantní termy jsou vždy substituovatelné
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Varianta}
+    
+    Substituovat $t$ můžeme vždy do \alert{varianty} $\varphi$, ve které přejmenujeme všechny kvantifikované proměnné na nové (které nejsou v $t$ ani $\varphi$)
+
+    \smallskip
+    
+    \myblock{
+    Má-li formule $\varphi$ podformuli tvaru $(Qx)\psi$ a je-li $y$ proměnná, že
+    \begin{enumerate}[(i)]
+        \item $y$ je substituovatelná za $x$ do $\psi$, a
+        \item $y$ nemá volný výskyt v $\psi$.
+    \end{enumerate}    
+    \alert{Varianta} $\varphi$ vznikne nahrazením $(Qx)\psi$ formulí $(Qy)\psi(x/y)$,  říkáme tak i výsledku postupné variace ve více podformulích.
+    }
+
+    \medskip
+
+    Mějme \myexampleinline{
+        $\varphi=(\exists x)(\forall y)(x\leq y)$}:
+    \begin{itemize}
+        \item \myexampleinline{
+            $(\exists u)(\forall v)(u\leq v)$} je varianta $\varphi$
+        \item \myexampleinline{
+            $(\exists y)(\forall y)(y\leq y)$} není varianta kvůli (i): $y$ není substituovatelná za $x$ do $\psi=(\forall y)(y\leq y)$
+        \item \myexampleinline{
+            $(\exists x)(\forall x)(x\leq x)$} není varianta kvůli (ii): $x$ má volný výskyt v~$\psi=(x\leq y)$        
+    \end{itemize}   
+
+\end{frame}
+
+
+\section{6.4 Sémantika}
+
+
+\begin{frame}{Sémantika neformálně}
+
+    \begin{itemize}
+        \item \alert{modely jsou struktury} dané signatury,
+        \item formule \alert{platí} ve struktuře, pokud platí při každém ohodnocení volných proměnných prvky z domény,
+        \item \alert{hodnoty termů} (jsou to prvky z domény) se vyhodnocují podle jejich stromů, kde symboly nahradíme jejich interpretacemi (relacemi, funkcemi, a konstantami z domény),
+        \item z hodnot termů získáme \alert{pravdivostní hodnoty atomických formulí}: je výsledná $n$-tice v relaci?
+        \item hodnoty složených formulí vyhodnocujeme také podle jejich stromu, přičemž \alert{$(\forall x)$ hraje roli `konjunkce přes všechny prvky'} a  \alert{$(\exists y)$ hraje roli `disjunkce přes všechny prvky'} z domény struktury
+    \end{itemize}    
+
+\end{frame}
+
+
+\begin{frame}{Modely jazyka}
+
+    \medskip
+
+    \myblock{
+    \alert{Model jazyka $L$}, nebo také \alert{$L$-struktura}, je libovolná struktura v signatuře jazyka $L$. \alert{Třídu} všech modelů jazyka označíme \alert{$\M_L$}.
+    }
+
+    \begin{itemize}
+        \item zda je jazyk s rovností nebo bez nehraje roli
+        \item proč \alert{třída} a ne \alert{množina} všech modelů $\M_L$? doména je libovolná neprázdná množina, `množina všech množin' neexistuje; třída je \alert{`soubor'} všech množin splňujících danou vlastnost (popsatelnou v \alert{jazyce teorie množin})
+    \end{itemize}
+    
+    Mezi \myexampleinline{modely jazyka uspořádání} $L=\langle \leq \rangle$ patří: \begin{itemize}
+        \item částečně uspořádané množiny $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, $\langle\mathcal P(X),\subseteq\rangle$
+        \item libovolný orientovaný graf $G=\langle V,E\rangle$, typicky není částečné uspořádání, tj. nesplňuje axiomy \alert{teorie uspořádání}
+        \item $\langle \mathbb C,R^\mathbb C\rangle$ kde $(z_1,z_2)\in R^\mathbb C$ právě když $|z_1|=|z_2|$ (není č. usp.)
+        %\item $\langle \{0,1\},\emptyset\rangle$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Hodnota termu}
+
+    Mějme term $t$ jazyka $L=\langle \mathcal R,\mathcal F\rangle$ a $L$-strukturu $\A=\langle A,\mathcal R^\A,F^\A\rangle$. \alert{Ohodnocení proměnných} v množině $A$ je lib. funkce $e:\Var\to A$.
+    
+    \myblock{
+        \alert{Hodnota termu} $t$ \alert{ve struktuře} $\A$ \alert{při ohodnocení} $e$, značíme \alert{$t^\A[e]$}, je definovaná induktivně:
+        \begin{itemize}
+            \item $x^\A[e]=e(x)$ pro proměnnou $x\in\Var$,
+            \item $c^\A[e]=c^\A$ pro konstantní symbol $c\in\mathcal F$, a
+            \item je-li $t=f(t_1,\dots,t_n)$ složený term, kde $f\in\mathcal F$, potom:
+            $$
+            t^\A[e]=f^\A(t_1^\A[e],\dots,t_n^\A[e])
+            $$
+        \end{itemize}
+    }
+
+    \begin{itemize}
+        \item závisí pouze na ohodnocení proměnných vyskytujících se v $t$
+        \item obecně, term $t$ reprezentuje \alert{termovou funkci} $f_t^\A\colon A^k\to A$, kde $k$ je počet proměnných v $t$
+        \item speciálně, hodnota konstantního termu na ohodnocení nezávisí, konstantní termy reprezentují konstantní funkce
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Hodnota termu: příklady}
+    
+    1. Hodnota termu \myexampleinline{
+            $t=-(x\lor \bot)\land y$
+         } v Booleově algebře $\A=\underline{\mathcal P(\{0,1,2\})}$ při ohodnocení $e$ ve kterém:
+        \begin{itemize}
+            \item $e(x)=\{0,1\}$
+            \item $e(y)=\{1,2\}$
+        \end{itemize}
+  
+        \myalertmath{
+            $$t^\A[e]=\{2\}$$
+        }
+    
+    \bigskip\bigskip
+
+    2. Hodnota termu \myexampleinline{
+            $x+1$
+         } ve struktuře $\mathcal N=\langle\mathbb N,\cdot,3\rangle$ jazyka $L=\langle +,1\rangle$ při ohodnocení $e$ ve kterém $e(x)=2$ 
+
+        \myalertmath{
+            $$(x+1)^\mathcal N[e]=6$$
+        }
+    
+\end{frame}
+
+
+\begin{frame}{Pravdivostní hodnota formule}
+
+    \myblock{\smallskip
+    Buď $\varphi$ v jazyce $L$, $\A\in\M_L$, $e:\Var\to A$ ohodnocení proměnných. \alert{Pravdivostní hodnota} $\varphi$ v $\A$ při ohodnocení $e$, \alert{$\mathrm{PH}^\A(\varphi)[e]$}:
+    \begin{itemize}
+        \item pro atomickou formuli $R(t_1,\dots,t_n)$:
+        $$
+        \mathrm{PH}^\A(R(t_1,\dots,t_n))[e]=
+        \begin{cases}
+            1 & \text{pokud }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A\\
+            0 & \text{jinak}    
+        \end{cases}
+        $$        
+        \item pro formuli tvaru $(\neg\varphi)$:
+        $$
+        \mathrm{PH}^\A(\neg \varphi)[e]=f_\neg(\mathrm{PH}^\A(\varphi)[e])=1-\mathrm{PH}^\A(\varphi)[e]
+        $$
+        \item pro formuli tvaru $(\varphi\lbin\psi)$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$:
+        $$
+        \mathrm{PH}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{PH}^\A(\varphi)[e],\mathrm{PH}^\A(\psi)[e])
+        $$
+    \end{itemize}
+    \smallskip
+    }
+    
+\end{frame}
+
+
+\begin{frame}{Pravdivostní hodnota formule: zbytek definice a poznámky}
+    
+    \myblock{
+    \smallskip
+    \begin{itemize}
+        \item pro formuli tvaru $(Qx)\varphi$ kde $Q\in\{\forall,\exists\}$:    
+        \begin{align*}
+            \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
+            \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
+        \end{align*}
+        kde \alert{$e(x/a)$} je ohodnocení získané z $e$ změnou $e(x)$ na $a$
+    \end{itemize}
+    \smallskip
+    }
+
+    \textbf{Pozorování:} Závisí pouze na ohodnocení volných proměnných. Speciálně, pro sentenci nezávisí na ohodnocení.
+
+    \begin{itemize}
+        \item tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla jedna vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$)
+        \item speciálně, $\mathrm{PH}^\A(t_1=t_2)[e]=1$ $\Leftrightarrow$ $(t_1^\A[e],t_2^\A[e])\in {=^\A}$ (\alert{identita} na $A$), tj. $t_1^\A[e]=t_2^\A[e]$ (je to stejný prvek $A$)
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Příklady}
+    
+    Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:
+    \begin{itemize}
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence)
+    \end{itemize}   
+    Ale pro strukturu $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ máme: 
+    \begin{itemize}
+        \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ 
+    \end{itemize}     
+
+\end{frame}
+
+
+\begin{frame}{Platnost ve struktuře}
+    
+    \myblock{
+        Mějme formuli $\varphi$, strukturu $\A$ (ve stejném jazyce), a ohodnocení $e$.
+
+        \begin{itemize}
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=1$, $\varphi$ \alert{platí} v $\A$ \alert{při ohodnocení} $e$, \alert{$\A\models\varphi[e]$}
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=0$, $\varphi$ \alert{neplatí} v $\A$ \alert{při ohodnoc.} $e$, \alert{$\A\not\models\varphi[e]$} 
+            \item $\varphi$ je \alert{pravdivá} (\alert{platí}) v $\A$, \alert{$\A\models\varphi$}, pokud platí při každém ohodnocení $e:\Var\to A$
+            \item $\varphi$ je \alert{lživá} v $\A$, pokud neplatí při žádném ohodnocení (v tom případě $\A\models\neg\varphi$)                       
+        \end{itemize} 
+    }
+    
+    \begin{itemize}
+        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! \\(je to pravda jen pro sentence)
+        \item \alert{platnost} je klíčový pojem sémantiky a celé logiky
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Zřejmé vlastnosti platnosti ve struktuře při ohodnocení}
+
+    \begin{itemize}
+        \item $\A\models\neg\varphi[e]$ právě když $\A\not\models\varphi[e]$
+        \item $\A\models(\varphi\land\psi)[e]$ právě když $\A\models\varphi[e]$ a $\A\models\psi[e]$
+        \item $\A\models(\varphi\lor\psi)[e]$ právě když $\A\models\varphi[e]$ nebo $\A\models\psi[e]$
+        \item $\A\models(\varphi\limplies\psi)[e]$ právě když platí: jestliže $\A\models\varphi[e]$ potom $\A \models\psi[e]$
+        \item $\A\models(\varphi\liff\psi)[e]$ právě když platí: $\A\models\varphi[e]$ právě když $\A\models\psi[e]
+        $
+        \item \myalertinline{
+            $\A\models(\forall x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro každé $a\in A$
+            }
+        \item \myalertinline{
+            $\A\models(\exists x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro nějaké $a\in A$
+        }
+        \item je-li term $t$ substituovatelný za proměnnou $x$ do $\varphi$, potom:
+        \myalertamsmath{
+        $$
+        \A\models\varphi(x/t)[e]\text{ právě když }\A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e]
+        $$
+        }
+        \item je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$
+    \end{itemize}
+
+    (dokažte si snadno z definic, najděte protipříklady)  
+
+\end{frame}
+
+
+\begin{frame}{Zřejmé vlastnosti platnosti ve struktuře}
+
+    \begin{itemize}
+        \item pokud $\A\models\varphi$, potom $\A\not\models\neg\varphi$; je-li $\varphi$ sentence, platí i opačná implikace
+        \item $\A\models\varphi\land\psi$ právě když $\A\models\varphi$ a $\A\models\psi$
+        \item pokud $\A\models\varphi$ nebo $\A\models\psi$, potom $\A\models\varphi\lor\psi$; je-li $\varphi$ sentence,  platí i opačná implikace.
+        \item $\A\models\varphi$ právě když $\A\models
+        (\forall x)\varphi$
+        \item speciálně, $\varphi(x_1,\dots,x_n)$ platí ve struktuře $\A$, právě když v $\A$ platí její \alert{generální uzávěr}, tj. sentence $(\forall x_1)\cdots(\forall x_n)\varphi$ 
+    \end{itemize}
+
+    (dokažte si snadno z definic, najděte protipříklady)
+
+\end{frame}
+
+
+\section{6.5 Vlastnosti teorií}
+
+
+\begin{frame}{Platnost v teorii}
+
+    \begin{itemize}
+        \item \alert{teorie} jazyka $L$ je množina $L$-formulí, její prvky jsou \alert{axiomy}
+        \item \alert{model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, značíme $\A\models T$
+        \item \alert{třída modelů} teorie $T$ je:
+        $$
+        \alert{\M_L(T)}=\{\A\in\M_L\mid\A\models T\}
+        $$
+    \end{itemize}
+    
+    Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom $\varphi$ je:
+    \begin{itemize}
+        \item \alert{pravdivá (platí) v $T$}, značíme \alert{$T\models\varphi$}, pokud $\A\models\varphi$ pro všechna $\A\in\M(T)$ (neboli: \myalertinline{
+            $\M(T)\subseteq\M(\varphi)$
+            })
+        \item \alert{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: \myalertinline{$\M(T)\cap\M(\varphi)=\emptyset$})
+        \item \alert{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$
+        \item je-li $T=\emptyset$ (tj. $\M(T)=\M_L$), píšeme jen \alert{$\models\varphi$}, a říkáme, že $\varphi$ \alert{je pravdivá (v logice), (logicky) platí, je tautologie}, apod.
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Další sémantické pojmy o teorii}
+    
+    \begin{itemize}
+        \item $T$ je \alert{sporná}, pokud v ní platí \alert{spor} $\bot$ (definujeme jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je lib. relační symbol)
+        \item $T$ je sporná, právě když v ní platí každá formule (ekvivalentně, nemá žádný model), jinak je \alert{bezesporná} (neplatí-li v ní spor, má-li alespoň jeden model)
+        \item \alert{důsledky} $T$ jsou \alert{sentence} pravdivé v $T$, množina všech důsledků $T$ v jazyce $L$ je
+        $$
+        \alert{\Conseq_L(T)}=\{\varphi\mid\text{$\varphi$ je sentence a }T\models \varphi\}
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kompletnost v predikátové logice}
+
+    %Připomeňme, že \alert{výroková} teorie je kompletní, je-li bezesporná a každý výrok v ní buď platí, nebo platí jeho negace. Ekvivalentně, má právě jeden model.
+
+    
+    \begin{itemize}
+        \item $T$ je \alert{kompletní}, je-li bezesporná a každá \alert{sentence} je v ní buď pravdivá, nebo lživá. \myalertinline{Pozor: neplatí, že má jediný model!}
+        \item máme-li jeden model, máme i nekonečně mnoho \alert{izomorfních} modelů (liší se jen pojmenováním prvků, definujeme později)
+        \item uvažovat jediný model \alert{až na izomorfismus} ale také \alert{nestačí}!
+    \end{itemize}
+    
+    \myblock{ 
+        Struktury $\A,\B$ (v témž jazyce) jsou \alert{elementárně ekvivalentní}, píšeme \alert{$\A\equiv\B$}, pokud v nich platí tytéž sentence.
+    }
+ 
+    \textbf{Pozorování:} Teorie je kompletní, právě když má právě jeden model \alert{až na elementární ekvivalenci}.   
+
+    Příklad: uspořádané množiny \myexampleinline{
+        $\A=\langle\mathbb Q,\leq\rangle$
+     } a \myexampleinline{
+        $\B=\langle\mathbb R,\leq\rangle$
+     }.
+     \begin{itemize}
+        \item \alert{nejsou izomorfní}, $\mathbb Q$ je spočetná a $\mathbb R$ nespočetná množina, neexistuje dokonce žádná \alert{bijekce} mezi doménami
+        \item \alert{ale $\A\equiv\B$}: indukcí dle struktury sentence $\varphi$ lze ukázat $\A\models\varphi\Leftrightarrow\B\models\varphi$; netriviální případ je $\exists$, klíčová je \alert{hustota} uspořádání $(x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)$
+     \end{itemize}     
+
+\end{frame}
+
+
+\begin{frame}{Platnost pomocí nesplnitelnosti}
+
+    Otázku platnosti v teorii lze převést na problém existence modelu:
+
+    \medskip
+
+    \myblock{
+    \textbf{Tvrzení (O nesplnitelnosti a pravdivosti):}
+        Je-li $T$ teorie a $\varphi$ \alert{sentence} (v témž jazyce), potom: $T\models\varphi$ $\Leftrightarrow$ $T\cup\{\neg\varphi\}$ nemá model.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+        Platí následující ekvivalence: 
+        \begin{itemize}
+            \item $T\cup\{\neg\varphi\}$ nemá model,
+            \item právě když $\neg\varphi$ neplatí v žádném modelu $T$,
+            \item právě když $\varphi$ platí v každém modelu $T$  ($\varphi$ je sentence!). \hfill\qedsymbol
+        \end{itemize}
+
+
+    NB: Předpoklad, že $\varphi$ je sentence, je nutný: pro $T=\{P(c)\}$ a formuli $\varphi=P(x)$ je $P(c)\not\models P(x)$ ale $\{P(c),\neg P(x)\}$ nemá model.
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Teorie grafů}
+    
+    \myexampleinline{Teorie grafů}: $L=\langle E\rangle$ s rovností, axiomy \alert{ireflexivity} a \alert{symetrie}
+    
+    \myalertmath{
+    $$
+    T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
+    $$
+    }
+
+    \textbf{Modely:} $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, tj. \alert{jednoduché} grafy, hranu $\{x,y\}$ reprezentuje dvojice $(x,y),(y,x)$
+    \begin{itemize}
+        \item Formule \myexampleinline{
+            $\neg x=y\limplies E(x,y)$
+         } platí v grafu, právě když je \alert{úplný}. Je tedy nezávislá v $T_\text{graph}$.
+        \item Formule \myexampleinline{
+            $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land$
+         } \myexampleinline{
+            $(\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$
+        } vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Teorie uspořádání}
+
+    \myexampleinline{Teorie uspořádání}: v jazyce uspořádání $L=\langle\leq\rangle$ s rovností, axiomy \alert{reflexivity}, \alert{antisymetrie}, a \alert{tranzitivity}
+
+    \myalertamsmath{
+    $$
+    T=\{ x\leq x,\ x\leq y\land y\leq x\limplies x=y,\ x\leq y\land y\leq z\limplies x\leq z\}
+    $$
+    }
+
+    \textbf{Modely:} $\langle S,\leq^S\rangle$, kde $\leq^S$ je \alert{částečné uspořádání}. 
+    
+    Příklad: \myexampleinline{
+        $\A=\langle\mathbb N,\leq\rangle$
+    }, \myexampleinline{
+        $\B=\langle\mathcal P(X),\subseteq\rangle$
+     } pro $X=\{0,1,2\}$.
+    \begin{itemize}
+        \item Formule \myexampleinline{
+            $x\leq y\lor y\leq x$
+         } (\alert{linearita}) platí v $\A$, ale neplatí v $\B$: neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
+        \item Sentence \myexampleinline{
+            $(\exists x)(\forall y)(y\leq x)$
+         } (označme $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je také nezávislá v $T$.
+        \item Formule \myexampleinline{
+            $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$
+         } (označme  $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \alert{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklady teorií: Algebraické teorie 1/2}
+
+    \myexampleinline{Teorie grup}: $L=\langle +,-,0\rangle$ s rovností, axiomy 
+    \alert{asociativita $+$}, \alert{neutralita $0$ vůči $+$}, a \alert{$-x$ je inverzní prvek k $x$ (vůči $+$ a $0$)}
+    {\small
+    \begin{align*}
+        T_1=\{& x + (y + z) = (x + y) + z,\\
+            & 0 + x = x,\ x + 0 = 0,\\
+            & x + (-x) = 0,\ (-x) + x = 0\}\\
+    \end{align*}
+    }
+   
+    \vspace{-24pt}
+
+    \myexampleinline{Teorie komutativních grup}: navíc \alert{komutativita $+$} 
+    {\small
+    $$
+    T_2=T_1\cup\{x+y=y+x\}
+    $$
+    }
+
+    \vspace{-6pt}
+
+    \myexampleinline{Teorie okruhů}: $L=\langle +,-,0,\cdot,1\rangle$ s rovností, navíc \alert{neutralita $1$ vůči~$\cdot$}, \alert{asociativita~$\cdot$}, a \alert{(levá i pravá) distributivita $\cdot$ vůči $+$}
+    {\small
+    \begin{align*}
+        T_3=T_2\cup\{   & 1 \cdot x = x \cdot 1,\\
+        & x \cdot (y \cdot z) = (x \cdot y) \cdot z,\\
+        & x \cdot (y + z) = x \cdot y + x \cdot z,\\
+        & (x + y) \cdot z = x \cdot z + y \cdot z\}
+    \end{align*}
+    }
+\end{frame}
+    
+
+\begin{frame}{Příklady teorií: Algebraické teorie 2/2}
+    
+    \myexampleinline{Teorie komutativních okruhů}: navíc axiom \alert{komutativity $\cdot$}:
+    {\small
+    $$
+    T_4 = T_3 \cup \{x \cdot y = y \cdot x\}
+    $$
+    }
+    
+    \myexampleinline{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \alert{existence inverzního prvku k $\cdot$} a \alert{netriviality}:
+    {\small
+    $$
+    T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1),\ \neg\,0=1\}
+    $$
+    }
+
+    \myexampleinline{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \alert{kompatibility uspořádání}: 
+
+    \begin{itemize}
+        \item $x\leq y\limplies (x+z\leq y+z)$
+        \item $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$
+    \end{itemize}
+
+    Modely jsou tělesa s \alert{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi.
+
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,769 @@
+\documentclass{beamer}
+
+\input{slides-header.tex}
+
+\title{Čtvrtá přednáška}
+\subtitle{NAIL062 Výroková a predikátová logika}
+\author{Jakub Bulín (KTIML MFF UK)}
+% \institute{KTIML MFF UK}
+\date{Zimní semestr 2023}
+
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}{Čtvrtá přednáška}
+
+    \textbf{Program}
+        \begin{itemize}
+            \item úvod do tablo metody
+            \item tablo důkaz
+            \item korektnost a úplnost
+        \end{itemize}
+
+    \textbf{Materiály}
+
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 4.1-4.6 z Kapitoly 4
+
+\end{frame}
+
+
+\section{\sc Kapitola 4: Metoda analytického tabla}
+
+
+\section{4.1 Formální dokazovací systémy}
+
+
+\begin{frame}{Formální dokazovací systém}
+
+    chceme zjistit, zda výrok platí [\alert{$T\models\varphi$}], a to čistě syntakticky, aniž bychom se zabývali sémantikou: najít \alert{(formální) důkaz} [\alert{$T\proves\varphi$}]
+
+    \alert{důkaz} je konečný syntaktický objekt vycházející z $\varphi$ a axiomů $T$
+
+    dokazování lze dělat \alert{algoritmicky} (pokud máme algoritmický přístup k axiomům $T$, která může být nekonečná), a lze rychle algoritmicky \alert{ověřit}, zda je daný objekt opravdu korektní důkaz
+
+    \begin{itemize}
+        \item \alert{korektnost}: ``co dokážu, platí'' \hfill \myalertinline{%
+            $T\proves\varphi\ \Rightarrow\ T\models\varphi$}
+        \item \alert{úplnost}: ``dokážu vše, co platí'' \hfill \myalertinline{%
+            $T\models\varphi\ \Rightarrow\ T\proves\varphi$}
+    \end{itemize}
+    (korektnost je nutná, úplnost ne: rychlý dokazovací systém může být praktický i když není úplný)
+
+    ukážeme si: \emph{tablo metodu}, \emph{hilbertovský kalkulus}, \emph{rezoluční metodu}
+    
+    \myblock{nutný předpoklad: \alert{jazyk musí být spočetný} (potom i $T$ je spočetná)}
+
+\end{frame}
+
+
+\section{4.2 Úvod do tablo metody}
+
+
+\begin{frame}{Tablo metoda neformálně}
+
+    nejprve případ $T=\emptyset$, tedy dokazujeme, že $\varphi$ platí \emph{v logice}
+
+    \alert{tablo} je strom představující \alert{hledání protipříkladu} (modelu $v\not\models\varphi$), když všechny větve \alert{selžou}, máme důkaz (sporem)
+
+    labely: \alert{položky} $\mathrm{T}\psi,\mathrm{F}\psi$ (určují, zda na dané větvi platí výrok $\psi$)
+
+    kořen \alert{$\mathrm{F}\varphi$}, dále rozvíjíme \alert{redukcí} položek (podle struktury výroků v nich), aby platil \alert{invariant}:
+
+    \myalert{
+        Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
+    }
+
+    je-li na větvi \alert{$\mathrm{T}\psi$} a zároveň \alert{$\mathrm{F}\psi$}, potom \alert{selhala} (je \alert{sporná}), pokud všechny větve selhaly, je tablo \alert{sporné}, je to \alert{důkaz} $T\proves\varphi$
+
+    pokud nějaká větev neselhala a je \alert{dokončená} (vše na ní zredukované), lze z ní zkonstruovat model, ve kterém $\varphi$ neplatí
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo důkaz $((p\limplies q)\limplies p)\limplies p$}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+
+        \begin{forest}
+        [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
+            [$\mathrm{T}(p\limplies q)\limplies p$
+                [$\mathrm{F}p$
+                    [$\mathrm{F}p\limplies q$
+                        [$\mathrm{T}p$ 
+                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                        ]                
+                    ]
+                    [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                    ]
+                ]
+            ]
+        ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item \alert{důkaz sporem}: v kořeni příznak F
+            \item redukujeme položku tvaru \alert{$\mathrm{F}\varphi_1\limplies\varphi_2$}:
+            \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models\varphi_2$
+            \item proto na větev připojíme položky \alert{$\mathrm{T}(p\limplies q)\limplies p$} a \alert{$\mathrm{F}p$}, invariant platí
+            \item redukce položky \alert{$\mathrm{T}(p\limplies q)\limplies p$}: model se shoduje s \alert{$\mathrm{F}(p\limplies q)$} nebo s \alert{$\mathrm{T}p$}, \alert{rozvětvi!}
+            \item redukce \alert{$\mathrm{F}(p\limplies q)$}: připoj  \alert{$\mathrm{T}p$} a \alert{$\mathrm{F}q$}
+            \item všechny větve sporné, protipříklad neexistuje, tedy máme tablo důkaz, píšeme: \alert{$\proves ((p\limplies q)\limplies p)\limplies p$}
+        \end{itemize}
+
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo pro $\mathrm{F}(\neg q\lor p)\limplies p$}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+
+        \begin{forest}
+            [$\mathrm{F}(\neg q\lor p)\limplies p$
+                [$\mathrm{T}\neg q\lor p$
+                    [$\mathrm{F}p$
+                        [$\mathrm{T}\neg q$
+                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
+                        ]
+                        [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item tablo je dokončené, ale není sporné
+            \item tedy nejde o důkaz
+            \item levá větev dává protipříklad: model \alert{$v=(0,0)$} ve kterém výrok neplatí
+            \item invariant říká, že existuje-li protipříklad, shoduje se s některou větví
+            \item tato větev nemůže být sporná
+            \item tak se dokáže \alert{korektnost} tablo metody
+        \end{itemize}
+
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Poznámky}
+
+    \begin{itemize}
+        \item Jak redukujeme položky? \begin{itemize}
+            \item Připojíme příslušné \alert{atomické tablo} (viz následující slide) na konec všech bezesporných větví procházejících vrcholem.
+        \end{itemize}
+        \item Co když dokazujeme v nějaké teorii $T$? \begin{itemize}
+            \item Připojíme položky $\mathrm{T}\alpha$ pro (všechny) axiomy $\alpha\in T$.
+        \end{itemize}
+        \item Co když je $T$ nekonečná? \begin{itemize}
+            \item Tablo může být nekonečné. 
+            \item Ale vyjde-li sporné, lze sestrojit jiné, které je konečné a také sporné. (``Existuje-li důkaz, existuje konečný důkaz.'')
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla}
+
+        \begin{tabular}{@{}c||c|c|c|c|c@{}}
+         & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
+        True
+        &  
+        \begin{forest}
+        [$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
+        \end{forest}
+        &  
+        \begin{forest}
+        [$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
+        \end{forest}
+        & 
+        \begin{forest}
+        [$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
+        \end{forest}
+        &  
+        \begin{forest}
+        [$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        \\ \midrule
+        False 
+        & 
+        \begin{forest}
+        [$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
+        \end{forest}
+        &
+        \begin{forest}
+        [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
+        \end{forest}
+        \end{tabular}
+    
+\end{frame}
+
+
+\begin{frame}{Konstrukce tabel z příkladů}
+    
+    \begin{center}
+    \scalebox{0.7}{
+
+    \begin{columns}
+        
+        \column{0.5\textwidth}
+
+        \centering
+            \begin{forest}
+            [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
+                [\textcolor{blue}{$\mathrm{F}((p\limplies q)\limplies p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [$\mathrm{T}(p\limplies q)\limplies p$
+                        [$\mathrm{F}p$
+                            [\textcolor{blue}{$\mathrm{T}(p\limplies q)\limplies p$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                [$\mathrm{F}p\limplies q$
+                                    [\textcolor{blue}{$\mathrm{F}p\limplies q$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                        [$\mathrm{T}p$ 
+                                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                        ]
+                                    ]
+                                ]
+                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            \end{forest}
+
+        \column{0.5\textwidth}
+
+        \centering
+
+            \begin{forest}
+            [$\mathrm{F}(\neg q\lor p)\limplies p$
+                [\textcolor{blue}{$\mathrm{F}(\neg q\lor p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
+                    [$\mathrm{T}\neg q\lor p$
+                        [$\mathrm{F}p$
+                            [\textcolor{blue}{$\mathrm{T}(\neg q\lor p)$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                [$\mathrm{T}\neg q$
+                                    [\textcolor{blue}{$\mathrm{T}\neg q$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
+                                        [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
+                                    ]
+                                ]
+                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            \end{forest}
+
+    \end{columns}
+
+    }
+
+
+    \alert{konvence:} kořeny atomických tabel (\textcolor{blue}{modře}) nezakreslujeme   
+
+    \end{center}    
+
+\end{frame}
+
+
+\begin{frame}{O stromech}
+    
+    \begin{itemize}
+        \item \alert{strom} je $T\neq\emptyset$ s částečným uspořádáním $<_T$, které má nejmenší prvek (\alert{kořen}) a množina předků libovolného vrcholu je \alert{dobře uspořádaná} (každá její neprázdná podmnožina má nejmenší prvek, to zakáže nekonečné klesající řetězce předků)
+        \item \alert{větev} je maximální lineárně uspořádaná podmnožina $T$.
+        \item \alert{uspořádaný strom} má navíc lineární uspořádání $<_L$ množiny synů každého vrcholu (říkáme mu \alert{pravolevé}, $<_T$ je \alert{stromové})
+        \item \alert{označkovaný strom} má navíc funkci $\mathrm{label}\colon T\to\mathrm{Labels}$        
+    \end{itemize}
+
+    \myblock{\textbf{Königovo lemma:} Nekonečný, konečně větvící strom má nekonečnou větev.}
+
+\end{frame}
+
+
+\section{4.3 Tablo důkaz}
+
+
+\begin{frame}{Formální definice tabla}
+
+    \begin{itemize}
+        \item \alert{položka} je nápis $\mathrm{T}\varphi$ nebo $\mathrm{F}\varphi$, kde $\varphi$ je nějaký výrok
+        \item \alert{konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+        \begin{itemize}
+            \item jednoprvkový strom s libovolnou položkou je tablo z teorie $T$
+            \item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme na konec větve $V$ připojit atomické tablo pro položku $P$
+            \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom $\alpha\in T$
+        \end{itemize}
+        \item \alert{tablo z teorie $T$} je buď konečné, nebo i nekonečné: v tom případě je spočetné a definujeme ho jako $\tau=\bigcup_{i\geq 0}\tau_i$, kde:
+        \begin{itemize}
+            \item $\tau_i$ jsou konečná tabla z $T$
+            \item $\tau_0$ je jednoprvkové tablo
+            \item $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku
+        \end{itemize}
+        \item \alert{tablo pro položku $P$} je tablo, které má položku $P$ v kořeni
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Dokončené a sporné tablo}
+
+    \begin{itemize}
+        \item Tablo je \alert{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \alert{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \alert{bezesporná}.
+        \item Tablo je \alert{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \alert{dokončená}, pokud je sporná, nebo
+        \begin{itemize}
+            \item každá její položka je na této větvi \alert{redukovaná},
+            \item a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \alert{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+        \begin{itemize}
+            \item je tvaru $\mathrm{T}p$ resp. $\mathrm{F}p$ pro nějaký prvovýrok $p\in\mathbb P$, 
+            \item nebo se vyskytuje na $V$ jako kořen atomického tabla (byť ho podle konvence nezakreslujeme), tj., typicky, při konstrukci tabla již došlo k jejímu rozvoji na $V$.
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz a tablo zamítnutí}
+
+    \begin{itemize}
+        \item \alert{tablo důkaz} výroku $\varphi$ z teorie $T$ je \alert{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni
+        \item pokud existuje, je $\varphi$ \alert{(tablo) dokazatelný} z $T$, píšeme \alert{$T\proves\varphi$}
+        \item podobně, \alert{tablo zamítnutí} je sporné tablo s $\mathrm{T}\varphi$ v kořeni
+        \item existuje-li, je $\varphi$ \alert{(tablo) zamítnutelný} z $T$, tj. platí \alert{$T\proves\neg\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo důkaz}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+        \begin{forest}
+            [$\mathrm{F}\psi$
+                [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
+                    [$\mathrm{F}\varphi$
+                        [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                    ]                
+                    [$\mathrm{T}\psi$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]
+            ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item tablo důkaz výroku \alert{$\psi$} z \alert{$T=\{\varphi,\varphi\limplies\psi\}$}
+            \item položky vycházející z axiomů jsou \textcolor{blue}{modře}
+            \item ukázali jsme tedy \alert{$T\proves\psi$}
+            \item $\varphi,\psi$ jsou libovolné pevně dané výroky \item tím jsme dokázali tzv. \alert{větu o dedukci}
+        \end{itemize}
+    
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: dokončené tablo, které není sporné}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+        \begin{forest}
+            [$\mathrm{F}p_0$
+                [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
+                    [$\mathrm{F}p_1$                
+                        [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
+                            [$\mathrm{F}p_2$ [$\vdots$]] 
+                            [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
+                        ]                
+                    ]
+                    [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]
+            ]
+        \end{forest}   
+        
+        \column{0.68\textwidth}
+
+        \begin{itemize}
+            \item dokončené tablo pro výrok \alert{$p_0$} z teorie \alert{$T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$}. \item nejlevější větev je \alert{dokončená} a \alert{bezesporná}
+            \item sestává z položek \alert{$\mathrm{T}p_{i+1}\limplies p_i$} a \alert{$\mathrm{F}p_i$} pro všechna $i\in\mathbb N$
+            \item shoduje se s modelem \alert{$v=(0,0,\dots)$}, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro vš. $i$
+            \item máme protipříklad ukazující, že \alert{$T\not\models p_0$}
+        \end{itemize}
+
+    \end{columns}
+
+\end{frame}
+
+
+\section{4.4 Konečnost a systematičnost důkazů}
+
+
+\begin{frame}{Konečnost a systematičnost důkazů}
+
+    Dokážeme:
+    \begin{itemize}
+        \item existuje-li tablo důkaz, existuje i \alert{konečný} tablo důkaz
+        \item existuje algoritmus, který umí vždy zkonstruovat dokončené tablo, tzv. \alert{systematické tablo}
+        \item tento algoritmus tedy \alert{zkonstruuje tablo důkaz}, pokud existuje 
+        
+        \medskip
+
+        (zde potřebujeme \emph{korektnost} a \emph{úplnost}, ty dokážeme později)    
+        
+        \medskip
+
+        (pokud tablo důkaz neexistuje, algoritmus se nemusí zastavit)
+    \end{itemize}
+    
+
+\end{frame}
+
+
+\begin{frame}{Dokončení tabla: v čem je problém?}
+
+    Pro konečnou $T$ je snadné zkonstruovat dokončené tablo:
+    \begin{itemize}
+        \item na začátku použijeme všechny axiomy
+        \item při redukci položek se výroky v nich zkracují
+        \item stačí nedělat zbytečné kroky
+    \end{itemize}
+
+    Pro \alert{nekonečnou} $T$ bychom ale mohli zkonstruovat nekonečné tablo, a přitom:
+    \begin{itemize}
+        \item nikdy nepoužít některý axiom, nebo
+        \item nikdy se nedostat k redukci některé položky
+    \end{itemize}
+        
+    \textbf{Myšlenka} \alert{systematického tabla}: na všechny se dostane, střídáme
+    \begin{itemize}
+        \item \alert{redukce následující položky} (po úrovních, zleva doprava) na všech bezesporných větvích, které jí procházejí 
+        \item \alert{přidání následujícího axiomu} na všechny bezesporné větve ($T$~je spočetná, axiomy libovolně očíslujeme)         
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Definice systematického tabla}
+ 
+    \alert{Systematické tablo} z teorie $T=\{\alpha_1,\alpha_2,\dots\}$ pro položku $R$ je tablo $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové tablo s položkou $R$, a pro každé $i\geq 0$:
+
+    \begin{itemize}
+        \item buď $P$ nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$
+        \item nejprve definujeme $\tau_i'$ jako tablo vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející $P$
+        \item pokud taková položka $P$ neexistuje, potom $\tau_i'=\tau_i$
+        \item tablo $\tau_{i+1}$ vznikne z $\tau_i'$ připojením $\mathrm{T}\alpha_{i+1}$ na každou bezespornou větev
+        \item to v případě, že $i<|T|$, jinak (je-li $T$ konečná a už jsme použili všechny axiomy) definujeme $\tau_{i+1}=\tau_i'$
+    \end{itemize}  
+
+\end{frame}
+
+
+\begin{frame}{Dokončenost systematického tabla}
+
+    \myblock{
+    \textbf{Lemma:} Systematické tablo je dokončené.
+    }
+
+    \textbf{Důkaz:} 
+    Jsou všechny větve dokončené?
+
+    \begin{itemize}
+        \item Sporné větve jsou dokončené z definice.
+        \item Bezesporná větev:
+        \begin{itemize}
+            \item \alert{obsahuje $\mathrm{T}\alpha_i$} pro všechna $i$ (připojeno v $i$-tém kroku)
+            \item každá položka je na ní \alert{zredukovaná} (leží-li v hloubce $d$, dostali jsme se k ní nejdéle v kroku $i=2^{d+1}-1$)
+        \end{itemize}  
+        \item Tedy i všechny bezesporné větve jsou dokončené.\hfill\qedsymbol        
+    \end{itemize}  
+
+\end{frame}
+
+
+\begin{frame}{Konečnost sporu}
+
+    \myblock{
+    \textbf{Věta (Konečnost sporu):} Je-li $\tau=\bigcup_{i\geq 0}\tau_i$ sporné tablo, potom existuje $n\in\mathbb N$ takové, že $\tau_n$ je sporné konečné tablo.
+    }
+
+    \textbf{Důkaz:} 
+    Buď $S$ množina všech vrcholů, nad kterými (ve stromovém uspořádání) není spor, tj. dvojice položek $\mathrm{T}\psi$, $\mathrm{F}\psi$.
+
+    \begin{itemize}
+        \item \alert{Kdyby byla $S$ nekonečná:} Podle Königova lemmatu pro podstrom $\tau$ na množině $S$ máme nekonečnou, bezespornou větev v $S$. To ale dává i \alert{bezespornou větev v $\tau$}, což je spor. 
+        %(Podrobněji: kdyby nekonečná bezesporná větev $V_S$ v $S$ byla podvětví nějaké sporné větve $V$ v $\tau$, spor na $V$ leží už v nějakém konečném prefixu $V$, a tedy nekonečně mnoho vrcholů z $V_S\subseteq S$ musí ležet pod tím to sporem).
+    
+        \item \alert{Množina $S$ je tedy konečná,} celá leží v hloubce $\leq d$ pro nějaké $d\in\mathbb N$. Každý vrchol \alert{na úrovni $d+1$ už má nad sebou spor}. 
+        
+        \item Zvolme $n$ tak, že $\tau_n$ už obsahuje všechny vrcholy $\tau$ z prvních $d+1$ úrovní. Potom každá větev tabla $\tau_n$ je sporná.\hfill\qedsymbol
+    \end{itemize}    
+
+\end{frame}
+
+
+\begin{frame}{Důsledky konečnosti sporu}
+    
+    Tedy: Pokud neprodlužujeme už sporné větve (např. pro systematické tablo), potom sporné tablo je konečné.
+    \medskip
+
+    \myblock{
+    \textbf{Důsledek (Konečnost důkazů):} Pokud $T\proves\varphi$, potom existuje i~\alert{konečný} tablo důkaz $\varphi$ z $T$.
+    }
+
+    \textbf{Důkaz:} 
+    Platí $\tau=\tau_n$, neboť sporné tablo už neměníme.\hfill\qedsymbol   
+
+    \bigskip
+
+    \myblock{
+    \textbf{Důsledek (Systematičnost důkazů):} Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+    }
+
+    Důkaz bude až v příští sekci, chybí nám dvě fakta:
+    \begin{itemize}
+        \item je-li $\varphi$ dokazatelná z $T$, potom v $T$ platí (Věta o korektnosti)
+        \item pokud by systematické tablo mělo bezespornou větev, šel by z ní vyrobit protipříklad (to je klíč k důkazu Věty o úplnosti)1
+    \end{itemize}
+
+\end{frame}
+
+
+\section{4.5 Korektnost a úplnost}
+
+
+\begin{frame}{Korektnost a úplnost}
+    
+    Nyní ukážeme, že \alert{dokazatelnost} je totéž, co \alert{platnost}, tj. pro každou teorii $T$ a výrok $\varphi$:
+    \alert{
+    $$
+    T\proves\varphi\ \Leftrightarrow\ T\models\varphi
+    $$
+    }
+
+    Rozdělíme na dvě implikace: 
+    
+    \begin{itemize}
+        \item \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$} \hspace{0.5cm} (korektnost) \hfill {\it``co jsme dokázali, platí''}
+        \item\alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}  \hspace{0.5cm} (úplnost) \hfill {\it ``co platí, lze dokázat''}
+    \end{itemize} 
+ 
+\end{frame}
+
+
+\begin{frame}{Korektnost: pomocné lemma}
+
+
+    Model $v$ se \alert{shoduje}
+    \begin{itemize}
+        \item \alert{s položkou $P$}, pokud
+        $P=\mathrm{T}\varphi$ a $v\models\varphi$, nebo $P=\mathrm{F}\varphi$ a $v\not\models\varphi$
+        \item \alert{s větví $V$}, pokud se shoduje s každou položkou na této větvi
+    \end{itemize}
+    
+    \medskip
+
+    \myblock{
+    \textbf{Lemma:}
+        Shoduje-li se model teorie $T$ s položkou v kořeni tabla z teorie $T$, potom se shoduje s některou větví.
+    }
+
+    \smallskip
+    
+    \textbf{Důkaz:}
+    Indukcí podle kroků $i$ při konstrukci tabla $\tau=\bigcup_{i\geq 0}\tau_i$ najdeme posloupnost větví $V_0\subseteq V_1\subseteq\dots$ takovou, že:
+     \begin{itemize}
+        \item $V_i$ je větev v tablu $\tau_i$ shodující se s modelem $v$
+        \item $V_{i+1}$ je prodloužením $V_i$
+     \end{itemize}
+    Hledaná větev v $\tau$ je potom $V=\bigcup_{i\geq 0}V_i$.
+    
+    \alert{Báze indukce:} Model $v$ se shoduje s kořenem $\tau$, tj. s (jednoprvkovou) větví $V_0$ v $\tau_0$.
+
+\end{frame}
+
+
+\begin{frame}{Pokračování důkazu pomocného lemmatu}
+
+    \alert{Indukční krok:}
+    
+    Pokud $\tau_{i+1}$ vzniklo z $\tau_i$ bez prodloužení $V_i$, definujeme $V_{i+1}=V_i$.
+
+    \medskip
+
+    Pokud $\tau_{i+1}$ vzniklo připojením $\mathrm{T}\alpha$ (pro axiom $\alpha\in T$) na konec $V_i$, definujeme $V_{i+1}$ jako tuto prodlouženou větev. Protože $v\models T$, máme i $v\models\alpha$, tedy $v$ se shoduje i s novou položkou.
+    
+    \medskip
+
+     Nechť $\tau_{i+1}$ vzniklo připojením atomického tabla pro položku $P$ na konec $V_i$. Protože se $v$ shoduje s $P$ (která leží na $V_i$), shoduje se i s kořenem připojeného atomického tabla, a proto se shoduje i s některou z jeho větví. (Ověříme si pro všechna atomická tabla.) Definujeme $V_{i+1}$ jako prodloužení $V_i$ o tuto větev atomického tabla.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Věta o korektnosti [tablo metody ve výrokové logice]}
+
+    \myblock{
+    \textbf{Věta (O korektnosti):}
+    Je-li výrok $\varphi$ tablo dokazatelný z teorie $T$, potom je $\varphi$ pravdivý v~$T$, tj. \alert{$T\proves\varphi\ \Rightarrow\T\models\varphi$}.
+    }
+
+    \medskip
+
+    \textbf{Myšlenka důkazu:} Protipříklad by se shodoval s některou z větví tablo důkazu, ty jsou ale všechny sporné.
+
+    \medskip
+
+    \textbf{Důkaz:} Sporem, nechť $T\not\models\varphi$, tj. existuje $v\in\M(T)$, že $v\not\models\varphi$.
+        
+    Protože je $T\proves\varphi$, existuje tablo důkaz $\varphi$ z $T$, což je sporné tablo z $T$ s položkou $\mathrm{F}\varphi$ v kořeni. 
+        
+    Model $v$ se shoduje s kořenem $\mathrm{F}\varphi$, tedy podle Lemmatu se shoduje s nějakou větví $V$. Všechny větve jsou ale sporné. Takže na $V$ jsou $\mathrm{T}\psi$ a $\mathrm{F}\psi$ (pro nějaký výrok $\psi$), a model $v$ se s těmito položkami shoduje. Máme $v\models\psi$ a zároveň $v\not\models\psi$, což je spor.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Úplnost: pomocné lemma}
+
+    selže-li dokazování, dostaneme \alert{bezespornou, dokončenou} větev v tablu z $T$ s $\mathrm{F}\varphi$ v kořeni; ukážeme, že dává protipříklad:
+
+    \alert{Kanonický model} pro bezespornou, dokončenou větev $V$ je model
+    $$
+    v(p)=\begin{cases}
+        1 \text{ pokud se na $V$ vyskytuje položka $\mathrm{T}p$}\\
+        0 \text{ jinak}
+    \end{cases}
+    $$  
+    
+    \medskip
+
+    \myblock{
+    \textbf{Lemma:}
+    Kanonický model pro (bezespornou, dokončenou) větev $V$ se shoduje s $V$.
+    }
+
+    \bigskip
+    
+    (tento model tedy musí splňovat všechny axiomy $T$, ale protože se shoduje s položkou $\mathrm{F}\varphi$ v kořeni, neplatí v něm výrok $\varphi$)
+
+\end{frame}
+
+
+\begin{frame}{Důkaz pomocného lemmatu}
+
+    \textbf{Důkaz:}
+    Indukcí podle struktury výroků v položkách. \alert{Báze indukce:} 
+    \begin{itemize}
+        \item je-li \alert{$P=\mathrm{T}p$} pro prvovýrok $p$, máme $v(p)=1$, shoduje se
+        \item je-li \alert{$P=\mathrm{F}p$}, potom na $V$ nemůže být $\mathrm{T}p$ (byla by sporná), máme tedy $v(p)=0$, shoduje se
+    \end{itemize}
+
+    \alert{Indukční krok:} rozebereme dva případy, ostatní jsou obdobné
+
+    \begin{itemize}
+        \item \alert{$P=\mathrm{T}\varphi\land\psi$}. Protože je $V$ dokončená, je na ní $P$ redukovaná. To znamená, že se na $V$ vyskytují i položky $\mathrm{T}\varphi$ a $\mathrm{T}\psi$. Podle indukčního předpokladu se s nimi $v$ shoduje: $v\models\varphi$ a $v\models\psi$. Takže platí i $v\models\varphi\land\psi$ a $v$ se shoduje s $P$.
+    
+        \item \alert{$P=\mathrm{F}\varphi\land\psi$}. Protože je $P$ na $V$ redukovaná, vyskytuje se na $V$ položka $\mathrm{F}\varphi$ nebo položka $\mathrm{F}\psi$. Platí tedy $v\not\models\varphi$ nebo $v\not\models\psi$, z čehož plyne $v\not\models\varphi\land\psi$ a $v$ se shoduje s $P$.\hfill\qedsymbol
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Věta o úplnosti (+ důkaz systematičnosti)}
+
+    \myblock{
+    \textbf{Věta (O úplnosti):} Je-li výrok $\varphi$ pravdivý v teorii $T$, potom je tablo dokazatelný z $T$, tj. \alert{$T\models\varphi\ \Rightarrow\T\proves\varphi$}.
+    }
+    
+    \textbf{Důkaz:}
+    Ukážeme, že libovolné dokončené (např. \alert{systematické}) tablo z $T$ s $\mathrm{F}\varphi$ v kořeni je nutně sporné, tedy je tablo důkazem. 
+    
+    Sporem: \alert{Není-li sporné}, má bezespornou (dokončenou) větev $V$, a dle Lemmatu se s ní kanonický model pro $V$ shoduje. 
+    
+    Protože je $V$ dokončená, obsahuje $\mathrm{T}\alpha$ pro všechny axiomy $T$. Model $v$ tedy splňuje všechny axiomy a máme $v\models T$. 
+    
+    Protože se ale $v$ shoduje i s položkou $\mathrm{F}\varphi$ v kořeni, máme $v\not\models\varphi$, což dává protipříklad, a máme $T\not\models\varphi$, spor.\hfill\qedsymbol
+
+
+    \textbf{Dokázali jsme i Důsledek o systematičnosti důkazů:}  Z důkazu vidíme, že i systematické tablo pro položku $\mathrm{F}\varphi$ je nutně sporné, a je tedy tablo důkazem.\hfill\qedsymbol
+
+\end{frame}
+
+
+\section{4.6 Důsledky korektnosti a úplnosti}
+
+
+\begin{frame}{$\proves\ =\ \models$}
+
+    Syntaktickou analogií \alert{důsledků} jsou \alert{teorémy}:
+    $$\Thm_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid T\proves\varphi\}$$
+    
+    Z korektnosti a úplnosti okamžitě dostáváme:
+        \begin{itemize}
+            \item $T\proves\varphi$ právě když $T\models\varphi$
+            \item $\Thm_\mathbb P(T)=\Conseq_\mathbb P(T)$
+        \end{itemize}
+    
+    Všude můžeme nahradit `\alert{platnost}' pojmem `\alert{dokazatelnost}'.  Např:
+    \begin{itemize}
+        \item $T$ je \alert{sporná}, je-li v ní dokazatelný spor (tj. \alert{$T\proves\bot$})
+        \item $T$ je \alert{kompletní}, je-li pro každý výrok buď $T\proves\varphi$ nebo $T\proves\neg\varphi$, ale ne obojí (jinak by byla sporná)
+    \end{itemize}
+
+    \myblock{
+        \textbf{Věta (O dedukci):} $T,\varphi\proves\psi$ právě když  $T\proves\varphi\to\psi$.
+    }
+
+    \textbf{Důkaz:} Stačí dokázat: $T,\varphi\models\psi\Leftrightarrow T\models\varphi\to\psi$. To je snadné.\hfill\qedsymbol
+
+\end{frame}
+
+
+\end{document}
+
+
+

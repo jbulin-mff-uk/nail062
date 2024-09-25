@@ -1,0 +1,581 @@
+\documentclass{beamer}
+
+\input{slides-header.tex}
+
+\title{Jedenáctá přednáška}
+\subtitle{NAIL062 Výroková a predikátová logika}
+\author{Jakub Bulín (KTIML MFF UK)}
+% \institute{KTIML MFF UK}
+\date{Zimní semestr 2023}
+
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+
+\begin{frame}{Jedenáctá přednáška}
+
+    \textbf{Program}
+        \begin{itemize}
+            \item korektnost rezoluce
+            \item lifting lemma a úplnost rezoluce
+            \item LI-rezoluce a Prolog
+            \item elementární ekvivalence
+        \end{itemize}
+
+    \textbf{Materiály}
+
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 8.6-8.7 z Kapitoly 8, Sekce 9.1 z Kapitoly 9
+        %todo Prolog jako samostatná sekce?
+
+\end{frame}
+
+
+\section{8.6 Korektnost a úplnost}
+
+
+\begin{frame}{Korektnost rezolučního kroku}
+
+    \myblock{
+    \textbf{Tvrzení:}
+    Mějme klauzule $C_1$, $C_2$ a jejich rezolventu $C$. Platí-li v~nějaké struktuře $\A$ klauzule $C_1$ a $C_2$, potom v ní platí i $C$.
+    }
+
+    \textbf{Důkaz:} Buď $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, a $C=C_1'\sigma \cup C_2'\sigma$, kde $S\sigma=\{A_1\sigma\}$ (a $\sigma$ je
+    nejobecnější). Klauzule jsou otevřené formule, proto platí i jejich instance:     
+    $$
+    \A\models C_1\sigma\ \text{ a }\ \A\models C_2\sigma
+    $$     
+    Po aplikaci unifikace máme: 
+    \begin{align*}        
+        C_1\sigma&=C_1'\sigma \cup \{A_1\sigma\}\\
+        C_2\sigma&=C_2'\sigma \cup \{\neg A_1\sigma\}        
+    \end{align*}
+    Chceme ukázat, že $\A\models C[e]$ pro lib. ohodnocení $e$. 
+    \begin{itemize}
+        \item Je-li \alert{$\A\models A_1\sigma[e]$}, potom $\A\not\models\neg A_1\sigma[e]$ a musí \alert{$\A\models C_2'\sigma[e]$}. Tedy i $\A\models C[e]$. 
+        \item Je-li \alert{$\A\not\models A_1\sigma[e]$}, musí být \alert{$\A\models C_1'\sigma[e]$} a opět $\A\models C[e]$. \hfill\qedsymbol
+    \end{itemize}    
+
+\end{frame}
+
+
+\begin{frame}{Korektnost rezoluce}
+
+    \myblock{
+    \textbf{Věta (O korektnosti rezoluce):}
+    Pokud je CNF formule $S$ rezolucí zamítnutelná, potom je nesplnitelná.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+        Víme, že $S\proves_R\square$, vezměme tedy nějaký rezoluční důkaz $\square$ z $S$. Kdyby existoval model $\A\models S$, díky korektnosti rezolučního pravidla bychom dokázali (indukcí podle délky důkazu) i $\A\models\square$, což ale není možné. \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Lifting lemma}
+
+    úplnost rezoluce dokážeme převedením na případ výrokové logiky: rezoluční důkaz `na úrovni VL' je možné `zvednout' na úroveň PL
+
+    \medskip
+
+    \myblock{
+    \textbf{Lifting lemma:}
+        Buďte $C_1$ a $C_2$ klauzule s disj. množ. proměnných, $C^*_1$ a $C^*_2$ jejich základní instance, $C^*$ rezolventa $C^*_1$ a $C^*_2$. Potom $C_1$ a $C_2$ mají rezolventu $C$ takovou, že $C^*$ je základní instance $C$.
+    }
+
+    (důkaz na příštím slidu)
+
+    \bigskip
+
+    \myblock{
+    \textbf{Důsledek:}
+        Buď $S$ CNF formule a označme $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ pro nějakou základní klauzuli $C^*$ (`na úrovni VL'), potom existuje klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni PL').
+    }
+    
+    \textbf{Důkaz:} Snadno z Lifting lemmatu indukcí dle délky důkazu.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Důkaz Lifting lemmatu}
+
+    Nechť \alert{$C^*_1=C_1\tau_1$} a \alert{$C^*_2=C_2\tau_2$}, $\tau_1$ a $\tau_2$ zákl. substituce nesdílející žádnou proměnnou. Najdeme rezolventu $C$, že \alert{$C^*=C\tau_1\tau_2$}.
+
+    Buď $C^*$ rezolventa $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že:
+    \begin{align*}
+        C_1&=C_1' \sqcup \{A_1,\dots,A_n\},\text{ kde }\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}\\
+        C_2&=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\},\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}
+    \end{align*}
+    Tedy $(\tau_1\tau_2)$ unifikuje $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Buď $\sigma$ nejob. unifikace pro $S$ z Unifikačního algoritmu. Zvolme \alert{$C=C_1'\sigma \cup C_2'\sigma$}.
+
+    \vspace{-24pt}
+    
+    \begin{align*}
+        &\alert{C\tau_1\tau_2
+        =} (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2
+        =C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2
+        \textcolor{red}{=}C_1'\tau_1\tau_2 \cup C_2'\tau_1\tau_2\\ &
+        \textcolor{blue}{=}C_1'\tau_1 \cup C_2'\tau_2
+        =(C_1\setminus\{A_1,\dots,A_n\})\tau_1\cup (C_2\setminus\{\neg B_1,\dots,\neg B_m\})\tau_2\\
+        &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})\alert{=C^*}
+    \end{align*}
+    
+    Zde \textcolor{red}{=} plyne z vlastnosti `navíc' Unif. algoritmu $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, \\a \textcolor{blue}{=} z 
+    toho, že jde o základní substituce nesdílející proměnnou.\hfill\qedsymbol    
+
+\end{frame}
+
+
+\begin{frame}{Úplnost rezoluce}
+
+    \myblock{
+    \textbf{Věta (O úplnosti rezoluce):}
+        Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
+    }
+
+    \medskip
+
+    \textbf{Důkaz:}
+    Množina $S^*$ všech základních instancí klauzulí z $S$ je také nesplnitelná (důsledek Herbrandovy věty). Úplnost \alert{výrokové} rezoluce dává $S^*\proves_R\square$ (`na úrovni VL'). 
+    
+    Z důsledku Lifting lemmatu dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni PL'). 
+    
+    Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.        
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+
+\section{8.7 LI-rezoluce}
+
+
+\begin{frame}{Lineární důkaz a LI-důkaz}
+
+    \begin{itemize}
+        \item \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
+        $$
+        \begin{bmatrix}
+            C_0 \\
+            B_0
+        \end{bmatrix},
+        \begin{bmatrix}
+            C_1 \\
+            B_1
+        \end{bmatrix},\dots,
+        \begin{bmatrix}
+            C_n \\
+            B_n
+        \end{bmatrix},
+        C_{n+1}
+        $$
+        kde: $B_0$ a $C_0$ jsou \myalertinline{varianty} klauzulí z $S$, $C_{n+1}=C$,
+        \begin{itemize}
+            \item $C_{i+1}$ je rezolventa $C_i$ a $B_i$
+            \item $B_i$ \alert{varianta} klauzule z $S$ nebo $B_i=C_j$ pro nějaké $j<i$.
+        \end{itemize}
+        \item \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$
+        
+        \item \alert{LI-důkaz} je lin. důkaz, kde vš. $B_i$ jsou varianty klauzulí z $S$
+        \item $C$ \alert{LI-dokazatelná} z $S$, \alert{$S\proves_{LI}C$}, pokud existuje LI-důkaz
+        \item $S$ je \alert{LI-zamítnutelná}, pokud $S\proves_{LI}\square$    
+        \item korektnost (lineární i LI-rezoluce) je zřejmá
+    \end{itemize}
+
+    
+\end{frame}
+
+
+\begin{frame}{Úplnost LI-rezoluce pro Hornovy formule}
+
+    \medskip
+
+    \myblock{
+    \textbf{Věta (O úplnosti lineární rezoluce):}
+        $C$ má lineární důkaz z $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
+    }
+
+    \textbf{Důkaz:} převodem na VL (Lifting lemma zachovává linearitu) \hfill\qedsymbol
+
+    \bigskip
+
+    \myblock{
+    \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):}
+        Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
+    }
+        
+    \textbf{Důkaz:} úplnost ve VL + Herbrandova věta + Lifting lemma\hfill\qedsymbol
+
+    \smallskip
+    
+    \begin{itemize}\small
+        \item \alert{Hornova formule:} množina Hornových klauzulí
+        \item \alert{Hornova klauzule:} nejvýše jeden pozitivní literál   
+        \item \alert{Pravidlo:} klauzule s 1 pozitivním a alespoň 1 negativním literálem  
+         
+        \item \alert{Fakt:} pozitivní jednotková klauzule    
+        \item \alert{Cíl:} neprázdná klauzule bez pozitivního literálu 
+        \item \alert{Programové klauzule:} pravidla a fakta  
+        \item \alert{Program}: Hornova formule obsahující jen programové klauzule
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Program v Prologu}
+
+    \texttt{\small\setlength\tabcolsep{3pt}
+    \begin{tabular}{lr}
+        son(X,Y):-father(Y,X),man(X). 
+        & 
+       \alert{$\{son(X,Y),\neg father(Y,X),\neg man(X)\}$} 
+        \\
+        son(X,Y):-mother(Y,X),man(X).
+        &
+        \alert{$\{son(X,Y),\neg mother(Y,X),\neg man(X)\}$}
+        \\
+        man(charlie). 
+        &
+        \alert{$\{man(charlie)\}$}
+        \\
+        father(bob,charlie). 
+        &
+        \alert{$\{father(bob,charlie)\}$}
+        \\
+        mother(alice,charlie). 
+        &
+        \alert{$\{mother(alice,charlie)\}$}
+        \\
+        \\
+        ?-son(charlie,X). 
+        &
+        \alert{$\{\neg son(charlie,X)\}$}
+    \end{tabular}   
+    }    
+
+\end{frame}
+
+
+\begin{frame}{LI-rezoluce v Prologu}
+
+    Platí v programu daný \alert{existenční dotaz},  \textcolor{blue}{$P\models(\exists X)son(charlie,X)$}?
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:
+        \begin{itemize}
+            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$
+            \item $P\cup\{G\}$ má LI-zamítnutí začínající $G$
+        \end{itemize}
+    }
+
+    \vspace{-2pt}
+    \textbf{Důkaz:} Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
+
+    \bigskip
+
+    Je-li odpověď na dotaz kladná, chceme znát i \alert{výstupní substituci} $\sigma$, tj. složení unifikací z rez. kroků, zúžené na proměnné v $G$. Platí:
+    $$
+    P\models(A_1\wedge\dots\wedge A_k)\sigma
+    $$
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+
+    \myexampleinline{\texttt{?-son(charlie,X).}}
+
+    \bigskip
+
+    \hspace*{-1.13cm}\scalebox{0.82}{\begin{forest}
+        for tree={math content,grow=west,l sep=5pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg father(X,c)\}}
+                [,phantom]
+                [{\{\neg father(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\alert{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg father(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{father(b,c)\}}, label=below:{\textcolor{blue}{$\{X/b\}$}}]
+        ]
+    \end{forest}
+    }
+
+    \myexampleinline{\texttt{X=bob}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}
+
+    \bigskip
+
+    \hspace*{-1.23cm}\scalebox{0.82}{
+    \begin{forest}
+        for tree={math content,grow=west,l sep=3pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg mother(X,c)\}}
+                [,phantom]
+                [{\{\neg mother(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\alert{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{mother(a,c)\}}, label=below:{\textcolor{blue}{$\{X/a\}$}}]
+        ]
+    \end{forest}
+    }
+
+    \myexampleinline{\texttt{X=alice}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/a\}$}
+
+\end{frame}
+
+
+\section{ČÁST III -- POKROČILÉ PARTIE}
+
+
+\section{\sc Kapitola 9: Teorie modelů}
+
+
+\begin{frame}{Teorie modelů}
+
+    \begin{itemize}
+        \item vztah mezi vlastnostmi teorií a tříd jejich modelů
+        \item bližší matematice než informatice a aplikacím
+        \item jen několik vybraných dostupných výsledků
+        \item[+] co je třeba pro Gödelovy věty (Kapitola 10)
+        \item[+] co se nevešlo jinam 
+    \end{itemize}
+
+\end{frame}
+
+
+\section{9.1 Elementární ekvivalence}
+
+
+\begin{frame}{Teorie struktury}
+
+    \myblock{
+        \alert{Teorie struktury} $\A$ (v jazyce $L$):
+        $$
+        \Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
+        $$
+    }
+
+    \medskip
+
+    Např.  pro \myexampleinline{standardní model aritmetiky} $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$ říkáme $\Th(\underline{\mathbb{N}})$ \alert{aritmetika přirozených čísel}, je \alert{nerozhodnutelná} (neexistuje algoritmus, který pro každou $\varphi$ doběhne a odpoví, zda $T\models\varphi$)
+
+    \medskip
+
+    \textbf{Pozorování:} Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.
+    \begin{itemize}
+        \item $\Th(\A)$ je kompletní teorie
+        \item $\A\in\M_L(T)$ $\Rightarrow$ $\Th(\A)$ je (kompletní) jednoduchá extenze $T$
+        \item $\A\in\M_L(T)$, $T$ kompletní $\Rightarrow$ $\Th(\A)=\Conseq_L(T)\sim T$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Elementární ekvivalence}
+    
+    \myblock{
+        $L$-struktury $\A$ a $\B$ jsou \alert{elementárně ekvivalentní} (\alert{$\A\equiv \B$}), pokud v nich platí tytéž $L$-sentence, neboli: \myalertinline{ 
+            $\A\equiv\B\ \Leftrightarrow\ \Th(\A)=\Th(\B)$ 
+        }
+    }
+
+    \bigskip
+
+    Například pro \myexampleinline{
+        $\langle\mathbb R,\leq\rangle$, 
+        $\langle\mathbb Q,\leq\rangle$,
+        $\langle\mathbb Z,\leq\rangle$
+    }
+    \begin{itemize}
+        \item  \alert{$\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$}: snadno pomocí \alert{hustoty}
+        \item \alert{$\langle\mathbb Q,\leq\rangle\not\equiv\langle\mathbb Z,\leq\rangle$}: v $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, v $\langle\mathbb Q,\leq\rangle$ ne, tedy $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)\setminus\Th(\langle\mathbb Q,\leq\rangle)$ pro následující sentenci:
+        $$
+        \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z))
+        $$        
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kompletní jednoduché extenze}
+
+    \vspace{-6pt}
+
+    Pro teorii $T$ nás hlavně zajímá, jak vypadají modely.
+
+    \vspace{-6pt}
+    \begin{itemize}
+        \item $T$ je \alert{kompletní}, právě když má jediný model až na elementární ekvivalenci (všechny modely jsou elementárně ekvivalentní)
+        \item Modely $T$ až na elementární ekvivalenci jednoznačně odpovídají \alert{kompletním jednoduchým extenzím} $T$, ty jsou tvaru $\Th(\A)$ pro $\A\in\M(T)$, kde $\A\equiv\B\Leftrightarrow\Th(\A)=\Th(\B)$
+    \end{itemize}
+    
+    \myalert{Místo hledání modelů stačí najít kompletní jednoduché extenze!}
+
+    \myblock{
+    \textbf{Motivace:} ukážeme, že lze-li \alert{efektivně popsat} všechny kompletní jednoduché extenze \alert{efektivně dané} teorie, potom je \alert{rozhodnutelná}.
+    }   
+    
+    \begin{itemize}
+        \item algoritmus, který pro vstup $(i,j)$ vypíše $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém očíslování)
+        \item algoritmus, který postupně vygeneruje všechny axiomy teorie
+    \end{itemize}
+
+    Schopnost efektivně popsat kompletní jedn. extenze je vzácná, vyžaduje silné předpoklady, ale u mnoha důležitých teorií to lze. 
+
+\end{frame}
+
+
+\begin{frame}{Příklad: DeLO*}
+
+    \myexample{
+        Teorie \alert{hustého lin. uspořádání (DeLO*)}  je extenze teorie uspořádání o \alert{linearitu} (\alert{dichotomii}), \alert{hustotu}, a někdy se přidává \alert{netrivialita}: 
+        \begin{itemize}
+            \item $x\leq y\lor y\leq x$
+            \item ${x\leq y}\land{\neg\,x=y}\limplies(\exists z)(x\leq z\land z\leq y\land\neg\,z=x\land\neg\,z=y)$
+            \item $(\exists x)(\exists y)(\neg\,x=y)$
+        \end{itemize}        
+    }
+
+    \myblock{
+        \textbf{Tvrzení:} Buď $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$. Následující jsou právě všechny kompletní jednoduché extenze DeLO* (až na ekvivalenci):
+        \begin{columns}\small
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}
+                    \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
+                    ,\neg\psi\}$
+                    \item $\DeLO^+ = \DeLO^*\ \cup \ \{\neg\varphi
+                    ,\psi\}$                    
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{itemize}                   
+                    \item $\DeLO^- = \DeLO^*\ \cup \ \{\varphi
+                    ,\neg\psi\}$
+                    \item $\DeLO^\pm = \DeLO^*\ \cup \ \{\varphi
+                    ,\psi\}$        
+                \end{itemize}
+            \end{column}
+        \end{columns}
+    }
+
+    Stačí ukázat, že jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat.\\  
+    Jak ukážeme, kompletnost plyne z faktu, že jsou \alert{$\omega$-kategorické}, tj. mají jediný spočetný model až na \alert{izomorfismus}.
+        
+\end{frame}
+
+
+\begin{frame}{Důsledky Löwenheim-Skolemovy věty bez rovnosti}
+
+    Připomeňme:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (L.-S. bez rovnosti):} 
+        Ve spočetném jazyce bez rovnosti má každá bezesporná teorie spočetně nekonečný model.
+    }
+
+    \medskip
+
+    Jednoduchý důsledek:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Důsledek:}
+    Je-li $L$ spočetný bez rovnosti, potom ke každé $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
+    }
+
+    \textbf{Důkaz:} $\Th(\A)$ je bezesporná (má model $\A$), tedy dle L.-S. věty má spočetně nekonečný model $\B\models\Th(\A)$, to znamená $\B\equiv\A$.\hfill\qedsymbol
+
+    \medskip
+
+    Bez rovnosti tedy nelze vyjádřit např. \myexampleinline{`model má právě 42 prvků'}.
+
+\end{frame}
+
+
+\begin{frame}{Důsledky Löwenheim-Skolemovy věty s rovností}
+
+    V důkazu L.-S. věty máme kanonický model pro bezespornou větev tabla z $T$ pro $\F\bot$; pro jazyk s rovností stačí faktorizovat dle $=^A$:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Věta (L.-S. s rovností):}
+        Ve spočetném jazyce s rovností má každá bezesporná teorie spočetný model (konečný, nebo nekonečný).
+    }
+
+    \medskip
+
+    I tato verze má snadný důsledek pro konkrétní struktury:
+
+    \smallskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        Je-li $L$ spočetný s rovností, ke každé \alert{nekonečné} $L$-struktuře existuje elem. ekvivalentní spočetně nekonečná struktura.
+    }
+
+    \smallskip
+
+    \textbf{Důkaz:}
+    Mějme nekonečnou $L$-strukturu $\A$. Podobně jako v důkazu Důsledku bez rovnosti najdeme \alert{spočetnou} $\B\equiv\A$. 
+    
+    Protože v $\A$ platí pro kažné $n\in\mathbb N$ sentence vyjadřující `existuje alespoň $n$ prvků' (což lze pomocí rovnosti snadno zapsat), platí i v $\B$, tedy $\B$ musí být nekonečná.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Spočetné algebraicky uzavřené těleso}
+
+    \begin{itemize}
+        \item \alert{algebraicky uzavřené} těleso: každý polynom nenulového stupně v něm má kořen
+        \item $\mathbb Q$ není, $x^2-2$ nemá v $\mathbb Q$ kořen
+        \item $\mathbb R$ není, $x^2+1$ nemá v $\mathbb R$ kořen
+        \item $\mathbb C$ je algebraicky uzavřené, ale je nespočetné
+    \end{itemize}
+
+    Algebraickou uzavřenost vyjádříme sentencemi $\psi_n$, pro $n>0$:
+    
+    \myalertamsmath{
+    $$
+    (\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0) = 0
+    $$
+    }
+
+    kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$
+
+    \myblock{
+    \textbf{Důsledek:}
+        Existuje spočetné algebraicky uzavřené těleso.
+    }
+
+    \smallskip
+
+    \textbf{Důkaz:}
+    Dle Důsledku L.S. věty (s rovností) existuje spočetně nekonečná $\A\equiv\mathbb C$. Protože $\mathbb C$ je těleso a splňuje $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.\hfill\qedsymbol
+
+\end{frame}
+
+
+\end{document}
+
+

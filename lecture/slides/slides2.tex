@@ -7,7 +7,7 @@
 \subtitle{NAIL062 Výroková a predikátová logika}
 \author{Jakub Bulín (KTIML MFF UK)}
 % \institute{KTIML MFF UK}
-\date{Zimní semestr 2023}
+\date{Zimní semestr 2024}
 
 
 \begin{document}
@@ -24,11 +24,12 @@
             \item normální formy
             \item vlastnosti a důsledky teorií
             \item extenze teorií
+            \item algebra výroků
         \end{itemize}   
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.5- z Kapitoly 2
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.5-2.5 z Kapitoly 2
 
 \end{frame}
 
@@ -36,14 +37,16 @@
 \begin{frame}{Další sémantické pojmy}
 
     \begin{itemize}
-        \item výrok $\varphi$ (nad $\mathbb P$) je \alert{pravdivý}, \alert{tautologie}, \alert{platí (v~logice)}, \alert{$\models \varphi$}, pokud platí v každém modelu, $\M_\mathbb P(\varphi)=\M_\mathbb P$
-        \item \alert{lživý}, \alert{sporný}, pokud nemá žádný model, $\M_\mathbb P(\varphi)=\emptyset$
+        \item výrok $\varphi$ (nad $\mathbb P$) je \alert{pravdivý}, \alert{tautologie}, \alert{platí (v~logice)}, \alert{$\models \varphi$}, pokud platí v každém modelu, $\M_\mathbb P(\varphi)=\M_\mathbb P$\pause
+        \item \alert{lživý}, \alert{sporný}, pokud nemá žádný model, $\M_\mathbb P(\varphi)=\emptyset$\pause
         
         \myalertinline{\it (Být \alert{lživý} není totéž, co nebýt \alert{pravdivý}!)}
+        \pause
 
-        \item \alert{nezávislý}, pokud platí v nějakém modelu a neplatí v nějakém jiném modelu, tj.\ není pravdivý ani lživý, $\emptyset\subsetneq\M_\mathbb P(\varphi)\subsetneq\M_\mathbb P$
+        \item \alert{nezávislý}, pokud platí v nějakém modelu a neplatí v nějakém jiném modelu, tj.\ není pravdivý ani lživý, $\emptyset\subsetneq\M_\mathbb P(\varphi)\subsetneq\M_\mathbb P$\pause
         \item \alert{splnitelný}, pokud má nějaký model, tj.\ není lživý, $\M_\mathbb P(\varphi)\neq\emptyset$
     \end{itemize}
+    \pause
     výroky $\varphi,\psi$ (ve stejném jazyce) jsou \alert{(logicky) ekvivalentní}, \alert{$\varphi\sim\psi$}, pokud mají stejné modely, tj.\
     \myalertinline{
     $
@@ -51,12 +54,14 @@
     $
     }
 
+    \pause
+    \medskip
     \myexample{
     \begin{itemize}
-        \item pravdivé jsou např.: $\top$, $p\lor q\liff q\lor p$
+        \item pravdivé: $\top$, $p\lor q\liff q\lor p$
         \item lživé: $\bot$, $(p\lor q)\land (p\lor \neg q)\land \neg p$
-        \item nezávislé a také splnitelné: $p$, $p\land q$
-        \item ekvivalentní: $p\sim p\lor p$, $p\limplies q\sim \neg p\lor q$, $\neg p \limplies (p\limplies q) \sim \top $
+        \item nezávislé, splnitelné: $p$, $p\land q$
+        \item ekvivalentní: $p\limplies q\sim \neg p\lor q$, $\neg p \limplies (p\limplies q) \sim \top $
     \end{itemize}
     }
     
@@ -70,18 +75,20 @@
         \item \alert{pravdivý/platí v $T$}, \alert{důsledek $T$}, \alert{$T \models \varphi$} je-li \myalertinline{$\M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)$}
         \item \alert{lživý/sporný v $T$} pokud $\M_\mathbb P(\varphi)\cap\M_\mathbb P(T)=\M_\mathbb P(T,\varphi)=\emptyset$.
         \item \alert{nezávislý v $T$} pokud $\emptyset\subsetneq\M_\mathbb P(T,\varphi)\subsetneq\M_\mathbb P(T)$,
-        \item \alert{splnitelný v $T$}, \alert{konzistentní s $T$} pokud $\M_\mathbb P(T,\varphi)\neq\emptyset$ (platí v alespoň jednom modelu $T$)
+        \item \alert{splnitelný v $T$}, \alert{konzistentní s $T$} pokud $\M_\mathbb P(T,\varphi)\neq\emptyset$ %(platí v alespoň jednom modelu $T$)
+        \pause
         \item $\varphi$ a $\psi$ jsou \alert{ekvivalentní v $T$}, \alert{$T$-ekvivalentní}, \alert{$\varphi\sim_T\psi$} platí-li v~týchž modelech $T$, tj. \myalertinline{
     $
     \varphi\sim_T\psi\ \Leftrightarrow\ \M_\mathbb P(T,\varphi)=\M_\mathbb P(T,\psi)
     $}
     \end{itemize}
 
-    \myexample{např. pro $T=\{p\lor q,\neg r\}$:
+    \pause
+    \myexample{např. $T=\{p\lor q,\neg r\}$:
         \begin{itemize}
-            \item výroky $q\lor p$, $\neg p\lor\neg q\lor \neg r$ jsou pravdivé v $T$
-            \item výrok $(\neg p\land\neg q)\lor r$ je v $T$ lživý
-            \item výroky $p\liff q, p\land q$ jsou v $T$ nezávislé, a také splnitelné
+            \item $\neg p\lor\neg q\lor \neg r$ je v $T$ pravdivý
+            \item $(\neg p\land\neg q)\lor r$ je v $T$ lživý
+            \item $p\liff q, p\land q$ jsou v $T$ nezávislé, splnitelné
             \item platí $p\sim_T p\lor r$ (ale $p\not\sim p\lor r$)
         \end{itemize}      
     }
@@ -93,21 +100,24 @@
 
     množina logických spojek je \alert{univerzální}, pokud:
     \begin{itemize}        
-        \item každá booleovská funkce je pravdivostní funkcí nějakého výroku vybudovaného z těchto spojek
+        \item každá booleovská funkce je pravdivostní funkcí nějakého výroku vybudovaného z těchto spojek\pause
         \item ekvivalentně: každá množina modelů nad konečným jazykem je množinou modelů nějakého výroku
     \end{itemize}
 
+    \pause
     \myblock{\textbf{Tvrzení:} $\{\neg, \landsymb,\lorsymb\}$ a $\{\neg, \limpliessymb\}$ jsou univerzální.}
     
     {\footnotesize [Důkaz na příštím slidu.]}
 
-
+    \pause
     Další zajímavé logické spojky:
     \begin{itemize}
         \item \alert{Shefferova spojka} (NAND, $\uparrow$)\hfill $p\uparrow q \sim \neg (p\land q)$,
         \item \alert{Pierceova spojka} (NOR, $\downarrow$)\hfill $p\downarrow q \sim \neg (p\lor q)$,
         \item \alert{Exclusive-OR} (XOR, $\oplus$)\hfill $p\oplus q \sim (p\lor q)\land\neg(p\land q)$
     \end{itemize}
+
+    \pause
     \myexampleinline{
         např. $\{\uparrow\}$ je univerzální, $\{\land,\lor\}$ není
     }
@@ -117,12 +127,15 @@
 
 \begin{frame}{Důkaz, že $\{\neg, \landsymb,\lorsymb\}$ a $\{\neg, \limpliessymb\}$ jsou univerzální}  
 
+    \pause
     Mějme $f\colon \{0,1\}^n\to \{0,1\}$, resp. $M=f^{-1}[1]\subseteq \{0,1\}^n$
  
+    \pause
     \textbf{Pro jediný model:} \myalertinline{
         $\varphi_v=\text{`musím být model $v$'}$
     }
 
+    \pause
     \begin{itemize}
         \item příklad: \myexampleinline{$v=(1,0,1,0)\ \rightsquigarrow\ \varphi_v=p_1\land \neg p_2 \land p_3\land \neg p_4$}
         \item obecně: $v=(v_1,\dots,v_n)$, použijeme značení $p^1=p$, $p^0=\neg p$
@@ -131,11 +144,14 @@
         $$    
     \end{itemize}
     
+    \pause
     \textbf{Pro více modelů:} \myalertinline{`musím být alespoň jeden z modelů z $M$'}
+    \pause
     $$
     \varphi_M = \bigvee_{v\in M}\varphi_v=\bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}
     $$
 
+    \pause
     Zřejmě $\M(\varphi_M)=M$ neboli $f_{\varphi_M,\mathbb P}=f$, a $\varphi_M$ používá jen $\{\neg, \landsymb,\lorsymb\}$. Protože $p\land q\sim \neg (p\limplies \neg q)$ a $p\lor q\sim \neg p\limplies q$, mohli bychom $\varphi_M$ ekvivalentně vyjádřit i pomocí  $\{\neg, \limpliessymb\}$. \hfill\qedsymbol   
 
 \end{frame}
@@ -146,7 +162,8 @@
 
 \begin{frame}{CNF a DNF}
 
-    \begin{itemize}
+    \pause
+    \begin{itemize}[<+->]
         \item \alert{literál} je prvovýrok nebo jeho negace, 
         $\bar \ell$ je \alert{opačný literál} k $\ell$ (pro \emph{pozitivní} $\ell=p$ je $\bar \ell=\neg p$, pro \emph{negativní}  $\ell=\neg p$  je $\bar \ell=p$)
         \item \alert{klauzule} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$ 
@@ -156,6 +173,7 @@
         \item výrok je v \alert{disjunktivní normální formě} (\alert{DNF}) je-li disjunkcí elementárních konjunkcí (prázdný DNF výrok je $\bot$)
     \end{itemize}
 
+    \pause
     například:
     \myexample{
         \begin{itemize}
@@ -174,14 +192,17 @@
     \myblock{zaměníme-li $0\leftrightsquigarrow 1$, negace zůstává stejná, z $\landsymb$ se stává $\lorsymb$ a naopak}
     \vspace{-12pt}
 
+    \pause
     \begin{itemize}
         \item $\varphi$ nad $\{\neg,\landsymb,\lorsymb\}$, zaměníme-li $\landsymb,\lorsymb$ a znegujeme-li prvovýroky: \alert{duální} $\psi\sim\neg\varphi$, modely $\varphi$ jsou nemodely $\psi$, $f_\psi(\neg x)=\neg f_\varphi(x)$
         \item CNF a DNF jsou duální pojmy
         \item \emph{pravdivost} je duální k \emph{nesplnitelnosti} 
     \end{itemize}
 
+    \pause
     \textbf{Pozorování:} Výrok v CNF je \alert{pravdivý}, právě když každá klauzule má dvojici opačných literálů.
 
+    \pause
     \textbf{Duálně:} Výrok v DNF je \alert{nesplnitelný}, pokud každá elementární konjunkce má dvojici opačných literálů.
        
 \end{frame}
@@ -197,17 +218,24 @@
 
     najdeme DNF a CNF výroky se stejnými modely, tj. ekvivalentní~$\varphi$
 
-    DNF sestrojíme tak, že pro každý model přidáme elementární konjunkci vynucující právě tento model:    
+    \pause
+    \bigskip
+
+    \alert{konstrukce DNF:} každý model popsaný jednou elem. konjunkcí
     \myexamplemath{\vspace{-12pt}
     $$
     \varphi_{\mathrm{DNF}}=(\neg p\land\neg q\land r)\lor (p\land\neg q\land\neg r) \lor (p\land q\land\neg r)\lor (p\land q\land r)
     $$
     }
 
-    při konstrukci CNF potřebujeme \alert{nemodely} $\varphi$: 
+    \pause
+    \bigskip
+
+    \alert{konstrukce CNF:} potřebujeme \alert{nemodely}
     \myexamplemath{$$\overline{M}=\{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$$
     }
 
+    \pause
     každá klauzule zakáže jeden nemodel: 
     \myexamplemath{\vspace{-12pt}
     $$
@@ -224,6 +252,8 @@
         \textbf{Tvrzení:} Buď $\mathbb P$ konečný, $M\subseteq\M_\mathbb P$ libovolná. Potom existují DNF a CNF výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$, že 
     \alert{$M=\M_\mathbb P(\varphi_{\mathrm{DNF}})=\M_\mathbb P(\varphi_{\mathrm{CNF}})$}.
 
+    \pause
+
     \vspace{-18pt}
     \begin{align*}
         \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}\\
@@ -231,15 +261,21 @@
     \end{align*}
     }
 
+    \pause
+
     \textbf{Důkaz:} $\varphi_{\mathrm{DNF}}=\varphi_M$ říká  \alert{`jsem jeden z modelů z $M$'}
+
+    \pause
 
     $\varphi_{\mathrm{CNF}}$ říká \alert{`nejsem žádný z nemodelů z $M$'}, je duální k $\varphi'_{\mathrm{DNF}}=\varphi_{\overline{M}}$ pro doplněk $M$, nebo přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou $\M_C=\M_\mathbb P\setminus\{v\}$, tedy každá klauzule zakáže jeden nemodel\hfill\qedsymbol
 
+    \pause
     \medskip
     \myblock{
     \textbf{Důsledek:} Každý výrok (v libovolném, i nekonečném jazyce $\mathbb P$) je ekvivalentní nějakému výroku v CNF a nějakému výroku v DNF.
     }
 
+    \pause
     \textbf{Důkaz:} použijeme konečný jazyk $\mathbb P'=\Var(\varphi)$, $M=\M_{\mathbb P'}(\varphi)$\hfill\qedsymbol
 
 \end{frame}
@@ -249,16 +285,22 @@
 
     Hledat všechny modely je neefektivní, lze i syntakticky pomocí \alert{ekvivalentních úprav}.
 
+    \pause
+
     \textbf{Pozorování:} Nahradíme-li podvýrok $\psi$ výroku $\varphi$ ekvivalentním $\psi'$, výsledný výrok $\varphi'$ je také ekvivalentní $\varphi$.
 
+    \pause
+
     \textbf{Postup úprav:}
-    \begin{enumerate}
+    \pause
+    \begin{enumerate}[<+->]
         \item přepiš ekvivalenci a implikaci pomocí $\neg,\landsymb,\lorsymb$
         \item přesuň negace dolů (k listům) ve stromu výroku pomocí de Morganových pravidel, odstraň dvojité negace
         \item přesuň dolů disjunkce (pro CNF) resp. konjunkce (pro DNF) pomocí distributivity $\landsymb$ a $\lorsymb$
         \item případně zjednoduš (odstranění duplicit, tautologií apod.)
     \end{enumerate}
 
+    \pause
     Důkaz, že funguje: indukcí dle struktury výroku
 
 \end{frame}
@@ -266,9 +308,10 @@
 
 \begin{frame}{Převod do normální formy: syntakticky (příklad)}
 
-    mějme opět výrok \myexampleinline{$\varphi=p\liff (q\lor \neg r)$}
+   \myexamplemath{$$\varphi=p\liff (q\lor \neg r)$$}
 
-    \begin{itemize}
+   \pause
+    \begin{itemize}[<+->]
         \item přepsat ekvivalence a implikace
         \begin{align*}
             p\liff (q\lor \neg r) &\sim (p\limplies (q\lor \neg r)) \land ((q\lor \neg r) \limplies p)\\
@@ -330,17 +373,18 @@
 
 \begin{frame}{Vlastnosti teorií}
  
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{sporná}: $T\models\bot$, ekvivalentně: nemá model, platí v ní vše
         \item \alert{bezesporná} (\alert{splnitelná}): není sporná, tj. má model
         \item \alert{kompletní}: bezesporná + každý výrok je v ní pravdivý nebo lživý (nemá nezávislé výroky), ekvivalentně: \myalertinline{právě jeden model}
         \item \alert{ekvivalence teorií}: $\alert{T\sim T'}$ právě když $\M_\mathbb P(T)=\M_\mathbb P(T')$ (různé \emph{axiomatizace} týchž vlastností)
     \end{itemize}   
 
+    \pause
     \myexample{
-        \begin{itemize}
+        \begin{itemize}[<+->]
             \item $T_1=\{p,p\limplies q,\neg q\}$ je sporná
-            \item $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní, např. $p\land q$ je v ní nezávislý: platí v modelu $(1,1,1)$, neplatí v $(1,0,1)$ 
+            \item $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní\pause, např. $p\land q$ je v ní nezávislý\pause: platí v modelu $(1,1,1)$, neplatí v $(1,0,1)$ \pause
             \item $T_2\cup\{\neg p\}$ je kompletní, jediným modelem je $(0,1,1)$.
             \item ekvivalentní teorie: $\{p\limplies q,r\}\sim\{(\neg p\lor q)\land r\}$
         \end{itemize}
@@ -358,22 +402,26 @@
     $$
     }
 
+    \pause
     pokud $\mathbb P'=\mathbb P$:
     \myalertinline{%
         $\Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid \M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)\}$}
 
+    \pause
     \bigskip
 
     \myblock{
     \textbf{Tvrzení:} Jsou-li $T,T'$ teorie a $\varphi,\varphi_1,\dots,\varphi_n$ výroky v jazyce $\mathbb P$:
-        \begin{enumerate}[(i)]       
+        \begin{enumerate}[(i)]     
             \item $T\subseteq\Conseq_\mathbb P(T)$
             \item $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(\Conseq_\mathbb P(T))$
             \item pokud $T\subseteq T'$, potom $\Conseq_\mathbb P(T)\subseteq\Conseq_\mathbb P(T')$
+            \pause
             \item $\varphi\in\Conseq_\mathbb P(\{\varphi_1,\dots,\varphi_n\})$ právě když $\models(\varphi_1\land \dots\land\varphi_n)\to\varphi$
         \end{enumerate}
     }
 
+    \pause
     \textbf{Důkaz:} snadný, použijte následující:
     \begin{itemize}
     \item $\M(\Conseq(T))=\M(T)$
@@ -387,11 +435,13 @@
 \begin{frame}{Extenze teorií: neformálně}
 
     \alert{Extenze} teorie $T$ je jakákoliv teorie, která splňuje vše, co platí v $T$
+    \pause
     \begin{itemize}
-        \item dodatečné požadavky o systému: \alert{jednoduchá extenze}
+        \item dodatečné požadavky o systému: \alert{jednoduchá extenze}\pause
         \item přidání nových částí k systému (a v původním platí totéž, co předtím): \alert{konzervativní extenze}
     \end{itemize}
 
+    \pause
     \myexample{
     Úvodní příklad o barvení grafů: 
     \begin{itemize}
@@ -408,8 +458,9 @@
 
     \myblock{Buď $T$ v jazyce $\mathbb P$. \alert{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\Conseq_\mathbb P(T)\subseteq\Conseq_{\mathbb P'}(T')$,
     
+    \pause
     \begin{itemize}
-        \item \alert{jednoduchá}: $\mathbb P'=\mathbb P$
+        \item \alert{jednoduchá}: $\mathbb P'=\mathbb P$\pause
         \item \alert{konzervativní}: $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$\\
         \begin{center}
             \it ``nové důsledky musí obsahovat nové prvovýroky''
@@ -418,23 +469,28 @@
     \end{itemize}
     }
 
+    \pause
     {\small
     \textbf{Pozorování:}\\
     1. $T'$ je jednoduchá extenze $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$
 
+    \pause
     2. $T'$ je extenze $T$, právě když $\M_{\mathbb P'}(T')\subseteq\M_{\alert{\mathbb P'}}(T)$. Tj. \alert{restrikce}
     modelů $T'$ na $\mathbb P$ musí být modely $T$:
     \alert{$
     \{v{\restriction_\mathbb P}\mid v\in\M_{\mathbb P'}(T')\}\subseteq\M_\mathbb P(T)
     $}
 
+    \pause
     3. $T'$ je konzervativní extenze $T$, je-li to extenze a navíc každý model $T$ lze \alert{expandovat} na model $T'$ (tj. \emph{každý} model $T$ získáme restrikcí \emph{nějakého} modelu $T'$ na jazyk $\mathbb P$):
     \alert{$
     \{v{\restriction_\mathbb P}\mid v\in\M_      {\mathbb P'}(T')\}=\M_\mathbb P(T)
     $}
 
+    \pause
     4. $T'$ je extenze $T$ a zároveň $T$ je extenze $T'$, právě když $T\sim T'$     
 
+    \pause
     5. \alert{Kompletní jednoduché extenze} $T$ \alert{odpovídají modelům} $T$ (až na $\sim$)
     }
 
@@ -444,7 +500,7 @@
 \begin{frame}{Extenze teorií: příklad}
 
     \small
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item mějme \myexampleinline{%
             $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$}, teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ \alert{je jednoduchá} extenze $T$: $\M_\mathbb P(T_1)\subseteq\M_\mathbb P(T)$
         %$\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$
@@ -465,6 +521,101 @@
             $T''=\{\neg p\lor q,\neg q\lor r,\neg r\lor p\}$ v jazyce $\mathbb P'$} je extenze $T$, ale \alert{není konzervativní}, neboť v ní platí $p\liff q$, což neplatí v $T$ (nebo proto, že model $(0, 1)$ teorie $T$ nelze rozšířit na model teorie $T''$)
     \end{itemize}
  
+\end{frame}
+
+
+\section{2.5 Algebra výroků}
+
+
+\begin{frame}{Výroky až na ekvivalenci}
+
+    Kolik existuje výroků nad $\mathbb P=\{p,q,r\}$? Nekonečně mnoho. \alert{Až na ekvivalenci?} Tolik, kolik je možných množin modelů: $2^{2^3}=256$.
+
+    \pause
+    \myalertinline{Výroky až na ekvivalenci studujeme pomocí jejich množin modelů.}
+
+    \pause
+    Ekvivalenční třídy: \alert{$\sfrac{\VF_\mathbb P}{\sim}$}, např. \myexampleinline{\small
+        $[p\limplies q]_\sim=\{p\limplies q,\neg p \lor q,\dots\}$}
+
+    \pause
+    Přiřazení modelů: \myalertinline{%
+        \small $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ definované $h([\varphi]_\sim)=\M(\varphi)$}\\        
+    (je dobře definované, prosté, pro konečný jazyk bijekce)
+
+    \pause
+    Na $\sfrac{\VF_\mathbb P}{\sim}$ zavedeme operace $\neg,\landsymb,\lorsymb$ \alert{pomocí reprezentantů}:
+    {\small
+    \begin{align*}
+        \neg [\varphi]_\sim &=[\neg\varphi]_\sim\\
+        [\varphi]_\sim \land [\psi]_\sim &= [\varphi\land\psi]_\sim\\
+        [\varphi]_\sim \lor [\psi]_\sim &= [\varphi\lor\psi]_\sim\\
+    \end{align*}
+    }
+
+    \pause
+    \vspace{-18pt}
+    přidáme konstanty {\small $\bot=[\bot]_\sim,\top=[\top]_\sim$}, máme \emph{Booleovu algebru}: \alert{algebru výroků} jazyka $\mathbb P$; totéž relativně k teorii $T$ (\alert{použijeme $\sim_T$})
+
+\end{frame}
+
+
+\begin{frame}{Algebra výroků}
+
+    \myblock{
+    \alert{Algebra výroků} jazyka $\mathbb P$ resp. teorie $T$: \vspace{-6pt}
+    \begin{align*}
+        \mathbf{AV}_\mathbb P&=\langle \sfrac{\VF_\mathbb P}{\sim}; \neg, \landsymb, \lorsymb, \bot, \top\rangle\\
+        \mathbf{AV}_\mathbb P(T)&=\langle \sfrac{\VF_\mathbb P}{\sim_T}; \neg_T, \landsymb_T, \lorsymb_T, \bot_T, \top_T\rangle
+    \end{align*}
+    }
+
+    \pause
+    přiřazení modelů $h$ je prosté zobrazení algebry výroků jazyka do \alert{potenční algebry} \myalertinline{%
+        $\mathbf{\mathcal P(\M_\mathbb P)}=\langle \mathcal P(\M_\mathbb P); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb P\rangle$} \alert{zachovávající} operace a konstanty: $h(\bot)=\emptyset$, $h(\top)=\M_\mathbb P$, a
+    {\small
+    \begin{align*}
+        h(\neg[\varphi]_\sim)&=\overline{h([\varphi]_\sim)}=\overline{\M(\varphi)}=\M_\mathbb P\setminus\M(\varphi)\\
+        h([\varphi]_\sim\land[\psi]_\sim)&=h([\varphi]_\sim)\cap h([\psi]_\sim)=\M(\varphi)\cap\M(\psi)\\
+        h([\varphi]_\sim\lor[\psi]_\sim)&=h([\varphi]_\sim)\cup h([\psi]_\sim)=\M(\varphi)\cup\M(\psi)
+    \end{align*}
+    }
+
+    \vspace{-6pt}
+
+    tj. je to  \alert{homomorfismus} Booleových algeber, a nad konečným jazykem bijekce, tzv. \alert{izomorfismus}; stejně pro algebru výroků teorie
+
+    \pause
+    \myblock{
+    \textbf{Důsledek:}
+    Pro bezespornou teorii $T$ nad \emph{konečným jazykem} $\mathbb P$ je algebra výroků   $\mathbf{AV}_\mathbb P(T)$ izomorfní potenční algebře $\mathbf{\mathcal P(\M_\mathbb P(T))}$ prostřednictvím zobrazení $h([\varphi]_{\sim_T})=M(T,\varphi)$.
+    }
+
+\end{frame}
+
+
+\begin{frame}{Počítání až na ekvivalenci}
+
+    \myblock{
+    \textbf{Tvrzení:}
+        Mějme $n$-prvkový jazyk $\mathbb P$ a bezespornou teorii $T$ mající právě $k$ modelů. Potom v jazyce $\mathbb P$ existuje \alert{až na ekvivalenci}:\pause
+        \begin{itemize}
+            \item $2^{2^n}$ výroků (resp. teorií),\pause
+            \item $2^{2^n-k}$ výroků pravdivých (resp. lživých) v $T$,\pause
+            \item $2^{2^n}-2\cdot 2^{2^n-k}$ výroků nezávislých v $T$,\pause
+            \item $2^k$ jednoduchých extenzí teorie $T$ (z toho 1 sporná),\pause
+            \item $k$ kompletních jednoduchých extenzí $T$.\pause
+        \end{itemize}
+        Dále \alert{až na $T$-ekvivalenci} existuje:\pause
+        \begin{itemize}
+            \item $2^k$ výroků,\pause
+            \item $1$ výrok pravdivý v $T$, $1$ lživý v $T$,\pause
+            \item $2^k-2$ výroků nezávislých v $T$.\pause
+        \end{itemize}
+    }
+
+    \textbf{Důkaz:} stačí spočítat možné množiny modelů\hfill\qedsymbol
+        
 \end{frame}
 
 

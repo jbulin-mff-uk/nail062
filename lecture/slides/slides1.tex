@@ -6,26 +6,36 @@
 \subtitle{NAIL062 Výroková a predikátová logika}
 \author{Jakub Bulín (KTIML MFF UK)}
 % \institute{KTIML MFF UK}
-\date{Zimní semestr 2023}
+\date{Zimní semestr 2024}
 
 
 \begin{document}
 
 
-\frame{\titlepage}
+\maketitle
 
 
-\begin{frame}{Cesta k jistému úspěchu u zkoušky\footnote{Podrobnosti o zkoušce včas upřesníme. Základní formát i většina otázek ale pravděpodobně zůstanou stejné, viz loňské \href{https://jbulin.github.io/teaching/fall/nail062/files/info-o-zkouskach.pdf}{\alert{\textbf{informace o zkouškách}}}.}}
+\begin{frame}{Jak se učit?}
 
-\begin{itemize}    
-    \item Studujte \alert{průběžně (každý týden)}, a průběžně také \alert{testujte své znalosti}: umíte sami \alert{napsat}(!) definici, větu, důkaz?
-    \item Před každou přednáškou alespoň zběžně projděte příslušné sekce v \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápiscích z přednášky}}}. Ty obsahují vše, co po vás bude vyžadováno.\footnote{Nedoporučujeme učit se primárně podle slidů! Mnoho detailů v nich chybí.} Snažte se pochopit smysl definic a tvrzení.
-    \item Po každé přednášce si skripta \alert{podrobně přečtěte}. Pokud něčemu nebudete rozumět, využijte konzultačních hodin.
-    \item Snažte se zúčastnit všech přednášek, pokud nemůžete, včas se materiál doučte, případně využijte konzultačních hodin.
-    \item Ujistěte se, že rozumíte nejen myšlenkám, ale umíte pracovat i s \alert{formalizmem}: ten je neoddělitelnou součástí logiky.
-    \item Stejnou pozornost věnujte i přípravě na \alert{cvičení}.
-    \bigskip
-\end{itemize}
+    Velmi doporučuji tento online minikurz o efektivním učení:
+
+
+    \href{https://www.samford.edu/departments/academic-success-center/how-to-study}{\alert{https://www.samford.edu/departments/academic-success-center/how-to-study}}
+
+    Investujte 35 minut nyní, ušetřete mnoho hodin později!
+    
+\end{frame}
+
+
+\begin{frame}{Cesta k jistému úspěchu u zkoušky}
+
+    \begin{itemize}    
+        \item \alert{Před přednáškou} alespoň zběžně projděte skripta, snažte se pochopit motivaci a smysl definic a hlavních tvrzení.
+        \item Po přednášce skripta \alert{podrobně přečtěte}, nejasnosti ujasněte.
+        \item Ujistěte se, že umíte pracovat i s \alert{formalizmem}.
+        \item Věnujte pozornost i \alert{cvičení}, pomůže vám vše pochopit.
+        \item Studujte \alert{průběžně}, a průběžně \alert{testujte své znalosti}.
+    \end{itemize}
 
 \end{frame}
 
@@ -56,10 +66,13 @@
     
     \href{https://www.google.com/search?q=define+logic}{\textbf{Dvě definice:}}
         \begin{enumerate}
-            \item soubor principů, které jsou základem uspořádání prvků nějakého systému (např.\ počítačového programu, elektronického zařízení, komunikačního protokolu)
+            \item soubor principů, které jsou základem uspořádání prvků nějakého systému (např. programu, zařízení, protokolu)
             \item věda o uvažování prováděném podle striktních pravidel zachovávajících platnost 
-        \end{enumerate}        
-
+        \end{enumerate}
+        
+    \medskip 
+    
+    \pause
 
     \myblock{\textbf{V informatice obojí:} daný systém nejprve \emph{formálně popíšeme}, a poté o něm \emph{formálně uvažujeme} (automaticky!), tj. odvozujeme \alert{platné inference} za použití nějakého \alert{dokazovacího systému}
     }
@@ -69,9 +82,15 @@
 
 \begin{frame}{Historie a aplikace logiky}
 
-    {\footnotesize Filozofie $\to$}  {\normalsize Matematika $\to$}  {\large Teoretická informatika $\to$} 
-        
-    \myalertinline{\Large Aplikovaná informatika}
+    {\footnotesize Filozofie $\to$}  {\normalsize Matematika $\to$}  {\Large Teoretická informatika $\to$} 
+    
+    \medskip
+    
+    \myalertinline{\Huge Aplikovaná informatika}
+
+    \pause
+
+    \medskip
 
     \begin{itemize}
         \item logic programming
@@ -94,12 +113,16 @@
     \myexample{
         Při hledání pokladu jsme narazili na rozcestí dvou chodeb. Víme, že na konci každé chodby je buď poklad, nebo drak, ale ne obojí. 
         
+        \pause
+
         \medskip
         Trpaslík nám řekl, že: 
         \begin{itemize}
             \item \emph{``Alespoň jedna z těch dvou chodeb vede k pokladu''}, a že
             \item \emph{``První chodba vede k drakovi.''}
         \end{itemize}
+
+        \pause
 
         \medskip
         Je známo, že trpaslíci buď vždy mluví pravdu, nebo vždy lžou. Kterou cestou se máme vydat?
@@ -114,19 +137,27 @@
     \begin{center}
         \alert{pravdivý} (\emph{True}, 1), nebo \alert{lživý} (\emph{False}, 0)
     \end{center}
+
+    \pause
     
     \alert{Prvovýroky} (\alert{atomické výroky}, \alert{výrokové proměnné}) zkombinované pomocí logických spojek a závorek do \alert{složených výroků}:
 
+    \pause
+
     \myexample{
         ``(Trpaslík lže,) \emph{právě když} (druhá chodba vede k drakovi.)''\
-    }        
+    }
+    
+    \medskip
+
+    \pause
 
     \begin{description}\setlength{\itemsep}{3pt}
-        \item[\huge\alert{$\neg$}] ``neplatí X'', \emph{negace}
-        \item[\huge\alert{$\landsymb$}] ``X a Y'', \emph{konjunkce}
-        \item[\huge\alert{$\lorsymb$}] ``X nebo Y'', \emph{disjunkce} (není exkluzivní)
-        \item[\huge\alert{$\limpliessymb$}] ``pokud X, potom Y'', \emph{implikace} (čistě logická)
-        \item[\huge\alert{$\liffsymb$}] ``X, právě když Y'', \emph{ekvivalence}
+        \item[\LARGE\alert{$\neg$}] ``neplatí X'', \emph{negace}
+        \item[\LARGE\alert{$\landsymb$}] ``X a Y'', \emph{konjunkce}
+        \item[\LARGE\alert{$\lorsymb$}] ``X nebo Y'', \emph{disjunkce} (není exkluzivní)
+        \item[\LARGE\alert{$\limpliessymb$}] ``pokud X, potom Y'', \emph{implikace} (čistě logická)
+        \item[\LARGE\alert{$\liffsymb$}] ``X, právě když Y'', \emph{ekvivalence}
     \end{description}
 
 \end{frame}
@@ -135,13 +166,20 @@
 \begin{frame}{Formalizace ve výrokové logice}
 
     Volba množiny prvovýroků: \myalertinline{bity informace popisující daný systém}
+
+    \pause
     
     \myexample{            
         $p_1=${\it ``Poklad je v první chodbě.''}\\
         $p_2=${\it ``Poklad je ve druhé chodbě.''}
     }
 
+    \pause
+
     (Co nejmenší, např. hodnota $t=${\it ``Trpaslík mluví pravdu.''} je jednoznačně určená hodnotami $\mathbb P=\{p_1,p_2\}$.)
+    
+    \pause
+
     \begin{itemize}
         \item {\it Poklad nebo drak, ale ne obojí}: zakódované do volby $\mathbb P$ (přítomnost draka je absence pokladu)
         \item {\it ``První chodba vede k drakovi.''} $\Leftrightarrow$ \alert{$\neg p_1$}
@@ -153,6 +191,8 @@
         $$
         }
     \end{itemize}
+
+    \pause
 
     \medskip
     \myblock{
@@ -172,10 +212,16 @@
     \M_\mathbb P=\{(0,0),(0,1),(1,0),(1,1)\}.
     $$
     }
+
+    \pause
+
     Je ``svět'' popsaný modelem $v = (1,0)$ \emph{konzistentní} s tím, co víme, tj. \alert{platí} v modelu $v$ výrok $\varphi$ resp. teorie $T$? Vyhodnotíme podle stromové struktury $\varphi$:
     $$
     v(p_1) = 1,\ v(p_2) = 0,\ v(\neg p_1) = 0,\ v(p_1 \lor p_2)=1,\ \dots,\ \alert{v(\varphi)=0}
     $$
+    
+    \pause
+
     Množina \alert{modelů výroku} \( \varphi \) (resp.\ \emph{modelů teorie} \( T \)):
     \myexample{\vspace{-6pt}
     $$
@@ -192,13 +238,18 @@
 
     Ověřovat všechny modely je nepraktické, pro $|\mathbb P|=n$ máme $2^n$ modelů, a $\mathbb P$ může být i nekonečná.
 
+    \pause
+
     \textbf{Dokazovací systém}
     \begin{itemize}
         \item \alert{důkaz} výroku~\( \psi \) z teorie \(T\) je formálně definovaný syntaktický objekt, snadno (mechanicky) ověřitelný
         \item lze hledat algoritmicky čistě na základě struktury \( \psi \) a axiomů \(T\) (``\emph{syntaxe}''), nemusíme se zabývat modely (``\emph{sémantikou}'').
     \end{itemize}        
+    
+    \pause
     Klíčové vlastnosti:
 
+    \pause
     \myblock{
     \begin{itemize}
         \item \alert{korektnost}: pokud existuje důkaz \( \psi \) z \(T\), potom \( \psi \) platí v \(T\)
@@ -206,6 +257,7 @@
     \end{itemize}
     }
 
+    \pause
     %Korektnost je nutná, ale efektivní dokazovací systém může být užitečný, i pokud v něm nelze dokázat vše, co platí.
     Ukážeme si \alert{metodu analytického tabla} a \alert{rezoluční metodu}. Obě dokazují \emph{sporem}: předpokládají platnost $T$ a \( \neg \psi \), hledají spor.
 
@@ -218,16 +270,21 @@
     \item důkaz je strom olabelovaný předpoklady o platnosti výroků
     \item v kořeni: \alert{neplatí} dokazovaný výrok $\psi$ (důkaz sporem)
     \item připojíme platnost axiomů z $T$
-    \item dále budujeme tablo zjednodušováním výroků ve vrcholech, podle pravidel zaručujících následující \alert{invariant}:
     
+    \pause
+    \item při konstrukci zjednodušujeme výroky ve vrcholech, \alert{invariant}:
+    
+    \pause
     \bigskip
     \myalert{\it
         Každý model teorie \(T\), ve kterém neplatí \(\psi\), se musí \emph{shodovat} s některou z větví tabla. 
     }
+
+    \pause
     
     \bigskip
 
-    \item například:
+    např.:
     
     \bigskip
     \myblock{
@@ -236,6 +293,7 @@
     }
     \smallskip    
         
+    \pause
 
     \item \alert{sporná} větev = předpokládá True i False stejného výroku
     \item \alert{důkaz} = všechny větve sporné (tj. nemůže existovat model $T$, ve kterém neplatí $\psi$)
@@ -298,30 +356,37 @@
         každý výrok má \alert{ekvivalentní} CNF (\alert{$\psi \sim \psi'$}, stejné modely)
     }
     
+    \pause
     \myexample{např. pro výrok 
     $
     (\neg p_1 \land (p_1 \lor p_2)) \lor (\neg (\neg p_1) \land \neg (p_1 \lor p_2))
     $
     }
 
+    \pause
     nahradíme \alert{$\neg (\neg p_1) \sim p_1$} a \alert{$\neg (p_1 \lor p_2) \sim (\neg p_1 \land \neg p_2)$} (\emph{De Morgan})
 
+    \pause
     \myexamplemath{
     $$
     (\neg p_1 \land (p_1 \lor p_2)) \lor (p_1 \land \neg p_1 \land \neg p_2)
     $$
     }
 
+    \pause
     a dále opakovaně použijeme \alert{distributivitu} \( \lorsymb \) vůči \( \landsymb \): \medskip
 
+    \pause
     \myexampleamsmath{
     \begin{gather*}
     (\neg p_1 \lor p_1) \land (\neg p_1 \lor \neg p_1) \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2 \lor p_1) \land\\ (p_1 \lor p_2 \lor \neg p_1)\land (p_1 \lor p_2 \lor \neg p_2)    
     \end{gather*}    
     }
 
+    \pause
     už je CNF, ještě zjednodušíme: odstraníme duplicitní literály, a klauzule obsahující $p_i$ a zároveň $\neg p_i$ (to jsou \alert{tautologie})
 
+    \pause
     \myexamplemath{
     $$
     \neg p_1 \land (\neg p_1 \lor \neg p_2) \land (p_1 \lor p_2)
@@ -333,8 +398,9 @@
 
 \begin{frame}{Rezoluční důkaz}
 
-    Důkaz sporem: převedeme \alert{negaci} dokazovaného do CNF a přidáme
+    Dk sporem, převeď \alert{negaci} dokazovaného do CNF a přidej k $T$
 
+    \pause
     \myblock{
     \alert{\(p_2\) platí v \(T\)}, právě když je následující CNF výrok \alert{nesplnitelný}:
     }
@@ -345,12 +411,14 @@
     $$
     }
 
+    \pause
     množinový zápis:
     \myexampleinline{$
     S=\left \{ \{\neg p_1\},\{\neg p_1,\neg p_2\},\{p_1, p_2\},\{\neg p_2\} \right \}
     $
     }
 
+    \pause
     \medskip
 
     \myalert{\alert{rezoluční pravidlo}: je-li $p\in C_1$ a $\neg p\in C_2$, potom \emph{rezolventa} 
@@ -359,10 +427,12 @@
     $$ platí v každém modelu, ve kterém platí $C_1$ i $C_2$
     }
     
+    \pause
     \medskip
 
     \alert{rezoluční zamítnutí $S$}: posloupnost klauzulí, kde každá je buď z $S$ nebo rezolventa předchozích, poslední je prázdná klauzule $\square$
 
+    \pause
     \myblock{\textbf{myšlenka:} protože $\square$ nemá žádný model, je i $S$ nesplnitelná}
 
 \end{frame}
@@ -370,7 +440,7 @@
 
 \begin{frame}{Příklad rezolučního důkazu}
 
-    \alert{rezoluční zamítnutí} (třetí klauzule je rezolventou 1. a 2., pátá je rezolventou 3. a 4.)
+    \alert{rezoluční zamítnutí} (3. klauzule je rezolventou 1.\&2., 5. je z 3.\&4.)
 
     \myexamplemath{
     \[
@@ -378,6 +448,7 @@
     \]
     }
 
+    \pause
     \bigskip
 
     \alert{rezoluční strom} (listy klauzule z $S$, vnitřní vrcholy rezolventy synů) 
@@ -415,10 +486,12 @@
     \end{center}
     }
     
+    \pause
     graf: množina vrcholů a množina (libovolně) \alert{orientovaných} hran
     \[
     \mystructure G = \langle V; E \rangle = \langle \{1,2,3,4\}; \{(1,2),(1,3),(1,4),(2,3),(3,4)\} \rangle
     \]
+    \pause
     jak formalizovat? pro $v\in V$ a $c\in C=\{R,G,B\}$:
     
     \myalertmath{
@@ -427,8 +500,10 @@
     $$
     }
 
+    \pause
     \mbox{\small $\mathbb P=\{p_v^c\mid c\in C,v\in V\}=\{p_1^R,p_1^G,p_1^B,p_2^R,p_2^G,p_2^B,p_3^R,p_3^G,p_3^B,p_4^R,p_4^G,p_4^B\}$}
 
+    \pause
     máme celkem \( |\M_\mathbb P|=2^{12}=4096 \) \alert{modelů jazyka} (12-dim. vektorů)
 \end{frame}
 
@@ -442,6 +517,7 @@
         T_1 = \{ (\neg p_v^R \lor \neg p_v^G) \land (\neg p_v^R \lor \neg p_v^B) \land (\neg p_v^G \lor \neg p_v^B) \mid v \in V \}
         $$}
 
+        \pause
         \medskip
 
         \item a každý vrchol má alespoň jednu barvu: $3^4=81$ modelů\medskip
@@ -449,11 +525,13 @@
         \myexamplemath{\vspace{-9pt}$$T_2 = T_1\cup \{ p_v^R \lor p_v^G \lor p_v^B \mid v \in V \}= T_1\cup \{\bigvee_{c\in C} p_v^c \mid v \in V \}
         $$}
 
+        \pause
         \medskip
         
         \myblock{$T_2$ je \alert{extenze} teorie $T_1$ neboť \alert{každý důsledek $T_1$ platí i v $T_2$}, zde dokonce $\M_\mathbb P(T_2)\subseteq\M_\mathbb P(T_1)$}
         %\footnote{Proč $\subseteq$? Čím více vlastností požadujeme, tím méně objektů je splňuje.}
 
+        \pause
         \medskip
 
         \item nakonec přidáme \alert{hranovou podmínku}:\medskip
@@ -463,6 +541,7 @@
         (\neg p_u^c \lor \neg p_v^c) \mid (u,v) \in E \}
         $$}  
 
+        \pause
         \medskip
 
         Výsledná teorie \( T_3 \) je \alert{splnitelná} (má model), právě když je graf \( \mystructure{G} \) 3-obarvitelný.   
@@ -486,13 +565,19 @@ $T_3$ má 6 modelů: \( v = (1,0,0,0,1,0,0,0,1,0,1,0) \) a další získané per
     \end{tikzpicture}
 \end{center}
 
+\pause
+
 \textbf{Obarvení, ve kterých je vrchol 1 modrý a vrchol 2 zelený?} 
 
 Odpovídají modelům teorie \( T_3 \cup \{ p_1^B, p_2^G\} \)
 
+\pause
+
 \textbf{Důkaz, že vrcholy 2 a 4 musí mít stejnou barvu?}
 
 \alert{Tablo} s kořenem $\text{False  }(p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B)$
+
+\pause
 
 Nebo \alert{rezolucí}: přidáme \alert{negaci} \( (p_2^R \land p_4^R)\lor(p_2^G \land p_4^G)\lor(p_2^B \land p_4^B) \), vše převedeme do CNF a zamítneme
 
@@ -503,7 +588,9 @@ Nebo \alert{rezolucí}: přidáme \alert{negaci} \( (p_2^R \land p_4^R)\lor(p_2^
 
 
 \begin{frame}{Nevýhody formalizace ve výrokové logice}
-Teorie $T_3$ je poměrně velká, a `natvrdo' kóduje graf $\mystructure G$.  
+Teorie $T_3$ je poměrně velká, a `natvrdo' kóduje graf $\mystructure G$.
+
+\pause
 
 \begin{center}
     \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
@@ -516,11 +603,15 @@ Teorie $T_3$ je poměrně velká, a `natvrdo' kóduje graf $\mystructure G$.
     \path[draw] (2) -- (5) -- (3);
     \end{tikzpicture}
 \end{center}
+
+\pause
 Obohatit jazyk $\mathbb P'=\mathbb P \cup \{ p_5^R,p_5^G,p_5^B\}
 $ a vytvořit ještě větší teorii~$T'_3$ přidáním axiomů o vrcholu 5 a hranách $(2, 5), (3,5)$?
 
+\pause
 A co vlastnosti obecně platné o všech nebo mnoha grafech?
 
+\pause
 \myblock{
 V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí \alert{proměnných} a přirozeně vyjádřit vlastnosti jako:
 \begin{itemize}
@@ -541,11 +632,16 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{align*}
     }
 
+    \pause
     \begin{itemize}
         \item množina vrcholů, a binární relace na této množině
+        \pause
         \item \alert{jazyk} specifikuje kolik \alert{relací} jakých arit má struktura mít, a symboly pro ně
+        \pause
         \item např. \alert{jazyk grafů} \( \mathcal L=\langle E \rangle \) (kde \(E\) je binární relační symbol)
+        \pause
         \item $\mystructure G$ a $\mystructure G'$ jsou \alert{struktury v jazyce} $\mathcal L$ (\alert{$\mathcal L$-struktury})   
+        \pause
         \item můžeme mít také \alert{funkce} a \alert{konstanty}, a symbol \alert{$=$} pro \alert{rovnost} 
     \end{itemize}
 
@@ -556,6 +652,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 
     \textbf{Syntaxe}: místo prvovýroků \alert{atomické formule}, např. $E(x,y)$, kde $x,y$ jsou \alert{proměnné} reprezentující vrcholy; stejné logické spojky, ale navíc \alert{kvantifikátory}:
   
+    \pause
     \myalert{
     \begin{description}
         \item[\alert{\( (\forall x) \)}] {\it``pro všechny vrcholy \(x\)''}
@@ -563,8 +660,10 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{description}
     }
 
+    \pause
     (hrají roli ``konjunkce'' a ``disjunkce'' přes všechny prvky)
     
+    \pause
     \bigskip
 
     \myexample{
@@ -575,6 +674,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{itemize}    
     }
 
+    \pause
     \bigskip
 
     \textbf{Sémantika}: V daném grafu \(\mystructure{G}\) a při \alert{dosazení} vrcholu \(u\) za proměnnou \(x\) a vrcholu \(v\) za proměnnou \(y\) \alert{vyhodnotíme} \( E(x,y) \) jako \alert{True}, právě když \alert{\( (u,v)\in E^{\mystructure{G}} \)}.
@@ -586,7 +686,11 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
       
     Jazyk \alert{\( \mathcal L' =\langle E, R, G, B \rangle \)}, kde \(E\) je binární a \(R,G,B\) jsou unární relační symboly (\(R(x)\) znamená {\it``vrchol \(x\) je červený''}) 
 
+    \pause
+
     \alert{$\mathcal L'$-struktura}: graf s trojicí množin vrcholů
+
+    \pause
 
     \vspace{-32pt}
     \begin{flushright}
@@ -601,6 +705,8 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         }
     \end{flushright}
 
+    \pause
+
     \myexampleamsmath{\vspace{3pt}\small
     \begin{align*}
     \mystructure G_C &= \langle V^{\mystructure G_C}; E^{\mystructure G_C}, R^{\mystructure G_C}, G^{\mystructure G_C}, B^{\mystructure G_C} \rangle \\
@@ -608,12 +714,15 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{align*}
     }  
 
+    \pause
     \( \mystructure{G}_C \) je \alert{expanze} \(\mathcal L\)-struktury \( \mystructure{G} \) \alert{do jazyka} \( \mathcal L' \)
 
     \bigskip
 
+    \pause
     Nejvýše jedna barva, alespoň jedna barva, hranová podmínka:
 
+    \pause
     \myexample{\small
     \begin{itemize}
         \item $(\forall x)((\neg R(x) \lor \neg G(x)) \land (\neg R(x) \lor \neg B(x)) \land (\neg G(x) \lor \neg B(x)))$
@@ -630,7 +739,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 
 \begin{frame}{Predikátové logiky vyšších řádů}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item Predikátová logika, kde proměnné reprezentují jednotlivé vrcholy, je logika \alert{prvního řádu} (\alert{first-order}, \alert{FO})
         \item Logika \alert{druhého řádu} (\alert{second-order}, \alert{SO}): proměnné i pro množiny vrcholů a $n$-tic vrcholů (tj. relace, funkce)
         \bigskip
@@ -644,13 +753,16 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         %     \end{align*}
         %     }
         % }
+        \pause
         \myexamplemath{
         $$(\exists S)(\forall x)(\forall y)(E(x,y)\limplies (S(x)\liff\neg S(y)))$$
-        }      
+        }  
+        \pause    
         \begin{center}
             \it ``Graf je bipartitní.''
         \end{center}  
 
+        \pause
         \medskip
         \item A v logice \emph{třetího řádu} máme i množiny množin (např. v topologii).
     \end{itemize}
@@ -661,7 +773,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 \begin{frame}{Logiky zobecňující pojem pravdy}
     Kromě toho lze zobecnit pojem platnosti (pravdy):
     
-    \begin{itemize}        
+    \begin{itemize}[<+->]     
         \item \alert{temporální logiky} (platnost `vždy', `někdy v budoucnosti', `dokud' apod.) -- např. v paralelním programování
         \item \alert{modální logiky} (`je možné', `je nutné') -- v umělé inteligenci, uvažování autonomních agentů o svém okolí
         \item \alert{fuzzy logiky} (`je 0.35 pravdivé') -- v automatických pračkách
@@ -676,21 +788,21 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 \begin{frame}{Obsah předmětu}
 
     \begin{enumerate}[I.]
-        \item Výroková logika (5 přednášek)
+        \item Výroková logika
         \begin{itemize}
             \item Syntaxe a sémantika
             \item Problém SAT
             \item Tablo metoda
             \item Rezoluční metoda
         \end{itemize}
-        \item Predikátová logika (6 přednášek)
+        \item Predikátová logika
         \begin{itemize}
             \item Syntaxe a sémantika
             \item Tablo metoda v predikátové logice
             \item Rezoluční metoda v predikátové logice
             \item Aplikace: databáze, Prolog, verifikace
         \end{itemize}
-        \item Pokročilé partie (2 přednášky)
+        \item Pokročilé partie
         \begin{itemize}
             \item Teorie modelů
             \item Nerozhodnutelnost a neúplnost
@@ -710,7 +822,9 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \alert{syntaxe} dává pravidla pro tvoření korektních formálních výrazů sestávajících ze symbolů, a pro operace s nimi (\emph{výrok}, \emph{důkaz}, \dots)
     
     \alert{sémantika} popisuje význam syntaktických objektů ``v reálném světě'' (\emph{model}, \dots)
-        
+    
+    \pause
+    
     Klíčem k logice je \alert{vztah mezi syntaxí a sémantikou}:
     \begin{itemize}
         \item sémantické objekty studujeme pomocí syntaxe (`jaké výroky platí v modelu?')
@@ -737,6 +851,8 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         
         (obvykle \emph{spočetná}, \emph{uspořádaná})
     
+        \pause
+
         \medskip
         \item dále do jazyka patří \alert{logické symboly}:
         \begin{itemize}
@@ -758,18 +874,25 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{itemize}
     }
 
+    \pause
     \myalert{Výroky jsou nutně \emph{konečné} řetězce!}
 
+    \pause
     \alert{$\Var(\varphi)$}: množina všech prvovýroků ve $\varphi$ (vždy konečná)
 
+    \pause
     \alert{podvýrok}: podřetězec, který je sám výrok
     
+    \pause
+    \medskip
     \myexample{
         $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$, $\Var(\varphi)=\{p,q,r\}$\\
         podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$
     }
 
-    \alert{pravda}: $\top=(p\lor(\neg p))$, \alert{spor}: $\bot=(p\land(\neg p))$ \\ {\small (kde $p\in\mathbb P$ je pevně daný)}
+    \pause
+    \medskip
+    \alert{pravda}: $\top=(p\lor(\neg p))$, \alert{spor}: $\bot=(p\land(\neg p))$ {\small ($p\in\mathbb P$ je pevně daný)}
 
 \end{frame}
 
@@ -780,12 +903,14 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 
     \myexample{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ lze zapsat jako $p\lor \neg q \liff (r\limplies p \land q)$}
 
+    \pause
     \begin{itemize}
         \item priorita operátorů: $\neg$ nejvyšší, dále $\landsymb$ a $\lorsymb$, nakonec $\limpliessymb$ a $\liffsymb$
         \item asociativita $\landsymb$ a $\lorsymb$: nápis $p\land q\land r$ znamená výrok $(p\land (q\land r))$
         \item vnější závorky nemusíme psát
     \end{itemize}
 
+    \pause
     \textbf{Poznámka:} v definici jsme mohli místo \emph{infixového} zápisu zvolit \emph{prefixový} (``polskou notaci''):
     {\it ``každý prvovýrok je výrok, jsou-li $\varphi,\psi$ výroky, jsou výroky také $\neg \varphi$, $\landsymb \varphi \psi$, $\lorsymb \varphi \psi$, $\limpliessymb \varphi \psi$, a $\liffsymb \varphi \psi$''} nebo i \emph{postfixový}
     
@@ -794,6 +919,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$
     }
 
+    \pause
     \medskip
     \myalert{Důležitá je jen \alert{stromová struktura} výroků!}
 
@@ -850,6 +976,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         $T=\{p_0\}\cup\{p_i\limplies p_{i+1}\mid i\in\mathbb N\}$ nad \emph{nekonečným} $\mathbb P=\{p_i\mid i\in\mathbb N\}$
     }
     
+    \pause
     \medskip
 
     \textbf{Poznámka:} \emph{Konečnou} teorii by bylo možné (byť ne praktické!) nahradit jediným výrokem: konjunkcí všech axiomů.
@@ -875,8 +1002,10 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \bigskip
     \begin{columns}        
         \column{0.5\textwidth}\centering
+        \pause
         (a) $\varphi$ \alert{platí} při ohodnocení \\$p=0$, $q=0$, $r=0$
 
+        \pause
         \medskip
         \scalebox{0.85}{
             \tikzset{every label/.style = {text=red}}
@@ -901,8 +1030,10 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         }
 
         \column{0.5\textwidth}\centering
+        \pause
         (b) $\varphi$ \alert{neplatí} při ohodnocení \\$p=1$, $q=0$, $r=1$
 
+        \pause
         \medskip
         \scalebox{0.85}{
             \tikzset{every label/.style = {text=red}}
@@ -945,7 +1076,8 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{table}
 
     %nebo jako \alert{booleovské funkce} ($f\colon\{0,1\}^n\to\{0,1\}$):
-    
+
+    \pause    
     \begin{center}\small
     \begin{tabular}{rl}
 
@@ -1016,6 +1148,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     sémantika logických spojek je daná booleovskými funkcemi, každý
     výrok určuje \emph{složenou} booleovskou funkci, tzv. \alert{pravdivostní funkci}
 
+    \pause
     např. \myexampleinline{$\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$} \alert{v jazyce~$\mathbb P'=\{p,q,r,s\}$}
   
     \myexamplemath{
@@ -1079,6 +1212,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{itemize}
     }
 
+    \pause
     \medskip
 
     \textbf{Poznámka:} Pravdivostní funkce $f_{\varphi,\mathbb P}$ závisí pouze na proměnných odpovídajících prvovýrokům z $\Var(\varphi)\subseteq\mathbb P$. 
@@ -1092,6 +1226,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 
     Pravdivostní ohodnocení reprezentuje `reálný svět' (systém) v námi zvoleném `formálním světě', proto mu také říkáme \alert{model}
 
+    \pause
     \medskip
 
     \myblock{
@@ -1104,6 +1239,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         $   
     }
 
+    \pause
     \medskip
 
     \myexample{
@@ -1127,12 +1263,14 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
 \begin{frame}{Platnost}
     výrok platí v modelu, pokud je jeho pravdivostní hodnota rovna 1
 
+    \pause
     \medskip
 
     \myblock{
         Výrok $\varphi$ v jazyce $\mathbb P$, model $v\in\M_\mathbb P$. Pokud $f_{\varphi,\mathbb P}(v)=1$, potom říkáme, že $\varphi$ \alert{platí} v modelu~$v$, $v$ je \alert{modelem}~$\varphi$, a píšeme \alert{$v\models\varphi$}.
     }
 
+    \pause
     \medskip
     
     Množina všech modelů resp. \emph{nemodelů} $\varphi$:
@@ -1142,6 +1280,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     \end{align*}
     
 
+    \pause
     Je-li jazyk zřejmý z kontextu, můžeme vynechat, ale jinak ne!
 
     \myexampleamsmath{\vspace{3pt}\small
@@ -1162,6 +1301,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
     Podobně jako pro výrok: $v$ je \alert{modelem} $T$, \alert{$v\models T$}, \alert{$v\in\M_\mathbb P(T)$}.
     } 
 
+    \pause
     Někdy píšeme $\M_\mathbb P(T,\varphi)$ místo $\M_\mathbb P(T\cup\{\varphi\})$, $\M_\mathbb P(\varphi_1,\varphi_2,\dots,\varphi_n)$ místo $\M_\mathbb P(\{\varphi_1,\varphi_2,\dots,\varphi_n\})$.
 
     %Všimněte si:
@@ -1173,6 +1313,7 @@ V \alert{predikátové logice} můžeme mluvit \alert{o vrcholech} grafu pomocí
         $
     \end{itemize}
 
+    \pause
     \bigskip
 
     \myexample{

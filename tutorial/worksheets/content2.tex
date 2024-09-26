@@ -23,7 +23,7 @@
 
 
     \begin{solution}
-            
+        Například: (a) $p\lor\neg p$, (b) $p\land\neg p$, (c) $p$, (d) $\neg p\lor\neg q\lor\neg r$ (e) $(p\lor r)\land\neg q$            
     \end{solution}
 
 \end{problem}
@@ -31,12 +31,19 @@
 
 \begin{problem} 
     
-    Jsou tyto množiny logických spojek univerzální? (a) $\{\vee, \rightarrow, \leftrightarrow\}$, (b) $\{\vee, \wedge, \rightarrow\}$    
+    Jsou tyto množiny logických spojek univerzální? (a) $\{\vee, \rightarrow, \leftrightarrow\}$, (b) $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR)    
 
     \begin{solution}
-            
+        \begin{enumerate}[(a)]
+            \item Ne, dokažte strukturální indukcí, že každá formule má za model $(1,\dots,1)$. 
+            \item Ano, využijeme faktu, že $\{\neg,\lor,\land\}$ je univerzální, a vyjádříme:
+            \begin{itemize}
+                \item $\neg x\sim x\downarrow x$
+                \item $x\lor y\sim\neg(x\downarrow y)\sim (x\downarrow y)\downarrow(x\downarrow y)$
+                \item $x\land y\sim \neg(\neg x\lor \neg y)\sim \neg x\downarrow\neg y\sim (x\downarrow x)\downarrow(y\downarrow y)$
+            \end{itemize}
+        \end{enumerate}            
     \end{solution}
-
 
 \end{problem}
 
@@ -49,6 +56,27 @@
     $$
 
     \begin{solution}
+        \begin{enumerate}[(a)]
+            \item Nejprve najdeme modely výroku: $\{(0,0,1),(1,0,0),(1,0,1)\}$, každý model popíšeme jednou elementární konjunkcí:
+            $$
+            (\neg p\land \neg q\land r)\lor
+            (p\land \neg q\land \neg r)\lor
+            (p\land \neg q\land r)
+            $$
+            CNF získáme z množiny nemodelů, každá klauzule zakazuje jeden nemodel:
+            \begin{gather*}
+                \{(0,0,0),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}\\
+                (p\lor q\lor r)\land
+                (p\lor \neg q\lor r)\land
+                (p\lor \neg q\lor \neg r)\land
+                (\neg p\lor \neg q\lor r)\land
+                (\neg p\lor \neg q\lor \neg r)
+            \end{gather*} 
+            
+            \item $(\neg p \vee q)\to (\neg q \wedge r)\sim \neg (\neg p \vee q)\lor (\neg q \wedge r)
+            \sim (p \wedge \neg q)\lor (\neg q \wedge r)
+            $ je DNF, CNF získáme distribucí, a dále zjednodušíme: $(p\lor \neg q)\land (p\lor r)\land (\neg q\lor\neg q)\land (\neg q\lor r)\sim (p\lor r)\land \neg q$
+        \end{enumerate}
             
     \end{solution}
         
@@ -57,15 +85,34 @@
 
 \begin{problem}\label{problem:properties-of-theories}
 
-    Mějme teorii $T=\{p\wedge q,p\to\neg q,q\}$ v jazyce $\mathbb P=\{p,q\}$.
+    Mějme teorii $T=\{p\liff q,\neg p\to\neg q,q\lor r\}$ v jazyce $\mathbb P=\{p,q,r\}$.
     \begin{enumerate}[(a)]
-        \item Rozhodněte, zda je teorie $T$ [konzistentní/splnitelná/kompletní]. %(konzistentní=bezesporná, kompletní=úplná)
-        \item Uveďte příklad výroku $\varphi$, který je [platný/nesplnitelný/nezávislý] v $T$
-        \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní/kompletní/konzervativní jednoduchá/kompletní jednoduchá/kompletní konzervativní].
+        \item Rozhodněte, zda je teorie $T$ [sporná/splnitelná/kompletní].
+        \item Uveďte příklad výroku $\varphi$, který je [pravdivý/lživý/nezávislý] v $T$
+        \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní / kompletní / konzervativní jednoduchá / kompletní jednoduchá / kompletní konzervativní].
         \item Na vašich příkladech extenzí ukažte, že platí sémantické kritérium (tj. tvrzení definující pojem [konzervativní] extenze pomocí expanzí/reduktů modelů).
     \end{enumerate}
 
     \begin{solution}
+        Budeme potřebovat znát modely: $\M(T)=\{(0,0,1),(1,1,0),(1,1,1)\}$
+        \begin{enumerate}[(a)]
+            \item Není sporná, je splnitelná, není kompletní.
+            \item V teorii $T$ je pravdivý je např. $p\lor r$, lživý $\neg q\land\neg r$, nezávislý $p\lor q$.  
+            \item Uveďme příklady nebo zdůvodnění neexistence:
+            \begin{enumerate}[1.]
+                \item Jednoduchá: $\{p\land q\}$
+                \item Konzervativní: $T_2=\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r,p\lor s\}$ v jazyce $\mathbb P'=\{p,q,r,s\}$
+                \item Kompletní: $\{\neg p,\neg q,r,\neg s\}$ v jazyce $\mathbb P'=\{p,q,r,s\}$
+                \item Konzervativní jednoduchá: musí být ekvivalentní $T$, např. $\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r\}$
+                \item Kompletní jednoduchá: $\{p,q,\neg r\}$
+                \item Kompletní konzervativní: neexistuje, nekompletní teorie nemůže mít kompletní konzervativní extenzi (dokažte si).
+            \end{enumerate}
+            \item Zkonstruujte příslušné množiny modelů a ověřte podmínku, ukážeme jen pro 2.:
+            $$
+            \M_{\mathbb P'}(T_2)=\{(0,0,1,1),(1,1,0,0),(1,1,0,1),(1,1,1,0),(1,1,1,1)\}
+            $$
+            Vidíme, že zúžením modelů $T_2$ na jazyk $\mathbb P$ získáme jen modely $T$, tedy jde o extenzi, a každý model $T$ lze rozšířit na nějaký model $T_2$, tedy je extenze konzervativní.
+        \end{enumerate}
             
     \end{solution}
     
@@ -82,8 +129,14 @@
         \item $T \models \varphi \to \psi$ a $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
     \end{enumerate}
 
-    \begin{solution}
-            
+    \begin{solution} 
+        Uvedeme jen správné odpovědi a protipříklady, dokažte si sami (z definic).      
+        \begin{enumerate}[(a)]
+            \item Neplatí, např. pro $T=p\lor q,\varphi=p$. (Je-li $T$ bezesporná, platí $\Rightarrow$.)
+            \item Platí.
+            \item Neplatí, např. pro $T=p\lor q,\varphi=p,\psi=q$. Platí $\Rightarrow$.
+            \item Neplatí, např. pro $T=\{p\limplies r\},\varphi=p,\psi=q,\chi=r$. Platí $\Rightarrow$. 
+        \end{enumerate}              
     \end{solution}
     
 \end{problem}
@@ -110,7 +163,7 @@
     
     Jsou následující množiny logických spojek univerzální? Zdůvodněte.
     \begin{enumerate}[(a)]
-        \item $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR),
+        \item $\{\vee, \wedge, \rightarrow\}$,
         \item $\{\uparrow\}$ kde $\uparrow$ je Sheffer stroke (NAND),
     \end{enumerate}
 

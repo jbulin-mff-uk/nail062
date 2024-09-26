@@ -18,299 +18,16 @@
 \begin{frame}{Čtvrtá přednáška}
 
     \textbf{Program}
-        \begin{itemize}
-            \item úvod do tablo metody
+        \begin{itemize}            
             \item tablo důkaz
             \item korektnost a úplnost
+            \item věta o kompaktnosti
+            %\item hilbertovský kalkulus
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 4.1-4.6 z Kapitoly 4
-
-\end{frame}
-
-
-\section{\sc Kapitola 4: Metoda analytického tabla}
-
-
-\section{4.1 Formální dokazovací systémy}
-
-
-\begin{frame}{Formální dokazovací systém}
-
-    chceme zjistit, zda výrok platí [\alert{$T\models\varphi$}], a to čistě syntakticky, aniž bychom se zabývali sémantikou: najít \alert{(formální) důkaz} [\alert{$T\proves\varphi$}]
-
-    \alert{důkaz} je konečný syntaktický objekt vycházející z $\varphi$ a axiomů $T$
-
-    dokazování lze dělat \alert{algoritmicky} (pokud máme algoritmický přístup k axiomům $T$, která může být nekonečná), a lze rychle algoritmicky \alert{ověřit}, zda je daný objekt opravdu korektní důkaz
-
-    \begin{itemize}
-        \item \alert{korektnost}: ``co dokážu, platí'' \hfill \myalertinline{%
-            $T\proves\varphi\ \Rightarrow\ T\models\varphi$}
-        \item \alert{úplnost}: ``dokážu vše, co platí'' \hfill \myalertinline{%
-            $T\models\varphi\ \Rightarrow\ T\proves\varphi$}
-    \end{itemize}
-    (korektnost je nutná, úplnost ne: rychlý dokazovací systém může být praktický i když není úplný)
-
-    ukážeme si: \emph{tablo metodu}, \emph{hilbertovský kalkulus}, \emph{rezoluční metodu}
-    
-    \myblock{nutný předpoklad: \alert{jazyk musí být spočetný} (potom i $T$ je spočetná)}
-
-\end{frame}
-
-
-\section{4.2 Úvod do tablo metody}
-
-
-\begin{frame}{Tablo metoda neformálně}
-
-    nejprve případ $T=\emptyset$, tedy dokazujeme, že $\varphi$ platí \emph{v logice}
-
-    \alert{tablo} je strom představující \alert{hledání protipříkladu} (modelu $v\not\models\varphi$), když všechny větve \alert{selžou}, máme důkaz (sporem)
-
-    labely: \alert{položky} $\mathrm{T}\psi,\mathrm{F}\psi$ (určují, zda na dané větvi platí výrok $\psi$)
-
-    kořen \alert{$\mathrm{F}\varphi$}, dále rozvíjíme \alert{redukcí} položek (podle struktury výroků v nich), aby platil \alert{invariant}:
-
-    \myalert{
-        Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
-    }
-
-    je-li na větvi \alert{$\mathrm{T}\psi$} a zároveň \alert{$\mathrm{F}\psi$}, potom \alert{selhala} (je \alert{sporná}), pokud všechny větve selhaly, je tablo \alert{sporné}, je to \alert{důkaz} $T\proves\varphi$
-
-    pokud nějaká větev neselhala a je \alert{dokončená} (vše na ní zredukované), lze z ní zkonstruovat model, ve kterém $\varphi$ neplatí
-
-\end{frame}
-
-
-\begin{frame}{Příklad: tablo důkaz $((p\limplies q)\limplies p)\limplies p$}
-
-    \begin{columns}
-    
-        \column{0.32\textwidth}
-
-        \centering
-
-        \begin{forest}
-        [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
-            [$\mathrm{T}(p\limplies q)\limplies p$
-                [$\mathrm{F}p$
-                    [$\mathrm{F}p\limplies q$
-                        [$\mathrm{T}p$ 
-                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                        ]                
-                    ]
-                    [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
-                    ]
-                ]
-            ]
-        ]
-        \end{forest}
-
-        \column{0.68\textwidth}
-
-        \begin{itemize}
-            \item \alert{důkaz sporem}: v kořeni příznak F
-            \item redukujeme položku tvaru \alert{$\mathrm{F}\varphi_1\limplies\varphi_2$}:
-            \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models\varphi_2$
-            \item proto na větev připojíme položky \alert{$\mathrm{T}(p\limplies q)\limplies p$} a \alert{$\mathrm{F}p$}, invariant platí
-            \item redukce položky \alert{$\mathrm{T}(p\limplies q)\limplies p$}: model se shoduje s \alert{$\mathrm{F}(p\limplies q)$} nebo s \alert{$\mathrm{T}p$}, \alert{rozvětvi!}
-            \item redukce \alert{$\mathrm{F}(p\limplies q)$}: připoj  \alert{$\mathrm{T}p$} a \alert{$\mathrm{F}q$}
-            \item všechny větve sporné, protipříklad neexistuje, tedy máme tablo důkaz, píšeme: \alert{$\proves ((p\limplies q)\limplies p)\limplies p$}
-        \end{itemize}
-
-    \end{columns}
-
-\end{frame}
-
-
-\begin{frame}{Příklad: tablo pro $\mathrm{F}(\neg q\lor p)\limplies p$}
-
-    \begin{columns}
-    
-        \column{0.32\textwidth}
-
-        \centering
-
-        \begin{forest}
-            [$\mathrm{F}(\neg q\lor p)\limplies p$
-                [$\mathrm{T}\neg q\lor p$
-                    [$\mathrm{F}p$
-                        [$\mathrm{T}\neg q$
-                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
-                        ]
-                        [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
-                        ]
-                    ]
-                ]
-            ]
-        \end{forest}
-
-        \column{0.68\textwidth}
-
-        \begin{itemize}
-            \item tablo je dokončené, ale není sporné
-            \item tedy nejde o důkaz
-            \item levá větev dává protipříklad: model \alert{$v=(0,0)$} ve kterém výrok neplatí
-            \item invariant říká, že existuje-li protipříklad, shoduje se s některou větví
-            \item tato větev nemůže být sporná
-            \item tak se dokáže \alert{korektnost} tablo metody
-        \end{itemize}
-
-    \end{columns}
-
-\end{frame}
-
-
-\begin{frame}{Poznámky}
-
-    \begin{itemize}
-        \item Jak redukujeme položky? \begin{itemize}
-            \item Připojíme příslušné \alert{atomické tablo} (viz následující slide) na konec všech bezesporných větví procházejících vrcholem.
-        \end{itemize}
-        \item Co když dokazujeme v nějaké teorii $T$? \begin{itemize}
-            \item Připojíme položky $\mathrm{T}\alpha$ pro (všechny) axiomy $\alpha\in T$.
-        \end{itemize}
-        \item Co když je $T$ nekonečná? \begin{itemize}
-            \item Tablo může být nekonečné. 
-            \item Ale vyjde-li sporné, lze sestrojit jiné, které je konečné a také sporné. (``Existuje-li důkaz, existuje konečný důkaz.'')
-        \end{itemize}
-    \end{itemize}
-
-\end{frame}
-
-
-\begin{frame}{Atomická tabla}
-
-        \begin{tabular}{@{}c||c|c|c|c|c@{}}
-         & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
-        True
-        &  
-        \begin{forest}
-        [$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
-        \end{forest}
-        &  
-        \begin{forest}
-        [$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
-        \end{forest}
-        & 
-        \begin{forest}
-        [$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
-        \end{forest}
-        &
-        \begin{forest}
-        [$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
-        \end{forest}
-        &  
-        \begin{forest}
-        [$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
-        \end{forest}
-        \\ \midrule
-        False 
-        & 
-        \begin{forest}
-        [$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
-        \end{forest}
-        &
-        \begin{forest}
-        [$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
-        \end{forest}
-        &
-        \begin{forest}
-        [$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
-        \end{forest}
-        &
-        \begin{forest}
-        [$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
-        \end{forest}
-        &
-        \begin{forest}
-        [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
-        \end{forest}
-        \end{tabular}
-    
-\end{frame}
-
-
-\begin{frame}{Konstrukce tabel z příkladů}
-    
-    \begin{center}
-    \scalebox{0.7}{
-
-    \begin{columns}
-        
-        \column{0.5\textwidth}
-
-        \centering
-            \begin{forest}
-            [$\mathrm{F}((p\limplies q)\limplies p)\limplies p$
-                [\textcolor{blue}{$\mathrm{F}((p\limplies q)\limplies p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
-                    [$\mathrm{T}(p\limplies q)\limplies p$
-                        [$\mathrm{F}p$
-                            [\textcolor{blue}{$\mathrm{T}(p\limplies q)\limplies p$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
-                                [$\mathrm{F}p\limplies q$
-                                    [\textcolor{blue}{$\mathrm{F}p\limplies q$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
-                                        [$\mathrm{T}p$ 
-                                            [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                                        ]
-                                    ]
-                                ]
-                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-            \end{forest}
-
-        \column{0.5\textwidth}
-
-        \centering
-
-            \begin{forest}
-            [$\mathrm{F}(\neg q\lor p)\limplies p$
-                [\textcolor{blue}{$\mathrm{F}(\neg q\lor p)\limplies p$}, tikz={\node[fit=()(!1)(!ll),rectangle,draw=blue!20,minimum size=12pt] {};}
-                    [$\mathrm{T}\neg q\lor p$
-                        [$\mathrm{F}p$
-                            [\textcolor{blue}{$\mathrm{T}(\neg q\lor p)$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
-                                [$\mathrm{T}\neg q$
-                                    [\textcolor{blue}{$\mathrm{T}\neg q$}, tikz={\node[fit=()(!1)(!l),rectangle,draw=blue!20,minimum size=12pt] {};}
-                                        [$\mathrm{F}q$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
-                                    ]
-                                ]
-                                [$\mathrm{T}p$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-            \end{forest}
-
-    \end{columns}
-
-    }
-
-
-    \alert{konvence:} kořeny atomických tabel (\textcolor{blue}{modře}) nezakreslujeme   
-
-    \end{center}    
-
-\end{frame}
-
-
-\begin{frame}{O stromech}
-    
-    \begin{itemize}
-        \item \alert{strom} je $T\neq\emptyset$ s částečným uspořádáním $<_T$, které má nejmenší prvek (\alert{kořen}) a množina předků libovolného vrcholu je \alert{dobře uspořádaná} (každá její neprázdná podmnožina má nejmenší prvek, to zakáže nekonečné klesající řetězce předků)
-        \item \alert{větev} je maximální lineárně uspořádaná podmnožina $T$.
-        \item \alert{uspořádaný strom} má navíc lineární uspořádání $<_L$ množiny synů každého vrcholu (říkáme mu \alert{pravolevé}, $<_T$ je \alert{stromové})
-        \item \alert{označkovaný strom} má navíc funkci $\mathrm{label}\colon T\to\mathrm{Labels}$        
-    \end{itemize}
-
-    \myblock{\textbf{Königovo lemma:} Nekonečný, konečně větvící strom má nekonečnou větev.}
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 4.3-4.7 z Kapitoly 4 (Sekci 4.8 zatím přeskočíme)
 
 \end{frame}
 
@@ -760,6 +477,161 @@
 
     \textbf{Důkaz:} Stačí dokázat: $T,\varphi\models\psi\Leftrightarrow T\models\varphi\to\psi$. To je snadné.\hfill\qedsymbol
 
+\end{frame}
+
+
+\section{4.7 Věta o kompaktnosti}
+
+
+\begin{frame}{Kompaktnost}
+
+    \myblock{
+        \textbf{Věta (O kompaktnosti):} Teorie má model, právě když každá její konečná část má model.
+    }
+    \smallskip
+
+    \textbf{Důkaz:} \alert{$\Rightarrow$ Snadné:} Model $T$ je zjevně modelem každé její části.
+    
+    \alert{$\Leftarrow$ Nepřímo:} buď $T$ sporná, najdeme spornou konečnou $T'\subseteq T$.
+
+    Z \alert{úplnosti} víme, že $T\proves\bot$, tedy existuje i \alert{konečný} tablo důkaz $\tau$ výroku $\bot$ z $T$. Konstrukce $\tau$ má konečně mnoho kroků, použili jsme tedy jen konečně 
+    mnoho axiomů z $T$. Definujme:
+    
+    \myalertmath{
+    $$
+    T'=\{\alpha\in T\mid \mathrm{T}\alpha\text{ je položka v tablu $\tau$}\}
+    $$
+    }   
+
+    Tedy $\tau$ je tablo jen z teorie $T'$, máme tablo důkaz $T'\proves\bot$, dle \alert{korektnosti} je $T'$ sporná.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Aplikace kompaktnosti}
+     
+    \begin{center}
+        \alert{vlastnost nekonečného objektu~$\mathcal O$}
+    
+        $\Updownarrow$
+
+        \alert{vlastnost všech konečných podobjektů~$\mathcal O'$}
+    \end{center}
+    
+    \begin{itemize}
+        \item vlastnost popíšeme pomocí (nekonečné) teorie $T$
+        \item ke každé konečné $T'\subseteq T$ sestrojíme konečný podobjekt $\mathcal O'$
+        \item $\mathcal O'$ splňuje danou vlastnost
+        \item to nám dává model $T'$
+        \item dle Věty o kompaktnosti má i $T$ model
+        \item což ukazuje, že i nekonečný objekt $\mathcal O$ splňuje vlastnost
+    \end{itemize}
+     
+    Věta o kompaktnosti má mnoho aplikací (několik z nich uvidíme později), následující příklad chápejte jako `šablonu'.
+
+\end{frame}
+
+
+\begin{frame}{Aplikace kompaktnosti: příklad}
+
+    \myexample{
+        \textbf{Důsledek:} Spočetně nekonečný graf je bipartitní, právě když je každý jeho konečný podgraf bipartitní.
+    }
+
+    \textbf{Důkaz:} \alert{$\Rightarrow$} Každý podgraf bipartitního grafu je bipartitní. 
+    
+    \alert{$\Leftarrow$} $G$ je bipartitní, právě když je obarvitelný 2 barvami. Mějme jazyk $\mathbb P=\{p_v\mid v\in V(G)\}$ (kde $p_v$ je barva $v$) a uvažme teorii
+    
+    \myalertmath{
+    $$  
+        T=\{p_u\liff\neg p_v\mid \{u,v\}\in E(G)\}
+    $$
+    }
+
+    Zřejmě $G$ je bipartitní, právě když $T$ má model. Dle Věty o kompaktnosti stačí ukázat, že každá konečná $T'\subseteq T$ má model.
+    
+    Buď $G'$ podgraf $G$ indukovaný na vrcholech, o kterých $T'$ mluví:
+    $$
+    V(G')=\{v\in V(G)\mid p_v\in\Var(T')\}
+    $$
+    Protože je $T'$ konečná, je $G'$ také konečný, tedy je dle předpokladu 2-obarvitelný. Libovolné 2-obarvení $V(G')$ ale určuje model $T'$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\section{Zatím přeskočíme: 4.8 Hilbertovský kalkulus}
+
+
+\begin{frame}{Hilbertovský deduktivní systém}
+
+    \begin{itemize}
+        \item jiný, původní dokazovací systém 
+        \item používá jen logické spojky $\neg$, $\limplies$
+        \item \alert{schémata logických axiomů} ($\varphi,\psi,\chi$ jsou libovolné výroky)
+        \begin{enumerate}[(i)]
+            \item $\varphi \limplies (\psi \limplies \varphi)$
+            \item $(\varphi\limplies (\psi \limplies \chi))\limplies ((\varphi \limplies \psi)\limplies(\varphi \limplies \chi))$
+            \item $(\neg \varphi \limplies \neg \psi)\limplies(\psi \limplies \varphi)$
+        \end{enumerate}
+        \item \alert{odvozovací pravidlo}: tzv. \alert{modus ponens}
+                $$\frac{\varphi, \varphi \limplies \psi}{\psi}$$       
+        \item \alert{hilbertovský důkaz} výroku $\varphi$ z teorie $T$ je \alert{konečná} posloupnost výroků $\varphi_0, \dots, \varphi_n=\varphi$, ve které pro každé $i\le n$:
+        \begin{itemize}
+        \item $\varphi_i$ je \alert{logický axiom}, nebo
+        \item $\varphi_i$ je \alert{axiom teorie} ($\varphi_i \in T$), nebo
+        \item $\varphi_i$ lze odvodit z předchozích pomocí \alert{odvozovacího pravidla}
+        \end{itemize}
+        \item existuje-li hilbertovský důkaz, píšeme: \alert{$T\proves_H\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad hilbertovského důkazu}
+
+    Ukažme, že pro teorii $T=\{\neg\varphi\}$ a pro libovolný výrok $\psi$ platí:  
+    \myexamplemath{  
+    $$
+    T\proves_H\varphi\limplies\psi
+    $$
+    }
+
+    Hilbertovským důkazem je následující posloupnost výroků:
+    
+    \begin{enumerate}\it
+        \item $\neg\varphi$\hfill axiom teorie
+        \item $\neg \varphi \limplies (\neg \psi \limplies \neg \varphi)$\hfill logický axiom (i)
+        \item $\neg \psi \limplies \neg \varphi$\hfill modus ponens na 1. a 2.
+        \item $(\neg \psi \limplies \neg \varphi)\limplies(\varphi \limplies \psi)$ \hfill logický axiom (iii)
+        \item $\varphi \limplies \psi$ \hfill modus ponens na 3. a 4.
+    \end{enumerate}    
+
+\end{frame}
+
+
+\begin{frame}{Korektnost a úplnost}
+
+    \myblock{
+    \textbf{Věta (o korektnosti hilbertovského kalkulu):}
+    $T\proves_H\varphi \Rightarrow T\models\varphi$
+    }
+
+    \medskip
+
+    \textbf{Důkaz:} Indukcí dle délky důkazu ukážeme, že každý výrok $\varphi_i$ z důkazu (tedy i $\varphi_n=\varphi$) platí v $T$.
+    \begin{itemize}
+        \item Je-li $\varphi_i$ logický axiom, $T \models \varphi_i$ platí protože logické axiomy jsou tautologie.
+        \item Je-li $\varphi_i\in T$, jistě platí $T \models \varphi_i$.
+        \item Získáme-li $\varphi_i$ pomocí modus ponens z $\varphi_j$ a $\varphi_k=\varphi_j\limplies\varphi_i$ (pro nějaká $j,k<i$), víme z indukčního předpokladu, že platí $T \models \varphi_j$ a $T \models \varphi_j\limplies\varphi_i$. Potom ale platí i $T \models \varphi_i$. (Modus ponens je \alert{korektní} odvozovací pravidlo)\hfill\qedsymbol
+    \end{itemize}
+
+    \myblock{
+    \textbf{Věta (o úplnosti hilbertovského kalkulu):}
+    $T\models\varphi\ \Rightarrow\ T\proves_H\varphi$
+    }
+
+    Důkaz vynecháme.
+    
 \end{frame}
 
 

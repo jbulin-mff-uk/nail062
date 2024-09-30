@@ -31,6 +31,13 @@
     \end{enumerate}
 
     \begin{solution}
+        \begin{enumerate}[(a)]
+            \item Podmínku vyjádříme pomocí množin modelů: $\M(\varphi)\subseteq\M(\psi)$ nebo $\M(\psi)\subseteq\M(\varphi)$. Víme, že všech modelů je $2^n$, a $|\M(\varphi)|=k$. Chceme spočítat, kolik je možných množin $\M(\psi)$. Podmínku $\M(\varphi)\subseteq\M(\psi)$ splňuje $2^{2^n-k}$ množin (tj. tolik je nadmnožin dané $k$-prvkové množiny uvnitř $2^n$-prvkové množiny), podmínku $\M(\psi)\subseteq\M(\varphi)$ splňuje $2^k$ množin. Musíme ale být opatrní, abychom případ $\M(\psi)=\M(\varphi)$ nezapočítali dvakrát. Celkem máme $2^{2^n-k}+2^k-1$ možných množin modelů, tedy výroků $\psi$ až na ekvivalenci.
+            \item $T\models\varphi$ právě když $\M(T)\subseteq\M(\varphi)$, takových množin $\M(T)$ je $2^k$
+            \item Navíc máme podmínku $|\M(T)|=1$, 1-prvkových podmnožin $k$-prvkové množiny je $k$.
+            \item Protože $\{\varphi,\psi\}$ je sporná, víme, že $\emptyset=\M(\varphi,\psi)=\M(\varphi)\cap\M(\psi)$. Počítáme množiny $\M(\chi)$ takové, že $\M(\varphi\lor\psi)\subseteq\M(\chi)$. Díky Lindenbaum-Tarského algebře víme, že $\M(\varphi\lor\psi)=\M(\varphi)\cup\M(\psi)$. Z disjunktnosti máme $|\M(\varphi)\cup\M(\psi)|=k+p$, snadno spočítáme, že množných množin modelů $\M(\chi)$ je $2^{2^n-(k+p)}$.
+            \item $\M(T)$ musí být podmnožinou $(k+p)$-prvkové $\M(\varphi\lor\psi)$, je jich tedy $2^{k+p}$.
+        \end{enumerate}
                 
     \end{solution}
     
@@ -45,9 +52,8 @@
     $$
 
     \begin{solution}
-                
+        Sestrojíme implikační graf. Zjistíme, že má dvě komponenty silné souvislosti: $C=\{p_1,p_2,\neg p_3,p_4,\neg p_5\}$ a $\overline{C}=\{\neg p_1,\neg p_2,p_3,\neg p_4,p_5\}$, nevede mezi nimi žádná hrana. Po kontrakci komponent tedy máme dvouvrcholový graf $\mathcal G^*$ bez hran, ten má dvě topologická uspořádání: $(C,\overline{C})$ a $(\overline{C},C)$, která odpovídají modelům $(0,0,1,0,1)$ a $(1,1,0,1,0)$.                
     \end{solution}
-
 
 \end{problem}
 
@@ -56,12 +62,12 @@
 
     Pomocí jednotkové propagace zjistěte, zda je následující Hornův výrok splnitelný. Pokud ano, najděte nějaké splňující ohodnocení.
     \begin{align*}
-        &(\neg p_1 \vee \neg p_3 \vee p_2)\wedge(\neg p_1 \vee p_2)\wedge p_1 \wedge (\neg p_1 \vee \neg p_2 \vee p_3)\wedge \\
-        &(\neg p_2 \vee \neg p_4 \vee p_1)\wedge(\neg p_4 \vee \neg p_3 \vee \neg p_2)\wedge(p_4\vee \neg p_5 \vee\neg p_6)
+        &(\neg p_1 \vee p_2 \vee \neg p_3)\wedge(\neg p_1 \vee p_2)\wedge p_1 \wedge (\neg p_1 \vee \neg p_2 \vee p_3)\wedge \\
+        &(p_1\vee\neg p_2 \vee \neg p_4)\wedge(\neg p_2 \vee \neg p_3 \vee \neg p_4)\wedge(p_4\vee \neg p_5 \vee\neg p_6)
     \end{align*}
 
     \begin{solution}
-                
+        Provádíme postupně jednotkovou propagaci přes literály $p_1,p_2,p_3,\neg p_4$, zbývá výrok $\neg p_5\lor\neg p_6$. Ten stačí ohodnotit tak, aby alespoň jedna z výrokových proměnných $p_5,p_6$ byla ohodnocená nulou. Modely výroku jsou tedy: $\{(1,1,1,0,0,1),(1,1,1,0,1,0),(1,1,1,0,1,1)\}$                
     \end{solution}
     
 \end{problem}
@@ -75,7 +81,14 @@
     $$
 
     \begin{solution}
-                
+        Výrok neobsahuje jednotkovou klauzuli ani literál s čistým výskytem, musíme tedy větvit, např. přes $p_1$:
+        \begin{itemize}
+            \item Z $\varphi\land p_1$ dostáváme po jednotkové propagaci
+            $\neg p_2\land p_2\land( p_2 \lor \neg p_3)$, po jednotkové propagaci přes $\neg p_2$ dostáváme $\square\land\neg p_3$, což obsahuje prázdnou klauzuli $\square$, tedy je nesplnitelné.
+            \item Z $\varphi\land \neg p_1$ dostáváme po jednotkové propagaci
+            $\neg p_2\land( p_2 \lor \neg p_3)\land p_3$, po jednotkové propagaci přes $\neg p_2$ dostáváme $\neg p_3\land p_3$, po jednotkové propagaci přes $\neg p_3$ dostáváme prázdnou klauzuli $\square$, tedy opět je nesplnitelné.            
+        \end{itemize}
+        V obou (všech) větvích výpočtu jsme dokázali nesplnitelnost, výrok je tedy nesplnitelný.                        
     \end{solution}
 
 \end{problem}
@@ -84,6 +97,22 @@
 \begin{problem}
 
     Mějme daný orientovaný graf. Chceme zjistit, zda je acyklický, a pokud ano, nalézt nějaké jeho topologické uspořádání. Zakódujte tento problém do SAT.
+
+    \begin{solution}
+        Řešení jen naznačíme. Jako jazyk zvolme $\mathbb P=\{p_{uv}\mid u,v\in V\}$, kde $p_{uv}$ bude znamenat, že vrchol $u$ je v topologickém uspořádání (ostře) před $v$. To, že jde o ostré uspořádání, vyjádříme pomocí následujících axiomů:
+        \begin{itemize}
+            \item $\neg p_{vv}$ pro všechna $v\in V$
+            \item $p_{uv}\limplies\neg p_{vu}$ pro všechna $u,v\in V$
+            \item $p_{uv}\land p_{vw}\limplies p_{uw}$ pro všechna $u,v,w\in V$
+        \end{itemize}
+        Zbývá vyjádřit, že všechny grafové hrany vedou v topologickém uspořádání dopředu:
+        \begin{itemize}
+            \item $p_{uv}$ pro všechny hrany $(u,v)\in E$
+        \end{itemize}
+
+
+
+    \end{solution}
 
 \end{problem}
     

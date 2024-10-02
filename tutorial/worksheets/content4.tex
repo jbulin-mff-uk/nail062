@@ -34,7 +34,79 @@
     \end{enumerate}
 
     \begin{solution}
-                    
+        \begin{enumerate}[(a)]
+            \item Z kontextu poznáme, že `buď, \dots nebo' je exkluzivní (truhla nemůže obsahovat zároveň poklad i smrtonosnou past). Zvolíme jazyk $\mathbb P=\{a,b\}$, kde $a$ znamená `truhla A obsahuje poklad', podobně pro $b$. Nápisy na truhlách formalizujeme jako výroky $a\lor b,\neg a$. Teorie $T$ vyjadřuje, že jsou oba pravdivé nebo oba lživé:
+            $$
+            T=\{((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)\}
+            $$
+            \item Tabla budou mít v kořeni položky $\mathrm{F}a$ resp. $\mathrm{F}b$ (dokazujeme `sporem'):
+            %\begin{multicols}{2}
+                \begin{center}
+                    \begin{forest}
+                        [$\mathrm{F}a$
+                            [$\mathrm{T}((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)$
+                                [$\mathrm{T}(a\lor b)\land \neg a$
+                                    [$\mathrm{T}(a\lor b)$
+                                        [$\mathrm{T}\neg a$
+                                            [$\mathrm{F}a$
+                                                [$\mathrm{T}a$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                [$\mathrm{T}b$, tikz={\node[fit to=tree,label=below:$\checkmark$] {};}]
+                                            ]
+                                        ]
+                                    ]                            
+                                ]
+                                [$\mathrm{T}\neg (a\lor b)\land \neg\neg a$
+                                    [$\mathrm{T}\neg (a\lor b)$
+                                        [$\mathrm{T}\neg\neg a$
+                                            [$\mathrm{F}\neg a$
+                                                [$\mathrm{T}a$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]                        
+                        ]            
+                    \end{forest}
+                \end{center}                
+
+                \begin{center}
+                    \begin{forest}
+                        [$\mathrm{F}b$
+                            [$\mathrm{T}((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)$
+                                [$\mathrm{T}(a\lor b)\land \neg a$
+                                    [$\mathrm{T}(a\lor b)$
+                                        [$\mathrm{T}\neg a$
+                                            [$\mathrm{T}a$
+                                                [$\mathrm{F}a$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                            ]
+                                            [$\mathrm{T}b$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                        ]
+                                    ]                            
+                                ]
+                                [$\mathrm{T}\neg (a\lor b)\land \neg\neg a$
+                                    [$\mathrm{T}\neg (a\lor b)$
+                                        [$\mathrm{T}\neg\neg a$
+                                            [$\mathrm{F}a\lor b$
+                                                [$\mathrm{F}a$
+                                                    [$\mathrm{F}b$
+                                                        [$\mathrm{F}\neg a$
+                                                            [$\mathrm{T}a$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]                        
+                        ]            
+                    \end{forest}
+                \end{center}
+            %\end{multicols}
+            \item První tablo je dokončené, ale bezesporné. Bezesporná větev obsahuje položky $\mathrm{F}a$, $\mathrm{T}b$, kanonický model pro tuto větev je $v=(0,1)$. Je to model teorie $T$ (všechny jeho větve jsou sporné), ve kterém v truhle A není poklad, tedy protipříklad k tvrzení, že v truhle A je poklad.
+            \item Druhé tablo je sporné, jde tedy o tablo důkaz a víme, že v truhle B je poklad.
+        \end{enumerate}
+
     \end{solution}
 
 \end{problem}
@@ -45,6 +117,95 @@
     Uvažme nekonečnou výrokovou teorii (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Pomocí tablo metody najděte všechny modely $T$. Je každý model $T$ kanonickým modelem pro některou z větví tohoto tabla? %(Můžete se pokusit sestrojit také \emph{systematické} tablo.)
 
     \begin{solution}
+
+        Sestrojíme tablo z teorie $T$, do kořene dáme položku $\mathrm{T}\alpha_0$, kde $\alpha_0$ je první axiom $T$. Ukážeme jen začátek konstrukce, potřebujete-li, zkonstuujte více.
+
+        Neprve vyřešme (a):
+        
+        \begin{center}
+            \begin{forest}
+                [$\mathrm{T}p_1\to p_0$ 
+                    [$\mathrm{F}p_1$
+                        [$\mathrm{T}p_2\to p_1$ 
+                            [$\mathrm{F}p_2$
+                                [$\mathrm{T}p_3\to p_2$ 
+                                    [$\mathrm{F}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]
+                                    [$\mathrm{T}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]              
+                                ] 
+                            ]
+                            [$\mathrm{T}p_1$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]              
+                        ]
+                    ]
+                    [$\mathrm{T}p_0$
+                        [$\mathrm{T}p_2\to p_1$ 
+                            [$\mathrm{F}p_2$
+                                [$\mathrm{T}p_3\to p_2$ 
+                                    [$\mathrm{F}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]
+                                    [$\mathrm{T}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]         
+                                ]
+                            ]
+                            [$\mathrm{T}p_1$
+                                [$\mathrm{T}p_3\to p_2$ 
+                                    [$\mathrm{F}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]
+                                    [$\mathrm{T}p_2$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]         
+                                ]
+                            ]              
+                        ]
+                    ]
+                ]
+            \end{forest}
+        \end{center}
+        Každý model $T$ se shoduje s některou (bezespornou) větví tohoto (dokončeného) tabla. Zde dokonce platí, že každý model $T$ je kanonickým modelem pro některou z větví. Modely jsou: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$ kde $v_\text{all}=1$ pro všechna $i\in\mathbb N$, a
+        $$
+        v_{<k}(p_i)=\begin{cases}
+            1 & \text{ if }i<k,\\
+            0 & \text{ if }i\geq k.            
+        \end{cases}
+        $$
+        
+        Nyní (b):
+
+        \begin{center}
+            \begin{forest}
+                [$\mathrm{T}p_0\to p_1$ 
+                    [$\mathrm{F}p_0$
+                        [$\mathrm{T}p_1\to p_2$ 
+                            [$\mathrm{F}p_1$
+                                [$\mathrm{T}p_2\to p_3$ 
+                                    [$\mathrm{F}p_2$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]
+                                    [$\mathrm{T}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]              
+                                ] 
+                            ]
+                            [$\mathrm{T}p_2$
+                                [$\mathrm{T}p_2\to p_3$ 
+                                    [$\mathrm{F}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    [$\mathrm{T}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]         
+                                ]
+                            ]              
+                        ]
+                    ]
+                    [$\mathrm{T}p_1$
+                        [$\mathrm{T}p_1\to p_2$ 
+                            [$\mathrm{F}p_1$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]         
+                            [$\mathrm{T}p_2$
+                                [$\mathrm{T}p_2\to p_3$ 
+                                    [$\mathrm{F}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    [$\mathrm{T}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]         
+                                ]
+                            ]              
+                        ]
+                    ]
+                ]
+            \end{forest}
+        \end{center}
+
+        Opět není těžké nahlédnout, že každý model je kanonickým modelem pro některou větev. Máme $\M(T)=\{v_\text{none}\}\cap\{v_{\geq k}\mid k\in\mathbb N\}$ kde $v_\text{none}=0$ pro všechna $i\in\mathbb N$, a
+        $$
+        v_{\geq k}(p_i)=\begin{cases}
+            0 & \text{ if }i<k,\\
+            1 & \text{ if }i\geq k.            
+        \end{cases}
+        $$
                     
     \end{solution}
 
@@ -56,6 +217,35 @@
     Navrhněte vhodná atomická tabla pro logickou spojku $\oplus$ (XOR) a ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví.
 
     \begin{solution}
+
+        Potřebujeme dvě atomická tabla, pro položky tvaru $\mathrm{T}\varphi\oplus\psi$ a $\mathrm{F}\varphi\oplus\psi$. Mohou vypadat například následovně, podmínku si ověřte sami (snadno sémanticky):
+
+        \begin{multicols}{2}
+
+            \centering
+            \begin{forest}
+                [$\mathrm{T}\varphi\oplus\psi$
+                    [$\mathrm{T}\varphi$
+                        [$\mathrm{F}\psi$]
+                    ]
+                    [$\mathrm{F}\varphi$
+                        [$\mathrm{T}\psi$]
+                    ]                        
+                ]            
+            \end{forest}
+
+            \begin{forest}
+                [$\mathrm{F}\varphi\oplus\psi$
+                    [$\mathrm{T}\varphi$
+                        [$\mathrm{T}\psi$]
+                    ]
+                    [$\mathrm{F}\varphi$
+                        [$\mathrm{F}\psi$]
+                    ]                        
+                ]            
+            \end{forest}
+
+        \end{multicols}
                     
     \end{solution}
         
@@ -64,6 +254,29 @@
 
 \begin{problem}
     Pomocí věty o kompaktnosti ukažte, že každé spočetné částečné uspořádání lze rozšířit na úplné (lineární) uspořádání.
+
+    \begin{solution}
+
+        Pro konečná částečná uspořádání se dokáže snadno (podobně jako topologické uspořádání acyklického orientovaného grafu). 
+        
+        Mějme spočetně nekonečnou částečně uspořádanou množinu $\langle X;\leq^X\rangle$. Sestrojíme výrokovou teorii $T$ takovou, aby její modely popisovaly lineární uspořádání na $X$ rozšiřující $\leq^X$. Bude sestávat z následujících množin výroků:
+        \begin{itemize}
+            \item $p_{xx}$ pro všechna $x\in X$ \hfill (reflexivita)
+            \item $p_{xy}\limplies\neg p_{yx}$ pro všechna $x\neq y\in X$ \hfill (antisymetrie)
+            \item $p_{xy}\land p_{yz}\limplies p_{xz}$ pro všechna $x,y,z\in X$ \hfill (tranzitivita)
+            \item $p_{xy}\lor p_{yx}$ pro všechna $x,y\in X$ \hfill (linearita)
+            \item $p_{xy}$ pro všechna $x,y$ taková, že $x\leq^X y$\hfill (jde o rozšíření $\leq^X$)
+        \end{itemize}
+        (Reflexivitu lze vynechat, plyne už z toho, že jde o rozšíření reflexivní relace $\leq^X$.)
+
+        Dokazujme: $\langle X;\leq^X\rangle$ má lineární rozšíření, právě když $T$ má model, to je z věty o kompaktnosti právě když každá konečná část $T$ má model. Vezměme libovolnou konečnou $T'\subseteq T$. Stačí tedy ukázat, že $T'$ má model. Označme jako $X'$ množinu všech $x\in X$, \emph{o kterých mluví $T'$}, tj.:
+        $$
+        X'=\{x\in X\mid p_{xy}\in\mathrm{Var}(T')\text{ nebo }p_{yx}\in\mathrm{Var}(T')\text{ pro nějaké }y\in X\}
+        $$
+        Protože $T'$ je konečná, je i $X'$ konečná množina. Buď $\leq^{X'}$ restrikce $\leq^X$ na množinu $X'$, neboli $\leq^{X'}\,=\,\leq^X \mathbin{\cap}\, (X'\times X')$. Toto konečné částečné uspořádání lze rozšířit na lineární uspořádání $\leq^{X'}_L$, což nám dává model teorie $T'$ (kde $v(p_{xy})=1$ právě když $x\leq^{X'}_L y$).
+        
+    \end{solution}
+    
 \end{problem}
         
         

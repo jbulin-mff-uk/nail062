@@ -25,6 +25,14 @@
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item Pomocí ekvivalentních úprav: $\neg\varphi=\neg(\neg (p \vee q) \to (\neg p \wedge \neg q))\sim\neg(\neg \neg (p \vee q) \lor (\neg p \wedge \neg q))\sim\neg(p \vee q \vee (\neg p \wedge \neg q))\sim \neg p \land \neg q \land  \neg (\neg p \wedge \neg q)\sim\neg p \land \neg q \land  (p \lor q)$
+            $$
+            S = \{\{\neg p\},\{\neg q\},\{p,q\}\}
+            $$
+            \item Rezoluční zamítnutí: $\{\neg p\},\{p,q\},\{q\},\{\neg q\},\square$ (nakreslete si rezoluční strom).
+        \end{enumerate}
                     
     \end{solution}
 
@@ -36,6 +44,29 @@
     Dokažte rezolucí, že v $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
 
     \begin{solution}
+        Teorii  $T\cup\{\neg s\}$ převedeme do CNF:, a zapíšeme v množinové reprezentaci. Máme $(r\to p)\to s\sim \neg(\neg r\lor p)\lor s\sim (r\land\neg p)\lor s\sim (r\lor s)\land (\neg p\lor s)$, ostatní axiomy se převedou snadno. Dostaneme: $S=\{\{p,\neg q\},\{q,\neg r\},\{r,s\},\{\neg p,s\},\{\neg s\}\}$. Rezoluční zamítnutí znázorníme rezolučním stromem:
+
+        \begin{center}
+            \begin{forest}
+            for tree={grow=north}
+            [$ \square $
+                [$ \{\neg q\} $
+                    [{$ \{p, \neg q\} $}]   
+                    [{$ \{\neg p\} $}
+                        [{$ \{\neg s\} $}]
+                        [{$ \{\neg p, s\} $}]
+                    ]
+                ]
+                [$ \{q\} $
+                    [{$ \{q, \neg r\} $}]
+                    [{$ \{r\} $}
+                        [{$ \{\neg s\} $}]
+                        [{$ \{r, s\} $}]
+                    ]
+                ]
+            ]
+            \end{forest}
+        \end{center}
                     
     \end{solution}
 
@@ -57,6 +88,30 @@
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item $T=\{\neg t\limplies\neg s, \neg(r\land\neg s), \neg r\limplies t\}$
+            \item $S$ získáme z teorie $T\cup\{\neg t\}$ převodem do CNF: $S=\{\{t,\neg s\},\{\neg r,s\},\{r,t\},\{\neg t\}\}$
+            \begin{center}
+                \begin{forest}
+                for tree={grow=north}
+                [$ \square $
+                    [{$ \{\neg s\} $}
+                        [{$ \{\neg t\} $}]
+                        [{$ \{t, \neg s\} $}]
+                    ]
+                    [$ \{s\} $
+                        [{$ \{\neg r, s\} $}]
+                        [{$ \{r\} $}
+                            [{$ \{\neg t\} $}]
+                            [{$ \{r, t\} $}]
+                        ]
+                    ]
+                ]
+                \end{forest}
+            \end{center}
+            \item Využijeme toho, že $T\models t$ (dokázali jsme v (b)). První a třetí axiom jsou díky tomu splněny, $T\sim\{t,\neg(r\land\neg s)\}$. Z toho snadno $\M(T)=\{(0,0,1),(0,1,1),(1,1,1)\}$.            
+        \end{enumerate}
                     
     \end{solution}
 
@@ -71,6 +126,104 @@
     $$
 
     \begin{solution}
+        Přednostně větvíme přes výrokové proměnné v jednotkových klauzulích. (Jakmile narazíme na prázdnou klauzuli, víme, že větev je sporná, zbytek formule nepotřebujeme, zde kvůli nedostatku místa nebudeme zapisovat.)
+        \begin{center}
+            \begin{forest}    
+            [{$S$}
+                [{$S^q=\{\{p,r\},\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                [{$S^{\bar q}=\{\{p,r\},\{\neg r\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$}
+                    [{$S^{\bar qr}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                    [{$S^{\bar q\bar r}=\{\{p\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$}
+                        [{$S^{\bar q \bar r p}=\{\{t\},\{\neg s\},\{s,\neg t\}\}$}
+                            [{$S^{\bar q \bar r p s}=\{\{t\},\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                            [{$S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$}
+                               [{$S^{\bar q \bar r p \bar s t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                               [{$S^{\bar q \bar r p \bar s \bar t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]                                
+                            ]
+                        ]
+                        [{$S^{\bar q \bar r \bar p}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                    ]
+                ]
+            ]
+            \end{forest}
+        \end{center}
+        Strom dosazení dává ``návod'', jak sestrojit rezoluční zamítnutí (to je klíčem k důkazu věty o úplnosti rezoluce). Postupujeme od listů ke kořeni, neboli podle počtu proměnných ve formulích. Pro formule na listech stromu dosazení máme jednoprvková rezoluční zamítnutí $\square$.
+
+        Formule $S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$ má jednokrokové rezoluční zamítnutí:
+
+        \begin{center}
+            \begin{forest}    
+            [{$\square$}
+                [{$\{\neg t\}$}]
+                [{$\{t\}$}]
+            ]
+            \end{forest}
+        \end{center}
+
+        Jak vzniklo? Z rezolučního zamítnutí $\square$ formule $S^{\bar q \bar r p \bar s t}$ vyrobíme rezoluční důkaz klauzule $\{\neg t\}$ z $S^{\bar q \bar r p \bar s}$, a to tak, že pro každý list, který vznikl odebráním literálu $\neg t$, vrátíme $\neg t$ do něj i do všech klauzulí nad ním. (Zde máme jen jeden list, což je zároveň kořen $\square$.)
+
+        Analogicky vyrobíme rezoluční důkaz $\{t\}$ z $S^{\bar q \bar r p \bar s \bar t}$ (přidáváme do vrcholů literál $t$). A nakonec přidáme jeden rezoluční krok, který z $\{\neg t\}$ a $\{t\}$ odvodí $\square$. (Pokud by žádný list nevznikl odebráním literálu z klauzule z $S^{\bar q \bar r p \bar s}$, znamená to, že rezoluční zamítnutí, které máme, je už i rezolučním zamítnutím $S^{\bar q \bar r p \bar s}$.)
+
+        Stejně postupujeme ve stromu výše, pro $S^{\bar q \bar r p}$, $S^{\bar q \bar r}$, $S^{\bar q}$, a nakonec pro $S$:
+
+            \begin{forest}    
+                [{$\square$}
+                    [{$\{\neg s\}$}]
+                    [{$\{s\}$}
+                        [{$\{\neg t,s\}$}]
+                        [{$\{t\}$}]
+                    ]
+                ]
+            \end{forest}        
+            \begin{forest}    
+                [{$\square$}
+                    [{$\{\neg p\}$}
+                        [{$\{\neg s\}$}]
+                        [{$\{s,\neg p\}$}
+                            [{$\{\neg t,s\}$}]
+                            [{$\{t,\neg p\}$}]
+                        ]
+                    ]
+                    [{$\{p\}$}]
+                ]
+            \end{forest}
+            \begin{forest}    
+                [{$\square$}    
+                    [{$\{\neg r\}$}]
+                    [{$\{r\}$}
+                        [{$\{\neg p\}$}
+                            [{$\{\neg s\}$}]
+                            [{$\{s,\neg p\}$}
+                                [{$\{\neg t,s\}$}]
+                                [{$\{t,\neg p\}$}]
+                            ]
+                        ]
+                        [{$\{p,r\}$}]
+                    ]
+                ]
+            \end{forest}
+            \begin{forest}
+                [{$\square$}  
+                    [{$\{\neg q\}$}]
+                    [{$\{q\}$}    
+                        [{$\{\neg r,q\}$}]
+                        [{$\{r\}$}
+                            [{$\{\neg p\}$}
+                                [{$\{\neg s\}$}]
+                                [{$\{s,\neg p\}$}
+                                    [{$\{\neg t,s\}$}]
+                                    [{$\{t,\neg p\}$}]
+                                ]
+                            ]
+                            [{$\{p,r\}$}]
+                        ]
+                    ]                    
+                ]
+            \end{forest}
+        
+        \medskip
+
+        Ověřte, že výsledný strom opravdu reprezentuje rezoluční zamítnutí $S$. Všimněte si, jak jeho tvar kopíruje tvar stromu dosazení. (V našem případě je strom ``chlupatá cesta'', což obecně být nemusí, ale konstrukce funguje stejně.)
                     
     \end{solution}
     

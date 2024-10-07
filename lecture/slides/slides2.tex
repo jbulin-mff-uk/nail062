@@ -173,8 +173,6 @@
         \item výrok je v \alert{disjunktivní normální formě} (\alert{DNF}) je-li disjunkcí elementárních konjunkcí (prázdný DNF výrok je $\bot$)
     \end{itemize}
 
-    \pause
-    například:
     \myexample{
         \begin{itemize}
             \item $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF
@@ -196,14 +194,14 @@
     \begin{itemize}
         \item $\varphi$ nad $\{\neg,\landsymb,\lorsymb\}$, zaměníme-li $\landsymb,\lorsymb$ a znegujeme-li prvovýroky: \alert{duální} $\psi\sim\neg\varphi$, modely $\varphi$ jsou nemodely $\psi$, $f_\psi(\neg x)=\neg f_\varphi(x)$
         \item CNF a DNF jsou duální pojmy
-        \item \emph{pravdivost} je duální k \emph{nesplnitelnosti} 
+        \item \alert{pravdivost} je duální k \alert{nesplnitelnosti} 
     \end{itemize}
 
     \pause
     \textbf{Pozorování:} Výrok v CNF je \alert{pravdivý}, právě když každá klauzule má dvojici opačných literálů.
 
     \pause
-    \textbf{Duálně:} Výrok v DNF je \alert{nesplnitelný}, pokud každá elementární konjunkce má dvojici opačných literálů.
+    \textbf{Duálně:} Výrok v DNF je \alert{nesplnitelný}, právě když každá elementární konjunkce má dvojici opačných literálů.
        
 \end{frame}
 
@@ -212,9 +210,13 @@
 
     mějme výrok \myexampleinline{$\varphi=p\liff (q\lor \neg r)$}
 
+    \pause
+
     jeho modely jsou \myexampleinline{
         $M=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$
     }
+
+    \pause
 
     najdeme DNF a CNF výroky se stejnými modely, tj. ekvivalentní~$\varphi$
 
@@ -300,7 +302,6 @@
         \item případně zjednoduš (odstranění duplicit, tautologií apod.)
     \end{enumerate}
 
-    \pause
     Důkaz, že funguje: indukcí dle struktury výroku
 
 \end{frame}
@@ -380,7 +381,6 @@
         \item \alert{ekvivalence teorií}: $\alert{T\sim T'}$ právě když $\M_\mathbb P(T)=\M_\mathbb P(T')$ (různé \emph{axiomatizace} týchž vlastností)
     \end{itemize}   
 
-    \pause
     \myexample{
         \begin{itemize}[<+->]
             \item $T_1=\{p,p\limplies q,\neg q\}$ je sporná
@@ -443,8 +443,9 @@
 
     \pause
     \myexample{
-    Úvodní příklad o barvení grafů: 
-    \begin{itemize}
+    Úvodní příklad o barvení grafů:
+    \pause 
+    \begin{itemize}[<+->]
         \item $T_3$ (úplná obarvení s hranovou podmínkou) je jednoduchou extenzí teorie $T_1$ (částečná obarvení bez ohledu na hrany)
         \item $T_3'$ (přidání nového vrcholu) je konzervativní, ale ne jednoduchou extenzí $T_3$
         \item $T_3'$ je extenze $T_1$, která není ani jednoduchá, ani konzervativní
@@ -572,7 +573,7 @@
 
     \pause
     přiřazení modelů $h$ je prosté zobrazení algebry výroků jazyka do \alert{potenční algebry} \myalertinline{%
-        $\mathbf{\mathcal P(\M_\mathbb P)}=\langle \mathcal P(\M_\mathbb P); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb P\rangle$} \alert{zachovávající} operace a konstanty: $h(\bot)=\emptyset$, $h(\top)=\M_\mathbb P$, a
+        $\mathbf{\mathcal P(\M_\mathbb P)}=\langle \mathcal P(\M_\mathbb P); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb P\rangle$} \pause\alert{zachovávající} operace a konstanty:\pause $h(\bot)=\emptyset$, $h(\top)=\M_\mathbb P$, a\pause
     {\small
     \begin{align*}
         h(\neg[\varphi]_\sim)&=\overline{h([\varphi]_\sim)}=\overline{\M(\varphi)}=\M_\mathbb P\setminus\M(\varphi)\\
@@ -582,8 +583,8 @@
     }
 
     \vspace{-6pt}
-
-    tj. je to  \alert{homomorfismus} Booleových algeber, a nad konečným jazykem bijekce, tzv. \alert{izomorfismus}; stejně pro algebru výroků teorie
+    \pause
+    tj. je to  \alert{homomorfismus} Booleových algeber, a nad konečným jazykem bijekce, tzv. \alert{izomorfismus}; \pause stejně pro algebru výroků teorie
 
     \pause
     \myblock{

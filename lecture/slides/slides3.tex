@@ -44,12 +44,16 @@
         \item otázka: je $\varphi$ splnitelný? 
     \end{itemize}
 
+    \pause
     \alert{univerzální problém}: každou teorii nad konečným jazykem lze převést do CNF
 
+    \pause
     \alert{Cook-Levinova věta}: SAT je NP-úplný (důkaz: formalizuj výpočet nedeterministického Turingova stroje ve výrokové logice)
 
+    \pause
     ale některé \emph{fragmenty} jsou v P, efektivně řešitelné, např. 2-SAT a Horn-SAT (viz Sekce 3.2 a 3.3)
 
+    \pause
     \alert{praktický problém}: moderní \emph{SAT solvery} (viz Sekce 3.1) se používají v řadě odvětví aplikované informatiky, poradí si s obrovskými instancemi
     
 \end{frame}
@@ -61,12 +65,13 @@
 \begin{frame}{SAT solvery}
 
     \begin{itemize}
-        \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.
-        \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)
-        \item různá rozšíření, např. \href{https://en.wikipedia.org/wiki/Conflict-driven_clause_learning}{\alert{Conflict-driven clause learning (CDCL)}}
+        \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.\pause
+        \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)\pause
+        \item různá rozšíření, zejména \href{https://en.wikipedia.org/wiki/Conflict-driven_clause_learning}{\alert{Conflict-driven clause learning (CDCL)}}\pause
         \item řada technologií pro efektivnější řešení instancí pocházejících z různých aplikačních domén, heuristiky pro řízení prohledávání (za použití ML, NN) --- desítky tisíc řádků kódu
     \end{itemize}
     
+    \pause
     \textbf{Praktická ukázka: boardomino}
 
     \smallskip
@@ -77,8 +82,10 @@
 
     \smallskip
 
+    \pause
     těžká instance SATu (proč?), jak zakódovat? 
     
+    \pause
     řešič \href{http://www.labri.fr/perso/lsimon/glucose/}{\alert{Glucose}}, formát vstupu: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\alert{DIMACS CNF}}
     
 \end{frame}
@@ -89,13 +96,13 @@
 
 \begin{frame}{2-SAT vs. 3-SAT}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{$k$-CNF}: CNF a každá klauzule nejvýše $k$ literálů
         \item \alert{$k$-SAT}: je daný $k$-CNF výrok splnitelný?
         \item $k$-SAT je NP-úplný pro $k\geq 3$ (ke každému výroku lze sestrojit \alert{ekvisplnitelný} 3-CNF výrok)
         \item ale \myalertinline{2-SAT je v P, dokonce řešitelný v lineárním čase}
         \item algoritmus využívá tzv. \alert{implikační graf}:         
-        \begin{itemize}
+        \begin{itemize}[<+->]
             \item 2-klauzule $p\lor q$ je ekvivalentní $\neg p\limplies q$ a také $\neg q\limplies p$
             \item $p\sim p\lor p$ je ekvivalentní $\neg p\limplies p$
             \item vrcholy jsou literály
@@ -117,6 +124,7 @@
         \end{align*}
     }    
 
+    \pause
     \medskip
     \myexamplemath{\vspace{-9pt}\small
     $$
@@ -125,17 +133,9 @@
     $$    
     }
     \vspace{-18pt}
+    \pause
     \begin{columns}
-        \begin{column}{0.45\textwidth}
-        
-        \begin{itemize}
-            \item najdeme komponenty silné souvislosti
-            \item literály v komponentě musí být ohodnoceny stejně (jinak ``$1\limplies 0$'')
-            \item pokud má nějaká komponenta opačné literály, je $\varphi$ nesplnitelný
-            \item jinak sestrojíme model
-        \end{itemize}
-        
-        \end{column}
+
         \begin{column}{0.55\textwidth}
             \scalebox{0.85}{
             \begin{tikzpicture}[every node/.style={circle,fill=gray!5,draw,minimum width=1cm,node distance=2cm}
@@ -166,7 +166,20 @@
             \draw[-{Latex[length=2.5mm]}] (-3) -- (-4);
             \end{tikzpicture}
             }
-        \end{column}    
+        \end{column} 
+        \pause
+
+        \begin{column}{0.45\textwidth}
+        
+        \begin{itemize}[<+->]
+            \item najdeme komponenty silné souvislosti
+            \item literály v komponentě musí být ohodnoceny stejně (jinak ``$1\limplies 0$'')
+            \item pokud má nějaká komponenta opačné literály, je $\varphi$ nesplnitelný
+            \item jinak sestrojíme model
+        \end{itemize}
+        
+        \end{column}
+         
     \end{columns}
 
 \end{frame}
@@ -176,9 +189,10 @@
 
     \myalert{\textbf{Všimněte si:} stačí, aby z žádné komponenty ohodnocené 1 nevedla hrana do komponenty ohodnocené 0}
 
-
+    \pause
     provedeme \alert{kontrakci komponent}, výsledný graf $\mathcal G_\varphi^\ast$ je \alert{acyklický}
 
+    \pause
     \vspace{-9pt}
     \begin{center}
         \scalebox{0.7}{
@@ -203,8 +217,10 @@
     \end{center}
     \vspace{-9pt}
 
+    \pause
     najdeme nějaké \alert{topologické uspořádání}; v něm najdeme nejlevější dosud neohodnocenou komponentu, ohodnotíme ji 0, opačnou komponentu ohodnotíme 1, a opakujeme
 
+    \pause
     \vspace{-9pt}
     \begin{center}
     \scalebox{0.7}{
@@ -235,22 +251,26 @@
 \begin{frame}{Shrnutí}
         
     \myblock{\textbf{Tvrzení:} $\varphi$ je splnitelný, právě když žádná silně souvislá komponenta v $\mathcal G_\varphi$ neobsahuje dvojici opačných literálů.}
+
+    \pause
     
     \textbf{Důkaz:} $\Rightarrow$ literály v komponentě musí být ohodnoceny stejně
 
-    $\Leftarrow$ ohodnocení zkonstruované výše je model $\varphi$:
+    \pause
+    $\Leftarrow$ ohodnocení zkonstruované výše je model $\varphi$:\pause
     \begin{itemize}
         \item \alert{jednotková} klauzule $\ell$ platí \myalertinline{%
-            kvůli hraně ${\ell}\limplies\ell$}, komponenta s $\overline{\ell}$ byla ohodnocena dříve, a to 0, takže $v(\ell)=1$
+            kvůli hraně ${\ell}\limplies\ell$}, komponenta s $\overline{\ell}$ byla ohodnocena dříve, a to 0, takže $v(\ell)=1$\pause
         \item podobně pro \alert{2-klauzuli} $\ell_1\lor\ell_2$, \myalertinline{%
             máme hrany $\overline{\ell_1}\limplies\ell_2$, $\overline{\ell_2}\limplies\ell_1$}   
-        
+        \pause
         pokud jsme $\ell_1$ ohodnotili dříve než $\ell_2$, museli jsme jako první narazit na komponentu s $\overline{\ell_1}$ a ohodnotit ji 0, tedy $\ell_1$ platí; v~opačném případě symetricky platí $\ell_2$ \hfill\qedsymbol
     \end{itemize}
 
-
+    \pause
     \myblock{\textbf{Důsledek:} 2-SAT je řešitelný v lineárním čase, včetně konstrukce modelu (pokud existuje).}
 
+    \pause
     \textbf{Důkaz:}
     Komponenty silné souvislosti i topologické uspořádání najdeme v čase $\mathcal O(|V|+|E|)$, stačí je projít jednou \hfill\qedsymbol
 
@@ -263,21 +283,22 @@
 \begin{frame}{Horn-SAT}
 
     \begin{itemize}
-        \item \alert{hornovská klauzule}: \emph{nejvýše jeden *pozitivní* literál}
+        \item \alert{hornovská klauzule}: \emph{nejvýše jeden *pozitivní* literál}\pause
         $$
         \alert{\neg p_1\lor \neg p_2\lor \dots \lor \neg p_n\lor q}\ \sim\ (p_1\land p_2\land\dots \land p_n)\limplies q
         $$
-        základ logického programování (Prolog \myblockinline{\texttt{q:-p1,p2,...,pn.}})
-        \item \myalertinline{Horn-SAT}, tj. splnitelnost \alert{hornovského} výroku (konjunkce hornovských klauzulí) \myalertinline{je opět v P, v lineárním čase}
+        \pause
+        základ logického programování (Prolog \myblockinline{\texttt{q:-p1,p2,...,pn.}})\pause
+        \item \myalertinline{Horn-SAT}, tj. splnitelnost \alert{hornovského} výroku (konjunkce hornovských klauzulí) \myalertinline{je opět v P, v lineárním čase}\pause
         \item algoritmus využívá tzv. \alert{jednotkovou propagaci}:  
-        \begin{itemize}
+        \begin{itemize}[<+->]
             \item jednotková klauzule vynucuje hodnotu výrokové proměnné
             \item tím můžeme výrok zjednodušit, např. pro $\neg p$ ($p=0$):\\
             odstraníme klauzule s literálem $\neg p$, už jsou splněné\\
             odstraníme literál $p$ (nemůže být splněný)
             \item žádná jednotková klauzule $\Rightarrow$ každá klauzule má \alert{aspoň jeden negativní literál} $\Rightarrow$ vše nastavíme na 0
         \end{itemize}    
-    \end{itemize}    
+    \end{itemize}
     
 \end{frame}
 
@@ -287,7 +308,8 @@
     \myexamplemath{\vspace{-12pt}%
         $$\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_2\lor\neg p_3)\land(\neg p_5\lor \neg p_4)\land \alert{p_4}$$}
 
-    \begin{itemize}
+    \pause
+    \begin{itemize}[<+->]
         \item nastav $v(p_4)=1$, odstraň klauzule obsahující literál $p_4$, z ostatních klauzulí odstraň $\neg p_4$
         $$
         \varphi^{p_4}=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land (\neg p_2\lor\neg p_3)\land\alert{\neg p_5}
@@ -298,17 +320,17 @@
         $$
         \item už žádná jednotková klauzule, v každé klauzuli alespoň dva literály ale \alert{nejvýše jeden pozitivní, tj. alespoň jeden negativní}: $v(p_1)=v(p_2)=v(p_3)=0$, model $v=(0,0,0,1,0)$
     \end{itemize}
-
+    \pause
     \myalertmath{
         $$
         \varphi^\ell=\{C\setminus\{\overline{\ell}\}\mid C\in\varphi,\ell\notin C\}\qquad\text{(množinový zápis)}
         $$
     }
-
+    \pause
     \myblock{
         \textbf{Pozorování:} $\varphi^\ell$ neobsahuje $\ell$ ani $\overline{\ell}$, modely = modely $\varphi$ splňující $\ell$
     }
-
+    \pause
     \myexampleinline{%
         $\psi=p\land (\neg p\lor q)\land (\neg q\lor r)\land\neg r$} je nesplnitelný, co se stane?
 
@@ -323,12 +345,14 @@
         \item Pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnoť všechny zbývající proměnné 0.
         \item Pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď jednotkovou propagaci, nahraď $\varphi$ výrokem~$\varphi^\ell$, a vrať se na začátek.
     \end{enumerate}
-
+    
+    \pause
     \myblock{
     \textbf{Tvrzení:} Algoritmus je korektní.\\
     \textbf{Důsledek:} Horn-SAT lze řešit v lineárním čase.\vspace{3pt}
     }
 
+    \pause
     \textbf{Důkaz:} {\small Korektnost plyne z pozorování a z diskuze. V každém kroku stačí projít, výrok zkrátíme (kvadratický horní odhad, ale při vhodné implementaci lineární)}\hfill\qedsymbol
 
 \end{frame}
@@ -341,12 +365,15 @@
 
     \textbf{myšlenka:} \alert{čistý výskyt} $p$  buď jen v pozitivních nebo jen v negativních literálech $\Rightarrow$ lze mu nastavit příslušnou hodnotu!
 
+    \pause
     \myalert{
     DPLL = jednotková propagace + čistý výskyt + větvení (rekurze)
     }
+    \pause
     \textbf{vstup}: výrok $\varphi$ v CNF,\\ 
     \textbf{výstup}: model $\varphi$ nebo informace, že  $\varphi$ není splnitelný
-    \begin{enumerate}                
+    \pause
+    \begin{enumerate}[<+->]                
         \item Dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť literál $\ell$ hodnotou 1, proveď \alert{jednotkovou propagaci}, nahraď $\varphi$ výrokem~$\varphi^\ell$.
          \item Dokud existuje literál $\ell$, který má ve $\varphi$ \alert{čistý výskyt}, ohodnoť $\ell$ hodnotou 1, a odstraň klauzule obsahující $\ell$.
         \item Pokud $\varphi$ neobsahuje žádnou klauzuli, je splnitelný.
@@ -364,17 +391,19 @@
             &(\neg p\lor q\lor \neg r)\land(\neg p\lor\neg q\lor\neg s)\land(p\lor \neg r\lor \neg s)\land \\ &(q\lor \neg r\lor s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
         \end{align*}
     }
-    
-    žádná jednotková klauzule, $\neg r$ má \alert{čistý výskyt}: nastav  $v(r)=0$ a odstraň klauzule obsahující $\neg r$:
+    \pause
+    žádná jednotková klauzule, $\neg r$ má \alert{čistý výskyt}: nastav  $v(r)=0$ a odstraň klauzule obsahující $\neg r$:\pause
     $$
     (\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)
     $$
+    \pause
     už žádný čistý výskyt, rekurzivně zavolej na:
     \begin{enumerate}
         \item $(\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\alert{\land p}$
         \item $(\neg p\lor\neg q\lor\neg s)\land (p\lor s)\land(p\lor\neg s)\land(q\lor s)\alert{\land \neg p}$
     \end{enumerate}
-    a pokračuj dále v obou větvích výpočtu
+    \pause
+    a pokračuj dále v obou větvích výpočtu \pause
     \begin{gather*}
         \vdots \\
         \M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}
@@ -393,20 +422,26 @@
 
     chceme zjistit, zda výrok platí [\alert{$T\models\varphi$}], a to čistě syntakticky, aniž bychom se zabývali sémantikou: najít \alert{(formální) důkaz} [\alert{$T\proves\varphi$}]
 
+    \pause
     \alert{důkaz} je konečný syntaktický objekt vycházející z $\varphi$ a axiomů $T$
 
+    \pause
     dokazování lze dělat \alert{algoritmicky} (pokud máme algoritmický přístup k axiomům $T$, která může být nekonečná), a lze rychle algoritmicky \alert{ověřit}, zda je daný objekt opravdu korektní důkaz
 
+    \pause
     \begin{itemize}
         \item \alert{korektnost}: ``co dokážu, platí'' \hfill \myalertinline{%
             $T\proves\varphi\ \Rightarrow\ T\models\varphi$}
         \item \alert{úplnost}: ``dokážu vše, co platí'' \hfill \myalertinline{%
             $T\models\varphi\ \Rightarrow\ T\proves\varphi$}
     \end{itemize}
+    \pause
     (korektnost je nutná, úplnost ne: rychlý dokazovací systém může být praktický i když není úplný)
 
+    \pause
     ukážeme si: \emph{tablo metodu}, \emph{hilbertovský kalkulus}, \emph{rezoluční metodu}
     
+    \pause
     \myblock{nutný předpoklad: \alert{jazyk musí být spočetný} (potom i $T$ je spočetná)}
 
 \end{frame}
@@ -419,18 +454,24 @@
 
     nejprve případ $T=\emptyset$, tedy dokazujeme, že $\varphi$ platí \emph{v logice}
 
-    \alert{tablo} je strom představující \alert{hledání protipříkladu} (modelu $v\not\models\varphi$), když všechny větve \alert{selžou}, máme důkaz (sporem)
+    \pause
+    \alert{tablo} je strom představující \alert{hledání protipříkladu} (modelu $v\not\models\varphi$), \pause když všechny větve \alert{selžou}, máme důkaz (sporem)
 
+    \pause
     labely: \alert{položky} $\mathrm{T}\psi,\mathrm{F}\psi$ (určují, zda na dané větvi platí výrok $\psi$)
 
+    \pause
     kořen \alert{$\mathrm{F}\varphi$}, dále rozvíjíme \alert{redukcí} položek (podle struktury výroků v nich), aby platil \alert{invariant}:
 
+    \pause
     \myalert{
         Každý model, který se \emph{shoduje} s položkou v kořeni (tj. ve kterém neplatí $\varphi$), se musí \emph{shodovat} i s některou větví tabla (tj. splňovat všechny požadavky vyjádřené položkami na této větvi).
     }
 
+    \pause
     je-li na větvi \alert{$\mathrm{T}\psi$} a zároveň \alert{$\mathrm{F}\psi$}, potom \alert{selhala} (je \alert{sporná}), pokud všechny větve selhaly, je tablo \alert{sporné}, je to \alert{důkaz} $T\proves\varphi$
 
+    \pause
     pokud nějaká větev neselhala a je \alert{dokončená} (vše na ní zredukované), lze z ní zkonstruovat model, ve kterém $\varphi$ neplatí
 
 \end{frame}
@@ -462,7 +503,8 @@
 
         \column{0.68\textwidth}
 
-        \begin{itemize}
+        \pause
+        \begin{itemize}[<+->]
             \item \alert{důkaz sporem}: v kořeni příznak F
             \item redukujeme položku tvaru \alert{$\mathrm{F}\varphi_1\limplies\varphi_2$}:
             \item pokud $v\not\models\varphi_1\limplies\varphi_2$, nutně $v\models\varphi_1$ a zároveň $v\not\models\varphi_2$
@@ -501,7 +543,8 @@
 
         \column{0.68\textwidth}
 
-        \begin{itemize}
+        \pause
+        \begin{itemize}[<+->]
             \item tablo je dokončené, ale není sporné
             \item tedy nejde o důkaz
             \item levá větev dává protipříklad: model \alert{$v=(0,0)$} ve kterém výrok neplatí
@@ -517,7 +560,7 @@
 
 \begin{frame}{Poznámky}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item Jak redukujeme položky? \begin{itemize}
             \item Připojíme příslušné \alert{atomické tablo} (viz následující slide) na konec všech bezesporných větví procházejících vrcholem.
         \end{itemize}
@@ -645,7 +688,7 @@
 
     }
 
-
+    \pause
     \alert{konvence:} kořeny atomických tabel (\textcolor{blue}{modře}) nezakreslujeme   
 
     \end{center}    
@@ -656,12 +699,13 @@
 \begin{frame}{O stromech}
     
     \begin{itemize}
-        \item \alert{strom} je $T\neq\emptyset$ s částečným uspořádáním $<_T$, které má nejmenší prvek (\alert{kořen}) a množina předků libovolného vrcholu je \alert{dobře uspořádaná} (každá její neprázdná podmnožina má nejmenší prvek, to zakáže nekonečné klesající řetězce předků)
-        \item \alert{větev} je maximální lineárně uspořádaná podmnožina $T$.
-        \item \alert{uspořádaný strom} má navíc lineární uspořádání $<_L$ množiny synů každého vrcholu (říkáme mu \alert{pravolevé}, $<_T$ je \alert{stromové})
+        \item \alert{strom} je $T\neq\emptyset$ s částečným uspořádáním $<_T$, které má nejmenší prvek (\alert{kořen}) a množina předků libovolného vrcholu je \alert{dobře uspořádaná} \pause(každá její neprázdná podmnožina má nejmenší prvek, to zakáže nekonečné klesající řetězce předků)\pause
+        \item \alert{větev} je maximální lineárně uspořádaná podmnožina $T$.\pause
+        \item \alert{uspořádaný strom} má navíc lineární uspořádání $<_L$ množiny synů každého vrcholu (říkáme mu \alert{pravolevé}, $<_T$ je \alert{stromové})\pause
         \item \alert{označkovaný strom} má navíc funkci $\mathrm{label}\colon T\to\mathrm{Labels}$        
     \end{itemize}
 
+    \pause
     \myblock{\textbf{Königovo lemma:} Nekonečný, konečně větvící strom má nekonečnou větev.}
 
 \end{frame}

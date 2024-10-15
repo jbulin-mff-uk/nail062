@@ -38,7 +38,7 @@
 
 \begin{frame}{Rezoluční metoda}
     
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item jiný důkazový systém než tablo metoda
         \item mnohem efektivnější implementace
         \item logické programování, automatické dokazování, SAT solvery (důkaz jako \alert{certifikát} nesplnitelnosti)
@@ -61,7 +61,7 @@
 
 \begin{frame}{Množinová reprezentace}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{literál} $\ell$ je $p$ nebo $\neg p$ (pro $p\in\mathbb P$), $\bar \ell$ je \alert{opačný literál} k $\ell$
         \item \alert{klauzule} $C$ je konečná množina literálů
         \item \alert{prázdná klauzule} $\square$ je nesplnitelná
@@ -69,7 +69,7 @@
         \item \alert{prázdná formule} $\emptyset$ je vždy splněna
     \end{itemize}
     Modely reprezentujeme jako množiny literálů:
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{(částečné) ohodnocení} je libovolná \alert{konzistentní} množina literálů (tj. nesmí obsahovat dvojici opačných literálů) 
         \item\alert{úplné ohodnocení} obsahuje $p$ nebo $\neg p$ pro každý prvovýrok
         \item ohodnocení $\mathcal V$ \alert{splňuje} formuli $S$, píšeme \alert{$\mathcal V\models S$}, pokud $\mathcal V$ obsahuje nějaký literál z každé klauzule v $S$:
@@ -85,7 +85,7 @@
     
     $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ 
         
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item v množinové reprezentaci:
         \myexampleamsmath{
         $$
@@ -97,7 +97,7 @@
         } 
         splňuje $S$, \alert{$\mathcal V\models S$}
         \item není úplné, můžeme rozšířit libovolným literálem pro $p_2$, platí 
-        \begin{itemize}
+        \begin{itemize}[<+->]
             \item \alert{$\mathcal V\union\{p_2\}\models S$}
             \item \alert{$\mathcal V\union\{\neg p_2\}\models S$}
         \end{itemize}        
@@ -124,20 +124,23 @@
     \vspace{-12pt}
     }
     
+    \pause
     tedy z první klauzule odstraníme $\ell$ a z druhé $\bar\ell$ (musely tam být!) a zbylé literály sjednotíme, mohli bychom také psát: 
     $$
     C_1'\union C_2'\text{ je rezolventou klauzulí }C_1'\disjointunion\{\ell\}\text{ a }C_2'\disjointunion\{\bar \ell\}
     $$
+    \pause
     \vspace{-12pt}
     \begin{itemize}
         \item \myexampleinline{
             z klauzulí $C_1=\{\neg q,r\}$ a $C_2=\{\neg p,\neg q,\neg r\}$
         }
-        odvodíme klauzuli $\{\neg p,\neg q\}$ přes literál $r$
+        odvodíme klauzuli $\{\neg p,\neg q\}$ přes literál $r$\pause
         \item \myexampleinline{
             z $\{p,q\}$ a $\{\neg p,\neg q\}$
         }
-        odvodíme $\{p,\neg p\}$ přes literál $q$, nebo $\{q,\neg q\}$ přes literál $p$ (obojí jsou ale tautologie)
+        odvodíme $\{p,\neg p\}$ přes literál $q$, nebo $\{q,\neg q\}$ přes literál $p$ (obojí jsou ale tautologie)\pause
+        
         \item nelze z nich ale odvodit $\square$ \emph{``rezolucí přes $p$ a $q$ najednou''}! ($S=\{\{p,q\},\{\neg p,\neg q\}\}$ je splnitelná, např. $(1,0)$ je model)
     \end{itemize}
 

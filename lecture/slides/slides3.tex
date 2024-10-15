@@ -260,7 +260,7 @@
     $\Leftarrow$ ohodnocení zkonstruované výše je model $\varphi$:\pause
     \begin{itemize}
         \item \alert{jednotková} klauzule $\ell$ platí \myalertinline{%
-            kvůli hraně ${\ell}\limplies\ell$}, komponenta s $\overline{\ell}$ byla ohodnocena dříve, a to 0, takže $v(\ell)=1$\pause
+            kvůli hraně $\overline{\ell}\limplies\ell$}, komponenta s $\overline{\ell}$ byla ohodnocena dříve, a to 0, takže $v(\ell)=1$\pause
         \item podobně pro \alert{2-klauzuli} $\ell_1\lor\ell_2$, \myalertinline{%
             máme hrany $\overline{\ell_1}\limplies\ell_2$, $\overline{\ell_2}\limplies\ell_1$}   
         \pause
@@ -405,9 +405,9 @@
     \pause
     a pokračuj dále v obou větvích výpočtu \pause
     \begin{gather*}
-        \vdots \\
-        \M_\varphi=\{(1,a,0,b,c)\mid a,b,c\in\{0,1\}\}
+        \vdots
     \end{gather*}
+    1. větev dává $(1,0,0,1)$ a $(1,1,0,0)$, 2. je sporná. Modelem je také $(1,1,1,0)$, ten ztratíme nastavením $v(r)=0$. \alert{Odstranění čistého výskytu zachová splnitelnost, ne všechny modely.}
     
 \end{frame}
 

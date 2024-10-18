@@ -47,13 +47,17 @@
 
 \begin{problem} \label{problem:2sat}
     
-    Sestrojte implikační graf následujícího 2-CNF výroku. Je splnitelný? Pokud ano, najděte nějaké řešení.
+    Sestrojte implikační graf daného 2-CNF výroku. Je splnitelný? Pokud ano, najděte nějaké řešení: (a) výrok $\varphi$ níže, (b) $\varphi\land\neg p_1$, (c) $\varphi\land\neg p_1\land(p_1\lor p_2)$.
     $$
-    (p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee \neg p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee \neg p_1)
+    \varphi=(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee \neg p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee \neg p_1)
     $$
 
     \begin{solution}
-        Sestrojíme implikační graf. Zjistíme, že má dvě komponenty silné souvislosti: $C=\{p_1,p_2,\neg p_3,p_4,\neg p_5\}$ a $\overline{C}=\{\neg p_1,\neg p_2,p_3,\neg p_4,p_5\}$, nevede mezi nimi žádná hrana. Po kontrakci komponent tedy máme dvouvrcholový graf $\mathcal G^*$ bez hran, ten má dvě topologická uspořádání: $(C,\overline{C})$ a $(\overline{C},C)$, která odpovídají modelům $(0,0,1,0,1)$ a $(1,1,0,1,0)$.                
+        (a) Sestrojíme implikační graf. Zjistíme, že má dvě komponenty silné souvislosti: $C=\{p_1,p_2,\neg p_3,p_4,\neg p_5\}$ a $\overline{C}=\{\neg p_1,\neg p_2,p_3,\neg p_4,p_5\}$, nevede mezi nimi žádná hrana. Po kontrakci komponent tedy máme dvouvrcholový graf $\mathcal G^*$ bez hran, ten má dvě topologická uspořádání: $(C,\overline{C})$ a $(\overline{C},C)$, která odpovídají modelům $(0,0,1,0,1)$ a $(1,1,0,1,0)$.
+        
+        (b) Komponenty jsou stejné, ale do $\mathcal G^*$ přibude hrana $C\to\overline{C}$, tedy jediné topologické uspořádání je $(C,\overline{C})$, což odpovídá modelu $(0,0,1,0,1)$.
+
+        (c) Implikační graf je nyní silně souvislý, tedy jeho jediná komponenta obsahuje (všechny) dvojice opačných literálů. To znamená, že výrok je nesplnitelný.
     \end{solution}
 
 \end{problem}
@@ -177,7 +181,7 @@
 
     Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvami tak, že žádné dva sousedící regiony nemají stejnou barvu. Najděte takové obarvení pomocí SAT solveru.
     \begin{multicols}{2}
-    \begin{enumerate}
+    \begin{enumerate}[(a)]
         \item Mapa krajů Česka  
         
         \vfill \includegraphics[width=0.5\textwidth]{files/map-coloring-czechia.png} \vfill

@@ -118,9 +118,9 @@
 
     \begin{solution}
 
-        Sestrojíme tablo z teorie $T$, do kořene dáme položku $\mathrm{T}\alpha_0$, kde $\alpha_0$ je první axiom $T$. Ukážeme jen začátek konstrukce, potřebujete-li, zkonstuujte více.
+        Sestrojíme tablo z teorie $T$, do kořene dáme položku $\mathrm{T}\alpha_0$, kde $\alpha_0$ je první axiom $T$. Ukážeme jen začátek konstrukce, potřebujete-li, zkonstruujte více.
 
-        Neprve vyřešme (a):
+        Nejprve vyřešme (a):
         
         \begin{center}
             \begin{forest}
@@ -155,7 +155,7 @@
                 ]
             \end{forest}
         \end{center}
-        Každý model $T$ se shoduje s některou (bezespornou) větví tohoto (dokončeného) tabla. Zde dokonce platí, že každý model $T$ je kanonickým modelem pro některou z větví. Modely jsou: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$ kde $v_\text{all}=1$ pro všechna $i\in\mathbb N$, a
+        Každý model $T$ se shoduje s některou (bezespornou) větví tohoto (dokončeného) tabla. (Zde dokonce platí, že každý model $T$ je \emph{kanonickým} modelem pro některou z větví. Obecně to ale neplatí.) Modely jsou: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$ kde $v_\text{all}(p_i)=1$ pro všechna $i\in\mathbb N$, a
         $$
         v_{<k}(p_i)=\begin{cases}
             1 & \text{ if }i<k,\\
@@ -199,7 +199,7 @@
             \end{forest}
         \end{center}
 
-        Opět není těžké nahlédnout, že každý model je kanonickým modelem pro některou větev. Máme $\M(T)=\{v_\text{none}\}\cap\{v_{\geq k}\mid k\in\mathbb N\}$ kde $v_\text{none}=0$ pro všechna $i\in\mathbb N$, a
+        Opět není těžké nahlédnout, že každý model se shoduje s některou z větví. Máme $\M(T)=\{v_\text{none}\}\cap\{v_{\geq k}\mid k\in\mathbb N\}$ kde $v_\text{none}(p_i)=0$ pro všechna $i\in\mathbb N$, a
         $$
         v_{\geq k}(p_i)=\begin{cases}
             0 & \text{ if }i<k,\\

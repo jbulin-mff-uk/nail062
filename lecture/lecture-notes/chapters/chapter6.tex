@@ -169,7 +169,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
 \emph{Strom termu $t$}, označme $\Tree(t)$, je definován podobně jako strom výroku, v listech jsou proměnné nebo konstantní symboly, ve vnitřních vrcholech jsou funkční symboly, jejichž arita je rovna počtu synů.
 
 \begin{example}\label{example:terms}
-    Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\neg,\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
+    Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $-(x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
     Na obrázku~\ref{figure:trees-of-terms} jsou nakresleny stromy těchto termů.
     
     \begin{figure}
@@ -196,7 +196,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
         \begin{forest}
             for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
             [\lor 
-                [\neg 
+                [- 
                     [\land
                         [x]
                         [y]                    
@@ -206,7 +206,7 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
             ]
         \end{forest}
         
-        (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber
+        (b) $-(x\land y)\lor \bot$ v jazyce Booleových algeber
     \end{minipage}
     \caption{Strom termu}
     \label{figure:trees-of-terms}
@@ -235,7 +235,7 @@ U binárních relačních symbolů často používáme infixový zápis, např. 
         \item $R(f(f(x)),c, f(d))$ kde $R$ je ternární relační, $f$ unární funkční, $c,d$ konstantní symboly,
         \item $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$ v jazyce uspořádaných těles,
         \item $x\cdot y\leq (S(0)+x)\cdot y$ v jazyce aritmetiky,
-        \item $\neg(x\land y)\lor\bot=\bot$ v jazyce Booleových algeber        
+        \item $-(x\land y)\lor\bot=\bot$ v jazyce Booleových algeber        
     \end{itemize}
 \end{example}
 
@@ -1077,7 +1077,7 @@ Nyní si ukážeme, jak lze výrokovou logiku `simulovat' v logice predikátové
             \end{align*}
             \item \emph{netrivialita}:
             \begin{align*}
-                \neg (\bot &= \top)
+                -(\bot &= \top)
             \end{align*}
 
         \end{itemize}

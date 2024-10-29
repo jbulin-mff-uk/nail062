@@ -45,7 +45,7 @@
         \item pracuje s CNF (každý výrok/teorii lze převést do CNF)
         \item jediné inferenční pravidlo: \alert{rezoluční pravidlo}
         $$
-        \frac{\{p\}\cup C_1,\{\neg p\}\cup C_2}{C_1\cup C_2}
+        \frac{\{p\}\disjointunion C_1,\{\neg p\}\disjointunion C_2}{C_1\cup C_2}
         $$
         \item platí obecnější \alert{pravidlo řezu}:
         $$
@@ -61,18 +61,18 @@
 
 \begin{frame}{Množinová reprezentace}
 
-    \begin{itemize}[<+->]
-        \item \alert{literál} $\ell$ je $p$ nebo $\neg p$ (pro $p\in\mathbb P$), $\bar \ell$ je \alert{opačný literál} k $\ell$
-        \item \alert{klauzule} $C$ je konečná množina literálů
-        \item \alert{prázdná klauzule} $\square$ je nesplnitelná
-        \item \alert{CNF formule} $S$ je množina klauzulí (může být i \alert{nekonečná}!)
+    \begin{itemize}
+        \item \alert{literál} $\ell$ je $p$ nebo $\neg p$ (pro $p\in\mathbb P$), $\bar \ell$ je \alert{opačný literál} k $\ell$\pause
+        \item \alert{klauzule} $C$ je konečná množina literálů\pause
+        \item \alert{prázdná klauzule} $\square$ je nesplnitelná\pause
+        \item \alert{CNF formule} $S$ je množina klauzulí\pause (může být i \alert{nekonečná}!)\pause
         \item \alert{prázdná formule} $\emptyset$ je vždy splněna
-    \end{itemize}
-    Modely reprezentujeme jako množiny literálů:
-    \begin{itemize}[<+->]
-        \item \alert{(částečné) ohodnocení} je libovolná \alert{konzistentní} množina literálů (tj. nesmí obsahovat dvojici opačných literálů) 
-        \item\alert{úplné ohodnocení} obsahuje $p$ nebo $\neg p$ pro každý prvovýrok
-        \item ohodnocení $\mathcal V$ \alert{splňuje} formuli $S$, píšeme \alert{$\mathcal V\models S$}, pokud $\mathcal V$ obsahuje nějaký literál z každé klauzule v $S$:
+    \end{itemize}\pause
+    Modely reprezentujeme jako množiny literálů:\pause
+    \begin{itemize}
+        \item \alert{(částečné) ohodnocení} je libovolná \alert{konzistentní} množina literálů (tj. nesmí obsahovat dvojici opačných literálů) \pause
+        \item\alert{úplné ohodnocení} obsahuje $p$ nebo $\neg p$ pro každý prvovýrok\pause
+        \item ohodnocení $\mathcal V$ \alert{splňuje} formuli $S$, píšeme \alert{$\mathcal V\models S$}, pokud $\mathcal V$ obsahuje nějaký literál z každé klauzule v $S$:\pause
         $$
         \mathcal V\cap C\neq\emptyset\text{ pro každou }C\in S
         $$
@@ -84,22 +84,24 @@
 \begin{frame}{Množinová reprezentace: příklad}
     
     $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ 
-        
-    \begin{itemize}[<+->]
+    
+    \pause
+
+    \begin{itemize}
         \item v množinové reprezentaci:
         \myexampleamsmath{
         $$
         S=\{\{\neg p_1,p_2\},\{\neg p_1,\neg p_2,p_3\},\{\neg p_3,\neg p_4\},\{\neg p_4,\neg p_5\},\{p_4\}\}
         $$
-        }
+        }\pause
         \item ohodnocení \myexampleinline{
             $\mathcal V=\{\neg p_1,\neg p_3,p_4,\neg p_5\}$
         } 
-        splňuje $S$, \alert{$\mathcal V\models S$}
-        \item není úplné, můžeme rozšířit libovolným literálem pro $p_2$, platí 
-        \begin{itemize}[<+->]
-            \item \alert{$\mathcal V\union\{p_2\}\models S$}
-            \item \alert{$\mathcal V\union\{\neg p_2\}\models S$}
+        splňuje $S$, \alert{$\mathcal V\models S$}\pause
+        \item není úplné, můžeme rozšířit libovolným literálem pro $p_2$: \pause
+        \begin{itemize}
+            \item \alert{$\mathcal V\union\{p_2\}\models S$}\pause
+            \item \alert{$\mathcal V\union\{\neg p_2\}\models S$}\pause
         \end{itemize}        
         \item tato dvě úplná ohodnocení odpovídají modelům
          \begin{itemize}
@@ -125,7 +127,7 @@
     }
     
     \pause
-    tedy z první klauzule odstraníme $\ell$ a z druhé $\bar\ell$ (musely tam být!) a zbylé literály sjednotíme, mohli bychom také psát: 
+    tedy z první klauzule odstraníme $\ell$ a z druhé $\bar\ell$ (musely tam být!) a zbylé literály sjednotíme, mohli bychom také psát:\pause
     $$
     C_1'\union C_2'\text{ je rezolventou klauzulí }C_1'\disjointunion\{\ell\}\text{ a }C_2'\disjointunion\{\bar \ell\}
     $$
@@ -149,27 +151,28 @@
 
 \begin{frame}{Rezoluční důkaz}
     
-    Rezoluční pravidlo je \alert{korektní}, tj. pro libovolné ohodnocení $\mathcal V$ platí:
+    Rezoluční pravidlo je \alert{korektní}, tj. pro libovolné ohodnocení $\mathcal V$ platí:\pause
+
     \myalertmath{
     $$
     \text{Pokud }\mathcal V\models C_1\text{ a }\mathcal V\models C_2\text{, potom }\mathcal V\models C.
     $$
-    }    
+    }\pause
     
-    V rezolučním důkazu můžeme vždy napsat buď axiom, nebo rezolventu již napsaných klauzulí; tím zaručíme korektnost důkazů:
+    V rezolučním důkazu můžeme vždy napsat buď axiom, nebo rezolventu již napsaných klauzulí; tím zaručíme korektnost důkazů:\pause
 
     \medskip
 
     \myblock{
-    \alert{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je konečná posloupnost klauzulí $C_0,C_1,\dots,C_n=C$ taková, že pro každé $i$:
+    \alert{Rezoluční důkaz (odvození)} klauzule $C$ z formule $S$ je konečná posloupnost klauzulí $C_0,C_1,\dots,C_n=C$ taková, že pro každé $i$:\pause
     \begin{itemize}
-        \item $C_i\in S$, nebo
-        \item $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j,k<i$
+        \item $C_i\in S$, nebo\pause
+        \item $C_i$ je rezolventou nějakých $C_j,C_k$ kde $j,k<i$\pause
     \end{itemize}
     }
     \begin{itemize}
-        \item existuje-li rez. důkaz, je $C$ \alert{rezolucí dokazatelná} z $S$, \alert{$S\proves_R C$}
-        \item \alert{rezoluční zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$
+        \item existuje-li rez. důkaz, je $C$ \alert{rezolucí dokazatelná} z $S$, \alert{$S\proves_R C$}\pause
+        \item \alert{rezoluční zamítnutí} formule $S$ je rezoluční důkaz $\square$ z $S$\pause
         \item v tom případě je $S$ \alert{rezolucí zamítnutelná}
    \end{itemize}   
    
@@ -180,12 +183,12 @@
 
     Formule \myexampleinline{
     $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$
-    } je rezolucí zamítnutelná, jedno z možných zamítnutí je:
+    } je rezolucí zamítnutelná, jedno z možných zamítnutí je:\pause
     $$
     \{p,\neg q,r\},\{q,r\},\{p,r\},\{\neg p,r\},\{r\},\{p,\neg r\},\{\neg p,\neg r\},\{\neg r\},\square
-    $$
+    $$\pause
 
-    Rezoluční důkaz má přirozeně stromovou strukturu, tzv. \alert{rezoluční strom}: na listech jsou axiomy, vnitřní vrcholy jsou rezoluční kroky.
+    Rezoluční důkaz má přirozeně stromovou strukturu, tzv. \alert{rezoluční strom}: na listech jsou axiomy, vnitřní vrcholy jsou rezoluční kroky.\pause
 
     \begin{center}
         \begin{forest}
@@ -212,19 +215,21 @@
 \begin{frame}{Rezoluční strom}
 
     \myblock{
-        \alert{Rezoluční strom} klauzule $C$ z formule $S$ je konečný binární strom s vrcholy označenými klauzulemi, kde
+        \alert{Rezoluční strom} klauzule $C$ z formule $S$ je konečný binární strom s vrcholy označenými klauzulemi, kde\pause
         \begin{itemize}
-            \item v kořeni je $C$,
-            \item v listech jsou klauzule z $S$,
+            \item v kořeni je $C$,\pause
+            \item v listech jsou klauzule z $S$,\pause
             \item v každém vnitřním vrcholu je rezolventa klauzulí ze synů tohoto vrcholu.
         \end{itemize}    
-    }
+    }\pause
 
     \medskip
 
-    \textbf{Pozorování:} $C$ má rezoluční strom z $S$, právě když $S\proves_R C$. (Důkaz snadno indukcí dle hloubky stromu a délky důkazu.)
+    \textbf{Pozorování:} $C$ má rezoluční. strom z $S$, právě když $S\proves_R C$.
+    \pause (Důkaz snadno indukcí dle hloubky stromu a délky důkazu.)
+    \pause
     \begin{itemize}
-        \item rezolučnímu důkazu odpovídá \alert{jednoznačný} rezoluční strom
+        \item rezolučnímu důkazu odpovídá \alert{jednoznačný} rezoluční strom\pause
         \item z rezolučního stromu můžeme získat více důkazů (jsou dané libovolnou procházkou po vrcholech, která navštíví vnitřní vrchol až poté, co navštívila oba jeho syny)
     \end{itemize}
 
@@ -233,15 +238,15 @@
 
 \begin{frame}{Rezoluční uzávěr}
     
-    jaké všechny klauzule se můžeme rezolucí \alert{`naučit'} z dané formule? (není praktické je všechny najít, jde o užitečný teoretický pohled)
+    jaké všechny klauzule se můžeme rezolucí \alert{`naučit'} z dané formule? (není praktické je všechny najít, jde o užitečný teoretický pohled)\pause
     
     \medskip
 
     \myblock{
-    \alert{Rezoluční uzávěr} $\mathcal R(S)$ formule $S$ je definován induktivně jako nejmenší množina klauzulí splňující:
+    \alert{Rezoluční uzávěr} $\mathcal R(S)$ formule $S$ je definován induktivně jako nejmenší množina klauzulí splňující:\pause
     \begin{itemize}
-        \item $C\in\mathcal R(S)$ pro všechna $C\in S$,
-        \item jsou-li $C_1,C_2\in\mathcal R(S)$ a $C$ jejich rezolventa, potom i $C\in\mathcal R(S)$
+        \item $C\in\mathcal R(S)$ pro všechna $C\in S$,\pause
+        \item jsou-li $C_1,C_2\in\mathcal R(S)$ a $C$ jejich rezolventa, potom i $C\in\mathcal R(S)$\pause
     \end{itemize}
     }
     
@@ -263,18 +268,18 @@
 
 \begin{frame}{Korektnost rezoluce}
     
-    Korektnost dokážeme snadno indukcí podle délky důkazu (nebo alternativně indukcí dle hloubky rezolučního stromu).
+    Korektnost dokážeme snadno indukcí podle délky důkazu (nebo alternativně indukcí dle hloubky rezolučního stromu).\pause
 
     \myblock{
     \textbf{Věta (O korektnosti rezoluce):} 
-    Je-li CNF formule $S$ rezolucí zamítnutelná, potom je $S$ nesplnitelná.
+    Je-li CNF formule $S$ rezolucí zamítnutelná, potom je $S$ nesplnitelná.\pause
     }
 
-    \textbf{Důkaz:} Nechť $S\proves_R\square$, a vezměme nějaký rezoluční důkaz $C_0,C_1,\dots,C_n=\square$. \alert{Sporem:} nechť existuje ohodnocení $\mathcal V\models S$. Indukcí podle $i$ dokážeme, že \alert{$\mathcal V\models C_i$}. Potom i $\mathcal V\models \square$, což je spor. 
+    \textbf{Důkaz:} Nechť $S\proves_R\square$, a vezměme nějaký rezoluční důkaz $C_0,C_1,\dots,C_n=\square$. \pause \alert{Sporem:} nechť existuje ohodnocení $\mathcal V\models S$. \pause Indukcí podle $i$ dokážeme, že \alert{$\mathcal V\models C_i$}. Potom i $\mathcal V\models \square$, což je spor. \pause
     
-    Pro $i=0$ to platí, neboť $C_0\in S$. Pro $i>0$ máme dva případy:
+    Pro $i=0$ to platí, neboť $C_0\in S$. Pro $i>0$ máme dva případy:\pause
     \begin{itemize}
-        \item \alert{$C_i\in S$:} v tom případě $\mathcal V\models C_i$ plyne z předpokladu, že $\mathcal V\models S$,
+        \item \alert{$C_i\in S$:} v tom případě $\mathcal V\models C_i$ plyne z předpokladu, že $\mathcal V\models S$,\pause
         \item \alert{$C_i$ je rezolventou $C_j,C_k$, kde $j,k<i$:} z indukčního předpokladu víme $\mathcal V\models C_j$ a $\mathcal V\models C_k$, $\mathcal V\models C_i$ plyne z korektnosti rezolučního pravidla\hfill\qedsymbol
     \end{itemize}
 
@@ -290,12 +295,12 @@
         $$
         S^\ell=\{C\setminus\{\bar\ell\}\mid \ell\notin C\in S\}
         $$
-    }
+    }\pause
         
     \begin{itemize}
-        \item $S^\ell$ je výsledkem \alert{jednotkové propagace} aplikované na $S\union\{\{\ell\}\}$.
-        \item $S^\ell$ neobsahuje v žádné klauzuli literál $\ell$ ani $\bar\ell$ (vůbec tedy neobsahuje prvovýrok z $\ell$)
-        \item Pokud $S$ neobsahovala literál $\ell$ ani $\bar\ell$, potom $S^\ell=S$.
+        \item $S^\ell$ je výsledkem \alert{jednotkové propagace} aplikované na $S\union\{\{\ell\}\}$.\pause
+        \item $S^\ell$ neobsahuje v žádné klauzuli literál $\ell$ ani $\bar\ell$ (vůbec tedy neobsahuje prvovýrok z $\ell$)\pause
+        \item Pokud $S$ neobsahovala literál $\ell$ ani $\bar\ell$, potom $S^\ell=S$.\pause
         \item Pokud $S$ obsahovala jednotkovou klauzuli $\{\bar\ell\}$, potom $\square\in S^\ell$, tedy $S^\ell$ je sporná.
     \end{itemize} 
 
@@ -307,16 +312,17 @@
     \myblock{
     \textbf{Lemma:} 
     $S$ je splnitelná, právě když je splnitelná $S^\ell$ nebo $S^{\bar\ell}$.
-    }
+    }\pause
 
-    \textbf{Důkaz:} \alert{$\Rightarrow$} Ohodnocení $\mathcal V\models S$ nemůže obsahovat $\ell$ i $\bar\ell$; BÚNO \alert{$\bar\ell\notin\mathcal V$}. Ukážeme, že potom $\mathcal V\models S^\ell$. 
+    \textbf{Důkaz:} \alert{$\Rightarrow$} Ohodnocení $\mathcal V\models S$ nemůže obsahovat $\ell$ i $\bar\ell$; BÚNO \alert{$\bar\ell\notin\mathcal V$}. \pause Ukážeme, že potom $\mathcal V\models S^\ell$. \pause
     
-    Vezměme libovolnou klauzuli v $S^\ell$. Ta je tvaru $C\setminus\{\bar\ell\}$ pro klauzuli $C\in S$ (neobsahující literál $\ell$). Víme, že $\mathcal V\models C$, protože ale $\mathcal V$ neobsahuje $\bar\ell$, muselo ohodnocení $\mathcal V$ splnit nějaký jiný literál v $C$, takže platí i $\mathcal V\models C\setminus\{\bar\ell\}$.
+    Vezměme libovolnou klauzuli v $S^\ell$. Ta je tvaru $C\setminus\{\bar\ell\}$ pro klauzuli $C\in S$ (neobsahující literál $\ell$).
+     \pause Víme, že $\mathcal V\models C$, protože ale $\mathcal V$ neobsahuje $\bar\ell$, muselo ohodnocení $\mathcal V$ splnit nějaký jiný literál v $C$, takže platí i $\mathcal V\models C\setminus\{\bar\ell\}$.\pause
 
-    \alert{$\Leftarrow$} BÚNO mějme ohodnocení \alert{$\mathcal V\models S^\ell$}. Protože se $\bar\ell$ (ani $\ell$) nevyskytuje v $S^\ell$, platí také \alert{$\mathcal V\setminus\{\bar\ell\}\models S^\ell$}. Ohodnocení \alert{$\mathcal V'=(\mathcal V\setminus\{\bar\ell\})\union\{\ell\}$} potom splňuje všechny $C\in S$, tedy $\mathcal V'\models S$: 
+    \alert{$\Leftarrow$} BÚNO mějme ohodnocení \alert{$\mathcal V\models S^\ell$}. \pause Protože se $\bar\ell$ (ani $\ell$) nevyskytuje v $S^\ell$, platí také \alert{$\mathcal V\setminus\{\bar\ell\}\models S^\ell$}. \pause Ohodnocení \alert{$\mathcal V'=(\mathcal V\setminus\{\bar\ell\})\union\{\ell\}$} potom splňuje všechny $C\in S$, tedy $\mathcal V'\models S$: \pause
     \begin{itemize}
-        \item pokud $\ell\in C$, potom $\ell\in C\cap\mathcal V'$ a $C\cap\mathcal V'\neq\emptyset$
-        \item jinak $C\cap\mathcal V'=C\cap\mathcal (\mathcal V\setminus\{\bar\ell\})=(C\setminus\{\bar\ell\})\cap(\mathcal V\setminus\{\bar\ell\})\neq\emptyset$ neboť $\mathcal V\setminus\{\bar\ell\}\models C\setminus\{\bar\ell\}\in S^\ell$\hfill\qedsymbol
+        \item pokud $\ell\in C$, potom $\ell\in C\cap\mathcal V'$ a $C\cap\mathcal V'\neq\emptyset$\pause
+        \item jinak $C\cap\mathcal V'=C\cap\mathcal (\mathcal V\setminus\{\bar\ell\})=(C\setminus\{\bar\ell\})\cap(\mathcal V\setminus\{\bar\ell\})\neq\emptyset$ \pause neboť $\mathcal V\setminus\{\bar\ell\}\models C\setminus\{\bar\ell\}\in S^\ell$\hfill\qedsymbol
     \end{itemize}
 
 \end{frame}
@@ -324,11 +330,11 @@
 
 \begin{frame}{Strom dosazení}
     
-    Zda je \emph{konečná} formule $S$ splnitelná můžeme zjišťovat rekurzivně, dosazením obou literálů pro některý prvovýrok $p$, a rozvětvením na $S^p,S^\bar p$ (jako v DPLL). Výslednému stromu říkáme \alert{strom dosazení}.
+    Zda je \emph{konečná} formule $S$ splnitelná můžeme zjišťovat rekurzivně, dosazením obou literálů pro některý prvovýrok $p$, a rozvětvením na $S^p,S^\bar p$ (jako v DPLL). Výslednému stromu říkáme \alert{strom dosazení}.\pause
  
     Např. pro \myexampleinline{
         $S=\{\{p\},\{\neg q\},\{\neg p,\neg q\}\}$
-    }:
+    }:\pause
     \vspace{-6pt}
     \begin{center}
         \begin{forest}    
@@ -342,11 +348,11 @@
         ]
         \end{forest}
     \end{center}
-    \vspace{-12pt}
+    \vspace{-12pt}\pause
     % ! beamer+forest conflict: compile with care
 
     \begin{itemize}
-        \item jakmile větev obsahuje $\square$, je nesplnitelná a nepokračujeme v ní
+        \item jakmile větev obsahuje $\square$, je nesplnitelná a nepokračujeme v ní\pause
         \item listy jsou buď nesplnitelné, nebo prázdné teorie: v tom případě z posloupnosti dosazení získáme splňující ohodnocení.    
     \end{itemize}
 
@@ -358,15 +364,15 @@
     \myblock{
     \textbf{Důsledek:} 
     CNF formule $S$ (ve spočetném jazyce, \alert{může být i nekonečná}) je nesplnitelná, právě když každá větev stromu dosazení obsahuje $\square$.
-    }
+    }\pause
 
     \textbf{Důkaz:} 
-        Pro \alert{konečnou} $S$ snadno dokážeme indukcí dle $|\Var(S)|$: 
+        Pro \alert{konečnou} $S$ snadno dokážeme indukcí dle $|\Var(S)|$: \pause
         \begin{itemize}
-            \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. 
-            \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma.
+            \item Je-li $|\Var(S)|=0$, máme $S=\emptyset$ nebo $S=\{\square\}$, v obou případech je strom dosazení jednoprvkový a tvrzení platí. \pause
+            \item V indukčním kroku vybereme libovolný literál $\ell\in\Var(S)$ a aplikujeme Lemma.\pause
         \end{itemize} 
-    Je-li $S$ \alert{nekonečná a splnitelná}, má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. 
+    Je-li $S$ \alert{nekonečná a splnitelná}, má splňující ohodnocení, to se `shoduje' s odpovídající (nekonečnou) větví ve stromu dosazení. \pause
     
     Je-li \alert{nekonečná a nesplnitelná}, dle Věty o kompaktnosti existuje konečná $S'\subseteq S$, která je také nesplnitelná. Po dosazení pro všechny proměnné z $\Var(S')$ bude v každé větvi $\square$, to nastane po konečně mnoha krocích.
     \hfill\qedsymbol
@@ -379,459 +385,459 @@
     \myblock{
     \textbf{Věta (O úplnosti rezoluce):} 
     Je-li CNF formule $S$ nesplnitelná, je rezolucí zamítnutelná (tj. $S\proves_R\square$).
-    }
+    }\pause
 
-    \textbf{Důkaz:} \alert{Je-li $S$ nekonečná}, má z kompaktnosti konečnou nesplnitelnou část, její rezoluční zamítnutí je také zamítnutí $S$. 
+    \textbf{Důkaz:} \alert{Je-li $S$ nekonečná}, má z kompaktnosti konečnou nesplnitelnou část, její rezoluční zamítnutí je také zamítnutí $S$. \pause
     
-    \alert{Je-li $S$ konečná}, ukážeme indukcí dle počtu proměnných: Je-li $|\Var(S)|=0$, jediná možná nesplnitelná formule bez proměnných je $S=\{\square\}$, a máme jednokrokový důkaz $S\proves_R\square$. 
+    \alert{Je-li $S$ konečná}, ukážeme indukcí dle počtu proměnných: \pause Je-li $|\Var(S)|=0$, jediná možná nesplnitelná formule bez proměnných je $S=\{\square\}$, a máme jednokrokový důkaz $S\proves_R\square$. \pause
     
-    Jinak vyberme $p\in\Var(S)$. Podle Lemmatu jsou $S^p$ i $S^{\bar p}$ nesplnitelné. Mají o proměnnou méně, tedy dle ind. předpokladu existují rezoluční stromy $T$ pro $S^p\proves_R\square$ a $T'$ pro $S^{\bar p}\proves_R\square$.
+    Jinak vyberme $p\in\Var(S)$. \pause Podle Lemmatu jsou $S^p$ i $S^{\bar p}$ nesplnitelné. \pause Mají o proměnnou méně, tedy dle ind. předpokladu existují rezoluční stromy $T$ pro $S^p\proves_R\square$ a $T'$ pro $S^{\bar p}\proves_R\square$.\pause
 
-    Ukážeme, jak z $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. Analogicky $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
+    Ukážeme, jak z $T$ vyrobit rezoluční strom $\widehat T$ pro $S\proves_R \neg p$. \pause Analogicky $\widehat{T'}$ pro $S\proves_R p$ a potom už snadno vyrobíme rezoluční strom pro $S\proves_R\square$: \pause ke kořeni $\square$ připojíme kořeny stromů $\widehat T$ a $\widehat{T'}$ jako levého a pravého syna (tj. získáme $\square$ rezolucí z $\{\neg p\}$ a $\{p\}$).
 
 \end{frame}
 
 
 \begin{frame}{Dokončení důkazu}
 
-    Rezoluční strom \alert{$T$ pro $S^p\proves_R\square$} \scalebox{1.5}{$\rightsquigarrow$} \alert{$\widehat T$ pro $S\proves_R \neg p$}: 
+    Rezoluční strom \alert{$T$ pro $S^p\proves_R\square$} \scalebox{1.5}{$\rightsquigarrow$} \alert{$\widehat T$ pro $S\proves_R \neg p$}: \pause
     
-    Vrcholy i uspořádání jsou stejné, jen do některých klauzulí ve vrcholech \alert{přidáme literál $\neg p$}. 
+    Vrcholy i uspořádání jsou stejné, jen do některých klauzulí ve vrcholech \alert{přidáme literál $\neg p$}. \pause
     
-    Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a
+    Na každém listu stromu $T$ je nějaká klauzule $C\in S^p$, a\pause
     \begin{itemize}
-        \item buď $C\in S$,
-        \item nebo $C\notin S$, ale $C\cup\{\neg p\}\in S$
+        \item buď $C\in S$,\pause
+        \item nebo $C\notin S$, ale $C\cup\{\neg p\}\in S$\pause
     \end{itemize}
     
-    V prvním případě necháme label stejný. Ve druhém případě přidáme do $C$ \alert{a do všech klauzulí nad tímto listem} literál $\neg p$. 
+    V prvním případě necháme label stejný. \pause Ve druhém případě přidáme do $C$ \alert{a do všech klauzulí nad tímto listem} literál $\neg p$.\pause 
     
-    Listy jsou nyní klauzule z $S$, a každý vnitřní vrchol je nadále rezolventou svých synů. V kořeni jsme $\square$ změnili na $\neg p$ (ledaže každý list $T$ už byl klauzule z $S$, to ale už $T$ dává $S\proves_R\square$). \hfill\qedsymbol
+    Listy jsou nyní klauzule z $S$, a každý vnitřní vrchol je nadále rezolventou svých synů. V kořeni jsme $\square$ změnili na $\neg p$ \pause(ledaže každý list $T$ už byl klauzule z $S$, to ale už $T$ dává $S\proves_R\square$). \hfill\qedsymbol
 
 \end{frame}
 
 
-\section{Zatím přeskočíme: 5.4 LI-rezoluce a Horn-SAT}
+% \section{Zatím přeskočíme: 5.4 LI-rezoluce a Horn-SAT}
 
 
-\begin{frame}{Lineární důkaz: neformálně}
+% \begin{frame}{Lineární důkaz: neformálně}
 
-    Rezoluční důkaz můžeme kromě rezolučního stromu \alert{zorganizovat i jinak}, jako tzv. \alert{lineární důkaz}:
+%     Rezoluční důkaz můžeme kromě rezolučního stromu \alert{zorganizovat i jinak}, jako tzv. \alert{lineární důkaz}:
     
-    \begin{center}
-        \begin{forest}
-            for tree={math content,grow=west,text height=2ex, text depth=1ex}
-            [C_{n+1}
-                [,phantom]
-                [C_n
-                    [,phantom]
-                    [\cdots\cdots\cdots
-                        [C_2
-                            [,phantom]
-                            [C_1
-                                [,phantom]
-                                [C_0]
-                                [B_0]
-                            ]
-                            [B_1]
-                        ]
-                    ]
-                    [B_{n-1}]                    
-                ]
-                [B_n]
-            ]
-        \end{forest}  
-    \end{center}
+%     \begin{center}
+%         \begin{forest}
+%             for tree={math content,grow=west,text height=2ex, text depth=1ex}
+%             [C_{n+1}
+%                 [,phantom]
+%                 [C_n
+%                     [,phantom]
+%                     [\cdots\cdots\cdots
+%                         [C_2
+%                             [,phantom]
+%                             [C_1
+%                                 [,phantom]
+%                                 [C_0]
+%                                 [B_0]
+%                             ]
+%                             [B_1]
+%                         ]
+%                     ]
+%                     [B_{n-1}]                    
+%                 ]
+%                 [B_n]
+%             ]
+%         \end{forest}  
+%     \end{center}
     
-    \vspace{-6pt}
+%     \vspace{-6pt}
 
-    \begin{itemize}
-        \item v každém kroku máme jednu \alert{centrální} klauzuli
-        \item tu rezolvujeme s \alert{boční} (`side') klauzulí
-        \item boční klauzule je buď axiom z $S$, nebo některá z předchozích centrálních (jako bychom odvozené klauzule přidávali k axiomům)
-        \item výsledná \alert{rezolventa je novou centrální klauzulí}
-    \end{itemize}
+%     \begin{itemize}
+%         \item v každém kroku máme jednu \alert{centrální} klauzuli
+%         \item tu rezolvujeme s \alert{boční} (`side') klauzulí
+%         \item boční klauzule je buď axiom z $S$, nebo některá z předchozích centrálních (jako bychom odvozené klauzule přidávali k axiomům)
+%         \item výsledná \alert{rezolventa je novou centrální klauzulí}
+%     \end{itemize}
 
-    (Tento pohled lépe odpovídá procedurálnímu výpočtu, jde jen o to, jak vybírat vhodné boční klauzule.)
+%     (Tento pohled lépe odpovídá procedurálnímu výpočtu, jde jen o to, jak vybírat vhodné boční klauzule.)
 
-\end{frame}
-
-
-\begin{frame}{Lineární důkaz: formálně}
-
-    \begin{center}
-        \begin{forest}
-            for tree={math content,grow=west,text height=2ex, text depth=1ex}
-            [C_{n+1}
-                [,phantom]
-                [C_n
-                    [,phantom]
-                    [\cdots\cdots\cdots
-                        [C_2
-                            [,phantom]
-                            [C_1
-                                [,phantom]
-                                [C_0]
-                                [B_0]
-                            ]
-                            [B_1]
-                        ]
-                    ]
-                    [B_{n-1}]                    
-                ]
-                [B_n]
-            ]
-        \end{forest}  
-    \end{center}
-
-    \myblock{
-    \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
-    $$
-    \begin{bmatrix}
-        C_0 \\
-        B_0
-    \end{bmatrix},
-    \begin{bmatrix}
-        C_1 \\
-        B_1
-    \end{bmatrix},\dots,
-    \begin{bmatrix}
-        C_n \\
-        B_n
-    \end{bmatrix},
-    C_{n+1}
-    $$
-    kde $C_i$ říkáme \alert{centrální} klauzule, $C_0$ je \alert{počáteční}, $C_{n+1}=C$ je \alert{koncová}, $B_i$ jsou \alert{boční} klauzule, a platí:
-    \begin{itemize}
-        \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
-        \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
-    \end{itemize}
-    \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$. 
-    }    
-
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Příklad a ekvivalence s rezolučním důkazem}
+% \begin{frame}{Lineární důkaz: formálně}
 
-    Lineární zamítnutí \myexampleinline{
-        $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$
-    }:
-    \begin{center}
-        \begin{forest}
-            for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
-            [{\square}
-                [,phantom]
-                [{\{\neg p\}}
-                    [,phantom]
-                    [{\{q\}}
-                        [,phantom]
-                        [{\textcolor{blue}{\{p\}}}
-                            [,phantom]
-                            [{\{p,q\}}]
-                            [{\{p,\neg q\}}]
-                        ]
-                        [{\{\neg p,q\}}]
-                    ]
-                    [{\{\neg p,\neg q\}}]                    
-                ]
-                [{\textcolor{red}{\{p\}}}]
-            ]
-        \end{forest}  
-    \end{center}
-    Poslední boční klauzule $\textcolor{red}{\{p\}}$ není z $S$, ale je rovna předchozí centrální klauzuli.
+%     \begin{center}
+%         \begin{forest}
+%             for tree={math content,grow=west,text height=2ex, text depth=1ex}
+%             [C_{n+1}
+%                 [,phantom]
+%                 [C_n
+%                     [,phantom]
+%                     [\cdots\cdots\cdots
+%                         [C_2
+%                             [,phantom]
+%                             [C_1
+%                                 [,phantom]
+%                                 [C_0]
+%                                 [B_0]
+%                             ]
+%                             [B_1]
+%                         ]
+%                     ]
+%                     [B_{n-1}]                    
+%                 ]
+%                 [B_n]
+%             ]
+%         \end{forest}  
+%     \end{center}
 
-    \textbf{Poznámka:} $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
+%     \myblock{
+%     \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
+%     $$
+%     \begin{bmatrix}
+%         C_0 \\
+%         B_0
+%     \end{bmatrix},
+%     \begin{bmatrix}
+%         C_1 \\
+%         B_1
+%     \end{bmatrix},\dots,
+%     \begin{bmatrix}
+%         C_n \\
+%         B_n
+%     \end{bmatrix},
+%     C_{n+1}
+%     $$
+%     kde $C_i$ říkáme \alert{centrální} klauzule, $C_0$ je \alert{počáteční}, $C_{n+1}=C$ je \alert{koncová}, $B_i$ jsou \alert{boční} klauzule, a platí:
+%     \begin{itemize}
+%         \item $C_0\in S$, pro $i\leq n$ je $C_{i+1}$ rezolventou $C_i$ a $B_i$,
+%         \item $B_0\in S$, pro $i\leq n$ je $B_i\in S$ nebo $B_i=C_j$ pro nějaké $j<i$. 
+%     \end{itemize}
+%     \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$. 
+%     }    
 
-    \alert{$\Rightarrow$} Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí dle délky důkazu: máme-li boční klauzuli $B_i\notin S$, potom $B_i=C_j$ pro nějaké $j<i$: místo $B_i$ připojíme rezoluční strom pro $C_j$ z $S$. 
+% \end{frame}
+
+
+% \begin{frame}{Příklad a ekvivalence s rezolučním důkazem}
+
+%     Lineární zamítnutí \myexampleinline{
+%         $S = \{\{p, q\},\{p, \neg q\}, \{\neg p, q\}, \{\neg p, \neg q\}\}$
+%     }:
+%     \begin{center}
+%         \begin{forest}
+%             for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+%             [{\square}
+%                 [,phantom]
+%                 [{\{\neg p\}}
+%                     [,phantom]
+%                     [{\{q\}}
+%                         [,phantom]
+%                         [{\textcolor{blue}{\{p\}}}
+%                             [,phantom]
+%                             [{\{p,q\}}]
+%                             [{\{p,\neg q\}}]
+%                         ]
+%                         [{\{\neg p,q\}}]
+%                     ]
+%                     [{\{\neg p,\neg q\}}]                    
+%                 ]
+%                 [{\textcolor{red}{\{p\}}}]
+%             ]
+%         \end{forest}  
+%     \end{center}
+%     Poslední boční klauzule $\textcolor{red}{\{p\}}$ není z $S$, ale je rovna předchozí centrální klauzuli.
+
+%     \textbf{Poznámka:} $C$ má lineární důkaz z $S$, právě když $S\proves_R C$.
+
+%     \alert{$\Rightarrow$} Z lineárního důkazu snadno vyrobíme rezoluční strom. Indukcí dle délky důkazu: máme-li boční klauzuli $B_i\notin S$, potom $B_i=C_j$ pro nějaké $j<i$: místo $B_i$ připojíme rezoluční strom pro $C_j$ z $S$. 
     
-    \alert{$\Leftarrow$} Plyne z úplnosti lineární rezoluce, důkaz najdete v učebnici.
+%     \alert{$\Leftarrow$} Plyne z úplnosti lineární rezoluce, důkaz najdete v učebnici.
         
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{LI-rezoluce}
+% \begin{frame}{LI-rezoluce}
     
-    \begin{itemize}
-        \item \alert{lineární důkaz:} boční klauzule je \alert{axiom nebo dřívější centrální}
-        \item co když požadujeme, aby boční klauzule byly \alert{pouze axiomy?}
+%     \begin{itemize}
+%         \item \alert{lineární důkaz:} boční klauzule je \alert{axiom nebo dřívější centrální}
+%         \item co když požadujeme, aby boční klauzule byly \alert{pouze axiomy?}
         
-        $\Rightarrow$ \alert{LI-rezoluce (linear-input)}        
+%         $\Rightarrow$ \alert{LI-rezoluce (linear-input)}        
             
-    \end{itemize}
+%     \end{itemize}
     
-    \myblock{
-    \alert{LI-důkaz} (rezolucí) klauzule $C$ z formule $S$ je lineární důkaz 
-    $$
-    \begin{bmatrix}
-        C_0 \\
-        B_0
-    \end{bmatrix},
-    \begin{bmatrix}
-        C_1 \\
-        B_1
-    \end{bmatrix},\dots,
-    \begin{bmatrix}
-        C_n \\
-        B_n
-    \end{bmatrix},
-    C
-    $$
-    ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud LI-důkaz existuje, říkáme, že je $C$ \alert{LI-dokazatelná} z $S$, a píšeme \alert{$S\proves_{LI}C$}. Pokud $S\proves_{LI}\square$, je $S$ \alert{LI-zamítnutelná}.
-    }
+%     \myblock{
+%     \alert{LI-důkaz} (rezolucí) klauzule $C$ z formule $S$ je lineární důkaz 
+%     $$
+%     \begin{bmatrix}
+%         C_0 \\
+%         B_0
+%     \end{bmatrix},
+%     \begin{bmatrix}
+%         C_1 \\
+%         B_1
+%     \end{bmatrix},\dots,
+%     \begin{bmatrix}
+%         C_n \\
+%         B_n
+%     \end{bmatrix},
+%     C
+%     $$
+%     ve kterém je každá boční klauzule $B_i$ axiom z $S$. Pokud LI-důkaz existuje, říkáme, že je $C$ \alert{LI-dokazatelná} z $S$, a píšeme \alert{$S\proves_{LI}C$}. Pokud $S\proves_{LI}\square$, je $S$ \alert{LI-zamítnutelná}.
+%     }
 
-    \begin{itemize}
-        \item LI-důkaz odpovídá rezolučnímu stromu tvaru \emph{``chlupaté cesty''}
-        \item z toho plyne korektnost
-        \item ztrácíme úplnost, ale hledání důkazů je snazší
-        \item ukážeme \alert{úplnost pro Hornovy formule}, je základem Prologu
-    \end{itemize}
+%     \begin{itemize}
+%         \item LI-důkaz odpovídá rezolučnímu stromu tvaru \emph{``chlupaté cesty''}
+%         \item z toho plyne korektnost
+%         \item ztrácíme úplnost, ale hledání důkazů je snazší
+%         \item ukážeme \alert{úplnost pro Hornovy formule}, je základem Prologu
+%     \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Hornovy formule}
+% \begin{frame}{Hornovy formule}
         
-    \begin{itemize}
-        \item \alert{Hornova klauzule} má nejvýše jeden pozitivní literál
-        \item \alert{Hornova formule} je množina Hornových klauzulí (i nekonečná)
-        \item \alert{Fakt} je pozitivní jednotková klauzule, např. $\{p\}$
-        \item \alert{Pravidlo} je klauzule s právě jedním pozitivním a alespoň jedním negativním literálem
-        \item Pravidlům a faktům říkáme \alert{programové klauzule}
-        \item \alert{Cíl} je neprázdná klauzule bez pozitivního literálu       
-        \item dokazujeme sporem: \alert{cíl} je negací toho, co chceme dokázat (konjunkce faktů)
-    \end{itemize}
+%     \begin{itemize}
+%         \item \alert{Hornova klauzule} má nejvýše jeden pozitivní literál
+%         \item \alert{Hornova formule} je množina Hornových klauzulí (i nekonečná)
+%         \item \alert{Fakt} je pozitivní jednotková klauzule, např. $\{p\}$
+%         \item \alert{Pravidlo} je klauzule s právě jedním pozitivním a alespoň jedním negativním literálem
+%         \item Pravidlům a faktům říkáme \alert{programové klauzule}
+%         \item \alert{Cíl} je neprázdná klauzule bez pozitivního literálu       
+%         \item dokazujeme sporem: \alert{cíl} je negací toho, co chceme dokázat (konjunkce faktů)
+%     \end{itemize}
 
-    \myblock{
-        \textbf{Pozorování:}
-        Je-li Hornova formule $S$ nesplnitelná a $\square\notin S$, potom obsahuje fakt i cíl.
-    }
+%     \myblock{
+%         \textbf{Pozorování:}
+%         Je-li Hornova formule $S$ nesplnitelná a $\square\notin S$, potom obsahuje fakt i cíl.
+%     }
 
-    \textbf{Důkaz:} Neobsahuje-li fakt, ohodnotíme všechny proměnné~0; neobsahuje-li cíl, ohodnotíme 1.\hfill\qedsymbol
+%     \textbf{Důkaz:} Neobsahuje-li fakt, ohodnotíme všechny proměnné~0; neobsahuje-li cíl, ohodnotíme 1.\hfill\qedsymbol
 
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Příklad konstrukce LI-zamítnutí}
+% \begin{frame}{Příklad konstrukce LI-zamítnutí}
     
-    Ukážeme: \myexampleinline{
-        $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}\ \models\ p\land q$
-    } Sestrojíme LI-zamítnutí $T\cup\{G\}\proves_{LI}\square$ pro cíl $G=\{\neg p,\neg q\}$. 
+%     Ukážeme: \myexampleinline{
+%         $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}\ \models\ p\land q$
+%     } Sestrojíme LI-zamítnutí $T\cup\{G\}\proves_{LI}\square$ pro cíl $G=\{\neg p,\neg q\}$. 
     
     
-    V $T$ \alert{najdeme fakt}, a provedeme \alert{jednotkovou propagaci} v $T\cup\{G\}$. Opakujeme, dokud není formule prázdná:
-    \begin{itemize}
-        \item $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, $G=\{\neg p,\neg q\}$
-        \item $T^s=\{\{p,\neg r\},\{\neg q,r\},\{q\}\}$, $G^s=\{\neg p,\neg q\}$
-        \item $T^{sq}=\{\{p,\neg r\},\{r\}\}$, $G^{sq}=\{\neg p\}$
-        \item $T^{sqr}=\{\{p\}\}$, $G^{sqr}=\{\neg p\}$
-        \item $T^{sqrp}=\emptyset$, $G^{sqrp}=\square$
-    \end{itemize}
+%     V $T$ \alert{najdeme fakt}, a provedeme \alert{jednotkovou propagaci} v $T\cup\{G\}$. Opakujeme, dokud není formule prázdná:
+%     \begin{itemize}
+%         \item $T=\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, $G=\{\neg p,\neg q\}$
+%         \item $T^s=\{\{p,\neg r\},\{\neg q,r\},\{q\}\}$, $G^s=\{\neg p,\neg q\}$
+%         \item $T^{sq}=\{\{p,\neg r\},\{r\}\}$, $G^{sq}=\{\neg p\}$
+%         \item $T^{sqr}=\{\{p\}\}$, $G^{sqr}=\{\neg p\}$
+%         \item $T^{sqrp}=\emptyset$, $G^{sqrp}=\square$
+%     \end{itemize}
 
-    To, že vždy najdeme fakt, plyne z Pozorování pro $T\cup\{G\}$.
+%     To, že vždy najdeme fakt, plyne z Pozorování pro $T\cup\{G\}$.
 
-    Nyní zpětným postupem sestrojíme LI-zamítnutí, podobně jako v důkazu úplnosti rezoluce.
+%     Nyní zpětným postupem sestrojíme LI-zamítnutí, podobně jako v důkazu úplnosti rezoluce.
     
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Konstrukce zamítnutí zpětným postupem}
+% \begin{frame}{Konstrukce zamítnutí zpětným postupem}
 
-    \begin{itemize}
-        \item $T^{sqrp},G^{sqrp}\proves_{LI}\square$:
-        \begin{center}
-            \begin{forest}
-                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
-                            [{\square}]                       ]
-            \end{forest} 
-        \end{center}
-        \item $T^{sqr},G^{sqr}\proves_{LI}\square$:
-        \begin{center}
-            \begin{forest}
-                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
-                            [{\square}
-                                [,phantom]
-                                [\{\alert{\neg p}\}]
-                                [{\{p\}}]                        
-                            ]
-            \end{forest} 
-        \end{center}
+%     \begin{itemize}
+%         \item $T^{sqrp},G^{sqrp}\proves_{LI}\square$:
+%         \begin{center}
+%             \begin{forest}
+%                 for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+%                             [{\square}]                       ]
+%             \end{forest} 
+%         \end{center}
+%         \item $T^{sqr},G^{sqr}\proves_{LI}\square$:
+%         \begin{center}
+%             \begin{forest}
+%                 for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+%                             [{\square}
+%                                 [,phantom]
+%                                 [\{\alert{\neg p}\}]
+%                                 [{\{p\}}]                        
+%                             ]
+%             \end{forest} 
+%         \end{center}
         
-        \item $T^{sq},G^{sq}\proves_{LI}\square$:
-        \begin{center}
-            \begin{forest}
-                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
-                        [{\square}
-                            [,phantom]
-                            [{\{\alert{\neg r}\}}
-                                [,phantom]
-                                [{\{\neg p\}}]
-                                [{\{p,\alert{\neg r}\}}]                        
-                            ]
-                            [{\{r\}}]
-                        ]
-            \end{forest} 
-        \end{center}
+%         \item $T^{sq},G^{sq}\proves_{LI}\square$:
+%         \begin{center}
+%             \begin{forest}
+%                 for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=3em}
+%                         [{\square}
+%                             [,phantom]
+%                             [{\{\alert{\neg r}\}}
+%                                 [,phantom]
+%                                 [{\{\neg p\}}]
+%                                 [{\{p,\alert{\neg r}\}}]                        
+%                             ]
+%                             [{\{r\}}]
+%                         ]
+%             \end{forest} 
+%         \end{center}
         
-    \end{itemize}
+%     \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Konstrukce zamítnutí zpětným postupem -- pokračování}
+% \begin{frame}{Konstrukce zamítnutí zpětným postupem -- pokračování}
     
-    \begin{itemize}
-        \item $T^{s},G^{s}\proves_{LI}\square$:
+%     \begin{itemize}
+%         \item $T^{s},G^{s}\proves_{LI}\square$:
         
-        \bigskip
+%         \bigskip
 
-        \begin{center}
-            \begin{forest}
-                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
-                    [{\square}
-                        [,phantom]
-                        [{\{\alert{\neg q}\}}
-                            [,phantom]
-                            [{\{\alert{\neg q},\neg r\}}
-                                [,phantom]
-                                [{\{\neg p,\alert{\neg q}\}}]
-                                [{\{p,\neg r\}}]                        
-                            ]
-                            [{\{\alert{\neg q},r\}}]
-                        ]
-                        [{\{q\}}]                    
-                    ]
-            \end{forest} 
-        \end{center}
+%         \begin{center}
+%             \begin{forest}
+%                 for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
+%                     [{\square}
+%                         [,phantom]
+%                         [{\{\alert{\neg q}\}}
+%                             [,phantom]
+%                             [{\{\alert{\neg q},\neg r\}}
+%                                 [,phantom]
+%                                 [{\{\neg p,\alert{\neg q}\}}]
+%                                 [{\{p,\neg r\}}]                        
+%                             ]
+%                             [{\{\alert{\neg q},r\}}]
+%                         ]
+%                         [{\{q\}}]                    
+%                     ]
+%             \end{forest} 
+%         \end{center}
         
-        \item $T,G\proves_{LI}\square$
+%         \item $T,G\proves_{LI}\square$
         
-        \bigskip
-            \begin{forest}
-                for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
-                [{\square}
-                    [,phantom]
-                    [{\{\alert{\neg s}\}}
-                        [,phantom]
-                        [{\{\neg q,\alert{\neg s}\}}
-                            [,phantom]
-                            [{\{\neg q,\neg r,\alert{\neg s}\}}
-                                [,phantom]
-                                [{\{\neg p,\neg q\}}]
-                                [{\{p,\neg r,\alert{\neg s}\}}]                        
-                            ]
-                            [{\{\neg q,r\}}]
-                        ]
-                        [{\{q,\alert{\neg s}\}}]                    
-                    ]
-                    [{\{s\}}]
-                ]
-            \end{forest}
+%         \bigskip
+%             \begin{forest}
+%                 for tree={math content,grow=west,text height=2ex, text depth=1ex, l sep=2em}
+%                 [{\square}
+%                     [,phantom]
+%                     [{\{\alert{\neg s}\}}
+%                         [,phantom]
+%                         [{\{\neg q,\alert{\neg s}\}}
+%                             [,phantom]
+%                             [{\{\neg q,\neg r,\alert{\neg s}\}}
+%                                 [,phantom]
+%                                 [{\{\neg p,\neg q\}}]
+%                                 [{\{p,\neg r,\alert{\neg s}\}}]                        
+%                             ]
+%                             [{\{\neg q,r\}}]
+%                         ]
+%                         [{\{q,\alert{\neg s}\}}]                    
+%                     ]
+%                     [{\{s\}}]
+%                 ]
+%             \end{forest}
         
-    \end{itemize}
+%     \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Úplnost pro Hornovy formule}
+% \begin{frame}{Úplnost pro Hornovy formule}
  
-    \myblock{
-    \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):} 
-    Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
-    }
+%     \myblock{
+%     \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):} 
+%     Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
+%     }
 
-    \textbf{Důkaz:} Opět lze díky Větě o kompaktnosti předpokládat, že $T$ je konečná. LI-zamítnutí sestrojíme indukcí podle počtu proměnných.
+%     \textbf{Důkaz:} Opět lze díky Větě o kompaktnosti předpokládat, že $T$ je konečná. LI-zamítnutí sestrojíme indukcí podle počtu proměnných.
 
-    Z Pozorování víme, že $T$ obsahuje fakt $\{p\}$. Protože $T\cup\{G\}$ je nesplnitelná, je dle Lemmatu o dosazení \alert{nesplnitelná i} $(T\cup\{G\})^p$ $=$ \alert{$T^p\cup\{G^p\}$}, kde $G^p=G\setminus\{\neg p\}$.
+%     Z Pozorování víme, že $T$ obsahuje fakt $\{p\}$. Protože $T\cup\{G\}$ je nesplnitelná, je dle Lemmatu o dosazení \alert{nesplnitelná i} $(T\cup\{G\})^p$ $=$ \alert{$T^p\cup\{G^p\}$}, kde $G^p=G\setminus\{\neg p\}$.
     
-    Všimněte si, že \alert{$T^p$ je splnitelná}. (Stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$.) 
+%     Všimněte si, že \alert{$T^p$ je splnitelná}. (Stejným ohodnocením jako $T$, neboť to musí obsahovat $p$ kvůli faktu $\{p\}$, tedy neobsahuje $\neg p$.) 
     
-    Zároveň má $T^p$ méně proměnných než $T$. \alert{Je-li $G^p$ cíl}, využijeme indukčního předpokladu (následující slide). Co když ale $G^p$ není cíl?       
+%     Zároveň má $T^p$ méně proměnných než $T$. \alert{Je-li $G^p$ cíl}, využijeme indukčního předpokladu (následující slide). Co když ale $G^p$ není cíl?       
     
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Dokončení důkazu}
+% \begin{frame}{Dokončení důkazu}
 
-    \alert{Není-li $G^p$ cíl}, nutně $G^p=\square$ a $G=\{\neg p\}$. Potom je $\square$ rezolventou $G$ a faktu $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T\cup\{G\}$. (To dává i \alert{bázi indukce}.)
+%     \alert{Není-li $G^p$ cíl}, nutně $G^p=\square$ a $G=\{\neg p\}$. Potom je $\square$ rezolventou $G$ a faktu $\{p\}\in T$, a máme jednokrokové LI-zamítnutí $T\cup\{G\}$. (To dává i \alert{bázi indukce}.)
 
 
-    \alert{Je-li $G^p$ cíl}, dle \alert{indukčního předpokladu} existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
+%     \alert{Je-li $G^p$ cíl}, dle \alert{indukčního předpokladu} existuje LI-odvození $\square$ z $T^p\cup\{G^p\}$ začínající $G^p=G\setminus\{\neg p\}$.
     
-    Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce):
+%     Hledané LI-zamítnutí $T\cup\{G\}$ začínající $G$ zkonstruujeme (podobně jako v důkazu Věty o úplnosti rezoluce):
 
-    \begin{itemize}
-        \item Přidáme literál $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (vznikly odebráním $\neg p$), a do všech vrcholů nad nimi.
-        \item Tím získáme $T\cup\{G\}\proves_{LI}\neg p$.
-        \item Na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.\hfill\qedsymbol
-    \end{itemize}
+%     \begin{itemize}
+%         \item Přidáme literál $\neg p$ do všech listů, které už nejsou v $T\cup\{G\}$ (vznikly odebráním $\neg p$), a do všech vrcholů nad nimi.
+%         \item Tím získáme $T\cup\{G\}\proves_{LI}\neg p$.
+%         \item Na závěr přidáme boční klauzuli $\{p\}$ a odvodíme $\square$.\hfill\qedsymbol
+%     \end{itemize}
 
-\end{frame}
-
-
-%\section{5.5 Rezoluce v Prologu}
+% \end{frame}
 
 
-\begin{frame}[fragile]{Program v Prologu}
+% %\section{5.5 Rezoluce v Prologu}
+
+
+% \begin{frame}[fragile]{Program v Prologu}
     
-    síla Prologu vychází z \alert{unifikace} a rezoluce v predikátové logice, nyní si ale ukážeme příklad \alert{výrokového} programu:
+%     síla Prologu vychází z \alert{unifikace} a rezoluce v predikátové logice, nyní si ale ukážeme příklad \alert{výrokového} programu:
 
-    \begin{itemize}
-        \item \alert{program} v Prologu je Hornova formule obsahující pouze \alert{programové klauzule}, tj. \alert{fakta} nebo \alert{pravidla}
-        \item \alert{dotaz} je konjunkce faktů, negace dotazu je \alert{cíl}
-    \end{itemize}
+%     \begin{itemize}
+%         \item \alert{program} v Prologu je Hornova formule obsahující pouze \alert{programové klauzule}, tj. \alert{fakta} nebo \alert{pravidla}
+%         \item \alert{dotaz} je konjunkce faktů, negace dotazu je \alert{cíl}
+%     \end{itemize}
       
-    Např.\myexampleinline{
-        program $\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, dotaz $p\land q$
-    } 
-    \begin{itemize}
-        \item klauzule $\{p,\neg r,\neg s\}$ je ekvivalentní $r\land s\limplies p$, píšeme \texttt{p:-r,s.}
-        \item výsledný program a dotaz:
-        \begin{verbatim}
-            p:-r,s.
-            r:-q.
-            q:-s.
-            s.
-            ?-p,q.    
-        \end{verbatim}
-    \end{itemize}
+%     Např.\myexampleinline{
+%         program $\{\{p,\neg r,\neg s\},\{\neg q,r\},\{q,\neg s\},\{s\}\}$, dotaz $p\land q$
+%     } 
+%     \begin{itemize}
+%         \item klauzule $\{p,\neg r,\neg s\}$ je ekvivalentní $r\land s\limplies p$, píšeme \texttt{p:-r,s.}
+%         \item výsledný program a dotaz:
+%         \begin{verbatim}
+%             p:-r,s.
+%             r:-q.
+%             q:-s.
+%             s.
+%             ?-p,q.    
+%         \end{verbatim}
+%     \end{itemize}
     
-    Například klauzuli $\{p,\neg r,\neg s\}$, která je ekvivalentní $r\land s\limplies p$, zapíšeme v Prologu jako: \texttt{p:-r,s.}
-    \begin{verbatim}
-        p:-r,s.
-        r:-q.
-        q:-s.
-        s.    
-    \end{verbatim}
-    A programu položíme dotaz:
-    \begin{verbatim}
-        ?-p,q.    
-    \end{verbatim}
+%     Například klauzuli $\{p,\neg r,\neg s\}$, která je ekvivalentní $r\land s\limplies p$, zapíšeme v Prologu jako: \texttt{p:-r,s.}
+%     \begin{verbatim}
+%         p:-r,s.
+%         r:-q.
+%         q:-s.
+%         s.    
+%     \end{verbatim}
+%     A programu položíme dotaz:
+%     \begin{verbatim}
+%         ?-p,q.    
+%     \end{verbatim}
 
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}{Rezoluce v Prologu}
+% \begin{frame}{Rezoluce v Prologu}
     
-    \myblock{
-        \textbf{Důsledek:} Mějme program $P$ a dotaz $Q=p_1\land\dots\land p_n$, a označme $G=\{\neg p_1,\dots,\neg p_n\}$ (tj. $G\sim \neg Q$). Následující podmínky jsou ekvivalentní:
+%     \myblock{
+%         \textbf{Důsledek:} Mějme program $P$ a dotaz $Q=p_1\land\dots\land p_n$, a označme $G=\{\neg p_1,\dots,\neg p_n\}$ (tj. $G\sim \neg Q$). Následující podmínky jsou ekvivalentní:
         
-        \begin{enumerate}[(i)]
-            \item $P\models Q$,
-            \item $P\cup\{G\}$ je nesplnitelná,
-            \item $P\cup\{G\}\proves_{LI}\square$, a existuje LI-zamítnutí začínající cílem $G$.
-        \end{enumerate}
-    }
+%         \begin{enumerate}[(i)]
+%             \item $P\models Q$,
+%             \item $P\cup\{G\}$ je nesplnitelná,
+%             \item $P\cup\{G\}\proves_{LI}\square$, a existuje LI-zamítnutí začínající cílem $G$.
+%         \end{enumerate}
+%     }
     
-    \medskip
+%     \medskip
 
-    \textbf{Důkaz:}
-    \begin{itemize}
-        \item \alert{(i)$\Leftrightarrow$(ii)} Věta o důkazu sporem
-        \item \alert{(ii)$\Leftrightarrow$(iii)} Věta o úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný)\hfill\qedsymbol
-    \end{itemize}
+%     \textbf{Důkaz:}
+%     \begin{itemize}
+%         \item \alert{(i)$\Leftrightarrow$(ii)} Věta o důkazu sporem
+%         \item \alert{(ii)$\Leftrightarrow$(iii)} Věta o úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný)\hfill\qedsymbol
+%     \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 
 \section{ČÁST II -- PREDIKÁTOVÁ LOGIKA}
@@ -845,32 +851,32 @@
 
 \begin{frame}{Predikátová logika neformálně}
 
-    \textbf{Výroková logika:} popis světa pomocí \alert{výroků} složených z \alert{prvovýroků} (\alert{výrokových proměnných}) -- bitů informace
+    \textbf{Výroková logika:} popis světa pomocí \alert{výroků} složených z \alert{prvovýroků} (\alert{výrokových proměnných}) -- bitů informace\pause
     
-    \textbf{Predikátová logika [prvního řádu]:}
+    \textbf{Predikátová logika [prvního řádu]:}\pause
     \begin{itemize}
-        \item základní stavební kámen jsou \alert{proměnné} reprezentující \alert{individua} -- nedělitelné objekty z nějaké množiny (např. přirozená čísla, vrcholy grafu, stavy mikroprocesoru)
-        \item tato individua mají určité vlastnosti a vzájemné vztahy (\alert{relace}), kterým říkáme \alert{predikáty}
+        \item základní stavební kámen jsou \alert{proměnné} reprezentující \alert{individua} -- nedělitelné objekty z nějaké množiny (např. přirozená čísla, vrcholy grafu, stavy mikroprocesoru)\pause
+        \item tato individua mají určité vlastnosti a vzájemné vztahy (\alert{relace}), kterým říkáme \alert{predikáty}\pause
         \begin{itemize}
             \item \myexampleinline{
                 $\mathrm{Leaf}(x)$
                 }nebo \myexampleinline{
                     $\mathrm{Edge}(x,y)$
-                    } mluvíme-li o grafu
+                    } mluvíme-li o grafu\pause
             \item \myexampleinline{
                 $x\leq y$
-                } v přirozených číslech
+                } v přirozených číslech\pause
         \end{itemize}
-        \item a mohou vstupovat do \alert{funkcí}
+        \item a mohou vstupovat do \alert{funkcí}\pause
         \begin{itemize}
             \item \myexampleinline{
                 $\mathrm{lowest\_common\_ancestor}(x,y)$
-                } v zakořeněném stromu
+                } v zakořeněném stromu\pause
             \item \myexampleinline{
                 $\mathrm{succ}(x)$
                 } nebo \myexampleinline{
                     $x+y$
-                    } v přirozených číslech
+                    } v přirozených číslech\pause
         \end{itemize}
         \item a mohou být \alert{konstantami} se speciálním významem, např. \myexampleinline{
             $\mathrm{root}$
@@ -886,15 +892,15 @@
 \begin{frame}{Syntaxe neformálně}
 
     \begin{itemize}
-        \item \alert{atomické formule}: predikát (včetně \alert{rovnosti} $=$) o proměnných nebo o \alert{termech} (`výrazy' složené z funkcí popř. konstant)
-        \item \alert{formule} jsou složené z atomických formulí pomocí logických spojek, a dvou \alert{kvantifikátorů}:
+        \item \alert{atomické formule}: predikát (včetně \alert{rovnosti} $=$) o proměnných nebo o \alert{termech} (`výrazy' složené z funkcí popř. konstant)\pause
+        \item \alert{formule} jsou složené z atomických formulí pomocí logických spojek, a dvou \alert{kvantifikátorů}:\pause
     \end{itemize}  
 
     \medskip
     \myalert{
-        $\forall x$ ``pro všechna individua (reprezentovaná proměnnou $x$)''
+        $\forall x$ ``pro všechna individua (reprezentovaná proměnnou $x$)''\pause
             
-        $\exists x$ ``existuje individuum (reprezentované proměnnou $x$)''
+        $\exists x$ ``existuje individuum (reprezentované proměnnou $x$)''\pause
     }
 
     \bigskip
@@ -904,10 +910,10 @@
     $$
     (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
     $$
-    }
+    }\pause
 
     \begin{itemize}
-        \item \alert{$\mathrm{child\_of}(y,x)$} je binární predikát vyjadřující, že individuum reprezentované proměnnou $y$ je dítětem individua reprezentovaného proměnnou $x$
+        \item \alert{$\mathrm{child\_of}(y,x)$} je binární predikát vyjadřující, že individuum reprezentované proměnnou $y$ je dítětem individua reprezentovaného proměnnou $x$\pause
         \item \alert{$\mathrm{is\_parent}(x)$} je unární predikát vyjadřující, že individuum reprezentované $x$ je rodič
     \end{itemize}
     
@@ -920,17 +926,17 @@
     $$
     (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
     $$
-    }
+    }\pause
 
-    Platnost? Záleží na \alert{modelu} světa/systému, který nás zajímá:
+    Platnost? Záleží na \alert{modelu} světa/systému, který nás zajímá:\pause
     
-    \alert{Model} je\dots
+    \alert{Model} je\dots\pause
     \begin{itemize}
-        \item (neprázdná) množina individuí, spolu
-        \item s binární relací \alert{interpretující} binární relační symbol \alert{$\mathrm{child\_of}$}, a
-        \item s unární relací (tj. podmnožinou) interpretující unární relační symbol \alert{$\mathrm{is\_parent}$}        
+        \item (neprázdná) množina individuí, spolu\pause
+        \item s binární relací \alert{interpretující} binární relační symbol \alert{$\mathrm{child\_of}$}, a\pause
+        \item s unární relací (tj. podmnožinou) interpretující unární relační symbol \alert{$\mathrm{is\_parent}$}\pause        
     \end{itemize}
-    Obecně mohou být relace jakékoliv, snadno sestrojíme model, ve kterém formule neplatí, např. 
+    Obecně mohou být relace jakékoliv, snadno sestrojíme model, ve kterém formule neplatí, např. \pause
     $$
     \mystructure{A}=\langle\{0,1\},\{(0,0),(0,1),(1,0),(1,1)\},\emptyset\rangle
     $$
@@ -940,23 +946,23 @@
 
 \begin{frame}{Příklad s funkcemi a konstantami}
 
-    ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom platí $(y_1 \cdot y_2)-(x_1\cdot x_2)\geq 0$.''
+    ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom platí $(y_1 \cdot y_2)-(x_1\cdot x_2)\geq 0$.''\pause
 
     \myexampleamsmath{
         $$
         \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
         $$
-    }
+    }\pause
 
     \begin{itemize}
-        \item dva binární relační symboly ($\leq,\geq$), binární funkční symbol $+$, unární funkční symbol $-$, a konstantní symbol $0$
-        \item \alert{model, ve kterém $\varphi$ platí:} $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, bin. funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$ 
-        \item vezmeme-li ale podobně množinu $\mathbb Z$, $\varphi$ už platit nebude
+        \item dva binární relační symboly ($\leq,\geq$), binární funkční symbol $+$, unární funkční symbol $-$, a konstantní symbol $0$\pause
+        \item \alert{model, ve kterém $\varphi$ platí:} $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, bin. funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$ \pause
+        \item vezmeme-li ale podobně množinu $\mathbb Z$, $\varphi$ už platit nebude\pause
     \end{itemize}
-    Poznámky:
+    Poznámky:\pause
     \begin{itemize}
-        \item mohli bychom chápat `$-$' jako binární, obvykle ale bývá unární
-        \item pro \alert{konstantní symbol} $0$ používáme (jak je zvykem) stejný symbol, jako pro přirozené číslo 0. Ale pozor, v našem modelu může být \alert{symbol} $0$ interpretován jako \alert{jiné číslo}, nebo náš model vůbec nemusí sestávat z čísel!
+        \item mohli bychom chápat `$-$' jako binární, obvykle ale bývá unární\pause
+        \item pro \alert{konstantní symbol} $0$ používáme (jak je zvykem) stejný symbol, jako pro přirozené číslo 0. \pause Ale pozor, v našem modelu může být \alert{symbol} $0$ interpretován jako \alert{jiné číslo}, nebo náš model vůbec nemusí sestávat z čísel!
     \end{itemize}
 
 \end{frame}
@@ -968,16 +974,16 @@
         $$
         \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
         $$
-    }
+    }\pause
 
     \begin{itemize}
-        \item $\varphi$ nemá žádné kvantifikátory, tj. je \alert{otevřená}
-        \item $x_1,x_2,y_1,y_2$ jsou \alert{volné proměnné} této formule (nejsou \alert{vázané} žádným kvantifikátorem), píšeme $\varphi(x_1,x_2,y_1,y_2)$
-        \item sémantiku $\varphi$ chápeme stejně jako $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi$
+        \item $\varphi$ nemá žádné kvantifikátory, tj. je \alert{otevřená}\pause
+        \item $x_1,x_2,y_1,y_2$ jsou \alert{volné proměnné} této formule (nejsou \alert{vázané} žádným kvantifikátorem), píšeme $\varphi(x_1,x_2,y_1,y_2)$\pause
+        \item sémantiku $\varphi$ chápeme stejně jako $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi$\pause
         \item používáme \alert{konvence} (infixový zápis, vynechání závorek), jinak:
         $$
         \varphi=((\leq (x_1,y_1) \land \leq(x_2,y_2))\limplies \leq(+(\cdot (y_1,y_2),-(\cdot(x_1,x_2))),0))
-        $$
+        $$\pause
         \item cvičení: definujte \alert{strom formule}, nakreslete ho pro $\varphi$
     \end{itemize}
    
@@ -990,17 +996,17 @@
         $$
         \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
         $$
-    }
+    }\pause
     
     \begin{itemize}
-        \item výraz \alert{$(y_1 \cdot y_2)+(-(x_1\cdot x_2))$} je \alert{term}
-        \item výrazy \alert{$(x_1\leq y_1)$}, \alert{$(x_2\leq y_2)$} a \alert{$((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$} jsou (všechny) \alert{atomické (pod)formule} $\varphi$ 
+        \item výraz \alert{$(y_1 \cdot y_2)+(-(x_1\cdot x_2))$} je \alert{term}\pause
+        \item výrazy \alert{$(x_1\leq y_1)$}, \alert{$(x_2\leq y_2)$} a \alert{$((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$} jsou (všechny) \alert{atomické (pod)formule} $\varphi$ \pause
     \end{itemize}
    
-    V čem je rozdíl? Máme-li konkrétní model, a konkrétní \alert{ohodnocení proměnných} individui (prvky) tohoto modelu:
+    V čem je rozdíl? \pause Máme-li konkrétní model, a konkrétní \alert{ohodnocení proměnných} individui (prvky) tohoto modelu: \pause 
     
     \begin{itemize}
-        \item výsledkem termu (při daném ohodnocení proměnných) je konkrétní \alert{individuum z modelu}, zatímco
+        \item výsledkem termu (při daném ohodnocení proměnných) je konkrétní \alert{individuum z modelu}, zatímco\pause
         \item atomickým formulí lze přiřadit \alert{pravdivostní hodnotu} (a tedy kombinovat je logickými spojkami)
     \end{itemize}   
 
@@ -1013,22 +1019,22 @@
 \begin{frame}{Signatura}
 
     \begin{itemize}
-        \item specifikuje jakého \alert{typu} bude daná struktura, tj. jaké  má relace, funkce (jakých arit) a konstanty, a symboly pro ně 
-        \item \alert{konstanty} lze chápat jako funkce arity 0, tj. funkce bez vstupů
+        \item specifikuje jakého \alert{typu} bude daná struktura, tj. jaké  má relace, funkce (jakých arit) a konstanty, a symboly pro ně \pause
+        \item \alert{konstanty} lze chápat jako funkce arity 0, tj. funkce bez vstupů\pause
     \end{itemize}
 
     \myblock{
-        \alert{Signatura} je dvojice $\langle\mathcal R,\mathcal F\rangle$, kde $\mathcal R,\mathcal F$ jsou disjunktní množiny symbolů (\alert{relační} a \alert{funkční}, ty zahrnují \alert{konstantní}) spolu s danými aritami (tj. danými funkcí $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) a neobsahující symbol `$=$' (ten je rezervovaný pro \alert{rovnost}). 
+        \alert{Signatura} je dvojice $\langle\mathcal R,\mathcal F\rangle$, kde $\mathcal R,\mathcal F$ jsou disjunktní množiny symbolů (\alert{relační} a \alert{funkční}, ty zahrnují \alert{konstantní}) spolu s danými aritami \pause(tj. danými funkcí $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) \pause a neobsahující symbol `$=$'\pause (ten je rezervovaný pro \alert{rovnost}). \pause
     }
 
     \bigskip
 
     \begin{itemize}
-        \item často zapíšeme jen výčtem symbolů, jsou-li arity a zda jsou relační nebo funkční zřejmé
-        \item kromě běžně používaných symbolů typicky používáme:
+        \item často zapíšeme jen výčtem symbolů, jsou-li arity a zda jsou relační nebo funkční zřejmé\pause
+        \item kromě běžně používaných symbolů typicky používáme:\pause
         \begin{itemize}
-            \item pro relační symboly $P,Q,R,\dots$
-            \item pro funkční (nekonstantní) symboly $f,g,h,\dots$
+            \item pro relační symboly $P,Q,R,\dots$\pause
+            \item pro funkční (nekonstantní) symboly $f,g,h,\dots$\pause
             \item pro konstantní symboly $c,d,a,b,\dots$
         \end{itemize}
     \end{itemize}
@@ -1042,22 +1048,22 @@
     \begin{itemize}
         \item \myexampleinline{
         $\langle E \rangle$
-        } signatura \alert{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy)
+        } signatura \alert{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy)\pause
         \item \myexampleinline{
         $\langle \leq \rangle$
-        } signatura \alert{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol (ne každá struktura v této signatuře je částečné uspořádání! k tomu musí splňovat příslušné \alert{axiomy})
+        } signatura \alert{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol \pause (ne každá struktura v této signatuře je částečné uspořádání! k tomu musí splňovat příslušné \alert{axiomy})\pause
         \item \myexampleinline{
         $\langle +, -, 0\rangle$
-        } signatura \alert{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol
+        } signatura \alert{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol\pause
         \item \myexampleinline{
         $\langle +, -, 0,\cdot,1\rangle$
-        } signatura \alert{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol
+        } signatura \alert{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol\pause
         \item \myexampleinline{
         $\langle +, -, 0,\cdot,1,\leq\rangle$
-        } signatura \alert{uspořádaných těles}: $\leq$ je binární relační symbol
+        } signatura \alert{uspořádaných těles}: $\leq$ je binární relační symbol\pause
         \item \myexampleinline{
         $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$
-        } signatura \alert{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční, $\bot,\top$ jsou konstantní symboly
+        } signatura \alert{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční, $\bot,\top$ jsou konstantní symboly\pause
         \item \myexampleinline{
         $\langle S,+,\cdot,0,\leq\rangle$
         } signatura \alert{aritmetiky}: $S$ je unární funkční symbol
@@ -1068,13 +1074,13 @@
 
 \begin{frame}{Struktury}
 
-    \alert{Strukturu} dané signatury získáme tak, že:
+    \alert{Strukturu} dané signatury získáme tak, že: \pause
     \begin{itemize}
-        \item zvolíme neprázdnou \alert{doménu}, a na ní
-        \item zvolíme \alert{realizace} (také říkáme \alert{interpretace}) všech relačních a funkčních symbolů (včetně konstantních)
-        \item to znamená \alert{konkrétní} relace resp. funkce příslušných arit
-        \item realizací konstantního symbolu je zvolený prvek z domény
-        \item na tom, jaké konkrétní symboly jsou v signatuře nezáleží (např. $+$ neznamená, že realizace musí souviset se sčítáním)
+        \item zvolíme neprázdnou \alert{doménu}, a na ní \pause
+        \item zvolíme \alert{realizace} (také říkáme \alert{interpretace}) všech relačních a funkčních symbolů (včetně konstantních) \pause
+        \item to znamená \alert{konkrétní} relace resp. funkce příslušných arit \pause
+        \item realizací konstantního symbolu je zvolený prvek z domény \pause
+        \item na tom, jaké konkrétní symboly jsou v signatuře nezáleží \pause (např. $+$ neznamená, že realizace musí souviset se sčítáním)
     \end{itemize}
 
 \end{frame}
@@ -1083,15 +1089,15 @@
 \begin{frame}{Příklady struktur 1/3}
     
     \begin{itemize}
-        \item Struktura \alert{v prázdné signatuře} $\langle\ \rangle$ je libovolná neprázdná množina. (Nemusí být konečná, ani spočetná! Formálně to bude trojice $\langle A,\emptyset,\emptyset\rangle$, ale rozdíl zanedbáme.)            
+        \item Struktura \alert{v prázdné signatuře} $\langle\ \rangle$ je libovolná neprázdná množina. \pause (Nemusí být konečná, ani spočetná! Formálně to bude trojice $\langle A,\emptyset,\emptyset\rangle$, ale rozdíl zanedbáme.) \pause             
 
-        \item Struktura \alert{v signatuře grafů} je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \alert{orientovaný graf}. 
+        \item Struktura \alert{v signatuře grafů} je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \alert{orientovaný graf}. \pause  
         \begin{itemize}
-            \item je-li $E$ ireflexivní a symetrická, je to \alert{jednoduchý} graf
-            \item je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \alert{částečné uspořádání}
-            \item je-li $E$ reflexivní, tranzitivní, a symetrická, je to \alert{ekvivalence}
+            \item je-li $E$ ireflexivní a symetrická, je to \alert{jednoduchý} graf \pause 
+            \item je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \alert{částečné uspořádání} \pause 
+            \item je-li $E$ reflexivní, tranzitivní, a symetrická, je to \alert{ekvivalence} \pause 
         \end{itemize}
-        \item Struktury \alert{v signatuře částečných uspořádání} jsou tytéž, jako v signatuře grafů, signatury se liší jen symbolem. (Ne každá struktura v signatuře částečných uspořádání je č. uspořádání!)
+        \item Struktury \alert{v signatuře částečných uspořádání} jsou tytéž, jako v signatuře grafů, signatury se liší jen symbolem. \pause (Ne každá struktura v signatuře částečných uspořádání je č. uspořádání!)
     \end{itemize}
 
 \end{frame}
@@ -1099,24 +1105,24 @@
 
 \begin{frame}{Příklady struktur 2/3}
     
-    Struktury \alert{v signatuře grup} jsou například následující \alert{grupy}:
+    Struktury \alert{v signatuře grup} jsou například následující \alert{grupy}: \pause 
         \begin{itemize}
             \item \myexampleinline{
                 $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$
-            }, \alert{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$). 
+            }, \alert{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$).  \pause 
             
             \smallskip
             
-            \textbf{Poznámka:} $\underline{\mathbb Z_n}$ znamená strukturu, zatímco $\mathbb Z_n$ jen její doménu. Často se to ale nerozlišuje a $\mathbb Z_n$ se používá i pro strukturu. Podobně $+,-,0$ jsou jak symboly, tak interpretace.
+            \textbf{Poznámka:} $\underline{\mathbb Z_n}$ znamená strukturu, zatímco $\mathbb Z_n$ jen její doménu. Často se to ale nerozlišuje a $\mathbb Z_n$ se používá i pro strukturu. Podobně $+,-,0$ jsou jak symboly, tak interpretace. \pause 
 
             \smallskip
 
             \item \myexampleinline{
                 $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$
-             } je \alert{symetrická grupa} (grupa všech permutací) na $n$ prvcích.
+             } je \alert{symetrická grupa} (grupa všech permutací) na $n$ prvcích. \pause 
             \item \myexampleinline{
                 $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$
-                } je \alert{multiplikativní grupa (nenulových) racionálních čísel}. \myalertinline{(Interpretací \alert{symbolu} $0$ je \alert{číslo} $1$!)}
+                } je \alert{multiplikativní grupa (nenulových) racionálních čísel}. \myalertinline{(Interpretací \alert{symbolu} $0$ je \alert{číslo} $1$!)} \pause 
         \end{itemize}
         Všechny tyto struktury \alert{splňují axiomy teorie grup}, snadno ale najdeme jiné, které axiomy nesplňují, nejsou tedy grupami.
     
@@ -1131,10 +1137,10 @@
             $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$
          }a\myexampleinline{
             $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$
-          } (se standardními operacemi a uspořádáním) jsou \alert{v signatuře uspořádaných těles} (ale jen první z nich je uspořádané těleso).
+          } (se standardními operacemi a uspořádáním) jsou \alert{v signatuře uspořádaných těles} \pause (ale jen první z nich je uspořádané těleso). \pause 
         \item \myexampleinline{
             $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$
-        }, tzv. \alert{potenční algebra} nad množinou $X$, je struktura \alert{v signatuře Booleových algeber}. (\alert{Booleova algebra} je to pokud $X\neq\emptyset$.)
+        }, tzv. \alert{potenční algebra} nad množinou $X$, je struktura \alert{v signatuře Booleových algeber}. \pause (\alert{Booleova algebra} je to pokud $X\neq\emptyset$.) \pause 
         \item \myexampleinline{
             $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$
         }, kde $S(x)=x+1$, a ostatní symboly jsou realizovány standardně, je \alert{standardní model aritmetiky}.
@@ -1146,11 +1152,11 @@
 \begin{frame}{Definice struktury}
     
     \myblock{
-    \alert{Struktura v signatuře} $\langle\mathcal R,\mathcal F\rangle$ je trojice $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, kde
+    \alert{Struktura v signatuře} $\langle\mathcal R,\mathcal F\rangle$ je trojice $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, kde \pause 
     \begin{itemize}
-    \item  $A$ je neprázdná množina, říkáme jí \alert{doména} (také \alert{univerzum}),
-    \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ kde $R^\A\subseteq A^{\mathrm{ar}(R)}$ je \alert{interpretace} relačního symbolu $R$,
-    \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ kde $f^\A\colon A^{\mathrm{ar}(f)}\to A$ je \alert{interpretace} funkčního symbolu $f$ (speciálně pro konstantní symbol $c\in\mathcal F$ máme $c^\A\in A$).
+    \item  $A$ je neprázdná množina, říkáme jí \alert{doména} (také \alert{univerzum}), \pause 
+    \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ kde $R^\A\subseteq A^{\mathrm{ar}(R)}$ je \alert{interpretace} relačního symbolu $R$, \pause 
+    \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ kde $f^\A\colon A^{\mathrm{ar}(f)}\to A$ je \alert{interpretace} funkčního symbolu $f$  \pause (speciálně pro konstantní symbol $c\in\mathcal F$ máme $c^\A\in A$). \pause 
     \end{itemize}
     }
 
@@ -1167,17 +1173,17 @@
 \begin{frame}{Jazyk}
 
     \myblock{
-    Jazyk je daný \alert{signaturou} a informací, zda je \alert{s rovností} nebo ne. 
+    Jazyk je daný \alert{signaturou} a informací, zda je \alert{s rovností} nebo ne.  \pause 
     }    
 
-    Tj. specifikujeme `typ' modelů a zda můžeme používat symbol `\alert{$=$}' interpretovaný jako \alert{identita} prvků z domény; většinou to dovolíme. (Je-li jazyk bez  rovnosti, musí mít signatura relační symbol. Proč?)
+    Tj. specifikujeme `typ' modelů a zda můžeme používat symbol `\alert{$=$}' interpretovaný jako \alert{identita} prvků z domény; většinou to dovolíme.  \pause (Je-li jazyk bez  rovnosti, musí mít signatura relační symbol. Proč?) \pause 
     
-    Do jazyka patří:
+    Do jazyka patří: \pause 
     \begin{itemize}
-        \item spočetně mnoho \alert{proměnných} $x_0,x_1,x_2,\dots$ (píšeme také $x,y,z,\dots$; množinu všech proměnných označíme \alert{$\Var$})
-        \item \alert{relační}, \alert{funkční} a \alert{konstantní symboly} ze signatury, symbol \alert{$=$} jde-li o jazyk s rovností (to jsou `\alert{mimologické}' symboly)
-        \item \alert{univerzální} a \alert{existenční} \alert{kvantifikátory} $(\forall x),(\exists x)$ pro každou proměnnou $x\in\Var$ (kvantifikátor `$(\forall x)$' chápeme jako jediný symbol, tj. \alert{neobsahuje} proměnnou $x$)
-        \item symboly pro log. spojky \alert{\( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \)}, závorky \alert{\( (,) \)}, a čárka `\alert{$,$}'
+        \item spočetně mnoho \alert{proměnných} $x_0,x_1,x_2,\dots$ (píšeme také $x,y,z,\dots$; množinu všech proměnných označíme \alert{$\Var$}) \pause 
+        \item \alert{relační}, \alert{funkční} a \alert{konstantní symboly} ze signatury, symbol \alert{$=$} jde-li o jazyk s rovností (to jsou `\alert{mimologické}' symboly) \pause 
+        \item \alert{univerzální} a \alert{existenční} \alert{kvantifikátory} $(\forall x),(\exists x)$ pro každou proměnnou $x\in\Var$ \pause (kvantifikátor `$(\forall x)$' chápeme jako jediný symbol, tj. \alert{neobsahuje} proměnnou $x$) \pause 
+        \item symboly pro log. spojky \( \alert{\neg},\alert{\landsymb},\alert{\lorsymb}, \alert{\limpliessymb}, \alert{\liffsymb} \), závorky \( \alert{(},\alert{)} \), a čárka `\alert{$,$}'
     \end{itemize}
 
 \end{frame}
@@ -1187,10 +1193,10 @@
 
     
     \begin{itemize}
-        \item Jazyk \alert{$L=\langle\rangle$ s rovností} je jazyk \alert{čisté rovnosti}
-        \item jazyk $L=\langle c_0,c_1,c_2,\dots\rangle$ s rovností je jazyk \alert{spočetně mnoha konstant}
-        \item jazyk \alert{uspořádání} je $\langle \leq \rangle$ s rovností
-        \item jazyk \alert{teorie grafů} je $\langle E \rangle$ s rovností
+        \item Jazyk \alert{$L=\langle\rangle$ s rovností} je jazyk \alert{čisté rovnosti} \pause 
+        \item jazyk $L=\langle c_0,c_1,c_2,\dots\rangle$ s rovností je jazyk \alert{spočetně mnoha konstant} \pause 
+        \item jazyk \alert{uspořádání} je $\langle \leq \rangle$ s rovností \pause 
+        \item jazyk \alert{teorie grafů} je $\langle E \rangle$ s rovností \pause 
         \item jazyky \alert{teorie grup, teorie těles, teorie uspořádaných těles, Booleových algeber, aritmetiky} jsou jazyky \alert{s rovností} odpovídající daným signaturám
     \end{itemize}
     
@@ -1200,22 +1206,22 @@
 \begin{frame}{Termy}
 
     \vspace{-6pt}
-    \alert{čistě syntaktické} `výrazy' z proměnných, konstantních symbolů, funkčních symbolů, závorek a čárek
+    \alert{čistě syntaktické} `výrazy' z proměnných, konstantních symbolů, funkčních symbolů, závorek a čárek \pause 
     
     \myblock{
-        \alert{Termy} jazyka $L$ jsou konečné nápisy definované induktivně:
+        \alert{Termy} jazyka $L$ jsou konečné nápisy definované induktivně: \pause 
         \begin{itemize}
-            \item každá proměnná a každý konstantní symbol z $L$ je term,
-            \item je-li $f$ funkční symbol z $L$ arity $n$ a jsou-li $t_1,\dots,t_n$ termy, potom nápis $f(t_1,t_2,\dots,t_n)$ je také term.
+            \item každá proměnná a každý konstantní symbol z $L$ je term, \pause 
+            \item je-li $f$ funkční symbol z $L$ arity $n$ a jsou-li $t_1,\dots,t_n$ termy, potom nápis $f(t_1,t_2,\dots,t_n)$ je také term. \pause 
         \end{itemize}
-        Množinu všech \alert{termů} jazyka $L$ označíme $\Term_L$. 
+        Množinu všech \alert{termů} jazyka $L$ označíme $\Term_L$.  \pause 
     }
 
     \begin{itemize}
-        \item \alert{podterm} je podřetězec, který je sám termem
-        \item term bez proměnných je \alert{konstantní (ground)}, např. \myexampleinline{$((S(0)+S(0))\cdot S(S(0)))$} v jazyce aritmetiky
-        \item \myalertinline{termy nesmí obsahovat prvky struktury, jen symboly z jazyka}
-        \item \myexampleinline{$(1+1)\cdot 2$} \alert{není} term, ledaže rozšíříme jazyk o \alert{symboly} $1$ a $2$
+        \item \alert{podterm} je podřetězec, který je sám termem \pause 
+        \item term bez proměnných je \alert{konstantní (ground)}, např. \myexampleinline{$((S(0)+S(0))\cdot S(S(0)))$} v jazyce aritmetiky \pause 
+        \item \myalertinline{termy nesmí obsahovat prvky struktury, jen symboly z jazyka} \pause 
+        \item \myexampleinline{$(1+1)\cdot 2$} \alert{není} term, ledaže rozšíříme jazyk o \alert{symboly} $1$ a $2$ \pause 
         \item jako lidé můžeme použít \alert{infixový} zápis, např. $(t_1+t_2)$ místo $+(t_1,t_2)$, vynechat závorky je-li struktura termu zřejmá
     \end{itemize}
 
@@ -1225,7 +1231,7 @@
 \begin{frame}{Strom termu}
     
     \vspace{-3pt}
-    \alert{Strom termu} $t$, \alert{$\Tree(t)$}: v listech proměnné nebo konst. symboly, ve vnitřních vrcholech funkční symboly (arita je rovna počtu synů)
+    \alert{Strom termu} $t$, \alert{$\Tree(t)$}: v listech proměnné nebo konst. symboly, ve vnitřních vrcholech funkční symboly (arita je rovna počtu synů) \pause 
 
     \begin{center}
 
@@ -1253,7 +1259,7 @@
             \begin{forest}
                 for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
                 [\lor 
-                    [\neg 
+                    [- 
                         [\land
                             [x]
                             [y]                    
@@ -1263,13 +1269,13 @@
                 ]
             \end{forest}
             
-            (b) $\neg (x\land y)\lor \bot$ v jazyce Booleových algeber 
+            (b) $-(x\land y)\lor \bot$ v jazyce Booleových algeber  
         \end{minipage}
     }
-    \end{center}
+    \end{center} \pause 
 
     \begin{itemize}
-        \item symboly $\neg,\land,\lor$ nejsou logické, ale mimologické ze signatury
+        \item symboly $\land,\lor$ nejsou logické, ale mimologické ze signatury \pause 
         \item \alert{sémantika}: proměnné ohodnotíme prvky, konst. a funkční symboly nahradíme interpretacemi, výsledek je prvek z domény
     \end{itemize}
     
@@ -1277,16 +1283,16 @@
 
 
 \begin{frame}{Atomické formule}
-    Termům nelze přiřadit \alert{pravdivostní hodnotu}, potřebujeme \alert{predikát} (relační symbol nebo $=$), který mluví \alert{o `vztahu' termů}: v dané struktuře při ohodnocení proměnných prvky je buď splněn, nebo ne.
+    Termům nelze přiřadit \alert{pravdivostní hodnotu}, potřebujeme \alert{predikát} (relační symbol nebo $=$), který mluví \alert{o `vztahu' termů}:  \pause v dané struktuře při ohodnocení proměnných prvky je buď splněn, nebo ne. \pause 
 
     \medskip
 
-    \alert{Formule} (`tvrzení o strukturách') skládáme z \alert{atomických formulí} pomocí  logických spojek a kvantifikátorů:  
+    \alert{Formule} (`tvrzení o strukturách') skládáme z \alert{atomických formulí} pomocí  logických spojek a kvantifikátorů:   \pause 
 
     \medskip
 
     \myblock{
-        \alert{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$. %Množinu všech \alert{atomických formulí} jazyka $L$ označíme $\AFm_L$. 
+        \alert{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$.  \pause %Množinu všech \alert{atomických formulí} jazyka $L$ označíme $\AFm_L$.
     }
 
     \medskip
@@ -1294,17 +1300,17 @@
     \begin{itemize}
         \item \myexampleinline{
             $R(f(f(x)),c, f(d))$
-            } kde $R$ je ternární relační, $f$ unární funkční, $c,d$ konstantní symboly
-            \item \myalertinline{ infixový zápis } $\leq(x,y)$, $=(t_1,t_2)$ píšeme jako $x\leq y$, $t_1=t_2$
+            } kde $R$ je ternární relační, $f$ unární funkční, $c,d$ konstantní symboly \pause 
+            \item \myalertinline{ infixový zápis } $\leq(x,y)$, $=(t_1,t_2)$ píšeme jako $x\leq y$, $t_1=t_2$ \pause 
         \item \myexampleinline{
             $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$
-            } v jazyce uspořád. těles
+            } v jazyce uspořád. těles \pause 
         \item \myexampleinline{
             $x\cdot y\leq (S(0)+x)\cdot y$
-            } v jazyce aritmetiky
+            } v jazyce aritmetiky \pause 
         \item \myexampleinline{
-            $\neg(x\land y)\lor\bot=\bot$
-            } v jazyce Booleových algeber        
+            $-(x\land y)\lor\bot=\bot$
+            } v jazyce Booleových algeber    
     \end{itemize} 
     
 \end{frame}
@@ -1313,21 +1319,21 @@
 \begin{frame}{Formule}
     
     \myblock{
-        \alert{Formule} jazyka $L$ jsou konečné nápisy definované induktivně: 
+        \alert{Formule} jazyka $L$ jsou konečné nápisy definované induktivně:  \pause 
         \begin{itemize}
-            \item každá \alert{atomická formule} jazyka $L$ je formule,
-            \item je-li $\varphi$ formule, potom \alert{$(\neg\varphi)$} je také formule
-            \item jsou-li $\varphi,\psi$ formule, potom \alert{$(\varphi\lbin\psi)$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$} jsou také formule
-            \item je-li $\varphi$ formule a $x$ proměnná, potom \alert{$((Q x)\varphi)$ pro $Q\in\{\forall,\exists\}$} jsou také formule
+            \item každá \alert{atomická formule} jazyka $L$ je formule, \pause 
+            \item je-li $\varphi$ formule, potom \alert{$(\neg\varphi)$} je také formule \pause 
+            \item jsou-li $\varphi,\psi$ formule, potom \alert{$(\varphi\lbin\psi)$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$} jsou také formule \pause 
+            \item je-li $\varphi$ formule a $x$ proměnná, potom \alert{$((Q x)\varphi)$ pro $Q\in\{\forall,\exists\}$} jsou také formule \pause 
             \end{itemize}    
         %Množinu všech \alert{formulí} jazyka $L$ označíme $\Fm_L$.
     }
     \begin{itemize}
-        \item \alert{podformule} je podřetězec, který je sám formulí
-        \item při zápisu formulí jako lidé používáme obvyklé konvence
-        \item kvantifikátory mají stejnou prioritu jako $\neg$, vyšší než ostatní logické spojky! místo $((\forall x)\varphi$) píšeme $(\forall x)\varphi$
+        \item \alert{podformule} je podřetězec, který je sám formulí \pause 
+        \item při zápisu formulí jako lidé používáme obvyklé konvence \pause 
+        \item kvantifikátory mají stejnou prioritu jako $\neg$, vyšší než ostatní logické spojky! místo $((\forall x)\varphi$) píšeme $(\forall x)\varphi$ \pause 
         \item \myalertinline{pozor, 
-        $(\forall x)\varphi\land\psi$ neznamená totéž, co $(\forall x)(\varphi\land\psi)$!}
+        $(\forall x)\varphi\land\psi$ neznamená totéž, co $(\forall x)(\varphi\land\psi)$!} \pause 
         \item někde uvidíte $\forall x\varphi$ nebo $\forall_ x\varphi$, my ale budeme psát jen $(\forall x)\varphi$
     
     \end{itemize}
@@ -1344,16 +1350,16 @@
 
         Příklad: \myexampleinline{
         $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$
-        }
+        } \pause 
 
         \bigskip
 
-        \alert{Strom formule}, \alert{$\Tree(\varphi)$}:
+        \alert{Strom formule}, \alert{$\Tree(\varphi)$}: \pause 
         
         \begin{itemize}
-            \item strom atomické formule $R(t_1,\dots,t_n)$: v kořeni $R$, připojíme stromy $\Tree(t_i)$
-            \item pro složené formule podobně jako ve výrokové logice
-            \item kvantifikátory mají jediného syna
+            \item strom atomické formule $R(t_1,\dots,t_n)$: v kořeni $R$, připojíme stromy $\Tree(t_i)$ \pause 
+            \item pro složené formule podobně jako ve výrokové logice \pause 
+            \item kvantifikátory mají jediného syna \pause 
         \end{itemize}
 
         \vspace{1.5cm}
@@ -1381,7 +1387,7 @@
 
 \begin{frame}{Volné a vázané proměnné}
 
-    Význam formule (\alert{pravdivostní hodnota}) může/nemusí záviset na proměnných~v~ní:\myexampleinline{
+    Význam formule (\alert{pravdivostní hodnota}) může/nemusí záviset na proměnných~v~ní: \pause \myexampleinline{
             $x\leq 0$
         }vs.\myexampleinline{
             $(\exists x)(x\leq 0)$
@@ -1389,11 +1395,12 @@
             $x\leq 0 \lor (\exists x)(x\leq 0)$
          }
 
+    \pause 
     \begin{itemize}
-        \item \alert{výskyt $x$ ve $\varphi$:} list $\Tree(\varphi)$ označený $x$ [v $(Qx)$ nemá výskyt!]
-        \item \alert{vázaný}: součástí podformule začínající $(Qx)$, jinak \alert{volný}
-        \item $x$ je \alert{volná} ve $\varphi$ má-li volný výskyt, \alert{vázaná} má-li vázaný výskyt
-        \item zápis \alert{$\varphi(x_1,\dots,x_n)$} znamená, že mezi $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$
+        \item \alert{výskyt $x$ ve $\varphi$:} list $\Tree(\varphi)$ označený $x$ [v $(Qx)$ nemá výskyt!] \pause 
+        \item \alert{vázaný}: součástí podformule začínající $(Qx)$, jinak \alert{volný} \pause 
+        \item $x$ je \alert{volná} ve $\varphi$ má-li volný výskyt, \alert{vázaná} má-li vázaný výskyt \pause 
+        \item zápis \alert{$\varphi(x_1,\dots,x_n)$} znamená, že mezi $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$ \pause 
     \end{itemize}
 
     Proměnná může být \alert{volná i vázaná}, např.:
@@ -1401,10 +1408,10 @@
     $$
     \varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z
     $$
-    }
+    } \pause 
 
     \begin{itemize}
-        \item první výskyt $x$ je vázaný a druhý volný (nakreslete si strom!) 
+        \item první výskyt $x$ je vázaný a druhý volný (nakreslete si strom!)  \pause 
         \item $y$ je vázaná a $z$ je volná, můžeme tedy psát $\varphi(x,z)$
     \end{itemize}
 
@@ -1413,27 +1420,27 @@
 
 \begin{frame}{Otevřené a uzavřené formule}
 
-    \alert{otevřená formule:} nemá žádný kvantifikátor\\
-    \alert{uzavřená formule (sentence):} nemá žádnou volnou proměnnou  
+    \alert{otevřená formule:} nemá žádný kvantifikátor\\ \pause 
+    \alert{uzavřená formule (sentence):} nemá žádnou volnou proměnnou \pause 
 
      \begin{itemize}
         \item \myexampleinline{
             $x+y\leq 0$
-        } je otevřená formule
+        } je otevřená formule \pause 
         \item \myexampleinline{
             $(\forall x)(\forall y)(x+y\leq 0)$
-        } je uzavřená formule  neboli sentence
+        } je uzavřená formule  neboli sentence \pause 
         \item \myexampleinline{
             $(\forall x)(x+y\leq 0)$
-         } není ani otevřená, ani uzavřená
+         } není ani otevřená, ani uzavřená \pause 
         \item \myexampleinline{
             $(0+1=1)\land (1+1=0)$
-         } je otevřená i uzavřená
-        \item atomické formule je otevřená, otevřené formule jsou kombinace atomických pomocí logických spojek
-        \item je-li formule otevřená i uzavřená potom nemá žádné proměnné (všechny termy v ní jsou konstantní)
+         } je otevřená i uzavřená \pause 
+        \item atomické formule je otevřená, otevřené formule jsou kombinace atomických pomocí logických spojek \pause 
+        \item je-li formule otevřená i uzavřená potom nemá žádné proměnné (všechny termy v ní jsou konstantní) \pause 
         \item formule bez vázané proměnné není nutně otevřená!\myexampleinline{
             $(\forall x)0=1$
-        }
+        } \pause 
     \end{itemize}
 
     Uvidíme, že \alert{pravdivostní hodnota} závisí jen na ohodnocení volných proměnných; \alert{sentence} mají ve struktuře pravdiv. hodnotu 0 nebo 1
@@ -1444,31 +1451,31 @@
 \begin{frame}{Instance a varianty: neformálně}
 
     \begin{itemize}
-        \item proměnná může hrát různé \myalertinline{`role'} (\myalertinline{`lokální'} vs. \myalertinline{`globální'})
-        \item \alert{instance}: \myalertinline{`dosazení'} do \myalertinline{`globální'} proměnné (lépe \myalertinline{`nahrazení'} proměnné nějakým termem, který ji počítá, čistě syntaktické!)
-        \item \alert{varianta}: \myalertinline{`přejmenování'} \myalertinline{`lokální'} proměnné
+        \item proměnná může hrát různé \myalertinline{`role'}  (\myalertinline{`lokální'} vs. \myalertinline{`globální'}) \pause 
+        \item \alert{instance}: \myalertinline{`dosazení'} do \myalertinline{`globální'} proměnné \pause (lépe \myalertinline{`nahrazení'} proměnné nějakým termem, který ji počítá, čistě syntaktické!) \pause 
+        \item \alert{varianta}: \myalertinline{`přejmenování'} \myalertinline{`lokální'} proměnné \pause 
     \end{itemize}
     
     \myexamplemath{
     $$
     P(x)\land (\forall x)(Q(x) \land (\exists x)R(x))
     $$
-    }
+    } \pause 
 
     \begin{itemize}
-        \item první výskyt $x$ je volný, 2. je vázaný $(\forall x)$, 3. je vázaný  $(\exists x)$
-        \item pokud \alert{substituujeme} za proměnnou $x$ term $t=1+1$, dostáváme \alert{instanci} formule $\varphi$, kterou označíme \alert{$\varphi(x/t)$}:
+        \item první výskyt $x$ je volný, 2. je vázaný $(\forall x)$, 3. je vázaný  $(\exists x)$ \pause 
+        \item pokud \alert{substituujeme} za proměnnou $x$ term $t=1+1$, dostáváme \alert{instanci} formule $\varphi$, kterou označíme \alert{$\varphi(x/t)$}: \pause 
         \myexamplemath{
         $$
         P(1+1)\land (\forall x)(Q(x) \land (\exists x)R(x))
         $$
-        }
-        \item přejmenujeme-li kvantifikátory, získáme \alert{variantu} formule $\varphi$:
+        } \pause 
+        \item přejmenujeme-li kvantifikátory, získáme \alert{variantu} formule $\varphi$: \pause 
         \myexamplemath{
         $$
         P(x)\land (\forall y)(Q(y) \land (\exists z)R(z))
         $$
-        }
+        } \pause 
     \end{itemize}
 
     \myalert{Kdy a jak to lze, aby instance byla \alert{důsledek} a varianta \alert{ekvivalentní}?}    
@@ -1478,22 +1485,22 @@
 
 \begin{frame}{Instance}
     
-    Substituujeme-li do $\varphi$ za $x$ term $t$, chceme aby výsledná formule \myalertinline{`říkala o $t$ totéž, co $\varphi$ o $x$'}. Např. \myexampleinline{
+    Substituujeme-li do $\varphi$ za $x$ term $t$, chceme aby výsledná formule \myalertinline{`říkala o $t$ totéž, co $\varphi$ o $x$'}.  \pause Např. \myexampleinline{
         $\varphi(x)=(\exists y)(x+y=1)$
-        }
+        } \pause 
     \begin{itemize}
-        \item říká o $x$, že \myalertinline{`existuje $1-x$'}
+        \item říká o $x$, že \myalertinline{`existuje $1-x$'} \pause 
         \item term $t=1$ lze: \myexampleinline{\small
-            $\varphi(x/t)=(\exists y)(1+y=1)$} říká \myalertinline{`existuje {\small $1-1$}'}
+            $\varphi(x/t)=(\exists y)(1+y=1)$} říká \myalertinline{`existuje {\small $1-1$}'} \pause 
         \item term $t=y$ nelze: \myexampleinline{
-            $(\exists y)(y+y=1)$} říká \myalertinline{`1 je dělitelné 2'}\\
-        \textbf{problém:} obsahuje $y$, po nahrazení bude nově vázané $(\exists y)$
+            $(\exists y)(y+y=1)$} říká \myalertinline{`1 je dělitelné 2'}\\ \pause 
+        \textbf{problém:} obsahuje $y$, po nahrazení bude nově vázané $(\exists y)$ \pause 
     \end{itemize}
     \myblock{
     Term $t$ je \alert{substituovatelný} za proměnnou $x$ ve formuli $\varphi$, pokud po simultánním nahrazení všech volných výskytů $x$ za $t$ nevznikne žádný vázaný výskyt proměnné z $t$. Potom je vzniklá formule \alert{instance} $\varphi$ vzniklá substitucí $t$ za $x$, \alert{$\varphi(x/t)$}.
-    }
+    } \pause 
     \begin{itemize}
-        \item $t$ \alert{není} substituovatelný za $x$ do $\varphi$, právě když $x$ má volný výskyt v nějaké podformuli $\varphi$ tvaru $(Qy)\psi$ a $y$ se vyskytuje v $t$
+        \item $t$ \alert{není} substituovatelný za $x$ do $\varphi$, právě když $x$ má volný výskyt v nějaké podformuli $\varphi$ tvaru $(Qy)\psi$ a $y$ se vyskytuje v $t$ \pause 
         \item speciálně: konstantní termy jsou vždy substituovatelné
     \end{itemize}
 
@@ -1502,18 +1509,18 @@
 
 \begin{frame}{Varianta}
     
-    Substituovat $t$ můžeme vždy do \alert{varianty} $\varphi$, ve které přejmenujeme všechny kvantifikované proměnné na nové (které nejsou v $t$ ani $\varphi$)
+    Substituovat $t$ můžeme vždy do \alert{varianty} $\varphi$, ve které přejmenujeme všechny kvantifikované proměnné na nové (které nejsou v $t$ ani $\varphi$) \pause 
 
     \smallskip
     
     \myblock{
-    Má-li formule $\varphi$ podformuli tvaru $(Qx)\psi$ a je-li $y$ proměnná, že
+    Má-li formule $\varphi$ podformuli tvaru $(Qx)\psi$ a je-li $y$ proměnná, že \pause 
     \begin{enumerate}[(i)]
-        \item $y$ je substituovatelná za $x$ do $\psi$, a
-        \item $y$ nemá volný výskyt v $\psi$.
+        \item $y$ je substituovatelná za $x$ do $\psi$, a \pause 
+        \item $y$ nemá volný výskyt v $\psi$. \pause 
     \end{enumerate}    
     \alert{Varianta} $\varphi$ vznikne nahrazením $(Qx)\psi$ formulí $(Qy)\psi(x/y)$,  říkáme tak i výsledku postupné variace ve více podformulích.
-    }
+    } \pause 
 
     \medskip
 
@@ -1521,9 +1528,9 @@
         $\varphi=(\exists x)(\forall y)(x\leq y)$}:
     \begin{itemize}
         \item \myexampleinline{
-            $(\exists u)(\forall v)(u\leq v)$} je varianta $\varphi$
+            $(\exists u)(\forall v)(u\leq v)$} je varianta $\varphi$ \pause 
         \item \myexampleinline{
-            $(\exists y)(\forall y)(y\leq y)$} není varianta kvůli (i): $y$ není substituovatelná za $x$ do $\psi=(\forall y)(y\leq y)$
+            $(\exists y)(\forall y)(y\leq y)$} není varianta kvůli (i): $y$ není substituovatelná za $x$ do $\psi=(\forall y)(y\leq y)$ \pause 
         \item \myexampleinline{
             $(\exists x)(\forall x)(x\leq x)$} není varianta kvůli (ii): $x$ má volný výskyt v~$\psi=(x\leq y)$        
     \end{itemize}   

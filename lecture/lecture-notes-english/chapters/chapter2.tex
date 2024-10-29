@@ -229,7 +229,7 @@ The \emph{truth function} of a proposition $\varphi$ in a finite language $\math
     $$
     f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1}) = f_\neg(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1})),
     $$
-    \item If $(\varphi' \lbin \varphi'')$ where $\lbinsymb \in \{\land, \lor, \limplies, \liff\}$, then 
+    \item If $\varphi = (\varphi' \lbin \varphi'')$ where $\lbinsymb \in \{\land, \lor, \limplies, \liff\}$, then 
     $$
     f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1}) = f_\lbinsymb(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}), f_{\varphi'',\mathbb P}(x_0,\dots,x_{n-1})).
     $$
@@ -401,7 +401,7 @@ Note that for the empty theory $T = \emptyset$, we have $\M_\mathbb P(T) = \M_\m
 
 \subsection{Universality of Logical Connectives}
 
-In the language of propositional logic, we use the following logical connectives: $\neg, \land, \lor, \limplies, \liff$. This is not the only possible choice; to build a fully-fledged logic, we could make do, for example, only with negation and implication,\footnote{Negation is needed to describe the state of a system, and implication to describe behavior over time.} or negation, conjunction, and disjunction.\footnote{These are sufficient to build logical circuits.} And as we will see below, we could use other logical connectives as well. Our choice is the golden middle path between expressiveness on the one hand and succintness of syntactic definitions and proofs on the other.
+In the language of propositional logic, we use the following logical connectives: $\neg, \land, \lor, \limplies, \liff$. This is not the only possible choice; to build a fully-fledged logic, we could make do, for example, only with negation and implication,\footnote{Negation is needed to describe the state of a system, and implication to describe behavior over time.} or negation, conjunction, and disjunction.\footnote{These are sufficient to build logical circuits.} And as we will see below, we could use other logical connectives as well. Our choice is the golden middle path between expressiveness on the one hand and succinctness of syntactic definitions and proofs on the other.
 
 What do we mean by saying that logic is fully-fledged? We say that a set of logical connectives $S$ is \emph{universal}\footnote{Some people would say \emph{[functionally] complete}.} if any Boolean function $f$ can be expressed as the truth function $f_{\varphi,\mathbb P}$ of some proposition $\varphi$ built from the logical connectives in $S$ (where $|\mathbb P|=n$ if $f$ is an $n$-ary function). Equivalently, for any finite language $\mathbb P$ (say $n$-element) and any set of models $M \subseteq \M_\mathbb P$, there must exist a proposition $\varphi$ such that $\M_\mathbb P(\varphi) = M$. (The equivalence of these two statements follows from the fact that if we have a Boolean function $f$ and choose $M = f^{-1}[1]$, then $f_{\varphi,\mathbb P} = f$ if and only if $\M_\mathbb P(\varphi) = M$.)
 

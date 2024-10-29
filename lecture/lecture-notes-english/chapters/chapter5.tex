@@ -1,8 +1,8 @@
 \chapter{Resolution Method}\label{chapter:propositional-resolution}
 
-In this chapter, we introduce another proof system more suitable for practical applications, called the \emph{resolution method}. This method is the foundation of, among others, \emph{logical programming}, \emph{automated theorem proving}, or \emph{software verification}. In this chapter, we limit ourselves to the resolution method in propositional logic, but later, in Chapter~\ref{chapter:prpredicate-resolution}, we will introduce the concept of \emph{unification}, which allows us to search for resolution proofs in predicate logic.
+In this chapter, we introduce another proof system more suitable for practical applications, called the \emph{resolution method}. This method is the foundation of, among others, \emph{logical programming}, \emph{automated theorem proving}, or \emph{software verification}. In this chapter, we limit ourselves to the resolution method in propositional logic, but later, in Chapter~\ref{chapter:predicate-resolution}, we will introduce the concept of \emph{unification}, which allows us to search for resolution proofs in predicate logic.
 
-The resolution method works with propositions in \emph{conjunctive normal form (CNF)}. Recall that every proposition can be converted to CNF. This conversion is, in the worst case, of exponential time copmlexity (there are even propositions whose shortest CNF equivalent is exponentially longer), but in practice, this is not an issue.
+The resolution method works with propositions in \emph{conjunctive normal form (CNF)}. Recall that every proposition can be converted to CNF. This conversion is, in the worst case, of exponential time complexity (there are even propositions whose shortest CNF equivalent is exponentially longer), but in practice, this is not an issue.
 
 Similar to the tableau method, the resolution method is based on proof by contradiction, i.e., we add the \emph{negation} of the proposition we want to prove to the theory in which we are proving (both converted to CNF), and show that this leads to a contradiction.
 

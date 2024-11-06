@@ -21,11 +21,13 @@
         \begin{itemize}
             \item sémantika predikátové logiky 
             \item vlastnosti teorií
+            \item podstruktura, expanze, redukt
+            
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.1-6.5 z Kapitoly 6
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.4-6.6 z Kapitoly 6
 
 \end{frame}
 
@@ -35,7 +37,7 @@
 
 \begin{frame}{Sémantika neformálně}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{modely jsou struktury} dané signatury,
         \item formule \alert{platí} ve struktuře, pokud platí při každém ohodnocení volných proměnných prvky z domény,
         \item \alert{hodnoty termů} (jsou to prvky z domény) se vyhodnocují podle jejich stromů, kde symboly nahradíme jejich interpretacemi (relacemi, funkcemi, a konstantami z domény),
@@ -50,18 +52,21 @@
 
     \medskip
 
+    \pause
     \myblock{
-    \alert{Model jazyka $L$}, nebo také \alert{$L$-struktura}, je libovolná struktura v signatuře jazyka $L$. \alert{Třídu} všech modelů jazyka označíme \alert{$\M_L$}.
+    \alert{Model jazyka $L$}, nebo také \alert{$L$-struktura}, je libovolná struktura v signatuře jazyka $L$. \pause\alert{Třídu} všech modelů jazyka označíme \alert{$\M_L$}.
     }
 
+    \pause
     \begin{itemize}
-        \item zda je jazyk s rovností nebo bez nehraje roli
-        \item proč \alert{třída} a ne \alert{množina} všech modelů $\M_L$? doména je libovolná neprázdná množina, `množina všech množin' neexistuje; třída je \alert{`soubor'} všech množin splňujících danou vlastnost (popsatelnou v \alert{jazyce teorie množin})
+        \item zda je jazyk s rovností nebo bez nehraje roli\pause
+        \item proč \alert{třída} a ne \alert{množina} všech modelů $\M_L$? doména je libovolná neprázdná množina, `množina všech množin' neexistuje; třída je \alert{`soubor'} všech množin splňujících danou vlastnost (popsatelnou v \alert{jazyce teorie množin})\pause
     \end{itemize}
     
-    Mezi \myexampleinline{modely jazyka uspořádání} $L=\langle \leq \rangle$ patří: \begin{itemize}
-        \item částečně uspořádané množiny $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, $\langle\mathcal P(X),\subseteq\rangle$
-        \item libovolný orientovaný graf $G=\langle V,E\rangle$, typicky není částečné uspořádání, tj. nesplňuje axiomy \alert{teorie uspořádání}
+    Mezi \myexampleinline{modely jazyka uspořádání} $L=\langle \leq \rangle$ patří:\pause
+    \begin{itemize}
+        \item částečně uspořádané množiny $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, $\langle\mathcal P(X),\subseteq\rangle$\pause
+        \item libovolný orientovaný graf $G=\langle V,E\rangle$, typicky není částečné uspořádání, tj. nesplňuje axiomy \alert{teorie uspořádání}\pause
         \item $\langle \mathbb C,R^\mathbb C\rangle$ kde $(z_1,z_2)\in R^\mathbb C$ právě když $|z_1|=|z_2|$ (není č. usp.)
         %\item $\langle \{0,1\},\emptyset\rangle$
     \end{itemize}
@@ -71,23 +76,24 @@
 
 \begin{frame}{Hodnota termu}
 
-    Mějme term $t$ jazyka $L=\langle \mathcal R,\mathcal F\rangle$ a $L$-strukturu $\A=\langle A,\mathcal R^\A,F^\A\rangle$. \alert{Ohodnocení proměnných} v množině $A$ je lib. funkce $e:\Var\to A$.
+    Mějme term $t$ jazyka $L=\langle \mathcal R,\mathcal F\rangle$ a $L$-strukturu $\A=\langle A,\mathcal R^\A,F^\A\rangle$. \pause\alert{Ohodnocení proměnných} v množině $A$ je lib. funkce $e:\Var\to A$.\pause
     
     \myblock{
-        \alert{Hodnota termu} $t$ \alert{ve struktuře} $\A$ \alert{při ohodnocení} $e$, značíme \alert{$t^\A[e]$}, je definovaná induktivně:
+        \alert{Hodnota termu} $t$ \alert{ve struktuře} $\A$ \alert{při ohodnocení} $e$, značíme \alert{$t^\A[e]$}, je definovaná induktivně:\pause
         \begin{itemize}
-            \item $x^\A[e]=e(x)$ pro proměnnou $x\in\Var$,
-            \item $c^\A[e]=c^\A$ pro konstantní symbol $c\in\mathcal F$, a
-            \item je-li $t=f(t_1,\dots,t_n)$ složený term, kde $f\in\mathcal F$, potom:
+            \item $x^\A[e]=e(x)$ pro proměnnou $x\in\Var$,\pause
+            \item $c^\A[e]=c^\A$ pro konstantní symbol $c\in\mathcal F$, a\pause
+            \item je-li $t=f(t_1,\dots,t_n)$ složený term, kde $f\in\mathcal F$, potom:\pause
             $$
             t^\A[e]=f^\A(t_1^\A[e],\dots,t_n^\A[e])
             $$
         \end{itemize}
     }
 
+    \pause
     \begin{itemize}
-        \item závisí pouze na ohodnocení proměnných vyskytujících se v $t$
-        \item obecně, term $t$ reprezentuje \alert{termovou funkci} $f_t^\A\colon A^k\to A$, kde $k$ je počet proměnných v $t$
+        \item závisí pouze na ohodnocení proměnných vyskytujících se v $t$\pause
+        \item obecně, term $t$ reprezentuje \alert{termovou funkci} $f_t^\A\colon A^k\to A$, kde $k$ je počet proměnných v $t$\pause
         \item speciálně, hodnota konstantního termu na ohodnocení nezávisí, konstantní termy reprezentují konstantní funkce
     \end{itemize}
     
@@ -96,6 +102,7 @@
 
 \begin{frame}{Hodnota termu: příklady}
     
+    \pause
     1. Hodnota termu \myexampleinline{
             $t=-(x\lor \bot)\land y$
          } v Booleově algebře $\A=\underline{\mathcal P(\{0,1,2\})}$ při ohodnocení $e$ ve kterém:
@@ -104,16 +111,19 @@
             \item $e(y)=\{1,2\}$
         \end{itemize}
   
+        \pause
         \myalertmath{
             $$t^\A[e]=\{2\}$$
         }
     
     \bigskip\bigskip
 
+    \pause
     2. Hodnota termu \myexampleinline{
             $x+1$
          } ve struktuře $\mathcal N=\langle\mathbb N,\cdot,3\rangle$ jazyka $L=\langle +,1\rangle$ při ohodnocení $e$ ve kterém $e(x)=2$ 
 
+         \pause
         \myalertmath{
             $$(x+1)^\mathcal N[e]=6$$
         }
@@ -123,8 +133,9 @@
 
 \begin{frame}{Pravdivostní hodnota formule}
 
+    \pause
     \myblock{\smallskip
-    Buď $\varphi$ v jazyce $L$, $\A\in\M_L$, $e:\Var\to A$ ohodnocení proměnných. \alert{Pravdivostní hodnota} $\varphi$ v $\A$ při ohodnocení $e$, \alert{$\mathrm{PH}^\A(\varphi)[e]$}:
+    Buď $\varphi$ v jazyce $L$, $\A\in\M_L$, $e:\Var\to A$ ohodnocení proměnných. \alert{Pravdivostní hodnota} $\varphi$ v $\A$ při ohodnocení $e$, \alert{$\mathrm{PH}^\A(\varphi)[e]$}:\pause
     \begin{itemize}
         \item pro atomickou formuli $R(t_1,\dots,t_n)$:
         $$
@@ -133,11 +144,11 @@
             1 & \text{pokud }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A\\
             0 & \text{jinak}    
         \end{cases}
-        $$        
+        $$\pause        
         \item pro formuli tvaru $(\neg\varphi)$:
         $$
         \mathrm{PH}^\A(\neg \varphi)[e]=f_\neg(\mathrm{PH}^\A(\varphi)[e])=1-\mathrm{PH}^\A(\varphi)[e]
-        $$
+        $$\pause
         \item pro formuli tvaru $(\varphi\lbin\psi)$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$:
         $$
         \mathrm{PH}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{PH}^\A(\varphi)[e],\mathrm{PH}^\A(\psi)[e])
@@ -151,6 +162,7 @@
 
 \begin{frame}{Pravdivostní hodnota formule: zbytek definice a poznámky}
     
+    \pause
     \myblock{
     \smallskip
     \begin{itemize}
@@ -158,16 +170,18 @@
         \begin{align*}
             \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
             \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
-        \end{align*}
+        \end{align*}\pause
         kde \alert{$e(x/a)$} je ohodnocení získané z $e$ změnou $e(x)$ na $a$
     \end{itemize}
     \smallskip
     }
 
+    \pause
     \textbf{Pozorování:} Závisí pouze na ohodnocení volných proměnných. Speciálně, pro sentenci nezávisí na ohodnocení.
 
+    \pause
     \begin{itemize}
-        \item tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla jedna vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$)
+        \item tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla jedna vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$)\pause
         \item speciálně, $\mathrm{PH}^\A(t_1=t_2)[e]=1$ $\Leftrightarrow$ $(t_1^\A[e],t_2^\A[e])\in {=^\A}$ (\alert{identita} na $A$), tj. $t_1^\A[e]=t_2^\A[e]$ (je to stejný prvek $A$)
     \end{itemize}
     
@@ -176,13 +190,13 @@
 
 \begin{frame}{Příklady}
     
-    Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:
+    Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:\pause
     \begin{itemize}
-        \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$
-        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$
-        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence)
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$\pause
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$\pause
+        \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence)\pause
     \end{itemize}   
-    Ale pro strukturu $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ máme: 
+    Ale pro strukturu $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ máme:\pause 
     \begin{itemize}
         \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ 
     \end{itemize}     
@@ -193,18 +207,18 @@
 \begin{frame}{Platnost ve struktuře}
     
     \myblock{
-        Mějme formuli $\varphi$, strukturu $\A$ (ve stejném jazyce), a ohodnocení $e$.
+        Mějme formuli $\varphi$, strukturu $\A$ (ve stejném jazyce), a ohodnocení $e$.\pause
 
         \begin{itemize}
-            \item je-li $\mathrm{PH}^\A(\varphi)[e]=1$, $\varphi$ \alert{platí} v $\A$ \alert{při ohodnocení} $e$, \alert{$\A\models\varphi[e]$}
-            \item je-li $\mathrm{PH}^\A(\varphi)[e]=0$, $\varphi$ \alert{neplatí} v $\A$ \alert{při ohodnoc.} $e$, \alert{$\A\not\models\varphi[e]$} 
-            \item $\varphi$ je \alert{pravdivá} (\alert{platí}) v $\A$, \alert{$\A\models\varphi$}, pokud platí při každém ohodnocení $e:\Var\to A$
-            \item $\varphi$ je \alert{lživá} v $\A$, pokud neplatí při žádném ohodnocení (v tom případě $\A\models\neg\varphi$)                       
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=1$, $\varphi$ \alert{platí} v $\A$ \alert{při ohodnocení} $e$, \alert{$\A\models\varphi[e]$}\pause
+            \item je-li $\mathrm{PH}^\A(\varphi)[e]=0$, $\varphi$ \alert{neplatí} v $\A$ \alert{při ohodnoc.} $e$, \alert{$\A\not\models\varphi[e]$} \pause
+            \item $\varphi$ je \alert{pravdivá} (\alert{platí}) v $\A$, \alert{$\A\models\varphi$}, pokud platí při každém ohodnocení $e:\Var\to A$\pause
+            \item $\varphi$ je \alert{lživá} v $\A$, pokud neplatí při žádném ohodnocení (v tom případě $\A\models\neg\varphi$)\pause            
         \end{itemize} 
     }
     
     \begin{itemize}
-        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! \\(je to pravda jen pro sentence)
+        \item pozor, \alert{lživá} není totéž, co \alert{není pravdivá} (\alert{neplatí})! \\(je to pravda jen pro sentence)\pause
         \item \alert{platnost} je klíčový pojem sémantiky a celé logiky
     \end{itemize}
     
@@ -262,21 +276,22 @@
 \begin{frame}{Platnost v teorii}
 
     \begin{itemize}
-        \item \alert{teorie} jazyka $L$ je množina $L$-formulí, její prvky jsou \alert{axiomy}
-        \item \alert{model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, značíme $\A\models T$
+        \item \alert{teorie} jazyka $L$ je množina $L$-formulí, její prvky jsou \alert{axiomy}\pause
+        \item \alert{model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, značíme $\A\models T$\pause
         \item \alert{třída modelů} teorie $T$ je:
         $$
         \alert{\M_L(T)}=\{\A\in\M_L\mid\A\models T\}
         $$
     \end{itemize}
     
-    Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom $\varphi$ je:
+    \pause
+    Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom $\varphi$ je:\pause
     \begin{itemize}
         \item \alert{pravdivá (platí) v $T$}, značíme \alert{$T\models\varphi$}, pokud $\A\models\varphi$ pro všechna $\A\in\M(T)$ (neboli: \myalertinline{
             $\M(T)\subseteq\M(\varphi)$
-            })
-        \item \alert{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: \myalertinline{$\M(T)\cap\M(\varphi)=\emptyset$})
-        \item \alert{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$
+            })\pause
+        \item \alert{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: \myalertinline{$\M(T)\cap\M(\varphi)=\emptyset$})\pause
+        \item \alert{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$\pause
         \item je-li $T=\emptyset$ (tj. $\M(T)=\M_L$), píšeme jen \alert{$\models\varphi$}, a říkáme, že $\varphi$ \alert{je pravdivá (v logice), (logicky) platí, je tautologie}, apod.
     \end{itemize}
     
@@ -286,8 +301,8 @@
 \begin{frame}{Další sémantické pojmy o teorii}
     
     \begin{itemize}
-        \item $T$ je \alert{sporná}, pokud v ní platí \alert{spor} $\bot$ (definujeme jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je lib. relační symbol)
-        \item $T$ je sporná, právě když v ní platí každá formule (ekvivalentně, nemá žádný model), jinak je \alert{bezesporná} (neplatí-li v ní spor, má-li alespoň jeden model)
+        \item $T$ je \alert{sporná}, pokud v ní platí \alert{spor} $\bot$ (definujeme jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je lib. relační symbol)\pause
+        \item $T$ je sporná, právě když v ní platí každá formule (ekvivalentně, nemá žádný model), jinak je \alert{bezesporná} (neplatí-li v ní spor, má-li alespoň jeden model)\pause
         \item \alert{důsledky} $T$ jsou \alert{sentence} pravdivé v $T$, množina všech důsledků $T$ v jazyce $L$ je
         $$
         \alert{\Conseq_L(T)}=\{\varphi\mid\text{$\varphi$ je sentence a }T\models \varphi\}
@@ -303,24 +318,26 @@
 
     
     \begin{itemize}
-        \item $T$ je \alert{kompletní}, je-li bezesporná a každá \alert{sentence} je v ní buď pravdivá, nebo lživá. \myalertinline{Pozor: neplatí, že má jediný model!}
-        \item máme-li jeden model, máme i nekonečně mnoho \alert{izomorfních} modelů (liší se jen pojmenováním prvků, definujeme později)
-        \item uvažovat jediný model \alert{až na izomorfismus} ale také \alert{nestačí}!
+        \item $T$ je \alert{kompletní}, je-li bezesporná a každá \alert{sentence} je v ní buď pravdivá, nebo lživá. \myalertinline{Pozor: neplatí, že má jediný model!}\pause
+        \item máme-li jeden model, máme i nekonečně mnoho \alert{izomorfních} modelů (liší se jen pojmenováním prvků, definujeme později)\pause
+        \item uvažovat jediný model \alert{až na izomorfismus} ale také \alert{nestačí}!\pause
     \end{itemize}
     
     \myblock{ 
         Struktury $\A,\B$ (v témž jazyce) jsou \alert{elementárně ekvivalentní}, píšeme \alert{$\A\equiv\B$}, pokud v nich platí tytéž sentence.
     }
  
+    \pause
     \textbf{Pozorování:} Teorie je kompletní, právě když má právě jeden model \alert{až na elementární ekvivalenci}.   
 
+    \pause
     Příklad: uspořádané množiny \myexampleinline{
         $\A=\langle\mathbb Q,\leq\rangle$
      } a \myexampleinline{
         $\B=\langle\mathbb R,\leq\rangle$
-     }.
+     }.\pause
      \begin{itemize}
-        \item \alert{nejsou izomorfní}, $\mathbb Q$ je spočetná a $\mathbb R$ nespočetná množina, neexistuje dokonce žádná \alert{bijekce} mezi doménami
+        \item \alert{nejsou izomorfní}, $\mathbb Q$ je spočetná a $\mathbb R$ nespočetná množina, neexistuje dokonce žádná \alert{bijekce} mezi doménami\pause
         \item \alert{ale $\A\equiv\B$}: indukcí dle struktury sentence $\varphi$ lze ukázat $\A\models\varphi\Leftrightarrow\B\models\varphi$; netriviální případ je $\exists$, klíčová je \alert{hustota} uspořádání $(x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)$
      \end{itemize}     
 
@@ -333,6 +350,7 @@
 
     \medskip
 
+    \pause
     \myblock{
     \textbf{Tvrzení (O nesplnitelnosti a pravdivosti):}
         Je-li $T$ teorie a $\varphi$ \alert{sentence} (v témž jazyce), potom: $T\models\varphi$ $\Leftrightarrow$ $T\cup\{\neg\varphi\}$ nemá model.
@@ -340,15 +358,16 @@
 
     \medskip
 
+    \pause
     \textbf{Důkaz:}
-        Platí následující ekvivalence: 
+        Platí následující ekvivalence:\pause
         \begin{itemize}
-            \item $T\cup\{\neg\varphi\}$ nemá model,
-            \item právě když $\neg\varphi$ neplatí v žádném modelu $T$,
+            \item $T\cup\{\neg\varphi\}$ nemá model,\pause
+            \item právě když $\neg\varphi$ neplatí v žádném modelu $T$,\pause
             \item právě když $\varphi$ platí v každém modelu $T$  ($\varphi$ je sentence!). \hfill\qedsymbol
         \end{itemize}
 
-
+    \pause
     NB: Předpoklad, že $\varphi$ je sentence, je nutný: pro $T=\{P(c)\}$ a formuli $\varphi=P(x)$ je $P(c)\not\models P(x)$ ale $\{P(c),\neg P(x)\}$ nemá model.
 
 \end{frame}
@@ -356,24 +375,28 @@
 
 \begin{frame}{Příklady teorií: Teorie grafů}
     
+    \pause
     \myexampleinline{Teorie grafů}: $L=\langle E\rangle$ s rovností, axiomy \alert{ireflexivity} a \alert{symetrie}
     
+    \pause
     \myalertmath{
     $$
     T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
     $$
     }
 
-    \textbf{Modely:} $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, tj. \alert{jednoduché} grafy, hranu $\{x,y\}$ reprezentuje dvojice $(x,y),(y,x)$
+    \pause
+    \textbf{Modely:} $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, tj. \alert{jednoduché} grafy, hranu $\{x,y\}$ reprezentuje dvojice $(x,y),(y,x)$\pause
     \begin{itemize}
         \item Formule \myexampleinline{
             $\neg x=y\limplies E(x,y)$
-         } platí v grafu, právě když je \alert{úplný}. Je tedy nezávislá v $T_\text{graph}$.
+         } platí v grafu, právě když je \alert{úplný}. Je tedy nezávislá v $T_\text{graph}$.\pause
         \item Formule \myexampleinline{
             $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land$
          } \myexampleinline{
             $(\forall z)(E(x,z)\limplies z=y_1\lor z=y_2)$
-        } vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
+        } vyjadřuje, že každý vrchol má stupeň právě 2. \pause
+        Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
     \end{itemize}
 
 \end{frame}
@@ -381,31 +404,36 @@
 
 \begin{frame}{Příklady teorií: Teorie uspořádání}
 
+    \pause
     \myexampleinline{Teorie uspořádání}: v jazyce uspořádání $L=\langle\leq\rangle$ s rovností, axiomy \alert{reflexivity}, \alert{antisymetrie}, a \alert{tranzitivity}
 
+    \pause
     \myalertamsmath{
     $$
     T=\{ x\leq x,\ x\leq y\land y\leq x\limplies x=y,\ x\leq y\land y\leq z\limplies x\leq z\}
     $$
     }
 
+    \pause
     \textbf{Modely:} $\langle S,\leq^S\rangle$, kde $\leq^S$ je \alert{částečné uspořádání}. 
     
+    \pause
     Příklad: \myexampleinline{
         $\A=\langle\mathbb N,\leq\rangle$
     }, \myexampleinline{
         $\B=\langle\mathcal P(X),\subseteq\rangle$
-     } pro $X=\{0,1,2\}$.
+     } pro $X=\{0,1,2\}$.\pause
     \begin{itemize}
         \item Formule \myexampleinline{
             $x\leq y\lor y\leq x$
-         } (\alert{linearita}) platí v $\A$, ale neplatí v $\B$: neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
+         } (\alert{linearita}) platí v $\A$, ale neplatí v $\B$: neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.\pause
         \item Sentence \myexampleinline{
             $(\exists x)(\forall y)(y\leq x)$
-         } (označme $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je také nezávislá v $T$.
+         } (označme $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je také nezávislá v $T$.\pause
         \item Formule \myexampleinline{
             $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$
-         } (označme  $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \alert{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
+         } (označme  $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. \pause 
+         Totéž platí pro její \alert{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
     \end{itemize}
 
 \end{frame}
@@ -413,8 +441,10 @@
 
 \begin{frame}{Příklady teorií: Algebraické teorie 1/2}
 
+    \pause
     \myexampleinline{Teorie grup}: $L=\langle +,-,0\rangle$ s rovností, axiomy 
     \alert{asociativita $+$}, \alert{neutralita $0$ vůči $+$}, a \alert{$-x$ je inverzní prvek k $x$ (vůči $+$ a $0$)}
+    \pause
     {\small
     \begin{align*}
         T_1=\{& x + (y + z) = (x + y) + z,\\
@@ -425,7 +455,9 @@
    
     \vspace{-24pt}
 
+    \pause
     \myexampleinline{Teorie komutativních grup}: navíc \alert{komutativita $+$} 
+    \pause
     {\small
     $$
     T_2=T_1\cup\{x+y=y+x\}
@@ -434,7 +466,9 @@
 
     \vspace{-6pt}
 
+    \pause
     \myexampleinline{Teorie okruhů}: $L=\langle +,-,0,\cdot,1\rangle$ s rovností, navíc \alert{neutralita $1$ vůči~$\cdot$}, \alert{asociativita~$\cdot$}, a \alert{(levá i pravá) distributivita $\cdot$ vůči $+$}
+    \pause
     {\small
     \begin{align*}
         T_3=T_2\cup\{   & 1 \cdot x = x \cdot 1,\\
@@ -448,20 +482,25 @@
 
 \begin{frame}{Příklady teorií: Algebraické teorie 2/2}
     
+    \pause
     \myexampleinline{Teorie komutativních okruhů}: navíc axiom \alert{komutativity $\cdot$}:
+    \pause
     {\small
     $$
     T_4 = T_3 \cup \{x \cdot y = y \cdot x\}
     $$
     }
     
+    \pause
     \myexampleinline{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \alert{existence inverzního prvku k $\cdot$} a \alert{netriviality}:
+    \pause
     {\small
     $$
     T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1),\ \neg\,0=1\}
     $$
     }
 
+    \pause
     \myexampleinline{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \alert{kompatibility uspořádání}: 
 
     \begin{itemize}
@@ -469,8 +508,222 @@
         \item $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$
     \end{itemize}
 
+    \pause
     Modely jsou tělesa s \alert{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi.
 
+\end{frame}
+
+
+\section{6.6 Podstruktura, expanze, redukt}
+
+
+\begin{frame}{Podstruktura}
+
+    \pause
+    \begin{itemize}
+        \item \alert{podstruktura} zobecňuje podgrupu, podprostor vektorového prostoru, (indukovaný) podgraf: na podmnožině $B$ univerza vytvoříme strukturu, která \myalertinline{``zdědí'' relace, funkce a konstanty}\pause
+        \item $B$ musí být \alert{uzavřená} na všechny funkce (vč. konstant)\pause
+    \end{itemize}
+
+    \myblock{
+    Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \alert{(indukovaná) podstruktura} struktury $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ (v též signatuře $\langle\mathcal R,\mathcal F\rangle$), značíme \alert{$\B\subseteq\A$}, jestliže:\pause
+
+    \begin{itemize}
+        \item $\emptyset\neq B\subseteq A$\pause
+        \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$\pause
+        \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$, tj. $f^\B$ je restrikce $f^\A$ na množinu $B$, a výstupy jsou všechny z $B$\pause
+    \end{itemize}
+    }
+
+    speciálně, pro konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$
+    
+\end{frame}
+
+
+\begin{frame}{Restrikce na podmnožinu, příklady}
+    
+    \pause
+    Množina $C\subseteq A$ je \alert{uzavřená} na funkci $f:A^n\to A$, pokud $f(x_1,\dots,x_n)\in C$ pro všechna $x_i\in C$.
+
+    \medskip
+
+    \pause
+    \myblock{
+    \textbf{Pozorování:} Množina $\emptyset\neq C\subseteq A$ je univerzem podstruktury, právě když je uzavřená na všechny funkce struktury $\A$ (včetně konstant). V tom případě je to \alert{restrikce} $\A$ na množinu $C$, značíme \alert{$\A\restriction C$}.
+    }
+
+    \medskip
+    
+    \pause
+    \begin{itemize}
+        \item \myexampleinline{
+            $\underline{\mathbb Z}=\langle \mathbb Z,+,\cdot,0\rangle$
+         } je podstrukturou \myexampleinline{
+            $\underline{\mathbb Q}=\langle \mathbb Q,+,\cdot,0\rangle$
+            }, můžeme psát: \alert{$\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$}\pause
+        \item \myexampleinline{
+            $\underline{\mathbb N}=\langle \mathbb N,+,\cdot,0\rangle$
+         } je podstrukturou obou těchto struktur, platí: \alert{$\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$}\pause
+        \item Množina \myexampleinline{
+            $\{k\in\mathbb Z\mid k\leq 0\}$
+         } není univerzem podstruktury $\underline{\mathbb Z}$ ani~$\underline{\mathbb Q}$, není uzavřená na násobení.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Platnost v podstruktuře (pro otevřené formule je zachována)}
+    
+    \pause
+    \myblock{
+    \textbf{Pozorování:}
+    Je-li $\B\subseteq\A$, $\varphi$ \alert{otevřená} formule, a \alert{$e\colon\Var\to B$}, potom platí: $\B\models\varphi[e]$ právě když $\A\models\varphi[e]$.
+    }
+
+    \pause
+    \textbf{Důkaz:}
+    Snadno indukcí dle struktury $\varphi$, pro atomickou zřejmé.\hfill\qedsymbol
+    
+    \medskip
+
+    \pause
+    \myblock{
+    \textbf{Důsledek:}
+    \alert{Otevřená} formule platí ve struktuře $\A$, právě když platí v každé podstruktuře $\B\subseteq\A$.
+    }
+
+    \medskip
+
+    \pause
+    Teorie $T$ je \alert{otevřená}, jsou-li všechny její axiomy otevřené formule.
+
+    \pause
+    \myblock{
+    \textbf{Důsledek:}
+    Modely otevřené teorie jsou uzavřené na podstruktury, tj. každá podstruktura modelu této teorie je také její model.
+    }
+
+    \medskip
+
+    \pause
+    \begin{itemize}
+        \item \myexampleinline{Teorie grafů} je otevřená. Podstruktura grafu je také graf: (indukovaný) \alert{podgraf}. Stejně podgrupy, Booleovy podalgebry.\pause
+        \item \myexampleinline{Teorie těles} není otevřená. \pause Později ukážeme, že ani \alert{otevřeně axiomatizovatelná} (kvantifikátoru v axiomu o existenci inverzního prvku se nezbavíme). \pause Podstruktura tělesa $\mathbb Q$ na množině $\mathbb Z$, $\mathbb Q\restriction\mathbb Z$, není těleso. (Je to tzv. \alert{okruh}.)
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Generovaná podstruktura (zobecníme lineární obal vektorů)}
+    
+    \pause
+    Co když podmnožina univerza \alert{není} uzavřená? Vezmeme její \alert{uzávěr}. %(zobecňuje \alert{lineární obal} množiny vektorů).
+
+    \medskip
+
+    \pause
+    \myblock{
+    Mějme $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ a $\emptyset\neq X\subseteq A$. Buď $B\subseteq A$ nejmenší podmnožina, která obsahuje $X$ a je uzavřená na všechny funkce $\A$ (tj. obsahuje i všechny konstanty). Potom podstruktura $\A\restriction B$ je \alert{generovaná} $X$, značíme ji \alert{$\A\langle X\rangle$}.
+    }
+
+    \medskip
+
+    \pause
+    Např. pro \myexampleinline{
+        $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$
+    }, \myexampleinline{
+        $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$
+    }, \myexampleinline{
+        $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$
+    }: \pause
+    \begin{itemize}
+        \item $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$\pause
+        \item $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$\pause
+        \item $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel
+    \end{itemize}
+
+    \medskip
+    
+    \pause
+    Pokud $\A$ nemá žádné funkce (ani konstanty), např. graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
+    
+\end{frame}
+
+
+\begin{frame}{Expanze a redukt}
+ 
+    \pause
+    \myblock{
+    Mějme $L\subseteq L'$,  $L$-strukturu $\A$ a $L'$-strukturu $\A'$ na stejné doméně. Je-li interpretace každého symbolu z $L$ stejná v $\A$ i v $\A'$, potom:\pause
+    \begin{itemize}
+        \item $\A'$ je \alert{expanze} $\A$ do $L'$ (\alert{$L'$-expanze} struktury $\A$)\pause
+        \item $\A$ je \alert{redukt} $\A'$ na $L$ (\alert{$L$-redukt} struktury $\A'$)\pause
+    \end{itemize} 
+    }  
+
+    
+    \medskip
+    Například:\pause
+    \begin{itemize}
+        \item Mějme \myexampleinline{grupu celých čísel $\langle\mathbb Z,+,-,0\rangle$}. Potom: \pause
+        \begin{itemize}
+            \item struktura $\langle \mathbb Z,+\rangle$ je její redukt\pause
+            \item struktura $\langle\mathbb Z,+,-,0,\cdot,1\rangle$ (\alert{okruh} celých čísel) je její expanze\pause
+        \end{itemize}
+    
+        \item Mějme \myexampleinline{graf $\mathcal G=\langle G, E^\mathcal G\rangle$}. Potom \alert{expanze $\mathcal G$ o jména prvků} (z množiny G) je struktura $\langle G, E^G,c_v^\mathcal G\rangle_{v\in G}$ v jazyce $\langle E,c_v\rangle_{v\in G}$, kde $c_v^\mathcal G=v$ pro všechny vrcholy $v\in G$.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Věta o konstantách}
+
+    \pause
+    \begin{itemize}
+        \item splnit formuli s volnou proměnnou $x$ je totéž, co splnit formuli, ve které je $x$ nahrazena \alert{novým} konstantním symbolem $c$\pause
+        \item proč: nový symbol lze v modelu interpretovat každým prvkem\pause
+        \item podobný trik využijeme v tablo metodě\pause
+    \end{itemize}
+
+    \myblock{
+    \textbf{Věta (O konstantách):}
+    Mějme $L$-formuli $\varphi$ s volnými proměnnými $x_1,\dots,x_n$. Označme jako $L'$ rozšíření $L$ o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$, ale v jazyce $L'$. Potom:
+    $$
+    T\models\varphi\ \text{ právě když }\ T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
+    $$
+    \vspace{-12pt}
+    }
+
+    \pause
+    \textbf{Důkaz:} stačí ukázat pro jednu volnou proměnnou, rozšířit indukcí
+
+    \pause
+    \alert{\Large \bf $\Rightarrow$} \textbf{Víme:} $\varphi$ platí v každém modelu $T$. \textbf{Chceme:} $\varphi(x/c)$ platí v každém modelu $T'$. \pause Mějme model $\A'\models T'$ a ohodnocení $e\colon\Var\to A'$ a ukažme, že \alert{$\A'\models\varphi(x/c)[e]$}.
+
+\end{frame}
+
+
+\begin{frame}{Pokračování důkazu}
+
+    Buď $\A$ redukt $\A'$ na $L$ (`zapomeneme' konstantu $c^{\A'}$). Všimněte si, že \alert{$\A$ je model $T$} (axiomy $T=T'$ neobsahují \alert{nový} symbol $c$). \pause Dle předpokladu $\A\models\varphi$, tj. $\A\models\varphi[e']$ pro \alert{libovolné} ohodnocení~$e'$, speciálně pro $e(x/c^{\A'})$ kde $x$ ohodnotíme  interpretací $c$ v $\A'$.
+    
+    \pause 
+    Máme $\A\models\varphi[e(x/c^{\A'})]$, což ale znamená $\A'\models\varphi(x/c)[e]$.
+    
+    \pause 
+    \alert{\Large \bf $\Leftarrow$} \textbf{Víme:} $\varphi(x/c)$ platí v každém modelu $T'$. \textbf{Chceme:} $\varphi$ platí v každém modelu $T$. \pause Zvolme $\A\models T$ a ohodnocení $e\colon\Var\to A$ a ukažme, že \alert{$\A\models\varphi[e]$}.
+
+    \pause 
+    Buď $\A'$ expanze $\A$ do $L'$, kde $c$ interpretujeme jako $c^{\A'}=e(x)$. \pause Dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$. \pause Tedy $\A'\models\varphi(x/c)[e]$, což znamená \alert{$\A'\models\varphi[e]$} (\myalertinline{
+        $e=e(x/c^{\A'})$
+        }, z toho plyne \myalertinline{
+            $\A'\models\varphi(x/c)[e]\Leftrightarrow\A'\models\varphi[e(x/c^{\A'})]\Leftrightarrow\A'\models\varphi[e]$
+            }).
+    
+    \pause 
+    Formule $\varphi$ neobsahuje $c$ (je \alert{nový}), máme tedy i $\A\models\varphi[e]$. \hfill\qedsymbol
+    
 \end{frame}
 
 

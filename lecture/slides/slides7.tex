@@ -19,209 +19,16 @@
 
     \textbf{Program}
         \begin{itemize}
-            \item podstruktury, expanze, redukty           
             \item extenze teorií, extenze o definice
             \item definovatelnost a databázové dotazy
             \item vztah výrokové a predikátové logiky
+            \item tablo metoda v predikátové logice, jazyky s rovností
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.6-6.9 z Kapitoly 6
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.7-6.9 z Kapitoly 6, Sekce 7.1-7.3 z Kapitoly 7
 
-\end{frame}
-
-
-\section{6.6 Podstruktura, expanze, redukt}
-
-
-\begin{frame}{Podstruktura}
-
-    \begin{itemize}
-        \item \alert{podstruktura} zobecňuje podgrupu, podprostor vektorového prostoru, (indukovaný) podgraf: na podmnožině $B$ univerza vytvoříme strukturu, která \myalertinline{``zdědí'' relace, funkce a konstanty}
-        \item $B$ musí být \alert{uzavřená} na všechny funkce (vč. konstant)
-    \end{itemize}
-
-    \myblock{
-    Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \alert{(indukovaná) podstruktura} struktury $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ (v též signatuře $\langle\mathcal R,\mathcal F\rangle$), značíme \alert{$\B\subseteq\A$}, jestliže:
-
-    \begin{itemize}
-        \item $\emptyset\neq B\subseteq A$
-        \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$
-        \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$, tj. $f^\B$ je restrikce $f^\A$ na množinu $B$, a výstupy jsou všechny z $B$
-    \end{itemize}
-    }
-
-    speciálně, pro konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$
-    
-
-
-\end{frame}
-
-
-\begin{frame}{Restrikce na podmnožinu, příklady}
-    
-    Množina $C\subseteq A$ je \alert{uzavřená} na funkci $f:A^n\to A$, pokud $f(x_1,\dots,x_n)\in C$ pro všechna $x_i\in C$.
-
-    \medskip
-
-    \myblock{
-    \textbf{Pozorování:} Množina $\emptyset\neq C\subseteq A$ je univerzem podstruktury, právě když je uzavřená na všechny funkce struktury $\A$ (včetně konstant). V tom případě je to \alert{restrikce} $\A$ na množinu $C$, značíme \alert{$\A\restriction C$}.
-    }
-
-    \medskip
-    
-    \begin{itemize}
-        \item \myexampleinline{
-            $\underline{\mathbb Z}=\langle \mathbb Z,+,\cdot,0\rangle$
-         } je podstrukturou \myexampleinline{
-            $\underline{\mathbb Q}=\langle \mathbb Q,+,\cdot,0\rangle$
-            }, můžeme psát: \alert{$\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$}
-        \item \myexampleinline{
-            $\underline{\mathbb N}=\langle \mathbb N,+,\cdot,0\rangle$
-         } je podstrukturou obou těchto struktur, platí: \alert{$\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$}
-        \item Množina \myexampleinline{
-            $\{k\in\mathbb Z\mid k\leq 0\}$
-         } není univerzem podstruktury $\underline{\mathbb Z}$ ani~$\underline{\mathbb Q}$, není uzavřená na násobení.
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Platnost v podstruktuře (pro otevřené formule je zachována)}
-    
-    
-    
-    \myblock{
-    \textbf{Pozorování:}
-    Je-li $\B\subseteq\A$, $\varphi$ \alert{otevřená} formule, a \alert{$e\colon\Var\to B$}, potom platí: $\B\models\varphi[e]$ právě když $\A\models\varphi[e]$.
-    }
-
-    \textbf{Důkaz:}
-    Snadno indukcí dle struktury $\varphi$, pro atomickou zřejmé.\hfill\qedsymbol
-    
-    \medskip
-
-    \myblock{
-    \textbf{Důsledek:}
-    \alert{Otevřená} formule platí ve struktuře $\A$, právě když platí v každé podstruktuře $\B\subseteq\A$.
-    }
-
-    \medskip
-
-    Teorie $T$ je \alert{otevřená}, jsou-li všechny její axiomy otevřené formule.
-
-    \myblock{
-    \textbf{Důsledek:}
-    Modely otevřené teorie jsou uzavřené na podstruktury, tj. každá podstruktura modelu této teorie je také její model.
-    }
-
-    \medskip
-
-    \begin{itemize}
-        \item \myexampleinline{Teorie grafů} je otevřená. Podstruktura grafu je také graf: (indukovaný) \alert{podgraf}. Stejně podgrupy, Booleovy podalgebry.
-        \item \myexampleinline{Teorie těles} není otevřená. Později ukážeme, že ani \alert{otevřeně axiomatizovatelná} (kvantifikátoru v axiomu o existenci inverzního prvku se nezbavíme). Podstruktura tělesa $\mathbb Q$ na množině $\mathbb Z$, $\mathbb Q\restriction\mathbb Z$, není těleso. (Je to tzv. \alert{okruh}.)
-    \end{itemize}
-    
-\end{frame}
-
-
-\begin{frame}{Generovaná podstruktura (zobecníme lineární obal vektorů)}
-    
-    Co když podmnožina univerza \alert{není} uzavřená? Vezmeme její \alert{uzávěr}. %(zobecňuje \alert{lineární obal} množiny vektorů).
-
-    \medskip
-
-    \myblock{
-    Mějme $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ a $\emptyset\neq X\subseteq A$. Buď $B\subseteq A$ nejmenší podmnožina, která obsahuje $X$ a je uzavřená na všechny funkce $\A$ (tj. obsahuje i všechny konstanty). Potom podstruktura $\A\restriction B$ je \alert{generovaná} $X$, značíme ji \alert{$\A\langle X\rangle$}.
-    }
-
-    \medskip
-
-    Např. pro \myexampleinline{
-        $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$
-    }, \myexampleinline{
-        $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$
-    }, \myexampleinline{
-        $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$
-    }: 
-    \begin{itemize}
-        \item $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$
-        \item $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$
-        \item $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel
-    \end{itemize}
-
-    \medskip
-    
-    Pokud $\A$ nemá žádné funkce (ani konstanty), např. graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
-    
-\end{frame}
-
-
-\begin{frame}{Expanze a redukt}
- 
-    \myblock{
-    Mějme $L\subseteq L'$,  $L$-strukturu $\A$ a $L'$-strukturu $\A'$ na stejné doméně. Je-li interpretace každého symbolu z $L$ stejná v $\A$ i v $\A'$, potom:
-    \begin{itemize}
-        \item $\A'$ je \alert{expanze} $\A$ do $L'$ (\alert{$L'$-expanze} struktury $\A$)
-        \item $\A$ je \alert{redukt} $\A'$ na $L$ (\alert{$L$-redukt} struktury $\A'$) 
-    \end{itemize} 
-    }  
-
-    \medskip
-    Například:
-    \begin{itemize}
-        \item Mějme \myexampleinline{grupu celých čísel $\langle\mathbb Z,+,-,0\rangle$}. Potom: 
-        \begin{itemize}
-            \item struktura $\langle \mathbb Z,+\rangle$ je její redukt
-            \item struktura $\langle\mathbb Z,+,-,0,\cdot,1\rangle$ (\alert{okruh} celých čísel) je její expanze
-        \end{itemize}
-    
-        \item Mějme \myexampleinline{graf $\mathcal G=\langle G, E^\mathcal G\rangle$}. Potom \alert{expanze $\mathcal G$ o jména prvků} (z množiny G) je struktura $\langle G, E^G,c_v^\mathcal G\rangle_{v\in G}$ v jazyce $\langle E,c_v\rangle_{v\in G}$, kde $c_v^\mathcal G=v$ pro všechny vrcholy $v\in G$.
-    \end{itemize}
-
-\end{frame}
-
-
-\begin{frame}{Věta o konstantách}
-
-    \begin{itemize}
-        \item splnit formuli s volnou proměnnou $x$ je totéž, co splnit formuli, ve které je $x$ nahrazena \alert{novým} konstantním symbolem $c$
-        \item proč: nový symbol lze v modelu interpretovat každým prvkem
-        \item podobný trik využijeme v tablo metodě
-    \end{itemize}
-
-    \myblock{
-    \textbf{Věta (O konstantách):}
-    Mějme $L$-formuli $\varphi$ s volnými proměnnými $x_1,\dots,x_n$. Označme jako $L'$ rozšíření $L$ o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$, ale v jazyce $L'$. Potom:
-    $$
-    T\models\varphi\ \text{ právě když }\ T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
-    $$
-    \vspace{-12pt}
-    }
-
-    \textbf{Důkaz:} stačí ukázat pro jednu volnou proměnnou, rozšířit indukcí
-
-    \alert{\Large \bf $\Rightarrow$} \textbf{Víme:} $\varphi$ platí v každém modelu $T$. \textbf{Chceme:} $\varphi(x/c)$ platí v každém modelu $T'$. Mějme model $\A'\models T'$ a ohodnocení $e\colon\Var\to A'$ a ukažme, že \alert{$\A'\models\varphi(x/c)[e]$}.
-
-\end{frame}
-
-
-\begin{frame}{Pokračování důkazu}
-
-    Buď $\A$ redukt $\A'$ na $L$ (`zapomeneme' konstantu $c^{\A'}$). Všimněte si, že \alert{$\A$ je model $T$} (axiomy $T=T'$ neobsahují \alert{nový} symbol $c$). Dle předpokladu $\A\models\varphi$, tj. $\A\models\varphi[e']$ pro \alert{libovolné} ohodnocení~$e'$, speciálně pro $e(x/c^{\A'})$ kde $x$ ohodnotíme  interpretací $c$ v $\A'$.
-    
-    Máme $\A\models\varphi[e(x/c^{\A'})]$, což ale znamená $\A'\models\varphi(x/c)[e]$.
-    
-    \alert{\Large \bf $\Leftarrow$} \textbf{Víme:} $\varphi(x/c)$ platí v každém modelu $T'$. \textbf{Chceme:} $\varphi$ platí v každém modelu $T$. Zvolme $\A\models T$ a ohodnocení $e\colon\Var\to A$ a ukažme, že \alert{$\A\models\varphi[e]$}.
-
-    Buď $\A'$ expanze $\A$ do $L'$, kde $c$ interpretujeme jako $c^{\A'}=e(x)$. Dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$. Tedy $\A'\models\varphi(x/c)[e]$, což znamená \alert{$\A'\models\varphi[e]$} (\myalertinline{
-        $e=e(x/c^{\A'})$
-        }, z toho plyne \myalertinline{
-            $\A'\models\varphi(x/c)[e]\Leftrightarrow\A'\models\varphi[e(x/c^{\A'})]\Leftrightarrow\A'\models\varphi[e]$
-            }).
-    
-    Formule $\varphi$ neobsahuje $c$ (je \alert{nový}), máme tedy i $\A\models\varphi[e]$. \hfill\qedsymbol
-    
 \end{frame}
 
 
@@ -230,26 +37,26 @@
 
 \begin{frame}{Extenze teorie}
 
-    Stejně jako ve výrokové logice, je-li $T$ teorie v jazyce $L$:
+    Stejně jako ve výrokové logice, je-li $T$ teorie v jazyce $L$:\pause 
 
     \myblock{
         \begin{itemize}
-            \item \alert{extenze:} $T'$ v jazyce $L'\supseteq L$ splňující $\Conseq_L(T)\subseteq\Conseq_{L'}(T')$
-            \item \alert{jednoduchá:} $L'=L$
-            \item \alert{konzervativní:} $\Conseq_L(T)=\Conseq_L(T')=\Conseq_{L'}(T')\cap \Fm_L$
-            \item \alert{ekvivalentní:} $T'$ extenzí $T$ a $T$ extenzí $T'$ (obě v témž jazyce)
+            \item \alert{extenze:} $T'$ v jazyce $L'\supseteq L$ splňující $\Conseq_L(T)\subseteq\Conseq_{L'}(T')$\pause 
+            \item \alert{jednoduchá:} $L'=L$\pause 
+            \item \alert{konzervativní:} $\Conseq_L(T)=\Conseq_L(T')=\Conseq_{L'}(T')\cap \Fm_L$\pause 
+            \item \alert{ekvivalentní:} $T'$ extenzí $T$ a $T$ extenzí $T'$ (obě v témž jazyce)\pause 
         \end{itemize}
     }
     
-    Jsou-li $T,T'$ ve stejném jazyce $L$:
+    Jsou-li $T,T'$ ve stejném jazyce $L$:\pause 
     \begin{itemize}
-        \item $T'$ je extenze $T$, právě když $\M_L(T')\subseteq\M_L(T)$
-        \item $T'$ je ekvivalentní s $T$, právě když $\M_L(T')=\M_L(T)$
+        \item $T'$ je extenze $T$, právě když $\M_L(T')\subseteq\M_L(T)$\pause 
+        \item $T'$ je ekvivalentní s $T$, právě když $\M_L(T')=\M_L(T)$\pause 
     \end{itemize}
        
-    Zvětšíme-li jazyk:
+    Zvětšíme-li jazyk:\pause 
     \begin{itemize}
-        \item \alert{ve výrokové logice:} přidáváme/zapomínáme hodnoty pro nové prvovýroky
+        \item \alert{ve výrokové logice:} přidáváme/zapomínáme hodnoty pro nové prvovýroky\pause 
         \item \alert{v predikátové logice:} expandujeme/redukujeme modely (přidáváme/zapomínáme nové relace, funkce, konstanty)
     \end{itemize}
 
@@ -259,26 +66,28 @@
 \begin{frame}{Extenze teorie: sémantický popis}
 
     \myblock{
-        Mějme jazyky $L\subseteq L'$, $L$-teorii $T$ a $L'$-teorii $T'$:
+        Mějme jazyky $L\subseteq L'$, $L$-teorii $T$ a $L'$-teorii $T'$:\pause 
         \begin{enumerate}[(i)]
-            \item $T'$ je \alert{extenzí} $T$ $\Leftrightarrow$ $L$-redukt každého modelu $T'$ je model $T$
-            \item $T'$ je \alert{konzervativní extenzí} $T$ $\Leftrightarrow$ $T'$ je extenzí $T$, a každý model $T$ lze expandovat do $L'$ na nějaký model $T'$
+            \item $T'$ je \alert{extenzí} $T$ $\Leftrightarrow$ $L$-redukt každého modelu $T'$ je model $T$\pause 
+            \item $T'$ je \alert{konzervativní extenzí} $T$ $\Leftrightarrow$ $T'$ je extenzí $T$, a každý model $T$ lze expandovat do $L'$ na nějaký model $T'$\pause 
         \end{enumerate}        
     }
     
     {\small \textbf{Poznámka:} Důkaz \alert{(ii) \Large $\Rightarrow$} vynecháme (technický problém: model, který
 
-    \vspace{-11pt} nelze expandovat $\rightsquigarrow$ $L$-sentence platná v $T$ ale ne v $T'$)}
+    \vspace{-11pt} nelze expandovat $\rightsquigarrow$ $L$-sentence platná v $T$ ale ne v $T'$)}\pause 
 
     \vspace{-3pt}
-    \textbf{Důkaz:}
-    \alert{(i) \Large $\Rightarrow$} Buď $\A'$ model $T'$, $\A$ jeho $L$-redukt. Protože $T'$ je extenzí, platí v ní, tedy i v $\A'$, každý axiom $\varphi\in T$. Ten ale obsahuje jen symboly z $L$, tedy platí i v $\A$.
+    \textbf{Důkaz:}\pause 
+    \alert{(i) \Large $\Rightarrow$} Buď $\A'$ model $T'$, $\A$ jeho $L$-redukt. \pause Protože $T'$ je extenzí, platí v ní, tedy i v $\A'$, každý axiom $\varphi\in T$. Ten ale obsahuje jen symboly z $L$, tedy platí i v $\A$.
     
+    \pause 
     \vspace{-3pt}
-    \alert{(i) \Large $\Leftarrow$} \textbf{Mějme:} $L$-sentenci $\varphi$,  $T\models\varphi$. \textbf{Chceme:} $T'\models\varphi$. Pro lib. model $\A'\in\M_{L'}(T')$ víme, že jeho $L$-redukt $\A$ je modelem $T$, tedy $\A\models\varphi$. Z toho plyne i $\A'\models\varphi$ (opět $\varphi$ je v $L$).
+    \alert{(i) \Large $\Leftarrow$} \textbf{Mějme:} $L$-sentenci $\varphi$,  $T\models\varphi$. \textbf{Chceme:} $T'\models\varphi$. \pause Pro lib. model $\A'\in\M_{L'}(T')$ víme, že jeho $L$-redukt $\A$ je modelem $T$, tedy $\A\models\varphi$. Z toho plyne i $\A'\models\varphi$ (opět $\varphi$ je v $L$).
     
+    \pause 
     \vspace{-3pt}
-    \alert{(ii) \Large $\Leftarrow$} \textbf{Mějme:} $L$-sentenci $\varphi$,  $T'\models\varphi$. \textbf{Chceme:} $T\models\varphi$. Každý $\A\in\M_L(T)$ lze expandovat na nějaký $\A'\in\M_{L'}(T')$. Víme, že $\A'\models\varphi$, takže i $\A\models\varphi$. Tím jsme dokázali $T\models\varphi$.    
+    \alert{(ii) \Large $\Leftarrow$} \textbf{Mějme:} $L$-sentenci $\varphi$,  $T'\models\varphi$. \textbf{Chceme:} $T\models\varphi$. \pause Každý $\A\in\M_L(T)$ lze expandovat na nějaký $\A'\in\M_{L'}(T')$. Víme, že $\A'\models\varphi$, takže i $\A\models\varphi$. Tím jsme dokázali $T\models\varphi$.    
     \hfill\qedsymbol
     
 \end{frame}
@@ -286,48 +95,50 @@
 
 \begin{frame}{Extenze o definice (neformálně)}
 
+    \pause 
     \begin{itemize}
         %\item speciální případ extenze: \alert{extenze o definici}
-        \item přidáme nový symbol, jehož význam je jednoznačně daný \alert{definující formulí} (jako procedura/funkce v programování)
-        \item pro relační symboly jednoduché, pro funkční symboly musíme navíc zaručit \alert{existenci} a \alert{jednoznačnost} funkční hodnoty
+        \item přidáme nový symbol, jehož význam je jednoznačně daný \alert{definující formulí} (jako procedura/funkce v programování)\pause 
+        \item pro relační symboly jednoduché, pro funkční symboly musíme navíc zaručit \alert{existenci} a \alert{jednoznačnost} funkční hodnoty\pause 
     \end{itemize}
 
-    Ukážeme:
+    Ukážeme:\pause 
     \begin{itemize}
-        \item je to konzervativní extenze, dokonce každý model původní teorie lze \alert{jednoznačně} expandovat na model nové teorie
+        \item je to konzervativní extenze, dokonce každý model původní teorie lze \alert{jednoznačně} expandovat na model nové teorie\pause 
         \item každou formuli používající nové symboly lze přepsat na  formuli v původním jazyce (tak, že jsou v extenzi ekvivalentní)
     \end{itemize}
 
 \end{frame}
 
 
-
 \begin{frame}{Definice relačního symbolu}
     
+    \pause 
     nový $n$-ární relační symbol $R$ lze definovat lib. formulí $\psi(x_1,\dots,x_n)$
 
+    \pause 
     \begin{itemize}
         \item teorii v jazyce s rovností lze \myexampleinline{rozšířit o symbol $\neq$} \alert{definovaný} formulí \alert{$\neg x_1=x_2$}; tj. požadujeme, aby:\myalertinline{
             $x_1\neq x_2\liff\neg x_1=x_2$
-            }
+            }\pause 
         \item teorii uspořádání lze \myexampleinline{rozšířit o $<$} definovaný formulí \alert{$x_1\leq x_2\land \neg x_1=x_2$}; tj. platí:\myalertinline{
             $x_1<x_2 \liff x_1\leq x_2\land \neg x_1=x_2$
-        }
+        }\pause 
         \item v aritmetice lze \myexampleinline{zavést $\leq$} takto:\myalertinline{
             $x_1\leq x_2\liff(\exists y)(x_1+y=x_2)$
-        }
+        }\pause 
         \item v uspořádaném stromu lze zavést unární predikát \myexampleinline{
             $\mathrm{Leaf}(x)$
         }:
         \myalertinline{
             $\mathrm{Leaf}(x)\liff\neg(\exists y)(x<_Ty)$
-        }
+        }\pause 
     \end{itemize}
 
     \medskip
 
     \myblock{
-    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n)$ v jazyce $L$. Označme jako $L'$ rozšíření jazyka $L$ o nový $n$-ární relační symbol $R$. \alert{Extenze teorie $T$ o definici $R$ formulí $\psi$} je $L'$-teorie:
+    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n)$ v jazyce $L$. Označme jako $L'$ rozšíření jazyka $L$ o nový $n$-ární relační symbol $R$. \pause \alert{Extenze teorie $T$ o definici $R$ formulí $\psi$} je $L'$-teorie:\pause 
     $$
     T'=T\cup\{R(x_1,\dots,x_n)\ \liff\ \psi(x_1,\dots,x_n)\}
     $$
@@ -338,21 +149,24 @@
 
 \begin{frame}{Definice relačního symbolu: vlastnosti}
     
+    \pause 
     \myblock{
         \textbf{Tvrzení:}
         \begin{enumerate}[(i)]
-            \item $T'$ je konzervativní extenze $T$.
+            \item $T'$ je konzervativní extenze $T$.\pause 
             \item Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
         \end{enumerate}
         
     }
 
-    \textbf{Důkaz:} \alert{(i)} ihned ze sémantického popisu extenzí, neboť zřejmě každý model $T$ lze \alert{jednoznačně} expandovat na model $T'$
+    \pause 
+    \textbf{Důkaz:} \pause \alert{(i)} ihned ze sémantického popisu extenzí, neboť zřejmě každý model $T$ lze \alert{jednoznačně} expandovat na model $T'$
 
+    \pause 
     \alert{(ii)} atomickou podformuli s novým symbolem $R$, tj. tvaru \alert{$R(t_1,\dots,t_n)$}, nahradíme formulí
     $$
     \psi'(x_1/t_1,\dots,x_n/t_n)
-    $$
+    $$\pause 
     kde $\psi'$ je \alert{varianta $\psi$ zaručující substituovatelnost} všech termů (např. přejmenujeme všechny vázané proměnné $\psi$ na zcela nové)\hfill\qedsymbol
 
 \end{frame}
@@ -360,12 +174,14 @@
 
 \begin{frame}{Definice funkčního symbolu: příklady}
     
+    \pause 
     \myblock{
     vztah $f(x_1,\dots,x_n)=y$ definujeme formulí $\psi(x_1,\dots,x_n,y)$; pro každý vstup $(x_1,\dots,x_n)$ musí \alert{existovat jednoznačný} výstup $y$
     }
 
     \bigskip
 
+    \pause 
     1. \myexampleinline{Teorie grup:} binární funkční symbol \alert{$-_b$} pomocí $+$ a unárního $-$
         
         \myalertmath{
@@ -374,12 +190,14 @@
         $$
         }
 
+    \pause 
     \begin{itemize}
         \item zřejmě pro každá $x,y$ \alert{existuje} \alert{jednoznačné} $z$ splňující definici  
     \end{itemize}
         
     \bigskip
     
+    \pause 
     2. \myexampleinline{Teorie \alert{lineárních uspořádání}:} binární funkční symbol \alert{$\min$}
         
         \myalertmath{
@@ -389,8 +207,9 @@
         $$
         }
 
+    \pause 
     \begin{itemize}
-        \item existence a jednoznačnost platí díky linearitě ($x\leq y\lor y\leq x$)
+        \item existence a jednoznačnost platí díky linearitě ($x\leq y\lor y\leq x$)\pause 
         \item pouze v teorii uspořádání by nešlo o dobrou definici: $\min^\A(a_1,a_2)$ nemusí existovat
     \end{itemize}        
     
@@ -399,12 +218,12 @@
 
 \begin{frame}{Definice funkčního symbolu: definice}
 
-
+    \pause 
     \myblock{
-    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n,y)$ v jazyce $L$. Označme  $L'$ rozšíření $L$ o nový $n$-ární funkční symbol $f$. Nechť platí:
+    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n,y)$ v jazyce $L$. Označme  $L'$ rozšíření $L$ o nový $n$-ární funkční symbol $f$. Nechť platí:\pause 
     \begin{itemize}
-        \item $T\models(\exists y)\psi(x_1,\dots,x_n,y)$ \hfill \alert{\footnotesize (existence)}
-        \item $T\models\psi(x_1,\dots,x_n,y)\land \psi(x_1,\dots,x_n,z)\limplies y=z$ \hfill \alert{\footnotesize (jednoznačnost)}
+        \item $T\models(\exists y)\psi(x_1,\dots,x_n,y)$ \hfill \alert{\footnotesize (existence)}\pause 
+        \item $T\models\psi(x_1,\dots,x_n,y)\land \psi(x_1,\dots,x_n,z)\limplies y=z$ \hfill \alert{\footnotesize (jednoznačnost)}\pause 
     \end{itemize}
     Potom \alert{extenze teorie $T$ o definici $f$ formulí $\psi$} je $L'$-teorie:
 
@@ -414,19 +233,22 @@
     $$
     }
 
+    \pause 
     \begin{itemize}
-        \item $\psi$ definuje v modelu $(n+1)$-ární relaci, ta \alert{musí být funkcí}        
+        \item $\psi$ definuje v modelu $(n+1)$-ární relaci, ta \alert{musí být funkcí} \pause 
         \item je-li $\psi$ tvaru $t(x_1,\dots,x_n)=y$ pro term $t$, vždy to platí
     \end{itemize}
 
+    \pause 
     \myblock{
         \textbf{Tvrzení:}
         \begin{enumerate}[(i)]
-            \item $T'$ je konzervativní extenze $T$.
+            \item $T'$ je konzervativní extenze $T$.\pause 
             \item Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
         \end{enumerate}        
     }
 
+    \pause 
     \textbf{Důkaz:} \alert{(i)} modely $T$ lze \alert{jednoznačně} expandovat na modely $T'$
 
 \end{frame}
@@ -434,25 +256,27 @@
 
 \begin{frame}{Pokračování důkazu}
 
+    \pause 
     \alert{(ii)} stačí pro jediný výskyt symbolu $f$, jinak induktivně (je-li více vnořených výskytů $f(\dots f(\dots)\dots)$, potom od vnitřních k vnějším)
 
+    \pause 
     \begin{enumerate}
-    \item  nahradíme term $f(t_1,\dots,t_n)$ \alert{novou} proměnnou $z$: \alert{výsledek $\varphi^*$}     
+    \item  nahradíme term $f(t_1,\dots,t_n)$ \alert{novou} proměnnou $z$: \alert{výsledek $\varphi^*$} \pause 
     \item $\varphi$ zkonstruujeme takto: \myalertinline{
      $(\exists z)(\varphi^*\land \psi'(x_1/t_1,\dots,x_n/t_n,y/z))$
      }
      (kde $\psi'$ je varianta $\psi$ zaručující substituovatelnost)
-    \end{enumerate}
+    \end{enumerate}\pause 
 
     Ukážeme, že pro libovolný model $\A\models T'$ a ohodnocení $e$ platí:
     $$
     \A\models\varphi'[e]\ \text{ právě když }\ \A\models\varphi[e]
-    $$
+    $$\pause 
       
     Označme \alert{$a=(f(t_1,\dots,t_n))^\A[e]$}. Díky existenci a jednoznačnosti:
     $$
     \A\models\psi'(x_1/t_1,\dots,x_n/t_n,y/z)[e]\ \text{ právě když }\ e(z)=a 
-    $$
+    $$\pause 
     Máme tedy: $\A\models\varphi'[e]$ $\Leftrightarrow$ $\A\models\varphi^*[e(z/a)]$ $\Leftrightarrow$ $\A\models\varphi[e]$ \hfill\qedsymbol    
 
 \end{frame}
@@ -461,29 +285,33 @@
 \begin{frame}{Definice konstantního symbolu}
     
     \begin{itemize}
-        \item \alert{speciální případ:} funkční symbol arity $0$
-        \item extenze o definici konstantního symbolu $c$ formulí $\psi(y)$:
+        \item \alert{speciální případ:} funkční symbol arity $0$\pause 
+        \item extenze o definici konstantního symbolu $c$ formulí $\psi(y)$:\pause
         $$
         \alert{T'=T\cup\{c=y\liff \psi(y)\}}
         $$
+        
+        \pause
         \item musí platit \myalertinline{
             $T\models (\exists y)\psi(y)$
         } a \myalertinline{
             $T\models\psi(y)\land\psi(z)\limplies y=z$
-        }
+        }\pause 
         \item platí stejná tvrzení
     \end{itemize}
 
+    \pause 
     \myexampleinline{1. teorie v jazyce aritmetiky}, rozšíříme o definici symbolu $1$ formulí $\psi(y)$ tvaru \alert{$y=S(0)$}, přidáme tedy axiom \myalertinline{
             $1=y\ \liff\ y=S(0)$
             }
 
+    \pause 
     \myexampleinline{2. teorie těles}, nový symbol $\frac{1}{2}$, definice formulí \alert{$y\cdot (1+1)=1$}, tj. přidáním 
         \myalertinline{
             $\frac{1}{2}=y\ \liff\ y\cdot (1+1)=1$
-        }?
+        }?\pause 
         \begin{itemize}
-            \item \myalertinline{není extenze o definici!} neplatí existence: v tělese \alert{charakteristiky 2}, např. $\mathbb Z_2$, nemá rovnice $y\cdot (1+1)=1$ řešení
+            \item \myalertinline{není extenze o definici!} neplatí existence: v tělese \alert{charakteristiky 2}, např. $\mathbb Z_2$, nemá rovnice $y\cdot (1+1)=1$ řešení\pause 
             \item ale v teorii těles \alert{charakteristiky různé od 2}, tj. přidáme-li axiom $\neg (1+1=0)$, už ano; např. v $\mathbb Z_3$ máme $\frac{1}{2}^{\mathbb Z_3}=2$
         \end{itemize}        
 
@@ -492,32 +320,36 @@
 
 \begin{frame}{Extenze o definice}
 
+    \pause 
     \myblock{
         $L'$-teorie $T'$ je \alert{extenzí}  $L$-teorie $T$ \alert{o definice}, pokud vznikla postupnou extenzí o definice relačních a funkčních (vč. konstantních) symbolů.
     } 
 
     \medskip
     
+    \pause 
     \myblock{
-    \textbf{Tvrzení:} (snadno indukcí)
+    \textbf{Tvrzení:} (snadno indukcí)\pause 
         \begin{itemize}
-            \item Každý model $T$ lze jednoznačně expandovat na model $T'$.
-            \item $T'$ je konzervativní extenze $T$.
+            \item Každý model $T$ lze jednoznačně expandovat na model $T'$.\pause 
+            \item $T'$ je konzervativní extenze $T$.\pause 
             \item Pro $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$, že $T'\models\varphi'\liff\varphi$.
         \end{itemize}
     }
 
     \bigskip
 
+    \pause 
     \myexampleinline{
         Příklad: $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$
-    } 
-    $L=\langle +,0,\leq\rangle$ s rovností, zavedeme \alert{\large $<$} a unární \alert{\large $-$} přidáním axiomů:
+    }\pause  
+    
+    $L=\langle +,0,\leq\rangle$ s rovností, zavedeme \alert{\large $<$} a unární \alert{\large $-$} přidáním axiomů:\pause 
     \begin{align*}
         T'= T\cup\{ -x=y\ &\liff\ x+y=0,\\
         x<y\ &\liff\ x\leq y\land\neg(x=y)\}
-    \end{align*}
-    Formule \alert{$-x<y$} v jazyce $L'=\langle +,-,0,\leq,<\rangle$ s rovností je v $T'$ ekvivalentní formuli:
+    \end{align*}\pause 
+    Formule \alert{$-x<y$} v jazyce $L'=\langle +,-,0,\leq,<\rangle$ s rovností je v $T'$ ekvivalentní formuli:\pause 
     \myalertinline{
         $(\exists z)((z\leq y\land\neg(z=y))\land x+z=0)$
     }
@@ -530,10 +362,11 @@
 
 \begin{frame}{Definovatelné množiny}
 
+    \pause
     \begin{itemize}
-        \item formule $\varphi$ s jednou volnou proměnnou $x$ \dots ``vlastnost'' prvků
-        \item ve struktuře \alert{definuje} množinu prvků, které vlastnost splňují (tj. prvků $a$ takových, že $\varphi$ platí při ohodnocení kde $e(x)=a$)
-        \item $\varphi(x,y)$ definuje binární relaci, atp.
+        \item formule $\varphi$ s jednou volnou proměnnou $x$ \dots ``vlastnost'' prvků \pause
+        \item ve struktuře \alert{definuje} množinu prvků, které vlastnost splňují (tj. prvků $a$ takových, že $\varphi$ platí při ohodnocení kde $e(x)=a$)\pause
+        \item $\varphi(x,y)$ definuje binární relaci, atp.\pause
     \end{itemize}
     
     \myblock{
@@ -542,22 +375,22 @@
     $$
     \alert{\varphi^\A(x_1,\dots,x_n)}=\{(a_1,\dots,a_n)\in A^n\mid\A\models\varphi[e(x_1/a_1,\dots,x_n/a_n)]\}
     $$
-    \vspace{-16pt}
+    \vspace{-16pt}\pause
     }
 
     Zkráceně píšeme: \myalertinline{
         $\varphi^\A(\bar x)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a)]\}$
-    }
+    }\pause
 
     \begin{itemize}
         \item formule \myexampleinline{
             $\neg(\exists y)E(x,y)$
-         } definuje \myexampleinline{ v daném grafu } množinu všech \alert{izolovaných} vrcholů
+         } definuje \myexampleinline{ v daném grafu } množinu všech \alert{izolovaných} vrcholů\pause
         \item \myexampleinline{
             $(\exists y)(y\cdot y=x)\land\neg (x=0)$
         } definuje \myexampleinline{
             v tělese $\underline{\mathbb R}$
-        } množinu všech kladných reálných čísel
+        } množinu všech kladných reálných čísel\pause
         \item \myexampleinline{
             $x\leq y\land \neg (x=y)$
          } definuje v \myexampleinline{
@@ -570,9 +403,10 @@
 
 \begin{frame}{Definovatelnost s parametry}
 
+    \pause
     \begin{itemize}
-        \item vlastnosti prvků relativně k jiným prvkům? nelze čistě syntakticky, ale můžeme dosadit prvky jako \alert{parametry}
-        \item zápis \alert{$\varphi(\bar x,\bar y)$}: volné proměnné $x_1,\dots,x_n,y_1,\dots,y_k$
+        \item vlastnosti prvků relativně k jiným prvkům? nelze čistě syntakticky, ale můžeme dosadit prvky jako \alert{parametry}\pause
+        \item zápis \alert{$\varphi(\bar x,\bar y)$}: volné proměnné $x_1,\dots,x_n,y_1,\dots,y_k$\pause
     \end{itemize}
 
 	\myblock{
@@ -582,11 +416,14 @@
     \varphi^{\A,\bar b}(\bar x,\bar y)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a,\bar y/\bar b)]\}
     $$
     
+    \pause
     Pro $B\subseteq A$ označíme $\mathrm{Df}^n(\A,B)$ množinu všech množin definovatelných v $\A$ s parametry pocházejícími z $B$.
     }
 
+    \pause
     \textbf{Pozorování:} $\mathrm{Df}^n(\A,B)$ je uzavřená na doplněk, průnik, sjednocení, a obsahuje $\emptyset$ a $A^n$: je to \alert{podalgebra potenční algebry} $\mathcal P(A^n)$.
 
+    \pause
     \medskip
     Např. pro \myexampleinline{
         $\varphi(x,y)=E(x,y)$
@@ -599,10 +436,11 @@
 
 \begin{frame}{Aplikace: databázové dotazy}
     
+    \pause
     \begin{itemize}
-        \item \alert{relační databáze}: jedna nebo více \alert{tabulek}, také \alert{relace}
-        \item řádky tabulky jsou \alert{záznamy (records)}, také \alert{tice (tuples)}
-        \item struktura v čistě relačním jazyce
+        \item \alert{relační databáze}: jedna nebo více \alert{tabulek}, také \alert{relace}\pause
+        \item řádky tabulky jsou \alert{záznamy (records)}, také \alert{tice (tuples)}\pause
+        \item struktura v čistě relačním jazyce\pause
     \end{itemize}
 
     \medskip
@@ -617,7 +455,7 @@
             Philadelphia   & J. Demme    & T. Hanks      \\
             Batman Returns & T. Burton   & M. Keaton     \\
             \vdots         & \vdots      & \vdots
-        \end{tabular} 
+        \end{tabular} \pause
  
         \hspace{2cm}{\bf\small Program}
 
@@ -636,29 +474,30 @@
 
 \begin{frame}{Příklad SQL dotazu}
 
+    \pause
     \begin{itemize}
-        \item  SQL dotaz v nejjednodušší formě je formule (pomineme např. \alert{agregační funkce})
-        \item výsledek je množina definovaná touto formulí (s parametry) 
+        \item  SQL dotaz v nejjednodušší formě je formule (pomineme např. \alert{agregační funkce})\pause
+        \item výsledek je množina definovaná touto formulí (s parametry) \pause
        \end{itemize}
     
     \begin{center}
-        \myexampleinline{``Kdy a kde můžeme vidět film s Tomem Hanksem?''}
+        \myexampleinline{``Kdy a kde můžeme vidět film s Tomem Hanksem?''}\pause
     \end{center}
 
     \vspace{-6pt}
         
     {\tt\footnotesize
     \alert{select} Program.cinema, Program.time \alert{from} Program, Movies \alert{where} Program.title = Movies.title  \alert{and} Movies.actor = `T. Hanks' 
-    }  
+    }  \pause
     
     \begin{itemize}
         \item výsledek je množina \myalertinline{
             $\varphi^{\text{Database},\text{`T. Hanks'}} (x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$
-        }
-        \item definovaná ve struktuře \alert{$\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$}
-        \item jejíž doména je {\small $D=\{\text{\tt`Atlas'},\text{\tt`Lucerna'},\dots,\text{\tt`M. Keaton'}\}$}
-        \item s parametrem \alert{\small\tt`T. Hanks'}, 
-        \item definující formule \alert{\small $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$}:
+        }\pause
+        \item definovaná ve struktuře \alert{$\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$}\pause
+        \item jejíž doména je {\small $D=\{\text{\tt`Atlas'},\text{\tt`Lucerna'},\dots,\text{\tt`M. Keaton'}\}$}\pause
+        \item s parametrem \alert{\small\tt`T. Hanks'}, \pause
+        \item definující formule \alert{\small $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$}:\pause
         
         \medskip
         \myexampleamsmath{
@@ -723,9 +562,10 @@
     \vspace{9pt}
     }
 
+    \pause
     \begin{itemize}
-        \item dualita: záměnou $\land$ s $\lor$ a $\bot$ s $\top$ získáme tytéž axiomy    
-        \item nejmenší model: \alert{2-prvková B. algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$
+        \item dualita: záměnou $\land$ s $\lor$ a $\bot$ s $\top$ získáme tytéž axiomy \pause   
+        \item nejmenší model: \alert{2-prvková B. algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$\pause
         \item konečné modely, až na \alert{izomorfismus} ($f^n$ je $f$ po složkách):
         \myalertmath{
         $$
@@ -733,6 +573,7 @@
         $$
         }
         
+        \pause
         \item jsou izomorfní \alert{potenčním algebrám} $\mathcal P(\{1,\dots,n\})$ pomocí bijekce mezi podmnožinami a  charakteristickými vektory
     \end{itemize}
     
@@ -741,29 +582,641 @@
 
 \begin{frame}{Vztah výrokové a predikátové logiky}
    
+    \pause
     \begin{itemize}
-        \item výrokovou logiku lze `simulovat' v predikátové logice v teorii Booleových algeber
-        \item výroky jsou \alert{Booleovské termy}, konstanty $\bot,\top$ představují pravdu a lež
-        \item pravdivostní hodnota výroku (při daném pravdivostním ohodnocení) je hodnota termu v 2-prvkové Booleově algebře
+        \item výrokovou logiku lze `simulovat' v predikátové logice v teorii Booleových algeber\pause
+        \item výroky jsou \alert{Booleovské termy}, konstanty $\bot,\top$ představují pravdu a lež\pause
+        \item pravdivostní hodnota výroku (při daném pravdivostním ohodnocení) je hodnota termu v 2-prvkové Booleově algebře\pause
         \item kromě toho, \alert{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (i pro nekonečné jazyky)        
     \end{itemize}
     
 \end{frame}
 
+
 \begin{frame}{Na druhou stranu\dots}
 
+    \pause
     \begin{itemize}
-        \item máme-li \alert{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické formule pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$
-        \item viz Kapitola 8: Rezoluce v predikátové logice, kde se nejprve zbavíme kvantifikátorů pomocí tzv. \alert{Skolemizace}
-        \item výrokovou logiku lze také zavést jako fragment logiky predikátové, pokud povolíme \alert{nulární relace}
+        \item máme-li \alert{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické formule pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$\pause
+        \item viz Kapitola 8: Rezoluce v predikátové logice, kde se nejprve zbavíme kvantifikátorů pomocí tzv. \alert{Skolemizace}\pause
+        \item výrokovou logiku lze také zavést jako fragment logiky predikátové, pokud povolíme \alert{nulární relace}\pause
         \item $A^0=\{\emptyset\}$, tedy na libovolné množině jsou právě dvě nulární relace $R^A\subseteq A^0$: $R^A=\emptyset=0$ a $R^A=\{\emptyset\}=\{0\}=1$
     \end{itemize}
-
-    
         
 \end{frame}
 
 
+\section{\sc Kapitola 7: Tablo metoda v predikátové logice}
+
+
+\section{7.1 Neformální úvod}
+
+\begin{frame}{Úvodní příklady: dva tablo důkazy}
+    
+    \pause
+    \begin{minipage}{.49\textwidth}
+        \centering
+        \scalebox{0.87}{
+        \begin{forest}
+            for tree={math content}
+            [\F(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)
+                [\textcolor{red}{\T(\exists x)\neg P(x)}
+                    [\F\neg(\forall x)P(x)
+                        [\textcolor{blue}{\T(\forall x)P(x)}
+                            [\T\neg P(c_0)
+                                [\F P(c_0)
+                                    [\textcolor{blue}{\T(\forall x)P(x)}
+                                        [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+        }
+    \end{minipage}\pause
+    \begin{minipage}{.49\textwidth}
+        \centering
+        \scalebox{0.87}{
+        \begin{forest}
+            for tree={math content}
+            [\F\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)
+                [\T\neg(\forall x) P(x)
+                    [\textcolor{blue}{\F(\exists x)\neg P(x)}
+                        [\textcolor{red}{\F(\forall x)P(x)}
+                            [\F P(c_0)
+                                [\textcolor{blue}{\F (\exists x)\neg P(x)}
+                                    [\F\neg P(c_0)
+                                        [\T P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+        }
+    \end{minipage}
+
+    % \begin{itemize}\footnotesize
+    %     \item $c_0$ je \alert{pomocný konstantní symbol} (přidáme do jazyka)
+    %     \item kvantifikátory: položky typu ``\textcolor{red}{svědek}'' vs. typu ``\textcolor{blue}{všichni}''
+    % \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Tablo metoda v predikátové logice}
+
+    \pause
+    \begin{itemize}
+        \item opět vždy předpokládáme, že jazyk $L$ je spočetný
+        (nejprve bez rovnosti, později metodu rozšíříme pro rovnost)\pause
+        \item v položkách musí být \alert{sentence}: pravdivostní hodnota nesmí záviset na ohodnocení (ale můžeme vzít \alert{generální uzávěry})\pause
+        \item \alert{redukce položek}: stejná atomická tabla pro logické spojky (kde $\varphi,\psi$ jsou sentence), ale čtyři nové případy \alert{pro kvantifikátory}:\pause
+        \begin{itemize}
+            \item typ ``\textcolor{red}{svědek}'': položky tvaru \textcolor{red}{$\mathrm{T}(\exists x)\varphi(x)$} a \textcolor{red}{$\mathrm{F}(\forall x)\varphi(x)$}\pause
+            \item typ ``\textcolor{blue}{všichni}'': položky tvaru \textcolor{blue}{$\mathrm{T}(\forall x)\varphi(x)$} a \textcolor{blue}{$\mathrm{F}(\exists x)\varphi(x)$}\pause
+        \end{itemize}
+        \item kvantifikátor nelze odstranit, $\varphi(x)$ by typicky nebyla sentence\pause
+        \item místo toho za $x$ \alert{substituujeme} \alert{konstantní term} $t$: \myalertinline{
+            $\varphi(x/t)$
+        }\pause
+        \item jaký? podle typu položky (``\textcolor{red}{svědek}'' vs. ``\textcolor{blue}{všichni}'')
+        % \begin{itemize}
+        %     \item jazyk rozšíříme o pomocné konstantní symboly
+        %     \item typ ``\textcolor{red}{svědek}'': nový pomocný konstantní symbol, reprezentuje `svědka'
+        %     \item typ ``\textcolor{blue}{všichni}'': jakýkoliv konstantní term (na bezesporné dokončené větvi musíme substituovat všechny -- )
+        % \end{itemize}
+       
+    \end{itemize}        
+
+\end{frame}
+
+
+\begin{frame}{Redukce položek s kvantifikátorem}
+
+    \pause
+    \begin{itemize}
+        \item jazyk $L$ rozšíříme o spočetně mnoho \alert{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$, 
+        %(ale píšeme i $c,d,\dots$)
+        označíme \alert{$L_C$}\pause
+        \item vždy máme k dispozici \alert{nový}, dosud \alert{nepoužitý} symbol $c\in C$\pause
+        
+        \medskip
+
+        \item \textbf{typ} ``\textcolor{red}{svědek}''\textbf{:} dosadíme \alert{nový} $c\in C$ (dosud na větvi není)\pause
+        \begin{itemize}
+            \item pro $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$\pause
+            \item $c$ hraje roli prvku, který položku `splňuje'\pause
+        \end{itemize}
+
+        \medskip
+
+        \item \textbf{typ} ``\textcolor{blue}{všichni}''\textbf{:} substituujeme \alert{libovolný} konstantní $L_C$-term\pause
+        \begin{itemize}
+            \item pro $\T(\forall x)\varphi(x)$ tedy máme $\T\varphi(x/t)$\pause
+            \item bezesporná větev je \alert{dokončená} jen pokud \alert{dosadíme všechny $t$} (`použijeme vše, co víme')\pause
+        \end{itemize}
+
+        \medskip
+
+        \item \textbf{konvence:} kořeny atomických tabel nekreslíme \alert{kromě položek typu} ``\textcolor{blue}{všichni}'' (po jednom dosazení ještě nejsme hotovi!)\pause
+        
+        \medskip
+        
+        \item \textbf{typický postup:} nejprve zredukujeme položky typu ``\textcolor{red}{svědek}'', poté zjistíme, co `\alert{o svědcích říkají}' položky typu ``\textcolor{blue}{všichni}'' 
+        
+    \end{itemize}
+
+\end{frame}
+
+
+\section{7.2 Formální definice}
+
+
+\begin{frame}{Jazyk, položky, atomická tabla}
+
+    \begin{itemize}[<+->]
+        \item buď $L$ \alert{spočetný} jazyk \alert{bez rovnosti}.
+        \item označme $L_C$ rozšíření $L$ o spočetně mnoho nových \alert{pomocných} konstantních symbolů $C=\{c_i\mid i\in \mathbb N\}$
+        \item zvolme očíslování konstantních $L_C$-termů: $\{t_i\mid i\in\mathbb N\}$
+        \item mějme nějakou $L$-teorii $T$ a $L$-sentenci $\varphi$
+        \item \alert{položka} je nápis $\T\varphi$ nebo $\F\varphi$, kde $\varphi$ je $L_C$-sentence
+        \item položky tvaru $\T(\exists x)\varphi(x)$ a $\F(\forall x)\varphi(x)$ jsou \alert{typu} ``\textcolor{red}{svědek}''
+        \item položky tvaru $\T(\forall x)\varphi(x)$ a $\F(\exists x)\varphi(x)$ jsou \alert{typu} ``\textcolor{blue}{všichni}'' 
+        \item \alert{atomická tabla} jsou násl. položkami označkované stromy:
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla pro kvantifikátory}
+
+    $\varphi$ je libovolná $L_C$-sentence, $x$ proměnná, $t_i$ konstantní $L_C$-term,
+    $c_i\in C$ je nový pomocný konstantní symbol (při konstrukci tabla nesměl dosud být na dané větvi)
+    
+    \begin{center}
+        \begin{tabular}{@{}c||c|c@{}}
+            & $\forall$ & $\exists$ \\ \midrule \midrule
+            True
+            &  
+            \textcolor{blue}{
+            \begin{forest}
+                [$\T(\forall x)\varphi(x)$ [$\T\varphi(x/t_i)$]]
+            \end{forest}
+            }
+            &
+            \textcolor{red}{  
+            \begin{forest}
+                [$\T(\exists x)\varphi(x)$ [$\T\varphi(x/c_i)$]]
+            \end{forest}
+            }
+            \\ \midrule
+            False 
+            &  
+            \textcolor{red}{
+            \begin{forest}
+                [$\F(\forall x)\varphi(x)$ [$\F\varphi(x/c_i)$]]
+            \end{forest}
+            }
+            &  
+            \textcolor{blue}{
+            \begin{forest}
+                [$\F(\exists x)\varphi(x)$ [$\F\varphi(x/t_i)$]]
+            \end{forest} 
+            }
+        \end{tabular}
+    \end{center}    
+
+\end{frame}
+
+
+\begin{frame}{Atomická tabla pro logické spojky}
+
+    $\varphi$ a $\psi$ jsou libovolné $L_C$-sentence
+    
+    \begin{center}
+        \scalebox{0.9}{
+        \begin{tabular}{@{}c||c|c|c|c|c@{}}
+            & $\neg$ & $\land$ & $\lor$ & $\limplies$ & $\liff$  \\ \midrule \midrule
+            True
+            &  
+            \begin{forest}
+            [$\mathrm{T}\neg\varphi$ [$\mathrm{F}\varphi$]]
+            \end{forest}
+            &  
+            \begin{forest}
+            [$\mathrm{T}\varphi\land\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]]]
+            \end{forest}
+            & 
+            \begin{forest}
+            [$\mathrm{T}\varphi\lor\psi$ [$\mathrm{T}\varphi$] [$\mathrm{T}\psi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{T}\varphi\limplies\psi$ [$\mathrm{F}\varphi$] [$\mathrm{T}\psi$]]
+            \end{forest}
+            &  
+            \begin{forest}
+            [$\mathrm{T}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{T}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            \\ \midrule
+            False 
+            & 
+            \begin{forest}
+            [$\mathrm{F}\neg\varphi$ [$\mathrm{T}\varphi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\land\psi$ [$\mathrm{F}\varphi$] [$\mathrm{F}\psi$]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\lor\psi$ [$\mathrm{F}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\limplies\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]]]
+            \end{forest}
+            &
+            \begin{forest}
+            [$\mathrm{F}\varphi\liff\psi$ [$\mathrm{T}\varphi$ [$\mathrm{F}\psi$]] [$\mathrm{F}\varphi$ [$\mathrm{T}\psi$]]]
+            \end{forest}
+        \end{tabular}
+        }
+    \end{center}
+    
+\end{frame}
+
+
+\begin{frame}{Formální definice tabla}
+    
+    \pause
+    \begin{itemize}
+        \item \alert{konečné tablo z teorie $T$} je uspoř., položkami označ. strom zkonstruovaný aplikací konečně mnoha následujících pravidel:\pause
+        \begin{itemize}
+            \item jednoprvkový strom s libovolnou položkou je tablo z teorie $T$\pause
+            \item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme na konec větve $V$ připojit atomické tablo pro položku $P$\pause
+            
+            \medskip
+            
+            \myalert{je-li $P$ typu ``\textcolor{red}{svědek}'', můžeme použít jen $c_i\in C$, který dosud na $V$ není (pro typ ``\textcolor{blue}{všichni}'' lze použít lib. konst. $L_C$-term $t_i$)\pause
+            }
+
+            \medskip
+            
+            \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom $\alpha\in T$\pause
+        \end{itemize}
+        \item \alert{tablo z teorie $T$} je buď konečné, nebo i nekonečné: v tom případě je spočetné a definujeme ho jako $\tau=\bigcup_{i\geq 0}\tau_i$, kde:\pause
+        \begin{itemize}
+            \item $\tau_i$ jsou konečná tabla z $T$\pause
+            \item $\tau_0$ je jednoprvkové tablo\pause
+            \item $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku\pause
+        \end{itemize}
+        \item \alert{tablo pro položku $P$} je tablo, které má položku $P$ v kořeni\pause
+    \end{itemize}
+   
+    \textbf{konvence:} kořen atom. tabla nezapisujeme \myalertinline{není-li $P$ typu ``\textcolor{blue}{všichni}''} 
+
+\end{frame}
+
+
+\begin{frame}{Dokončené a sporné tablo}
+
+    \begin{itemize}[<+->]
+        \item Tablo je \alert{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \alert{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějakou \myalertinline{sentenci} $\psi$, jinak je \alert{bezesporná}.
+        \item Tablo je \alert{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \alert{dokončená}, pokud je sporná, nebo
+        \begin{itemize}[<+->]
+            \item každá její položka je na této větvi \alert{redukovaná},
+            \item a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \alert{redukovaná} na větvi $V$ procházející $P$, pokud 
+        \begin{itemize}[<+->]
+            \item je tvaru $\mathrm{T}\psi$ resp. $\mathrm{F}\psi$ pro \myalertinline{atomickou sentenci}, nebo
+            \item \myalertinline{není typu ``\textcolor{blue}{všichni}'' a} vyskytuje se na $V$ jako kořen atomického tabla (tj., typicky, již došlo k jejímu rozvoji na $V$)\myalertinline{, nebo}
+        \end{itemize}
+        \myalert{
+        \begin{itemize}
+            \item je typu ``\textcolor{blue}{všichni}'' a všechny její \alert{výskyty} na větvi $V$ jsou na $V$ \alert{redukované}.
+        \end{itemize}
+        }
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Kdy je výskyt položky typu ``všichni'' redukovaný?}
+    
+    \pause
+    Výskyt položky $P$ typu ``\textcolor{blue}{všichni}'' na $V$ je \alert{$i$-tý}, má-li právě $i-1$ předků označených $P$, a \alert{$i$-tý výskyt je redukovaný} na $V$, pokud\pause
+    \begin{itemize}
+        \item $P$ má $(i+1)$-ní výskyt na $V$, a zároveň\pause
+        \item na $V$ je položka \alert{$\T\varphi(x/t_i)$} (je-li $P=\T(\forall x)\varphi(x)$) resp. \alert{$\F\varphi(x/t_i)$} (je-li $P=\F(\exists x)\varphi(x)$), kde $t_i$ je $i$-tý konstantní $L_C$-term (tj., typicky, už jsme za $x$ substituovali $t_i$)\pause
+    \end{itemize} 
+
+
+    \textbf{NB:} je-li položka typu ``\textcolor{blue}{všichni}'' na $V$ redukovaná, má na $V$ nekonečně výskytů, a dosadili jsme všechny konstantní $L_C$-termy
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz a tablo zamítnutí}
+
+    \begin{itemize}[<+->]
+        \item \alert{tablo důkaz} \myalertinline{sentence} $\varphi$ z teorie $T$ je \alert{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni
+        \item pokud existuje, je $\varphi$ \alert{(tablo) dokazatelný} z $T$, píšeme \alert{$T\proves\varphi$}
+        \item podobně, \alert{tablo zamítnutí} je sporné tablo s $\mathrm{T}\varphi$ v kořeni
+        \item existuje-li, je $\varphi$ \alert{(tablo) zamítnutelný} z $T$, tj. platí \alert{$T\proves\neg\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo důkaz (v logice)}
+
+    \centering
+    \scalebox{0.64}{
+        \begin{forest}
+            for tree={math content}
+            [\F(\forall x)(P(x) \limplies Q(x)) \limplies ((\forall x)P(x) \limplies (\forall x)Q(x))
+                [\textcolor{blue}{\T(\forall x)(P(x) \limplies Q(x))}
+                    [\F(\forall x)P(x) \limplies (\forall x)Q(x)
+                        [\textcolor{blue}{\T(\forall x)P(x)}
+                            [\textcolor{red}{\F(\forall x)Q(x)}
+                                [\F Q(c_0)
+                                    [\textcolor{blue}{\T(\forall x)P(x)}
+                                        [\T P(c_0)
+                                            [\textcolor{blue}{\T(\forall x)(P(x) \limplies Q(x))}
+                                                [\T P(c_0)\limplies Q(c_0)
+                                                    [\F P(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                    [\T Q(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]            
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        \end{forest}
+    }
+
+\end{frame}
+
+
+\begin{frame}{Ještě příklad ($\varphi,\psi$ jsou formule s jedinou volnou proměnnou $x$)}
+
+    \centering
+    \scalebox{0.73}{
+        \centering
+        \begin{forest}
+        for tree={math content}
+        [\F(\forall x)(\varphi(x) \land \psi(x)) \liff((\forall x)\varphi (x) \land (\forall x)\psi(x))
+            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                [\F(\forall x)\varphi (x) \land (\forall x)\psi(x)
+                    [\textcolor{red}{\F(\forall x)\varphi (x)}
+                        [\F\varphi(c_0)
+                            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                                [\T\varphi(c_0) \land \psi(c_0)
+                                    [\T\varphi(c_0)
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                    [\textcolor{red}{\F(\forall x)\psi(x)}
+                        [\F\psi(c_0)
+                            [\textcolor{blue}{\T(\forall x)(\varphi(x) \land \psi(x))}
+                                [\T\varphi(c_0) \land \psi(c_0)
+                                    [\T\varphi(c_0)
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            [\textcolor{red}{\F(\forall x)(\varphi(x) \land \psi(x))}
+                [\T(\forall x)\varphi (x) \land (\forall x)\psi(x)
+                    [\textcolor{blue}{\T(\forall x)\varphi (x)}
+                        [\textcolor{blue}{\T(\forall x)\psi(x)}
+                            [\F(\varphi(c_0) \land \psi(c_0))
+                                [\F\varphi(c_0)
+                                    [\textcolor{blue}{\T(\forall x)\varphi (x)}
+                                        [\T\varphi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                                [\F\psi(c_0)
+                                    [\textcolor{blue}{\T(\forall x)\psi (x)}
+                                        [\T\psi(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                ]
+                            ]                
+                        ]
+                    ]
+                ]
+            ]
+        ]
+        \end{forest}
+    }
+
+    \vspace{-4pt}
+    \footnotesize
+    ($c_0$ lze použít jako \alert{nový} ve všech případech: \alert{na dané větvi} se dosud nevyskytuje)
+
+\end{frame}
+
+
+\begin{frame}{Systematické tablo}
+
+    \pause
+    \vspace{-6pt}
+    musí někdy zredukovat každou položku, použít každý axiom, a nově ve všech položkách typu ``\textcolor{blue}{všichni}'' \alert{dosadit každý $L_C$ term $t_i$ }
+
+    \pause
+    \myblock{
+    \alert{Systematické tablo} z $T=\{\alpha_0,\alpha_1,\alpha_2,\dots\}$ pro položku $R $ je $\tau=\bigcup_{i\geq 0}\tau_i$, kde $\tau_0$ je jednoprvkové s položkou $R$, a pro $i\geq 0$:
+
+    \pause
+    \begin{itemize}
+        \item buď $P$ nejlevější položka v co nejmenší úrovni, která není redukovaná na nějaké bezesporné větvi procházející $P$ \myalertinline{(resp. je-li typu ``\textcolor{blue}{všichni}'', její \alert{výskyt} není redukovaný)}\pause
+        \item nejprve definujeme $\tau_i'$ vzniklé z $\tau_i$ připojením atomického tabla pro $P$ na každou bezespornou větev procházející~$P$, kde\pause
+        
+        \smallskip
+        
+        \myalert{
+        je-li $P$ typu ``\textcolor{blue}{všichni}'' a má-li ve vrcholu $k$-tý výskyt, dosadíme $k$-tý $L_C$-term $t_k$,
+        je-li typu ``\textcolor{red}{svědek}'', substituujeme $c_i\in C$ s nejmenším $i$, které na větvi zatím není
+        }
+
+        \pause
+        \item pokud taková položka $P$ neexistuje, potom $\tau_i'=\tau_i$\pause
+        \item $\tau_{i+1}$ vznikne z $\tau_i'$ připojením $\mathrm{T}\alpha_{i+1}$ na vš. bezesporné větve (pokud už jsme použili všechny axiomy, definujeme $\tau_{i+1}=\tau_i'$)
+    \end{itemize} 
+    }
+
+\end{frame}
+
+
+\begin{frame}{Konečnost a systematičnost důkazů}
+
+    \pause
+    \myblock{
+        \textbf{Lemma:} Systematické tablo je dokončené.
+    }
+
+    \pause
+    \textbf{Důkaz:} $k$-tý výskyt položky typu ``\textcolor{blue}{všichni}'' redukujeme když na něj narazíme: připojíme $(k+1)$-ní výskyt a dosadíme $k$-tý $L_C$-term $t_k$. Zbytek důkazu jako ve výrokové logice.\hfill\qedsymbol
+
+    \bigskip
+
+    \pause
+    Neprodlužujeme-li sporné větve (což nemusíme), je sporné tablo vždy konečné. Důkaz stejný jako ve výrokové logice:
+
+    \pause
+    \myblock{
+        \textbf{Důsledek (Konečnost důkazů):}
+    Pokud $T\proves\varphi$, potom existuje i konečný tablo důkaz $\varphi$ z $T$.
+    }
+
+    \bigskip
+
+    \pause
+    Stejně jako ve výrokové logice z důkazu plyne:
+
+    \pause
+    \myblock{
+        \textbf{Důsledek (Systematičnost důkazů):}
+        Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
+    }
+    
+\end{frame}
+
+
+\section{7.3 Jazyky s rovností}
+
+
+\begin{frame}{Rovnost}
+
+    \pause
+    $1+0=0+1$? identita celých čísel, výrazů, množin, unifikovatelnost termů (v Prologu), \dots
+
+    \pause
+    Tablo je čistě \alert{syntaktický} objekt, ale \alert{$=^\A$} má být \alert{identita} na $A$. Jak toho docílit?
+
+    \pause
+    Mějme dokončenou bezespornou větev tabla s položkou \alert{$\T c_1=c_2$}. V \alert{kanonickém modelu} musí platit nejen \alert{$(c_1^\A,c_2^\A)\in {=^\A}$}, ale také:
+
+    \pause
+    \begin{itemize}
+        \item $c_2^\A =^\A c_1^\A$\pause
+        \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$\pause
+        \item $c_1^\A\in P^\A$ právě když $c_2^\A\in P^\A$
+    \end{itemize}
+
+    \pause
+    To vynutíme přidáním \alert{axiomů rovnosti}, $=^\A$ bude \alert{kongruence}~$\A$ (ekvivalence, která se chová dobře k funkcím a relacím). 
+    
+    \pause
+    Poté vezmeme \alert{faktorstrukturu} $\B=\A/_{=^\A}$, v ní už je $=^\B$ \alert{identita}.
+
+\end{frame}
+
+
+\begin{frame}{Kongruence a faktorstruktura}
+    
+    \pause    
+    Buď $\sim$ ekvivalence na $A$, $f\colon A^n\to A$, $R\subseteq A^n$. Říkáme, že $\sim$ je:\pause
+    \begin{itemize}
+        \item \alert{kongruence pro $f$}, pokud pro všechna $a_i,b_i\in A$ taková, že \myalertinline{
+            $a_i\sim b_i$ ($1\leq i\leq n$)
+         }, platí \myalertinline{
+            $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$
+        }\pause
+        \item \alert{kongruence pro $R$}, pokud pro všechna $a_i,b_i\in A$ taková, že \myalertinline{
+            $a_i\sim b_i$ ($1\leq i\leq n$)
+         }, platí \myalertinline{
+            $R(a_1,\dots,a_n)$ $\Leftrightarrow$ $R(b_1,\dots,b_n)$
+        }\pause
+    \end{itemize}    
+    \alert{Kongruence} struktury $\A$ je ekvivalence na $A$, která je kongruencí pro všechny funkce a relace $\A$. \pause
+
+    \alert{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura \alert{$\A/_\sim$ } v témž jazyce, doména $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, funkce a relace definujeme \alert{pomocí reprezentantů}:\pause
+    
+    \myalert{
+    \begin{itemize}
+        \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$\pause
+        \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ $\Leftrightarrow$ $R^\A(a_1,\dots,a_n)$
+    \end{itemize}
+    }
+        
+\end{frame}
+
+
+\begin{frame}{Axiomy rovnosti}
+
+    \myblock{
+    \alert{Axiomy rovnosti} pro jazyk $L$ s rovností:\pause
+    \begin{enumerate}[(i)]
+        \item $x=x$\pause
+        \item pro každý $n$-ární funkční symbol $f$ jazyka $L$:
+        $$
+        x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)
+        $$
+
+        \pause
+        \item pro každý $n$-ární relační symbol $R$ jazyka $L$ \alert{včetně rovnosti}:
+        $$
+        x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))
+        $$ 
+    \end{enumerate}
+    }
+
+    \pause
+    \begin{itemize}
+        \item symetrie a tranzitivita plynou z (iii) pro $=$ (dokažte si)\pause
+        \item z axiomů $(i)$ a $(iii)$ tedy plyne, že relace $=^\A$ je ekvivalence\pause
+        \item axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruence\pause
+    \end{itemize}
+
+    V tablo metodě pro jazyk s rovností implicitně přidáme axiomy rovnosti (přesněji jejich generální uzávěry, potřebujeme sentence).
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz s rovností}
+
+    \pause
+    Je-li $T$ teorie v jazyce $L$ s rovností, označme jako $T^*$ rozšíření $T$ o generální uzávěry axiomů rovnosti pro $L$. 
+
+    \pause
+    \begin{itemize}
+        \item \alert{tablo důkaz} z teorie $T$ je \alert{tablo důkaz} z $T^*$\pause
+        \item podobně pro tablo zamítnutí, a obecně jakékoliv tablo z $T$
+    \end{itemize}
+ 
+    \pause
+    \textbf{Pozorování:}\pause
+    \begin{itemize}
+        \item Je-li $\A\models T^*$, potom i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita.\pause
+        \item Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
+    \end{itemize}
+     
+    \pause
+    (Použijeme při konstrukci \alert{kanonického modelu} v důkazu úplnosti.)
+
+\end{frame}
+
+
 \end{document}
-
-

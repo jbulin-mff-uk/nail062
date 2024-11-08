@@ -19,17 +19,25 @@
 
 \begin{problem}
 
-    Uvažme $\underline{\mathbb{Z}}_4=\langle\{0,1,2,3\},+,-,0 \rangle$ kde $+$ je binární sčítání modulo $4$ a $-$ je unární funkce, která vrací \emph{inverzní} prvek $+$ vzhledem k \emph{neutrálnímu} prvku $0$.
+    Uvažme $\underline{\mathbb Z_4}=\langle\{0,1,2,3\};+,-,0 \rangle$ kde $+$ je binární sčítání modulo $4$ a $-$ je unární funkce, která vrací \emph{inverzní} prvek $+$ vzhledem k \emph{neutrálnímu} prvku $0$.
     \begin{enumerate}[(a)]      
-        \item Je $\underline{\mathbb{Z}}_4$ model teorie grup (tj. je to \emph{grupa})?
-        \item Určete všechny podstruktury $\underline{\mathbb{Z}}_4\langle a\rangle$ generované nějakým $a\in \mathbb{Z}_4$.
-        \item Obsahuje $\underline{\mathbb{Z}}_4$ ještě nějaké další podstruktury?
-        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ modelem teorie grup?
-        \item Je každá podstruktura $\underline{\mathbb{Z}}_4$ elementárně ekvivalentní $\underline{\mathbb{Z}}_4$?
+        \item Je $\underline{\mathbb Z_4}$ model teorie grup (tj. je to \emph{grupa})?
+        \item Určete všechny podstruktury $\underline{\mathbb Z_4}\langle a\rangle$ generované nějakým $a\in \mathbb Z_4$.
+        \item Obsahuje $\underline{\mathbb Z_4}$ ještě nějaké další podstruktury?
+        \item Je každá podstruktura $\underline{\mathbb Z_4}$ modelem teorie grup?
+        \item Je každá podstruktura $\underline{\mathbb Z_4}$ elementárně ekvivalentní $\underline{\mathbb Z_4}$?
         %\item Je každá podstruktura \emph{komutativní} grupy (tj. grupy, která splňuje $x+y=y+x$) také komutativní grupa?
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item Ano, lze ověřit, že $\underline{\mathbb Z_4}$ splňuje všechny axiomy teorie grup ($+$ je asociativní, $0$ je neutrální vůči $+$, $-x$ je inverzní prvek k $x$ vůči $+$ a $0$).
+            \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{triviální grupa}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (dvouprvková grupa \emph{izomorfní} grupě $\underline{\mathbb Z_4}$).
+            \item Ne, jakmile máme prvek $1$ nebo $3$, generovaná podstruktura už je celá $\underline{\mathbb Z_4}$.
+            \item Ano, teorie grup je \emph{otevřená}, proto podstruktury modelů (grup) jsou také modely (\emph{podgrupy}).
+            \item Ne, jazyk teorie grup je s rovností, konečná velikost modelu lze popsat sentencí, tedy různě velké konečné modely nemohou být elementárně ekvivalentní. Rovnost ale nepotřebujeme, platilo by i v jazyce bez rovnosti, např. sentence $(\forall x)x=0$ odliší triviální grupu $\underline{\mathbb Z_4}\restriction\{0\}$ od dvouprvkové grupy $\underline{\mathbb Z_4}\restriction\{0,2\}$ i od $\underline{\mathbb Z_4}$, a např. $(\forall x)x+x=0$ platí v $\underline{\mathbb Z_4}\restriction\{0,2\}$ ale ne v $\underline{\mathbb Z_4}$.
+        \end{enumerate}
                     
     \end{solution}
 
@@ -38,15 +46,22 @@
 
 \begin{problem}
 
-    Buď $\underline{\mathbb{Q}}=\langle\mathbb{Q},+,-,\cdot,0,1 \rangle$ těleso racionálních čísel se standardními operacemi.
+    Buď $\underline{\mathbb{Q}}=\langle\mathbb{Q};+,-,\cdot,0,1 \rangle$ těleso racionálních čísel se standardními operacemi.
     \begin{enumerate}[(a)]                
         \item Existuje redukt $\underline{\mathbb{Q}}$, který je modelem teorie grup?
         \item Lze redukt $\langle\mathbb{Q},\cdot,1\rangle$ rozšířit na model teorie grup?
         \item Obsahuje $\underline{\mathbb{Q}}$ podstrukturu, která není elementárně ekvivalentní $\underline{\mathbb{Q}}$?
-        \item Označme $Th(\underline{\mathbb{Q}})$ množinu všech sentencí pravdivých v $\underline{\mathbb{Q}}$. Je $Th(\underline{\mathbb{Q}})$ kompletní teorie?
+        \item Označme $\mathrm{Th}(\underline{\mathbb{Q}})$ množinu všech sentencí pravdivých v $\underline{\mathbb{Q}}$. Je $\mathrm{Th}(\underline{\mathbb{Q}})$ kompletní teorie?
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item Ano, $\underline{\mathbb{Q}}=\langle\mathbb{Q};+,-,0\rangle$.
+            \item Ne, prvek $1$ (interpretace symbolu $0$ z jazyka teorie grup) není neutrální prvek vzhledem k operaci $\cdot$ (interpretaci symbolu $+$), protože $1\cdot 0=0\neq 1$.
+            \item Ano, např. $\underline{\mathbb{Q}}\restriction\mathbb Z =\langle\mathbb{Z};+,-,\cdot,0,1 \rangle$ (\emph{okruh celých čísel}), neplatí v něm existence inverzních prvků vůči násobení pro všechny nenulové prvky, tj. sentence $(\forall x)(\neg x=0\to (\exists y)x\cdot y=1)$ (např. číslo 2 nemá v celých číslech inverz, ale v racionálních ano, $\frac{1}{2}$). (Z toho plyne, že teorie těles nemůže být otevřeně axiomatizova[tel]ná, jinak by podstruktura tělesa musela být také tělesem.)
+            \item Ano, tzv. \emph{teorie struktury} je vždy kompletní: Pro každou sentenci $\psi$ platí, že $\mathrm{Th}(\underline{\mathbb{Q}})\models\psi\ \Leftrightarrow\ \underline{\mathbb{Q}}\models\psi$, pokud to neplatí, máme $\underline{\mathbb{Q}}\models\neg\psi$ (je to \emph{sentence}) tedy $\mathrm{Th}(\underline{\mathbb{Q}})\models\neg\psi$.
+        \end{enumerate}
                     
     \end{solution}
 
@@ -59,11 +74,57 @@
     Mějme teorii $T=\{x=c_1 \vee x=c_2 \vee x=c_3\}$ v jazyce $L=\langle c_1,c_2,c_3\rangle$ s rovností.
     \begin{enumerate}[(a)]     
         \item Je $T$ kompletní?
-        \item Najděte všechny jednoduché extenze $T$, až na ekvivalenci. Které z nich jsou kompletní?
-        \item Je teorie $T'=T\cup\{x=c_1 \vee x=c_4\}$ v jazyce $L=\langle c_1,c_2,c_3,c_4\rangle$ extenzí $T$? Je $T'$ jednoduchá extenze $T$? Je $T'$ konzervativní extenze $T$?
+        \item Kolik má teorie $T$ jednoduchých extenzí, až na ekvivalenci? Kolik je kompletních? Napište všechny kompletní a alespoň tři nekompletní.
+        \item Je teorie $T'=T\cup\{x=c_1 \vee x=c_4\}$ v jazyce $L'=\langle c_1,c_2,c_3,c_4\rangle$ extenzí $T$? Je $T'$ jednoduchá extenze $T$? Je $T'$ konzervativní extenze $T$?
     \end{enumerate}
 
     \begin{solution}
+        
+        Teorie říká, že každý prvek je jednou ze tří konstant. Ty ale nemusí být různé. Nejprve najděme všechny modely až na izomorfismus, je jich pět (nakreslete si je):
+        \begin{itemize}
+            \item $\mathcal A_1=\langle\{0\};0,0,0\rangle$ (jednoprvkový model, $c_1^{\mathcal A_1}=c_2^{\mathcal A_1}=c_3^{\mathcal A_1}=0$)
+            \item $\mathcal A_2=\langle\{0,1\};0,0,1\rangle$ (dvouprvkový model, $c_1^{\mathcal A_2}=c_2^{\mathcal A_2}\neq c_3^{\mathcal A_2}$)
+            \item $\mathcal A_3=\langle\{0,1\};0,1,1\rangle$ (dvouprvkový model, $c_1^{\mathcal A_3}\neq c_2^{\mathcal A_3}=c_3^{\mathcal A_3}$) 
+            \item $\mathcal A_4=\langle\{0,1\};0,1,0\rangle$ (dvouprvkový model, $c_1^{\mathcal A_4}=c_3^{\mathcal A_4}\neq c_2^{\mathcal A_4}$)
+            \item $\mathcal A_5=\langle\{0,1,2\};0,1,2\rangle$ (trojprvkový model, konstanty jsou různé)
+        \end{itemize}
+        \begin{enumerate}[(a)]
+            \item Není kompletní, např. sentence $c_1=c_2$ je v $T$ nezávislá (platí v $\mathcal A_1$,  neplatí v $\mathcal A_3$. (Neboli, dle sémantického kritéria, modely $\mathcal A_1$ a $\mathcal A_3$ nejsou elementárně ekvivalentní).
+            \item Jednoduché extenze odpovídají podmnožinám $\{\mathcal A_1,\mathcal A_2,\mathcal A_3,\mathcal A_4,\mathcal A_5\}$, je jich 32, kompletní odpovídají jednoprvkovým podmnožinám, je jich 5.
+            
+            Kompletní extenze, které nejsou jednoduché:
+            \begin{itemize}
+                \item $T$ \hfill modely $\mathcal A_1,\mathcal A_2,\mathcal A_3,\mathcal A_4,\mathcal A_5$
+                \item $T\cup\{x=y\lor x=z\}$ \hfill modely $\mathcal A_1,\mathcal A_2,\mathcal A_3,\mathcal A_4\phantom{,\mathcal A_5}$
+                \item $T\cup\{(\exists x)(\exists y)\neg x=y\}$ \hfill modely $\phantom{\mathcal A_1,}\mathcal A_2,\mathcal A_3,\mathcal A_4,\mathcal A_5$\\
+                (Pozor: $(\exists x)(\exists y)\neg x=y\sim\neg(\forall x)(\forall y)x=y\not\sim\neg x=y\sim(\forall x)(\forall y)\neg x=y$.)
+                
+                \item[\vdots]
+                
+                \item $\{x=x\land\neg x=x\}$ \hfill sporná teorie, nemá model
+            \end{itemize}
+
+            Jednoduché kompletní extenze:
+            \begin{itemize}
+                \item $\mathrm{Th}(\mathcal A_1)\sim\{x=y\}$
+                \item $\mathrm{Th}(\mathcal A_2)\sim\{(\exists x)(\exists y)\neg x=y,x=y\lor x=z,c_1=c_2,\neg c_2=c_3\}$
+                \item $\mathrm{Th}(\mathcal A_3)\sim\{(\exists x)(\exists y)\neg x=y,x=y\lor x=z,\neg c_1=c_2,c_2=c_3\}$
+                \item $\mathrm{Th}(\mathcal A_4)\sim\{(\exists x)(\exists y)\neg x=y,x=y\lor x=z,c_1=c_3,\neg c_1=c_2\}$
+                \item $\mathrm{Th}(\mathcal A_4)\sim\{x=c_1 \vee x=c_2 \vee x=c_3,\neg (c_1=c_2\lor c_1=c_3\lor c_2=c_3)\}$
+            \end{itemize}    
+            
+            \item Teorie navíc říká, že každý prvek je buď interpretací symbolu $c_1$ nebo $c_4$. Modely tedy mají nejvýše dva prvky, až na izomorfismus jsou to:
+            \begin{itemize}
+                \item $\mathcal A_1'=\langle\{0\};0,0,0,0\rangle$
+                \item $\mathcal A_2'=\langle\{0,1\};0,0,1,1\rangle$
+                \item $\mathcal A_3'=\langle\{0,1\};0,1,1,1\rangle$
+                \item $\mathcal A_4'=\langle\{0,1\};0,1,0,1\rangle$                
+            \end{itemize}
+            Teorie $T'$ je extenzí $T$, platí v ní všechny důsledky teorie $T$, sémanticky: restrikce modelů $T'$ na původní jazyk $L$ jsou modely $T$ (např. restrikcí modelu $\mathcal A_1'$ na $L$ je $\mathcal A_1$). Není to jednoduchá extenze, zvětšili jsme jazyk. 
+            
+            Není to ani konzervativní extenze, např. sentence $(\forall x)(\forall y)(\forall z)(x=y\lor x=z)$ je sentence původního jazyka $L$, platí v $T'$ ale neplatila v $T$. Sémanticky: (tříprvkový) model $\mathcal A_5$ teorie $T$ nelze expandovat do jazyka $L'$ na model teorie $T'$, neboli restrikcí modelů $T'$ na původní jazyk $L$ nedostaneme všechny modely $T$.
+
+        \end{enumerate}
                     
     \end{solution}
 
@@ -79,9 +140,23 @@
     \end{align*}
     Najděte formule v jazyce $L$, které jsou ekvivalentní v $T'$ s následujícími formulemi.
         
-    (a) $x+(-x)=0$ \hfill (b) $x+(-y)<x$ \hfill (c) $-(x+y)<-x$\hfill{}
+    (a) $(-x)+x=0$ \hfill (b) $x+(-y)<x$ \hfill (c) $-(x+y)<-x$\hfill{}
 
     \begin{solution}
+
+        Všimněte si, že axiomy teorie vyjadřují existenci a jednoznačnost pro definici funkčního symbolu $-$, jde tedy o korektní extenzi o definice. Postupujeme dle (důkazu) tvrzení z přednášky:
+        \begin{enumerate}[(a)]
+            \item $(\exists z)(x+z=0\land z+x=0)$ (Podformule $x+z=0$ říká, že `$z$ je $-x$' a druhá, že `$(-x)+x=0$'.)
+            \item Nejprve nahradíme definicí term $-y$: 
+            $$
+            (\exists z)(y+z=0\land x+z<x)
+            $$
+            Nyní relační symbol $<$:
+            $$
+            (\exists z)(y+z=0\land x+z\leq z\land\neg(x+z=z))
+            $$
+            \item $(\exists u)(\exists v)((x+y)+u=0\land x+v=0\land u\leq v\land \neg u=v)$ (Kde `$u$ je $-(x+y)$' a `$v$ je $-x$'.)
+        \end{enumerate}
                     
     \end{solution}
     
@@ -99,6 +174,13 @@
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item $(\exists y)F(y,y)=x\land \neg (\forall y)F(x,y)=x$ (Číslo $x$ je čtverec, a není to nula.)
+            \item $(\exists z)(F(x,y)=z\land(\forall u)F(z,u)=u)$ (Součin je roven jedné.)
+            \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=y$ (Kdykoliv je množina sjednocením dvou množin, je rovna jedné z nich. A není prázdná.)
+            \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=x$ (Kdykoliv je součin dvou čísel roven prvočíslu, je jedno z nich rovno prvočíslu, a prvočíslo není nula.)
+        \end{enumerate}
                     
     \end{solution}
 

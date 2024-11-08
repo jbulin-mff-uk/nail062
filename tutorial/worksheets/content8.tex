@@ -113,12 +113,92 @@
 
     \begin{enumerate}[(a)]
         \item Formalizujte tvrzení jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ bez rovnosti.        
-        \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.        
-        \item Rozhodněte, zda platí $T\models \varphi_5$ a zda platí $T\models M(f(0))$.
+        \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni. Rozhodněte, zda platí $T\models \varphi_5$.
         \item Pokud existují, uveďte alespoň dvě kompletní jednoduché extenze teorie $T$.
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item \begin{align*}
+                \varphi_1 & = M(0) \\
+                \varphi_2 & = (\forall x)(M(x)\leftrightarrow B(x,0)) \\
+                \varphi_3 & = (\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y)) \\
+                \varphi_4 & = (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y))) \\
+                \varphi_5 & = (\forall x)(\forall y)(M(x)\wedge M(y)\to B(f(x+y),f(0)))
+            \end{align*}
+
+            \item Tablo vyjde sporné, máme tedy $T\proves \varphi_5$ a z úplnosti $T\models \varphi_5$. Všimněte si, že axiom $\varphi_1 = M(0)$ není potřeba:
+            
+            {\centering
+            \scalebox{0.95}{
+            \begin{forest}
+                for tree={math content}
+                [{\F(\forall x)(\forall y)(M(x)\wedge M(y)\to B(f(x+y),f(0)))}
+                  [{\F(\forall y)(M(c_0)\wedge M(y)\to B(f(c_0+y),f(0)))}
+                    [{\F M(c_0)\wedge M(c_1)\to B(f(c_0+c_1),f(0))}
+                      [\T M(c_0)\wedge M(c_1)
+                        [{\F B(f(c_0+c_1),f(0))}
+                          [\T M(c_0)
+                            [\T M(c_1)
+                              [\textcolor{blue}{\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))}
+                                [\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))
+                                  [\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))
+                                    [\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))
+                                      [\T M(c_0)\wedge M(c_1)\to M(c_0+c_1)
+                                        [\F M(c_0)\wedge M(c_1)
+                                          [\F M(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                          [\F M(c_1), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                        ]
+                                        [\T M(c_0+c_1)
+                                          [\textcolor{blue}{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
+                                            [{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
+                                              [{\T M(c_0+c_1)\leftrightarrow B(c_0+c_1,0)}
+                                                [\T M(c_0+c_1)
+                                                  [{\T B(c_0+c_1,0)}
+                                                    [\textcolor{blue}{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
+                                                      [{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
+                                                        [{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
+                                                          [{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
+                                                            [{\T B(c_0+c_1,0)\to B(f(c_0+c_1),f(0))}
+                                                              [{\F B(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                              [{\T B(f(c_0+c_1),f(0))}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                            ]
+                                                          ]
+                                                        ]
+                                                      ]
+                                                    ]
+                                                  ]
+                                                ]
+                                                [\F M(c_0+c_1)
+                                                  [{\F B(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                ]
+                                              ]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]                              
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+            \end{forest}
+            }
+            } 
+            \item Najdeme dva elementárně neekvivalentní modely $T$:
+            \begin{itemize}
+                \item $\mathcal A=\langle\{0\};M^\mathcal A,B^\mathcal A,f^\mathcal A,+^\mathcal A, 0^\mathcal A\rangle$ kde $M^\mathcal A=\{0\}$, $B^\mathcal A=\{(0,0)\}$, $f^\mathcal A=\{(0,0)\}$, $+^\mathcal A=\{((0,0),0)\}$, a $0^\mathcal A=0$
+                \item $\mathcal B=\langle\{0,1\};M^\mathcal B,B^\mathcal B,f^\mathcal B,+^\mathcal B, 0^\mathcal B\rangle$ kde $M^\mathcal B=\{0\}$, $B^\mathcal B=\{(0,0),(1,1)\}$, $f^\mathcal B=\{(0,0),(1,1)\}$, $+^\mathcal B=\{((0,0),0),((0,1),1),((1,0),1),((1,1),0)\}$, a $0^\mathcal B=0$
+            \end{itemize}
+            Kompletní jednoduché extenze jsou potom $\mathrm{Th}(\mathcal A)$ a $\mathrm{Th}(\mathcal B)$ (tj. všechny $L$-sentence, které platí v $\mathcal A$ resp. $\mathcal B$). Teorie struktury je vždy kompletní teorie. Nejsou ekvivalentní například proto, že $(\forall x)M(x)$ platí v $\mathcal A$ ale ne v $\mathcal B$. (Uvědomte si, že jazyk je bez rovnosti, potřebujeme tedy sentenci bez rovnosti.)
+        \end{enumerate}
                     
     \end{solution}
 

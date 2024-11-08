@@ -30,13 +30,69 @@
 
     Dokažte tablo metodou, že: {\it Ne všichni obvinění jsou viníci.} Konkrétně:
     \begin{enumerate}[(a)]
-        \item Zvolte vhodný jazyk $L$. Bude s rovností, nebo bez rovnosti?        
-        \item Formalizujte naše znalosti a dokazované tvrzení jako sentence $\alpha_1,\alpha_2,\alpha_3,\varphi$ v jazyce $L$.
+        \item Zvolte vhodný jazyk $\mathcal L$. Bude s rovností, nebo bez rovnosti?        
+        \item Formalizujte naše znalosti a dokazované tvrzení jako sentence $\alpha_1,\alpha_2,\alpha_3,\varphi$ v jazyce $\mathcal L$.
         \item Sestrojte tablo důkaz sentence $\varphi$ z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$.
         %, tj. sporné tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni.
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item Zvolme jazyk $\mathcal L=\langle V,L,O,S\rangle$ bez rovnosti, kde $V$, $L$, a $S$ jsou unární relační symboly o významu ``být viníkem/lhářem/svědkem''.
+            \item 
+            \begin{align*}
+                \alpha_1 & = (\forall x)(V(x)\to L(x)) \\
+                \alpha_2 & = (\exists x)(O(x)\land S(x)) \\
+                \alpha_3 & = \neg(\exists x)(S(x)\land L(x)) \\
+                \varphi & = \neg (\forall x)(O(x)\limplies V(x))
+            \end{align*}
+            \item Sestrojíme dokončené tablo z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$ s položkou $F\varphi$ v kořeni. Uvidíme, že všechny větve budou sporné, půjde tedy o tablo důkaz.
+            
+            \centering
+            \scalebox{1}{
+                \begin{forest}
+                    for tree={math content}
+                    [\F\neg (\forall x)(O(x)\limplies V(x))
+                        [\T (\forall x)(O(x)\limplies V(x))
+                            [\textcolor{blue}{\T(\exists x)(O(x)\land S(x))}
+                                [\T O(c_0)\land S(c_0)
+                                    [\T O(c_0)
+                                        [\T S(c_0)
+                                            [\T (\forall x)(O(x)\limplies V(x))
+                                                [\T O(c_0)\limplies V(c_0)
+                                                    [\F O(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                    [\T V(c_0)
+                                                        [\textcolor{blue}{\T(\forall x)(V(x)\limplies L(x))}
+                                                            [\T(\forall x)(V(x)\limplies L(x))
+                                                                [\T V(c_0)\limplies L(c_0)
+                                                                    [\F V(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                                    [\T L(c_0)
+                                                                        [\textcolor{blue}{\T\neg(\exists x)(S(x)\land L(x))}
+                                                                            [\F(\exists x)(S(x)\land L(x))
+                                                                                [\F(\exists x)(S(x)\land L(x))
+                                                                                    [\F S(c_0)\land L(c_0)
+                                                                                        [\F S(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]           [\F L(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                                                    ]
+                                                                                ]
+                                                                            ]
+                                                                        ]
+                                                                    ]
+                                                                ]
+                                                            ]
+                                                        ]
+                                                    ]       
+                                                ]
+                                            ]
+                                        ]
+                                    ]                                                
+                                ]
+                            ]
+                        ]
+                    ]
+                \end{forest}
+            }
+        \end{enumerate}
                     
     \end{solution}
 

@@ -49,8 +49,8 @@
             \end{align*}
             \item Sestrojíme dokončené tablo z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$ s položkou $F\varphi$ v kořeni. Uvidíme, že všechny větve budou sporné, půjde tedy o tablo důkaz.
             
-            \centering
-            \scalebox{1}{
+            \begin{center}
+                \scalebox{1}{
                 \begin{forest}
                     for tree={math content}
                     [\F\neg (\forall x)(O(x)\limplies V(x))
@@ -91,7 +91,8 @@
                         ]
                     ]
                 \end{forest}
-            }
+                }
+            \end{center}            
         \end{enumerate}
                     
     \end{solution}
@@ -130,7 +131,7 @@
 
             \item Tablo vyjde sporné, máme tedy $T\proves \varphi_5$ a z úplnosti $T\models \varphi_5$. Všimněte si, že axiom $\varphi_1 = M(0)$ není potřeba:
             
-            {\centering
+            \begin{center}
             \scalebox{0.95}{
             \begin{forest}
                 for tree={math content}
@@ -191,7 +192,7 @@
                 ]
             \end{forest}
             }
-            } 
+            \end{center} 
             \item Najdeme dva elementárně neekvivalentní modely $T$:
             \begin{itemize}
                 \item $\mathcal A=\langle\{0\};M^\mathcal A,B^\mathcal A,f^\mathcal A,+^\mathcal A, 0^\mathcal A\rangle$ kde $M^\mathcal A=\{0\}$, $B^\mathcal A=\{(0,0)\}$, $f^\mathcal A=\{(0,0)\}$, $+^\mathcal A=\{((0,0),0)\}$, a $0^\mathcal A=0$
@@ -205,11 +206,70 @@
 \end{problem}
 
 
-\begin{problem} %todo solution
+\begin{problem}
 
     Uvažme jazyk $L=\langle c\rangle$ s rovností, kde $c$ je konstantní symbol. Tablo metodou dokažte, že v teorii $T=\{(\exists x)(\forall y)x=y\}$ platí formule $x=c$.
 
     \begin{solution}
+
+        Sestrojíme dokončené tablo z teorie $T$ s položkou $\F(\forall x)x=c$ v kořeni (formule v položkách tabla musí být sentence). Protože je jazyk s rovností, můžeme v tablu používat i axiomy rovnosti pro jazyk $L$, resp. jejich generální uzávěry: $(\forall x)x=x$ a $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))$.
+
+        \begin{center}
+            \scalebox{0.95}{
+            \begin{forest}
+                for tree={math content}
+                [{\F(\forall x)x=c}
+                  [{\F c_0=c}
+                    [\textcolor{blue}{\T(\exists x)(\forall y)x=y}
+                      [{\T(\forall y)c_1=y}
+                        [{\T(\forall y)c_1=y}
+                          [{\T c_1=c}
+                            [{\T(\forall y)c_1=y}
+                              [{\T c_1=c_0}
+                                [\textcolor{blue}{\T(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))}
+                                  [{\T(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))}
+                                    [{\T(\forall x_2)(\forall y_1)(\forall y_2)(c_1=y_1\wedge x_2=y_2\to (c_1=x_2\to y_1=y_2))}
+                                      [{\T(\forall x_2)(\forall y_1)(\forall y_2)(c_1=y_1\wedge x_2=y_2\to (c_1=x_2\to y_1=y_2))}
+                                        [{\T(\forall y_1)(\forall y_2)(c_1=y_1\wedge c_1=y_2\to (c_1=c_1\to y_1=y_2))}
+                                          [{\T(\forall y_1)(\forall y_2)(c_1=y_1\wedge c_1=y_2\to (c_1=c_1\to y_1=y_2))}
+                                            [{\T(\forall y_2)(c_1=c_0\wedge c_1=y_2\to (c_1=c_1\to c_0=y_2))}
+                                              [{\T(\forall y_2)(c_1=c_0\wedge c_1=y_2\to (c_1=c_1\to c_0=y_2))}
+                                                [{\T(c_1=c_0\wedge c_1=c\to (c_1=c_1\to c_0=c))}
+                                                  [{\F c_1=c_0\wedge c_1=c}
+                                                    [{\F c_1=c_0}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                    [{\F c_1=c}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                  ]
+                                                  [{\T c_1=c_1\to c_0=c}
+                                                    [{\F c_1=c_1}
+                                                      [\textcolor{blue}{\T(\forall x)x=x}
+                                                        [{\T(\forall x)x=x}
+                                                          [{\T c_1=c_1
+                                                          }, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                        ]    
+                                                      ]
+                                                    ]
+                                                    [{\T c_0=c}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                  ]
+                                                ]
+                                              ]
+                                            ]
+                                          ]
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]        
+            \end{forest}
+            }            
+        \end{center}
                     
     \end{solution}
 
@@ -218,10 +278,18 @@
 
 \begin{problem} 
     
-    Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ teorie v tomto jazyce taková, že $T$ má nekončený model a platí v ní axiomy lineárního uspořádání $T$. Pomocí věty o kompaktnosti ukažte, že $T$ má model $\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že existují prvky $c_i$ pro každé $i\in \mathbb{N}$ v $A$ takové, že: $\dots < c_{n+1} < c_n< \dots <c_0$.
+    Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ teorie v tomto jazyce taková, že $T$ má nekončený model a platí v ní axiomy lineárního uspořádání. Pomocí věty o kompaktnosti ukažte, že $T$ má model $\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že v $A$ existují prvky $c_i$ pro každé $i\in \mathbb{N}$ takové, že: $\dots < c_{n+1} < c_n< \dots <c_0$.
     (Z toho plyne, že pojem \emph{dobrého uspořádání} není definovatelný v logice prvního řádu.)
 
     \begin{solution}
+        
+        Jazyk $L$ rozšíříme přidáním spočetně mnoha nových konstantních symbolů $c_i$ ($i\in\mathbb{N}$). Označme rozšířený jazyk $L'$. Uvažme následující $L'$teorii $T'$:
+        $$
+        T' = T \cup \{c_{i+1}\leq c_i\land\neg c_{i+1}=c_i\mid i\in\mathbb{N}\}
+        $$
+        Stačí ukázat, že $T'$ má model. Ten zřejmě musí být nekonečný a jeho redukt na jazyk $L$ je hledaný model $\mathcal A$ teorie $T$, který má nekonečný klesající řetězec $\dots < c_{n+1}^\mathcal A < c_n^\mathcal A < \dots < c_0^\mathcal A$. 
+        
+        Z věty o kompaktnosti víme, že $T'$ má model, právě když každá konečná podmnožina $T'$ má model. Máme-li konečnou podteorii $S\subseteq T'$, ta obsahuje jen konečně mnoho formulí $c_{i+1}\leq c_i\land\neg c_{i+1}=c_i$, pro nějakou konečnou množinu indexů $I\subseteq\mathbb N$. Označme jako $\mathcal B$  nekonečný model $T$, který máme z přepokladu. (Tento model nemusí mít nekonečný klesající řetězec! Mohl by to být např. $\langle \mathbb N;\leq^\mathbb N\rangle$) V něm stačí vybrat libovolný konečný klesající řetězec délky $|I|$ jako interpretace konstantních symbolů $c_i$ pro $i\in I$ (symboly $c_j\notin I$ interpretujeme libovolně), a dostáváme model $S$.
                     
     \end{solution}
 

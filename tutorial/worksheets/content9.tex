@@ -25,6 +25,57 @@
     \end{enumerate}
 
     \begin{solution}
+
+        \begin{enumerate}[(a)]
+            \item Volné proměnné jsou $x,z$. (Můžete si nakreslit strom formule.) Nejprve nahradíme formuli variantou, kde přejmenujeme vázané proměnné aby byly různé, a různé od volných. Dostáváme ekvivalentní formuli:
+            $$
+            (\forall y_1)((\exists x_1)P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)((\forall x_2)R(x_2,y_2)\vee Q(x,y_2))
+            $$
+            Nyní postupujeme aplikací pravidel pro převod do PNF, podle stromu formule (posouváme kvantifikátory nahoru). Pořadí vytýkání volíme tak, že nejprve vytkneme ty kvanfitikátory, které nakonec (až budou v kvantifikátorovém prefixu, tj. nahoře u kořene stromu) budou existenční, a teprve potom ty, které budou univerzální (abychom zbytečně nevytvořili `závislost' ve Skolemově variantě). Dostáváme:
+            \begin{align*}
+                &(\forall y_1)((\exists x_1)P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)((\forall x_2)R(x_2,y_2)\vee Q(x,y_2))\\
+                \sim\ & (\forall y_1)(\forall x_1)(P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)(\forall x_2)(R(x_2,y_2)\vee Q(x,y_2))\\
+                \sim\ & (\exists y_2)((\forall y_1)(\forall x_1)(P(x_1,y_1)\to Q(y_1,z))\wedge (\forall x_2)(R(x_2,y_2)\vee Q(x,y_2)))\\
+                \sim\ & (\exists y_2)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,y_2)\vee Q(x,y_2)))
+            \end{align*}
+            (Pozor na pravidla pro implikaci: při vytknutí z antecedentu se mění kvantifikátor, alternativně lze nejprve přepsat implikaci $\varphi\limplies\psi$ jako $\neg\varphi\lor\psi$. Buďte také opatrní, aby proměnná ve vytknutém kvantifikátoru nebyla volná v druhé části formule, tomu jsme ale zajistili přejmenováním.)
+
+            Nezapomeňte, že pro skolemizaci potřebujeme sentenci, tj. generální uzávěr formule:
+            $$
+            (\forall x)(\forall z)(\exists y_2)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,y_2)\vee Q(x,y_2)))
+            $$
+            Skolemova varianta je potom:
+            $$
+            (\forall x)(\forall z)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,f(x,z))\vee Q(x,f(x,z))))
+            $$
+            Zde $f$ je nový, binární funkční symbol. (Pozor, skolemizujeme-li teorii, všechny funkční symboly použité při skolemizaci všech axiomů musí být nové, navzájem různé.)
+
+            Skolemova varianta je z definice sentence, ale i její otevřené jádro $(P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,f(x,z))\vee Q(x,f(x,z)))$ je ekvisplnitelné (ale typicky ne ekvivalentní!) s původní formuli.
+            
+            \item Postupujeme stejně jako v (a), ale ekvivalenci nejprve přepíšeme na dvojici implikací:
+            \begin{align*}
+                &(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)\\
+                \sim\ &((\exists x)R(x,y)\limplies (\forall y)P(x,y))\land((\forall y)P(x,y)\limplies (\exists x)R(x,y))\\
+                \sim\ &((\exists x_1)R(x_1,y)\limplies (\forall y_1)P(x,y_1))\land((\forall y_2)P(x,y_2)\limplies (\exists x_2)R(x_2,y))\\
+                \sim\ &(\exists x_2)(\exists y_2)(\forall x_1)(\forall y_1)((R(x_1,y)\limplies P(x,y_1))\land(P(x,y_2)\limplies R(x_2,y)))\\
+                \sim\ &(\forall x)(\forall y)(\exists x_2)(\exists y_2)(\forall x_1)(\forall y_1)((R(x_1,y)\limplies P(x,y_1))\land(P(x,y_2)\limplies R(x_2,y)))
+            \end{align*}
+            Skolemova varianta ($f,g$ jsou nové, binární funkční symboly):
+            $$
+            (\forall x)(\forall y)(\forall x_1)(\forall y_1)((R(x_1,y)\limplies P(x,y_1))\land(P(x,g(x,y))\limplies R(f(x,y),y)))
+            $$
+
+            \item Všimněte si, že formule je sentence. Obdobným postupem:
+            \begin{align*}
+            &\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)\\
+            \sim\ &\neg((\forall x)(\exists y)P(x,y)\to (\exists x')(\exists y')R(x',y'))\wedge(\forall x'')\neg(\exists y'')Q(x'',y'')\\
+            \sim\ & (\exists x'')(\exists y'')(\forall x)(\exists y)(\forall x')(\forall y')
+            (    
+                \neg(P(x,y)\to R(x',y'))\wedge\neg Q(x'',y'') 
+            )
+            \end{align*}
+            
+        \end{enumerate}
                     
     \end{solution}
 
@@ -43,6 +94,22 @@
     \end{enumerate}
 
     \begin{solution}
+        Nejprve vytvoříme Skolemovu variantu (viz předchozí příklad), poté vezmeme její otevřené jádro, a převedeme do CNF pomocí ekvivalentních úprav (stejně jako ve výrokové logice):
+        \begin{enumerate}[(a)]
+            \item $(\forall y)(\exists x)P(x,y)$ už je sentence v PNF, Skolemova varianta: $(\forall y)(P(f(y),y))$ ($f$ nový, unární funkční symbol). Otevřené jádro: $P(f(y),y)$, CNF v množinové reprezentaci: 
+            $$
+            S=\{\{P(f(y),y)\}\}
+            $$
+            \item $\neg (\forall y)(\exists x)P(x,y)\sim(\exists y)(\forall x)\neg P(x,y)$, Skolemova varianta $(\forall x)\neg P(x,c)$ ($c$ nový konstantní symbol), CNF: $S=\{\{\neg P(x,c)\}\}$
+            \item Symboly $c,d$ chápejme jako konstantní symboly, ne proměnné (dle konvence), jde tedy už o sentenci. Převod do PNF je snadný:
+            $$
+            \neg (\exists x)((P(x)\to P(c))\wedge (P(x)\to P(d)))\sim(\forall x)\neg((P(x)\to P(c))\wedge (P(x)\to P(d)))
+            $$
+            To už je univerzální sentence, skolemizace není potřeba (je sama svojí skolemovou variantou). Odstraníme $(\forall x)$ a převedeme do CNF: $(P(x)\lor P(x))\land (P(x)\lor \neg P(d))\land (\neg P(c)\lor P(x))\land (\neg P(c)\lor \neg P(d))$, po zjednodušení $P(x)\land (\neg P(c)\lor \neg P(d))$, množinová reprezentace: $S=\{\{P(x)\},\{\neg P(c),\neg P(d)\}\}$
+            \item Skolemova varianta: $(\forall y)(P(c,f(y))\wedge P(f(y),y) \to R(c,y))$, CNF v množinové reprezentaci: $S=\{\{\neg P(c,f(y)),\neg P(f(y),y), R(c,y)\}\}$.
+        \end{enumerate}
+
+
                     
     \end{solution}
 
@@ -54,7 +121,16 @@
     Nechť $T=\{(\exists x)R(x), (\exists y)\neg P(x,y), (\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti. Najděte otevřenou teorii $T'$ ekvisplnitelnou s $T$. Převeďte $T'$ do CNF a výslednou formuli $S$ zapište v množinové reprezentaci.
 
     \begin{solution}
-                    
+        Axiomy už jsou v PNF, ale pro skolemizaci potřebujeme sentence (generální uzávěry): $T\sim\{(\exists x)R(x), (\forall x)(\exists y)\neg P(x,y), (\forall x)(\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$. Skolemizujeme (všechny symboly musí být nové):
+        $\{R(c), (\forall x)\neg P(x,f(x)), (\forall x)(\forall z)(\neg R(x)\vee P(g(y),z))\}$. Odstraníme univerzální kvanfitikátory:
+        $$T'=\{R(c), \neg P(x,f(x)), \neg R(x)\vee P(g(y),z)\}$$
+        Ta už je v CNF, množinový zápis: $S=\{\{R(c)\},\{\neg P(x,f(x))\},\{\neg R(x),P(g(y),z)\}\}$
+        
+        Všimněte si, že $S$ je nesplnitelná: to vidíme `na úrovni výrokové logiky', substitujeme-li do druhé klauzule $\{x/g(c)\}$ a do třetí klauzule $\{x/c,y/c,z/f(g(c))\}$, dostáváme základní instance:
+        $$
+        S'=\{\{R(c)\},\{\neg P(g(c),f(g(c)))\},\{\neg R(c),P(g(c),f(g(c)))\}\}
+        $$
+        Díky ekvisplnitelnosti s $S$ je tedy nesplinitelná i původní teorie $T$.        
     \end{solution}
 
 \end{problem}
@@ -69,8 +145,31 @@
     \end{align*}
     \begin{enumerate}[(a)]
         \item Pomocí skolemizace sestrojte otevřeně axiomatizovanou teorii $T'$ (případně v širším jazyce $L'$) ekvisplnitelnou s $T$.
-        \item Buď $\mathcal{A}=\langle\mathbb{N}\cup\{0\},R^A\rangle$, kde $(n,m)\in R^A$ právě když $n$ dělí $m$.  Nalezněte expanzi $\mathcal{A}'$ $L$-struktury $\mathcal{A}$ do jazyka $L'$ takovou, že $\mathcal{A}'\models T'$.
+        \item Buď $\mathcal{A}=\langle\mathbb{N},R^A\rangle$, kde $(n,m)\in R^A$ právě když $n$ dělí $m$.  Nalezněte expanzi $\mathcal{A}'$ $L$-struktury $\mathcal{A}$ do jazyka $L'$ takovou, že $\mathcal{A}'\models T'$. (Množina všech přirozených čísel $\mathbb N$ obsahuje nulu, viz ISO 80000-2:2019.)
     \end{enumerate}
+
+    \begin{solution}
+        \begin{enumerate}[(a)]
+            \item Nejprve skolemizujeme:
+            \begin{itemize}
+                \item $\varphi_1\sim (\forall x)(\exists y)R(y,x)$, Skolemova varianta: 
+                $(\forall x)R(f(x),x)$
+                \item $\varphi_2\sim (\forall x)(\forall y)(\exists z)(\forall w)(R(z,x)\wedge R(z,y)\wedge (R(w,x) \wedge R(w,y)\to R(w,z)))$, Skolemova varianta: $(\forall x)(\forall y)(\forall w)(R(g(x,y),x)\wedge R(g(x,y),y)\wedge (R(w,x) \wedge R(w,y)\to R(w,g(x,y))))$
+            \end{itemize}
+            Nakonec odstraníme kvantifikátorové prefixy, a třetí axiom ve formě konjunkce pro přehlednost rozdělíme:
+            $$
+            T'=\{R(f(x),x), R(g(x,y),x), R(g(x,y),y), R(w,x) \wedge R(w,y)\to R(w,g(x,y))\}
+            $$
+            \item Uvědomíme si význam axiomů: první říká, že každé číslo má nějakého dělitele, a druhý vyjadřuje existenci největšího společného dělitele. Potřebujeme odpovídajícím způsobem interpretovat funkční symboly, např.:
+            \begin{itemize}
+                \item $f^{\mathcal A'}(n)=n$ (pro všechna $n\in\mathbb N$)
+                \item $g^{\mathcal A'}(n,m)=\gcd(n,m)$ (pro všechna $n,m\in\mathbb N$),
+            \end{itemize}
+            Dostáváme tedy strukturu $\mathcal A'=\langle\mathbb N,R^\mathcal A,f^{\mathcal A'},g^{\mathcal A'}\rangle$ v jazyce $L'=\langle R,f,g\rangle$ s rovností, kde $R^\mathcal A$ je relace dělitelnosti jako výše.
+
+            Všimněte si, že tato $\mathcal A'$ není jediná možná. Mohli bychom také zvolit $f^{\mathcal A'}(n)=1$. To je důvod, proč skolemizací dostaneme ekvisplnitelnou, ale typicky ne ekvivalentní teorii.
+        \end{enumerate}
+    \end{solution}
 
 \end{problem}
 

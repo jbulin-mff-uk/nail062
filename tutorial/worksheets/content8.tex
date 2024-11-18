@@ -282,7 +282,9 @@
     (Z toho plyne, že pojem \emph{dobrého uspořádání} není definovatelný v logice prvního řádu.)
 
     \begin{solution}
-        
+
+        Z předpokladu víme, že $T$ má nekonečný model $\mathcal B$, tj. nekonečné lineární uspořádání. To by ale mohlo být např. $\langle \mathbb N;\leq^\mathbb N\rangle$, které žádný nekonečný řetězec nemá. Potřebujeme model s nekonečným klesajícím řetězcem, ten získáme z Věty o kompaktnosti (verze pro predikátovou logiku):
+                
         Jazyk $L$ rozšíříme přidáním spočetně mnoha nových konstantních symbolů $c_i$ ($i\in\mathbb{N}$). Označme rozšířený jazyk $L'$. Uvažme následující $L'$teorii $T'$:
         $$
         T' = T \cup \{c_{i+1}\leq c_i\land\neg c_{i+1}=c_i\mid i\in\mathbb{N}\}

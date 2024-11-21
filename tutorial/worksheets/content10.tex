@@ -22,6 +22,50 @@
     
     \emph{Každý holič holí všechny, kdo neholí sami sebe. Žádný holič neholí nikoho, kdo holí sám sebe.} Formalizujte v predikátové logice a dokažte rezolucí, že: \emph{Neexistují žádní holiči.}
 
+    \begin{solution}
+
+        Nejprve zvolíme vhodný jazyk. V textu identifikujeme vlastnost objektů ``$x$ je holič'' a vztah dvou objektů ``(kdo) $x$ holí (koho) $y$''. Použijeme jazyk $L=\langle B, S\rangle$ bez rovnosti, kde $B$ je unární relační symbol, $B(x)$ má význam ``$x$ je holič (barber)'', $S$ je binární relační symbol, $S(x,y)$ znamená ``$x$ holí (shaves) $y$''. 
+        
+        V tomto jazyce formalizujeme tvrzení ze zadání:
+        \begin{itemize}
+            \item Každý holič holí všechny, kdo neholí sami sebe: 
+            $$
+            \varphi_1\ =\ (\forall x)(B(x)\limplies (\forall y)(\neg S(y,y)\limplies S(x,y)))
+            $$
+            \item Žádný holič neholí nikoho, kdo holí sám sebe: 
+            $$
+            \varphi_2\ =\ \neg (\exists x)(B(x) \land (\exists y)(S(x,y)\land S(y,y)))
+            $$
+            \item Neexistují žádní holiči:
+            $$
+            \psi\ =\ \neg (\exists x)B(x)
+            $$
+        \end{itemize}
+        Naším cílem je ukázat, že v teorii $T=\{\varphi_1,\varphi_2\}$ platí sentence $\psi$. Dokazujeme sporem, vyjdeme tedy z teorie $T\cup\{\neg\psi\}=\{\varphi_1,\varphi_2,\neg\psi\}$. Pomocí skolemizace k ní najdeme ekvisplnitelnou CNF formuli $S$. Najdeme rezoluční zamítnutí $S$, čímž ukážemem že $S$ a tedy i $T\cup\{\neg\psi\}$ je nesplnitelná.
+
+        Převedeme do PNF, skolemizujeme, odstraníme univerzální kvantifikátory, a převedeme do CNF:
+        \begin{itemize}
+            \item $\varphi_1\ \rightsquigarrow\ B(x)\limplies (\neg S(y,y)\limplies S(x,y))\ \sim \ \neg B(x)\lor S(y,y)\lor S(x,y)$
+            \item $\varphi_1\ \rightsquigarrow\ \neg(B(x)\land S(x,y)\land S(y,y))\ \sim\ \neg B(x)\lor \neg S(x,y)\lor \neg S(y,y)$
+            \item $\neg\psi\rightsquigarrow\ B(c)$ (kde $c$ je nový konstantní symbol)
+        \end{itemize}
+        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule!). V množinovém zápisu:
+        $$
+        S = \{\{\neg B(x), S(y,y), S(x,y)\},\{\neg B(x), \neg S(x,y), \neg S(y,y)\},\{B(c)\}\}
+        $$
+        Rezoluční zamítnutí:
+        \begin{align*}
+            &\{B(c)\},\{\neg B(x), S(y,y), S(x,y)\},\{S(y,y),S(c,y)\},\{\neg B(x), \neg S(x,y'), \neg S(y',y')\},\\
+            &\{\neg S(c,y'), \neg S(y',y')\},\square    
+        \end{align*}
+        První dvě klauzule jsou z $S$, třetí jejich rezolventa za použití unifikace $\{x/c\}$. Čtvrtá klauzule je variantou klauzule z $S$, proměnnou $y$ jsme přejmenovali na $y'$, abychom dodrželi technickou podmínku o disjunktních množinách proměnných v rezolvovaných klauzulích. Pátá klauzule je rezolventou první a čtvrté za použití unifikace $\{x/c\}$. Poslední, prázdná klauzule $\square$ je rezolventou z 3. a 5. klauzule, unifikace $\{y/c,y'/c\}$.
+
+        Typicky ale zamítnutí zakreslíme rezolučním stromem, naznačíme i použité unifikace:
+
+        TODO
+
+    \end{solution}
+
 \end{problem}
 
 

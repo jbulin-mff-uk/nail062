@@ -108,9 +108,6 @@
             To už je univerzální sentence, skolemizace není potřeba (je sama svojí skolemovou variantou). Odstraníme $(\forall x)$ a převedeme do CNF: $(P(x)\lor P(x))\land (P(x)\lor \neg P(d))\land (\neg P(c)\lor P(x))\land (\neg P(c)\lor \neg P(d))$, po zjednodušení $P(x)\land (\neg P(c)\lor \neg P(d))$, množinová reprezentace: $S=\{\{P(x)\},\{\neg P(c),\neg P(d)\}\}$
             \item Skolemova varianta: $(\forall y)(P(c,f(y))\wedge P(f(y),y) \to R(c,y))$, CNF v množinové reprezentaci: $S=\{\{\neg P(c,f(y)),\neg P(f(y),y), R(c,y)\}\}$.
         \end{enumerate}
-
-
-                    
     \end{solution}
 
 \end{problem}
@@ -185,7 +182,63 @@
     \end{enumerate}
 
     \begin{solution}
-                    
+        \begin{enumerate}[(a)]
+            \item $T$ je sporná. Nesplnitelná je následující konjunkce základních instancí axiomů:
+            $$
+            (\neg P(c)\lor Q(f(c),d))\land \neg Q(f(c),d)\land P(c)
+            $$
+            To lze snadno ověřit rezolucí `na úrovni výrokové logiky', tj. každou atomickou formuli chápeme jako prvovýrok: označíme-li $P(c)$ jako $p$ a $Q(f(c),d)$ jako $q$, máme $(\neg p\lor q)\land \neg q\land p$.
+
+            Jak můžeme tyto základní instance axiomů najít? Herbrandova věta dává návod: sestrojíme (konečný) tablo důkaz sporu z teorie $T_\mathrm{ground}$ sestávající ze všech základních instancí axiomů $T$. Alternativně, použijeme stejný postup jako při hledání modelů: sestrojíme \emph{tablo zamítnutí} některého z axiomů $\varphi_\mathrm{ground}\in T_\mathrm{ground}$, tj. sporné tablo z teorie $T_\mathrm{ground}$ s položkou $\mathrm{T}\varphi_\mathrm{ground}$ v kořeni. Při vhodné volbě axiomů dojdeme ke spornému tablu snadno:
+            \begin{center}
+                \scalebox{1}{
+                \begin{forest}
+                    for tree={math content}
+                    [\textcolor{blue}{\T P(c)}
+                        [\textcolor{blue}{\T \neg Q(f(c),d)}
+                            [{\F Q(f(c),d)}
+                                [\textcolor{blue}{\T\neg P(c)\lor Q(f(c),d)}
+                                    [\T\neg P(c)
+                                        [\F P(c), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                    [{\T Q(f(c),d)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                ]
+                            ]
+                        ]
+                    ]
+                \end{forest}
+                }
+            \end{center}  
+            Axiomy $T_\mathrm{ground}$ (tj. základní instance axiomů $T$), teré jsme v tablo zamítnutí použili (modře), patří do nesplnitelné konjunkce výše.
+
+            V příští sadě příkladů si ale ukážeme lepší postup: nesplnitelnou konjunkci základních instancí axiomů můžeme také získat z \emph{rezolučního zamítnutí} $S$ (vzniklého převodem $T$ do CNF).
+
+            \item Tato teorie není sporná, má tedy Herbrandův model (model, jehož univerzum tvoří všechny konstantní termy jazyka, a kde interpretace funkčních symbolů odpovídají ``vytvoření termu'' aplikací daného symbolu). 
+            
+            V takto jednoduchém případě můžeme Herbrandův model zkonstruovat sami: 
+            $$
+            \mathcal H=\langle H;P^\mathcal H,Q^\mathcal H,f^\mathcal H,c^\mathcal H,d^\mathcal H\rangle
+            $$
+            \begin{itemize}
+                \item $\mathcal H=\{\text{``c''},\text{``d''},\text{``f(c)''},\text{``f(d)''},\text{``f(f(c))''},\text{``f(f(d))''},\dots\}$
+                \item $c^\mathcal H=\text{``c''}$, $d^\mathcal H=\text{``d''}$
+                \item $f^\mathcal H(\text{``t''})=\text{``f(t)''}$
+                \item $P^\mathcal H=H$
+                \item $Q^\mathcal H=H\times H$
+            \end{itemize}
+            Relace $P^\mathcal H=H$ a $Q^\mathcal H=H\times H$ jsme zvolili jako úplnou unární resp. binární relaci, aby bylo snadno vidět, že všechny axiomy jsou splněny. Zbytek je dán z definice Herbrandova modelu.
+
+            Vysvětlíme si také postup daný důkazem Herbrandovy věty. Podobně jako výše bychom zkonstruovali dokončené tablo z $T_\mathrm{ground}$ pro položku $\T P(c)$ (například), ale tentokrát tablo nebude sporné (teorie $T_\mathrm{ground}$ není sporná). Herbrandův model získáme z libovolné (dokončené) bezesporné větve, a to stejným postupem jako kanonický model, s tím rozdílem, že do jazyka nepřidáváme pomocné konstantní symboly $c_0,c_1,\dots$ jako jsme to dělali v tablo metodě. Všimněte si, že nejsou potřeba: protože je teorie $T$ \emph{otevřená}, nejsou v ní ani v $T_\mathrm{ground}$ žádné kvantifikátory, tedy nemusíme redukovat žádné položky typu ``svědek''. (Můžete si zkusit kousek tabla zkonstruovat, ale vyjde poměrně složité.)
+            
+            \item Není sporná, v Herbrandově modelu lze zvolit např. $P^\mathcal H=H\times\{\text{``f(t)''}\mid t\in H\}$, tj. v relaci jsou takové dvojice termů, kde druhý začíná funkčním symbolem $f$.
+            
+            \item Teorie je sporná. V axiomech nevidíme žádný konstantní symbol, proto si musíme jeden do jazyka přidat, buďme tedy v jazyce $L=\langle P,f,g,c\rangle$ (bez rovnosti). Sporná, nesplnitelná konjunkce základních instancí axiomů je např.:
+            $$
+            P(g(c),f(g(c)))\land \neg P(c,g(c))\land (P(g(c),f(g(c))) \to P(c,g(c)))
+            $$
+        
+        \end{enumerate}
+
     \end{solution}
 
 \end{problem}
@@ -228,7 +281,7 @@
 \section*{K zamyšlení}
 
     
-\begin{problem} 
+\begin{problem}
     
     Skolemova varianta nemusí být ekvivalentní původní formuli, ověřte, že platí:
     \begin{enumerate}[(a)]

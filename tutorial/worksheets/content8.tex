@@ -47,7 +47,7 @@
                 \alpha_3 & = \neg(\exists x)(S(x)\land L(x)) \\
                 \varphi & = \neg (\forall x)(O(x)\limplies V(x))
             \end{align*}
-            \item Sestrojíme dokončené tablo z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$ s položkou $F\varphi$ v kořeni. Uvidíme, že všechny větve budou sporné, půjde tedy o tablo důkaz.
+            \item Sestrojíme dokončené tablo z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$ s položkou $F\varphi$ v kořeni. Uvidíme, že všechny větve budou sporné, půjde tedy o tablo důkaz. (\textcolor{blue}{Modře} je vyznačeno připojení axiomů, \textcolor{red}{červeně} jsou kořeny atomických tabel položek typu `všichni', které bychom mohli nekreslit, kdyby nám to konvence dovolila.)
             
             \begin{center}
                 \scalebox{1}{
@@ -59,18 +59,18 @@
                                 [\T O(c_0)\land S(c_0)
                                     [\T O(c_0)
                                         [\T S(c_0)
-                                            [\T (\forall x)(O(x)\limplies V(x))
+                                            [\textcolor{red}{\T (\forall x)(O(x)\limplies V(x))}
                                                 [\T O(c_0)\limplies V(c_0)
                                                     [\F O(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                     [\T V(c_0)
                                                         [\textcolor{blue}{\T(\forall x)(V(x)\limplies L(x))}
-                                                            [\T(\forall x)(V(x)\limplies L(x))
+                                                            [\textcolor{red}{\T(\forall x)(V(x)\limplies L(x))}
                                                                 [\T V(c_0)\limplies L(c_0)
                                                                     [\F V(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                                     [\T L(c_0)
                                                                         [\textcolor{blue}{\T\neg(\exists x)(S(x)\land L(x))}
                                                                             [\F(\exists x)(S(x)\land L(x))
-                                                                                [\F(\exists x)(S(x)\land L(x))
+                                                                                [\textcolor{red}{\F(\exists x)(S(x)\land L(x))}
                                                                                     [\F S(c_0)\land L(c_0)
                                                                                         [\F S(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]           [\F L(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                                                     ]
@@ -143,9 +143,9 @@
                           [\T M(c_0)
                             [\T M(c_1)
                               [\textcolor{blue}{\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))}
-                                [\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))
+                                [\textcolor{red}{\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))}
                                   [\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))
-                                    [\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))
+                                    [\textcolor{red}{\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))}
                                       [\T M(c_0)\wedge M(c_1)\to M(c_0+c_1)
                                         [\F M(c_0)\wedge M(c_1)
                                           [\F M(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
@@ -153,14 +153,14 @@
                                         ]
                                         [\T M(c_0+c_1)
                                           [\textcolor{blue}{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
-                                            [{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
+                                            [\textcolor{red}{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
                                               [{\T M(c_0+c_1)\leftrightarrow B(c_0+c_1,0)}
                                                 [\T M(c_0+c_1)
                                                   [{\T B(c_0+c_1,0)}
                                                     [\textcolor{blue}{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
-                                                      [{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
+                                                      [\textcolor{red}{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
                                                         [{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
-                                                          [{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
+                                                          [\textcolor{red}{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
                                                             [{\T B(c_0+c_1,0)\to B(f(c_0+c_1),f(0))}
                                                               [{\F B(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                               [{\T B(f(c_0+c_1),f(0))}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
@@ -222,18 +222,18 @@
                   [{\F c_0=c}
                     [\textcolor{blue}{\T(\exists x)(\forall y)x=y}
                       [{\T(\forall y)c_1=y}
-                        [{\T(\forall y)c_1=y}
+                        [\textcolor{red}{\T(\forall y)c_1=y}
                           [{\T c_1=c}
-                            [{\T(\forall y)c_1=y}
+                            [\textcolor{red}{\T(\forall y)c_1=y}
                               [{\T c_1=c_0}
                                 [\textcolor{blue}{\T(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))}
-                                  [{\T(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))}
+                                  [\textcolor{red}{\T(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))}
                                     [{\T(\forall x_2)(\forall y_1)(\forall y_2)(c_1=y_1\wedge x_2=y_2\to (c_1=x_2\to y_1=y_2))}
-                                      [{\T(\forall x_2)(\forall y_1)(\forall y_2)(c_1=y_1\wedge x_2=y_2\to (c_1=x_2\to y_1=y_2))}
+                                      [\textcolor{red}{\T(\forall x_2)(\forall y_1)(\forall y_2)(c_1=y_1\wedge x_2=y_2\to (c_1=x_2\to y_1=y_2))}
                                         [{\T(\forall y_1)(\forall y_2)(c_1=y_1\wedge c_1=y_2\to (c_1=c_1\to y_1=y_2))}
-                                          [{\T(\forall y_1)(\forall y_2)(c_1=y_1\wedge c_1=y_2\to (c_1=c_1\to y_1=y_2))}
+                                          [\textcolor{red}{\T(\forall y_1)(\forall y_2)(c_1=y_1\wedge c_1=y_2\to (c_1=c_1\to y_1=y_2))}
                                             [{\T(\forall y_2)(c_1=c_0\wedge c_1=y_2\to (c_1=c_1\to c_0=y_2))}
-                                              [{\T(\forall y_2)(c_1=c_0\wedge c_1=y_2\to (c_1=c_1\to c_0=y_2))}
+                                              [\textcolor{red}{\T(\forall y_2)(c_1=c_0\wedge c_1=y_2\to (c_1=c_1\to c_0=y_2))}
                                                 [{\T(c_1=c_0\wedge c_1=c\to (c_1=c_1\to c_0=c))}
                                                   [{\F c_1=c_0\wedge c_1=c}
                                                     [{\F c_1=c_0}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
@@ -242,7 +242,7 @@
                                                   [{\T c_1=c_1\to c_0=c}
                                                     [{\F c_1=c_1}
                                                       [\textcolor{blue}{\T(\forall x)x=x}
-                                                        [{\T(\forall x)x=x}
+                                                        [\textcolor{red}{\T(\forall x)x=x}
                                                           [{\T c_1=c_1
                                                           }, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                         ]    

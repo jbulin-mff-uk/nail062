@@ -49,7 +49,9 @@
             \item $\varphi_1\ \rightsquigarrow\ \neg(B(x)\land S(x,y)\land S(y,y))\ \sim\ \neg B(x)\lor \neg S(x,y)\lor \neg S(y,y)$
             \item $\neg\psi\rightsquigarrow\ B(c)$ (kde $c$ je nový konstantní symbol)
         \end{itemize}
-        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule!). V množinovém zápisu:
+        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule! Skolemizací $\neg\exists B(x)$ bychom dostali $\neg B(x)$, čehož negace je $B(x)$, tj. `všichni jsou holiči' zatímco správným postupem dostaneme `(svědek) $c$ je holič'.). 
+        
+        V množinovém zápisu tedy máme:
         $$
         S = \{\{\neg B(x), S(y,y), S(x,y)\},\{\neg B(x), \neg S(x,y), \neg S(y,y)\},\{B(c)\}\}
         $$
@@ -60,9 +62,23 @@
         \end{align*}
         První dvě klauzule jsou z $S$, třetí jejich rezolventa za použití unifikace $\{x/c\}$. Čtvrtá klauzule je variantou klauzule z $S$, proměnnou $y$ jsme přejmenovali na $y'$, abychom dodrželi technickou podmínku o disjunktních množinách proměnných v rezolvovaných klauzulích. Pátá klauzule je rezolventou první a čtvrté za použití unifikace $\{x/c\}$. Poslední, prázdná klauzule $\square$ je rezolventou z 3. a 5. klauzule, unifikace $\{y/c,y'/c\}$.
 
-        Typicky ale zamítnutí zakreslíme rezolučním stromem, naznačíme i použité unifikace:
+        Typicky ale zamítnutí zakreslíme pouze rezolučním stromem, naznačíme i použité unifikace:
 
-        TODO
+        \begin{center}            
+            \begin{forest}
+                for tree={l=1.5cm, grow=north}
+                [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$\{y/c,y'/c\}$}}
+                    [{$ \{\neg S(c,y'), \neg S(y',y')\} $}, label=right:{\footnotesize\textcolor{blue}{$\{x/c\}$}}
+                        [{$ \{\neg B(x), \neg S(x,y'), \neg S(y',y')\} $}]
+                        [{$ \{B(c)\} $}]
+                    ]
+                    [{$ \{S(y,y),S(c,y)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c\}$}}
+                        [{$ \{\neg B(x), S(y,y), S(x,y)\} $}]
+                        [{$ \{B(c)\} $}]
+                    ]
+                ]
+            \end{forest}
+        \end{center}
 
     \end{solution}
 
@@ -78,13 +94,48 @@
     \end{enumerate}
     Chceme ukázat rezolucí, že pak: {\it (iii) Pokud ovce porodila, byla sama porozena.} Konkrétně:
     \begin{enumerate}[(a)]
-        \item Uvedená tvrzení vyjádřete sentencemi $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti ($P$ je binární a $K$ unární relační symbol).
+        \item Uvedená tvrzení vyjádřete sentencemi $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti ($P$ je binární a $K$ unární relační symbol, $P(x,y)$ znamená `ovce $x$ porodila ovci $y$', $K(x)$ znamená `ovce $x$ byla naklonována').
         \item S využitím skolemizace těchto sentencí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. %Zapište ji v množinové reprezentaci.
         \item Najděte rezoluční zamítnutí $S$, nakreslete rezoluční strom s použitými unifikacemi.
         \item Má $S$ LI-zamítnutí?
     \end{enumerate}
 
     \begin{solution}
+        Všimněte si, že všechny objekty, o kterých mluvíme, jsou ovce, nepotřebujeme tedy predikát pro `býti ovcí'. Postup je stejný jako v předchozím příkladě:
+        \begin{enumerate}[(a)]
+            \item Možností jak formulovat formule je více, pokud se snažíme co nejpřesněji držet textu, dostaneme např.:
+            \begin{align*}
+                \varphi_1 &\ =\ (\forall x)(((\exists y)P(y,x)\lor K(x))\land \neg ((\exists z)P(z,x)\land K(x)))\\
+                \varphi_2 &\ =\ \neg(\exists x)(K(x)\land (\exists y)P(x,y))\\
+                \varphi_3 &\ =\ (\forall x)((\exists y)P(x,y)\limplies (\exists z)P(z,x))
+            \end{align*}
+            \item Vyjdeme z teorie $\{\varphi_1,\varphi_2,\neg\varphi_3\}$ (dokazujeme sporem). Převedeme do PNF, skolemizujeme, odstraníme univerzální kvantifikátory, převedeme do CNF, a zapíšeme v množinovém zápisu:
+            \begin{itemize}
+                \item $\varphi_1\ \sim\ (\forall x)(\exists y)(\forall z)((P(y,x)\lor K(x))\land \neg (P(z,x)\land K(x)))\ \rightsquigarrow\ (P(f(x),x)\lor K(x))\land \neg (P(z,x)\land K(x))\ \sim\ \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\}\}$
+                \item $\varphi_2\ \sim\ (\forall x)(\forall y)\neg (K(x)\land P(x,y))\ \sim\ \{\{\neg K(x),\neg P(x,y)\}\}$
+                \item $\neg\varphi_3\ \sim\ (\exists x)(\exists y)(\forall z)\neg(P(x,y)\limplies P(z,x))\ \rightsquigarrow\ \neg(P(c,d)\limplies P(z,c))\ \sim\ \{\{P(c,d)\},\{\neg P(z,c)\}\}$
+            \end{itemize}
+            $$
+            S = \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\},\{\neg K(x),\neg P(x,y)\},\{P(c,d)\},\{\neg P(z,c)\}\}
+            $$
+            \item Rezoluční strom pro rezoluční zamítnutí $S\proves_R\square$:
+            \begin{center}            
+                \begin{forest}
+                    for tree={l=1.5cm, grow=north}
+                    [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$\{y/d\}$}}
+                        [{$ \{P(c,d)\} $}]
+                        [{$ \{\neg P(c,y)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
+                            [{$ \{\neg K(x),\neg P(x,y)\} $}]
+                            [{$ \{K(c)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
+                                [{$ \{\neg P(z,c)\} $}]
+                                [{$ \{P(f(x),x), K(x)\} $}]
+                            ]
+                        ]
+                    ]                    
+                \end{forest}
+            \end{center}
+            \item Ano, v (c) se nám podařilo sestrojit LI-zamítnutí. I kdyby ne, existence LI-zamítnutí plyne z Věty o úplnosti LI-rezoluce pro Hornovy formule, naše CNF formule $S$ je Hornova.
+        \end{enumerate}
                     
     \end{solution}
 
@@ -99,11 +150,93 @@
         \item Skolemizací nalezněte k $T$ otevřenou ekvisplnitelnou teorii $T'$.
         \item Převeďte $T'$ na ekvivalentní teorii $S$ v CNF. Zapište $S$ v množinové reprezentaci.
         \item Nalezněte rezoluční zamítnutí teorie $S$. U každého kroku uveďte použitou unifikaci.
-        \item Nalezněte konjunkci základních instancí axiomů $S$, která je nesplnitelná. {\it Nápověda: využijte unifikace z (c).}       
+        \item Nalezněte konjunkci základních instancí klauzulí z $S$, která je nesplnitelná. {\it Nápověda: využijte unifikace z (c).}       
     \end{enumerate}
 
     \begin{solution}
-                    
+        
+        \begin{enumerate}[(a)]
+            \item Skolemizací dostáváme: 
+            $$
+            T'=\{\neg R(x),\ P(c,y)\to P(y,c),\ P(x,y)\land P(y,x)\to R(x),\ P(x,f(x))\}
+            $$
+            (Pozor u třetího axiomu: $(\exists y)$ vytýkáme z antecedentu implikace, změní se na $(\forall y)$).
+            \item Snadno převedeme do CNF: 
+            $$
+            S = \{\{\neg R(x)\},\{\neg P(c,y),P(y,c)\},\{\neg P(x,y),\neg P(y,x),R(x)\},\{P(x,f(x))\}\}
+            $$
+            \item Rezoluční strom pro $S\proves_R\square$:
+            \begin{center}            
+                \begin{forest}
+                    for tree={l=1.5cm, grow=north}
+                    [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,y/f(c)\}$}}
+                        [{$ \{P(x,f(x))\} $}]
+                        [{$ \{\neg P(c,y)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,y'/y\}$}}
+                            [{$ \{\neg P(c,y'),P(y',c)\} $}]
+                            [{$ \{\neg P(x,y),\neg P(y,x)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x'/x\}$}}
+                                [{$ \{\neg P(x',y),\neg P(y,x'),R(x')\} $}]
+                                [{$ \{\neg R(x)\} $}]
+                            ]
+                        ]
+                    ]                    
+                \end{forest}
+            \end{center}
+            (Všimněte si, kde potřebujeme přejmenovat proměnné, aby rezolvované klauzule měly disjunktní množiny proměnných.)
+            \item K nalezení konjunkce základních instancí axiomů můžeme použít sestrojené rezoluční zamítnutí. Pro každý list rezolučního stromu, který je označkovaný klauzulí $C$ (až na přejmenování je to klauzule z $S$), aplikujeme na $C$ postupně všechny unifikace na cestě od tohoto listu až ke kořeni:
+            \begin{itemize}
+                \item $\neg R(x)\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg R(c)$
+                \item $\neg P(x',y)\lor\neg P(y,x')\lor R(x')\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)$
+                \item $\neg P(c,y')\lor P(y',c)\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor P(f(c),c)$
+                \item $P(x,f(x))\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=P(c,f(c))$
+            \end{itemize}
+            Pokud by v některých klauzulích zůstaly proměnné, substituujeme za ně libovolný konstantní term. Dostáváme nesplnitelnou konjunkci základních instancí klauzulí z $S$:
+            $$
+            \neg R(c)\land (\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)))\land (\neg P(c,f(c))\lor P(f(c),c))\land P(c,f(c))
+            $$
+            Její rezoluční zamítnutí `na úrovni výrokové logiky' má stejnou strukturu jako rezoluční zamítnutí $S$:
+            
+            \begin{minipage}{0.6\textwidth}
+                \scalebox{0.9}{
+                \begin{forest}
+                    for tree={l=1.5cm, grow=north}
+                    [{$ \square $}
+                        [{$ \{P(c,f(c))\} $}]
+                        [{$ \{\neg P(c,f(c))\} $}
+                            [{$ \{\neg P(c,f(c)),P(f(c),c)\} $}]
+                            [{$ \{\neg P(c,f(c)),\neg P(f(c),c)\} $}
+                                [{$ \{\neg P(c,f(c)),\neg P(f(c),c),R(c)\} $}]
+                                [{$ \{\neg R(c)\} $}]
+                            ]
+                        ]
+                    ]                    
+                \end{forest}
+                }
+            \end{minipage}%
+            \begin{minipage}{0.35\textwidth}
+                \scalebox{0.9}{
+                \begin{forest}
+                    for tree={l=1.5cm, grow=north}
+                    [{$ \square $}
+                        [{$ \{q\} $}]
+                        [{$ \{\neg q\} $}
+                            [{$ \{\neg q,r\} $}]
+                            [{$ \{\neg q,\neg r\} $}
+                                [{$ \{\neg q,\neg r,p\} $}]
+                                [{$ \{\neg p\} $}]
+                            ]
+                        ]
+                    ]                    
+                \end{forest}
+                }
+            \end{minipage} 
+            Pokud bychom chtěli základní instance původní teorie $T$, musíme se podívat, ze kterých axiomů $T$ vznikly naše klauzle, a aplikovat stejné unifikace, výsledkem by bylo:
+            $$
+            \neg R(c)\land (P(c,f(c))\to P(f(c),c))\land (P(c,f(c))\land P(f(c),c)\to R(c))\land P(c,f(c))
+            $$
+
+
+        \end{enumerate}
+
     \end{solution}
 
 \end{problem}

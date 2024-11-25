@@ -1037,7 +1037,7 @@ SQL dotaz ve své nejjednodušší formě (pomineme-li např. \emph{agregační 
 
 Výsledkem bude množina $\varphi^{\text{Database},\text{`T. Hanks'}} (x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ definovaná ve struktuře $\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$, kde $D=\{\text{`Atlas'},\text{`Lucerna'},\dots,\text{`M. Keaton'}\}$, s parametrem `T. Hanks' následující formulí $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ :
 $$
-(\exists y_\mathrm{title})(\exists y_\mathrm{director})(\mathrm{Program}(x_\mathrm{cinema},y_\mathrm{title},x_\mathrm{time}) \land \mathrm{Movies}(y_\mathrm{title},y_\mathrm{director},y_\mathrm{actor}))
+(\exists z_\mathrm{title})(\exists z_\mathrm{director})(\mathrm{Program}(x_\mathrm{cinema},z_\mathrm{title},x_\mathrm{time}) \land \mathrm{Movies}(z_\mathrm{title},z_\mathrm{director},y_\mathrm{actor}))
 $$
 
 

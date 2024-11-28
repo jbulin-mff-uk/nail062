@@ -18,138 +18,20 @@
 \begin{frame}{Jedenáctá přednáška}
 
     \textbf{Program}
-        \begin{itemize}
-            \item korektnost rezoluce
-            \item lifting lemma a úplnost rezoluce
+        \begin{itemize}            
             \item LI-rezoluce a Prolog
             \item elementární ekvivalence
+            \item izomorfismus a konečné modely
+            \item definovatelnost a automorfismy
+            \item $\omega$-kategoricita a úplnost
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 8.6-8.7 z Kapitoly 8, Sekce 9.1 z Kapitoly 9
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 8.7 z Kapitoly 8, Sekce 9.1-9.3 z Kapitoly 9
         %todo Prolog jako samostatná sekce?
 
 \end{frame}
-
-
-\section{8.6 Korektnost a úplnost}
-
-
-\begin{frame}{Korektnost rezolučního kroku}
-
-    \myblock{
-    \textbf{Tvrzení:}
-    Mějme klauzule $C_1$, $C_2$ a jejich rezolventu $C$. Platí-li v~nějaké struktuře $\A$ klauzule $C_1$ a $C_2$, potom v ní platí i $C$.
-    }
-
-    \textbf{Důkaz:} Buď $C_1=C_1'\sqcup \{A_1,\dots,A_n\}$, $C_2=C_2'\sqcup \{\neg B_1,\dots,\neg B_m\}$, a $C=C_1'\sigma \cup C_2'\sigma$, kde $S\sigma=\{A_1\sigma\}$ (a $\sigma$ je
-    nejobecnější). Klauzule jsou otevřené formule, proto platí i jejich instance:     
-    $$
-    \A\models C_1\sigma\ \text{ a }\ \A\models C_2\sigma
-    $$     
-    Po aplikaci unifikace máme: 
-    \begin{align*}        
-        C_1\sigma&=C_1'\sigma \cup \{A_1\sigma\}\\
-        C_2\sigma&=C_2'\sigma \cup \{\neg A_1\sigma\}        
-    \end{align*}
-    Chceme ukázat, že $\A\models C[e]$ pro lib. ohodnocení $e$. 
-    \begin{itemize}
-        \item Je-li \alert{$\A\models A_1\sigma[e]$}, potom $\A\not\models\neg A_1\sigma[e]$ a musí \alert{$\A\models C_2'\sigma[e]$}. Tedy i $\A\models C[e]$. 
-        \item Je-li \alert{$\A\not\models A_1\sigma[e]$}, musí být \alert{$\A\models C_1'\sigma[e]$} a opět $\A\models C[e]$. \hfill\qedsymbol
-    \end{itemize}    
-
-\end{frame}
-
-
-\begin{frame}{Korektnost rezoluce}
-
-    \myblock{
-    \textbf{Věta (O korektnosti rezoluce):}
-    Pokud je CNF formule $S$ rezolucí zamítnutelná, potom je nesplnitelná.
-    }
-
-    \medskip
-
-    \textbf{Důkaz:}
-        Víme, že $S\proves_R\square$, vezměme tedy nějaký rezoluční důkaz $\square$ z $S$. Kdyby existoval model $\A\models S$, díky korektnosti rezolučního pravidla bychom dokázali (indukcí podle délky důkazu) i $\A\models\square$, což ale není možné. \hfill\qedsymbol
-
-\end{frame}
-
-
-\begin{frame}{Lifting lemma}
-
-    úplnost rezoluce dokážeme převedením na případ výrokové logiky: rezoluční důkaz `na úrovni VL' je možné `zvednout' na úroveň PL
-
-    \medskip
-
-    \myblock{
-    \textbf{Lifting lemma:}
-        Buďte $C_1$ a $C_2$ klauzule s disj. množ. proměnných, $C^*_1$ a $C^*_2$ jejich základní instance, $C^*$ rezolventa $C^*_1$ a $C^*_2$. Potom $C_1$ a $C_2$ mají rezolventu $C$ takovou, že $C^*$ je základní instance $C$.
-    }
-
-    (důkaz na příštím slidu)
-
-    \bigskip
-
-    \myblock{
-    \textbf{Důsledek:}
-        Buď $S$ CNF formule a označme $S^*$ množinu všech jejích základních instancí. Pokud $S^*\proves_R C^*$ pro nějakou základní klauzuli $C^*$ (`na úrovni VL'), potom existuje klauzule $C$ a základní substituce $\sigma$ taková, že $C^*=C\sigma$ a $S\proves_R C$ (`na úrovni PL').
-    }
-    
-    \textbf{Důkaz:} Snadno z Lifting lemmatu indukcí dle délky důkazu.\hfill\qedsymbol
-
-\end{frame}
-
-
-\begin{frame}{Důkaz Lifting lemmatu}
-
-    Nechť \alert{$C^*_1=C_1\tau_1$} a \alert{$C^*_2=C_2\tau_2$}, $\tau_1$ a $\tau_2$ zákl. substituce nesdílející žádnou proměnnou. Najdeme rezolventu $C$, že \alert{$C^*=C\tau_1\tau_2$}.
-
-    Buď $C^*$ rezolventa $C_1^*$ a $C_2^*$ přes literál $P(t_1,\dots,t_k)$. Víme, že:
-    \begin{align*}
-        C_1&=C_1' \sqcup \{A_1,\dots,A_n\},\text{ kde }\{A_1,\dots,A_n\}\tau_1=\{P(t_1,\dots,t_k)\}\\
-        C_2&=C_2' \sqcup \{\neg B_1,\dots,\neg B_m\},\{\neg B_1,\dots,\neg B_m\}\tau_2=\{\neg P(t_1,\dots,t_k)\}
-    \end{align*}
-    Tedy $(\tau_1\tau_2)$ unifikuje $S=\{A_1,\dots,A_n,B_1,\dots,B_m\}$. Buď $\sigma$ nejob. unifikace pro $S$ z Unifikačního algoritmu. Zvolme \alert{$C=C_1'\sigma \cup C_2'\sigma$}.
-
-    \vspace{-24pt}
-    
-    \begin{align*}
-        &\alert{C\tau_1\tau_2
-        =} (C_1'\sigma \cup C_2'\sigma)\tau_1\tau_2
-        =C_1'\sigma\tau_1\tau_2 \cup C_2'\sigma\tau_1\tau_2
-        \textcolor{red}{=}C_1'\tau_1\tau_2 \cup C_2'\tau_1\tau_2\\ &
-        \textcolor{blue}{=}C_1'\tau_1 \cup C_2'\tau_2
-        =(C_1\setminus\{A_1,\dots,A_n\})\tau_1\cup (C_2\setminus\{\neg B_1,\dots,\neg B_m\})\tau_2\\
-        &=(C_1^*\setminus\{P(t_1,\dots,t_k)\})\cup(C_2^*\setminus \{\neg P(t_1,\dots,t_k)\})\alert{=C^*}
-    \end{align*}
-    
-    Zde \textcolor{red}{=} plyne z vlastnosti `navíc' Unif. algoritmu $(\tau_1\tau_2)=\sigma(\tau_1\tau_2)$, \\a \textcolor{blue}{=} z 
-    toho, že jde o základní substituce nesdílející proměnnou.\hfill\qedsymbol    
-
-\end{frame}
-
-
-\begin{frame}{Úplnost rezoluce}
-
-    \myblock{
-    \textbf{Věta (O úplnosti rezoluce):}
-        Je-li CNF formule $S$ nesplnitelná, potom je zamítnutelná rezolucí.
-    }
-
-    \medskip
-
-    \textbf{Důkaz:}
-    Množina $S^*$ všech základních instancí klauzulí z $S$ je také nesplnitelná (důsledek Herbrandovy věty). Úplnost \alert{výrokové} rezoluce dává $S^*\proves_R\square$ (`na úrovni VL'). 
-    
-    Z důsledku Lifting lemmatu dostáváme klauzuli $C$ a základní substituci $\sigma$ takové, že $C\sigma=\square$ a $S\proves_R C$ (`na úrovni PL'). 
-    
-    Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.        
-    \hfill\qedsymbol
-
-\end{frame}
-
 
 
 \section{8.7 LI-rezoluce}
@@ -572,6 +454,240 @@
 
     \textbf{Důkaz:}
     Dle Důsledku L.S. věty (s rovností) existuje spočetně nekonečná $\A\equiv\mathbb C$. Protože $\mathbb C$ je těleso a splňuje $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.\hfill\qedsymbol
+
+\end{frame}
+
+
+\section{9.2 Izomorfismus struktur}
+
+
+\begin{frame}{Definice izomorfismu}
+    
+    \myblock{
+        \alert{Izomorfismus} $\A$ a $\B$ (v $L=\langle\mathcal R,\mathcal F\rangle$) je bijekce $h\colon A\to B$ splňující:
+    \begin{itemize}
+        \item pro každý ($n$-ární) $f\in\mathcal F$ a pro všechna $a_i\in A$:
+        \vspace{-6pt}
+        $$
+        h(f^\A(a_1,\dots,a_n))=f^\B(h(a_1),\dots,h(a_n))
+        $$
+        \vspace{-24pt}
+        \item speciálně, je-li $c\in\mathcal F$ konstantní: $h(c^\A)=c^\B$
+        \item pro každý ($n$-ární) $R\in\mathcal R$ a pro všechna $a_i\in A$:
+        \vspace{-6pt}
+        $$
+        R^\A(a_1,\dots,a_n)\ \text{ právě když }\ R^\B(h(a_1),\dots,h(a_n))
+        $$
+        \vspace{-24pt}
+    \end{itemize}
+    Existuje-li, jsou \alert{izomorfní} (`\alert{via $h$}'), \alert{$\A\simeq\B$} (nebo \alert{$\A\simeq_h\B$}).\\
+    \alert{Automorfismus} $\A$ je izomorfismus $\A$ a $\A$.
+    }
+    \vspace{-6pt}
+    \begin{itemize}
+        \item tj. liší se jen `pojmenováním prvků'
+        \item relace `být izomorfní' je ekvivalence
+        \item např. potenční algebra \myexampleinline{\small
+            $\underline{\mathcal P(X)}=\langle \mathcal P(X),-,\cap,\cup,\emptyset,X\rangle$
+         }, $|X|=n$, je izomorfní s {\small $\underline{2^n}=\langle \{0,1\}^n,-_n,\land_n,\lor_n,(0,\dots,0),(1,\dots,1)\rangle$} (operace po složkách) via \alert{$h(A)=\chi_A$} (charakt. vektor $A\subseteq X$)
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Izomorfismus zachovává sémantiku \& vztah $\simeq$ a $\equiv$}
+        
+    \myblock{
+        \textbf{Tvrzení:} Bijekce $h\colon A\to B$ je izomorfismus $\A$ a $\B$, právě když:
+        \begin{enumerate}[(i)]
+            \item pro každý term $t$ a $e:\Var\to A$:\hfill
+            \alert{$h(t^\A[e])=t^\B[e\circ h]$}
+            \item pro každou $\varphi$ a $e:\Var\to A$:\hfill
+            \alert{$\A\models\varphi[e]\Leftrightarrow\B\models\varphi[e\circ h]$}
+        \end{enumerate}
+    }
+
+    \textbf{Důkaz:} \alert{\Large$\Rightarrow$} snadno indukcí podle struktury termu resp. formule
+
+    \alert{\Large$\Leftarrow$} je-li $h$ bijekce splňující (i)\&(ii), dosazení $t=f(x_1,\dots,x_n)$ resp. $\varphi=R(x_1,\dots,x_n)$ dává vlastnosti z definice izomorfismu \hfill\qedsymbol
+
+    \myblock{
+        \textbf{Důsledek:} 
+        $\A\simeq\B\ \Rightarrow\ \A\equiv\B$.
+    }
+    \textbf{Důkaz:} pro každou sentenci $\varphi$ máme z (ii) $\A\models\varphi\Leftrightarrow\B\models\varphi$\hfill\qedsymbol
+    
+    Naopak obecně ne, \myexampleinline{
+        $\langle\mathbb Q,\leq \rangle\equiv\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq \rangle\not\simeq \langle \mathbb R,\leq\rangle$
+    } Platí ale:
+
+    \myblock{\textbf{Tvrzení:}
+        Jsou-li $\A,\B$ konečné v jazyce s rovností, potom
+        \vspace{-9pt}
+        $$
+        \A\simeq\B\ \Leftrightarrow\ \A\equiv\B
+        $$
+        \vspace{-20pt}        
+    }
+
+    \myblock{
+        \textbf{Důsledek}
+        Pokud má kompletní teorie v jazyce s rovností konečný model, potom jsou všechny její modely izomorfní.
+    }   
+    
+\end{frame}
+
+
+\begin{frame}{Důkaz $\equiv\ \Rightarrow\ \simeq$ pro konečné struktury s rovností}
+    
+    \vspace{-6pt}
+    Díky $=$ vyjádříme ``existuje právě $n$ prvků'', z toho plyne \alert{$|A|=|B|$}.    
+    Buď $\A'$ expanze $\A$ o jména prvků, v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme, že $\B$ \alert{lze expandovat} na $L'$-strukturu $\B$ \alert{tak, že $\A'\equiv \B'$}.     
+    Potom je \alert{$h(a)= c_a^{\B'}$} izomorfismus $\A'$ a $\B'$, i pro $L$-redukty $\A\simeq\B$.
+    
+    Stačí ukázat, že \alert{pro $c_a^{\A'}=a\in A$ existuje $b\in B$} tak, že expanze o interpretaci konstantního symbolu $c_a$ splňují \alert{$\langle \A,a\rangle\equiv\langle\B,b\rangle$}. 
+    
+    Buď $\Omega$ množina `\alert{vlastností prvku $a$}', tj. formulí $\varphi(x)$ splňujících $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná, existuje \alert{konečně mnoho $\varphi_1(x),\dots,\varphi_m(x)$} tak, že pro každou $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$. %(neboť $\A\equiv\B$, stačí vzít generální uzávěr, což je sentence).
+        
+        Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Neboli existuje $b\in B$ takové, že $\B\models \bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{Definovatelnost a automorfismy}
+
+    definovatelné množiny jsou \alert{invariantní} na automorfismy (např. automorfismus grafu musí zobrazit trojúhelník na trojúhelník):
+
+    \medskip
+
+    \myblock{
+        \textbf{Tvrzení:}
+        Je-li $D\subseteq A^n$ definovatelná v $\A$, potom pro každý automorfismus $h\in\Aut(\A)$ platí $h[D]=D$ (kde $h[D]$ značí $\{(h(\overline{a})\mid\overline{a}\in D\}$).
+    
+        Je-li definovatelná s parametry $\overline{b}$, platí to pro automorfismy identické na $\overline{b}$ (tj. $h(\overline{b})=\overline{b}$ neboli $h(b_i)=b_i$ pro všechna $i$).
+    }
+
+    \textbf{Důkaz:}
+    Ukážeme jen verzi s parametry. Nechť $D=\varphi^{\A,\overline{b}}(\overline{x},\overline{y})$. Potom pro každé $\overline{a}\in A^n$ platí následující ekvivalence:
+    \begin{align*}
+    \overline{a}\in D\ 
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\  \A\models \varphi[(e\circ h)(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/h(\overline{b}))]\\
+    &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/h(\overline{a}),\overline{y}/\overline{b})]\\
+    &\Leftrightarrow\ h(\overline{a})\in D.
+    \end{align*}
+
+    \vspace{-0.85cm}
+    \hfill\qedsymbol    
+
+\end{frame}
+
+
+\begin{frame}{Příklad}
+
+    \vspace{6pt}
+
+    \begin{columns}
+
+        \begin{column}{0.8\textwidth}            
+            Množiny definovatelné s parametrem $0$, $\mathrm{Df}^1(\mathcal G,\{0\})$? Jediný netriviální automorfismus zachovávající $0$: \alert{$h(i)=(5-i) \bmod 5$}, orbity $\{0\}$, $\{1,4\}$, a $\{2,3\}$. Tyto množiny jsou definovatelné:            
+        \end{column} 
+
+        \begin{column}{0.2\textwidth}            
+            \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.4cm,node distance=1cm}]
+                \node (1) {$1$};
+                \node[below left of=1](0) {$0$};
+                \node[below right of=0] (4) {$4$};
+                \node[right of=4] (3) {$2$};
+                \node[right of=1] (2) {$3$};
+                \path[draw] (0) -- (1) -- (2) -- (3) -- (4) -- (0);
+            \end{tikzpicture}                        
+        \end{column}
+
+    \end{columns}
+
+    \begin{itemize}
+        \item $\{0\}$ formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$
+        \item $\{1,4\}$ lze definovat pomocí $E(x,y)$
+        \item $\{2,3\}$ formulí $\neg E(x,y)\land \neg x=y$
+    \end{itemize}
+    $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra $\underline{\mathcal P(V(\mathcal G))}$, tedy uzavřená na doplněk, sjednocení, průnik, obsahuje $\emptyset$ a $V(\mathcal G)$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:
+    \begin{align*}        
+        \mathrm{Df}^1(\mathcal G,\{0\})=\{&\emptyset, \{0\}, \{1,4\}, \{2,3\}, \{0,1,4\}, \{0,2,3\}, \\ &\{1,4,2,3\}, \{0,1,2,3,4\}\}        
+    \end{align*}
+    
+\end{frame}
+
+
+\section{9.3 $\omega$-kategorické teorie}
+
+
+\begin{frame}{$\omega$-kategorické teorie}
+
+    \vspace{-8pt}
+    \alert{Izomorfní spektrum} $T$ je počet modelů $T$ kardinality $\kappa$ až na $\simeq$.\\
+    $T$ je \alert{$\kappa$-kategorická} pokud $I(\kappa,T)=1$, \alert{$\omega$-kategorická} má-li jediný spočetně nekonečný model až na izomorfismus.
+
+    \vspace{-3pt}
+    \myblock{
+        \textbf{Tvrzení:}
+        Teorie DeLO je $\omega$-kategorická.
+    }
+    \textbf{Důkaz:}
+    Buďte $\A,\B$ spočetně nekonečné modely, $A=\{a_i\mid i\in\mathbb N\}$, $B=\{b_i\mid i\in\mathbb N\}$. Z hustoty najdeme indukcí $h_0\subseteq h_1\subseteq h_2\subseteq\dots$ prosté parciální fce z $A$ do $B$ zach. usp., $\{a_0,\dots,a_{n-1}\}\subseteq\dom h_n$, $\{b_0,\dots,b_{n-1}\}\subseteq\rng h_n$. Potom $\A\simeq\B$ via $h=\bigcup_{n\in\mathbb N}h_n$.
+    \hfill\qedsymbol
+
+    \myblock{
+        \textbf{Důsledek:}
+        Izomorfní spektrum teorie DeLO*:
+        \vspace{-3pt}
+        \begin{itemize}
+            \item $I(\kappa,DeLO^*)=0$ pro $\kappa\in\mathbb{N}$
+            \item $I(\omega,DeLO^*)=4$
+        \end{itemize}      
+        \vspace{-3pt}
+        Spočetné modely až na izomorfismus jsou například:
+        \vspace{-9pt}
+        $$ 
+        \mathbb Q=\langle \mathbb Q,\leq\rangle\simeq\mathbb Q\upharpoonright(0,1), \ \mathbb Q\upharpoonright(0,1], \ \mathbb Q \upharpoonright [0,1), \ \mathbb Q \upharpoonright [0,1]
+        $$
+        \vspace{-20pt}
+    }
+    \textbf{Důkaz:}
+    Husté uspořádání nemůže být konečné. Izomorfismus zobrazí minimum na minimum a maximum na maximum.
+    \hfill\qedsymbol
+
+\end{frame}
+
+
+\begin{frame}{$\omega$-kategorické kritérium kompletnosti}
+
+    %\alert{$\omega$-kategoricita} je zeslabení pojmu \alert{kompletnosti}
+
+    \myblock{
+        \textbf{Věta:}
+        Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li
+        \begin{enumerate}[(i)]
+            \item $L$ bez rovnosti, nebo
+            \item $L$ s rovností a $T$ nemá konečné modely,
+        \end{enumerate}
+        potom je $T$ kompletní.
+    }
+
+    \textbf{Důkaz:}
+    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elementárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.
+    
+    \alert{(ii)} Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali. \hfill\qedsymbol
+
+    \medskip
+
+    \myblock{
+        \textbf{Důsledek:}
+        $\DeLO$, $\DeLO^+$, $\DeLO^-$, a $\DeLO^\pm$ jsou kompletní, jsou to všechny (navzájem neekvivalentní) kompletní jedn. extenze $DeLO^*$.
+    }
+
+    Analogické kritérium platí i pro kardinality $\kappa$ větší než $\omega$.
 
 \end{frame}
 

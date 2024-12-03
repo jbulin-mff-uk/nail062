@@ -94,7 +94,7 @@
     \end{enumerate}
     Chceme ukázat rezolucí, že pak: {\it (iii) Pokud ovce porodila, byla sama porozena.} Konkrétně:
     \begin{enumerate}[(a)]
-        \item Uvedená tvrzení vyjádřete sentencemi $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti ($P$ je binární a $K$ unární relační symbol, $P(x,y)$ znamená `ovce $x$ porodila ovci $y$', $K(x)$ znamená `ovce $x$ byla naklonována').
+        \item Vyjádřete sentencemi $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti ($P$ je binární, $K$ unární relační symbol, $P(x,y)$ znamená `ovce $x$ porodila ovci $y$', $K(x)$ `ovce $x$ byla naklonována').
         \item S využitím skolemizace těchto sentencí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. %Zapište ji v množinové reprezentaci.
         \item Najděte rezoluční zamítnutí $S$, nakreslete rezoluční strom s použitými unifikacemi.
         \item Má $S$ LI-zamítnutí?
@@ -150,7 +150,7 @@
         \item Skolemizací nalezněte k $T$ otevřenou ekvisplnitelnou teorii $T'$.
         \item Převeďte $T'$ na ekvivalentní teorii $S$ v CNF. Zapište $S$ v množinové reprezentaci.
         \item Nalezněte rezoluční zamítnutí teorie $S$. U každého kroku uveďte použitou unifikaci.
-        \item Nalezněte konjunkci základních instancí klauzulí z $S$, která je nesplnitelná. {\it Nápověda: využijte unifikace z (c).}       
+        \item Nalezněte nesplnitelnou konjunkci základních instancí klauzulí z $S$. {\it Nápověda: využijte unifikace z (c).}       
     \end{enumerate}
 
     \begin{solution}
@@ -213,7 +213,7 @@
                 }
             \end{minipage}%
             \begin{minipage}{0.35\textwidth}
-                \scalebox{0.9}{
+                \scalebox{0.8}{
                 \begin{forest}
                     for tree={l=1.5cm, grow=north}
                     [{$ \square $}

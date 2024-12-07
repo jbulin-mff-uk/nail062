@@ -34,12 +34,12 @@
 \end{frame}
 
 
-\section{8.7 LI-rezoluce}
+\section{8.7 LI-rezoluce (více podrobností ve skriptech, VL v Sekci 5.4)}
 
 
 \begin{frame}{Lineární důkaz a LI-důkaz}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
         $$
         \begin{bmatrix}
@@ -77,25 +77,30 @@
 
     \medskip
 
+    \pause
     \myblock{
     \textbf{Věta (O úplnosti lineární rezoluce):}
         $C$ má lineární důkaz z $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
     }
 
-    \textbf{Důkaz:} převodem na VL (Lifting lemma zachovává linearitu) \hfill\qedsymbol
+    \pause
+    \textbf{Důkaz:} \pause převodem na VL (Lifting lemma zachovává linearitu) \hfill\qedsymbol
 
     \bigskip
 
+    \pause
     \myblock{
     \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):}
         Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
     }
         
-    \textbf{Důkaz:} úplnost ve VL + Herbrandova věta + Lifting lemma\hfill\qedsymbol
+    \pause
+    \textbf{Důkaz:} \pause úplnost ve VL + Herbrandova věta + Lifting lemma\hfill\qedsymbol
 
     \smallskip
     
-    \begin{itemize}\small
+    \pause
+    \begin{itemize}[<+->]\small
         \item \alert{Hornova formule:} množina Hornových klauzulí
         \item \alert{Hornova klauzule:} nejvýše jeden pozitivní literál   
         \item \alert{Pravidlo:} klauzule s 1 pozitivním a alespoň 1 negativním literálem  
@@ -145,24 +150,28 @@
 
 \begin{frame}{LI-rezoluce v Prologu}
 
+    \pause
     Platí v programu daný \alert{existenční dotaz},  \textcolor{blue}{$P\models(\exists X)son(charlie,X)$}?
 
     \medskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
-        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:
+        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:\pause
         \begin{itemize}
-            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$
+            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$\pause
             \item $P\cup\{G\}$ má LI-zamítnutí začínající $G$
         \end{itemize}
     }
 
+    \pause
     \vspace{-2pt}
-    \textbf{Důkaz:} Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
+    \textbf{Důkaz:} \pause Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
 
     \bigskip
 
+    \pause
     Je-li odpověď na dotaz kladná, chceme znát i \alert{výstupní substituci} $\sigma$, tj. složení unifikací z rez. kroků, zúžené na proměnné v $G$. Platí:
     $$
     P\models(A_1\wedge\dots\wedge A_k)\sigma
@@ -173,7 +182,8 @@
 
 \begin{frame}{Příklady}
 
-    \myexampleinline{\texttt{?-son(charlie,X).}}
+    \pause
+    \myexampleinline{\texttt{?-son(charlie,X).}}\pause
 
     \bigskip
 
@@ -195,7 +205,8 @@
     \end{forest}
     }
 
-    \myexampleinline{\texttt{X=bob}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}
+    \pause
+    \myexampleinline{\texttt{X=bob}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}\pause
 
     \bigskip
 
@@ -218,6 +229,7 @@
     \end{forest}
     }
 
+    \pause
     \myexampleinline{\texttt{X=alice}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/a\}$}
 
 \end{frame}
@@ -231,7 +243,7 @@
 
 \begin{frame}{Teorie modelů}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item vztah mezi vlastnostmi teorií a tříd jejich modelů
         \item bližší matematice než informatice a aplikacím
         \item jen několik vybraných dostupných výsledků
@@ -247,6 +259,7 @@
 
 \begin{frame}{Teorie struktury}
 
+    \pause
     \myblock{
         \alert{Teorie struktury} $\A$ (v jazyce $L$):
         $$
@@ -256,14 +269,16 @@
 
     \medskip
 
+    \pause
     Např.  pro \myexampleinline{standardní model aritmetiky} $\underline{\mathbb{N}}=\langle\mathbb{N},S,+,\cdot,0,\le\rangle$ říkáme $\Th(\underline{\mathbb{N}})$ \alert{aritmetika přirozených čísel}, je \alert{nerozhodnutelná} (neexistuje algoritmus, který pro každou $\varphi$ doběhne a odpoví, zda $T\models\varphi$)
 
     \medskip
 
-    \textbf{Pozorování:} Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.
+    \pause
+    \textbf{Pozorování:} Nechť $\A$ je $L$-struktura a $T$ je $L$-teorie.\pause
     \begin{itemize}
-        \item $\Th(\A)$ je kompletní teorie
-        \item $\A\in\M_L(T)$ $\Rightarrow$ $\Th(\A)$ je (kompletní) jednoduchá extenze $T$
+        \item $\Th(\A)$ je kompletní teorie\pause
+        \item $\A\in\M_L(T)$ $\Rightarrow$ $\Th(\A)$ je (kompletní) jednoduchá extenze $T$\pause
         \item $\A\in\M_L(T)$, $T$ kompletní $\Rightarrow$ $\Th(\A)=\Conseq_L(T)\sim T$
     \end{itemize}
 
@@ -272,6 +287,7 @@
 
 \begin{frame}{Elementární ekvivalence}
     
+    \pause
     \myblock{
         $L$-struktury $\A$ a $\B$ jsou \alert{elementárně ekvivalentní} (\alert{$\A\equiv \B$}), pokud v nich platí tytéž $L$-sentence, neboli: \myalertinline{ 
             $\A\equiv\B\ \Leftrightarrow\ \Th(\A)=\Th(\B)$ 
@@ -280,14 +296,16 @@
 
     \bigskip
 
+    \pause
     Například pro \myexampleinline{
         $\langle\mathbb R,\leq\rangle$, 
         $\langle\mathbb Q,\leq\rangle$,
         $\langle\mathbb Z,\leq\rangle$
     }
-    \begin{itemize}
-        \item  \alert{$\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$}: snadno pomocí \alert{hustoty}
-        \item \alert{$\langle\mathbb Q,\leq\rangle\not\equiv\langle\mathbb Z,\leq\rangle$}: v $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, v $\langle\mathbb Q,\leq\rangle$ ne, tedy $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)\setminus\Th(\langle\mathbb Q,\leq\rangle)$ pro následující sentenci:
+    \pause
+    \begin{itemize}[<+->]
+        \item  \alert{$\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$}: \pause snadno pomocí \alert{hustoty} \pause
+        \item \alert{$\langle\mathbb Q,\leq\rangle\not\equiv\langle\mathbb Z,\leq\rangle$}: \pause v $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, v $\langle\mathbb Q,\leq\rangle$ ne, tedy $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)\setminus\Th(\langle\mathbb Q,\leq\rangle)$ pro následující sentenci:\pause
         $$
         \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z))
         $$        
@@ -300,25 +318,31 @@
 
     \vspace{-6pt}
 
+    \pause
     Pro teorii $T$ nás hlavně zajímá, jak vypadají modely.
 
+    \pause
     \vspace{-6pt}
     \begin{itemize}
-        \item $T$ je \alert{kompletní}, právě když má jediný model až na elementární ekvivalenci (všechny modely jsou elementárně ekvivalentní)
+        \item $T$ je \alert{kompletní}, právě když má jediný model až na elementární ekvivalenci (všechny modely jsou elementárně ekvivalentní)\pause
         \item Modely $T$ až na elementární ekvivalenci jednoznačně odpovídají \alert{kompletním jednoduchým extenzím} $T$, ty jsou tvaru $\Th(\A)$ pro $\A\in\M(T)$, kde $\A\equiv\B\Leftrightarrow\Th(\A)=\Th(\B)$
     \end{itemize}
     
+    \pause
     \myalert{Místo hledání modelů stačí najít kompletní jednoduché extenze!}
 
+    \pause
     \myblock{
     \textbf{Motivace:} ukážeme, že lze-li \alert{efektivně popsat} všechny kompletní jednoduché extenze \alert{efektivně dané} teorie, potom je \alert{rozhodnutelná}.
     }   
     
+    \pause
     \begin{itemize}
-        \item algoritmus, který pro vstup $(i,j)$ vypíše $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém očíslování)
+        \item algoritmus, který pro vstup $(i,j)$ vypíše $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém očíslování)\pause
         \item algoritmus, který postupně vygeneruje všechny axiomy teorie
     \end{itemize}
 
+    \pause
     Schopnost efektivně popsat kompletní jedn. extenze je vzácná, vyžaduje silné předpoklady, ale u mnoha důležitých teorií to lze. 
 
 \end{frame}
@@ -326,6 +350,7 @@
 
 \begin{frame}{Příklad: DeLO*}
 
+    \pause
     \myexample{
         Teorie \alert{hustého lin. uspořádání (DeLO*)}  je extenze teorie uspořádání o \alert{linearitu} (\alert{dichotomii}), \alert{hustotu}, a někdy se přidává \alert{netrivialita}: 
         \begin{itemize}
@@ -335,6 +360,7 @@
         \end{itemize}        
     }
 
+    \pause
     \myblock{
         \textbf{Tvrzení:} Buď $\varphi=(\exists x)(\forall y)(x\leq y)$ a $\psi=(\exists x)(\forall y)(y\leq x)$. Následující jsou právě všechny kompletní jednoduché extenze DeLO* (až na ekvivalenci):
         \begin{columns}\small
@@ -343,7 +369,7 @@
                     \item $\DeLO = \DeLO^*\ \cup \ \{\neg\varphi
                     ,\neg\psi\}$
                     \item $\DeLO^+ = \DeLO^*\ \cup \ \{\neg\varphi
-                    ,\psi\}$                    
+                    ,\psi\}$                  
                 \end{itemize}
             \end{column}
             \begin{column}{0.5\textwidth}
@@ -356,7 +382,8 @@
             \end{column}
         \end{columns}
     }
-
+    
+    \pause
     Stačí ukázat, že jsou kompletní. Potom už je zřejmé, že žádná další kompletní jednoduchá extenze DeLO* nemůže existovat.\\  
     Jak ukážeme, kompletnost plyne z faktu, že jsou \alert{$\omega$-kategorické}, tj. mají jediný spočetný model až na \alert{izomorfismus}.
         
@@ -365,10 +392,12 @@
 
 \begin{frame}{Důsledky Löwenheim-Skolemovy věty bez rovnosti}
 
+    \pause
     Připomeňme:
 
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Věta (L.-S. bez rovnosti):} 
         Ve spočetném jazyce bez rovnosti má každá bezesporná teorie spočetně nekonečný model.
@@ -376,19 +405,23 @@
 
     \medskip
 
+    \pause
     Jednoduchý důsledek:
 
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
     Je-li $L$ spočetný bez rovnosti, potom ke každé $L$-struktuře existuje elementárně ekvivalentní spočetně nekonečná struktura.
     }
 
+    \pause
     \textbf{Důkaz:} $\Th(\A)$ je bezesporná (má model $\A$), tedy dle L.-S. věty má spočetně nekonečný model $\B\models\Th(\A)$, to znamená $\B\equiv\A$.\hfill\qedsymbol
 
     \medskip
 
+    \pause
     Bez rovnosti tedy nelze vyjádřit např. \myexampleinline{`model má právě 42 prvků'}.
 
 \end{frame}
@@ -396,10 +429,12 @@
 
 \begin{frame}{Důsledky Löwenheim-Skolemovy věty s rovností}
 
+    \pause
     V důkazu L.-S. věty máme kanonický model pro bezespornou větev tabla z $T$ pro $\F\bot$; pro jazyk s rovností stačí faktorizovat dle $=^A$:
 
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Věta (L.-S. s rovností):}
         Ve spočetném jazyce s rovností má každá bezesporná teorie spočetný model (konečný, nebo nekonečný).
@@ -407,10 +442,12 @@
 
     \medskip
 
+    \pause
     I tato verze má snadný důsledek pro konkrétní struktury:
 
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         Je-li $L$ spočetný s rovností, ke každé \alert{nekonečné} $L$-struktuře existuje elem. ekvivalentní spočetně nekonečná struktura.
@@ -418,9 +455,11 @@
 
     \smallskip
 
+    \pause
     \textbf{Důkaz:}
     Mějme nekonečnou $L$-strukturu $\A$. Podobně jako v důkazu Důsledku bez rovnosti najdeme \alert{spočetnou} $\B\equiv\A$. 
     
+    \pause
     Protože v $\A$ platí pro kažné $n\in\mathbb N$ sentence vyjadřující `existuje alespoň $n$ prvků' (což lze pomocí rovnosti snadno zapsat), platí i v $\B$, tedy $\B$ musí být nekonečná.\hfill\qedsymbol
 
 \end{frame}
@@ -428,23 +467,28 @@
 
 \begin{frame}{Spočetné algebraicky uzavřené těleso}
 
+    \pause
     \begin{itemize}
-        \item \alert{algebraicky uzavřené} těleso: každý polynom nenulového stupně v něm má kořen
-        \item $\mathbb Q$ není, $x^2-2$ nemá v $\mathbb Q$ kořen
-        \item $\mathbb R$ není, $x^2+1$ nemá v $\mathbb R$ kořen
+        \item \alert{algebraicky uzavřené} těleso: každý polynom nenulového stupně v něm má kořen\pause
+        \item $\mathbb Q$ není, $x^2-2$ nemá v $\mathbb Q$ kořen\pause
+        \item $\mathbb R$ není, $x^2+1$ nemá v $\mathbb R$ kořen\pause
         \item $\mathbb C$ je algebraicky uzavřené, ale je nespočetné
     \end{itemize}
 
+    \pause
     Algebraickou uzavřenost vyjádříme sentencemi $\psi_n$, pro $n>0$:
     
+    \pause
     \myalertamsmath{
     $$
     (\forall x_{n-1})\dots(\forall x_0)(\exists y)(y^n+x_{n-1}\cdot y^{n-1}+\dots+x_1\cdot y + x_0) = 0
     $$
     }
 
+    \pause
     kde $y^k$ je zkratka za term $y\cdot y \cdot\ \cdots\ \cdot y$
 
+    \pause
     \myblock{
     \textbf{Důsledek:}
         Existuje spočetné algebraicky uzavřené těleso.
@@ -452,6 +496,7 @@
 
     \smallskip
 
+    \pause
     \textbf{Důkaz:}
     Dle Důsledku L.S. věty (s rovností) existuje spočetně nekonečná $\A\equiv\mathbb C$. Protože $\mathbb C$ je těleso a splňuje $\psi_n$ pro všechna $n>0$, je i $\A$ algebraicky uzavřené těleso.\hfill\qedsymbol
 
@@ -463,64 +508,72 @@
 
 \begin{frame}{Definice izomorfismu}
     
+    \pause
     \myblock{
-        \alert{Izomorfismus} $\A$ a $\B$ (v $L=\langle\mathcal R,\mathcal F\rangle$) je bijekce $h\colon A\to B$ splňující:
+        \alert{Izomorfismus} $\A$ a $\B$ (v $L=\langle\mathcal R,\mathcal F\rangle$) je bijekce $h\colon A\to B$ splňující:\pause
     \begin{itemize}
         \item pro každý ($n$-ární) $f\in\mathcal F$ a pro všechna $a_i\in A$:
         \vspace{-6pt}
         $$
         h(f^\A(a_1,\dots,a_n))=f^\B(h(a_1),\dots,h(a_n))
         $$
-        \vspace{-24pt}
-        \item speciálně, je-li $c\in\mathcal F$ konstantní: $h(c^\A)=c^\B$
+        \vspace{-24pt}\pause
+        \item speciálně, je-li $c\in\mathcal F$ konstantní: $h(c^\A)=c^\B$\pause
         \item pro každý ($n$-ární) $R\in\mathcal R$ a pro všechna $a_i\in A$:
         \vspace{-6pt}
         $$
         R^\A(a_1,\dots,a_n)\ \text{ právě když }\ R^\B(h(a_1),\dots,h(a_n))
         $$
         \vspace{-24pt}
-    \end{itemize}
+    \end{itemize}\pause
     Existuje-li, jsou \alert{izomorfní} (`\alert{via $h$}'), \alert{$\A\simeq\B$} (nebo \alert{$\A\simeq_h\B$}).\\
-    \alert{Automorfismus} $\A$ je izomorfismus $\A$ a $\A$.
+    \alert{Automorfismus} $\A$ je izomorfismus $\A$ a $\A$.\pause
     }
     \vspace{-6pt}
     \begin{itemize}
-        \item tj. liší se jen `pojmenováním prvků'
-        \item relace `být izomorfní' je ekvivalence
+        \item tj. liší se jen `pojmenováním prvků'\pause
+        \item relace `být izomorfní' je ekvivalence\pause
         \item např. potenční algebra \myexampleinline{\small
             $\underline{\mathcal P(X)}=\langle \mathcal P(X),-,\cap,\cup,\emptyset,X\rangle$
-         }, $|X|=n$, je izomorfní s {\small $\underline{2^n}=\langle \{0,1\}^n,-_n,\land_n,\lor_n,(0,\dots,0),(1,\dots,1)\rangle$} (operace po složkách) via \alert{$h(A)=\chi_A$} (charakt. vektor $A\subseteq X$)
+         }, $|X|=n$, \pause je izomorfní s {\small $\underline{2^n}=\langle \{0,1\}^n,-_n,\land_n,\lor_n,(0,\dots,0),(1,\dots,1)\rangle$} (operace po složkách) via \alert{$h(A)=\chi_A$} (charakt. vektor $A\subseteq X$)
     \end{itemize}
 
 \end{frame}
 
 
 \begin{frame}{Izomorfismus zachovává sémantiku \& vztah $\simeq$ a $\equiv$}
-        
+    
+    \pause
     \myblock{
-        \textbf{Tvrzení:} Bijekce $h\colon A\to B$ je izomorfismus $\A$ a $\B$, právě když:
+        \textbf{Tvrzení:} Bijekce $h\colon A\to B$ je izomorfismus $\A$ a $\B$, právě když:\pause
         \begin{enumerate}[(i)]
             \item pro každý term $t$ a $e:\Var\to A$:\hfill
-            \alert{$h(t^\A[e])=t^\B[e\circ h]$}
+            \alert{$h(t^\A[e])=t^\B[e\circ h]$}\pause
             \item pro každou $\varphi$ a $e:\Var\to A$:\hfill
             \alert{$\A\models\varphi[e]\Leftrightarrow\B\models\varphi[e\circ h]$}
         \end{enumerate}
     }
 
-    \textbf{Důkaz:} \alert{\Large$\Rightarrow$} snadno indukcí podle struktury termu resp. formule
+    \pause
+    \textbf{Důkaz:} \pause \alert{\Large$\Rightarrow$} snadno indukcí podle struktury termu resp. formule
 
+    \pause
     \alert{\Large$\Leftarrow$} je-li $h$ bijekce splňující (i)\&(ii), dosazení $t=f(x_1,\dots,x_n)$ resp. $\varphi=R(x_1,\dots,x_n)$ dává vlastnosti z definice izomorfismu \hfill\qedsymbol
 
+    \pause
     \myblock{
         \textbf{Důsledek:} 
         $\A\simeq\B\ \Rightarrow\ \A\equiv\B$.
     }
+    \pause
     \textbf{Důkaz:} pro každou sentenci $\varphi$ máme z (ii) $\A\models\varphi\Leftrightarrow\B\models\varphi$\hfill\qedsymbol
     
+    \pause
     Naopak obecně ne, \myexampleinline{
         $\langle\mathbb Q,\leq \rangle\equiv\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq \rangle\not\simeq \langle \mathbb R,\leq\rangle$
-    } Platí ale:
+    } \pause Platí ale:
 
+    \pause
     \myblock{\textbf{Tvrzení:}
         Jsou-li $\A,\B$ konečné v jazyce s rovností, potom
         \vspace{-9pt}
@@ -530,6 +583,7 @@
         \vspace{-20pt}        
     }
 
+    \pause
     \myblock{
         \textbf{Důsledek}
         Pokud má kompletní teorie v jazyce s rovností konečný model, potom jsou všechny její modely izomorfní.
@@ -540,35 +594,40 @@
 
 \begin{frame}{Důkaz $\equiv\ \Rightarrow\ \simeq$ pro konečné struktury s rovností}
     
+    \pause
     \vspace{-6pt}
-    Díky $=$ vyjádříme ``existuje právě $n$ prvků'', z toho plyne \alert{$|A|=|B|$}.    
-    Buď $\A'$ expanze $\A$ o jména prvků, v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme, že $\B$ \alert{lze expandovat} na $L'$-strukturu $\B$ \alert{tak, že $\A'\equiv \B'$}.     
-    Potom je \alert{$h(a)= c_a^{\B'}$} izomorfismus $\A'$ a $\B'$, i pro $L$-redukty $\A\simeq\B$.
+    Díky $=$ vyjádříme ``existuje právě $n$ prvků'', z toho plyne \alert{$|A|=|B|$}. \pause 
+    Buď $\A'$ expanze $\A$ o jména prvků, v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme: $\B$ \alert{lze expandovat} na $L'$-strukturu $\B'$ \alert{že $\A'\equiv \B'$}.\pause Potom je \alert{$h(a)= c_a^{\B'}$} izomorfismus $\A'$ a $\B'$, i pro $L$-redukty $\A\simeq\B$. \pause
     
-    Stačí ukázat, že \alert{pro $c_a^{\A'}=a\in A$ existuje $b\in B$} tak, že expanze o interpretaci konstantního symbolu $c_a$ splňují \alert{$\langle \A,a\rangle\equiv\langle\B,b\rangle$}. 
+    Stačí ukázat, že \alert{pro $c_a^{\A'}=a\in A$ existuje $b\in B$} tak, že expanze o interpretaci konstantního symbolu $c_a$ splňují \alert{$\langle \A,a\rangle\equiv\langle\B,b\rangle$}. \pause 
     
-    Buď $\Omega$ množina `\alert{vlastností prvku $a$}', tj. formulí $\varphi(x)$ splňujících $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná, existuje \alert{konečně mnoho $\varphi_1(x),\dots,\varphi_m(x)$} tak, že pro každou $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$. %(neboť $\A\equiv\B$, stačí vzít generální uzávěr, což je sentence).
-        
-        Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Neboli existuje $b\in B$ takové, že $\B\models \bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
+    Buď $\Omega$ množina `\alert{vlastností prvku $a$}', \pause tj. formulí $\varphi(x)$ splňujících $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. \pause Protože je $A$ konečná, existuje \alert{konečně mnoho $\varphi_1(x),\dots,\varphi_m(x)$} tak, že pro každou $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. \pause Potom i $\B\models\varphi\liff\varphi_i$. %(neboť $\A\equiv\B$, stačí vzít generální uzávěr, což je sentence).
+    
+    \pause
+    Protože v $\A$ platí sentence \alert{$(\exists x)\bigwedge_{i=1}^m\varphi_i$} (je splněna díky $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. \pause Neboli existuje $b\in B$ takové, že $\B\models \bigwedge_{i=1}^m\varphi_i[e(x/b)]$. \pause Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, z toho $\langle \A,a\rangle\equiv\langle\B,b\rangle$.\hfill\qedsymbol
 
 \end{frame}
 
 
 \begin{frame}{Definovatelnost a automorfismy}
 
+    \pause
     definovatelné množiny jsou \alert{invariantní} na automorfismy (např. automorfismus grafu musí zobrazit trojúhelník na trojúhelník):
 
     \medskip
 
+    \pause
     \myblock{
-        \textbf{Tvrzení:}
+        \textbf{Tvrzení:}\pause
         Je-li $D\subseteq A^n$ definovatelná v $\A$, potom pro každý automorfismus $h\in\Aut(\A)$ platí $h[D]=D$ (kde $h[D]$ značí $\{(h(\overline{a})\mid\overline{a}\in D\}$).
     
+        \pause
         Je-li definovatelná s parametry $\overline{b}$, platí to pro automorfismy identické na $\overline{b}$ (tj. $h(\overline{b})=\overline{b}$ neboli $h(b_i)=b_i$ pro všechna $i$).
     }
 
+    \pause
     \textbf{Důkaz:}
-    Ukážeme jen verzi s parametry. Nechť $D=\varphi^{\A,\overline{b}}(\overline{x},\overline{y})$. Potom pro každé $\overline{a}\in A^n$ platí následující ekvivalence:
+    Ukážeme jen verzi s parametry. Nechť $D=\varphi^{\A,\overline{b}}(\overline{x},\overline{y})$. Potom pro každé $\overline{a}\in A^n$ platí následující ekvivalence:\pause
     \begin{align*}
     \overline{a}\in D\ 
     &\Leftrightarrow\ \A\models \varphi[e(\overline{x}/\overline{a},\overline{y}/\overline{b})]\\
@@ -607,12 +666,13 @@
 
     \end{columns}
 
+    \pause
     \begin{itemize}
-        \item $\{0\}$ formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$
-        \item $\{1,4\}$ lze definovat pomocí $E(x,y)$
-        \item $\{2,3\}$ formulí $\neg E(x,y)\land \neg x=y$
+        \item $\{0\}$ formulí $x=y$, tj. $(x=y)^{\mathcal G,\{0\}}=\{0\}$\pause
+        \item $\{1,4\}$ lze definovat pomocí $E(x,y)$\pause
+        \item $\{2,3\}$ formulí $\neg E(x,y)\land \neg x=y$\pause
     \end{itemize}
-    $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra $\underline{\mathcal P(V(\mathcal G))}$, tedy uzavřená na doplněk, sjednocení, průnik, obsahuje $\emptyset$ a $V(\mathcal G)$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:
+    $\mathrm{Df}^1(\mathcal G,\{0\})$ je podalgebra $\underline{\mathcal P(V(\mathcal G))}$, tedy uzavřená na doplněk, sjednocení, průnik, obsahuje $\emptyset$ a $V(\mathcal G)$. Podalgebra generovaná $\{\{0\},\{1,4\},\{2,3\}\}$ už ale obsahuje všechny podmnožiny zachovávající automorfismus $h$. Dostáváme:\pause
     \begin{align*}        
         \mathrm{Df}^1(\mathcal G,\{0\})=\{&\emptyset, \{0\}, \{1,4\}, \{2,3\}, \{0,1,4\}, \{0,2,3\}, \\ &\{1,4,2,3\}, \{0,1,2,3,4\}\}        
     \end{align*}
@@ -625,19 +685,23 @@
 
 \begin{frame}{$\omega$-kategorické teorie}
 
+    \pause
     \vspace{-8pt}
     \alert{Izomorfní spektrum} $T$ je počet modelů $T$ kardinality $\kappa$ až na $\simeq$.\\
     $T$ je \alert{$\kappa$-kategorická} pokud $I(\kappa,T)=1$, \alert{$\omega$-kategorická} má-li jediný spočetně nekonečný model až na izomorfismus.
 
+    \pause
     \vspace{-3pt}
     \myblock{
         \textbf{Tvrzení:}
         Teorie DeLO je $\omega$-kategorická.
     }
+    \pause
     \textbf{Důkaz:}
     Buďte $\A,\B$ spočetně nekonečné modely, $A=\{a_i\mid i\in\mathbb N\}$, $B=\{b_i\mid i\in\mathbb N\}$. Z hustoty najdeme indukcí $h_0\subseteq h_1\subseteq h_2\subseteq\dots$ prosté parciální fce z $A$ do $B$ zach. usp., $\{a_0,\dots,a_{n-1}\}\subseteq\dom h_n$, $\{b_0,\dots,b_{n-1}\}\subseteq\rng h_n$. Potom $\A\simeq\B$ via $h=\bigcup_{n\in\mathbb N}h_n$.
     \hfill\qedsymbol
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         Izomorfní spektrum teorie DeLO*:
@@ -647,6 +711,7 @@
             \item $I(\omega,DeLO^*)=4$
         \end{itemize}      
         \vspace{-3pt}
+        \pause
         Spočetné modely až na izomorfismus jsou například:
         \vspace{-9pt}
         $$ 
@@ -654,6 +719,7 @@
         $$
         \vspace{-20pt}
     }
+    \pause
     \textbf{Důkaz:}
     Husté uspořádání nemůže být konečné. Izomorfismus zobrazí minimum na minimum a maximum na maximum.
     \hfill\qedsymbol
@@ -665,28 +731,32 @@
 
     %\alert{$\omega$-kategoricita} je zeslabení pojmu \alert{kompletnosti}
 
+    \pause
     \myblock{
         \textbf{Věta:}
-        Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li
+        Buď $T$ $\omega$-kategorická ve spočetném jazyce $L$. Je-li\pause
         \begin{enumerate}[(i)]
-            \item $L$ bez rovnosti, nebo
-            \item $L$ s rovností a $T$ nemá konečné modely,
+            \item $L$ bez rovnosti, nebo\pause
+            \item $L$ s rovností a $T$ nemá konečné modely,\pause
         \end{enumerate}
         potom je $T$ kompletní.
     }
 
-    \textbf{Důkaz:}
-    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elementárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.
+    \pause
+    \textbf{Důkaz:}\pause
+    \alert{(i)} Důsledek L.-S. věty bez rovnosti říká, že každý model je elementárně ekvivalentní nějakému spočetně nekonečnému, ten je ale až na izomorfismus jediný.\pause
     
-    \alert{(ii)} Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali. \hfill\qedsymbol
+    \alert{(ii)} \pause Důsledek L.-S. věty s rovností podobně říká, že všechny nekonečné modely jsou elementárně ekvivalentní. Mohla by mít elementárně neekvivalentní konečné modely, to jsme ale zakázali. \hfill\qedsymbol
 
     \medskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         $\DeLO$, $\DeLO^+$, $\DeLO^-$, a $\DeLO^\pm$ jsou kompletní, jsou to všechny (navzájem neekvivalentní) kompletní jedn. extenze $DeLO^*$.
     }
 
+    \pause
     Analogické kritérium platí i pro kardinality $\kappa$ větší než $\omega$.
 
 \end{frame}

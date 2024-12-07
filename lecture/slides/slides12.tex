@@ -37,25 +37,29 @@
 
 
 \begin{frame}{Axiomatizovatelnost}
-        
+    
+    \pause
     Třída struktur $K\subseteq\M_L$ je:
     
+    \pause
     \begin{itemize}
-        \item \alert{axiomatizovatelná}, existuje-li teorie $T$ taková, že $\M_L(T)=K$
-        \item \alert{konečně}/\alert{otevřeně} axiomatiz., je-li ax. konečnou/otevřenou $T$
+        \item \alert{axiomatizovatelná}, existuje-li teorie $T$ taková, že $\M_L(T)=K$\pause
+        \item \alert{konečně}/\alert{otevřeně} axiomatiz., je-li ax. konečnou/otevřenou $T$\pause
         \item teorie $T'$ je \alert{konečně}/\alert{otevřeně} axiomatizovatelná, platí-li to o třídě jejích modelů $K=\M_L(T')$
     \end{itemize}
 
+    \pause
     \textbf{Pozorování:} Je-li $K$ axiomatizovatelná, musí být uzavřená na $\equiv$.
 
     \medskip
     
+    \pause
     \myexample{
-    Například, jak ukážeme:
+    Například, jak ukážeme:\pause
     \begin{itemize}
-        \item grafy a částečná uspořádání jsou konečně i otevřeně ax.
-        \item tělesa jsou konečně, ale ne otevřeně axiomatizovatelná
-        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně
+        \item grafy a částečná uspořádání jsou konečně i otevřeně ax.\pause
+        \item tělesa jsou konečně, ale ne otevřeně axiomatizovatelná\pause
+        \item nekonečné grupy jsou axiomatizovatelné, ale ne konečně\pause
         \item konečné grafy nejsou axiomatizovatelné
     \end{itemize}
     }
@@ -67,28 +71,34 @@
 
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Věta:}
         Má-li $T$ libovolně velké konečné modely, má i nekonečný model. Potom není třída jejích konečných modelů axiomatizovatelná.
     }
 
-    \textbf{Důkaz:}
+    \pause
+    \textbf{Důkaz:} \pause
     \alert{Je-li jazyk bez rovnosti,} vezmeme  kanonický model pro bezespornou větev v tablu z $T$ pro $\F\bot$ ($T$ je bezesporná).
     
+    \pause
     \alert{Je-li jazyk s rovností,} přidáme spočetně mnoho nových konst. symbolů $c_i$ a vezmeme extenzi: \myalertinline{
         $T'=T \cup \{\neg c_i = c_j \mid i\neq j\in\mathbb N\}$
     }
 
     \vspace{-2pt}
 
+    \pause
     Každá \alert{konečná část} $T'$ má model: buď $k$ největší, že $c_k$ je v této konečné části: lib. $\geq(k+1)$-prvkový model,21 interpretuj $c_0,\dots,c_k$ jako různé prvky.
 
     \vspace{-2pt}
 
+    \pause
     \alert{Věta o kompaktnosti} dává model $T'$, ten je nekonečný, redukt na původní jazyk (zapomenutí $c_i^\A$) je nekonečný model $T$.\hfill\qedsymbol
 
+    \pause
     \begin{itemize}
-        \item např. \myexampleinline{konečné grafy} nejsou axiomatizovatelné
+        \item např. \myexampleinline{konečné grafy} nejsou axiomatizovatelné\pause
         \item \alert{nekonečné modely} teorie jsou vždy axiomatizovatelné, máme-li rovnost: stačí přidat \myalertinline{`existuje alespoň $n$ prvků'} pro vš. $n\in\mathbb N$
     \end{itemize}
 
@@ -99,48 +109,53 @@
     
     \smallskip
 
+    \pause
     \myblock{
         \textbf{Věta (O konečné axiomatizovatelnosti):}
         $K\subseteq \M_L$ je konečně axiomatizovatelná, právě když $K$ i $\overline{K}=\M_L\setminus K$ jsou axiomatizovatelné.
     }
 
+    \pause
     \textbf{Důkaz:} \alert{\Large$\Rightarrow$}
-    Je-li $K$ axiomatizovatelná \alert{sentencemi} $\varphi_1,\dots,\varphi_n$ (vezmi gen. uzávěry), potom $\neg(\varphi_1\land\varphi_2\land\dots\land\varphi_n)$ axiomatizuje $\overline{K}$.
+    Je-li $K$ axiomatizovatelná \alert{sentencemi} $\varphi_1,\dots,\varphi_n$ (vezmi gen. uzávěry), potom $\neg(\varphi_1\land\varphi_2\land\dots\land\varphi_n)$ axiomatizuje $\overline{K}$.\pause
 
     \alert{\Large$\Leftarrow$} Buď $K=\M(T)$ a $\overline{K}=\M(S)$. Potom  \alert{$T\cup S$ je sporná}, neboť:
     $$
     \M(T\cup S)=\M(T)\cap \M(S)=K\cap\overline{K}=\emptyset
     $$
-    \alert{Věta o kompaktnosti} dává konečné $T'\subseteq T$ a $S'\subseteq S$ takové, že:
+    \pause \alert{Věta o kompaktnosti} dává konečné $T'\subseteq T$ a $S'\subseteq S$ takové, že:
     $$
     \emptyset = \M(T'\cup S')=\M(T')\cap \M(S')
     $$
-    Nyní si všimněme, že platí:
+    \pause Nyní si všimněme, že platí:
     $$
     \M(T)\subseteq \M(T')\subseteq \overline{\M(S')}\subseteq \overline{\M(S)}=\M(T)
     $$
-    Tím jsme dokázali, že \alert{$M(T)=M(T')$}, neboli $T'$ je konečná axiomatizace $K$. \hfill\qedsymbol
+    \pause Tím jsme dokázali, že \alert{$M(T)=M(T')$}, neboli $T'$ je konečná axiomatizace $K$. \hfill\qedsymbol
 
 \end{frame}
 
 
 \begin{frame}{Tělesa charakteristiky 0 nejsou konečně axiomatizovatelná}
 
-    Buď $T$ teorie těles. Těleso $\A=\langle A,+,-,0,\cdot,1 \rangle$ je
+    \pause
+    Buď $T$ teorie těles. Těleso $\A=\langle A,+,-,0,\cdot,1 \rangle$ je\pause
     \vspace{-6pt}
     \begin{itemize}
-        \item \alert{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ je term $1+1+\dots+1$ (s $p$ jedničkami),
-        \item \alert{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné $p$.
+        \item \alert{charakteristiky $p$}, je-li $p$ nejmenší prvočíslo takové, že $\A\models p1=0$, kde $p1$ je term $1+1+\dots+1$ (s $p$ jedničkami),\pause
+        \item \alert{charakteristiky 0}, pokud není charakteristiky $p$ pro žádné $p$.\pause
         \item Tělesa charakteristiky $p$ jsou konečně axiomatizovatelná: \myalertmath{\small
             $$
             T_p=T\cup \{p1=0\}
             $$
         }
+        \pause
         \item Tělesa char. 0 jsou axiomatizovatelná, ale ne konečně: \myalertmath{\small
             $$
             T_0=T\cup \{\neg\, p1=0\mid p\text{ prvočíslo}\}
             $$
         }
+        \pause
     \end{itemize}
     \myblock{\vspace{2pt}
         \textbf{Tvrzení:}
@@ -148,9 +163,12 @@
         \vspace{2pt}
     }
     
-    \textbf{Důkaz:}
-    Stačí ukázat, že $\overline{K}$ (tělesa nenulové char. a netělesa) není axiomatizovatelná. \alert{Sporem: $\overline{K}=\M(S)$.} Potom  
-    $S'=S\cup T_0$ má model, neboť každá konečná část má model: těleso charakteristiky větší než jakékoliv $p$ z axiomu $T_0$ tvaru $\neg\, p1=0$. Je-li $\A$ je model $S'$, potom $\A\in\M(S)=\overline{K}$. Zároveň ale $\A\in\M(T_0)=K$, spor.\hfill\qedsymbol
+    \pause
+    \textbf{Důkaz:} \pause
+    Stačí ukázat, že $\overline{K}$ (tělesa nenulové char. a netělesa) není axiomatizovatelná. 
+    \pause \alert{Sporem: $\overline{K}=\M(S)$.} 
+    \pause Potom $S'=S\cup T_0$ má model, neboť každá konečná část má model: těleso charakteristiky větší než jakékoliv $p$ z axiomu $T_0$ tvaru $\neg\, p1=0$. 
+    \pause Je-li $\A$ je model $S'$, potom $\A\in\M(S)=\overline{K}$. Zároveň ale $\A\in\M(T_0)=K$, spor.\hfill\qedsymbol
 
 \end{frame}
 
@@ -159,21 +177,25 @@
 
     \smallskip
 
+    \pause
     \myblock{\vspace{2pt}
         \textbf{Tvrzení:}
         Je-li $T$ otevřeně axiomatizovatelná, potom je každá podstruktura modelu $T$ také modelem $T$.
         \vspace{2pt}  
     }
     
+    \pause
     \textbf{Důkaz:}
     Buď $T'$ otevřená axiomatizace $T$, $\A$ model $T'$, $\B\subseteq\A$. Pro každou $\varphi\in T'$ platí $\B\models\varphi$ ($\varphi$ je otevřená), tedy i $\B\models T'$.  
     \hfill\qedsymbol
 
+    \pause
     \textbf{Poznámka:} Platí i obráceně, je-li každá podstruktura modelu také model, potom je otevřeně axiomatizovatelná. (Důkaz neuvedeme.)
 
+    \pause
     \begin{itemize}
-        \item \myexampleinline{DeLO} není otevřeně axiomatizovatelná, např. žádná konečná podstruktura modelu DeLO není hustá
-        \item \myexampleinline{teorie těles} není otevřeně axiomatizovatelná, podstruktura $\mathbb Z\subseteq\mathbb Q$ není těleso, nemá inverzní prvek k $2$ vůči násobení
+        \item \myexampleinline{DeLO} není otevřeně axiomatizovatelná, např. žádná konečná podstruktura modelu DeLO není hustá\pause
+        \item \myexampleinline{teorie těles} není otevřeně axiomatizovatelná, podstruktura $\mathbb Z\subseteq\mathbb Q$ není těleso, nemá inverzní prvek k $2$ vůči násobení\pause
         \item pro dané $n\in\mathbb N$ jsou \myexampleinline{nejvýše $n$-prvkové grupy} otevřeně axiomatizovatelné (i jejich podgrupy jsou nejvýše $n$-prvkové); k (otevřené) teorii grup stačí přidat: \myalertinline{
             $\bigvee_{1\leq i<j\leq n+1}x_i=x_j$
         }
@@ -187,11 +209,13 @@
 
 \begin{frame}{Nerozhodnutelnost a neúplnost}
 
+    \pause
     Jak lze s teoriemi pracovat algoritmicky?
 
     \medskip
 
-    + zlatý hřeb přednášky: \alert{Gödelovy věty o neúplnosti} (1931)
+    \pause
+    + zlatý hřeb přednášky: \alert{Gödelovy věty o neúplnosti} (1931)\pause
     \begin{itemize}
         \item ukazují limity formálního přístupu
         \item zastavily program formalizace matematiky
@@ -200,6 +224,7 @@
         
     \end{itemize}
 
+    \pause
     Typicky potřebujeme spočetný jazyk.
      
 \end{frame}
@@ -211,17 +236,19 @@
 \begin{frame}{Rekurzivní axiomatizace}
 
     \begin{itemize}
-        \item v dokazování povolujeme nekonečné teorie, jak jsou zadané?
-        \item pro ověření že daný důkaz (např. tablo, rezoluční zamítnutí) je korektní potřebujeme algoritmický přístup ke všem axiomům
-        \item mohli bychom požadovat \alert{enumerátor} pro $T$, tj. algoritmus, který vypisuje axiomy z $T$, a každý axiom někdy vypíše
-        \item ale kdyby byl v důkazu chybný axiom, nikdy bychom se to nedozvěděli: stále bychom čekali, zda ho enumerátor vypíše
+        \item v dokazování povolujeme nekonečné teorie, jak jsou zadané?\pause
+        \item pro ověření že daný důkaz (např. tablo, rezoluční zamítnutí) je korektní potřebujeme algoritmický přístup ke všem axiomům\pause
+        \item mohli bychom požadovat \alert{enumerátor} pro $T$, tj. algoritmus, který vypisuje axiomy z $T$, a každý axiom někdy vypíše\pause
+        \item ale kdyby byl v důkazu chybný axiom, nikdy bychom se to nedozvěděli: stále bychom čekali, zda ho enumerátor vypíše\pause
         \item proto požadujeme silnější vlastnost:
     \end{itemize}
 
+    \pause
     \myblock{
         $T$ je \alert{rekurzivně axiomatizovaná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$.
     }
 
+    \pause
     (ekvivalentní enumerátoru vypisujícímu axiomy v lexikograf. pořadí)  
 
 \end{frame}
@@ -229,57 +256,64 @@
 
 \begin{frame}{Rozhodnutelnost}
 
+    \pause
     \vspace{-3pt}
     Můžeme v dané teorii \alert{`algoritmicky rozhodovat pravdu'}?
 
+    \pause
     \vspace{-3pt}
     \myblock{
         \begin{itemize}
-            \item $T$ je \alert{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,
-            \item $T$ je \alert{částečně rozhodnutelná}, existuje-li algoritmus, který: %pro každou vstupní formuli:
+            \item $T$ je \alert{rozhodnutelná}, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$,\pause
+            \item $T$ je \alert{částečně rozhodnutelná}, existuje-li algoritmus, který: \pause%pro každou vstupní formuli:
             \begin{itemize}
-                \item pokud $T\models\varphi$, doběhne a odpoví ``ano''
+                \item pokud $T\models\varphi$, doběhne a odpoví ``ano''\pause
                 \item pokud $T\not\models\varphi$, buď nedoběhne, nebo doběhne a odpoví ``ne''
             \end{itemize}
         \end{itemize}
     }
 
     
+    \pause
     \myblock{
         \textbf{Tvrzení:}
         Je-li $T$ je rekurzivně axiomatizovaná, potom:
                 
-        (i) $T$ je část. rozhod. \hfill (ii) je-li navíc kompletní, je rozhodnutelná
+        \pause (i) $T$ je část. rozhod. \hfill \pause (ii) je-li navíc kompletní, je rozhodnutelná
     }
     
-    
-    \textbf{Důkaz:} \alert{(i)} Algoritmus konstruuje systematické tablo z $T$ pro $\F\varphi$; stačí enumerátor pro $T$, nebo postupně generovat vš. sentence a testovat, jsou-li v $T$. Je-li $T\models\varphi$, konstrukce skončí, ověříme, že je tablo sporné. (Jinak skončit nemusí.)
+    \pause
+    \textbf{Důkaz:} \pause \alert{(i)} \pause Algoritmus konstruuje systematické tablo z $T$ pro $\F\varphi$; stačí enumerátor pro $T$, nebo postupně generovat vš. sentence a testovat, jsou-li v $T$. Je-li $T\models\varphi$, konstrukce skončí, ověříme, že je tablo sporné. (Jinak skončit nemusí.)
     
     \vspace{-3pt}  
-    \alert{(ii)}
+    \pause \alert{(ii)} \pause
     Víme, že buď $T\proves\varphi$ nebo $T\proves\neg\varphi$. Paralelně konstruujeme tablo pro $\F\varphi$ a pro $\T\varphi$ (důkaz a zamítnutí $\varphi$ z $T$). Jedna z konstrukcí po konečně mnoha krocích skončí.
     \hfill\qedsymbol
-
 
 \end{frame}
 
 
 \begin{frame}{Rekurzivně spočetná kompletace}
 
+    \pause
     \myblock{
         $T$ má \alert{rekurzivně spočetnou kompletaci}, je-li (nějaká) množina až na $\sim$ všech jednoduchých kompletních extenzí $T$ \alert{rekurzivně spočetná}, tj. existuje algoritmus, který pro vstup $(i,j)$ vypíše $i$-tý axiom $j$-té extenze (v nějakém uspořádání), nebo odpoví, že už neexistuje.
     }
      
+    \pause
     \myblock{
         \textbf{Tvrzení:}
         Je-li $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je rozhodnutelná.
     }
-        
-    \textbf{Důkaz:}
+    
+    \pause
+    \textbf{Důkaz:} \pause
     Buď $T\proves\varphi$, nebo existuje protipříklad $\A\not\models\varphi$, tj. kompl. jedn. extenze $T_i$, že $T_i\not\proves\varphi$. Kompletnost $T_i$ dává $T_i\proves\neg\varphi$. 
     
+    \pause
     Algoritmus paralelně konstruuje tablo důkaz $\varphi$ z $T$ a (postupně) tablo důkazy $\neg\varphi$ ze všech kompletních jedn. extenzí $T_1,T_2,\dots$. (Je-li jich nekonečně mnoho, uděláme \alert{dovetailing}: 1. krok 1. tabla, potom 2. krok 1., 1. krok 2., 3. krok 1., 2. krok 2., 1. krok 3., atd.)
     
+    \pause
     Alespoň jedno z tabel je sporné, můžeme předpokládat konečné, algoritmus ho po konečně mnoha krocích zkonstruuje.
     \hfill\qedsymbol
 
@@ -306,24 +340,31 @@
 
 \begin{frame}{Rekurzivní axiomatizovatelnost}
 
+    \pause
     Kdy lze třídu struktur `efektivně (algoritmicky) popsat'?
 
+    \pause
     \myblock{
         $K\subseteq\M_L$ je \alert{rek. axiomatizovatelná}, pokud existuje rek. axiomatizovaná $T$, že $K=M_L(T)$. $T'$ je \alert{rek. axiomatizovatelná}, platí-li to pro třídu jejích modelů (tj. je-li ekvivalentní rek. axiomatizované teorii).
     }
 
+    \pause
     (podobně lze definovat \alert{rek. spočetnou axiomatizovatelnost})
 
+    \pause
     \myblock{
         \textbf{Tvrzení:}
         Je-li $\A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\Th(\A)$ rekurzivně axiomatizovatelná.
     }
         
+    \pause
     (z toho plyne i rozhodnutelnost $\Th(\A)$, ale $\A\models\varphi$ lze ověřit přímo)
 
-    \textbf{Důkaz:}
+    \pause
+    \textbf{Důkaz:} \pause
     Buď $A=\{a_1,\dots,a_n\}$. $\Th(\A)$ axiomatizujeme sentencí ``existuje právě $n$ prvků $a_1,\dots,a_n$ splňujících právě ty \alert{základní vztahy} o funkčních hodnotách a relacích, které platí v $\A$''.
     
+    \pause
     Např. je-li $f^\A(a_4, a_2)=a_{17}$, přidej atom. formuli $f(x_{a_4},x_{a_2})=x_{a_{17}}$, je-li $(a_3,a_3,a_1)\notin R^\A$ přidej $\neg R(x_{a_3},x_{a_3},x_{a_1})$.\hfill\qedsymbol
 
 \end{frame}
@@ -346,12 +387,15 @@
 
     \medskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         Pro struktury výše platí, že $\Th(\A)$ je rozhodnutelná.
     }
+    \pause
     \textbf{Důkaz:} $\Th(\A)$ je vždy kompletní.
 
+    \pause
     \myexample{
         Teorie \alert{standardního modelu aritmetiky} $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ ale \alert{není} rekurzivně axiomatizovatelná (viz První Gödelova věta o neúplnosti).
     }
@@ -364,7 +408,7 @@
 
 \begin{frame}{Aritmetika}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item přirozená čísla hrají důležitou roli v matematice i v aplikacích
         \item \alert{jazyk aritmetiky} je $L=\langle S,+,\cdot,0,\leq\rangle$ s rovností
         \item \alert{standardní model aritmetiky}  $\underline{\mathbb N}=\langle\mathbb N,S,+,\cdot,0,\leq\rangle$ nemá rekurzivně axiomatizovatelnou teorii (První věta o neúplnosti)
@@ -377,6 +421,7 @@
 
 \begin{frame}{Robinsonova aritmetika $Q$}    
 
+    \pause
     \myblockamsmath{ 
         \vspace{-12pt}       
         \begin{align*}
@@ -387,9 +432,10 @@
         \end{align*}
     }
     
+    \pause
     \begin{itemize}
-        \item velmi slabá, nelze v ní dokázat např. komutativitu ani asociativitu $+$ či $\cdot$, nebo tranzitivitu $\leq$
-        \item ale lze dokázat všechna \alert{existenční tvrzení o numerálech} pravdivá v $\underline{\mathbb N}$, tj. formule v PNF, jen $\exists$, za volné proměnné substituujeme \alert{numerály} $\underline{n}=S(\dots S(0)\dots)$
+        \item velmi slabá, nelze v ní dokázat např. komutativitu ani asociativitu $+$ či $\cdot$, nebo tranzitivitu $\leq$\pause
+        \item ale lze dokázat všechna \alert{existenční tvrzení o numerálech} pravdivá v $\underline{\mathbb N}$, tj. formule v PNF, jen $\exists$, za volné proměnné substituujeme \alert{numerály} $\underline{n}=S(\dots S(0)\dots)$\pause
         \item např. pro \myexampleinline{
             $\varphi(x,y)=(\exists z)(x+z=y)$
          } je $Q\proves\varphi(\underline{1},\underline{2})$
@@ -397,6 +443,7 @@
 
     \medskip
     
+    \pause
     \myblock{
         \textbf{Tvrzení:}
         Je-li $\varphi(x_1,\dots,x_n)$ existenční formule, $a_1,\dots,a_n\in\mathbb N$, pak
@@ -411,6 +458,7 @@
 
 \begin{frame}{Peanova aritmetika $PA$}    
 
+    \pause
     \myblock{
         Extenze $Q$ o \alert{schéma indukce}, tj. pro každou $L$-formuli $\varphi(x,\overline{y})$:
         \vspace{-6pt}
@@ -420,21 +468,24 @@
         \vspace{-21pt}
     }
 
+    \pause
     \begin{itemize}
-        \item mnohem lepší aproximace $\Th(\underline{\mathbb N})$
+        \item mnohem lepší aproximace $\Th(\underline{\mathbb N})$\pause
         \item dokáže `základní' vlastnosti (např. komut. a asociativitu $+$) \item stále ale existují sentence platné v $\underline{\mathbb N}$ ale nezávislé v $PA$\\(opět dokážeme v První větě o neúplnosti)
     \end{itemize}
 
     \bigskip
 
+    \pause
     \textbf{Poznámka:} strukturu $\underline{\mathbb N}$ lze axiomatizovat (až na $\simeq$) v predikátové logice \alert{2. řádu}, extenzí $PA$ o tzv. \alert{axiom indukce}:
     $$
     (\forall X)((X(0) \land (\forall x)(X(x) \limplies X(S(x)))) \limplies (\forall x)X(x))
     $$
 
+    \pause
     \begin{itemize}
-        \item $X$ reprezentuje (libovolnou) podmnožinu modelu
-        \item použijeme na množinu všech následníků 0
+        \item $X$ reprezentuje (libovolnou) podmnožinu modelu\pause
+        \item použijeme na množinu všech následníků 0\pause
         \item každý prvek je následník 0 $\Rightarrow$ izomorfismus s $\underline{\mathbb N}$
     \end{itemize}
 
@@ -446,20 +497,24 @@
 
 \begin{frame}{Nerozhodnutelnost predikátové logiky}
     
+    \pause
     \myblock{
         \textbf{Věta (O nerozhodnutelnosti predikátové logiky):}
         Neexistuje algoritmus, který pro vstupní formuli $\varphi$ rozhodne, zda je logicky platná.
     }
 
+    \pause
     \begin{itemize}
-        \item tj. zda je formule $\varphi$ [v lib. jazyce 1. řádu] tautologie ($\models\varphi$)
+        \item tj. zda je formule $\varphi$ [v lib. jazyce 1. řádu] tautologie ($\models\varphi$)\pause
         \item neboli $T=\emptyset$ není rozhodnutelná 
     \end{itemize}
 
+    \pause
     Nemáme formalismus pro algoritmy (Turingovy stroje), dokážeme redukcí na jiný nerozhodnutelný problém: \alert{\href{https://en.wikipedia.org/wiki/Hilbert\%27s_problems}{Hilbertův 10. problém}}
 
     \bigskip
 
+    \pause
     \myalert{
     \begin{quote}
         ``Najděte algoritmus, který po konečně mnoha krocích určí, zda daná diofantická rovnice s libovolným počtem proměnných a
@@ -469,9 +524,10 @@
 
     \medskip
 
+    \pause
     \alert{diofantická rovnice}: $p(x_1,\dots,x_n)=0$, kde $p$ je celočíselný polynom
 
-
+    \pause
     ukážeme, že existuje \alert{redukce} `těžkého' Hilbertova 10. problému na náš problém, tedy i náš problém je `těžký'
     
 \end{frame}
@@ -479,6 +535,7 @@
 
 \begin{frame}{Nerozhodnutelnost Hilbertova desátého problému}
 
+    \pause
     \myblock{
         \textbf{Věta (Matiyasevich 1970):}    
         Problém existence celočíselného řešení dané diofantické rovnice s celočís. koeficienty je nerozhodnutelný.
@@ -488,6 +545,7 @@
 
     \medskip
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         Neexistuje algoritmus rozhodující, mají-li dané polynomy $p(x_1,\dots,x_n),q(x_1,\dots,x_n)$ s \alert{přiroz.} koeficienty \alert{přirozené řešení}, tj.
@@ -498,6 +556,7 @@
         \vspace{-16pt}
     }
     
+    \pause
     \textbf{Důkaz:} \alert{\href{https://en.wikipedia.org/wiki/Lagrange\%27s_four-square_theorem}{Lagrangeova věta o čtyřech čtvercích}} říká, že každé přirozené číslo lze vyjádřit jako součet čtyř čtverců (celých čísel). Naopak, každé celé číslo je rozdíl dvou přirozených. Diofantickou rovnici lze tedy transformovat na rovnici z důsledku, a naopak.\hfill\qedsymbol
 
 \end{frame}
@@ -505,22 +564,25 @@
 
 \begin{frame}{Důkaz nerozhodnutelnosti predikátové logiky}
 
+    \pause
     Uvažme $\varphi$ tvaru $(\exists x_1)\dots(\exists x_n)\ p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$ 
     kde $p$ a $q$ jsou přirozené polynomy. Dle Tvrzení o Robinsonově aritmetice:
     $$
     \underline{\mathbb N}\models \varphi\ \Leftrightarrow\  Q\proves \varphi
     $$
 
+    \pause
     Buď $\psi_Q$ konjunkce (gen. uzávěrů) axiomů $Q$ (je konečná). Zřejmě: 
     $$
     \alert{Q\proves\varphi}\ \Leftrightarrow\ \psi_Q\proves\varphi\ \Leftrightarrow\ \alert{\proves\psi_Q\limplies\varphi}
     $$
+    \pause
     Dle Věty o úplnosti je to ale ekvivalentní \alert{$\models\psi_Q\limplies\varphi$}. Dostáváme:
     $$
     \underline{\mathbb N}\models \varphi\ \Leftrightarrow\ \models \psi_Q\limplies\varphi
     $$
+    \pause
     \alert{Sporem:} Pokud bychom měli algoritmus rozhodující logickou platnost, mohli bychom rozhodovat i existenci přirozeného řešení rovnice $p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$, tj. Hilbertův 10. problém.\hfill\qedsymbol
-
 
 \end{frame}
 
@@ -530,24 +592,28 @@
 
 \begin{frame}{První věta o neúplnosti + důsledek o nekompletnosti}
 
+    \pause
     \myblock{
         \textbf{Věta (Gödel 1931):}
         Je-li $T$ bezesporná rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky, potom existuje sentence, která je pravdivá v~$\underline{\mathbb N}$, ale není dokazatelná v $T$.
     }
 
+    \pause
     \begin{itemize}
-        \item vlastnosti aritmetiky přir. čísel nelze `rozumně', efektivně popsat (v logice 1. řádu), takový popis je nutně `neúplný'
-        \item \alert{pravdivost} je ve standardním modelu $\underline{\mathbb N}$ zatímco \alert{dokazatelnost} v $T$ (samozřejmě pravdivá v $T$ je v $T$ i dokazatelná)
-        \item \alert{bezespornost} nutná (sporná teorie dokáže vše)
-        \item bez \alert{rekurzivní axiomatizovatelnosti} by teorie nebyla `užitečná'
+        \item vlastnosti aritmetiky přir. čísel nelze `rozumně', efektivně popsat (v logice 1. řádu), takový popis je nutně `neúplný'\pause
+        \item \alert{pravdivost} je ve standardním modelu $\underline{\mathbb N}$ zatímco \alert{dokazatelnost} v $T$ (samozřejmě pravdivá v $T$ je v $T$ i dokazatelná)\pause
+        \item \alert{bezespornost} nutná (sporná teorie dokáže vše)\pause
+        \item bez \alert{rekurzivní axiomatizovatelnosti} by teorie nebyla `užitečná'\pause
         \item extenze $Q$ znamená `základní aritmetická síla' (různé varianty předpokladu; nelze-li zakódovat přir. čísla s $+,\cdot$ je moc `slabá'
     \end{itemize}    
 
+    \pause
     \myblock{
         \textbf{Důsledek:}
         Splňuje-li teorie $T$ předpoklady První věty o neúplnosti a je-li navíc $\underline{\mathbb N}$ modelem $T$, potom $T$ není kompletní.
     }
     
+    \pause
     \textbf{Důkaz:}
         Vezměme Gödelovu sentenci $\varphi$ ($\underline{\mathbb N}\models\varphi$, $T\not\proves\varphi$). Je-li $T$ kompletní, víme $T\proves\neg\varphi$, z korektnosti $T\models\neg\varphi$, tedy $\underline{\mathbb N}\models\neg\varphi$.
     \hfill\qedsymbol    
@@ -557,7 +623,7 @@
 
 \begin{frame}{O důkazu}
 
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item Gödelova sentence formalizuje \alert{``Nejsem dokazatelná v $T$''}
         \item převratná důkazová technika, dva hlavní principy:
         \item \alert{aritmetizace syntaxe}, zakódování sentencí a jejich dokazatelnosti do přirozených čísel
@@ -570,7 +636,7 @@
 
 \begin{frame}{Aritmetizace syntaxe a dokazatelnosti}
     
-    \begin{itemize}
+    \begin{itemize}[<+->]
         \item \alert{Gödelovo číslování} `rozumně' kóduje konečné syntaktické objekty (termy, formule, tablo důkazy) do $\mathbb N$: lze algoritmicky [de-]kódovat, simulovat `manipulaci' s objekty na jejich kódech
         \item pro $\varphi$ bude \alert{$\lceil\varphi\rceil$} příslušný kód, \alert{$\underline{\varphi}$} odpovídající $\lceil\varphi\rceil$-tý numerál
         \item pro danou $T$ máme binární relaci $\MyProof_T\subseteq\mathbb N^2$ definovanou
@@ -588,33 +654,39 @@
 
 \begin{frame}{Predikát dokazatelnosti}
 
+    \pause
     \myblock{
         \textbf{Tvrzení:}
-        Je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky, potom existuje formule $\Prf_T(x,y)$ v jazyce aritmetiky, která \alert{reprezentuje} relaci $\MyProof_T$, tj. pro každá $n,m\in\mathbb N$:
+        Je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky, potom existuje formule $\Prf_T(x,y)$ v jazyce aritmetiky, která \alert{reprezentuje} relaci $\MyProof_T$, tj. pro každá $n,m\in\mathbb N$:\pause
     \begin{itemize}
-        \item je-li $(n,m)\in\MyProof_T$, potom $Q\proves\Prf_T(\underline{n},\underline{m})$
+        \item je-li $(n,m)\in\MyProof_T$, potom $Q\proves\Prf_T(\underline{n},\underline{m})$\pause
         \item jinak $Q\proves\neg\Prf_T(\underline{n},\underline{m})$
     \end{itemize} 
     }
 
+    \pause
     (Důkaz vynecháme!)
 
+    \pause
     \begin{itemize}
         \item formule \myalertinline{
             $\Prf_T(x,y)$
-            } vyjadřuje \alert{``$y$ je důkaz $x$ v $T$''}
+            } vyjadřuje \alert{``$y$ je důkaz $x$ v $T$''}\pause
         \item formule \myalertinline{
             $(\exists y)\Prf_T(x,y)$
-            } znamená \alert{``$x$ je dokazatelná v $T$''}
+            } znamená \alert{``$x$ je dokazatelná v $T$''}\pause
         \item svědek poskytuje kód tablo důkazu, a $\underline{\mathbb N}$ splňuje $Q$, proto:
     \end{itemize}
 
+    \pause
     \myblock{
-    \textbf{Pozorování:} $T\proves\varphi$ právě když $\underline{\mathbb N}\models (\exists y)\Prf_T(\underline{\varphi},y)$.  
+        \textbf{Pozorování:} $T\proves\varphi$ právě když $\underline{\mathbb N}\models (\exists y)\Prf_T(\underline{\varphi},y)$.  
     }
     
+    \pause
     Budeme potřebovat následující důsledek (také bez důkazu):
     
+    \pause
     \myblock{
     \textbf{Důsledek:}
         Je-li $T\proves\varphi$, potom $T\proves (\exists y)\Prf_T(\underline{\varphi},y)$.
@@ -625,34 +697,40 @@
 
 \begin{frame}[fragile]{Self-reference}
 
+    \pause
     \vspace{-6pt}
     vyjádřili jsme \myalertinline{
         $\varphi$ je dokazatelná
     } ale chceme \myalertinline{já nejsem dokazatelná}
     
+    \pause
     přirozené jazyky mají self-referenci:
     \myexampleinline{\texttt{Tato věta má 22 znaků.}};  
     formální systémy obvykle ne, umožňují ale \alert{přímou referenci} (mluvit o posloupnostech symbolů):
     
     \medskip
 
+    \pause
     \myexample{
         \texttt{Následující věta má 29 znaků. "Následující věta má 29 znaků."}
     }
 
     \medskip
 
+    \pause
     zde není žádná self-reference, pomůžeme si proto trikem \alert{zdvojení}:
     
     \medskip
 
+    \pause
     \myexample{   
         \texttt{Následující věta zapsaná jednou a ještě jednou v uvozovkách má 149 znaků. "Následující věta zapsaná jednou a ještě jednou v uvozovkách má 149 znaků."}
     }  
 
     \medskip
 
-    \myalertinline{přímou referencí a zdvojením tedy získáme self-referenci}; podobně program v C, který vypíše svůj kód (34 je ASCII kód uvozovek): 
+    \pause
+    \myalertinline{přímou referencí a zdvojením tedy získáme self-referenci}; \pause podobně program v C, který vypíše svůj kód (34 je ASCII kód uvozovek): 
 
     \vspace{-6pt}
     {\small
@@ -667,6 +745,7 @@ printf(c,34,c,34);}
 
 \begin{frame}{Věta o pevném bodě}
     
+    \pause
     \myblock{
         \textbf{Věta:}
         Je-li $T$ extenzí Robinsonovy aritmetiky, potom pro každou formuli $\varphi(x)$ (v jazyce teorie $T$) existuje sentence $\psi$ taková, že: 
@@ -677,18 +756,21 @@ printf(c,34,c,34);}
         $$
     }
 
+    \pause
     \begin{itemize}
-        \item také ``diagonalizační lemma'' nebo ``self-referenční'' lemma
-        \item $\psi$ je \alert{self-referenční}, říká o sobě: \myalertinline{``já splňuji vlastnost $\varphi$''}
-        \item v důkazu První věty bude $\varphi(x)$ formule $\neg(\exists y)\Prf_T(x,y)$
+        \item také ``diagonalizační lemma'' nebo ``self-referenční'' lemma\pause
+        \item $\psi$ je \alert{self-referenční}, říká o sobě: \myalertinline{``já splňuji vlastnost $\varphi$''}\pause
+        \item v důkazu První věty bude $\varphi(x)$ formule $\neg(\exists y)\Prf_T(x,y)$\pause
         %\item důkaz využívá diagonalizační argument (jako Holičův paradox)
         \item všimněte si, jak se v důkazu použije přímá reference a zdvojení
     \end{itemize}
 
+    \pause
     \textbf{Důkaz (myšlenka):} \alert{Zdvojující funkce} $d\colon\mathbb N\to\mathbb N$ dekóduje vstup $n$ jako $\varphi(x)$, dosadí numerál $\underline{n}$, znovu zakóduje: pro vš. $\chi(x)$ platí:
     $$
     \alert{d(\lceil \chi(x)\rceil)=\lceil\chi(\underline{\chi(x)})\rceil}
     $$
+    \pause
     S využitím $T$ extenze $Q$ se dokáže, že $d$ je v $T$ \alert{reprezentovatelná}. \myexampleinline{Pro jednoduchost ať ji reprezentuje term}, označíme ho také $d$ (ale ve skutečnosti je to složitá formule).
     
 \end{frame}
@@ -696,11 +778,13 @@ printf(c,34,c,34);}
 
 \begin{frame}{Pokračování důkazu}
 
+    \pause
     Tedy $Q$, proto i $T$, dokazuje \alert{o numerálech}, že $d$ opravdu `zdvojuje':
     $$
     T\proves d(\underline{\chi(x)})=\underline{\chi(\underline{\chi(x)})}
     $$
         
+    \pause
     Hledaná self-referenční sentence $\psi$ je sentence:
 
         \myalertmath{
@@ -711,15 +795,18 @@ printf(c,34,c,34);}
 
     \bigskip
 
+    \pause
     Chceme dokázat, že $T\proves \psi \liff \varphi(\underline{\psi})$, neboli:
     $$
     T \proves \varphi(\alert{d(\underline{\varphi(d(x))})})\liff\varphi(\alert{\underline{\varphi(d(\underline{\varphi(d(x))}))}})
     $$
     
+    \pause
     K~tomu stačí \myalertinline{
         $T \proves d(\underline{\varphi(d(x))})=\underline{\varphi(d(\underline{\varphi(d(x))}))}$
     } což máme z reprezentovatelnosti $d$, kde $\chi(x)$ je $\varphi(d(x))$.\hfill\qedsymbol
 
+    \pause
     {\footnotesize
     $\psi$ tedy říká: >>Následující věta zapsaná jednou a ještě jednou v uvozovkách má vlastnost $\varphi$. ``Následující věta zapsaná jednou a ještě jednou v uvozovkách má vlastnost $\varphi$.''<< kde v uvozovkách znamená numerál kódu (přímá reference)
     }
@@ -729,26 +816,29 @@ printf(c,34,c,34);}
 
 \begin{frame}{Nedefinovatelnost pravdy}
 
+    \pause
     \myblock{
         \textbf{Věta:}
         V žádném bezesporném rozšíření Robinsonovy aritmetiky nemůže existovat definice pravdy.
     }
     \vspace{-12pt}
+    \pause
     \begin{itemize}
         \item \alert{definice pravdy} v aritmetické teorii $T$ je formule $\tau(x)$ taková, že pro každou sentenci $\psi$ platí: 
         \myalertinline{
             $T\proves\psi\liff\tau(\underline{\psi})$
-        }
-        \item kdyby existovala, místo dokazování by stačilo spočíst kód $\lceil \psi\rceil$, dosadit numerál $\underline{\psi}$ do $\tau$, a vyhodnotit
-        \item rozcvička pro důkaz Gödelovy První věty o neúplnosti
-        \item důkaz užívá \alert{Paradox lháře}, vyjádříme \myalertinline{``Nejsem pravdivá v $T$''}
-        \item důkaz První věty užívá stejný trik s ``Nejsem dokazatelná v $T$''
+        }\pause
+        \item kdyby existovala, místo dokazování by stačilo spočíst kód $\lceil \psi\rceil$, dosadit numerál $\underline{\psi}$ do $\tau$, a vyhodnotit\pause
+        \item rozcvička pro důkaz Gödelovy První věty o neúplnosti\pause
+        \item důkaz užívá \alert{Paradox lháře}, vyjádříme \myalertinline{``Nejsem pravdivá v $T$''}\pause
+        \item důkaz První věty užívá stejný trik s ``Nejsem dokazatelná v $T$''\pause
     \end{itemize}
     \vspace{-3pt}
-    \textbf{Důkaz:} Sporem, ať existuje definice pravdy $\tau(x)$. Z Věty o pevném bodě kde $\varphi(x)$ je $\neg\tau(x)$ dostáváme sentenci $\psi$ takovou, že:
+    \textbf{Důkaz:} \pause Sporem, ať existuje definice pravdy $\tau(x)$. Z Věty o pevném bodě kde $\varphi(x)$ je $\neg\tau(x)$ dostáváme sentenci $\psi$ takovou, že:
     $$
     T\proves\psi\liff\neg\tau(\underline{\psi})
     $$
+    \pause
     Protože $\tau(x)$ je definice pravdy, platí ale i $T\proves\psi\liff\tau(\underline{\psi})$, tedy i $T\proves\tau(\underline{\psi})\liff\neg\tau(\underline{\psi})$. To by ale znamenalo, že $T$ je sporná.
     \hfill\qedsymbol
     
@@ -757,25 +847,30 @@ printf(c,34,c,34);}
 
 \begin{frame}{Důkaz První věty o neúplnosti}
 
+    \pause
     $T$ bezesp. rek. ax. ext. $Q$. Gödelovu sentenci ($\underline{\mathbb N}\models\psi_T,T\not\proves\psi_T$) získáme z Věty o pevném bodě kde $\varphi(x)$ je \alert{$\neg(\exists y)\Prf_T(x,y)$}:
 
+    \pause
     \myalertmath{
     $$
     T\proves\psi_T\liff\neg(\exists y)\Prf_T(\underline{\psi_T},y)
     $$
     }
 
-    Tedy $\psi_T$ je v $T$ ekvivalentní ``$\psi_T$ není dokazatelná v $T$''. Ekvivalence platí i v $\underline{\mathbb N}$ (z konstrukce, protože $\underline{\mathbb N}$ splňuje $Q$), a spolu s ekvivalencí z Pozorování o predikátu dokazatelnosti:    
+    \pause
+    Tedy $\psi_T$ je v $T$ ekvivalentní ``$\psi_T$ není dokazatelná v $T$''. Ekvivalence platí i v $\underline{\mathbb N}$ (z konstrukce, protože $\underline{\mathbb N}$ splňuje $Q$), a spolu s ekvivalencí z Pozorování o predikátu dokazatelnosti: \pause
     $$
     \alert{\underline{\mathbb N}\models\psi_T}\ \Leftrightarrow\ 
     \underline{\mathbb N}\models\neg(\exists y)\Prf_T(\underline{\psi_T},y)\ \Leftrightarrow\ \alert{T\not\proves\psi_T}
     $$    
 
+    \pause
     Stačí tedy ukázat nedokazatelnost $\psi_T$ v $T$. \alert{Sporem: ať $T\proves\psi_T$. }
     
+    \pause
     \begin{itemize}
-        \item Self-reference: $T\proves\neg(\exists y)\Prf_T(\underline{\psi_T},y)$
-        \item Důsledek o predikátu dokazatelnosti: $T\proves (\exists y)\Prf_T(\underline{\psi_T},y)$
+        \item Self-reference: $T\proves\neg(\exists y)\Prf_T(\underline{\psi_T},y)$\pause
+        \item Důsledek o predikátu dokazatelnosti: $T\proves (\exists y)\Prf_T(\underline{\psi_T},y)$\pause
     \end{itemize}
     To by ale znamenalo, že $T$ je sporná.\hfill\qedsymbol
     
@@ -784,29 +879,35 @@ printf(c,34,c,34);}
 
 \begin{frame}{Důsledky a zesílení}
     
+    \pause
     \myblock{
         \textbf{Důsledek (už byl):}
         Je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky a je-li $\underline{\mathbb N}$ model $T$, potom $T$ není kompletní.        
     }
     
+    \pause
     \textbf{Důkaz:}
         $T$ není sporná, tedy splňuje předpoklady První věty. Víme, že G. sentence splňuje $\underline{\mathbb N}\models\psi_T$ a $T\not\proves\psi_T$. Je-li $T$ kompletní, máme $T\proves\neg\psi_T$, z korektnosti $T\models\neg\psi_T$, tj. $\underline{\mathbb N}\models\neg\psi_T$, spor.
     \hfill\qedsymbol
     
     \medskip
 
+    \pause
     \myblock{\textbf{Důsledek:}
     Teorie $\Th(\underline{\mathbb N})$ není rekurzivně axiomatizovatelná.    
     }
 
+    \pause
     \textbf{Důkaz:}
     $\Th(\underline{\mathbb N})$ je extenze $Q$, platí v $\underline{\mathbb N}$. Kdyby byla rekurzivně axiomatizovatelná, podle Důsledku by [její rekurzivní axiomatizace] nebyla kompletní, ale je.
     \hfill\qedsymbol
 
     \medskip
 
+    \pause
     Zesílení První věty: předpoklad $\underline{\mathbb N}\models T$ v Důsledku je nadbytečný.
 
+    \pause
     \myblock{\textbf{Věta (Rosserův trik, 1936):}
     V bezesporné rekurzivně axiomatizované extenzi Robinsonovy aritmetiky existuje nezávislá sentence.  
     }
@@ -818,28 +919,31 @@ printf(c,34,c,34);}
 
 \begin{frame}{Gödelova Druhá věta o neúplnosti}
     
+    \pause
     \myalert{
         Efektivně daná, dostatečně bohatá $T$ nedokáže svou bezespornost.
     }
 
+    \pause
     \begin{itemize}
         \item bezespornost vyjádří sentence \alert{$\Con_T$}:\hfill \myalertinline{\small
             $\neg(\exists y)\Prf_T(\underline{0=S(0)},y)$
-        }  
-        \item všimněte si: $\underline{\mathbb N}\models\Con_T$ $\Leftrightarrow$ $T\not\proves 0=S(0)$
+        } \pause 
+        \item všimněte si: $\underline{\mathbb N}\models\Con_T$ $\Leftrightarrow$ $T\not\proves 0=S(0)$\pause
         \item tj. $\Con_T$ opravdu vyjadřuje, že \alert{``$T$ je bezesporná''}
     \end{itemize}
 
     \bigskip
-    
+    \pause
     \myblock{\textbf{Věta (Gödel, 1931):} Je-li $T$ bezesporná rekurzivně axiomatizovaná extenze $PA$, potom $\Con_T$ není dokazatelná v $T$.
     }
 
     \medskip
 
+    \pause
     \begin{itemize}
-        \item všimněte si: \alert{$\Con_T$ je pravdivá v $\underline{\mathbb N}$} (neboť $T$ je bezesporná)
-        \item není třeba plná síla $PA$, stačí slabší předpoklad
+        \item všimněte si: \alert{$\Con_T$ je pravdivá v $\underline{\mathbb N}$} (neboť $T$ je bezesporná)\pause
+        \item není třeba plná síla $PA$, stačí slabší předpoklad\pause
         \item ukážeme si hlavní myšlenku důkazu
     \end{itemize}
     
@@ -848,22 +952,28 @@ printf(c,34,c,34);}
 
 \begin{frame}{Myšlenka důkazu}
 
+    \pause
     Gödelova sentence $\psi_T$ vyjadřuje: \myalertinline{``Nejsem dokazatelná v $T$.''}
     
+    \pause
     V důkazu První věty o neúplnosti jsme ukázali:
 
     \myalert{
         ``Pokud je $T$ bezesporná, potom $\psi_T$ není dokazatelná v $T$.''
     }
     
+    \pause
     Z toho jednak plyne, že $T\not\proves\psi_T$, neboť $T$ bezesporná je. 
     
+    \pause
     Na druhou stranu to lze formulovat jako: \myalertinline{``Platí $\Con_T\to \psi_T$.''}
     
+    \pause
     Je-li $T$ extenze Peanovy aritmetiky, lze důkaz tohoto tvrzení zformalizovat v rámci teorie $T$, tedy ukázat, že:
     $$
     \alert{ T\proves\Con_T\to\psi_T}
     $$
+    \pause
     Kdyby platilo $T\proves\Con_T$, dostali bychom i $T\proves\psi_T$, což je spor.
     \hfill\qedsymbol
 
@@ -872,26 +982,32 @@ printf(c,34,c,34);}
 
 \begin{frame}{Důsledky}    
 
+    \pause
     \myblock{\textbf{Důsledek:}
         $PA$ má model, ve kterém platí $(\exists y)\Prf_{PA}(\underline{0=S(0)},y)$.
     }
 
+    \pause
     \textbf{Důkaz:}
         Sentence $\Con_{PA}$ není dokazatelná, tedy ani pravdivá v $PA$. Platí ale v $\underline{\mathbb N}$ (neboť $PA$ je bezesporná), což znamená, že je $\Con_{PA}$ nezávislá v $PA$. V nějakém modelu tedy musí platit její negace, která je ekvivalentní $(\exists y)\Prf_{PA}(\underline{0=S(0)},y)$.            
     \hfill\qedsymbol
 
+    \pause
     \textbf{Poznámka:} Musí to být nestandardní model $PA$, svědek \alert{nestandardní} prvek (není hodnotou žádného numerálu).
 
     \bigskip
 
+    \pause
     \myblock{\textbf{Důsledek:}
         $PA$ má bezespornou rekurzivně axiomatizovanou extenzi, která ``dokazuje svou spornost'', tj. $T\proves \neg \Con_T$.
     }
 
+    \pause
     \textbf{Důkaz:}
     $T=PA \cup \{\neg \Con_{PA}\}$ je \alert{bezesporná}, neboť $PA\not\proves\Con_{PA}$. Také triviálně $T\proves\neg\Con_{PA}$, tj. $T$ `dokazuje spornost' $PA$. Protože $PA\subseteq T$, platí i $T\proves\neg\Con_T$.
     \hfill\qedsymbol
 
+    \pause
     \textbf{Poznámka:} $\underline{\mathbb{N}}$ nemůže být modelem $T$.
     
 \end{frame}
@@ -899,18 +1015,18 @@ printf(c,34,c,34);}
 
 \begin{frame}{Bezespornost ZFC}
 
+    \pause
     Formalizace matematiky je založena na \href{https://en.wikipedia.org/wiki/Zermelo\%E2\%80\%93Fraenkel_set_theory}{\alert{Zermelově–Fraenkelově teorii množin s axiomem výběru (ZFC)}}. Formálně vzato to není extenze $PA$, ale můžeme v ní Peanovu aritmetiku `interpretovat'.
 
+    \pause
     \myblock{\textbf{Důsledek:}
         Je-li ZFC bezesporná, není $\Con_{ZFC}$ v ZFC dokazatelná.
     }
 
+    \pause
     Pokud by tedy někdo v rámci ZFC dokázal, že je ZFC bezesporná, znamenalo by to, že je ZFC sporná.    
 
 \end{frame}
 
 
 \end{document}
-
-
-

@@ -367,8 +367,8 @@ Before we delve into a more formal exposition, let us briefly summarize the sema
 \begin{itemize}
     \item Models are structures of the given signature,
     \item A formula is valid in a structure if it holds under every assignment of free variables to elements from the domain,
-    \item The values of terms are evaluated according to their trees, where symbols are replaced by their interpretations (relations, functions, and constants from the domain),
-    \item From the values of terms, we obtain the truth values of atomic formulas: is the resulting $n$-tuple in the relation?
+    \item The values of terms are evaluated according to their trees, where symbols are replaced by their interpretations (functions, and constants from the domain),
+    \item From the values of terms, we obtain the truth values of atomic formulas: is the resulting $n$-tuple in the relation (interpreting the given relation symbol)?
     \item The values of complex formulas are also evaluated according to their tree, where $(\forall x)$ acts as `conjunction over all elements' and $(\exists y)$ acts as `disjunction over all elements' of the structure's domain.
 \end{itemize}
 

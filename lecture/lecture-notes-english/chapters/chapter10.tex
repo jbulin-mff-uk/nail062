@@ -52,7 +52,7 @@ If $T$ is complete, we know that exactly one of the following holds: either $T \
 The requirement of completeness is too strong; we now show that it suffices to eb able to effectively describe all complete simple extensions.\footnote{I.e., `all models up to elementary equivalence'.}
 
 \begin{definition}[Recursively Enumerable Completion]
-We say that a theory $T$ has \emph{recursively enumerable completion} if (some) set of up to equivalence all complete simple extensions of the theory $T$ is \emph{recursively enumerable}, i.e., there is an algorithm that, for a given pair of natural numbers $(i,j)$, outputs the $i$-th axiom of the $j$-th extension (in some fixed order\footnote{Here, we need the language to be countable.}), or answers that such an axiom does not exist.\footnote{If there are fewer than $j$ extensions or if the $j$-th extension has fewer than $i$ axioms.}
+We say that a theory $T$ has \emph{recursively enumerable completion} if it has up to equivalence only countably many complete simple extensions and (some) set of up to equivalence all complete simple extensions of the theory $T$ is \emph{recursively enumerable}, i.e., there is an algorithm that, for a given pair of natural numbers $(i,j)$, outputs the $i$-th axiom of the $j$-th extension (in some fixed order\footnote{Here, we need the language to be countable.}), or answers that such an axiom does not exist.\footnote{If there are fewer than $j$ extensions or if the $j$-th extension has fewer than $i$ axioms.}
 \end{definition}
 
 \begin{proposition}\label{propositon:recursively-enumerable-completion}    
@@ -234,7 +234,7 @@ Peano arithmetic is a much better approximation of the theory $\Th(\underline{\m
     \underline{\mathbb N}\models \varphi\text{ if and only if }Q\proves \varphi
     $$
     
-    Let $\psi_Q$ denote the conjunction (of the general closures) of all axioms of $Q$. Clearly, $Q\proves\varphi$ if and only if $\psi_Q\proves\varphi$, which holds if and only if $\proves\psi_Q\limplies\varphi$. According to the Completeness Theorem, this is equivalent to $\models\psi_Q\limplies\varphi$. We thus obtain the following equivalence:
+    Let $\psi_Q$ denote the conjunction (of the general closures) of all axioms of $Q$. Clearly, $Q\proves\varphi$ if and only if $\psi_Q\proves\varphi$, which holds if and only if $\proves\psi_Q\limplies\varphi$. According to the Soundness and Completeness Theorems, this is equivalent to $\models\psi_Q\limplies\varphi$. We thus obtain the following equivalence:
     $$
     \underline{\mathbb N}\models \varphi\text{ if and only if }\models \psi_Q\limplies\varphi
     $$

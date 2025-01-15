@@ -7,8 +7,11 @@ V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z
 V této sekci tablo metodu v predikátové logice neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
 
 \begin{example} Na Obrázku \ref{figure:predicate-tableau-intro-examples} jsou znázorněna dvě tabla. Jsou to tablo důkazy (v logice, tj. z prázdné teorie) \emph{sentencí} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (vpravo) a $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (vlevo) jazyka $L=\langle P\rangle$ (bez rovnosti), kde $P$ je unární relační symbol. Symbol $c_0$ je \emph{pomocný konstantní symbol}, který do jazyka při konstrukci tabla přidáváme.
+\end{example}
+
 
 \begin{figure}[htbp]
+\label{figure:predicate-tableau-intro-examples}
 \begin{minipage}{.49\textwidth}
 \centering
 \begin{forest}
@@ -51,10 +54,8 @@ V této sekci tablo metodu v predikátové logice neformálně představíme. K 
     ]
 \end{forest}
 \end{minipage}
-\label{figure:predicate-tableau-intro-examples}
 \caption{Příklady tabel. Položky typu `svědek' jsou znázorněny červeně, položky typu `všichni' modře.}
 \end{figure}
-\end{example}
 
 
 \subsubsection{Položky}

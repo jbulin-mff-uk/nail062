@@ -7,6 +7,8 @@ In this chapter, we will demonstrate how to generalize the \emph{method of analy
 In this section, we will informally introduce the tableau method in predicate logic. Formal definitions will follow later. We will start with two examples illustrating how the tableau method works in predicate logic and how it deals with quantifiers.
 
 \begin{example} Figure \ref{figure:predicate-tableau-intro-examples} shows two tableaux. These are tableau proofs (in logic, i.e., from the empty theory) of the \emph{sentences} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (right) and $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (left) in the language $L=\langle P\rangle$ (without equality), where $P$ is a unary relation symbol. The symbol $c_0$ is an \emph{auxiliary constant symbol} that we add to the language during the construction of the tableau.
+\end{example}
+
 
 \begin{figure}[htbp]
 \begin{minipage}{.49\textwidth}
@@ -54,7 +56,6 @@ In this section, we will informally introduce the tableau method in predicate lo
 \label{figure:predicate-tableau-intro-examples}
 \caption{Example tableaux. Entries of the `witness' type are shown in red, entries of the `everyone' type in blue.}
 \end{figure}
-\end{example}
 
 
 \subsubsection{Entries}

@@ -3,7 +3,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bookmark}
 \usepackage{booktabs}
-\usepackage[english]{babel}
+\usepackage[czech]{babel}
 \usepackage{enumerate}
 \usepackage[T1]{fontenc}
 \usepackage{forest}
@@ -18,20 +18,20 @@
 
 %% theorems
 \theoremstyle{plain}
-    \newtheorem{theorem}{Theorem}[section]
-    \newtheorem*{theorem-unnumbered}{Theorem}
-    \newtheorem{proposition}[theorem]{Proposition}
-    \newtheorem{corollary}[theorem]{Corollary}
+    \newtheorem{theorem}{Věta}[section]
+    \newtheorem*{theorem-unnumbered}{Věta}
+    \newtheorem{proposition}[theorem]{Tvrzení}
+    \newtheorem{corollary}[theorem]{Důsledek}
     \newtheorem{lemma}[theorem]{Lemma}
-    \newtheorem{observation}[theorem]{Observation}
+    \newtheorem{observation}[theorem]{Pozorování}
 \theoremstyle{definition}
-    \newtheorem{definition}[theorem]{Definition}
-    \newtheorem*{algorithm}{Algorithm}
+    \newtheorem{definition}[theorem]{Definice}
+    \newtheorem*{algorithm}{Algoritmus}
 \theoremstyle{remark}
-    \newtheorem{remark}[theorem]{Remark}
-    \newtheorem{example}[theorem]{Example}
-    \newtheorem{exercise}{Exercise}[chapter]
-    \newtheorem*{solution}{Solution}
+    \newtheorem{remark}[theorem]{Poznámka}
+    \newtheorem{example}[theorem]{Příklad}
+    \newtheorem{exercise}{Cvičení}[chapter]
+    \newtheorem*{solution}{Řešení}
 
 %% macros and definitions
 \DeclareMathOperator{\Aut}{Aut}
@@ -47,7 +47,7 @@
 \DeclareMathOperator{\Thm}{Thm}
 \DeclareMathOperator{\Tree}{Tree}
 \DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\VF}{PF} % PF "propositional formulas"
+\DeclareMathOperator{\VF}{VF}
 
 
 \newcommand{\A}{\structure{A}}
@@ -71,4 +71,3 @@
 
 % nicer turnstile
 \DeclareRobustCommand\proves{\mathrel{|}\joinrel\mkern-.5mu\mathrel{-}}
-

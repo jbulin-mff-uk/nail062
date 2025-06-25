@@ -1,126 +1,119 @@
-\chapter{Syntaxe a sémantika výrokové logiky}
+\chapter{Syntax and Semantics of Propositional Logic}
 
-\emph{Syntaxe} je soubor formálních pravidel pro tvoření korektních vět sestávajících ze slov (v případě přirozených jazyků), nebo formálních výrazů sestávajících ze symbolů (např.\ příkazy v programovacím jazyce). Naproti tomu \emph{sémantika} popisuje význam takových výrazů. Vztah mezi syntaxí a sémantikou se prolíná celou logikou a je klíčem k jejímu pochopení.
+\emph{Syntax} is a set of formal rules for creating well-formed sentences consisting of words (in the case of natural languages) or formal expressions consisting of symbols (e.g., statements in a programming language). In contrast, \emph{semantics} describes the meaning of such expressions. The relationship between syntax and semantics is fundamental to all of logic and is therefore the key to its understanding.
 
+\section{Syntax of Propositional Logic}
 
-\section{Syntaxe výrokové logiky}
+First, we define the formal `statements' with which we will work in propositional logic.
 
-Nejprve definujeme formální `nápisy', se kterými budeme v logice pracovat.
+\subsection{Language}
 
-
-\subsection{Jazyk}
-
-\emph{Jazyk} výrokové logiky je určený neprázdnou množinou \emph{výrokových proměnných} \( \mathbb P \) (také jim říkáme \emph{prvovýroky} nebo \emph{atomické výroky}). Tato množina může být konečná nebo i nekonečná, obvykle ale bude spočetná\footnote{To je důležité v mnoha aplikacích v informatice, nespočetné množiny se do (ani nekonečného) počítače nevejdou.} (pokud neřekneme jinak), a bude mít dané uspořádání. Pro výrokové proměnné budeme obvykle používat označení \( p_i\) (od slova ``proposition''), ale pro lepší čitelnost, zejména je-li \( \mathbb P \) konečná, také \(p,q,r,\dots \) Například:
+The \emph{language} of propositional logic is determined by a non-empty set of \emph{propositional variables} \( \mathbb P \) (also called \emph{atomic propositions} or \emph{atoms}). This set can be finite or infinite, but it will usually be countable\footnote{This is important in many applications in computer science, as uncountable sets cannot fit into a (even infinite) computer.} (unless otherwise specified), and it will have a fixed ordering. For propositional variables, we will typically use the notation \( p_i \) (from the word ``proposition''), but for better readability, especially if \( \mathbb P \) is finite, we will also use \( p, q, r, \dots \). For example:
 \begin{align*}
-    \mathbb P_1 &= \{ p, q, r\}\\
-    \mathbb P_2 &= \{ p_0, p_1, p_2, p_3, \ldots \} = \{ p_i \mid i \in \mathbb N \}
+    \mathbb P_1 &= \{ p, q, r \} \\
+    \mathbb P_2 &= \{ p_0, p_1, p_2, p_3, \ldots \} = \{ p_i \mid i \in \mathbb{N} \}
 \end{align*}
 
-Do jazyka patří kromě výrokových proměnných také \emph{logické symboly}: symboly pro logické spojky \( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \) a závorky \( (,) \). Budeme ale pro jednoduchost mluvit o ``jazyce~\( \mathbb P \)''.
+In addition to propositional variables, the language also includes \emph{logical symbols}: symbols for logical connectives \( \neg, \land, \lor, \limplies, \liff \) and parentheses \( (, ) \). However, for simplicity, we will talk about the ``language~\( \mathbb P \)''.
 
 \begin{remark}\label{remark:order-of-language}
-Pokud budeme potřebovat formálněji vyjádřit uspořádání jazyka $\mathbb P$, představíme si ho jako bijekci $\iota\colon\{0,1,\dots,n-1\}\to \mathbb P$ (pro konečný, $n$-prvkový jazyk) resp.\ $\iota\colon\mathbb N\to \mathbb P$ (je-li $\mathbb P$ spočetně nekonečný). V našich příkladech $\iota_1(0)=p$, $\iota_1(1)=q$, $\iota_1(2)=r$, a $\iota_2(i)=p_i$ pro všechna $i\in\mathbb N$.\footnote{Množina přirozených čísel $\mathbb N$ obsahuje nulu, viz standard ISO 80000-2:2019.}
+If we need to formally express the ordering of the propositional variables in $\mathbb P$, we imagine it as a bijection $\iota\colon\{0, 1, \dots, n-1\}\to \mathbb P$ (for a finite, $n$-element language) or $\iota\colon\mathbb{N}\to \mathbb P$ (if $\mathbb P$ is countably infinite). In our examples, $\iota_1(0)=p$, $\iota_1(1)=q$, $\iota_1(2)=r$, and $\iota_2(i)=p_i$ for all $i\in\mathbb{N}$.\footnote{The set of natural numbers $\mathbb{N}$ includes zero, see standard ISO 80000-2:2019.}
 \end{remark}
 
+\subsection{Proposition}
 
-\subsection{Výrok}
-
-Základním stavebním kamenem výrokové logiky je \emph{výrok} neboli \emph{výroková formule}. Je to konečný řetězec sestavený z výrokových proměnných a logických symbolů podle jistých pravidel. Prvovýroky jsou výroky, a dále můžeme vytvářet výroky z jednodušších výroků a logických symbolů: například pro logickou spojku $\landsymb$ vypíšeme nejprve symbol `(', potom první výrok, symbol `$\landsymb$', druhý výrok, a nakonec symbol `)'.
-\begin{definition}[Výrok]\label{definition:proposition}
-    \emph{Výrok} (\emph{výroková formule}) v jazyce $\mathbb P$ je prvek množiny $\VF_\mathbb P$ definované následovně: $\VF_\mathbb P$ je nejmenší množina splňující\footnote{Takovému druhu definice říkáme \emph{induktivní}. Lze také přirozeně vyjádřit pomocí \emph{formální gramatiky}, viz předmět \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN071}{NTIN071 Automaty a gramatiky}.}
+The basic building block of propositional logic is a \emph{proposition}, also called \emph{propositional formula}. It is a finite string composed of propositional variables and logical symbols according to certain rules. Atomic propositions are propositions, and we can further create propositions from simpler propositions and logical symbols: for example, for the logical connective $\land$, we write first the symbol `(', then the first proposition, the symbol `$\land$', the second proposition, and finally the symbol `)'.
+\begin{definition}[Proposition]\label{definition:proposition}
+    A \emph{proposition} (\emph{propositional formula}) in the language $\mathbb P$ is an element of the set $\VF_\mathbb P$ defined as follows: $\VF_\mathbb P$ is the smallest set satisfying\footnote{This kind of definition is called \emph{inductive}. It can also be naturally expressed using a \emph{formal grammar}, see the course \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NTIN071}{NTIN071 Automata and Grammars}.}
     \begin{itemize}
-        \item pro každý prvovýrok $p\in\mathbb P$ platí $p\in\VF_\mathbb P$,
-        \item pro každý výrok $\varphi\in\VF_\mathbb P$ je $(\neg\varphi)$ také prvek $\VF_\mathbb P$
-        \item pro každé $\varphi,\psi\in\VF_\mathbb P$ jsou $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, a $(\varphi\liff\psi)$ také prvky $\VF_\mathbb P$.
+        \item for every atomic proposition $p\in\mathbb P$, $p\in\VF_\mathbb P$,
+        \item for every proposition $\varphi\in\VF_\mathbb P$, $(\neg\varphi)$ is also an element of $\VF_\mathbb P$,
+        \item for every $\varphi,\psi\in\VF_\mathbb P$, $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, and $(\varphi\liff\psi)$ are also elements of $\VF_\mathbb P$.
     \end{itemize}        
 \end{definition}
-Výroky označujeme obvykle řeckými písmeny $\varphi,\psi,\chi$ ($\varphi$ od slova ``formule''). Abychom nemuseli vypisovat všechny čtyři binární logické spojky, používáme pro ně někdy zástupný symbol $\lbinsymb$. Třetí bod definice bychom tedy mohli vyjádřit takto:
+Propositions are usually denoted by Greek letters $\varphi, \psi, \chi$ ($\varphi$ from the word ``formula''). To avoid listing all four binary logical connectives, we sometimes use a placeholder symbol $\lbinsymb$. Thus, the third point of the definition could be expressed as:
 \begin{itemize}
-    \item pro každé $\varphi,\psi\in\VF_\mathbb P$ a $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$ je $(\varphi\lbin\psi)$ také prvek $\VF_\mathbb P$.
+    \item for every $\varphi,\psi\in\VF_\mathbb P$ and $\lbinsymb\in\{\land, \lor, \limplies, \liff\}$, $(\varphi\lbin\psi)$ is also an element of $\VF_\mathbb P$.
 \end{itemize}  
 
-
-\emph{Podvýrok} (\emph{podformule}) je podřetězec, který je sám o sobě výrokem. Uvědomte si, že všechny výroky jsou nutně konečné řetězce, vzniklé aplikací konečně mnoha kroků z definice na své podvýroky. 	
+A \emph{subproposition} (\emph{subformula}) is a substring that is itself a proposition. Note that all propositions are necessarily finite strings, created by applying a finite number of steps from the definition to their subpropositions.
 
 \begin{example}\label{example:proposition}
-Výrok $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ má následující podvýroky: $p, q, (\neg q), (p\lor (\neg q)), r, (p\land q), (r\limplies (p \land q)), \varphi$.
+The proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$ has the following subpropositions: $p, q, (\neg q), (p \lor (\neg q)), r, (p \land q), (r \limplies (p \land q)), \varphi$.
 \end{example}
 
-Výrok v jazyce $\mathbb P$ nemusí obsahovat všechny prvovýroky z $\mathbb P$ (ani nemůže pokud je $\mathbb P$ nekonečná množina). Bude se nám proto hodit značení $\Var(\varphi)$ pro množinu prvovýroků vyskytujících se ve $\varphi$.\footnote{Pokud nespecifikujeme v jakém jazyce je výrok (a pokud to není jasné z kontextu), myslíme tím, že je v jazyce $\Var(\varphi)$.} V našem příkladě $\Var(\varphi)=\{p,q,r\}$.
+A proposition in the language $\mathbb P$ does not have to contain all atomic propositions from $\mathbb P$ (and it cannot if $\mathbb P$ is an infinite set). Therefore, it will be useful to denote by $\Var(\varphi)$ the set of atomic propositions occurring in $\varphi$.\footnote{If we do not specify the language of a proposition (and if it is not clear from the context), we mean that it is in the language $\Var(\varphi)$.} In our example, $\Var(\varphi)=\{p, q, r\}$.
 
-Zavedeme si zkratky pro dva speciální výroky: $\top=(p\lor(\neg p))$ (\emph{pravda}) a $\bot=(p\land(\neg p))$ (\emph{spor}), kde $p\in\mathbb P$ je pevně zvolený (např.\ první prvovýrok z $\mathbb P$). Tedy výrok~$\top$ je vždy pravdivý a výrok~$\bot$ je vždy nepravdivý.
+We introduce abbreviations for two special propositions: $\top = (p \lor (\neg p))$ (\emph{tautology}) and $\bot = (p \land (\neg p))$ (\emph{contradiction}), where $p \in \mathbb P$ is fixed (e.g., the first atomic proposition from $\mathbb P$). Thus, the proposition~$\top$ is always true, and the proposition~$\bot$ is always false.
 
+When writing propositions, we may omit some parentheses for better readability. For example, the proposition $\varphi$ from Example~\ref{example:proposition} can be represented by the string
+$p \lor \neg q \liff (r \limplies p \land q)$. We omit outer parentheses and use priority of operators: $\neg$ has the highest priority, followed by $\land, \lor$, and finally $\limplies, \liff$ have the lowest priority. Furthermore, the notation $p \land q \land r \land s$ means the proposition $(p \land (q \land (r \land s)))$, and similarly for $\lor$.\footnote{Due to the associativity of $\land, \lor$, the placement of parentheses does not matter.}\footnote{Sometimes finer priorities are introduced, $\land$ often has higher priority than $\lor$, and $\limplies$ has higher priority than $\liff$. Also, sometimes $p \limplies q \limplies r$ is written instead of $(p \limplies (r \limplies q))$, although $\limplies$ is not associative and so here the placement of parentheses does matter. We prefer to avoid both of those conventions.}
 
-Při zápisu výroků můžeme pro lepší čitelnost některé závorky vynechat. Např.\ výrok $\varphi$ z příkladu~\ref{example:proposition} můžeme reprezentovat nápisem
-$p\lor \neg q \liff (r\limplies p \land q)$. Vynecháváme vnější závorky a používáme prioritu operátorů: $\neg$ má nejvyšší prioritu, dále $\landsymb,\lorsymb$, a konečně $\limpliessymb,\liffsymb$ mají nejnižší prioritu. Dále nápisem $p\land q\land r\land s$ myslíme výrok $(p\land (q\land (r \land s)))$, a podobně pro $\lorsymb$.\footnote{Díky asociativitě $\landsymb,\lorsymb$ na uzávorkování nezáleží.}\footnote{Někdy se zavádí jemnější priority, $\landsymb$ mívá vyšší prioritu než $\lorsymb$,  $\limpliessymb$ vyšší než $\liffsymb$. A někdy se píše $p\limplies q\limplies r$ místo $(p\limplies (r\limplies q))$, byť $\limpliessymb$ není asociativní a na uzávorkování záleží. Obojímu se ale raději vyhneme.}
+\subsection{Tree of a Proposition}
 
-
-\subsection{Strom výroku}
-
-V definici výroku jsme zvolili \emph{infixový} zápis se závorkami čistě z důvodu čitelnosti pro člověka. Nic by nám nebránilo použít \emph{prefixový} zápis (``polskou notaci''), tj.\ definovat výroky takto:
+In the definition of a proposition, we chose \emph{infix} notation (with parentheses) purely for human readability. Nothing would prevent us from using \emph{prefix} (``Polish'') notation, i.e., defining propositions as follows:
 \begin{itemize}
-    \item každý prvovýrok je výrok, a
-    \item jsou-li $\varphi,\psi$ výroky, jsou také $\neg \varphi$, $\landsymb \varphi \psi$, $\lorsymb \varphi \psi$, $\limpliessymb \varphi \psi$, a $\liffsymb \varphi \psi$ výroky.
+    \item every atomic proposition is a proposition, and
+    \item if $\varphi, \psi$ are propositions, then $\neg \varphi$, $\land \varphi \psi$, $\lor \varphi \psi$, $\limplies \varphi \psi$, and $\liff \varphi \psi$ are also propositions.
 \end{itemize}
-Výrok $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ bychom potom zapsali jako $\varphi=\liffsymb \lorsymb p \neg q \limpliessymb r \landsymb p q$. Také bychom mohli použít \emph{postfixový} zápis a psát $\varphi=p q \neg \lorsymb r p q \landsymb \limpliessymb \liffsymb$. Vše podstatné o výroku ve skutečnosti obsahuje jeho stromová struktura, která zachycuje, jak je sestaven z jednodušších výroků, obdobně jako strom aritmetického výrazu.
+The proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$ would then be written as $\varphi = \liff \lor p \neg q \limplies r \land p q$. We could also use \emph{postfix} notation and write $\varphi = p q \neg \lor r p q \land \limplies \liff$. The essential information about a proposition is actually contained in its tree structure, which captures how it is composed of simpler propositions, similar to the tree of an arithmetic expression.
 
 \begin{example}\label{example:tree}
-Strom výroku $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ je znázorněný na obrázku~\ref{figure:tree-of-proposition}.
+The tree of the proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$ is illustrated in Figure~\ref{figure:tree-of-proposition}.
 \begin{figure}
 \centering
     \begin{forest}
         for tree={circle,draw=blue!20,fill=blue!10,minimum size=24pt}
-        [$\liffsymb$ [$\lorsymb$ [$p$] [$\neg$ [$q$]]] [$\limpliessymb$ [$r$] [$\landsymb$ [$p$] [$q$]]]]
+        [$\liff$ [$\lor$ [$p$] [$\neg$ [$q$]]] [$\limplies$ [$r$] [$\land$ [$p$] [$q$]]]]
     \end{forest}
-    \caption{Strom výroku $\varphi=((p\lor (\neg q)) \liff (r\limplies (p \land q)))$}\label{figure:tree-of-proposition}
+    \caption{Tree of the proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$}\label{figure:tree-of-proposition}
 \end{figure}
-Všimněte si také, že podvýroky $\varphi$ odpovídají podstromům. Výrok $\varphi$ získáme průchodem stromem od kořene, v každém vrcholu:
+Notice also how the subpropositions of $\varphi$ correspond to subtrees. The proposition $\varphi$ is obtained by traversing the tree from the root, and at each node:
 \begin{itemize} 
-    \item pokud je label prvovýrok, vypíšeme ho   
-    \item pokud je label negace: vypíšeme `($\neg$', rekurzivně zavoláme syna, vypíšeme `)',   
-    \item jinak (pro binární logické spojky):
-    vypíšeme `(', zavoláme levého syna, vypíšeme label, zavoláme pravého syna, vypíšeme `)'.\footnote{Prefixový a postfixový zápis bychom získali podobně, ale nevypisujeme závorky a label vypíšeme hned při vstupu resp.\ těsně před opuštěním vrcholu.}
+    \item if the label is an atomic proposition, write it out,  
+    \item if the label is a negation: write `($\neg$', recursively call the child, write `)',   
+    \item otherwise (for binary logical connectives):
+    write `(', call the left child, write the label, call the right child, write `)'.\footnote{Prefix and postfix notations would be obtained similarly, but we do not write parentheses, and the label is written immediately upon entering or just before leaving the node.}
 \end{itemize}
 \end{example}
 
-Nyní si strom výroku definujeme formálně, \emph{indukcí podle struktury výroku}:\footnote{Jakmile máme definovaný strom výroku, můžeme indukci podle struktury výroku chápat jako indukci podle hloubky stromu. Zatím tím ale chápejme indukci podle počtu kroků z definice~\ref{definition:proposition}, kterými výrok vznikl. Alternativně postačí indukce podle délky výroku, nebo podle počtu logických spojek.}
+Now we will define the tree of a proposition formally, \emph{by induction on the structure of the proposition}:\footnote{Once we have the tree of a proposition defined, we can understand induction on the structure of the proposition as induction on the depth of the tree. For now, understand it as induction on the number of steps in Definition~\ref{definition:proposition} by which the proposition was created. Alternatively, induction on the length of the proposition or the number of logical connectives would work as well.}
 
-\begin{definition}[Strom výroku]
-    \emph{Strom výroku} $\varphi$, označme $\Tree(\varphi)$ je zakořeněný uspořádaný strom, definovaný induktivně takto: 
+\begin{definition}[Tree of a Proposition]
+    The \emph{tree of a proposition} $\varphi$, denoted $\Tree(\varphi)$, is a rooted ordered tree, defined inductively as follows: 
     \begin{itemize}
-        \item Je-li $\varphi$ prvovýrok $p$, obsahuje $\Tree(\varphi)$ jediný vrchol, jeho label je $p$.
-        \item Je-li $\varphi$ tvaru $(\neg \varphi')$, má $\Tree(\varphi)$ kořen s labelem $\neg$, a jeho jediný syn je kořen $\Tree(\varphi')$.
-        \item Je-li $\varphi$ tvaru $(\varphi' \lbin \varphi'')$ pro $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, má $\Tree(\varphi)$ kořen s labelem $\lbinsymb$ a dvěma syny: levý syn je kořen stromu $\Tree(\varphi')$, pravý je kořen $\Tree(\varphi'')$.
+        \item If $\varphi$ is an atomic proposition $p$, $\Tree(\varphi)$ contains a single node, and its label is $p$.
+        \item If $\varphi$ is of the form $(\neg \varphi')$, $\Tree(\varphi)$ has a root labeled $\neg$, and its single child is the root of $\Tree(\varphi')$.
+        \item If $\varphi$ is of the form $(\varphi' \lbin \varphi'')$ for $\lbinsymb \in \{\land, \lor, \limplies, \liff\}$, $\Tree(\varphi)$ has a root labeled $\lbinsymb$ with two children: the left child is the root of the tree $\Tree(\varphi')$, and the right child is the root of $\Tree(\varphi'')$.
     \end{itemize}
 \end{definition}
 
 \begin{exercise}
-    Dokažte, že každý výrok má jednoznačně určený strom výroku, a naopak.
+    Prove that every proposition has a uniquely determined proposition tree, and vice versa.
 \end{exercise}
 
+\subsection{Theory}
 
-\subsection{Teorie}
+In practical applications, we do not express the desired properties with a single proposition — it would have to be very long and complex and difficult to work with — but with many simpler propositions.
 
-V praktických aplikacích nevyjádříme požadované vlastnosti jediným výrokem --- to by musel být velmi dlouhý a složitý a špatně by se s ním pracovalo --- ale mnoha jednoduššími výroky.
-
-\begin{definition}[Teorie]\label{definition:theory}
-    \emph{Teorie} v jazyce $\mathbb P$ je libovolná množina výroků v $\mathbb P$, tedy libovolná podmnožina $T\subseteq\VF_\mathbb P$. Jednotlivým výrokům $\varphi\in T$ říkáme také \emph{axiomy}.
+\begin{definition}[Theory]\label{definition:theory}
+    A \emph{theory} in the language $\mathbb P$ is any set of propositions in $\mathbb P$, that is, any subset $T \subseteq \VF_\mathbb P$. The individual propositions $\varphi \in T$ are also called \emph{axioms}.
 \end{definition}
 
-\emph{Konečné} teorie by tedy bylo možné (byť ne praktické) nahradit jediným výrokem: konjunkcí všech jejich axiomů. Připouštíme ale i nekonečné teorie (triviálním příkladem je teorie $T=\VF_\mathbb P$), a prázdnou teorii $T=\emptyset$.\footnote{Nekonečné teorie se hodí například pro popis vývoje nějakého systému v (diskrétním) čase $t=0,1,2,\dots$ Prázdná teorie se nehodí k ničemu, ale bylo by nešikovné formulovat věty o logice, pokud by teorie musely být neprázdné.}
+\emph{Finite} theories could be replaced by a single proposition: the conjunction of all their axioms. But that would not be practical. Moreover, we also allow infinite theories (a trivial example is the theory $T = \VF_\mathbb P$), and the empty theory $T = \emptyset$.\footnote{Infinite theories are useful, for example, for describing the development of a system over (discrete) time steps $t = 0, 1, 2, \dots$. The empty theory is not useful for anything, but it would be awkward to formulate statements about logic if theories had to be non-empty.}
 
 
-\section{Sémantika výrokové logiky}
+\section{Semantics of Propositional Logic}
 
-V naší logice je sémantika daná jednou ze dvou možných hodnot: \emph{pravda}, nebo \emph{nepravda}. (V jiných logických systémech může být sémantika zajímavější.)
+In our logic, the semantics are given by one of two possible values: \emph{True} or \emph{False}. (In other logical systems, semantics can be more interesting.)
 
 
-\subsection{Pravdivostní hodnota}
+\subsection{Truth Value}
 
-Výrokům můžeme přiřadit jednu ze dvou možných pravdivostních hodnot: \emph{pravdivý} (\emph{True}, 1), nebo \emph{lživý} (\emph{False}, 0). Prvovýroky reprezentují jednoduchá, nadále nedělitelná tvrzení (proto jim také říkáme \emph{atomické} výroky); pravdivostní hodnotu jim musíme přiřadit tak, aby odpovídala tomu, co chceme modelovat (proto jim říkáme \emph{výrokové proměnné}). Jakmile ale \emph{ohodnotíme} prvovýroky, pravdivostní hodnota libovolného složeného výroku je jednoznačně určená, a snadno ji spočteme podle stromu výroku:
+Propositions can be assigned one of two possible truth values: \emph{True} (1) or \emph{False} (0). Atomic propositions represent simple, indivisible statements (hence the name `\emph{atomic}'); their truth value must be assigned to correspond to what we want to model (that is why we call them \emph{propositional variables}). Once we \emph{assign} truth values to the atomic propositions, the truth value of any compound proposition is uniquely determined and can be easily calculated according to the tree of the proposition:
 
 \begin{example}\label{example:truth-value}
-Spočtěme pravdivostní hodnotu výroku $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ při ohodnocení (a) $p=0$, $q=0$, $r=0$, (b) $p=1$, $q=0$, $r=1$. Postupujeme od listů směrem ke kořeni, podobně jako bychom vyhodnocovali např.\ aritmetický výraz. Výrok $\varphi$ \emph{platí} při ohodnocení z (a), \emph{neplatí} při ohodnocení z (b). Viz obrázek~\ref{figure:truth-value}.
+Let us calculate the truth value of the proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$ for the assignments (a) $p = 0$, $q = 0$, $r = 0$ and (b) $p = 1$, $q = 0$, $r = 1$. We proceed from the leaves towards the root, similarly to evaluating an arithmetic expression. The proposition $\varphi$ is \emph{true} under assignment (a) and \emph{false} under assignment (b). See Figure~\ref{figure:truth-value}.
 
 \begin{figure}
 \tikzset{every label/.style = {text=red}}
@@ -146,7 +139,7 @@ Spočtěme pravdivostní hodnotu výroku $\varphi = ((p\lor (\neg q)) \liff (r\l
         ]
     \end{forest}   
 
-    (a) $p=0$, $q=0$, $r=0$
+    (a) $p = 0$, $q = 0$, $r = 0$
 \end{minipage}
 \begin{minipage}{.49\textwidth}
     \centering
@@ -169,35 +162,34 @@ Spočtěme pravdivostní hodnotu výroku $\varphi = ((p\lor (\neg q)) \liff (r\l
         ]
     \end{forest}
 
-    (b) $p=1$, $q=0$, $r=1$
+    (b) $p = 1$, $q = 0$, $r = 1$
 \end{minipage}
-\caption{Pravdivostní ohodnocení výroku}
+\caption{Truth value of a proposition}
 \label{figure:truth-value}
 \end{figure}
 \end{example}
         
-Logické spojky ve vnitřních vrcholech vyhodnocujeme podle jejich \emph{pravdivostních tabulek}, viz tabulka~\ref{table:logical-connectives}.\footnote{Připomeňme ještě jednou, že disjunkce není exkluzivní, tj.\ $p\lor q$ platí i pokud platí $p$ i $q$, a že implikace je čistě logická, tj.\ $p\limplies q$ platí kdykoliv $p$ neplatí.}
+Logical connectives in the inner nodes are evaluated according to their \emph{truth tables}, see Table~\ref{table:logical-connectives}.\footnote{Let us recall once again that disjunction is not exclusive, i.e., $p \lor q$ is true even if both $p$ and $q$ are true, and that implication is purely logical, i.e., $p \limplies q$ is true whenever $p$ is false.}
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{@{}cc|ccccc@{}}
         \toprule
-        $p$ & $q$ & $\neg p$ & $p\land q$ & $p\lor q$ & $p\limplies q$ & $p\liff q$ \\ \midrule
+        $p$ & $q$ & $\neg p$ & $p \land q$ & $p \lor q$ & $p \limplies q$ & $p \liff q$ \\ \midrule
         0   & 0   & 1        & 0          & 0         & 1          & 1          \\
         0   & 1   & 1        & 0          & 1         & 1          & 0          \\
         1   & 0   & 0        & 0          & 1         & 0          & 0          \\
         1   & 1   & 0        & 1          & 1         & 1          & 1          \\ \bottomrule
     \end{tabular}
-    \caption{Pravdivostní tabulky logických spojek.}
+    \caption{Truth tables of logical connectives.}
     \label{table:logical-connectives}
 \end{table}
 
+\subsection{Propositions and Boolean Functions}
 
-\subsection{Výroky a booleovské funkce}
+To formalize the truth value of a proposition, we first look at the relationship between propositions and Boolean functions. 
 
-Abychom mohli formalizovat pravdivostní hodnotu výroku, podíváme se nejprve na souvislost výroků a booleovských funkcí. 
-
-\emph{Booleovská funkce} je funkce $f\colon\{0,1\}^n\to\{0,1\}$, tedy vstupem je $n$-tice nul a jedniček, a výstupem 0 nebo 1. Každá logická spojka reprezentuje booleovskou funkci. V případě negace jde o unární funkci $f_\neg(x)=1-x$, ostatním logickým spojkám odpovídají binární funkce popsané v tabulce~\ref{table:boolean-functions-for-logical-connectives}.
+A \emph{Boolean function} is a function $f\colon\{0,1\}^n\to\{0,1\}$, meaning that the input is an $n$-tuple of zeros and ones, and the output is 0 or 1. Each logical connective represents a Boolean function. In the case of negation, it is a unary function $f_\neg(x)=1-x$, while the other logical connectives correspond to binary functions described in Table~\ref{table:boolean-functions-for-logical-connectives}.
 
 \begin{table}
 \centering
@@ -225,30 +217,31 @@ $f_\liffsymb(x,y)$:
     0 & 1 & 0  \\
     1 & 0 & 1 
 \end{tabular}
-\caption{Booleovské funkce logických spojek}
+\caption{Boolean functions of logical connectives}
 \label{table:boolean-functions-for-logical-connectives}    
 \end{table}
 
-\begin{definition}[Pravdivostní funkce]\label{definition:truth-function}
-\emph{Pravdivostní funkce} výroku $\varphi$ v konečném jazyce $\mathbb P$ je funkce  $f_{\varphi,\mathbb P}\colon\{0,1\}^{|\mathbb P|}\to\{0,1\}$ definovaná induktivně:
+\begin{definition}[Truth Function]\label{definition:truth-function}
+The \emph{truth function} of a proposition $\varphi$ in a finite language $\mathbb P$ is the function $f_{\varphi,\mathbb P}\colon\{0,1\}^{|\mathbb P|}\to\{0,1\}$ defined inductively:
 \begin{itemize}
-    \item je-li $\varphi$ $i$-tý prvovýrok z $\mathbb P$, potom $f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=x_i$,
-    \item je-li $\varphi=(\neg\varphi')$, potom 
+    \item If $\varphi$ is the $i$-th atomic proposition from $\mathbb P$, then $f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=x_i$,
+    \item If $\varphi = (\neg \varphi')$, then 
     $$
-    f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\neg(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1})),$$
-    \item je-li $\varphi=(\varphi'\lbin\varphi'')$ kde $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, potom 
+    f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1}) = f_\neg(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1})),
     $$
-    f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1})=f_\lbinsymb(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}), f_{\varphi'',\mathbb P}(x_0,\dots,x_{n-1})).
+    \item If $\varphi = (\varphi' \lbin \varphi'')$ where $\lbinsymb \in \{\land, \lor, \limplies, \liff\}$, then 
+    $$
+    f_{\varphi,\mathbb P}(x_0,\dots,x_{n-1}) = f_\lbinsymb(f_{\varphi',\mathbb P}(x_0,\dots,x_{n-1}), f_{\varphi'',\mathbb P}(x_0,\dots,x_{n-1})).
     $$
 \end{itemize}
 \end{definition}
 
 \begin{example}
-    Spočtěme pravdivostní funkci výroku $\varphi = ((p\lor (\neg q)) \liff (r\limplies (p \land q)))$ v jazyce~$\mathbb P'=\{p,q,r,s\}$:
+    Let us calculate the truth function of the proposition $\varphi = ((p \lor (\neg q)) \liff (r \limplies (p \land q)))$ in the language $\mathbb P'=\{p,q,r,s\}$:
     $$        
     f_{\varphi,\mathbb P'}(x_0,x_1,x_2,x_3)=f_\liffsymb(f_\lorsymb(x_0,f_\neg(x_1)),f_\limpliessymb(x_2,f_\landsymb(x_0,x_1)))    
     $$
-    Pravdivostní hodnotu výroku $\varphi$ při ohodnocení $p=1$, $q=0$, $r=1$, $s=1$ spočteme takto (srovnejte s obrázkem \ref{figure:truth-value}(b)):
+    Truth value of the proposition $\varphi$ for the truth assignment $p=1$, $q=0$, $r=1$, $s=1$ is calculated as follows (compare with Figure \ref{figure:truth-value}(b)):
     \begin{align*}
     f_{\varphi,\mathbb P'}(1,0,1,1)
         &=f_\liffsymb(f_\lorsymb(1,f_\neg(0)),f_\limpliessymb(1,f_\landsymb(1,0))) \\
@@ -259,567 +252,563 @@ $f_\liffsymb(x,y)$:
 \end{example}
 
 \begin{observation}
-Pravdivostní funkce výroku $\varphi$ nad $\mathbb P$ závisí pouze na proměnných odpovídajících prvovýrokům z $\Var(\varphi)\subseteq\mathbb P$.
+The truth function of a proposition $\varphi$ over $\mathbb P$ depends only on the variables corresponding to the atomic propositions in $\Var(\varphi)\subseteq\mathbb P$.
 \end{observation}
 
-Tedy i pokud máme výrok $\varphi$ v \emph{nekonečném} jazyce $\mathbb P$, můžeme se omezit na jazyk $\Var(\varphi)$ (který je konečný) a uvažovat pravdivostní funkci nad tímto jazykem. 
+Thus, even if we have a proposition $\varphi$ in an \emph{infinite} language $\mathbb P$, we can restrict ourselves to the language $\Var(\varphi)$ (which is finite) and consider the truth function over this language. 
 
+\subsection{Models}
 
-\subsection{Modely}
+A given truth assignment of propositional variables is a representation of the `real world' (system) in our chosen `formal world,' hence it is also called a \emph{model}.
 
-Konkrétní pravdivostní ohodnocení výrokových proměnných představuje reprezentaci `reálného světa' (systému) v námi zvoleném `formálním světě', proto mu také říkáme \emph{model}.
-
-\begin{definition}[Model jazyka]\label{definition:model}
-    \emph{Model} jazyka $\mathbb P$ je libovolné pravdivostní ohodnocení $v\colon \mathbb P\to \{0,1\}$. \emph{Množinu (všech) modelů jazyka $\mathbb P$} označíme  $\M_\mathbb P$:
+\begin{definition}[Model of a Language]\label{definition:model}
+    A \emph{model} of a language $\mathbb P$ is any truth assignment $v\colon \mathbb P\to \{0,1\}$. The \emph{set of (all) models of a language $\mathbb P$} is denoted by $\M_\mathbb P$:
     $$
-    \M_\mathbb P=\left\{v\mid v\colon \mathbb P\to \{0,1\}\right\}=\{0,1\}^\mathbb P
+    \M_\mathbb P=\left\{v \mid v\colon \mathbb P\to \{0,1\}\right\}=\{0,1\}^\mathbb P
     $$
 \end{definition}
-Modely budeme označovat písmeny $v,u,w$ apod.\ ($v$ od slova `valuation'). Model jazyka je tedy funkce, formálně množina dvojic (vstup, výstup). Například pro jazyk $\mathbb P=\{p,q,r\}$ a pravdivostní ohodnocení ve kterém $p$ je pravda, $q$ nepravda, a $r$ pravda máme model
+Models will be denoted by letters $v,u,w$, etc. ($v$ from the word `valuation'). A model of a language is therefore a function, formally a set of pairs (input, output). For example, for the language $\mathbb P=\{p,q,r\}$ and the truth assignment where $p$ is true, $q$ false, and $r$ true, we have the model
 $$
-v=\{(p,1),(q,0),(r,1)\}.
+v = \{(p,1),(q,0),(r,1)\}.
 $$
-Pro jednoduchost ale budeme psát jen $v=(1,0,1)$. Pro jazyk $\mathbb P=\{p,q,r\}$ tedy máme $2^3=8$ modelů: 
+For simplicity, we will write it as $v = (1,0,1)$. For the language $\mathbb P = \{p,q,r\}$, we have $2^3 = 8$ models: 
 $$
-\M_\mathbb P=\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)\}
+\M_\mathbb P = \{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)\}
 $$
 
 \begin{remark}
-Formálně vzato, ztotožňujeme množinu $\{0,1\}^\mathbb P$ s množinou $\{0,1\}^{|\mathbb P|}$ pomocí uspořádání $\iota$ jazyka $\mathbb P$ (viz Poznámka~\ref{remark:order-of-language}). Konkrétně, místo prvku $v=\{(p,1),(q,0),(r,1)\}\in\{0,1\}^\mathbb P$ píšeme $(1,0,1)=(v\circ\iota)(0,1,2)=(v(\iota(0)),v(\iota(1)),v(\iota(2)))\in\{0,1\}^{|\mathbb P|}$ (kde funkcím $v,\iota$ dovolíme působit `po složkách').\footnote{Alternativně bychom mohli při formalizaci syntaxe vyžadovat (alespoň pro spočetné jazyky), aby jazyk \emph{byl} $\mathbb P=\{0,1,2,\dots\}$ a symboly $p_0,p_1,p,q,r$ používat jen pro zvýšení čitelnosti.} Pokud by se to zdálo matoucí, představte si model $v$ jako množinu prvovýroků, které jsou ohodnocené jako pravda, tj.\ $\{p,r\}\subseteq\mathbb P$, náš zápis $v=(1,0,1)$ je potom charakteristický vektor této množiny. Toto ztotožnění budeme nadále používat bez dalšího upozornění. 
+Formally speaking, we identify the set $\{0,1\}^\mathbb P$ with the set $\{0,1\}^{|\mathbb P|}$ using the ordering $\iota$ of the language $\mathbb P$ (see Remark~\ref{remark:order-of-language}). Specifically, instead of the element $v = \{(p,1),(q,0),(r,1)\} \in \{0,1\}^\mathbb P$, we write $(1,0,1) = (v \circ \iota)(0,1,2) = (v(\iota(0)),v(\iota(1)),v(\iota(2))) \in \{0,1\}^{|\mathbb P|}$ (where we allow the functions $v,\iota$ to act `component-wise').\footnote{Alternatively, we could require (at least for countable languages) that the language \emph{be} $\mathbb P = \{0,1,2,\dots\}$ and use symbols $p_0,p_1,p,q,r$ only for readability.} If this seems confusing, imagine the model $v$ as a set of atomic propositions that are true, i.e., $\{p,r\} \subseteq \mathbb P$, our notation $v = (1,0,1)$ is then the characteristic vector of this set. This identification will be used henceforth without further notice. 
 \end{remark}
 
 
-\subsection{Platnost}
+\subsection{Validity}
 
-Nyní můžeme definovat klíčový pojem logiky, \emph{platnost} výroku v daném modelu. Neformálně, výrok platí v modelu (tj.\ při konkrétním pravdivostním ohodnocení prvovýroků), pokud jeho pravdivostní hodnota, tak jak jsme ji počítali v Příkladu~\ref{example:truth-value}, je rovna 1. Ve formální definici využijeme pravdivostní funkci výroku (Definice~\ref{definition:truth-function}).\footnote{Pro \emph{platnost} používáme symbol $\models$, který čteme jako `splňuje' nebo `modeluje', v {\LaTeX}u {\textbackslash}models.}
+We are now ready to define the key concept of logic, \emph{validity} of a proposition in a given model. Informally, a proposition is valid in a model (i.e., under a specific truth assignment of atomic propositions) if its truth value, as calculated in Example~\ref{example:truth-value}, equals 1. In the formal definition, we will use the truth function of the proposition (Definition~\ref{definition:truth-function}).\footnote{For \emph{validity}, we use the symbol $\models$, which we read as `satisfies' or `models', in {\LaTeX} as {\textbackslash}models.}
 
-\begin{definition}[Platnost výroku v modelu, model výroku]\label{definition:validity}
-    Mějme výrok $\varphi$ v jazyce $\mathbb P$ a model $v\in\M_\mathbb P$. Pokud platí $f_{\varphi,\mathbb P}(v)=1$, potom říkáme, že výrok $\varphi$ \emph{platí} v modelu~$v$, $v$ je \emph{modelem}~$\varphi$, a píšeme $v\models\varphi$. Množinu všech modelů výroku $\varphi$ označujeme $\M_\mathbb P(\varphi)$.
+\begin{definition}[Validity of a Proposition in a Model, Model of a Proposition]\label{definition:validity}
+    Given a proposition $\varphi$ in a language $\mathbb P$ and a model $v \in \M_\mathbb P$, if $f_{\varphi,\mathbb P}(v) = 1$, we say that the proposition $\varphi$ is \emph{valid} in the model~$v$, $v$ is a \emph{model} of~$\varphi$, and we write $v \models \varphi$. The set of all models of the proposition $\varphi$ is denoted by $\M_\mathbb P(\varphi)$.
 \end{definition}
-Modelům jazyka, které nejsou modely $\varphi$, budeme někdy říkat \emph{nemodely} $\varphi$. Tvoří doplněk množiny modelů $\varphi$. S pomocí standardního zápisu pro inverzní funkci můžeme psát:
+Models of a language that are not models of $\varphi$ will sometimes be called \emph{non-models} of $\varphi$. They form the complement of the set of models of $\varphi$. Using the standard notation for function inverse, we can write:
 \begin{align*}
-    \M_\mathbb P(\varphi)&=\{v\in\M_\mathbb P\mid v\models \varphi\}=f_{\varphi,\mathbb P}^{-1}[1]\\
-    \overline{\M_\mathbb P(\varphi)}=M_\mathbb P\setminus M_\mathbb P(\varphi)&=\{v\in\M_\mathbb P\mid v\not\models \varphi\}=f_{\varphi,\mathbb P}^{-1}[0]
+    \M_\mathbb P(\varphi) &= \{v \in \M_\mathbb P \mid v \models \varphi\} = f_{\varphi,\mathbb P}^{-1}[1]\\
+    \overline{\M_\mathbb P(\varphi)} = \M_\mathbb P \setminus \M_\mathbb P(\varphi) &= \{v \in \M_\mathbb P \mid v \not\models \varphi\} = f_{\varphi,\mathbb P}^{-1}[0]
 \end{align*}
 
-Je-li jazyk zřejmý z kontextu, můžeme psát jen $\M(\varphi)$. Musíme si ale být opravdu jistí: například v jazyce $\mathbb P=\{p,q\}$ máme 
+If the language is clear from the context, we can simply write $\M(\varphi)$. We must be really sure, though: for example, in the language $\mathbb P = \{p,q\}$ we have 
 $$
-\M_{\{p,q\}}(p\limplies q)=\{(0,0),(0,1),(1,1)\},$$
-zatímco v jazyce $\mathbb P'=\{p,q,r\}$ bychom měli
+\M_{\{p,q\}}(p \limplies q) = \{(0,0),(0,1),(1,1)\},
 $$
-\M_{\mathbb P'}(p\limplies q)=\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}.
+while in the language $\mathbb P' = \{p,q,r\}$ we would have
+$$
+\M_{\mathbb P'}(p \limplies q) = \{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}.
 $$
 
-
-\begin{definition}[Platnost teorie, model teorie]\label{definition:validity-of-theory}
-    Je-li $T$ teorie v jazyce  $\mathbb P$, potom $T$ \emph{platí} v modelu $v$, pokud každý axiom $\varphi\in T$ platí ve $v$. V tom případě říkáme také, že $v$ je \emph{modelem} $T$, a píšeme $v\models T$. Množinu všech modelů teorie $T$ v jazyce $\mathbb P$ označíme $\M_\mathbb P(T)$.    
+\begin{definition}[Validity of a Theory, Model of a Theory]\label{definition:validity-of-theory}
+    Let $T$ be a theory in a language $\mathbb P$. The theory $T$ is \emph{valid} in a model $v$ if every axiom $\varphi \in T$ is valid in $v$. In this case, we also say that $v$ is a \emph{model} of $T$, and we write $v \models T$. The set of all models of the theory $T$ in a language $\mathbb P$ is denoted by $\M_\mathbb P(T)$.    
 \end{definition}
 
-Pracujeme-li s konečnou teorií, nebo přidáváme-li k nějaké teorii konečně mnoho nových axiomů, budeme používat následující zjednodušený zápis:
+When dealing with a finite theory, or adding a finite number of new axioms to a theory, we will use the following simplified notation:
 \begin{itemize}
-    \item $\M_\mathbb P(\varphi_1,\varphi_2,\dots,\varphi_n)$ místo $\M_\mathbb P(\{\varphi_1,\varphi_2,\dots,\varphi_n\})$,
-    \item $\M_\mathbb P(T,\varphi)$ místo $\M_\mathbb P(T\cup\{\varphi\})$.
+    \item $\M_\mathbb P(\varphi_1, \varphi_2, \dots, \varphi_n)$ instead of $\M_\mathbb P(\{\varphi_1, \varphi_2, \dots, \varphi_n\})$,
+    \item $\M_\mathbb P(T, \varphi)$ instead of $\M_\mathbb P(T \cup \{\varphi\})$.
 \end{itemize}
 
-Všimněte si, že $\M_\mathbb P(T,\varphi)=\M_\mathbb P(T)\cap\M_\mathbb P(\varphi)$, $\M_\mathbb P(T)=\bigcap_{\varphi\in T}\M_\mathbb P(\varphi)$, a že pro konečnou teorii (podobně i pro spočetnou) platí
+Note that $\M_\mathbb P(T, \varphi) = \M_\mathbb P(T) \cap \M_\mathbb P(\varphi)$, $\M_\mathbb P(T) = \bigcap_{\varphi \in T} \M_\mathbb P(\varphi)$, and for a finite theory (similarly for countable theories), we have
 $$
 \M_\mathbb P(\varphi_1)\supseteq \M_\mathbb P(\varphi_1,\varphi_2)\supseteq \M_\mathbb P(\varphi_1,\varphi_2,\varphi_3)\supseteq\dots\supseteq\M_\mathbb P(\varphi_1,\varphi_2,\dots,\varphi_n).
 $$
-Toho můžeme využít při hledání modelů hrubou silou.
+We can use this when finding models by brute force.
 
 \begin{example}
-    Modely teorie $T=\{p\lor q\lor r, q\limplies r, \neg r\}$ (v jazyce $\mathbb P=\{p,q,r\}$) můžeme najít tak, najdeme tak, že nejprve najdeme modely výroku $\neg r$:
+    We can find models of the theory $T = \{p \lor q \lor r, q \limplies r, \neg r\}$ (in the language $\mathbb P = \{p, q, r\}$) as follows. First, we find the models of the proposition $\neg r$:
     $$
-    \M_\mathbb P(r)=\{(x,y,0)\mid x,y\in\{0,1\}\}=\{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\},
+    \M_\mathbb P(r) = \{(x, y, 0) \mid x, y \in \{0,1\}\} = \{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\},
     $$
-    poté určíme, ve který z těchto modelů platí výrok $q\limplies r$: 
+    then we determine in which of these models the proposition $q \limplies r$ is valid: 
     \begin{itemize}
-        \item $(0,0,0)\models q\limplies r$,
-        \item $(0,1,0)\not\models q\limplies r$,
-        \item $(1,0,0)\models q\limplies r$,
-        \item $(1,1,0)\not\models q\limplies r$,
+        \item $(0,0,0) \models q \limplies r$,
+        \item $(0,1,0) \not\models q \limplies r$,
+        \item $(1,0,0) \models q \limplies r$,
+        \item $(1,1,0) \not\models q \limplies r$,
     \end{itemize}  
-    Tedy $\M_\mathbb P(r,q\limplies r)=\{(0,0,0),(1,0,0)\}$. Výrok  $p\lor q\lor r$ platí jen ve druhém z těchto modelů, dostáváme tedy
+    Thus $\M_\mathbb P(r, q \limplies r) = \{(0,0,0),(1,0,0)\}$. The proposition $p \lor q \lor r$ is valid only in the second of these models, so we get
     $$
-    \M_\mathbb P(r,q\limplies r,p\lor q\lor r)=\M_\mathbb P(T)=\{(1,0,0)\}.
+    \M_\mathbb P(r, q \limplies r, p \lor q \lor r) = \M_\mathbb P(T) = \{(1,0,0)\}.
     $$
-    Tento postup je efektivnější než určit množiny modelů jednotlivých axiomů a udělat jejich průnik. (Ale mnohem méně efektivní než postup založený na tablo metodě, který si ukážeme později.)
+    This procedure is more efficient than determining the sets of models of the individual axioms and taking their intersection. (But much less efficient than using a formal proof system, such as the tableau method, which we will see later.)
 \end{example}
 
 
-\subsection{Další sémantické pojmy}
+\subsection{Additional semantic notions}
 
-V návaznosti na pojem platnosti budeme používat řadu dalších pojmů. Pro některé vlastnosti existuje více různých termínů, v závislosti na kontextu v jakém se vyskytnou.
+Following the notion of validity, we will use several other notions. For some properties, several different names are in use, depending on the context in which the property is discussed.
 
-\begin{definition}[Sémantické pojmy]\label{definition:semantic-notions}
-Říkáme, že výrok $\varphi$ (v jazyce $\mathbb P$) je
+\begin{definition}[Semantic notions]\label{definition:semantic-notions}
+We say that a proposition $\varphi$ (in a language $\mathbb P$) is
 \begin{itemize}
-    \item \emph{pravdivý}, \emph{tautologie}, \emph{platí (v logice/logicky)}, a píšeme $\models \varphi$, pokud platí v každém modelu (jazyka $\mathbb P$), $\M_\mathbb P(\varphi)=\M_\mathbb P$,
-    \item \emph{lživý}, \emph{sporný}, pokud nemá žádný model, $\M_\mathbb P(\varphi)=\emptyset$.\footnote{Všimněte si, že být \emph{lživý} není totéž, co nebýt \emph{pravdivý}!}
-    \item \emph{nezávislý}, pokud platí v nějakém modelu, a neplatí v nějakém jiném modelu, tj.\ není pravdivý ani lživý, $\emptyset\subsetneq\M_\mathbb P(\varphi)\subsetneq\M_\mathbb P$,
-    \item \emph{splnitelný}, pokud má nějaký model, tj.\ není lživý, $\M_\mathbb P(\varphi)\neq\emptyset$.
+    \item \emph{true}, \emph{tautology}, \emph{valid (in logic/logically)}, and we write $\models \varphi$, if it is valid in every model (of the language $\mathbb P$), $\M_\mathbb P(\varphi) = \M_\mathbb P$,
+    \item \emph{false}, \emph{contradictory}, if it has no model, $\M_\mathbb P(\varphi) = \emptyset$,\footnote{Note that being \emph{false} is not the same as not being \emph{true}!}
+    \item \emph{independent}, if it is valid in some model, and it is not valid in some other model, i.e., it is neither true nor false, $\emptyset \subsetneq \M_\mathbb P(\varphi) \subsetneq \M_\mathbb P$,
+    \item \emph{satisfiable}, if it has some model, i.e., it is not false, $\M_\mathbb P(\varphi) \neq \emptyset$.
 \end{itemize}
-Dále říkáme, že výroky $\varphi,\psi$ (ve stejném jazyce $\mathbb P$) jsou \emph{(logicky) ekvivalentní}, píšeme $\varphi\sim\psi$ pokud mají stejné modely, tj.\
+Furthermore, we say that propositions $\varphi, \psi$ (in the same language $\mathbb P$) are \emph{(logically) equivalent}, we write $\varphi \sim \psi$, if they have the same models, i.e.,
 $$
-\varphi\sim\psi\text{ právě když }\M_\mathbb P(\varphi)=\M_\mathbb P(\psi).
+\varphi \sim \psi \text{ if and only if } \M_\mathbb P(\varphi) = \M_\mathbb P(\psi).
 $$    
 \end{definition}
 
-\begin{example} Například platí následující:
+\begin{example} For example, the following hold:
     \begin{itemize}
-        \item výroky $\top$, $p\lor q\liff q\lor p$ jsou pravdivé,
-        \item výroky $\bot$, $(p\lor q)\land (p\lor \neg q)\land \neg p$ jsou lživé,
-        \item výroky $p, p\land q$ jsou nezávislé, a také splnitelné, a
-        \item následující výroky jsou ekvivalentní: 
+        \item propositions $\top$, $p \lor q \liff q \lor p$ are true,
+        \item propositions $\bot$, $(p \lor q) \land (p \lor \neg q) \land \neg p$ are false,
+        \item propositions $p, p \land q$ are independent, and also satisfiable, and
+        \item the following propositions are equivalent: 
         \begin{itemize}
-            \item $p\sim p\lor p\sim p\lor p\lor p$,
-            \item $p\limplies q\sim \neg p\lor q$,
-            \item $\neg p \limplies (p\limplies q) \sim \top $.
+            \item $p \sim p \lor p \sim p \lor p \lor p$,
+            \item $p \limplies q \sim \neg p \lor q$,
+            \item $\neg p \limplies (p \limplies q) \sim \top $.
         \end{itemize}  
     \end{itemize}      
 \end{example}
 
-Pojmy z Definice \ref{definition:semantic-notions} můžeme také relativizovat vzhledem k dané teorii. To znamená, že se v jednotlivých definicích omezíme na modely této teorie:
+The notions from Definition \ref{definition:semantic-notions} can also be relativized with respect to a given theory. This means that we restrict the individual definitions to the models of this theory:
 
-\begin{definition}[Sémantické pojmy vzhledem k teorii]
-    Mějme teorii $T$ v jazyce $\mathbb P$. Říkáme, že výrok $\varphi$ v jazyce $\mathbb P$ je
+\begin{definition}[Semantic Notions Relative to a Theory]
+    Let $T$ be a theory in a language $\mathbb P$. We say that a proposition $\varphi$ in the language $\mathbb P$ is
     \begin{itemize}
-        \item \emph{pravdivý v $T$}, \emph{důsledek $T$}, \emph{platí v $T$}, a píšeme $T \models \varphi$, pokud $\varphi$ platí v každém modelu teorie $T$, neboli $\M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)$,
-        \item \emph{lživý v $T$}, \emph{sporný v $T$}, pokud neplatí v žádném modelu $T$, neboli $\M_\mathbb P(\varphi)\cap\M_\mathbb P(T)=\M_\mathbb P(T,\varphi)=\emptyset$.
-        \item \emph{nezávislý v $T$}, pokud platí v nějakém modelu $T$, a neplatí v nějakém jiném modelu $T$, tj.\ není pravdivý v $T$ ani lživý v $T$, $\emptyset\subsetneq\M_\mathbb P(T,\varphi)\subsetneq\M_\mathbb P(T)$,
-        \item \emph{splnitelný v $T$}, \emph{konzistentní s $T$}, pokud platí v nějakém modelu $T$, tj.\ není lživý v $T$, $\M_\mathbb P(T,\varphi)\neq\emptyset$.
+        \item \emph{true in $T$}, a \emph{consequence of $T$}, \emph{valid in $T$}, and we write $T \models \varphi$, if $\varphi$ is valid in every model of the theory $T$, i.e., $\M_\mathbb P(T) \subseteq \M_\mathbb P(\varphi)$,
+        \item \emph{false in $T$}, \emph{contradictory in $T$}, if it is not valid in any model of $T$, i.e., $\M_\mathbb P(\varphi) \cap \M_\mathbb P(T) = \M_\mathbb P(T,\varphi) = \emptyset$.
+        \item \emph{independent in $T$}, if it is valid in some model of $T$, and not valid in some other model of $T$, i.e., it is neither true in $T$ nor false in $T$, $\emptyset \subsetneq \M_\mathbb P(T,\varphi) \subsetneq \M_\mathbb P(T)$,
+        \item \emph{satisfiable in $T$}, \emph{consistent with $T$}, if it is valid in some model of $T$, i.e., it is not false in $T$, $\M_\mathbb P(T,\varphi) \neq \emptyset$.
     \end{itemize}
-    A říkáme, že výroky $\varphi,\psi$ (ve stejném jazyce $\mathbb P$) jsou \emph{ekvivalentní v $T$}, \emph{$T$-ekvivalentní}, píšeme $\varphi\sim_T\psi$ pokud platí v týchž modelech $T$, tj.\
+    And we say that propositions $\varphi, \psi$ (in the same language $\mathbb P$) are \emph{equivalent in $T$}, \emph{$T$-equivalent}, we write $\varphi \sim_T \psi$ if they hold in the same models of $T$, i.e.,
     $$
-    \varphi\sim_T\psi\text{ právě když }\M_\mathbb P(T,\varphi)=\M_\mathbb P(T,\psi).
+    \varphi \sim_T \psi \text{ if and only if } \M_\mathbb P(T,\varphi) = \M_\mathbb P(T,\psi).
     $$
-    \end{definition}
+\end{definition}
 
-Všimněte si, že pro prázdnou teorii $T=\emptyset$ platí $\M_\mathbb P(T)=\M_\mathbb P$ a výše uvedené pojmy pro $T$ se proto shodují s původními. Opět si pojmy ilustrujeme na několika příkladech:
+Note that for the empty theory $T = \emptyset$, we have $\M_\mathbb P(T) = \M_\mathbb P$ and the above concepts for $T$ coincide with the original ones. Again, we illustrate the concepts with several examples:
 
-\begin{example} Mějme teorii $T=\{p\lor q,\neg r\}$. Platí následující:
+\begin{example} Let $T = \{p \lor q, \neg r\}$. The following hold:
     \begin{itemize}
-        \item výroky $q\lor p$, $\neg p\lor\neg q\lor \neg r$ jsou pravdivé v $T$,
-        \item výrok $(\neg p\land\neg q)\lor r$ je v $T$ lživý,
-        \item výroky $p\liff q, p\land q$ jsou v $T$ nezávislé, a také splnitelné, a
-        \item platí $p\sim_T p\lor r$ (ale $p\not\sim p\lor r$).
+        \item propositions $q \lor p$, $\neg p \lor \neg q \lor \neg r$ are true in $T$,
+        \item the proposition $(\neg p \land \neg q) \lor r$ is false in $T$,
+        \item propositions $p \liff q, p \land q$ are independent in $T$, and also satisfiable, and
+        \item $p$ and $p\lor r$ are $T$-equivalent, $p \sim_T p \lor r$ (but $p \not\sim p \lor r$).
     \end{itemize}      
 \end{example}
 
 
-\subsection{Univerzálnost logických spojek}
+\subsection{Universality of Logical Connectives}
 
-V jazyce výrokové logiky používáme následující logické spojky: $\neg, \landsymb,\lorsymb,\limpliessymb,\liffsymb$. To ale není jediná možná volba, k vybudování plnohodnotné logiky by nám stačila například negace a implikace,\footnote{Negaci potřebujeme k popisu stavu systému, a implikaci k popisu chování v čase.} nebo negace, konjunkce, a disjunkce.\footnote{Ty stačí k vybudování logických obvodů.} A jak uvidíme níže, mohli bychom použít i jiné logické spojky. Naše volba je zlatou střední cestou mezi bohatostí vyjadřování na jedné straně, a úsporností syntaktických pravidel na straně druhé. 
+In the language of propositional logic, we use the following logical connectives: $\neg, \land, \lor, \limplies, \liff$. This is not the only possible choice; to build a fully-fledged logic, we could make do, for example, only with negation and implication,\footnote{Negation is needed to describe the state of a system, and implication to describe behavior over time.} or negation, conjunction, and disjunction.\footnote{These are sufficient to build logical circuits.} And as we will see below, we could use other logical connectives as well. Our choice is the golden middle path between expressiveness on the one hand and succinctness of syntactic definitions and proofs on the other.
 
-Co myslíme tím, že je logika plnohodnotná?
-Řekneme, že množina logických spojek $S$ je \emph{univerzální}, pokud lze každou booleovskou funkci $f$ vyjádřit jako pravdivostní funkci $f_{\varphi,\mathbb P}$ nějakého výroku $\varphi$ vybudovaného z logických spojek z $S$ (kde $|\mathbb P|=n$ je-li f $n$-ární funkce). Ekvivalentně, pro každý konečný jazyk $\mathbb P$ (řekněme, že $n$-prvkový) a každou množinu modelů $M\subseteq \M_\mathbb P$ musí existovat výrok $\varphi$ takový, že $\M_\mathbb P(\varphi)=M$. (Ekvivalence těchto dvou vyjádření plyne z toho, že máme-li booleovskou funkci $f$ a zvolíme-li $M=f^{-1}[1]$, potom $f_{\varphi,\mathbb P}=f$ právě když $\M_\mathbb P(\varphi)=M$.)
+What do we mean by saying that logic is fully-fledged? We say that a set of logical connectives $S$ is \emph{universal}\footnote{Some people would say \emph{[functionally] complete}.} if any Boolean function $f$ can be expressed as the truth function $f_{\varphi,\mathbb P}$ of some proposition $\varphi$ built from the logical connectives in $S$ (where $|\mathbb P|=n$ if $f$ is an $n$-ary function). Equivalently, for any finite language $\mathbb P$ (say $n$-element) and any set of models $M \subseteq \M_\mathbb P$, there must exist a proposition $\varphi$ such that $\M_\mathbb P(\varphi) = M$. (The equivalence of these two statements follows from the fact that if we have a Boolean function $f$ and choose $M = f^{-1}[1]$, then $f_{\varphi,\mathbb P} = f$ if and only if $\M_\mathbb P(\varphi) = M$.)
 
 \begin{proposition} \label{proposition:not-and-or-is-universal}
-    Množiny logických spojek $\{\neg, \landsymb,\lorsymb\}$ a $\{\neg, \limpliessymb\}$ jsou univerzální.
+    The sets of logical connectives $\{\neg, \land, \lor\}$ and $\{\neg, \limplies\}$ are universal.
 \end{proposition}
 
 \begin{proof}
-Mějme funkci $f\colon \{0,1\}^n\to \{0,1\}$, resp. množinu modelů $M=f^{-1}[1]\subseteq \{0,1\}^n$. Náš jazyk bude $\mathbb P=\{p_1,\dots,p_n\}$. Pokud by množina $M$ obsahovala jediný model, např. $v=(1,0,1,0)$ mohli bychom ji reprezentovat výrokem $\varphi_v=p_1\land \neg p_2 \land p_3\land \neg p_4$, který říká `musím být model $v$'. Pro obecný model $v$ bychom výrok $\varphi_v$ zapsali takto:
+Let us have a function $f\colon \{0,1\}^n\to \{0,1\}$, or equivalently a set of models $M = f^{-1}[1] \subseteq \{0,1\}^n$. Our language will be $\mathbb P = \{p_1, \dots, p_n\}$. If the set $M$ contained only one model, say $v = (1,0,1,0)$, we could represent it with the proposition $\varphi_v = p_1 \land \neg p_2 \land p_3 \land \neg p_4$, which says `I must be the model $v$.' For a general model $v$, we would write the proposition $\varphi_v$ as follows:
 $$
-\varphi_v = p_1^{v_1}\land p_2^{v_2}\land \dots\land p_n^{v_n}=\bigwedge_{i=1}^n p_i^{v(p_i)}=\bigwedge_{p\in\mathbb P}p^{v(p)}
+\varphi_v = p_1^{v_1} \land p_2^{v_2} \land \dots \land p_n^{v_n} = \bigwedge_{i=1}^n p_i^{v(p_i)} = \bigwedge_{p \in \mathbb P} p^{v(p)},
 $$
-kde zavádíme následující užitečné značení: $p^{v(p)}$ je výrok $p$ pokud $v(p)=1$, a výrok $\neg p$ pokud $v(p)=0$.
+where we introduce the following useful notation: $p^{v(p)}$ is the proposition $p$ if $v(p) = 1$, and the proposition $\neg p$ if $v(p) = 0$.
 
-Obsahuje-li množina $M$ více modelů, řekneme `musím být alespoň jeden z modelů z $M$':
-\
+If the set $M$ contains more models, we say `I must be at least one of the models from $M$':
 $$
-\varphi_M = \bigvee_{v\in M}\varphi_v=\bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}
+\varphi_M = \bigvee_{v \in M} \varphi_v = \bigvee_{v \in M} \bigwedge_{p \in \mathbb P} p^{v(p)}
 $$
-Zřejmě platí $M_\mathbb P(\varphi_M)=M$ neboli $f_{\varphi_M,\mathbb P}=f$. (Pokud $M=\emptyset$, potom z definice $\bigvee_{v\in M}\varphi_v=\bot$.)\footnote{Podobně jako součet prázdné množiny sčítanců je roven 0.}
+Clearly, $\M_\mathbb P(\varphi_M) = M$, or equivalently $f_{\varphi_M,\mathbb P} = f$. (If $M = \emptyset$, then by definition $\bigvee_{v \in M} \varphi_v = \bot$.)\footnote{Similar to how the sum of an empty set of summands equals 0.}
 
-Univerzálnost $\{\neg, \limpliessymb\}$ plyne z univerzálnosti $\{\neg, \landsymb,\lorsymb\}$ a faktu, že konjunkci a disjunkci můžeme vyjádřit pomocí negace a implikace: $p\land q\sim \neg (p\limplies \neg q)$ a $p\lor q\sim \neg p\limplies q$.
+The universality of $\{\neg, \limplies\}$ follows from the universality of $\{\neg, \land, \lor\}$ and the fact that conjunction and disjunction can be expressed using negation and implication: $p \land q \sim \neg (p \limplies \neg q)$ and $p \lor q \sim \neg p \limplies q$.
 \end{proof}
 
 \begin{remark}
-Všimněte si, že při konstrukci výroku $\varphi_M$ je klíčové, že množina $M$ je konečná (má nejvýše $2^n$ prvků). Kdyby byla nekonečná, symbol `$\bigvee_{v\in M}$' by znamenal `disjunkci' nekonečně mnoha výroků, a výsledkem by tedy nebyl konečný nápis, tj. `$\varphi_M$' by vůbec nebyl výrok. (Máme-li spočetně nekonečný jazyk $\mathbb P'$, potom ne každou podmnožinu $M\subseteq \M_{\mathbb P'}$ lze reprezentovat výrokem---takových podmnožin je nespočetně mnoho, zatímco výroků je jen spočetně mnoho.)
+Note that in the construction of the proposition $\varphi_M$, it is crucial that the set $M$ is finite (it has at most $2^n$ elements). If it were infinite, the symbol `$\bigvee_{v \in M}$' would mean `disjunction' of infinitely many propositions, and thus the result would not be a finite string, i.e., `$\varphi_M$' would not be a proposition. (If we have a countably infinite language $\mathbb P'$, then not every subset $M \subseteq \M_{\mathbb P'}$ can be represented by a proposition---there are uncountably many such subsets, while propositions are only countably many.)
 \end{remark}
 
-Jaké další logické spojky bychom mohli použít? Nulární booleovské funkce,\footnote{Ve formalizaci matematiky resp.\ informatiky funkce arity 0 znamená, že nemá žádné vstupy, výstup tedy nemůže záviset na vstupu a je konstantní. Formálně, jde o funkce $f\colon \emptyset\to \{0,1\}$. Pokud je to matoucí, představte si, že funkce musí mít aritu alespoň 1, a místo `nulární funkce' říkejme `konstanta'.} neboli konstanty 0, 1, bychom mohli zavést jako symboly TRUE a FALSE, my si ale vystačíme s výroky $\top,\bot$.  Unární booleovské funkce jsou čtyři ($4=2^{2^1}$), ale negace je jediná `zajímavá': ostatní jsou $f(x)=x$, $f(x)=0$, a $f(x)=1$. Zajímavých binárních logických spojek už je více, v přírodě se vyskytují například tyto:
+What other logical connectives could we use? Nullary Boolean functions,\footnote{In formalizing mathematics or computer science, a function of arity 0 means it has no inputs, so the output cannot depend on the input and is constant. Formally, these are functions $f\colon \emptyset\to \{0,1\}$. If this is confusing, assume that functions must have an arity of at least 1, and instead of `nullary function', say `constant.'} i.e. constants 0, 1, could be introduced as symbols TRUE and FALSE; we will suffice with propositions $\top, \bot$. There are four unary Boolean functions ($4 = 2^{2^1}$), but negation is the only `interesting' one: the others are $f(x) = x$, $f(x) = 0$, and $f(x) = 1$. There are more interesting binary logical connectives that occur naturally, for example:
 \begin{itemize}
-    \item NAND neboli \emph{Shefferova spojka},  někdy se používá symbol $p\uparrow q$, platí $p\uparrow q \sim \neg (p\land q)$,
-    \item NOR neboli \emph{Pierceova spojka},  někdy se používá symbol $p\downarrow q$, platí $p\downarrow q \sim \neg (p\lor q)$,
-    \item XOR, neboli \emph{exclusive-OR}, někdy se píše také $\oplus$, platí $p\oplus q \sim (p\lor q)\land\neg(p\land q)$, neboli součet pravdivostní hodnot modulo 2.
+    \item NAND or \emph{Sheffer's stroke}, sometimes denoted as $p \uparrow q$, where $p \uparrow q \sim \neg (p \land q)$,
+    \item NOR or \emph{Peirce's arrow}, sometimes denoted as $p \downarrow q$, where $p \downarrow q \sim \neg (p \lor q)$,
+    \item XOR, or \emph{exclusive-OR}, sometimes denoted as $\oplus$, where $p \oplus q \sim (p \lor q) \land \neg (p \land q)$, i.e. the sum of truth values modulo 2.
 \end{itemize}
 
 \begin{exercise}
-    Vyjádřete $(p\oplus q)\oplus r$ pomocí $\{\neg, \landsymb,\lorsymb\}$.
+    Express $(p \oplus q) \oplus r$ using $\{\neg, \land, \lor\}$.
 \end{exercise}
 
 \begin{exercise}
-    Ukažte, že $\{\mathrm{NAND}\}$ a také $\{\mathrm{NOR}\}$ jsou univerzální.
+    Show that $\{\mathrm{NAND}\}$ and $\{\mathrm{NOR}\}$ are universal.
 \end{exercise}
 
 \begin{exercise}
-Uvažme ternární logickou spojku $\mathrm{IFTE}$, kde $IFTE(p,q,r)$ je splněno, právě když platí `if $p$ then $q$ else $r$'. Určete pravdivostní tabulku této logické spojky (tj.\ funkci $f_\mathrm{IFTE}$) a ukažte, že $\{\mathrm{TRUE}, \mathrm{FALSE},\mathrm{IFTE}\}$ je univerzální.
+Consider the ternary logical connective $\mathrm{IFTE}$, where $IFTE(p,q,r)$ is satisfied if and only if `if $p$ then $q$ else $r$'. Determine the truth table of this logical connective (i.e., the function $f_\mathrm{IFTE}$) and show that $\{\mathrm{TRUE}, \mathrm{FALSE}, \mathrm{IFTE}\}$ is universal.
 \end{exercise}
 
 
-\section{Normální formy}
+\section{Normal Forms}
 
-Připomeňme, že výroky jsou ekvivalentní, pokud mají stejnou množinu modelů. Pro každý výrok existuje nekonečně mnoho ekvivalentních výroků; často se hodí vyjádřit výrok v nějakém `hezkém' (užitečném) `tvaru', tj.\ najít ekvivalentní výrok v daném tvaru. Takovému konceptu tvaru se v matematice říká \emph{normální forma}. My si představíme dvě nejznámější: \emph{konjunktivní normální formu (conjunctive normal form, CNF)} a \emph{disjunktivní normální formu (DNF)}. 
+Let us recall that propositions are equivalent if they have the same set of models. For each proposition, there exist infinitely many equivalent propositions; it is often useful to express a proposition in a `nice' (useful) `shape', i.e., to find an equivalent proposition of that `shape'. This concept of `shape' in mathematics is called a \emph{normal form}. We will introduce two most common normal forms: \emph{conjunctive normal form (CNF)} and \emph{disjunctive normal form (DNF)}.
 
-Používá se následující terminologie a značení:
+The following terminology and notation are needed:
 \begin{itemize}
-    \item \emph{Literál} $\ell$ je buď prvovýrok $p$ nebo negace prvovýroku $\neg p$. Pro prvovýrok $p$ označme $p^0=\neg p$ a $p^1=p$. Je-li $\ell$ literál, potom $\bar \ell$ označuje \emph{opačný literál} k $\ell$. Je-li $\ell=p$ (\emph{pozitivní literál}), potom $\bar \ell=\neg p$, je-li $\ell=\neg p$ (\emph{negativní literál}), potom $\bar \ell=p$
-    \item \emph{Klauzule (clause)} je disjunkce literálů $C=\ell_1\lor\ell_2\lor\dots\lor\ell_n$. \emph{Jednotková klauzule (unit clause)} je samotný literál ($n=1$) a \emph{prázdnou klauzulí} ($n=0$) myslíme $\bot$.
-    \item Výrok je \emph{v konjunktivní normální formě (v CNF)} pokud je konjunkcí klauzulí. \emph{Prázdný výrok v CNF} je $\top$.
-    \item \emph{Elementární konjunkce} je konjunkce literálů $E=\ell_1\land\ell_2\land\dots\land\ell_n$. \emph{Jednotková elementární konjunkce} je samotný literál ($n=1$). \emph{Prázdná elementární konjunkce} ($n=0$) je $\top$.
-    \item Výrok je \emph{v disjunktivní normální formě (v DNF)} pokud je disjunkcí elementárních konjunkcí. \emph{Prázdný výrok v DNF} je $\bot$.
+    \item A \emph{literal} $\ell$ is either a propositional variable $p$ or the negation of a propositional variable $\neg p$. For a propositional variable $p$, denote $p^0=\neg p$ and $p^1=p$. If $\ell$ is a literal, then $\bar{\ell}$ denotes the \emph{opposite literal} to $\ell$. If $\ell=p$ (a \emph{positive literal}), then $\bar{\ell}=\neg p$; if $\ell=\neg p$ (a \emph{negative literal}), then $\bar{\ell}=p$.
+    \item A \emph{clause} is a disjunction of literals $C=\ell_1 \lor \ell_2 \lor \dots \lor \ell_n$. A \emph{unit clause} is a single literal ($n=1$) and the \emph{empty clause} ($n=0$) is interpreted as $\bot$.
+    \item A proposition is in \emph{conjunctive normal form (CNF)} if it is a conjunction of clauses. The \emph{empty CNF proposition} is $\top$.
+    \item An \emph{elementary conjunction} is a conjunction of literals $E=\ell_1 \land \ell_2 \land \dots \land \ell_n$. A \emph{unit elementary conjunction} is a single literal ($n=1$). The \emph{empty elementary conjunction} ($n=0$) is $\top$.
+    \item A proposition is in \emph{disjunctive normal form (DNF)} if it is a disjunction of elementary conjunctions. The \emph{empty DNF proposition} is $\bot$.
 \end{itemize}
 
 \begin{example}
-    Výrok ${{p\lor q}\lor\neg r}$ je v CNF (je to jediná klauzule) a zároveň v DNF (je to disjunkce jednotkových elementárních konjunkcí). Výrok $(p\lor q)\land (p\lor \neg q)\land \neg p$ je v CNF, výrok $\neg p\lor (p\land q)$ je v DNF.
+    The proposition ${{p\lor q}\lor\neg r}$ is in CNF (it is a single clause) as well as in DNF (it is a disjunction of unit elementary conjunctions). The proposition $(p\lor q)\land (p\lor \neg q)\land \neg p$ is in CNF, while the proposition $\neg p\lor (p\land q)$ is in DNF.
 \end{example}
 
 \begin{example}
-    Výrok $\varphi_v$ z důkazu Tvrzení~\ref{proposition:not-and-or-is-universal} je v CNF (je to konjunkce jednotkových klauzulí, tj.\ literálů) a také v DNF (je to jediná elementární konjunkce). Výrok $\varphi_M$ je v DNF.
+    The proposition $\varphi_v$ from the proof of Proposition~\ref{proposition:not-and-or-is-universal} is in CNF (it is a conjunction of unit clauses, i.e., literals) and also in DNF (it is a single elementary conjunction). The proposition $\varphi_M$ is in DNF.
 \end{example}
 
 \begin{observation}
-Všimněte si, že výrok v CNF je tautologie, právě když každá jeho klauzule obsahuje dvojici opačných literálů. Podobně, výrok v DNF je splnitelný, pokud ne každá elementární konjunkce obsahuje dvojici opačných literálů.
+    Note that a proposition in CNF is a tautology if and only if each of its clauses contains a pair of opposite literals. Similarly, a proposition in DNF is satisfiable if and only if not every elementary conjunction contains a pair of opposite literals.
 \end{observation}
 
-\subsection{O dualitě}
 
-Všimněte si, že pokud ve výrokové logice zaměníme hodnoty pro pravdu a nepravdu, tj.\ 0 a 1, pravdivostní tabulka negace zůstává stejná, z konjunkce se stává disjunkce, a naopak. Tomuto konceptu se říká \emph{dualita}; v logice uvidíme mnoho příkladů. 
+\subsection{On Duality}
 
-Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Protože $p,q$ jsou výrokové proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí pokud $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
+Note that if we interchange the values for truth and falsehood in propositional logic, i.e., 0 and 1, the truth table for negation remains the same, while conjunction becomes disjunction, and vice versa. This concept is called \emph{duality}; we will see many examples of this in logic.
 
-Pojem DNF je duální k pojmu CNF, `je tautologie' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ a $\lor$, pravdy a nepravdy.
+We have $\neg(p \land q) \sim (\neg p \lor \neg q)$, and from \emph{duality}, we also know that $\neg(\neg p \lor \neg q) \sim (\neg \neg p \land \neg \neg q)$, from which we can easily deduce $\neg(p \lor q) \sim (\neg p \land \neg q)$.\footnote{Since $p,q$ are propositional variables, they can be assigned both values 0 and 1, thus we can interchange them with their opposite literals.} More generally, $n$-ary Boolean functions $f, g$ are \emph{dual} to each other if $f(\neg x) = \neg g(x)$. If we have a proposition $\varphi$ built from $\{\neg, \land, \lor\}$ and we interchange $\land$ and $\lor$, and negate the propositional variables (i.e., interchange literals with their opposite literals), we obtain a proposition $\psi \sim \neg \varphi$ (i.e., the models of $\varphi$ are the non-models of $\psi$ and vice versa), and the functions $f_{\varphi, \mathbb P}$ and $f_{\psi, \mathbb P}$ are dual to each other.
+
+The notion of DNF is dual to the notion of CNF; `is a tautology' is dual to `is not satisfiable', thus the previous observation can be understood as an example of duality. For every statement in propositional logic, we obtain a \emph{dual} statement `for free', resulting from the interchange of $\land$ and $\lor$, truth and falsehood.
 
 
-\subsection{Převod do normální formy}\label{subsection:convert-to-normal-form}
+\subsection{Conversion to Normal Forms}\label{subsection:convert-to-normal-form}
 
-Disjunktivní normální formu jsme již potkali, v důkazu Tvrzení~\ref{proposition:not-and-or-is-universal}. Klíčovou část důkazu bychom mohli zformulovat takto: `Je-li jazyk konečný, lze každou množinu modelů \emph{axiomatizovat} výrokem v DNF'. Z duality dostáváme také axiomatizaci v CNF, neboť doplněk množiny modelů je také množina modelů:
+We have already encountered the disjunctive normal form in the proof of Proposition~\ref{proposition:not-and-or-is-universal}. The key part of the proof can be formulated as follows: `If the language is finite, any set of models can be \emph{axiomatized} by a proposition in DNF'. From duality, we also obtain axiomatization in CNF since the complement of a set of models is also a set of models:
 
 \begin{proposition} \label{proposition:axiomatize-in-DNF-CNF}
-    Mějme konečný jazyk $\mathbb P$ a libovolnou množinu modelů $M\subseteq\M_\mathbb P$. Potom existuje výrok $\varphi_{\mathrm{DNF}}$ v DNF a výrok $\varphi_{\mathrm{CNF}}$ v CNF takový, že $M=\M_\mathbb P(\varphi_{\mathrm{DNF}})=\M_\mathbb P(\varphi_{\mathrm{CNF}})$. Konkrétně:
+    Given a finite language $\mathbb P$ and any set of models $M \subseteq \M_\mathbb P$, there exists a proposition $\varphi_{\mathrm{DNF}}$ in DNF and a proposition $\varphi_{\mathrm{CNF}}$ in CNF such that $M = \M_\mathbb P(\varphi_{\mathrm{DNF}}) = \M_\mathbb P(\varphi_{\mathrm{CNF}})$. Specifically:
 \begin{align*}
-    \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v\in M}\bigwedge_{p\in\mathbb P}p^{v(p)}\\
-    \varphi_{\mathrm{CNF}} &= \bigwedge_{v\in \overline{M}}\bigvee_{p\in\mathbb P}\overline{p^{v(p)}}=\bigwedge_{v\notin M}\bigvee_{p\in\mathbb P}p^{1-v(p)}
+    \varphi_{\mathrm{\mathrm{DNF}}} &= \bigvee_{v \in M} \bigwedge_{p \in \mathbb P} p^{v(p)} \\
+    \varphi_{\mathrm{CNF}} &= \bigwedge_{v \in \overline{M}} \bigvee_{p \in \mathbb P} \overline{p^{v(p)}} = \bigwedge_{v \notin M} \bigvee_{p \in \mathbb P} p^{1-v(p)}
 \end{align*}
 \end{proposition}
 
-
 \begin{proof}
-    Pro výrok $\varphi_{\mathrm{DNF}}$ viz důkaz Tvrzení~\ref{proposition:not-and-or-is-universal}, každá elementární konjunkce popisuje jeden model. Výrok $\varphi_{\mathrm{CNF}}$ je duální k výroku $\varphi'_{\mathrm{DNF}}$ sestrojenému pro doplněk $M'=\overline{M}$. Nebo můžeme dokázat přímo: modely klauzule $C_v=\bigvee_{p\in\mathbb P}p^{1-v(p)}$ jsou všechny modely kromě $v$, $\M_C=\M_\mathbb P\setminus\{v\}$, tedy každá klauzule v konjunkci zakazuje jeden nemodel.
+    For the proposition $\varphi_{\mathrm{DNF}}$, see the proof of Proposition~\ref{proposition:not-and-or-is-universal}, where each elementary conjunction describes one model. The proposition $\varphi_{\mathrm{CNF}}$ is dual to the proposition $\varphi'_{\mathrm{DNF}}$ constructed for the complement $M' = \overline{M}$. Alternatively, we can prove it directly: the models of the clause $C_v = \bigvee_{p \in \mathbb P} p^{1-v(p)}$ are all models except $v$, $\M_C = \M_\mathbb P \setminus \{v\}$, so each clause in the conjunction excludes one non-model.
 \end{proof}
 
-Tvrzení~\ref{proposition:axiomatize-in-DNF-CNF} dává návod, jak převádět výrok do disjunktivní nebo do konjunktivní normální formy:
+Proposition~\ref{proposition:axiomatize-in-DNF-CNF} provides a method for converting a proposition to disjunctive or conjunctive normal form:
 
 \begin{example}
-    Uvažme výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve najdeme množinu modelů: $M=\M(\varphi)=\{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Nyní najdeme výroky $\varphi_{\mathrm{DNF}},\varphi_{\mathrm{CNF}}$ podle Tvrzení \ref{proposition:axiomatize-in-DNF-CNF}, ty mají stejnou množinu modelů jako $\varphi$, jsou tedy ekvivalentní.
+    Consider the proposition $\varphi = p \liff (q \lor \neg r)$. First, we find the set of models: $M = \M(\varphi) = \{(0,0,1),(1,0,0),(1,1,0),(1,1,1)\}$. Then, we find the propositions $\varphi_{\mathrm{DNF}}$ and $\varphi_{\mathrm{CNF}}$ according to Proposition \ref{proposition:axiomatize-in-DNF-CNF}. Those have the same models as $\varphi$ and are therefore equivalent with it.
 
-    Výrok $\varphi_{\mathrm{DNF}}$ najdeme tak, že pro každý model sestrojíme elementární konjunkci vynucující právě tento model:
+    We find the proposition $\varphi_{\mathrm{DNF}}$ by constructing an elementary conjunction for each model that enforces precisely that model:
     $$
-    \varphi_{\mathrm{DNF}}=(\neg p\land\neg q\land r)\lor (p\land\neg q\land\neg r) \lor (p\land q\land\neg r)\lor (p\land q\land r)
+    \varphi_{\mathrm{DNF}} = (\neg p \land \neg q \land r) \lor (p \land \neg q \land \neg r) \lor (p \land q \land \neg r) \lor (p \land q \land r)
     $$
-    Při konstrukci $\varphi_{\mathrm{CNF}}$ budeme potřebovat \emph{nemodely} $\varphi$, $\overline{M}=\{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$. Každá klauzule zakáže jeden nemodel:
+    For constructing $\varphi_{\mathrm{CNF}}$, we need the \emph{non-models} of $\varphi$, $\overline{M} = \{(0,0,0),(0,1,0),(0,1,1),(1,0,1)\}$. Each clause excludes one non-model:
     $$
-    \varphi_{\mathrm{CNF}}=(p\lor q\lor r)\land (p\lor\neg q\lor r) \land (p\lor \neg q\lor\neg r)\land (\neg p\lor q\lor\neg r)
+    \varphi_{\mathrm{CNF}} = (p \lor q \lor r) \land (p \lor \neg q \lor r) \land (p \lor \neg q \lor \neg r) \land (\neg p \lor q \lor \neg r)
     $$   
 \end{example}
 
 \begin{corollary}
-    Každý výrok (v libovolném, i nekonečném jazyce $\mathbb P$) je ekvivalentní nějakému výroku v CNF a nějakému výroku v DNF.
+    Every proposition (in any, even infinite, language $\mathbb P$) is equivalent to some proposition in CNF and some proposition in DNF.
 \end{corollary}
 \begin{proof}
-I když je jazyk $\mathbb P$ nekonečný, výrok $\varphi$ obsahuje jen konečně mnoho výrokových proměnných, můžeme tedy použít Tvrzení \ref{proposition:axiomatize-in-DNF-CNF} pro jazyk $\mathbb P'=\Var(\varphi)$, a množinu modelů $M=\M_{\mathbb P'}(\varphi)$. Protože $M=\M_{\mathbb P'}(\varphi_{\mathrm{DNF}})=\M_{\mathbb P'}(\varphi_{\mathrm{CNF}})$, máme $\varphi\sim\varphi_{\mathrm{DNF}}\sim\varphi_{\mathrm{CNF}}$.
+Even if the language $\mathbb P$ is infinite, the proposition $\varphi$ contains only finitely many propositional variables, so we can use Proposition \ref{proposition:axiomatize-in-DNF-CNF} for the language $\mathbb P' = \Var(\varphi)$ and the set of models $M = \M_{\mathbb P'}(\varphi)$. Since $M = \M_{\mathbb P'}(\varphi_{\mathrm{DNF}}) = \M_{\mathbb P'}(\varphi_{\mathrm{CNF}})$, we have $\varphi \sim \varphi_{\mathrm{DNF}} \sim \varphi_{\mathrm{CNF}}$.
 \end{proof}
 
 \begin{exercise}
-Rozmyslete si, jak lze z DNF výroku snadno vygenerovat jeho modely, a z CNF výroku jeho nemodely.
+Describe how one can easily generate models from a DNF proposition and non-models from a CNF proposition.
 \end{exercise}
 
 \begin{remark}
-    Kdy lze axiomatizovat \emph{teorii} výrokem v DNF nebo výrokem v CNF? Mějme jazyk $\mathbb P'=\Var(T)$ (tj. všechny výrokové proměnné vyskytující se v axiomech $T$). Má-li $T$ v jazyce $\mathbb P'$ konečně mnoho modelů (tj.\ je-li $\M_{\mathbb P'}(T)$ konečná), můžeme sestrojit výrok v DNF, a má-li konečně mnoho \emph{nemodelů}, můžeme sestrojit výrok v CNF. Obecně ale ne každou teorii lze axiomatizovat \emph{jediným} výrokem v CNF nebo v DNF. Vždy můžeme převést jednotlivé axiomy do CNF (nebo DNF), a můžeme také axiomatizovat teorii jen pomocí (potenciálně nekonečně mnoha) klauzulí.
+    When can a \emph{theory} be axiomatized by a proposition in DNF or CNF? Consider the language $\mathbb P' = \Var(T)$ (i.e., all propositional variables occurring in the axioms of $T$). If $T$ in the language $\mathbb P'$ has finitely many models (i.e., $\M_{\mathbb P'}(T)$ is finite), we can construct a proposition in DNF, and if it has finitely many \emph{non-models}, we can construct a proposition in CNF. Generally, however, not every theory can be axiomatized by a \emph{single} proposition in CNF or DNF. We can always convert individual axioms to CNF (or DNF), and we can also axiomatize the theory using (potentially infinitely many) clauses.
 \end{remark}
 
-Tento způsob převodu do CNF resp. do DNF vyžaduje znalost množiny modelů výroku, je tedy poměrně neefektivní. A také výsledná normální forma může být velmi dlouhá. Ukážeme si ještě jeden postup.
+This method of conversion to CNF or DNF requires knowledge of the set of models of the proposition, so it is quite inefficient. Additionally, the resulting normal form can be very long. We will now show another method.
 
-\subsubsection{Převod pomocí ekvivalentních úprav}
+\subsubsection{Conversion Using Equivalent Transformations}
 
-Využijeme následujícího pozorování: Nahradíme-li nějaký podvýrok $\psi$ výroku $\varphi$ ekvivalentním výrokem $\psi'$, výsledný výrok $\varphi'$ bude také ekvivalentní $\varphi$. Nejprve si ukážeme postup na příkladě:
+We use the following observation: If we replace some subproposition $\psi$ of a proposition $\varphi$ with an equivalent proposition $\psi'$, the resulting proposition $\varphi'$ will also be equivalent to $\varphi$. We will first demonstrate the method on an example:
 
 \begin{example}
-    Převedeme opět výrok $\varphi=p\liff (q\lor \neg r)$. Nejprve se zbavíme ekvivalence, vyjádříme ji jako konjunkci dvou implikací. V dalším kroku odstraníme implikace, pomocí pravidla $\varphi\limplies\psi\sim\neg\varphi\lor\psi$:
+    Again, we will convert the proposition $\varphi = p \liff (q \lor \neg r)$. First, we eliminate the equivalence, expressing it as a conjunction of two implications. In the next step, we remove the implications using the rule $\varphi \limplies \psi \sim \neg \varphi \lor \psi$:
     \begin{align*}
-        p\liff (q\lor \neg r) &\sim (p\limplies (q\lor \neg r)) \land ((q\lor \neg r) \limplies p)\\
-        &\sim (\neg p\lor q\lor \neg r) \land (\neg (q\lor \neg r) \lor p)
+        p \liff (q \lor \neg r) &\sim (p \limplies (q \lor \neg r)) \land ((q \lor \neg r) \limplies p)\\
+        &\sim (\neg p \lor q \lor \neg r) \land (\neg (q \lor \neg r) \lor p)
     \end{align*}
-    Nyní si představme strom výroku, v dalším kroku chceme dostat negace na co nejnižší úroveň stromu, bezprostředně nad listy: využijeme toho, že $\neg (q\lor \neg r)\sim \neg q\land \neg\neg r$ a zbavíme se dvojité negace $\neg\neg r\sim r$. Dostáváme výrok 
+    Now, imagine the tree of the proposition; in the next step, we want to push the negations as low as possible in the tree, just above the leaves: we use $\neg (q \lor \neg r) \sim \neg q \land \neg \neg r$ and eliminate the double negation $\neg \neg r \sim r$. We obtain the proposition
     $$
-    (\neg p\lor q\lor \neg r) \land ( (\neg q\land r) \lor p)
+    (\neg p \lor q \lor \neg r) \land ( (\neg q \land r) \lor p)
     $$
-    Nyní již necháme literály nedotčené, a použijeme distributivitu $\landsymb$ vůči $\lorsymb$, nebo naopak, podle toho, zda chceme DNF nebo CNF. Pro převod do CNF použijeme úpravu $(\neg q\land r) \lor p\sim (\neg q\lor p)\land (r \lor p) $, kterou jsme dostali symbol $\lorsymb$ na nižší úroveň stromu. (Nakreslete si!) Tím už dostáváme výrok v CNF, pro přehlednost ještě seřadíme literály v klauzulích:
+    At this point, we leave the literals untouched and apply the distributivity of $\landsymb$ over $\lorsymb$, or vice versa, depending on whether we want DNF or CNF. For conversion to CNF, we use the transformation $(\neg q \land r) \lor p \sim (\neg q \lor p) \land (r \lor p)$, which pushes the $\lorsymb$ symbol lower in the tree. (Draw the tree!) This gives us a proposition in CNF; for better readability, we sort the literals in the clauses:
     $$
-    (\neg p\lor q\lor \neg r) \land (p\lor \neg q) \land (p \lor r) 
+    (\neg p \lor q \lor \neg r) \land (p \lor \neg q) \land (p \lor r)
     $$
-    Při převodu do DNF bychom postupovali obdobně, opakovanou aplikací distributivity. Zde vyjdeme z CNF formy a zkombinujeme každý literál z první klauzule s každým literálem z druhé a s každým literálem z třetí klauzule. Všimneme si, že stejný literál nemusíme v elementární konjunkci opakovat dvakrát, a že obsahuje-li elementární klauzule dvojici opačných literálů, je sporná, a můžeme ji tedy v DNF vynechat. Také můžeme vynechat elementární konjunkci $E$, pokud máme jinou elementární konjunkci $E'$ takovou, že literály obsažené v $E'$ jsou podmnožinou literálů obsažených v $E$, např. $E=(p\land q \land \neg r)$ a $E'=(p\land \neg r)$. (Rozmyslete si proč, a zformulujte duální zjednodušení při převodu do CNF.) Výsledný výrok v DNF je:
+    For conversion to DNF, we proceed similarly by repeatedly applying distributivity. Here, we start from the CNF form and combine each literal from the first clause with each literal from the second and each literal from the third clause. Note that the same literal does not need to be repeated twice in the elementary conjunction, and if the elementary conjunction contains a pair of opposite literals, it is contradictory and can be omitted in the DNF. We can also omit an elementary conjunction $E$ if we have another elementary conjunction $E'$ such that  the literals contained in $E'$ are a subset of the literals contained in $E$, e.g., $E = (p \land q \land \neg r)$ and $E' = (p \land \neg r)$. (Think about why, and formulate the dual simplification when converting to CNF.) The resulting proposition in DNF is:
     $$
-    (\neg p \land \neg q\land r) \lor (p\land q \land r) \lor (p\land \neg r)
+    (\neg p \land \neg q \land r) \lor (p \land q \land r) \lor (p \land \neg r)
     $$
 \end{example}
 
-Nyní vypíšeme všechny potřebné ekvivalentní úpravy. Důkaz, že každý výrok lze převést do DNF a do CNF lze snadno provést indukcí podle struktury výroku (podle hloubky stromu výroku).
+We now list all equivalent transformations needed for the method. The proof that every proposition can be converted to DNF and CNF can be easily carried out by induction on the structure of the proposition (depth of the proposition tree).
 
 \begin{tcolorbox}
 \begin{multicols}{2}
 \begin{itemize}
-    \item Implikace a ekvivalence:
+    \item Implications and equivalences:
     \begin{itemize}
-        \item[] $\varphi\limplies\psi\sim\neg\varphi\lor\psi$
-        \item[] $\varphi\liff\psi\sim(\neg\varphi\lor\psi)\land(\neg\psi\lor\varphi)$
+        \item[] $\varphi \limplies \psi \sim \neg \varphi \lor \psi$
+        \item[] $\varphi \liff \psi \sim (\neg \varphi \lor \psi) \land (\neg \psi \lor \varphi)$
     \end{itemize}
-    \item Negace:
+    \item Negations:
     \begin{itemize}
-        \item[] $\neg(\varphi\land\psi)\sim\neg\varphi\lor\neg\psi$
-        \item[] $\neg(\varphi\lor\psi)\sim\neg\varphi\land\neg\psi$
-        \item[] $\neg\neg\varphi\sim\varphi$
+        \item[] $\neg (\varphi \land \psi) \sim \neg \varphi \lor \neg \psi$
+        \item[] $\neg (\varphi \lor \psi) \sim \neg \varphi \land \neg \psi$
+        \item[] $\neg \neg \varphi \sim \varphi$
     \end{itemize}
-    \item Konjunkce (převod do DNF):
+    \item Conjunctions (conversion to DNF):
     \begin{itemize}
-        \item[] $\varphi \land (\psi\lor\chi) \sim (\varphi\land\psi)\lor (\varphi\land\chi)$
-        \item[] $(\varphi \lor \psi)\land\chi \sim (\varphi\land\chi)\lor (\psi\land\chi)$
+        \item[] $\varphi \land (\psi \lor \chi) \sim (\varphi \land \psi) \lor (\varphi \land \chi)$
+        \item[] $(\varphi \lor \psi) \land \chi \sim (\varphi \land \chi) \lor (\psi \land \chi)$
     \end{itemize}
-    \item Disjunkce (převod do CNF):
+    \item Disjunctions (conversion to CNF):
     \begin{itemize}
-        \item[] $\varphi \lor (\psi\land\chi) \sim (\varphi\lor\psi)\land (\varphi\lor\chi)$
-        \item[] $(\varphi \land \psi)\lor\chi \sim (\varphi\lor\chi)\land (\psi\lor\chi)$
+        \item[] $\varphi \lor (\psi \land \chi) \sim (\varphi \lor \psi) \land (\varphi \lor \chi)$
+        \item[] $(\varphi \land \psi) \lor \chi \sim (\varphi \lor \chi) \land (\psi \lor \chi)$
     \end{itemize}
 \end{itemize}
 \end{multicols}
 \end{tcolorbox}
 
+As we will see in the next chapter, CNF is much more important in practice than DNF (even though they are dual concepts). For describing a real system, it is more natural to express it as a conjunction of many simpler properties than as a single very long disjunction. There are many other forms of representing Boolean functions. Similar to data structures, we choose the appropriate form of representation depending on the operations we need to perform on the function.\footnote{See, for example, the course \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL031}{NAIL031 Representations of Boolean Functions}.}
 
-Jak uvidíme v příští kapitole, CNF je v praxi mnohem důležitější než DNF (byť jde o duální pojmy). Při popisu reálného systému je přirozenější vyjádření pomocí konjunkce mnoha jednodušších vlastností, než jako jednu velmi dlouhou disjunkci. Existuje mnoho dalších forem reprezentace booleovských funkcí. Podobně jako datové struktury, vhodnou formu reprezentace volíme podle toho, jaké operace potřebujeme s funkcí dělat.\footnote{Viz například přednáška \href{https://is.cuni.cz/studium/predmety/index.php?do=predmet&kod=NAIL031}{NAIL031 Reprezentace booleovských funkcí}.}
 
+\section{Properties and Consequences of Theories}
 
-\section{Vlastnosti a důsledky teorií}
-
-Podívejme se nyní hlouběji na vlastnosti teorií. Podobně jako pro výroky řekneme, že dvě teorie $T,T'$ v jazyce $\mathbb P$ jsou \emph{ekvivalentní}, pokud mají stejnou množinu modelů:
+Let us delve deeper into properties of theories. Similar to propositions, we say that two theories $T, T'$ in the language $\mathbb P$ are \emph{equivalent} if they have the same set of models:
 $$
-T\sim T' \text{ právě když } \M_\mathbb P(T)=\M_\mathbb P(T')
+T \sim T' \text{ if and only if } \M_\mathbb P(T) = \M_\mathbb P(T')
 $$
-Jde tedy o teorie vyjadřující tytéž vlastnosti modelů, jen jinak vyjádřené (\emph{axiomatizované}). V logice nás převážně zajímají ty vlastnosti teorií, které nezávisí na konkrétní \emph{axiomatizaci}.
+These are theories expressing the same properties of models, just formulated (\emph{axiomatized}) differently. In logic, we are mainly interested in properties of theories that are independent of the specific \emph{axiomatization}.
 
 \begin{example}
-    Například teorie $T=\{p\limplies q,p\liff r\}$ je ekvivalentní teorii $T'=\{(\neg p\lor q)\land(\neg p\lor r)\land(p\lor\neg r)\}$.
+    For example, the theory $T = \{p \limplies q, p \liff r\}$ is equivalent to the theory $T' = \{(\neg p \lor q) \land (\neg p \lor r) \land (p \lor \neg r)\}$.
 \end{example}
 
-\begin{definition}[Vlastnosti teorií]
-Řekneme, že teorie $T$ v jazyce $\mathbb P$ je
+\begin{definition}[Properties of Theories]
+We say that a theory $T$ in the language $\mathbb P$ is
 \begin{itemize}
-    \item \emph{sporná}, jestliže v ní platí $\bot$ (spor), ekvivalentně, jestliže nemá žádný model, ekvivalentně, jestliže v ní platí všechny výroky,
-    \item \emph{bezesporná} (\emph{splnitelná}), pokud není sporná, tj. má nějaký model,
-    \item \emph{kompletní}, jestliže není sporná a každý výrok je v ní pravdivý nebo lživý (tj. nemá žádné nezávislé výroky), ekvivalentně, pokud má právě jeden model.
+    \item \emph{inconsistent} (\emph{unsatisfiable}), if it includes $\bot$ (a contradiction), equivalently, if it has no model, equivalently, if it includes all propositions,
+    \item \emph{consistent} (\emph{satisfiable}) if it is not inconsistent, i.e., it has some model,
+    \item \emph{complete} if it is not inconsistent and every proposition in it is either true or false (i.e., it has no independent propositions), equivalently, if it has exactly one model.
 \end{itemize}    
 \end{definition}
 
-Rozmysleme si, proč platí ekvivalence vlastností v definici. Uvědomme si, že ve sporné teorii platí skutečně platí všechny výroky! Vskutku, výrok platí v $T$, pokud platí v každém modelu $T$, ty ale žádné nejsou. Naopak, pokud teorie má alespoň jeden model, v tomto modelu nemůže platit $\bot=p\land\neg p$.
+Let us verify that the equivalence of properties in the definition holds. Notice that in an inconsistent theory, all propositions are indeed valid! A proposition is valid in $T$ if it is valid in every model of $T$, but there are none. Conversely, if the theory has at least one model, $\bot = p \land \neg p$ cannot be valid in this model.
 
-A je-li teorie kompletní, nemůže mít dva různé modely $v\neq v'$. Výrok $\varphi_{v}=\bigwedge_{p\in\mathbb P}p^{v(p)}$ (který jsme potkali v důkazu Tvrzení \ref{proposition:not-and-or-is-universal}) by totiž byl nezávislý v $T$, protože platí v modelu $v$ ale ne v modelu $v'$. Naopak, má-li $T$ jediný model $v$, potom každý výrok buď platí ve $v$, a tedy platí v $T$, nebo neplatí ve $v$ a potom je lživý v $T$.
+If a theory is complete, it cannot have two different models $v \neq v'$. The proposition $\varphi_{v} = \bigwedge_{p \in \mathbb P} p^{v(p)}$ (which we encountered in the proof of Proposition \ref{proposition:not-and-or-is-universal}) would be independent in $T$ because it is valid in the model $v$ but not in $v'$. Conversely, if $T$ has a single model $v$, then every proposition is either valid in $v$ and thus in $T$, or it is not valid in $v$ and therefore false in $T$.
 
 \begin{example} 
-    Příkladem sporné teorie je třeba $T_1=\{p,p\limplies q,\neg q\}$. Teorie $T_2=\{p\lor q,r\}$ je bezesporná, ale není kompletní, například výrok $p\land q$ v ní není pravdivý (neplatí v modelu $(1,0,1)$) ale ani lživý (platí v modelu $(1,1,1)$). Teorie $T_2\cup\{\neg p\}$ je kompletní, jejím jediným modelem je $(0,1,1)$.
+    An example of an inconsistent theory is $T_1 = \{p, p \limplies q, \neg q\}$. The theory $T_2 = \{p \lor q, r\}$ is consistent but not complete, for instance, the proposition $p \land q$ is neither true (it does not hold in the model $(1,0,1)$) nor false (it holds in the model $(1,1,1)$). The theory $T_2 \cup \{\neg p\}$ is complete, with its only model being $(0,1,1)$.
 \end{example}
 
-\subsection{Důsledky teorií}
 
-Připomeňme, že důsledek teorie $T$ je každý výrok, který v $T$ platí (tj. platí v každém modelu $T$) a označme si \emph{množinu všech důsledků} teorie $T$ v jazyce $\mathbb P$ jako
-$$
-\Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid T\models \varphi\}
-$$
-Pokud je teorie $T$ v jazyce $\mathbb P$, můžeme psát: 
-$$
-\Conseq_\mathbb P(T)=\{\varphi\in\VF_\mathbb P\mid \M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)\}
-$$
-(Dává ale smysl mluvit i o důsledcích teorie v nějakém menším jazyce, který je podmnožinou jazyka $T$). 
+\subsection{Consequences of Theories}
 
-Ukážeme si několik jednoduchých vlastností důsledků:
+Recall that a consequence of a theory $T$ is any proposition that is true in $T$ (i.e., valid in every model of $T$), and let us denote the \emph{set of all consequences} of a theory $T$ in the language $\mathbb P$ as
+$$
+\Conseq_\mathbb P(T) = \{\varphi \in \VF_\mathbb P \mid T \models \varphi\}
+$$
+If the theory $T$ is in the language $\mathbb P$, we can write:
+$$
+\Conseq_\mathbb P(T) = \{\varphi \in \VF_\mathbb P \mid \M_\mathbb P(T) \subseteq \M_\mathbb P(\varphi)\}
+$$
+(However, it is also meaningful to talk about consequences of a theory that are in some smaller language, which is a subset of the language of $T$).
+
+Let us demonstrate some simple properties of consequences:
 \begin{proposition}\label{proposition:properties-of-consequences}
-    Mějme teorie $T,T'$ a výroky $\varphi,\varphi_1,\dots,\varphi_n$ v jazyce $\mathbb P$. Potom platí:
+    Let $T, T'$ be theories and $\varphi, \varphi_1, \dots, \varphi_n$ be propositions in a language $\mathbb P$. Then the following holds:
     \begin{enumerate}[(i)]       
-        \item $T\subseteq\Conseq_\mathbb P(T)$,
-        \item $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(\Conseq_\mathbb P(T))$,
-        \item pokud $T\subseteq T'$, potom $\Conseq_\mathbb P(T)\subseteq\Conseq_\mathbb P(T')$,
-        \item $\varphi\in\Conseq_\mathbb P(\{\varphi_1,\dots,\varphi_n\})$ právě když je výrok $(\varphi_1\land \dots\land\varphi_n)\to\varphi$ tautologie.
+        \item $T \subseteq \Conseq_\mathbb P(T)$,
+        \item $\Conseq_\mathbb P(T) = \Conseq_\mathbb P(\Conseq_\mathbb P(T))$,
+        \item if $T \subseteq T'$, then $\Conseq_\mathbb P(T) \subseteq \Conseq_\mathbb P(T')$,
+        \item $\varphi \in \Conseq_\mathbb P(\{\varphi_1, \dots, \varphi_n\})$ if and only if the proposition $(\varphi_1 \land \dots \land \varphi_n) \to \varphi$ is a tautology.
     \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-    Důkaz je snadný, použijeme-li, že $\varphi$ je důsledek $T$ právě když $\M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)$, a uvědomíme-li si následující vztahy:
+    The proof is straightforward, using the fact that $\varphi$ is a consequence of $T$ if and only if $\M_\mathbb P(T) \subseteq \M_\mathbb P(\varphi)$, and recognizing the following relationships:
     \begin{itemize}
-        \item $\M(\Conseq(T))=\M(T)$,
-        \item je-li $T\subseteq T'$ potom $\M(T)\supseteq\M(T')$,\footnote{Čím více vlastností předepíšeme, tím méně objektů je bude všechny splňovat.}
-        \item $\psi\limplies\varphi$ je tautologie, právě když platí $\M(\psi)\subseteq\M(\varphi)$,
-        \item $\M(\varphi_1\land \dots\land\varphi_n)=\M(\varphi_1,\dots,\varphi_n)$.
+        \item $\M(\Conseq(T)) = \M(T)$,
+        \item if $T \subseteq T'$, then $\M(T) \supseteq \M(T')$,\footnote{The more properties we prescribe, the fewer objects will satisfy them all.}
+        \item $\psi \limplies \varphi$ is a tautology if and only if $\M(\psi) \subseteq \M(\varphi)$,
+        \item $\M(\varphi_1 \land \dots \land \varphi_n) = \M(\varphi_1, \dots, \varphi_n)$.
     \end{itemize}
 \end{proof}
 
 \begin{exercise}
-    Dokažte podrobně Tvrzení~\ref{proposition:properties-of-consequences}.
+    Give a detailed proof of Proposition~\ref{proposition:properties-of-consequences}.
 \end{exercise}
 
-\subsection{Extenze teorií}
 
-Neformálně řečeno, rozšířením, neboli \emph{extenzí} teorie $T$ myslíme jakoukoliv teorii $T'$, která splňuje vše, co platí v teorii $T$ (a něco navíc, nejde-li o triviální případ). Modeluje-li $T$ nějaký systém, lze ji rozšířit dvěma způsoby: přidáním dodatečných požadavků o systému (tomu budeme říkat \emph{jednoduchá extenze}) nebo i rozšířením systému o nějaké nové části. Pokud ve druhém případě nemáme dodatečné požadavky na původní část systému, tedy platí-li o původní části totéž, co předtím, říkáme, že je extenze \emph{konzervativní}.
+\subsection{Extensions of Theories}
+
+Informally speaking, an \emph{extension} of a theory $T$ refers to any theory $T'$ that satisfies everything that is true in $T$ (and more, apart from the trivial case). If theory $T$ models some system, it can be extended in two ways: by adding additional requirements about the system (which we will call a \emph{simple extension}) or by expanding the system with some new parts. If in the second case there are no additional requirements on the original part of the system, i.e., exactly the same hold about the original part as before, we say that the extension is \emph{conservative}.
 
 \begin{example}
-    Vraťme se k úvodnímu příkladu o barvení grafů, Příklad \ref{example:graph-coloring-intro}. Teorie $T_3$ (úplná obarvení grafu zachovávající hranovou podmínku) je jednoduchou extenzí teorie $T_1$ (částečná obarvení množiny vrcholů bez ohledu na hrany). Teorie $T_3'$ z Sekce \ref{subsection:disadvantages-of-propositional-logic} (přidání nového vrcholu do grafu) je konzervativní, ale ne jednoduchou extenzí $T_3$. A jde o extenzi $T_1$, která není ani jednoduchá ani konzervativní.
+    Let us return to the initial example of graph coloring, Example \ref{example:graph-coloring-intro}. The theory $T_3$ (complete colorings satisfying the edge condition) is a simple extension of the theory $T_1$ (partial colorings of vertices with no regard for edges). The theory $T_3'$ from Section \ref{subsection:disadvantages-of-propositional-logic} (adding a new vertex to the graph) is a conservative, non-simple extension of $T_3$. And it is an extension of $T_1$ that is neither simple nor conservative.
 \end{example}
 
-Uveďme nyní konečně formální definice:
+Let us now finally present the formal definitions:
 
-\begin{definition}[Extenze teorie]
-    Mějme teorii $T$ v jazyce $\mathbb P$.
+\begin{definition}[Extension of a Theory]
+    Let $T$ be a theory in the language $\mathbb P$.
     \begin{itemize}
-        \item \emph{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\Conseq_\mathbb P(T)\subseteq\Conseq_{\mathbb P'}(T')$,
-        \item je to \emph{jednoduchá extenze}, pokud $\mathbb P'=\mathbb P$,
-        \item je to \emph{konzervativní extenze}, pokud $\Conseq_\mathbb P(T)=\Conseq_\mathbb P(T')=\Conseq_{\mathbb P'}(T')\cap \VF_\mathbb P$.
+        \item An \emph{extension} of the theory $T$ is any theory $T'$ in a language $\mathbb P' \supseteq \mathbb P$ that satisfies $\Conseq_\mathbb P(T) \subseteq \Conseq_{\mathbb P'}(T')$,
+        \item it is a \emph{simple extension} if $\mathbb P' = \mathbb P$,
+        \item it is a \emph{conservative extension} if $\Conseq_\mathbb P(T) = \Conseq_\mathbb P(T') = \Conseq_{\mathbb P'}(T') \cap \VF_\mathbb P$.
     \end{itemize}
 \end{definition}
-Extenze tedy znamená, že splňuje všechny důsledky původní teorie. Extenze je jednoduchá, pokud do jazyka nepřidáváme žádné nové výrokové proměnné, a konzervativní, pokud neměníme platnost tvrzení vyjádřitelných v původním jazyce, každý nový důsledek tedy musí obsahovat nějakou nově přidanou výrokovou proměnnou. 
+Thus, an extension means that it satisfies all the consequences of the original theory. An extension is simple if we do not add any new propositional variables to the language, and it is conservative if it does not change the validity of statements expressible in the original language, meaning that any new consequence must contain some of the newly added propositional variables.
 
-Co tyto pojmy znamenají \emph{sémanticky}, v řeči modelů? Zformulujme nejprve obecné pozorování, které ihned poté ilustrujeme na příkladě:
+What do these concepts mean \emph{semantically}, in terms of models? Let us first formulate a general observation, which we will then illustrate with an example:
 \begin{observation}\label{observation:extensions-semantic-description-propositional}
-    Je-li $T$ teorie v jazyce $\mathbb P$ a $T'$ teorie v jazyce $\mathbb P'$ obsahujícím jazyk $\mathbb P$. Potom platí:
+    Let $T$ be a theory in the language $\mathbb P$, and $T'$ a theory in a language $\mathbb P'$ containing the language $\mathbb P$. Then the following holds:
     \begin{itemize}
-        \item $T'$ je jednoduchou extenzí $T$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')\subseteq\M_\mathbb P(T)$,
-        \item $T'$ je extenzí $T$, právě když $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P'}(T)$. Uvažujeme tedy modely teorie $T$ nad rozšířeným jazykem $\mathbb P'$.\footnote{Pozor, nemůžeme psát $\M_\mathbb P(T')$, protože modely $T'$ musí být ohodnoceními většího jazyka $\mathbb P'$, hodnoty jen pro proměnné z $\mathbb P$ nestačí k určení pravdivostní hodnoty. A nelze psát ani $\M_{\mathbb P'}(T')\subseteq\M_{\mathbb P}(T)$, jde o množiny vektorů jiné dimenze.} Jinými slovy, \emph{restrikce}\footnote{\emph{Restrikce} znamená zapomenutí hodnot pro nové výrokové proměnné, resp. smazání příslušných souřadnic při reprezentaci modelu vektorem.} libovolného modelu $v\in\M_{\mathbb P'}(T')$ na původní jazyk $\mathbb P$ musí být modelem $T$, mohli bychom psát $v{\restriction_\mathbb P}\in\M_\mathbb P(T)$ nebo:
+        \item $T'$ is a simple extension of $T$ if and only if $\mathbb P' = \mathbb P$ and $\M_\mathbb P(T') \subseteq \M_\mathbb P(T)$,
+        \item $T'$ is an extension of $T$ if and only if $\M_{\mathbb P'}(T') \subseteq \M_{\mathbb P'}(T)$. We thus consider models of theory $T$ in the extended language $\mathbb P'$.\footnote{Note that we cannot write $\M_\mathbb P(T')$ because models of $T'$ must be truth assignments of the larger language $\mathbb P'$, and values only for the propositional variables in $\mathbb P$ are not sufficient to determine the truth value of axioms of $T'$. And we cannot write $\M_{\mathbb P'}(T') \subseteq \M_{\mathbb P}(T)$ either, as these are sets of vectors of different dimensions.} In other words, the \emph{restriction}\footnote{\emph{Restriction} means forgetting the values for the new propositional variables, i.e., deleting the corresponding coordinates in the vector representation of the model.} of any model $v \in \M_{\mathbb P'}(T')$ to the original language $\mathbb P$ must be a model of $T$. We could write $v{\restriction_\mathbb P} \in \M_\mathbb P(T)$ or:
         $$
-        \{v{\restriction_\mathbb P}\mid v\in\M_{\mathbb P'}(T')\}\subseteq\M_\mathbb P(T)
+        \{v{\restriction_\mathbb P} \mid v \in \M_{\mathbb P'}(T')\} \subseteq \M_\mathbb P(T)
         $$
-        \item $T'$ je konzervativní extenzí $T$, pokud je extenzí a navíc platí, že každý model $T$ (v jazyce $\mathbb P$) lze nějak \emph{expandovat} (rozšířit)\footnote{Přidáním hodnot pro nové výrokové proměnné, resp. přidáním odpovídajících souřadnic ve vektorové reprezentaci.} na model $T'$ (v jazyce $\mathbb P'$), neboli \emph{každý} model $T$ (v jazyce $\mathbb P$) získáme restrikcí \emph{nějakého} modelu $T'$ na jazyk $\mathbb P$. Mohli bychom psát:
+        \item $T'$ is a conservative extension of $T$ if it is an extension and, moreover, every model of $T$ (in the language $\mathbb P$) can be \emph{expanded}\footnote{By adding values for the new propositional variables, i.e., adding the corresponding coordinates in the vector representation.}  (in some way, not necessarily uniquely) to a model of $T'$ (in the language $\mathbb P'$), in other words, \emph{every} model of $T$ (in the language $\mathbb P$) is obtained by restricting \emph{some} model of $T'$ to the language $\mathbb P$. We could write:
         $$
-        \{v{\restriction_\mathbb P}\mid v\in\M_      {\mathbb P'}(T')\}=\M_\mathbb P(T)
+        \{v{\restriction_\mathbb P} \mid v \in \M_{\mathbb P'}(T')\} = \M_\mathbb P(T)
         $$
-        \item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $\mathbb P'=\mathbb P$ a $\M_\mathbb P(T')=\M_\mathbb P(T)$, neboli $T'\sim T$.        
-        \item Kompletní jednoduché extenze $T$ jednoznačně až na ekvivalenci odpovídají modelům $T$.
+        \item $T'$ is an extension of $T$ and $T$ is an extension of $T'$, if and only if $\mathbb P' = \mathbb P$ and $\M_\mathbb P(T') = \M_\mathbb P(T)$, in other words, $T' \sim T$.
+        \item Complete simple extensions of $T$ correspond to models of $T$, uniquely up to equivalence.
     \end{itemize}
 \end{observation}
 
 \begin{example}
-Mějme teorii $T=\{p\limplies q\}$ v jazyce $\mathbb P=\{p,q\}$. Teorie $T_1=\{p\land q\}$ v jazyce $\mathbb P$ je jednoduchou extenzí $T$, máme $\M_\mathbb P(T_1)=\{(1,1)\}\subseteq\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$. Je to kompletní teorie, další kompletní jednoduché extenze teorie $T$ jsou např.\ $T_2=\{\neg p,q\}$ a $T_3=\{\neg p,\neg q\}$. Každá kompletní jednoduchá extenze teorie $T$ je ekvivalentní s $T_1$, $T_2$, nebo $T_3$.
+Consider the theory $T = \{p \limplies q\}$ in the language $\mathbb P = \{p, q\}$. The theory $T_1 = \{p \land q\}$ in the language $\mathbb P$ is a simple extension of $T$, we have $\M_\mathbb P(T_1) = \{(1, 1)\} \subseteq \{(0, 0), (0, 1), (1, 1)\} = \M_\mathbb P(T)$. It is a complete theory, and other complete simple extensions of theory $T$ are, for example, $T_2 = \{\neg p, q\}$ and $T_3 = \{\neg p, \neg q\}$. Each complete simple extension of theory $T$ is equivalent to $T_1$, $T_2$, or $T_3$.
 
-Uvažme nyní teorii $T'=\{p\liff (q\land r)\}$ v jazyce $\mathbb P'=\{p,q,r\}$. Je extenzí $T$, neboť $\mathbb P=\{p,q\}\subseteq\{p,q,r\}=\mathbb P'$ a platí:
+Now consider the theory $T' = \{p \liff (q \land r)\}$ in the language $\mathbb P' = \{p, q, r\}$. It is an extension of $T$ because $\mathbb P = \{p, q\} \subseteq \{p, q, r\} = \mathbb P'$ and:
 \begin{align*}
-    \M_{\mathbb P'}(T')&=\{(0,0,0),(0,0,1),(0,1,0),(1,1,1)\}\\ 
-    &\subseteq\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}=\M_{\mathbb P'}(T)     
+    \M_{\mathbb P'}(T') &= \{(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 1, 1)\}\\ 
+    &\subseteq \{(0, 0, 0), (0, 0, 1), (0, 1, 0), (0, 1, 1), (1, 1, 0), (1, 1, 1)\} = \M_{\mathbb P'}(T)     
 \end{align*}
-Jinými slovy, zúžením modelů $T'$ na jazyk $\mathbb P$ dostáváme $\{(0,0),(0,1),(1,1)\}$ což je podmnožina $\M_\mathbb P(T)$. 
+In other words, by restricting the models of $T'$ to the language $\mathbb P$, we get $\{(0, 0), (0, 1), (1, 1)\}$, which is a subset of $\M_\mathbb P(T)$.
 
-Protože platí dokonce $\{(0,0),(0,1),(1,1)\}=\M_\mathbb P(T)$, jinými slovy, každý model $v\in\M_\mathbb P(T)$ lze rozšířit na model $v'\in\M_{\mathbb P'}(T')$ (např. $(0,1)$ lze rozšířit dodefinováním $v'(r)=0$ na model $(0,1,0)$), je $T'$ dokonce konzervativní extenzí $T$. To znamená, že každý výrok v jazyce $\mathbb P$ platí v $T$, právě když platí v $T'$. Ale výrok $p\limplies r$ (který je v jazyce $\mathbb P'$, ale ne v jazyce $\mathbb P$) je novým důsledkem: platí v $T'$ ale ne v $T$ (viz model $(1,1,0)$).
+Because $\{(0, 0), (0, 1), (1, 1)\} = \M_\mathbb P(T)$, in other words, every model $v \in \M_\mathbb P(T)$ can be expanded to a model $v' \in \M_{\mathbb P'}(T')$ (e.g., $(0, 1)$ can be expanded by defining $v'(r) = 0$ to the model $(0, 1, 0)$), $T'$ is even a conservative extension of $T$. This means that every proposition in the language $\mathbb P$ is valid in $T$ if and only if it is valid in $T'$. But the proposition $p \limplies r$ (which is in the language $\mathbb P'$, but not in the language $\mathbb P$) is a new consequence: it is valid in $T'$ but not in $T$ (see the model $(1, 1, 0)$).
 
-Teorie $T''=\{\neg p\lor q,\neg q\lor r,\neg r\lor p\}$ v jazyce $\mathbb P'$ je extenzí $T$, ale ne konzervativní extenzí, neboť v ní platí $p\liff q$, což neplatí v $T$. Nebo také proto, že model $(0, 1)$ teorie $T$ nelze rozšířit na model teorie $T''$: $(0,1,0)$ ani $(0,1,1)$ nesplňují axiomy $T''$.
+The theory $T'' = \{\neg p \lor q, \neg q \lor r, \neg r \lor p\}$ in the language $\mathbb P'$ is an extension of $T$ but not a conservative extension because $p \liff q$ is valid in $T''$, but not in $T$. Or because the model $(0, 1)$ of the theory $T$ cannot be extended to a model of $T''$: neither $(0, 1, 0)$ nor $(0, 1, 1)$ satisfy the axioms of $T''$.
 
-Teorie $T$ je (jednoduchou) extenzí teorie $\{\neg p\lor q\}$ v jazyce $\mathbb P$ a naopak, $T\sim\{\neg p\lor q\}$. Je také, jako každá teorie, jednoduchou konzervativní extenzí sebe sama.
+The theory $T$ is a (simple) extension of the theory $\{\neg p \lor q\}$ in the language $\mathbb P$, and vice versa: $T \sim \{\neg p \lor q\}$. It is also, like any theory, a simple conservative extension of itself.
 \end{example}
 
 \begin{exercise}
-    Ukažte (podrobně), že má-li teorie $T$ kompletní konzervativní extenzi, potom je sama nutně kompletní.
+    Show (in detail) that if a theory $T$ has a complete conservative extension, then it must itself be complete.
 \end{exercise}
 
-\section{Algebra výroků}
 
-V logice nás většinou\footnote{Pokud např. neprovádíme konkrétní algoritmus založený na syntaktických úpravách, třeba převod do CNF.} zajímají výroky (resp. teorie) \emph{až na ekvivalenci}.\footnote{Můžeme je chápat jako jakési abstraktní `vlastnosti' modelů bez ohledu na jejich konkrétní vyjádření.} Na otázku `Kolik existuje různých výroků v jazyce $\mathbb P=\{p,q,r\}$?' je správná odpověď `Nekonečně mnoho.' Nejspíše nás ale zajímaly výroky \emph{až na ekvivalenci} (neboli \emph{navzájem neekvivalentní}). Těch je tolik, kolik existuje různých podmnožin modelů jazyka, tedy $2^{|\M_\mathbb P|}=2^8=256$. Skutečně, mají-li dva výroky stejnou množinu modelů, jsou z definice ekvivalentní. A pro každou množinu modelů můžeme najít odpovídající výrok, např. v DNF (viz \ref{proposition:axiomatize-in-DNF-CNF}). Zkusme trochu složitější úvahu:
+\section{Algebra of Propositions}
+
+In logic, we are usually\footnote{Unless, for example, we have a syntactic-transformation-based method such as conversion to CNF.} interested in propositions (or theories) \emph{up to equivalence}.\footnote{We can view them as a kind of abstract `properties' of models, regardless of their specific description.} The correct answer to the question `How many different propositions are there in the language $\mathbb{P} = \{p, q, r\}$?' is `Infinitely many'. However, we are probably interested in propositions \emph{up to equivalence} (in other words, \emph{mutually inequivalent}). There are as many of these as there are different subsets of models of the language, which is $2^{|\M_\mathbb{P}|} = 2^8 = 256$. Indeed, if two propositions have the same set of models, they are equivalent by definition. And for each set of models, we can find a corresponding proposition, e.g., in DNF (see \ref{proposition:axiomatize-in-DNF-CNF}). Let us consider slightly more complex reasoning:
 
 \begin{example}
-    Mějme teorii $T$ v jazyce $\mathbb P=\{p,q,r\}$ mající právě pět modelů. Kolik existuje (až na ekvivalenci) výroků nad $\mathbb P$, které jsou nezávislé v teorii $T$? Označme $|\mathbb P|=n=3$ a $|\M_\mathbb P(T)|=k=5$.
+    Let $T$ be a theory in the language $\mathbb{P} = \{p, q, r\}$ having exactly five models. How many propositions over $\mathbb{P}$ (up to equivalence) are independent in the theory $T$? Let $|\mathbb{P}| = n = 3$ and $|\M_\mathbb{P}(T)| = k = 5$.
 
-    Počítáme množiny $M=\M_\mathbb P(\varphi)$ a požadujeme, aby $\emptyset\neq M\cap \M_\mathbb P(T)\neq\M_\mathbb P(T)$. Máme tedy celkem $2^k-2=30$ možností, jak může vypadat množina $M\cap \M_\mathbb P(T)$. A pro každý model jazyka, který není modelem $T$ (těch je $2^n-k=3$) můžeme zvolit libovolně, zda bude či nebude v $M$. Celkově tedy dostáváme $(2^k-2)\cdot 2^{2^n-k}=30\cdot 2^{8-5}=240$ možných množin $M$, tolik je tedy výroků nezávislých v $T$, až na ekvivalenci.
+    We count the sets $M = \M_\mathbb{P}(\varphi)$ and require that $\emptyset \neq M \cap \M_\mathbb{P}(T) \neq \M_\mathbb{P}(T)$. Thus, we have a total of $2^k - 2 = 30$ possibilities for what the set $M \cap \M_\mathbb{P}(T)$ may be. And for each model of the language that is not a model of $T$ (there are $2^n - k = 3$ of these), we can choose arbitrarily whether or not it will be in $M$. Altogether, we get $(2^k - 2) \cdot 2^{2^n - k} = 30 \cdot 2^{8 - 5} = 240$ possible sets $M$. Hence that is the number of propositions independent in $T$, up to equivalence.
 \end{example}
 
-Podívejme se na věc abstraktněji. Formálně, uvažujeme množinu ekvivalenčních tříd $\sim$ na množině všech výroků $\VF_\mathbb P$, kterou označíme $\sfrac{\VF_\mathbb P}{\sim}$. Prvky této množiny jsou množiny ekvivalentních výroků, např. $[p\limplies q]_\sim=\{p\limplies q,\neg p \lor q,\neg(p\land \neg q), \neg p\lor q\lor q,\dots\}$. A máme zobrazení $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ (kde $\mathcal P(X)$ je množina všech podmnožin $X$) definované předpisem:
+Let us explore the matter on a more abstract level. Formally, we consider the set of equivalence classes of $\sim$ on the set of all propositions $\VF_\mathbb{P}$, which we denote as $\sfrac{\VF_\mathbb{P}}{\sim}$. The elements of this set are sets of equivalent propositions, e.g., $[p \limplies q]_\sim = \{p \limplies q, \neg p \lor q, \neg(p \land \neg q), \neg p \lor q \lor q, \dots\}$. And we have a mapping $h:\sfrac{\VF_\mathbb{P}}{\sim} \to \mathcal{P}(\M_\mathbb{P})$ (where $\mathcal{P}(X)$ is the set of all subsets of $X$) defined by:
 $$
-h([\varphi]_\sim)=\M(\varphi)
+h([\varphi]_\sim) = \M(\varphi)
 $$
-tj. třídě ekvivalentních výroků přiřadíme množinu modelů libovolného z nich. Je snadné ověřit, že toto zobrazení je korektně definované (nezáleží na tom, jaký výrok z třídy ekvivalence jsme si vybrali) a prosté, a že je-li jazyk $\mathbb P$ konečný, je $h$ dokonce bijekce. (Ověřte!)
+That is, to an equivalence class of propositions we assign the set of models of any member of that class. It is easy to verify that this mapping is well-defined (the definition does not depend on the choice of proposition from the class), injective, and if the language $\mathbb{P}$ is finite, then $h$ is even bijective. (Do verify this!)
 
-Na množině $\sfrac{\VF_\mathbb P}{\sim}$ můžeme zavést operace $\neg,\landsymb,\lorsymb$ pomocí předpisu
+On the set $\sfrac{\VF_\mathbb{P}}{\sim}$, we can define operations $\neg, \land, \lor$ by:
 \begin{align*}
-    \neg [\varphi]_\sim &=[\neg\varphi]_\sim\\
-    [\varphi]_\sim \land [\psi]_\sim &= [\varphi\land\psi]_\sim\\
-    [\varphi]_\sim \lor [\psi]_\sim &= [\varphi\lor\psi]_\sim
+    \neg [\varphi]_\sim &= [\neg \varphi]_\sim \\
+    [\varphi]_\sim \land [\psi]_\sim &= [\varphi \land \psi]_\sim \\
+    [\varphi]_\sim \lor [\psi]_\sim &= [\varphi \lor \psi]_\sim
 \end{align*}
-tedy vybereme reprezentanta resp. reprezentanty, a provedeme operaci s nimi, např. `konjunkce' tříd $[p\limplies q]_\sim$ a $[q\lor \neg r]_\sim$ je:
+In words, we select the representative or representatives and perform the operation with them, e.g., the `conjunction' of the classes $[p \limplies q]_\sim$ and $[q \lor \neg r]_\sim$ is:
 $$
-[p\limplies q]_\sim\land[q\lor \neg r]_\sim=[(p\limplies q)\land (q\lor \neg r)]_\sim
+[p \limplies q]_\sim \land [q \lor \neg r]_\sim = [(p \limplies q) \land (q \lor \neg r)]_\sim
 $$
-Přidáme-li také \emph{konstanty} $\bot=[\bot]_\sim$ a $\top=[\top]_\sim$, dostáváme \emph{(matematickou) strukturu}\footnote{Struktura je neprázdná množina spolu s relacemi, operacemi, a konstantami. Například (orientovaný) graf, grupa, těleso, vektorový prostor. Struktury budou hrát důležitou roli v predikátové logice.}
+By adding \emph{constants} $\bot = [\bot]_\sim$ and $\top = [\top]_\sim$, we obtain the \emph{(mathematical) structure}\footnote{A structure is a non-empty set together with relations, operations, and constants. For example, a (directed) graph, a group, a field, a vector space. Structures will play an important role in predicate logic.}
 $$
-\mathbf{AV}_\mathbb P=\langle \sfrac{\VF_\mathbb P}{\sim}; \neg, \landsymb, \lorsymb, \bot, \top\rangle
+\mathbf{AV}_\mathbb{P} = \langle \sfrac{\VF_\mathbb{P}}{\sim}; \neg, \land, \lor, \bot, \top \rangle
 $$
-které říkáme \emph{algebra výroků} jazyka $\mathbb P$. Je to příklad tzv. \emph{Booleovy algebry}. To znamená,  že její operace se `chovají' jako operace $\overline{\phantom{x}}$, $\cap$, $\cup$ na množině všech podmnožin $\mathcal P(X)$ nějaké neprázdné množiny $X$, a konstanty odpovídají $\emptyset$, $X$ (takové Booleově algebře říkáme \emph{potenční algebra}).\footnote{Tj. splňují určité algebraické zákony, například distributivitu $\land$ vůči $\lor$. Booleovy algebry definujeme formálně později, uveďme ale ještě jeden důležitý příklad: množina všech $n$-bitových vektorů s operacemi $\thicksim$, $\&$, $|$ (po složkách) a s konstantami $(0,0,\dots,0)$ a $(1,1,\dots,1)$.}
+which we call the \emph{algebra of propositions} of the language $\mathbb{P}$. It is an example of a so-called \emph{Boolean algebra}. This means that its operations `behave' like the operations $\overline{\phantom{x}}$, $\cap$, $\cup$ on the set of all subsets $\mathcal{P}(X)$ of some non-empty set $X$, and the constants correspond to $\emptyset$, $X$ (such a Boolean algebra is called a \emph{power set algebra}).\footnote{That is, they satisfy certain algebraic laws, such as the distributive law of $\land$ over $\lor$. Boolean algebras will be formally defined later, but let us mention another important example: the set of all $n$-bit vectors with operations $\thicksim$, $\&$, $|$ (coordinate-wise) and with constants $(0,0,\dots,0)$ and $(1,1,\dots,1)$.}
 
-Zobrazení $h:\sfrac{\VF_\mathbb P}{\sim}\to\mathcal P(\M_\mathbb P)$ je tedy prosté zobrazení z algebry výroků $\mathbf{AV}_\mathbb P$ do potenční algebry
+The mapping $h:\sfrac{\VF_\mathbb{P}}{\sim} \to \mathcal{P}(\M_\mathbb{P})$ is thus an injective mapping from the algebra of propositions $\mathbf{AV}_\mathbb{P}$ to the power set algebra
 $$
-\mathbf{\mathcal P(\M_\mathbb P)}=\langle \mathcal P(\M_\mathbb P); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb P\rangle
+\mathbf{\mathcal{P}(\M_\mathbb{P})} = \langle \mathcal{P}(\M_\mathbb{P}); \overline{\phantom{x}}, \cap, \cup, \emptyset, \M_\mathbb{P} \rangle
 $$
-a je-li jazyk konečný, je to bijekce. Toto zobrazení `zachovává' operace a konstanty, tj. platí $h(\bot)=\emptyset$, $h(\top)=\M_\mathbb P$, a
+and if the language is finite, it is a bijection. This mapping `preserves' the operations and constants, i.e., it holds that $h(\bot) = \emptyset$, $h(\top) = \M_\mathbb{P}$, and
 \begin{align*}
-    h(\neg[\varphi]_\sim)&=\overline{h([\varphi]_\sim)}=\overline{\M(\varphi)}=\M_\mathbb P\setminus\M(\varphi)\\
-    h([\varphi]_\sim\land[\psi]_\sim)&=h([\varphi]_\sim)\cap h([\psi]_\sim)=\M(\varphi)\cap\M(\psi)\\
-    h([\varphi]_\sim\lor[\psi]_\sim)&=h([\varphi]_\sim)\cup h([\psi]_\sim)=\M(\varphi)\cup\M(\psi)
+    h(\neg[\varphi]_\sim) &= \overline{h([\varphi]_\sim)} = \overline{\M(\varphi)} = \M_\mathbb{P} \setminus \M(\varphi) \\
+    h([\varphi]_\sim \land [\psi]_\sim) &= h([\varphi]_\sim) \cap h([\psi]_\sim) = \M(\varphi) \cap \M(\psi) \\
+    h([\varphi]_\sim \lor [\psi]_\sim) &= h([\varphi]_\sim) \cup h([\psi]_\sim) = \M(\varphi) \cup \M(\psi)
 \end{align*}
-Takovému zobrazení říkáme \emph{homomorfismus} Booleových algeber, a je-li to bijekce, jde o \emph{izomorfismus}. 
+Such a mapping is called a \emph{homomorphism} of Boolean algebras, and if it is a bijection, it is an \emph{isomorphism}.
 
 \begin{remark}
-Tyto vztahy můžeme také využít při hledání modelů: například pro výrok $\varphi\limplies(\neg\psi\land\chi)$ platí (s využitím toho, že $\M(\varphi\limplies\varphi')=M(\neg\varphi\lor\varphi')$):
+We can apply these relationships when searching for models: for the proposition $\varphi \limplies (\neg \psi \land \chi)$, it holds (using the fact that $\M(\varphi \limplies \varphi') = \M(\neg \varphi \lor \varphi')$):
 $$
-\M(\varphi\limplies(\neg\psi\land\chi))=\overline{\M(\varphi)}\cup(\overline{\M(\psi)}\cap\M(\chi))
+\M(\varphi \limplies (\neg \psi \land \chi)) = \overline{\M(\varphi)} \cup (\overline{\M(\psi)} \cap \M(\chi))
 $$
 \end{remark}
 
-Všechny předchozí úvahy můžeme také relativizovat vzhledem k dané teorii $T$ v jazyce $\mathbb P$, a to tak, že ekvivalenci $\sim$ nahradíme $T$-ekvivalencí $\sim_T$ a množinu modelů jazyka $\M_\mathbb P$ nahradíme množinou modelů teorie $\M_\mathbb P(T)$. Dostáváme:
+We can also relativize all of the above reasoning with respect to a given theory $T$ in the language $\mathbb{P}$ by replacing the equivalence $\sim$ with $T$-equivalence $\sim_T$ and the set of models of the language $\M_\mathbb{P}$ with the set of models of the theory $\M_\mathbb{P}(T)$. We get:
 \begin{align*}
-    h(\bot)&=\emptyset,\\
-    h(\top)&=\M(T)\\
-    h(\neg[\varphi]_{\sim_T})&=\M(T)\setminus\M(T,\varphi)\\
-    h([\varphi]_{\sim_T}\land[\psi]_{\sim_T})&=\M(T,\varphi)\cap\M(T,\psi)\\
-    h([\varphi]_{\sim_T}\lor[\psi]_{\sim_T})&=\M(T,\varphi)\cup\M(T,\psi)
+    h(\bot) &= \emptyset,\\
+    h(\top) &= \M(T)\\
+    h(\neg[\varphi]_{\sim_T}) &= \M(T) \setminus \M(T,\varphi)\\
+    h([\varphi]_{\sim_T} \land [\psi]_{\sim_T}) &= \M(T,\varphi) \cap \M(T,\psi)\\
+    h([\varphi]_{\sim_T} \lor [\psi]_{\sim_T}) &= \M(T,\varphi) \cup \M(T,\psi)
 \end{align*}
-Výslednou \emph{algebru výroků vzhledem k teorii $T$} označíme $\mathbf{AV}_\mathbb P(T)$. Algebra výroků jazyka je tedy totéž co algebra výroků vzhledem k prázdné teorii. Z technických důvodů potřebujeme, aby $\M(T)$ byla neprázdná, tj. $T$ musí být bezesporná. Shrňme naše úvahy:
+The resulting \emph{algebra of propositions with respect to the theory $T$} is denoted as $\mathbf{AV}_\mathbb{P}(T)$. The algebra of propositions of the language is thus the same as the algebra of propositions with respect to the empty theory. For technical reasons, we need $\M(T)$ to be non-empty, i.e., $T$ must be consistent. Let's summarize our considerations:
 
 \begin{corollary}\label{corollary:lt-algebra}
-Je-li $T$ bezesporná teorie nad \emph{konečným} jazykem $\mathbb P$, potom je algebra výroků   $\mathbf{AV}_\mathbb P(T)$ izomorfní potenční algebře $\mathbf{\mathcal P(\M_\mathbb P(T))}$ prostřednictvím zobrazení $h([\varphi]_{\sim_T})=M(T,\varphi)$.
+If $T$ is a consistent theory over a \emph{finite} language $\mathbb{P}$, then the algebra of propositions $\mathbf{AV}_\mathbb{P}(T)$ is isomorphic to the power set algebra $\mathbf{\mathcal{P}(\M_\mathbb{P}(T))}$ through the mapping $h([\varphi]_{\sim_T}) = \M(T,\varphi)$.
 \end{corollary}
 
-Víme tedy, že negace, konjunkce, a disjunkce odpovídají doplňku, průniku a sjednocení množin modelů, a že chceme-li najít počet výroků až na ekvivalenci resp. $T$-ekvivalenci, stačí určit počet příslušných množin modelů. Shrňme si několik takových výpočtů ve formě tvrzení, jeho důkaz necháme jako cvičení.
+Thus, we know that negation, conjunction, and disjunction correspond to complement, intersection, and union of sets of models, and that if we want to find the number of propositions up to equivalence or $T$-equivalence, we just need to determine the number of corresponding sets of models. Let us summarize a few such calculations in the form of a proposition, leaving its proof as an exercise.
 
 \begin{proposition}\label{proposition:counting-up-to-equivalence}
-Mějme $n$-prvkový jazyk $\mathbb P$ a bezespornou teorii $T$ mající právě $k$ modelů. Potom v jazyce $\mathbb P$ existuje \emph{až na ekvivalenci}:
+Let $\mathbb{P}$ be a language of size $n$ and $T$ a consistent theory in $\mathbb P$ with exactly $k$ models. Then in $\mathbb{P}$ there are, \emph{up to equivalence}:
 \begin{itemize}
-    \item $2^{2^n}$ výroků (resp. teorií),
-    \item $2^{2^n-k}$ výroků pravdivých (resp. lživých) v $T$,
-    \item $2^{2^n}-2\cdot 2^{2^n-k}$ výroků nezávislých v $T$,
-    \item $2^k$ jednoduchých extenzí teorie $T$ (z toho 1 sporná),
-    \item $k$ kompletních jednoduchých extenzí $T$.
+    \item $2^{2^n}$ propositions (or theories),
+    \item $2^{2^n - k}$ propositions true (or false) in $T$,
+    \item $2^{2^n} - 2 \cdot 2^{2^n - k}$ propositions independent in $T$,
+    \item $2^k$ simple extensions of the theory $T$ (of which 1 is inconsistent),
+    \item $k$ complete simple extensions of $T$.
 \end{itemize}
-Dále \emph{až na $T$-ekvivalenci} existuje:
+Furthermore, \emph{up to $T$-equivalence}, there are:
 \begin{itemize}
-    \item $2^k$ výroků,
-    \item $1$ výrok pravdivý v $T$, $1$ lživý v $T$,
-    \item $2^k-2$ výroků nezávislých v $T$.
+    \item $2^k$ propositions,
+    \item $1$ proposition true in $T$, $1$ false in $T$,
+    \item $2^k - 2$ propositions independent in $T$.
 \end{itemize}
 \end{proposition}
 
 \begin{exercise}
-    Zvolte vhodnou teorii $T$ a ukažte na jejím příkladě, že platí Tvrzení \ref{proposition:counting-up-to-equivalence}.
+    Choose a suitable theory $T$ and use it as an example to demonstrate that Proposition \ref{proposition:counting-up-to-equivalence} holds.
 \end{exercise}
 
 \begin{exercise}
-    Dokažte podrobně Tvrzení \ref{proposition:counting-up-to-equivalence}. (Nakreslete si Vennův diagram.)    
+    Prove Proposition \ref{proposition:counting-up-to-equivalence} in detail. (Draw a Venn diagram.)
 \end{exercise}
 
 \begin{exercise}
-    Dokažte podrobně, že zobrazení $h$ z Důsledku \ref{corollary:lt-algebra} je korektně definované, prosté, a je-li jazyk konečný, potom i na.
+    Prove in detail that the mapping $h$ from Corollary \ref{corollary:lt-algebra} is well-defined, injective, and if the language is finite, also surjective.
 \end{exercise}
-
-
-

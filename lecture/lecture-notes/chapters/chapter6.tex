@@ -1,176 +1,168 @@
-\chapter{Syntaxe a sémantika predikátové logiky}
+\chapter{Syntax and Semantics of Predicate Logic}
 
-Kurzy logiky vesměs začínají výrokovou logikou, která je pro svou jednoduchost vhodnější k prvnímu seznámení. Plná síla logiky v informatice se ale projeví teprve s použitím logiky predikátové.
-Začněme neformálním úvodem, ve kterém ilustrujeme základní aspekty predikátové logiky. K formálnímu výkladu se vrátíme v následujících sekcích.
+Courses on logic generally start with propositional logic, which is more suitable for initial exposition due to its simplicity. However, the full power of logic in computer science only manifests itself with the use of predicate logic. Let us begin with an informal introduction that illustrates the basic aspects of predicate logic. We will return to a formal exposition in the following sections.
 
-\section{Úvod}
-Připomeňme, že ve výrokové logice jsme popisovali svět pomocí \emph{výroků} složených z \emph{prvovýroků}---odpovědí na zjišťovací (ano/ne) otázky o světě. V predikátové logice (prvního řádu)\footnote{V logice druhého řádu máme také proměnné reprezentující množiny individuí nebo i množiny $n$-tic, tj. relace na množině individuí.} jsou základním stavebním kamenem \emph{proměnné} reprezentující \emph{individua}---nedělitelné objekty z nějaké množiny: např. přirozená čísla, vrcholy grafu, nebo stavy mikroprocesoru. 
+\section{Introduction}
+Recall that in propositional logic, we described the world using \emph{propositions} composed of \emph{atomic propositions}---answers to yes/no questions about the world. In (first-order\footnote{In second-order logic, we also have variables representing sets of individuals or even sets of $n$-tuples, i.e., relations on the set of individuals.}) predicate logic  the basic building blocks are \emph{variables} representing \emph{individuals}---indivisible objects from some set: e.g., natural numbers, vertices of a graph, or states of a microprocessor.
 
-Tato individua mohou mít určité vlastnosti a vzájemné vztahy, kterým říkáme \emph{predikáty}, např. `$\mathrm{Leaf}(x)$' nebo `$\mathrm{Edge}(x,y)$' mluvíme-li o grafu, nebo `$x\leq y$' v přirozených číslech. Kromě toho mohou individua vstupovat do funkcí, např. `$\mathrm{lowest\_common\_ancestor}(x,y)$' v zakořeněném stromu, `$\mathrm{succ}(x)$' nebo `$x+y$' v přirozených číslech, a být \emph{konstantami} se speciálním významem, např. `$\mathrm{root}$' v zakořeněném stromu, `$0$' v přirozených číslech. 
+These individuals can have certain properties and relationships, which we call \emph{predicates}, e.g., `$\mathrm{Leaf}(x)$' or `$\mathrm{Edge}(x,y)$' when talking about a graph, or `$x\leq y$' in natural numbers. In addition, individuals can be passed into functions, e.g., `$\mathrm{lowest\_common\_ancestor}(x,y)$' in a rooted tree, `$\mathrm{succ}(x)$' or `$x+y$' in natural numbers, and they can be \emph{constants} with special meaning, e.g., `$\mathrm{root}$' in a rooted tree, `$0$' in natural numbers.
 
-\emph{Atomické formule} popisují predikát (včetně predikátu \emph{rovnosti} $=$) o proměnných nebo o \emph{termech} (`výrazech' složených\footnote{Podobně jako vytváříme aritmetické výrazy.} z funkcí popř. konstant). A složitější tvrzení (\emph{formule}) budujeme z atomických formulí pomocí logických spojek, a dvou \emph{kvantifikátorů}: 
+\emph{Atomic formulas} describe a predicate (including \emph{equality} predicate $=$) about variables or \emph{terms} (`expressions' composed\footnote{Similarly to how we create arithmetic expressions.} of functions or constants). More complex statements (\emph{formulas}) are built from atomic formulas using logical connectives and two \emph{quantifiers}:
 \begin{itemize}
-    \item $\forall x$ ``pro všechna individua (reprezentovaná proměnnou $x$),'' a
-    \item $\exists x$ ``existuje individuum (reprezentované proměnnou $x$)''.
+    \item $\forall x$ ``for all individuals (represented by variable $x$),'' and
+    \item $\exists x$ ``there exists an individual (represented by variable $x$)''.
 \end{itemize}
-Uveďme příklad: tvrzení \textit{``Každý, kdo má dítě, je rodič.''} bychom mohli formalizovat následující formulí:
+Let us look at an example: the statement \textit{``Everyone who has a child is a parent.''} could be formalized by the following formula:
 $$
 (\forall x)((\exists y)\mathrm{child\_of}(y,x)\limplies\mathrm{is\_parent}(x))
 $$
-kde $\mathrm{child\_of}(y,x)$ je binární predikát vyjadřující, že individuum reprezentované proměnnou $y$ je dítětem individua reprezentovaného proměnnou $x$, a $\mathrm{is\_parent}(x)$ je unární predikát (tj. `vlastnost') vyjadřující, že individuum reprezentované $x$ je rodič.
+where $\mathrm{child\_of}(y,x)$ is a binary predicate expressing that the individual represented by variable $y$ is a child of the individual represented by variable $x$, and $\mathrm{is\_parent}(x)$ is a unary predicate (i.e., a `property') expressing that the individual represented by $x$ is a parent.
 
-Jak je to s platností této formule? To záleží na konkrétním \emph{modelu} světa/systému, který nás zajímá. Model je (neprázdná) množina objektů spolu s unární relací (tj. podmnožinou) \emph{interpretující} \emph{unární relační symbol} $\mathrm{is\_parent}$ a binární relací interpretující \emph{binární relační symbol} $\mathrm{child\_of}$. Tyto relace mohou být obecně jakékoliv a snadno sestrojíme model, kde formule neplatí.\footnote{Vezměme například jednoprvkovou množinu $A=\{a\}$, a relace $\mathrm{child\_of}^A=\{(a,a)\}$, $\mathrm{parent}^A=\emptyset$, tedy jediný objekt je svým vlastním dítětem, ale není rodičem.} Pokud ale modelujeme například všechny lidi na světě, a relace mají svůj přirozený význam, potom formule bude platit.\footnote{Při formalizaci musíme být velmi opatrní, abychom nepřidali dodatečné předpoklady, které v modelovaném systému nemusí platit. Zde se například schovává předpoklad, že má-li někdo dítě, musí být jeho rodičem.}
+What about the validity of this formula? That depends on the specific \emph{model} of the world/system we are interested in. A model is a (non-empty) set of objects together with a unary relation (i.e., a subset) \emph{interpreting} the \emph{unary relation symbol} $\mathrm{is\_parent}$ and a binary relation interpreting the \emph{binary relation symbol} $\mathrm{child\_of}$. These relations can generally be arbitrary, and it is easy to construct a model where the formula is not valid.\footnote{For example, take a single-element set $A=\{a\}$, and the relations $\mathrm{child\_of}^A=\{(a,a)\}$, $\mathrm{parent}^A=\emptyset$; here the only object is its own child, but it is not a parent.} However, if we model, for example, all people in the world, and the relations have their natural meaning, then the formula will be valid.\footnote{When formalizing, we must be very careful not to add additional assumptions that may not hold in the modeled system. Here, for example, there is an implicit assumption that if someone has a child, they must be the child's parent.}
 
-Podívejme se na ještě jeden příklad, tentokrát i s funkčními symboly a s konstantním symbolem: ``Je-li $x_1\leq y_1$ a $x_2\leq y_2$, potom $(y_1 \cdot y_2)-(x_1\cdot x_2)$ je nezáporné.'' Výsledná formule by mohla vypadat takto:
+Let us look at another example, this time with function symbols and a constant symbol: ``If $x_1\leq y_1$ and $x_2\leq y_2$, then $(y_1 \cdot y_2)-(x_1\cdot x_2)$ is nonnegative.'' The resulting formula could look like this:
 $$
 \varphi=(x_1\leq y_1)\land (x_2\leq y_2)\limplies ((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)
 $$
-Vidíme dva binární relační symboly ($\leq,\geq$), binární funkční symbol $+$, unární funkční symbol $-$, a konstantní symbol $0$. 
+We see two binary relation symbols ($\leq,\geq$), a binary function symbol $+$, a unary function symbol $-$, and a constant symbol $0$.
 
-Příkladem modelu, ve kterém formule platí, je množina přirozených čísel $\mathbb N$ s binárními relacemi $\leq^\mathbb N,\geq^\mathbb N$, binárními funkcemi $+^\mathbb N,\cdot^\mathbb N$, unární funkcí $-^\mathbb N$, a konstantou $0^\mathbb N=0$. Vezmeme-li ale podobně množinu celých čísel, formule už platit nebude.
+An example of a model in which the formula is valid is the set of natural numbers $\mathbb N$ with binary relations $\leq^\mathbb N,\geq^\mathbb N$, binary functions $+^\mathbb N,\cdot^\mathbb N$, unary function $-^\mathbb N$, and the constant $0^\mathbb N=0$. However, if we similarly take the set of integers, the formula will no longer be valid.
 
 \begin{remark}
-Mohli bychom chápat symbol $-$ jako binární operaci, obvykle se ale zavádí jako unární. Pro konstantní symbol $0$ používáme (jak je zvykem) stejný symbol, jako pro přirozené číslo 0. Ale pozor, v našem modelu může být tento konstantní symbol interpretován jako jiné číslo, nebo náš model vůbec nemusí sestávat z čísel!
+We could understand the symbol $-$ as a binary operation, but it is usually introduced as unary. For the constant symbol $0$, we use (as is customary) the same symbol as for the natural number 0. But note that in our model, this constant symbol could be interpreted as a different number, or our model might not consist of numbers at all!
 \end{remark}
 
-Ve formuli nejsou žádné kvantifikátory (takovým formulím říkáme \emph{otevřené}), proměnné $x_1,x_2,y_1,y_2$ jsou \emph{volné proměnné} této formule (nejsou \emph{vázané} žádným kvantifikátorem), píšeme $\varphi(x_1,x_2,y_1,y_2)$. Sémantiku této formule chápeme stejně, jako formule
+There are no quantifiers in the formula (such formulas are called \emph{open}), the variables $x_1,x_2,y_1,y_2$ are \emph{free variables} of this formula (they are not \emph{bound} by any quantifier), we write $\varphi(x_1,x_2,y_1,y_2)$. We understand the semantics of this formula in the same way as the formula
 $$
 (\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)
 $$
 
-Výraz $(y_1 \cdot y_2)+(-(x_1\cdot x_2))$ je příkladem \emph{termu}, výrazy $(x_1\leq y_1)$, $(x_2\leq y_2)$ a $((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$ jsou \emph{atomické (pod)formule}. V čem spočívá rozdíl? Máme-li konkrétní model, a konkrétní \emph{ohodnocení proměnných} individui (prvky) tohoto modelu, potom atomickým formulím lze přiřadit pravdivostní hodnotu. Lze je tedy kombinovat s logickými spojkami do složitějších `logických výrazů', tj. formulí. Na druhou stranu `výsledkem' termu (při daném ohodnocení) je nějaké konkrétní individuum z modelu.
+The expression $(y_1 \cdot y_2)+(-(x_1\cdot x_2))$ is an example of a \emph{term}, and the expressions $(x_1\leq y_1)$, $(x_2\leq y_2)$ and $((y_1 \cdot y_2)+(-(x_1\cdot x_2))\geq 0)$ are \emph{atomic (sub)formulas}. What is the difference? Given a specific model and a specific \emph{variable assignment} by individuals (elements) of this model, atomic formulas can be assigned a truth value. Therefore, they can be combined with logical connectives into more complex `logical expressions', i.e., formulas. On the other hand, the `result' of a term (under a given variable assignment) is some specific individual from the model.
 
-Upozorníme ještě na to, že v zápisu formule $\varphi$ jsme použili infixový zápis pro funkční symboly $+,\cdot$ a pro relace $\leq,\geq$, a podobné konvence o uzávorkování jako ve výrokové logice. Jinak bychom formuli $\varphi$ zapsali takto:
+We also note that in the formula $\varphi$, we used infix notation for the function symbols $+,\cdot$ and for the relations $\leq,\geq$, and similar conventions for parentheses as in propositional logic. Otherwise, we would write the formula $\varphi$ as follows:
 $$
 ((\leq (x_1,y_1) \land \leq(x_2,y_2))\limplies \leq(+(\cdot (y_1,y_2),-(\cdot(x_1,x_2))),0))
 $$
 
-
 \begin{exercise}
-Najděte vhodnou definici pojmu \emph{stromu formule} (zobecňující \emph{strom výroku} z výrokové logiky) a nakreslete strom formule $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)$.
+Find a suitable definition for the notion of a \emph{tree of a formula} (generalizing the \emph{tree of a proposition} from propositional logic). Draw the tree for the following formula from the above example: $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)\varphi(x_1,x_2,y_1,y_2)$.
 \end{exercise}
 
+Now, let us start by formalizing this notion of a ``\emph{model}'', a so-called \emph{structure}. The rest of the chapter follows the outline of the exposition on propositional logic: we will introduce the syntax, then the semantics, and finally the more advanced properties of formulas, theories, and structures. At the end, we will show a simple but very useful application of predicate logic, called \emph{definability} of subsets and relations, which is the basis of \emph{relational databases} (e.g., SQL), and once again look at the relationship between propositional and predicate logic.
 
-Nyní začneme tím, že formalizujeme tento koncept ``\emph{modelu}'', tzv. \emph{strukturu}. Zbytek kapitoly sleduje osnovu výkladu o výrokové logice: představíme syntaxi, následně sémantiku, a nakonec pokročilejší vlastnosti formulí, teorií, a struktur. Na závěr si ukážeme jednu jednoduchou, ale velmi užitečnou aplikaci predikátové logiky, takzvanou \emph{definovatelnost} podmnožin a relací, která je základem \emph{relačních databází} (např. SQL), a ještě jednou se podíváme na vztah výrokové a predikátové logiky.
+\section{Structures}
 
-\section{Struktury}
-
-Nejprve specifikujeme, jakého \emph{typu} bude daná struktura, tj. jaké bude mít relace, funkce (jakých arit) a konstanty, a jaké symboly pro ně budeme používat. Této formální specifikaci se někdy říká \emph{typ}, my budeme říkat \emph{signatura}.\footnote{Signaturu si můžete představovat analogicky definici \emph{třídy} v OOP, struktury potom odpovídají \emph{objektům} této třídy (v `programovacím jazyce' teorie množin).} Připomeňme, že \emph{konstanty} můžeme chápat jako funkce arity 0 (tj. funkce bez vstupů).
+First, we specify what \emph{type} the given structure will be, i.e., what relations, functions (of which arities), and constants it will have, and what symbols we will use for them. This formal specification is sometimes called a \emph{type}, but we will call it a \emph{signature}.\footnote{You can think of a signature  as similar to the definition of a \emph{class} in OOP; structures then correspond to \emph{objects} of this class (in the `programming language' of set theory).} Recall that we can consider \emph{constants} as functions of arity 0 (i.e., functions without inputs).
 
 \begin{definition}
-    \emph{Signatura} je dvojice $\langle\mathcal R,\mathcal F\rangle$, kde $\mathcal R,\mathcal F$ jsou disjunktní množiny symbolů (\emph{relační} a \emph{funkční}, ty zahrnují \emph{konstantní}) spolu s danými aritami (tj. danými funkcí $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) a neobsahující symbol `$=$' (ten je rezervovaný pro \emph{rovnost}). 
-    
+    A \emph{signature} is a pair $\langle\mathcal R,\mathcal F\rangle$, where $\mathcal R,\mathcal F$ are disjoint sets of symbols (\emph{relation} and \emph{function}, the latter include \emph{constant} symbols) with given arities (i.e., given by a function $\mathrm{ar}\colon \mathcal R\cup\mathcal F\to\mathbb N$) and not containing the symbol `$=$' (which is reserved for \emph{equality}).
 \end{definition}
 
-Často ale budeme signaturu zapisovat jen výčtem symbolů, bude-li jejich arita a to, zda jsou relační nebo funkční, zřejmé z kontextu. Uveďme několik příkladů signatur:
+However, we will often write a signature just by listing the symbols, where their arity and whether they are relation or function symbols will be clear from the context. Here are a few examples of signatures:
 \begin{itemize}
-    \item $\langle E \rangle$ signatura \emph{grafů}: $E$ je binární relační symbol (struktury jsou uspořádané grafy),
-    \item $\langle \leq \rangle$ signatura \emph{částečných uspořádání}: stejná jako signatura grafů, jen jiný symbol,\footnote{Ne každá struktura v této signatuře je částečné uspořádání, k tomu ještě potřebujeme, aby splňovala příslušné \emph{axiomy}.}
-    \item $\langle +, -, 0\rangle$ signatura \emph{grup}: $+$ je binární funkční, $-$ unární funkční, $0$ konstantní symbol
-    \item $\langle +, -, 0,\cdot,1\rangle$ signatura \emph{těles}: $\cdot$ je binární funkční, $1$ konstantní symbol
-    \item $\langle +, -, 0,\cdot,1,\leq\rangle$ signatura \emph{uspořádaných těles}: $\leq$ je binární relační symbol,
-    \item $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ signatura \emph{Booleových algeber}: $\landsymb,\lorsymb$ jsou binární funkční symboly, $\bot,\top$ jsou konstantní symboly,
-    \item $\langle S,+,\cdot,0,\leq\rangle$ signatura \emph{aritmetiky}: $S$ je unární funkční symbol (`successor').
+    \item $\langle E \rangle$ the signature of \emph{graphs}: $E$ is a binary relation symbol (structures are directed graphs),
+    \item $\langle \leq \rangle$ the signature of \emph{partial orders}: the same as the signature of graphs, just a different symbol,\footnote{Not every structure in this signature is a partial order; for that, it needs to satisfy the corresponding \emph{axioms}.}
+    \item $\langle +, -, 0\rangle$ the signature of \emph{groups}: $+$ is a binary function, $-$ a unary function, $0$ a constant symbol
+    \item $\langle +, -, 0,\cdot,1\rangle$ the signature of \emph{fields}: $\cdot$ is a binary function, $1$ a constant symbol
+    \item $\langle +, -, 0,\cdot,1,\leq\rangle$ the signature of \emph{ordered fields}: $\leq$ is a binary relation symbol,
+    \item $\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ the signature of \emph{Boolean algebras}: $\landsymb,\lorsymb$ are binary function symbols, $\bot,\top$ are constant symbols,
+    \item $\langle S,+,\cdot,0,\leq\rangle$ the signature of \emph{arithmetic}: $S$ is a unary function symbol (`successor').
 \end{itemize}
-Kromě běžných symbolů relací, funkcí a konstant (známých např. z aritmetiky) typicky používáme pro relační symboly $P,Q,R,\dots$, pro funkční symboly $f,g,h,\dots$, a pro konstantní symboly $c,d,a,b,\dots$
+In addition to common symbols for relations, functions, and constants (familiar e.g. from arithmetic), we typically use $P,Q,R,\dots$ for relation symbols, $f,g,h,\dots$ for function symbols, and $c,d,a,b,\dots$ for constant symbols.
 
-\emph{Strukturu} dané signatury získáme tak, že na nějaké neprázdné \emph{doméně} zvolíme \emph{realizace} (také říkáme \emph{interpretace}) všech relačních a funkčních symbolů (a konstant), tj. konkrétní relace resp. funkce příslušných arit. (V případě konstantního symbolu je jeho realizací zvolený prvek z domény.)\footnote{Na tom, jaké konkrétní symboly v signatuře použijeme, nezáleží, můžeme je interpretovat libovolně. Například to, že máme symbol $+$ neznamená, že by jeho interpretace musela mít cokoliv společného se sčítáním (tedy kromě toho, že to bude také binární funkce).}
+A \emph{structure} of a given signature is obtained by taking some non-empty \emph{domain} and choosing \emph{interpretations} (also called \emph{realizations}) of all relation and function symbols (and constants) on that domain, i.e., specific relations or functions of the appropriate arities. (In the case of a constant symbol, its interpretation is a chosen element from the domain.)\footnote{It does not matter what specific symbols we use in the signature; we can interpret them arbitrarily. For example, having the symbol $+$ does not mean that its interpretation must have anything to do with addition (other than being a binary function).}
 
 \begin{example} \label{example:signatures}
-    Formální definice \emph{struktury} je uvedena níže, nejprve si ukážeme několik příkladů:
+    The formal definition of a \emph{structure} is given below; first, let us show a few examples:
 \begin{itemize}
-    \item Struktura v prázdné signatuře $\langle\ \rangle$ je libovolná neprázdná množina.\footnote{Jak uvidíme v definici níže, formálně vzato je to trojice $\langle A,\emptyset,\emptyset\rangle$, ale tento rozdíl budeme zanedbávat.} (Nemusí být konečná, dokonce ani spočetná!)
-    \item Struktura v signatuře grafů je $\mathcal G=\langle V,E\rangle$, kde $V\neq\emptyset$ a $E\subseteq V^2$, říkáme jí \emph{orientovaný graf}. 
+    \item A structure in the empty signature $\langle\ \rangle$ is any non-empty set.\footnote{As we will see in the definition below, formally, it is the triple $\langle A,\emptyset,\emptyset\rangle$, but we will ignore this distinction.} (It does not have to be finite, not even countable!)
+    \item A structure in the signature of graphs is $\mathcal G=\langle V,E\rangle$, where $V\neq\emptyset$ and $E\subseteq V^2$, called a \emph{directed graph}. 
     \begin{itemize}
-        \item Je-li $E$ ireflexivní a symetrická, jde o \emph{jednoduchý} graf (tj. neorientovaný, bez smyček).
-        \item Je-li $E$ reflexivní, tranzitivní, a antisymetrická, jde o \emph{částečné uspořádání}.
-        \item Je-li $E$ reflexivní, tranzitivní, a symetrická, mluvíme o \emph{ekvivalenci}.
+        \item If $E$ is irreflexive and symmetric, it is a \emph{simple} graph (i.e., undirected, without loops).
+        \item If $E$ is reflexive, transitive, and antisymmetric, it is a \emph{partial order}.
+        \item If $E$ is reflexive, transitive, and symmetric, it is an \emph{equivalence relation}.
     \end{itemize}
-    \item Struktury v signatuře částečných uspořádání jsou tytéž, jako v signatuře grafů, signatury se liší jen použitým symbolem. (Tedy ne každá struktura v signatuře částečných uspořádání je částečné uspořádání!)
-    \item Struktury v signatuře grup jsou například následující \emph{grupy}:
+    \item Structures in the signature of partial orders are the same as in the signature of graphs, differing only by the symbol used. (Thus, not every structure in the signature of partial orders is a partial order!)
+    \item Structures in the signature of groups are, for example, the following \emph{groups}:
     \begin{itemize}
-        \item $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$, \emph{aditivní grupa celých čísel modulo $n$} (operace jsou modulo $n$).\footnote{Zde $\underline{\mathbb Z_n}$ znamená strukturu, zatímco $\mathbb Z_n=\{0,1,\dots,n-1\}$ jen její doménu. Často se ale toto nerozlišuje a symbol $\mathbb Z_n$ se používá jak pro celou strukturu, tak jen její doménu. Podobně $+,-,0$ jsou jak symboly, tak i jejich interpretace. To je běžně používané značení, je klíčové být si vždy vědomi toho, v jakém významu daný symbol na daném místě používáme.}
-        \item $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$ je \emph{symetrická grupa} (grupa všech permutací) na $n$ prvcích.
-        \item $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$ je \emph{multiplikativní grupa (nenulových) racionálních čísel}. Všimněte si, že interpretací \emph{symbolu} $0$ je \emph{číslo} $1$.
+        \item $\underline{\mathbb Z_n}=\langle\mathbb Z_n,+,-,0\rangle$, the \emph{additive group of integers modulo $n$} (operations are modulo $n$).\footnote{Here, $\underline{\mathbb Z_n}$ denotes the structure, while $\mathbb Z_n=\{0,1,\dots,n-1\}$ denotes only its domain. Often, this distinction is not made, and the symbol $\mathbb Z_n$ is used for both the whole structure and its domain. Similarly, $+,-,0$ are both symbols and their interpretations. This is a common abuse of notation; it is crucial to always be aware of the meaning of the symbol in the given context.}
+        \item $\mathcal S_n=\langle \mathrm{Sym}_n,\circ,{}^{-1},\mathrm{id}\rangle$ is the \emph{symmetric group} (the group of all permutations) on $n$ elements.
+        \item $\underline{\mathbb Q}^*=\langle \mathbb Q\setminus\{0\},\cdot,{}^{-1},1\rangle$ is the \emph{multiplicative group of (non-zero) rational numbers}. Note that the interpretation of the \emph{symbol} $0$ is the \emph{number} $1$.
     \end{itemize}
-    Všechny tyto struktury \emph{splňují axiomy teorie grup}, snadno ale najdeme jiné struktury, které tyto axiomy nesplňují, a nejsou tedy grupami. Například změníme-li ve struktuře $\mathbb Z_n$ interpretaci symbolu $+$ na funkci $\cdot$ (modulo $n$).
-    \item Struktury $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ a $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$, se standardními operacemi a uspořádáním, jsou v signatuře uspořádaných těles (ale jen první z nich je uspořádaným tělesem).
-    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, tzv. \emph{potenční algebra} nad množinou $X$, je to struktura v signatuře Booleových algeber. (\emph{Booleova algebra} je to pokud $X\neq\emptyset$.)
-    \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, kde $S(x)=x+1$, a ostatní symboly jsou interpretovány standardně, je \emph{standardní model aritmetiky}.
+    All these structures \emph{satisfy the axioms of group theory}, but we can easily find other structures that do not satisfy these axioms and are therefore not groups. For example, if we change the interpretation of the symbol $+$ in the structure $\mathbb Z_n$ to the function $\cdot$ (modulo $n$).
+    \item Structures $\underline{\mathbb Q}=\langle \mathbb Q, +, -, 0,\cdot,1,\leq\rangle$ and $\underline{\mathbb Z}=\langle \mathbb Z, +, -, 0,\cdot,1,\leq\rangle$, with the standard operations and the standard order relation, are in the signature of ordered fields (but only the first one is an ordered field).
+    \item $\underline{\mathcal P(X)}=\langle \mathcal P(X),\bar{},\cap,\cup,\emptyset,X\rangle$, the so-called \emph{power set algebra} over a set $X$, is a structure in the signature of Boolean algebras. (It is a \emph{Boolean algebra}, as long as $X\neq\emptyset$.)
+    \item $\underline{\mathbb N}=\langle \mathbb N,S,+,\cdot,0,\leq\rangle$, where $S(x)=x+1$, and other symbols are interpreted in the standard way, is the \emph{standard model of arithmetic}.
 \end{itemize}
 \end{example}
 
-
-\begin{definition}[Struktura]
-\emph{Struktura v signatuře} $\langle\mathcal R,\mathcal F\rangle$ je trojice $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, kde
+\begin{definition}[Structure]
+A \emph{structure in the signature} $\langle\mathcal R,\mathcal F\rangle$ is a triple $\A=\langle A, \mathcal R^\A,\mathcal F^\A \rangle$, where
 \begin{itemize}
-   \item  $A$ je neprázdná množina, říkáme jí \emph{doména} (také \emph{univerzum}),
-   \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ kde $R^\A\subseteq A^{\mathrm{ar}(R)}$ je \emph{interpretace} relačního symbolu $R$,
-   \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ kde $f^\A\colon A^{\mathrm{ar}(f)}\to A$ je \emph{interpretace} funkčního symbolu $f$ (speciálně pro konstantní symbol $c\in\mathcal F$ máme $c^\A\in A$).
+   \item  $A$ is a non-empty set, called the \emph{domain} (also \emph{universe}),
+   \item $\mathcal R^\A=\{R^\A\mid R\in\mathcal R\}$ where $R^\A\subseteq A^{\mathrm{ar}(R)}$ is the \emph{interpretation} of the relation symbol $R$,
+   \item $\mathcal F^\A=\{f^\A\mid f\in\mathcal F\}$ where $f^\A\colon A^{\mathrm{ar}(f)}\to A$ is the \emph{interpretation} of the function symbol $f$ (in particular, for a constant symbol $c\in\mathcal F$, we have $c^\A\in A$).
 \end{itemize}
-
-
 \end{definition}
 
-
 \begin{exercise}
-Uvažme signaturu \emph{$n$ konstant} $\langle c_1,c_2,\dots,c_n\rangle$. Jak vypadají struktury v této signatuře? Popište např. všechny nejvýše pětiprvkové struktury v signatuře tří konstant. (Interpretace konstant nemusí být různé!)
-A jak je tomu v případě signatury \emph{spočetně mnoha konstant} $\langle c_1,c_2,\dots\rangle=\langle c_i\mid i\in\mathbb N\rangle$?
+Consider the signature of \emph{$n$ constants} $\langle c_1,c_2,\dots,c_n\rangle$. What do structures in this signature look like? Describe, for example, all structures with at most five elements in the signature of three constants. (The interpretations of constants do not have to be different!)
+And what about the case of the signature of \emph{countably many constants} $\langle c_1,c_2,\dots\rangle=\langle c_i\mid i\in\mathbb N\rangle$?
 \end{exercise}
 
 
-\section{Syntaxe}
+\section{Syntax}
 
-V této sekci představíme syntaxi predikátové logiky (prvního řádu). Srovnejte co má syntaxe společného, a jak se liší, od syntaxe výrokové logiky.
+In this section, we introduce the syntax of predicate (first-order) logic. Compare what the syntax has in common with, and how it differs from, the syntax of propositional logic.
 
 
-\subsection{Jazyk}
+\subsection{Language}
 
-Při specifikaci jazyka nejprve stanovíme, jakého typu jsou struktury, které chceme popisovat, tj. určíme \emph{signaturu}. Dále přidáme informaci, zda je jazyk \emph{s rovností} nebo ne, tj. zda ve formulích můžeme také používat symbol `$=$' vyjadřující rovnost (identitu) prvků v doméně struktur.\footnote{Ve většině aplikací budeme používat jazyky s rovností. V některých speciálních oblastech se ale hodí rovnost nemít. Například pokud se zabýváme velmi rychlými výpočetními modely: zjistit, které proměnné se sobě rovnají, vyžaduje najít tranzitivní uzávěr rovností daných formulí, což je relativně výpočetně náročný problém.} Do jazyka patří následující:
+When specifying a language, we first determine what type of structures we want to describe, i.e., we specify the \emph{signature}. Additionally, we include the information on whether the language is \emph{with equality} or not, i.e., whether we can use the symbol `$=$' in formulas to express the equality (identity) of elements in the domain of structures.\footnote{In most applications, we will use languages with equality. However, in some special areas, it is useful to not have equality in the language. For example, if we deal with very fast models of computation: finding out which variables are equal requires finding the transitive closure of equality predicates given by formulas, which is already a relatively computationally demanding problem.} The language includes the following:
 \begin{itemize}
-    \item spočetně mnoho \emph{proměnných} $x_0,x_1,x_2,\dots$ (ale píšeme také $x,y,z,\dots$; množinu všech proměnných označíme $\Var$),
-    \item \emph{relační}, \emph{funkční} a \emph{konstantní symboly} ze signatury, a symbol $=$ jde-li o jazyk s rovností,
-    \item \emph{univerzální} a \emph{existenční} \emph{kvantifikátory} $(\forall x),(\exists x)$ pro každou proměnnou $x\in\Var$,\footnote{Kvantifikátor chápeme jako jediný symbol, tedy $(\forall x)$ \emph{neobsahuje} proměnnou $x$. Někdy se také používají symboly $\forall_x,\exists_x$.}
-    \item symboly pro logické spojky \( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \) a závorky \( (,) \).
+    \item countably many \emph{variables} $x_0,x_1,x_2,\dots$ (but we also write $x,y,z,\dots$; the set of all variables is denoted $\Var$),
+    \item \emph{relation}, \emph{function}, and \emph{constant symbols} from the signature, and the symbol $=$ if the language is with equality,
+    \item \emph{universal} and \emph{existential} \emph{quantifiers} $(\forall x),(\exists x)$ for each variable $x\in\Var$,\footnote{A quantifier is understood as a single symbol, so $(\forall x)$ \emph{does not include} the variable $x$. Sometimes the symbols $\forall_x,\exists_x$ are used instead.}
+    \item symbols for logical connectives \( \neg,\landsymb,\lorsymb, \limpliessymb, \liffsymb \) and parentheses \( (,) \).
 \end{itemize}
-Podobně jako symbol $\lbinsymb$ zastupující libovolnou binární logickou spojku budeme někdy psát $(Qx)$ pro kvantifikátor $(\forall x)$ nebo $(\exists x)$.
+Similarly to the symbol $\lbinsymb$ representing any binary logical connective, we will sometimes write $(Qx)$ for the quantifier $(\forall x)$ or $(\exists x)$.
 
-Symbolům ze signatury, a $=$, říkáme \emph{mimologické}, ostatní jsou \emph{logické}. Jazyk musí obsahovat alespoň jeden relační symbol (buď rovnost, nebo v signatuře).\footnote{Jinak bychom v jazyce nemohli vybudovat žádná `tvrzení' (\emph{formule}), viz níže.}
+Symbols from the signature, and $=$, are called \emph{non-logical}, and the other symbols are \emph{logical}. The language must contain at least one relation symbol (either equality, or in the signature).\footnote{Otherwise, we would not be able to build any `statements' (\emph{formulas}) in the language, see below.}
 
-Jazyk tedy specifikujeme pomocí signatury a informace `s rovností' (popř. `bez rovnosti'). Například:
+Thus, we specify the language by giving a signature and the information `with equality' (or `without equality'). For example:
 \begin{itemize}
-    \item Jazyk $L=\langle\rangle$ s rovností je jazyk \emph{čisté rovnosti},
-    \item jazyk $L=\langle c_0,c_1,c_2,\dots\rangle$ s rovností je jazyk \emph{spočetně mnoha konstant},
-    \item jazyk \emph{uspořádání} je $\langle \leq \rangle$ s rovností,
-    \item jazyk \emph{teorie grafů} je $\langle E \rangle$ s rovností,
-    \item jazyky \emph{teorie grup, teorie těles, teorie uspořádaných těles, Booleových algeber, aritmetiky} jsou jazyky s rovností odpovídající signaturám z Příkladu \ref{example:signatures}
+    \item The language $L=\langle\rangle$ with equality is the language of \emph{pure equality},
+    \item the language $L=\langle c_0,c_1,c_2,\dots\rangle$ with equality is the language of \emph{countably many constants},
+    \item the language of \emph{order} is $\langle \leq \rangle$ with equality,
+    \item the language of \emph{graph theory} is $\langle E \rangle$ with equality,
+    \item the languages of \emph{group theory, field theory, ordered field theory, Boolean algebras, arithmetic} are languages with equality corresponding to the signatures from Example \ref{example:signatures}.
 \end{itemize}
 
 
-\subsection{Termy}
+\subsection{Terms}
 
-Termy jsou syntaktické `výrazy' složené z proměnných, konstantních symbolů a funkčních symbolů.
+Terms are syntactic `expressions' composed of variables, constant symbols, and function symbols.
 
-\begin{definition}[Termy]
-    \emph{Termy} jazyka $L$ jsou konečné nápisy definované induktivně:
+\begin{definition}[Terms]
+    \emph{Terms} of the language $L$ are finite strings defined inductively:
     \begin{itemize}
-        \item každá proměnná a každý konstantní symbol z $L$ je term,
-        \item je-li $f$ funkční symbol z $L$ arity $n$ a jsou-li $t_1,\dots,t_n$ termy, potom nápis $f(t_1,t_2,\dots,t_n)$ je také term.
+        \item each variable and each constant symbol from $L$ is a term,
+        \item if $f$ is a function symbol from $L$ of arity $n$ and $t_1,\dots,t_n$ are terms, then the string $f(t_1,t_2,\dots,t_n)$ is also a term.
     \end{itemize}
-    Množinu všech \emph{termů} jazyka $L$ označíme $\Term_L$. 
+    The set of all \emph{terms} of the language $L$ is denoted $\Term_L$.
 \end{definition}
 
-Při zápisu termů obsahujících binární funkční symbol můžeme používat \emph{infixový} zápis, např. $(t_1+t_2)$ znamená $+(t_1,t_2)$. Závorky někdy vynecháváme, je-li struktura termu (`priorita operátorů') zřejmá.
+When writing terms containing a binary function symbol, we can use \emph{infix} notation, e.g., $(t_1+t_2)$ means $+(t_1,t_2)$. Parentheses are sometimes omitted if the structure of the term (`operator precedence') is clear.
 
-\emph{Podterm} je podřetězec termu, který je sám termem (je to tedy buď celý term, nebo se vyskytl jako nějaké $t_i$ při konstrukci termu).
+A \emph{subterm} is a substring of a term that is itself a term (it is either the whole term or it appeared as some $t_i$ in the construction of the term).
 
-Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, například $((S(0)+S(0))\cdot S(S(0)))$ je konstantní term v jazyce aritmetiky.\footnote{Pozor, termy jsou čistě syntaktické, můžeme používat jen symboly z jazyka, nikoliv prvky struktury, tedy např. $(1+1)\cdot 2$ \emph{není} term v jazyce aritmetiky! (Mohli bychom ale \emph{definovat} nové konstantní symboly $1,2$ jako zkratky za $S(0)$ a $S(S(0))$ a \emph{rozšířit} tak náš jazyk, viz Sekce \ref{subsection:extension-by-definition}.)}
+If a term does not contain a variable, we call it \emph{ground} (also \emph{constant}), for example, $((S(0)+S(0))\cdot S(S(0)))$ is a ground term in the language of arithmetic.\footnote{Note that terms are purely syntactic; we can only use symbols from the language, not elements of the structure, so $(1+1)\cdot 2$ is \emph{not} a term in the language of arithmetic! (However, we could \emph{define} new constant symbols $1,2$ as abbreviations for $S(0)$ and $S(S(0))$ and \emph{extend} our language, see Section \ref{subsection:extension-by-definition}.)}
 
-\emph{Strom termu $t$}, označme $\Tree(t)$, je definován podobně jako strom výroku, v listech jsou proměnné nebo konstantní symboly, ve vnitřních vrcholech jsou funkční symboly, jejichž arita je rovna počtu synů.
+The \emph{tree of the term $t$}, denoted $\Tree(t)$, is defined similarly to a tree of a proposition: leaves are labeled by variables or constant symbols, inner nodes by function symbols whose arity matches the number of children.
 
 \begin{example}\label{example:terms}
-    Nakresleme stromy termů (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky, (b) $-(x\land y)\lor \bot$ v jazyce Booleových algeber. Zde $\land,\lor$ nejsou logické spojky z jazyka, ale mimologické symboly ze signatury Booleových algeber (byť používáme stejné symboly)! Termy v tomto jazyce můžeme chápat jako výrokové formule (s konstantami pro spor a tautologii), viz Sekce~\ref{section:relationship-propositional-predicate-logic}.   
-    Na obrázku~\ref{figure:trees-of-terms} jsou nakresleny stromy těchto termů.
+    Let us draw the trees of the terms (a) $(S(0) + x) \cdot y$ in the language of arithmetic, (b) $-(x\land y)\lor \bot$ in the language of Boolean algebras. Here, $\land,\lor$ are not logical connectives from the language but non-logical symbols from the signature of Boolean algebras (although we use the same symbols)! Terms in this language can be understood as propositional formulas (with constants for falsity and truth), see Section~\ref{section:relationship-propositional-predicate-logic}.
+    Figure~\ref{figure:trees-of-terms} shows the trees of these terms.
     
     \begin{figure}
     \tikzset{every label/.style = {text=red}}
@@ -189,14 +181,14 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
             ]
         \end{forest}
 
-        (a) $(S(0) + x) \cdot y$ v jazyce aritmetiky
+        (a) $(S(0) + x) \cdot y$ in the language of arithmetic
     \end{minipage}
     \begin{minipage}{.49\textwidth}
         \centering
         \begin{forest}
             for tree={math content,circle,draw=blue!20,fill=blue!10,minimum size=22pt}
             [\lor 
-                [- 
+                [-
                     [\land
                         [x]
                         [y]                    
@@ -206,53 +198,52 @@ Pokud term neobsahuje proměnnou, říkáme mu \emph{konstantní (ground)}, nap�
             ]
         \end{forest}
         
-        (b) $-(x\land y)\lor \bot$ v jazyce Booleových algeber
+        (b) $-(x\land y)\lor \bot$ in the language of Boolean algebras
     \end{minipage}
-    \caption{Strom termu}
+    \caption{Term tree}
     \label{figure:trees-of-terms}
     \end{figure}
 \end{example}
 
-Není těžké uhádnout, jaká bude \emph{sémantika} termů. Máme-li  konkrétní strukturu, odpovídá term funkci na její doméně: vstupem je ohodnocení proměnných prvky domény, konstantní a funkční symboly jsou nahrazeny jejich interpretacemi, a výstupem je hodnota (prvek domény) v kořeni. Formálněji ale až v Sekci \ref{section:predicate-semantics}.
+It is not hard to guess what the \emph{semantics} of terms will be. Given a specific structure, a term corresponds to a function on its domain: the input is an assignment of the variables to elements of the domain, the constant and function symbols are replaced by their interpretations, and the output is the value (element of the domain) at the root. More formally, this will be covered in Section \ref{section:predicate-semantics}.
 
 
-\subsection{Formule}
+\subsection{Formulas}
 
-Termům nelze v žádném smyslu přiřadit pravdivostní hodnotu, k tomu potřebujeme \emph{predikát} (relační symbol nebo rovnost), který mluví o `vztahu' termů: v konkrétní struktuře při konkrétním ohodnocení proměnných prvky z domény je tento vztah buď splněn, nebo nesplněn. 
+Terms cannot be assigned a truth value in any sense; for that, we need a \emph{predicate} (a relation symbol or equality) that talks about the `relationship' between terms: in a specific structure with a specific variable assignment to elements of the domain, this relationship is either satisfied or not.
 
-Nejjednoduššími \emph{formulemi} jsou \emph{atomické formule}. Z nich potom vybudujeme pomocí logických spojek a kvantifikátorů všechny formule.
+The simplest \emph{formulas} are \emph{atomic formulas}. We then build all formulas from them using logical connectives and quantifiers.
 
-
-\begin{definition}[Atomická formule]
-    \emph{Atomická formule} jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (včetně $=$ jde-li o jazyk s rovností) a $t_i\in\Term_L$. %Množinu všech \emph{atomických formulí} jazyka $L$ označíme $\AFm_L$. 
+\begin{definition}[Atomic Formula]
+    An \emph{atomic formula} of the language $L$ is a string $R(t_1,\dots,t_n)$, where $R$ is an $n$-ary relation symbol from $L$ (including $=$ if it is a language with equality) and $t_i\in\Term_L$. %The set of all \emph{atomic formulas} of the language $L$ is denoted $\AFm_L$. 
 \end{definition}
 
-U binárních relačních symbolů často používáme infixový zápis, např. atomickou formuli $\leq(x,y)$ zapíšeme jako $x\leq y$, a (je-li jazyk s rovností) místo $=(t_1,t_2)$ budeme psát $t_1=t_2$.
+For binary relation symbols, we often use infix notation, e.g., the atomic formula $\leq(x,y)$ is written as $x\leq y$, and (if the language has equality) instead of $=(t_1,t_2)$, we will write $t_1=t_2$.
 
 \begin{example}
-    Uveďme několik příkladů atomických formulí:
+    Here are some examples of atomic formulas:
     \begin{itemize}
-        \item $R(f(f(x)),c, f(d))$ kde $R$ je ternární relační, $f$ unární funkční, $c,d$ konstantní symboly,
-        \item $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$ v jazyce uspořádaných těles,
-        \item $x\cdot y\leq (S(0)+x)\cdot y$ v jazyce aritmetiky,
-        \item $-(x\land y)\lor\bot=\bot$ v jazyce Booleových algeber        
+        \item $R(f(f(x)),c, f(d))$ where $R$ is a ternary relation symbol, $f$ a unary function symbol, $c,d$ are constant symbols,
+        \item $(x\cdot x)+(y\cdot y)\leq (x+y)\cdot(x+y)$ in the language of ordered fields,
+        \item $x\cdot y\leq (S(0)+x)\cdot y$ in the language of arithmetic,
+        \item $-(x\land y)\lor\bot=\bot$ in the language of Boolean algebras        
     \end{itemize}
 \end{example}
 
-
-\begin{definition}[Formule]
-    \emph{Formule} jazyka $L$ jsou konečné nápisy definované induktivně: 
+\begin{definition}[Formula]
+    \emph{Formulas} of the language $L$ are finite strings defined inductively: 
     \begin{itemize}
-        \item každá atomická formule jazyka $L$ je formule,
-        \item je-li $\varphi$ formule, potom $(\neg\varphi)$ je také formule,
-        \item jsou-li $\varphi,\psi$ formule, potom $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, a $(\varphi\liff\psi)$ jsou také formule,
-        \item je-li $\varphi$ formule a $x$ proměnná, potom $((\forall x)\varphi)$ a $((\exists x)\varphi)$ jsou také formule.
+        \item each atomic formula of the language $L$ is a formula,
+        \item if $\varphi$ is a formula, then $(\neg\varphi)$ is also a formula,
+        \item if $\varphi,\psi$ are formulas, then $(\varphi\land\psi)$, $(\varphi\lor\psi)$, $(\varphi\limplies\psi)$, and $(\varphi\liff\psi)$ are also formulas,
+        \item if $\varphi$ is a formula and $x$ a variable, then $((\forall x)\varphi)$ and $((\exists x)\varphi)$ are also formulas.
         \end{itemize}    
-    %Množinu všech \emph{formulí} jazyka $L$ označíme $\Fm_L$.
+    %The set of all \emph{formulas} of the language $L$ is denoted $\Fm_L$.
 \end{definition}
-\emph{Podformule} je podřetězec, který je sám o sobě formulí. \emph{Strom formule}, označíme $\Tree(\varphi)$, je definován takto: strom atomické formule $\varphi=R(t_1,\dots,t_n)$ má v kořeni relační symbol $R$, a k němu jsou připojeny stromy $\Tree(t_i)$. Není-li $\varphi$ atomická, strom zkonstruujeme obdobně jako strom výroku.\footnote{Kvantifikátory mají, podobně jako negace, jediného syna.} Při zápisu formulí používáme obdobné konvence jako ve výrokové logice, přičemž kvantifikátory mají stejnou prioritu jako $\neg$ (vyšší než ostatní logické spojky). Místo $((\forall x)\varphi$) tedy můžeme psát $(\forall x)\varphi$.\footnote{Někdy se také nepíší závorky v kvantifikátorech, tj. jen $\forall x\varphi$, my je ale pro přehlednost psát budeme.}
 
-\begin{example}\label{example:formula} Příkladem formule v jazyce aritmetiky je $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$. Její strom je znázorněn na Obrázku \ref{figure:tree-of-formula}.
+A \emph{subformula} is a substring that is itself a formula. The \emph{tree of a formula}, denoted $\Tree(\varphi)$, is defined as follows: the tree of an atomic formula $\varphi=R(t_1,\dots,t_n)$ has the relation symbol~$R$ at the root, to which we append the trees $\Tree(t_i)$. If $\varphi$ is not atomic, the tree is constructed similarly to a propositional formula tree.\footnote{Quantifiers, like negations, have a single child.} When writing formulas, we use similar conventions as in propositional logic, with quantifiers having the same precedence as~$\neg$ (higher than other logical connectives). Therefore, instead of $((\forall x)\varphi)$ we can write $(\forall x)\varphi$.\footnote{Sometimes parentheses are not written in quantifiers, e.g., $\forall x\varphi$, but we will always include them, for better readability.}
+
+\begin{example}\label{example:formula} An example of a formula in the language of arithmetic is $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$. Its tree is shown in Figure \ref{figure:tree-of-formula}.
     \begin{figure}
         \centering
         \begin{forest}
@@ -264,148 +255,149 @@ U binárních relačních symbolů často používáme infixový zápis, např. 
                 ]
             ]
         \end{forest}
-            \caption{Strom formule $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$}\label{figure:tree-of-formula}
+            \caption{Tree of the formula $(\forall x)(x\cdot y\leq (S(0)+x)\cdot y)$}\label{figure:tree-of-formula}
         \end{figure}
 \end{example}
 
 
-\subsubsection{Volné a vázané proměnné}
+\subsubsection{Free and Bound Variables}
 
-Význam formule\footnote{Přesněji, její \emph{pravdivostní hodnota}, kterou formálně definujeme níže v Sekci \ref{subsection:truth-value-of-formula}.} může, nebo nemusí záviset na proměnných, které se v ní vyskytují: srovnejte $x\leq 0$ a $(\exists x)(x\leq 0)$ (a co teprve $x\leq 0 \lor (\exists x)(x\leq 0)$). Nyní tento koncept upřesníme a zavedeme potřebnou terminologii.
+The meaning of a formula\footnote{More precisely, its \emph{truth value}, formally defined below in Section \ref{subsection:truth-value-of-formula}.} may or may not depend on the variables that appear in it: compare $x\leq 0$ and $(\exists x)(x\leq 0)$ (and how about $x\leq 0 \lor (\exists x)(x\leq 0)$?). We now clarify this concept and introduce the necessary terminology.
 
-
-\emph{Výskytem} proměnné $x$ ve formuli $\varphi$ myslíme list $\Tree(\varphi)$ označený $x$. \footnote{Proměnná $x$ se tedy \emph{nevyskytuje} v symbolu pro kvantifikátor $(Qx)$.} Výskyt je \emph{vázaný}, je-li součástí nějaké podformule (podstromu) začínající $(Qx)$. Není-li výskyt vázaný, je \emph{volný}. Proměnná je \emph{volná} ve $\varphi$, pokud má ve $\varphi$ volný výskyt, a \emph{vázaná} ve $\varphi$, pokud má ve $\varphi$ vázaný výskyt. Zápis $\varphi(x_1,\dots,x_n)$ znamená, že $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$.
+An \emph{occurrence} of a variable $x$ in a formula $\varphi$ means a leaf in $\Tree(\varphi)$ labeled $x$. \footnote{Thus, the variable $x$ does \emph{not occur} in the symbol for the quantifier $(Qx)$.} An occurrence is \emph{bound} if it is a part of some subformula (subtree) starting with $(Qx)$. If an occurrence is not bound, it is \emph{free}. A variable is \emph{free} in $\varphi$ if it has a free occurrence in $\varphi$, and \emph{bound} in $\varphi$ if it has a bound occurrence in $\varphi$. The notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are all the free variables in the formula $\varphi$.
 
 \begin{example}
-    Proměnná může být volná i vázaná, např. ve formuli $\varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z$ je první výskyt $x$ vázaný a druhý výskyt volný. (Nakreslete si strom formule!) Proměnná $y$ je vázaná (její jediný výskyt je vázaný) a $z$ je volná. Můžeme tedy psát $\varphi(x,z)$.
+    A variable can be both free and bound, e.g., in the formula $\varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z$, the first occurrence of $x$ is bound and the second occurrence is free. (Draw the formula tree!) The variable $y$ is bound (its only occurrence is bound) and $z$ is free. Thus, we can write $\varphi(x,z)$.
 \end{example}
 
 \begin{remark}
-    Jak uvidíme níže, význam (\emph{pravdivostní hodnota}) formule závisí pouze na ohodnocení volných proměnných. Proměnné v kvantifikátorech, spolu s příslušnými vázanými výskyty, můžeme přejmenovat (musíme ale být opatrní, viz níže).   
+    As we will see below, the meaning (\emph{truth value}) of a formula depends only on the assignment of free variables. Variables in quantifiers, along with their corresponding bound occurrences, can be renamed (we have to be careful though, see below).
 \end{remark}
 
-\subsubsection{Otevřené a uzavřené formule}
 
-Často budeme mluvit o následujících dvou důležitých druzích formulí:
+\subsubsection{Open and Closed Formulas}
 
-\begin{definition}[Otevřená a uzavřená formule]
-Formule je \emph{otevřená}, neobsahuje-li žádný kvantifikátor, a \emph{uzavřená} (neboli \emph{sentence}), pokud nemá žádnou volnou proměnnou  
+We often talk about the following two important properties of formulas:
+
+\begin{definition}[Open and Closed Formula]
+A formula is \emph{open} if it contains no quantifier, and \emph{closed} (or a \emph{sentence}) if it has no free variable.
 \end{definition}
 
-\begin{example} Uveďme několik příkladů:
+\begin{example} Here are a few examples:
     \begin{itemize}
-        \item formule $x+y\leq 0$ je otevřená,
-        \item formule $(\forall x)(\forall y)(x+y\leq 0)$ je uzavřená (tedy je to sentence),
-        \item formule $(\forall x)(x+y\leq 0)$ není ani otevřená, ani uzavřená,
-        \item formule $(0+1=1)\land (1+1=0)$ je otevřená i uzavřená. 
+        \item the formula $x+y\leq 0$ is open,
+        \item the formula $(\forall x)(\forall y)(x+y\leq 0)$ is closed (i.e., it is a sentence),
+        \item the formula $(\forall x)(x+y\leq 0)$ is neither open nor closed,
+        \item the formula $(0+1=1)\land (1+1=0)$ is both open and closed.
     \end{itemize}
 \end{example}
 
-Každá atomická formule je otevřená, otevřené formule jsou jen kombinace atomických pomocí logických spojek. Formule může být otevřená i uzavřená zároveň, v tom případě jsou všechny její termy konstantní. Formule je uzavřená, právě když nemá žádnou volnou proměnnou.\footnote{Neplatí ale, že formule je otevřená, pokud nemá žádnou vázanou proměnnou, viz formule $(\forall x)0=1$.}
+Every atomic formula is open, and open formulas are just combinations of atomic formulas using logical connectives. A formula can be both open and closed if all its terms are constant. A formula is closed if and only if it has no free variable.\footnote{It is not true that a formula is open if it has no bound variable, see the formula $(\forall x)0=1$.}
 
 \begin{remark}
-Jak uvidíme později, \emph{pravdivostní hodnota} formule závisí jen na ohodnocení jejích volných proměnných. Speciálně, sentence má v dané struktuře pravdivostní hodnotu 0 nebo 1 (nezávisle na ohodnocení proměnných). To je důvod, proč hrají sentence v logice důležitou roli.
+As we will see later, the \emph{truth value} of a formula depends only on the assignment of its free variables. In particular, a sentence has a truth value of 0 or 1 in a given structure (independently of variable assignments). This is why sentences play an important role in logic.
 \end{remark}
 
-\subsection{Instance a varianty}
 
-Jak jsme viděli, jedna proměnná se může ve formuli vyskytovat v různých `rolích'. Jde o velmi podobný princip jako v programování, kde jeden identifikátor může v programu znamenat různé proměnné (buď lokální, nebo globální). Pod pojmem \emph{instance} si představte `dosazení' (termu) do (globální) proměnné (nebo lépe `nahrazení' proměnné nějakým výrazem, který ji počítá), a pod pojmem \emph{varianta} `přejmenování' (lokální) proměnné. Vezměme například formuli $\varphi(x)$:
+\subsection{Instances and Variants}
+
+As we have seen, one variable can appear in different `roles' in a formula. This is a very similar principle to programming, where one identifier can mean different variables in a program (either local or global). The term \emph{instance} can be understood as `substituting' (a term) into a (global) variable (or better, `replacing' a variable with some expression that computes it), and the term \emph{variant} as `renaming' a (local) variable. Consider, for example, the formula $\varphi(x)$:
 $$
 P(x)\land (\forall x)(Q(x) \land (\exists x)R(x))
 $$
-První výskyt proměnné $x$ je volný, druhý je vázaný kvantifikátorem $(\forall x)$, a třetí je vázaný  $(\exists x)$. Pokud `dosadíme' za proměnnou $x$ term $t=1+1$, dostáváme \emph{instanci} formule $\varphi$, kterou označíme $\varphi(x/t)$:
+The first occurrence of the variable $x$ is free, the second is bound by the quantifier $(\forall x)$, and the third is bound by $(\exists x)$. If we `substitute' the term $t=1+1$ for the variable $x$, we get an \emph{instance} of the formula $\varphi$, denoted $\varphi(x/t)$:
 $$
 P(1+1)\land (\forall x)(Q(x) \land (\exists x)R(x))
 $$
-Můžeme také přejmenovat kvantifikátory ve formuli, tak získáme \emph{variantu} formule $\varphi$, např.:
+We can also rename the quantifiers in the formula, thus obtaining a \emph{variant} of the formula $\varphi$, e.g.:
 $$
 P(x)\land (\forall y)(Q(y) \land (\exists z)R(z))
 $$
-Jak víme, kdy a jak toto můžeme provést, abychom zachovali význam, tj. aby instance byla \emph{důsledkem} $\varphi$, a varianta byla s $\varphi$ \emph{ekvivalentní}? To nyní chceme zformalizovat.
+How do we know when and how we can do this to preserve the meaning, i.e., so that the instance is a \emph{consequence} of $\varphi$, and the variant is \emph{equivalent} to $\varphi$? This is what we now want to formalize.
 
-\subsubsection{Instance}
 
-Pokud do formule $\varphi$ \emph{dosadíme} za volnou proměnnou $x$ term $t$, požadujeme, aby výsledná formule `říkala' o $t$ `totéž', co $\varphi$ o $x$. 
+\subsubsection{Instances}
+
+If we \emph{substitute} a term $t$ for a free variable $x$ in a formula $\varphi$, we require that the resulting formula `says' about $t$ `the same' as $\varphi$ says about $x$.
 
 \begin{example}
-    Například formule $\varphi(x)=(\exists y)(x+y=1)$ říká o $x$, že `existuje $1-x$'. Term $t=1$ lze dosadit, neboť $\varphi(x/t)=(\exists y)(1+y=1)$ říká `existuje 1-1'. Ale term $t=y$ dosadit nelze, $(\exists y)(y+y=1)$ říká `1 je dělitelné 2'. Problém spočívá v tom, že term $t=y$ obsahuje proměnnou $y$, jež bude nově vázaná kvantifikátorem $(\exists y)$. Takové situaci se musíme vyhnout.
+    For example, the formula $\varphi(x)=(\exists y)(x+y=1)$ says about $x$ that `there exists $1-x$'. The term $t=1$ can be substituted because $\varphi(x/t)=(\exists y)(1+y=1)$ says `there exists 1-1'. But the term $t=y$ cannot be substituted because $(\exists y)(y+y=1)$ says `1 is divisible by 2'. The problem is that the term $t=y$ contains the variable $y$, which will now be bound by the quantifier $(\exists y)$. We must avoid such situations.
 \end{example}
 
-\begin{definition}[Substituovatelnost a instance]
-    Term $t$ je \emph{substituovatelný} za proměnnou $x$ ve formuli $\varphi$, pokud po simultánním nahrazení všech volných výskytů $x$ ve $\varphi$ za $t$ nevznikne ve $\varphi$ žádný vázaný výskyt proměnné z $t$. V tom případě říkáme vzniklé formuli \emph{instance} $\varphi$ vzniklá substitucí $t$ za $x$, a označujeme ji $\varphi(x/t)$.
+\begin{definition}[Substitutability and Instance]
+    A term $t$ is \emph{substitutable} for a variable $x$ in a formula $\varphi$ if, after simultaneously replacing all free occurrences of $x$ in $\varphi$ with $t$, no new bound occurrence of a variable from $t$ arises in $\varphi$. In that case, the resulting formula is called an \emph{instance} of $\varphi$ obtained by substituting $t$ for $x$, denoted $\varphi(x/t)$.
 \end{definition}
 
 \begin{remark}
-    Všimněte si, že term $t$ \emph{není} substituovatelný za $x$ do $\varphi$, právě když $x$ má volný výskyt v nějaké podformuli $\varphi$ tvaru $(Qy)\psi$ a proměnná $y$ se vyskytuje v $t$. Speciálně, konstantní termy jsou vždy substituovatelné.    
+    Note that a term $t$ is \emph{not} substitutable for $x$ in $\varphi$ if and only if $x$ has a free occurrence in some subformula $\varphi$ of the form $(Qy)\psi$ and the variable $y$ appears in $t$. In particular, ground terms are always substitutable.
 \end{remark}
 
-\subsubsection{Varianty}
 
-Potřebujeme-li substituovat term $t$ do formule $\varphi$, můžeme to udělat vždy, pokud nejprve přejmenujeme všechny kvantifikované proměnné na zcela nové (tj. takové, které se nevyskytují ani ve $\varphi$ ani v $t$), a potom substituujeme $t$ do takto vzniklé \emph{varianty} formule $\varphi$.
+\subsubsection{Variants}
 
-\begin{definition}[Varianta]
-   Má-li formule $\varphi$ podformuli tvaru $(Qx)\psi$ a je-li $y$ proměnná, taková, že
+If we need to substitute a term $t$ into a formula $\varphi$, we can always do so if we first rename all quantified variables to entirely new ones (i.e., ones that do not appear in $\varphi$ or $t$), and then substitute $t$ into the resulting \emph{variant} of the formula $\varphi$.
+
+\begin{definition}[Variant]
+   If a formula $\varphi$ has a subformula of the form $(Qx)\psi$ and $y$ is a variable such that
    \begin{itemize}
-    \item $y$ je substituovatelná za $x$ do $\psi$ a
-    \item $y$ nemá volný výskyt v $\psi$,
+    \item $y$ is substitutable for $x$ in $\psi$, and
+    \item $y$ has no free occurrence in $\psi$,
    \end{itemize} 
-potom nahrazením podformule $(Qx)\psi$ formulí $(Qy)\psi(x/y)$ vznikne \emph{varianta} formule $\varphi$ v podformuli $(Qx)\psi$. \emph{Varianta} říkáme i výsledku postupné variace ve více podformulích.
+then replacing the subformula $(Qx)\psi$ with $(Qy)\psi(x/y)$ results in a \emph{variant} of the formula $\varphi$ in the subformula $(Qx)\psi$. The result of successive variations in multiple subformulas is also called a \emph{variant}.
 \end{definition}
 
-Všimněte si, že požadavek na proměnnou $y$ z definice varianty je vždy splněn, pokud se $y$ nevyskytuje ve formuli $\varphi$.
+Note that the requirement for the variable $y$ in the definition of a variant is always satisfied if $y$ does not appear in the formula $\varphi$.
 
 \begin{example}
-    Mějme formuli $\varphi=(\exists x)(\forall y)(x\leq y)$. Potom:
+    Consider the formula $\varphi=(\exists x)(\forall y)(x\leq y)$. Then:
 \begin{itemize}
-    \item $(\exists y)(\forall y)(y\leq y)$ není varianta $\varphi$, neboť $y$ není substituovatelná za $x$ do $\psi=(\forall y)(x\leq y)$,
-    \item $(\exists x)(\forall x)(x\leq x)$ není varianta $\varphi$, neboť $x$ má volný výskyt v podformuli $\psi=(x\leq y)$,
-    \item $(\exists u)(\forall v)(u\leq v)$ je varianta $\varphi$.
+    \item $(\exists y)(\forall y)(y\leq y)$ is not a variant of $\varphi$ because $y$ is not substitutable for $x$ in $\psi=(\forall y)(x\leq y)$,
+    \item $(\exists x)(\forall x)(x\leq x)$ is not a variant of $\varphi$ because $x$ has a free occurrence in the subformula $\psi=(x\leq y)$,
+    \item $(\exists u)(\forall v)(u\leq v)$ is a variant of $\varphi$.
 \end{itemize}   
 \end{example}
 
-Tím jsme uzavřeli výklad o syntaxi, následuje sémantika.
+This concludes the exposition on syntax; next is semantics.
 
 
-\section{Sémantika}\label{section:predicate-semantics}
+\section{Semantics}\label{section:predicate-semantics}
 
-Než se pustíme do formálnějšího výkladu, shrňme stručně sémantiku, tak jak jsme ji už naznačili v předchozích sekcích: 
+Before we delve into a more formal exposition, let us briefly summarize the semantics as we have already hinted in previous sections:
 
 \begin{itemize}
-    \item modely jsou struktury dané signatury,
-    \item formule platí ve struktuře, pokud platí při každém ohodnocení volných proměnných prvky z domény,
-    \item hodnoty termů se vyhodnocují podle jejich stromů, kde symboly nahradíme jejich interpretacemi (funkcemi, a konstantami z domény),
-    \item z hodnot termů získáme pravdivostní hodnoty atomických formulí: je výsledná $n$-tice v relaci (interpretující daný relační symbol)?
-    \item hodnoty složených formulí vyhodnocujeme také podle jejich stromu, přičemž $(\forall x)$ hraje roli `konjunkce přes všechny prvky' a  $(\exists y)$ hraje roli `disjunkce přes všechny prvky' z domény struktury
+    \item Models are structures of the given signature,
+    \item A formula is valid in a structure if it holds under every assignment of free variables to elements from the domain,
+    \item The values of terms are evaluated according to their trees, where symbols are replaced by their interpretations (functions, and constants from the domain),
+    \item From the values of terms, we obtain the truth values of atomic formulas: is the resulting $n$-tuple in the relation (interpreting the given relation symbol)?
+    \item The values of complex formulas are also evaluated according to their tree, where $(\forall x)$ acts as `conjunction over all elements' and $(\exists y)$ acts as `disjunction over all elements' of the structure's domain.
 \end{itemize}
 
-Nyní formálněji:
+Now more formally:
 
-\subsection{Modely jazyka}
+\subsection{Models of the Language}
 
-\begin{definition}[Model jazyka]
-\emph{Model jazyka $L$}, nebo také \emph{$L$-struktura}, je libovolná struktura v signatuře jazyka $L$. \emph{Třídu všech modelů jazyka} označíme $\M_L$.
+\begin{definition}[Model of the Language]
+A \emph{model of the language $L$}, or an \emph{$L$-structure}, is any structure in the signature of the language $L$. The \emph{class of all models} of the language is denoted $\M_L$.
 \end{definition}
 
 \begin{remark}
-V definici nehraje roli, zda je jazyk s rovností nebo bez. A proč nemůžeme mluvit o \emph{množině} všech modelů $\M_L$, proč musíme říkat \emph{třída}? Protože doménou struktury může být libovolná neprázdná množina, a `množina všech množin' neexistuje, je to klasický příklad tzv. vlastní třídy. Třída je \emph{`soubor'} všech množin splňujících danou vlastnost (popsatelnou v \emph{jazyce teorie množin}).
+The definition does not care whether the language is with or without equality. And why can't we talk about the \emph{set} of all models $\M_L$, why do we have to say \emph{class}? Because the domain of a structure can be any non-empty set, and the `set of all sets' does not exist; it is a classic example of a so-called proper class. A class is the \emph{`collection'} of all sets satisfying a given property (describable in the \emph{language of set theory}).
 \end{remark}
 
-
 \begin{example}
-    Mezi modely jazyka uspořádání $L=\langle \leq \rangle$ patří následující struktury: $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, libovolný orientovaný graf $G=\langle V,E\rangle$, $\langle \mathcal P(X),\subseteq\rangle$. Ale také např. $\langle \mathbb C,R^\mathbb C\rangle$ kde $(z_1,z_2)\in R^\mathbb C$ právě když $|z_1|=|z_2|$ nebo $\langle \{0,1\},\emptyset\rangle$, což \emph{nejsou} částečná uspořádání.
+    Among the models of the language of order $L=\langle \leq \rangle$ are the following structures: $\langle \mathbb N,\leq\rangle$, $\langle \mathbb Q, > \rangle$, any directed graph $G=\langle V,E\rangle$, $\langle \mathcal P(X),\subseteq\rangle$. But also, for instance, $\langle \mathbb C,R^\mathbb C\rangle$ where $(z_1,z_2)\in R^\mathbb C$ if and only if $|z_1|=|z_2|$ or $\langle \{0,1\},\emptyset\rangle$, which are \emph{not} partial orders.
 \end{example}
 
+\subsection{Value of a term}
 
-\subsection{Hodnota termu}
+Consider a term $t$ in the language $L=\langle \mathcal R,\mathcal F\rangle$ (with or without equality), and an $L$-structure $\A=\langle A,\mathcal R^\A,\mathcal F^\A\rangle$. A \emph{variable assignment} in the set $A$ is any function $e:\Var\to A$.
 
-Mějme term $t$ jazyka $L=\langle \mathcal R,\mathcal F\rangle$ (s rovností nebo bez), a $L$-strukturu $\A=\langle A,\mathcal R^\A,F^\A\rangle$. \emph{Ohodnocení proměnných} v množině $A$ je libovolná funkce $e:\Var\to A$.
-
-\begin{definition}[Hodnota termu]
-    \emph{Hodnota termu $t$ ve struktuře $\A$ při ohodnocení $e$}, kterou značíme $t^\A[e]$, je dána induktivně:
+\begin{definition}[Value of a term]
+    The \emph{value of the term $t$ in the structure $\A$ under the assignment $e$}, denoted $t^\A[e]$, is defined inductively:
     \begin{itemize}
-        \item $x^\A[e]=e(x)$ pro proměnnou $x\in\Var$,
-        \item $c^\A[e]=c^\A$ pro konstantní symbol $c\in\mathcal F$, a
-        \item je-li $t=f(t_1,\dots,t_n)$ složený term, kde $f\in\mathcal F$, potom:
+        \item $x^\A[e]=e(x)$ for a variable $x\in\Var$,
+        \item $c^\A[e]=c^\A$ for a constant symbol $c\in\mathcal F$, and
+        \item if $t=f(t_1,\dots,t_n)$ is a compound term where $f\in\mathcal F$, then:
         $$
         t^\A[e]=f^\A(t_1^\A[e],\dots,t_n^\A[e])
         $$
@@ -413,598 +405,589 @@ Mějme term $t$ jazyka $L=\langle \mathcal R,\mathcal F\rangle$ (s rovností neb
 \end{definition}
 
 \begin{remark}
-    Všimněte si, že hodnota termu závisí pouze na ohodnocení proměnných vyskytujících se v něm. Speciálně, je-li $t$ konstantní term, jeho hodnota na ohodnocení nezávisí.
-    Obecně, každý term $t$ reprezentuje \emph{termovou funkci} $f_t^\A\colon A^k\to A$, kde $k$ je počet proměnných v $t$, a konstantním termům odpovídají konstantní funkce.
+    Note that the value of a term depends only on the assignment of the variables appearing in it. In particular, if $t$ is a ground term, its value does not depend on the assignment.
+    In general, each term $t$ represents a \emph{term function} $f_t^\A\colon A^k\to A$, where $k$ is the number of variables in $t$, and ground terms correspond to constant functions.
 \end{remark}
 
 \begin{example}
-    Uveďme dva příklady:
+    Here are two examples:
     \begin{itemize}
-        \item Hodnota termu $-(x\lor \bot)\land y$ v Booleově algebře $\underline{\mathcal P(\{0,1,2\})}$ při ohodnocení $e$ ve kterém $e(x)=\{0,1\}$ a $e(y)=\{1,2\}$ je $\{2\}$.
-        \item Hodnota termu $x+1$ ve struktuře $\mathcal N=\langle\mathbb N,\cdot,3\rangle$ jazyka $L=\langle +,1\rangle$ při ohodnocení $e$ ve kterém $e(x)=2$ je $(x+1)^\mathcal N[e]=6$.
+        \item The value of the term $-(x\lor \bot)\land y$ in the Boolean algebra $\underline{\mathcal P(\{0,1,2\})}$ under the assignment $e$ where $e(x)=\{0,1\}$ and $e(y)=\{1,2\}$ is $\{2\}$.
+        \item The value of the term $x+1$ in the structure $\mathcal N=\langle\mathbb N,\cdot,3\rangle$ of the language $L=\langle +,1\rangle$ under the assignment $e$ where $e(x)=2$ is $(x+1)^\mathcal N[e]=6$.
     \end{itemize}
 \end{example}
 
+\subsection{Truth Value of a Formula}\label{subsection:truth-value-of-formula}
 
-\subsection{Pravdivostní hodnota formule}\label{subsection:truth-value-of-formula}
+We are now ready to define the \emph{truth value}. Locally, we introduce the notation $\mathrm{TVal}$ for it.
 
-Nyní už jsme připraveni definovat \emph{pravdivostní hodnotu}. Lokálně pro ni zavedeme značení $\mathrm{PH}$.
+\begin{definition}[Truth Value]
+Given a formula $\varphi$ in the language $L$, a structure $\A\in\M_L$, and a variable assignment $e:\Var\to A$. The \emph{truth value of $\varphi$ in $\A$ under the assignment $e$, $\mathrm{TVal}^\A(\varphi)[e]$}, is defined inductively according to the structure of the formula:
 
-\begin{definition}[Pravdivostní hodnota]
-Mějme formuli $\varphi$ v jazyce $L$, strukturu $\A\in\M_L$,  a ohodnocení proměnných $e:\Var\to A$. \emph{Pravdivostní hodnota $\varphi$ v $\A$ při ohodnocení $e$, $\mathrm{PH}^\A(\varphi)[e]$}, je definována induktivně podle struktury formule:
-
-Pro atomickou formuli $\varphi=R(t_1,\dots,t_n)$ máme 
+For an atomic formula $\varphi=R(t_1,\dots,t_n)$, we have 
 $$
-\mathrm{PH}^\A(\varphi)[e]=
+\mathrm{TVal}^\A(\varphi)[e]=
 \begin{cases}
-    1 & \text{pokud }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A,\\
-    0 & \text{jinak.}    
+    1 & \text{if }(t_1^\A[e],\dots,t_n^\A[e])\in R^\A,\\
+    0 & \text{otherwise.}    
 \end{cases}
 $$
-Speciálně, je-li $\varphi$ tvaru $t_1=t_2$, potom $\mathrm{PH}^\A(\varphi)[e]=1$ právě když $(t_1^\A[e],t_2^\A[e])\in {=^\A}$, kde $=^\A$ je identita na $A$, tj. právě když $t_1^\A[e]=t_2^\A[e]$ (obě strany rovnosti jsou stejný prvek $a\in A$).
+In particular, if $\varphi$ is of the form $t_1=t_2$, then $\mathrm{TVal}^\A(\varphi)[e]=1$ if and only if $(t_1^\A[e],t_2^\A[e])\in {=^\A}$, where $=^\A$ is the identity on $A$, i.e., if and only if $t_1^\A[e]=t_2^\A[e]$ (both sides of the equality are the same element $a\in A$).
 
-Pravdivostní hodnota negace je definována takto:
+The truth value of a negation is defined as follows:
 $$
-\mathrm{PH}^\A(\neg \varphi)[e]=f_\neg(\mathrm{PH}^\A(\varphi)[e])=1-\mathrm{PH}^\A(\varphi)[e]
+\mathrm{TVal}^\A(\neg \varphi)[e]=f_\neg(\mathrm{TVal}^\A(\varphi)[e])=1-\mathrm{TVal}^\A(\varphi)[e]
 $$
-Obdobně pro binární logické spojky, jsou-li $\varphi,\psi$ a $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, potom:
+Similarly, for binary logical connectives, if $\varphi,\psi$ are formulas and $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, then:
 $$
-\mathrm{PH}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{PH}^\A(\varphi)[e],\mathrm{PH}^\A(\psi)[e])
+\mathrm{TVal}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{TVal}^\A(\varphi)[e],\mathrm{TVal}^\A(\psi)[e])
 $$
-Zbývá definovat pravdivostní hodnotu pro kvantifikátory, tj. formule tvaru $(Qx)\varphi$. Budeme potřebovat následující značení: Změníme-li v ohodnocení $e:\Var\to A$ hodnotu pro proměnnou $x$ na $a$, výsledné ohodnocení zapíšeme jako $e(x/a)$. Platí tedy $e(x/a)(x)=a$. Pravdivostní hodnotu pro $(Qx)\varphi$ definujeme takto:
+It remains to define the truth value for quantifiers, i.e., formulas of the form $(Qx)\varphi$. We will need the following notation: If in the assignment $e:\Var\to A$ we change the value for the variable $x$ to $a$, the resulting assignment is written as $e(x/a)$. Thus, $e(x/a)(x)=a$. The truth value for $(Qx)\varphi$ is defined as follows:
 \begin{align*}
-    \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
-    \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
+    \mathrm{TVal}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{TVal}^\A(\varphi)[e(x/a)])\\ 
+    \mathrm{TVal}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{TVal}^\A(\varphi)[e(x/a)])
 \end{align*}
-Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
+Thus, under the assignment $e$, we set the value of the variable $x$ successively to all elements $a\in A$ and require that the truth value is 1 always (in the case of $\forall$) or at least once (in the case of $\exists$).\footnote{Recall that $f_\landsymb(x,y)=\min(x,y)$ and $f_\lorsymb(x,y)=\max(x,y)$. Thus, quantifiers play the role of `conjunction' ($\forall$) or `disjunction' ($\exists$) over all elements of the structure.}
 \end{definition}
 
 \begin{remark}
-    Pravdivostní hodnota závisí pouze na ohodnocení volných proměnných. Speciálně, je-li $\varphi$ sentence, potom její pravdivostní hodnota nezávisí na ohodnocení.
+    The truth value depends only on the assignment of free variables. In particular, if $\varphi$ is a sentence, then its truth value does not depend on the assignment.
 \end{remark}
 
 \begin{example}
-Vezměme si uspořádané těleso $\underline{\mathbb Q}$. Potom:
+Consider the ordered field $\underline{\mathbb Q}$. Then:
 \begin{itemize}
-    \item $\mathrm{PH}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ právě když $e(x)\in (0,1]$,
-    \item $\mathrm{PH}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ právě když $e(y)=0$,
-    \item $\mathrm{PH}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ pro každé ohodnocení $e$ (je to sentence), ale 
-    \item $\mathrm{PH}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (pro každé $e$), je-li $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ se standardními operacemi a uspořádáním.
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}(x\leq 1 \land \neg (x\leq 0))[e]=1$ if and only if $e(x)\in (0,1]$,
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}((\forall x)(x\cdot y = y))[e]=1$ if and only if $e(y)=0$,
+    \item $\mathrm{TVal}^{\underline{\mathbb Q}}((\exists x)(x \leq 0 \land \neg x=0))[e]=1$ for any assignment $e$ (it is a sentence), but 
+    \item $\mathrm{TVal}^{\A}((\exists x)(x \leq 0 \land \neg x=0))[e]=0$ (for any $e$), if $\A=\langle \mathbb N,+,-,0,\cdot,1,\leq\rangle$ with the standard operations and order.
 \end{itemize}    
 \end{example}
 
+\subsection{Validity}
 
-\subsection{Platnost}
+Based on the truth value, we can now define the key notion of semantics, \emph{validity}.
 
-Na základě pravdivostní hodnoty už můžeme definovat klíčový pojem sémantiky, \emph{platnost}.
-
-\begin{definition}[Platnost ve struktuře]
-Mějme formuli $\varphi$ a strukturu $\A$ (ve stejném jazyce). 
+\begin{definition}[Validity in a Structure]
+Given a formula $\varphi$ and a structure $\A$ (in the same language). 
 \begin{itemize}
-    \item Je-li $e$ ohodnocení a $\mathrm{PH}^\A(\varphi)[e]=1$, potom říkáme, že \emph{$\varphi$ platí v $\A$ při ohodnocení $e$}, a píšeme $\A\models\varphi[e]$. (V opačném případě říkáme, že \emph{$\varphi$ neplatí v $\A$ při ohodnocení $e$}, a píšeme $\A\not\models\varphi[e]$.)
-    \item Pokud $\varphi$ platí v $\A$ při každém ohodnocení $e:\Var\to A$, potom říkáme, že \emph{$\varphi$ je pravdivá (platí) v $\A$}, a píšeme $\A\models\varphi$.
-    \item Pokud $\A\models\neg\varphi$, tj. $\varphi$ neplatí v $\A$ při žádném ohodnocení (pro každé $e$ máme $\A\not\models\varphi[e]$), potom je \emph{$\varphi$ lživá v $\A$}.\footnote{Pozor, \emph{lživá} není totéž, co \emph{není pravdivá}! To platí jen pro sentence.}
+    \item If $e$ is an assignment and $\mathrm{TVal}^\A(\varphi)[e]=1$, we say that \emph{$\varphi$ is valid in $\A$ under the assignment $e$}, and write $\A\models\varphi[e]$. (Otherwise, we say that \emph{$\varphi$ is not valid in $\A$ under the assignment $e$}, and write $\A\not\models\varphi[e]$.)
+    \item If $\varphi$ is valid in $\A$ under every assignment $e:\Var\to A$, we say that \emph{$\varphi$ is valid (true) in $\A$}, and write $\A\models\varphi$.
+    \item If $\A\models\neg\varphi$, i.e., $\varphi$ is not valid in $\A$ under any assignment (for every $e$ we have $\A\not\models\varphi[e]$), then \emph{$\varphi$ is contradictory in $\A$}.\footnote{Note that \emph{contradictory} is not the same as \emph{not valid}! This only holds for sentences.}
 \end{itemize}    
 \end{definition}
 
-Shrňme několik jednoduchých vlastností, nejprve týkajících se platnosti při ohodnocení. Buď $\A$ struktura, $\varphi,\psi$ formule, a $e$ ohodnocení.
+Let us summarize some simple properties, first concerning validity under an assignment. Let $\A$ be a structure, $\varphi,\psi$ formulas, and $e$ a variable assignment.
 \begin{itemize}
-    \item $\A\models\neg\varphi[e]$ právě když $\A\not\models\varphi[e]$,
-    \item $\A\models(\varphi\land\psi)[e]$ právě když $\A\models\varphi[e]$ a $\A\models\psi[e]$,
-    \item $\A\models(\varphi\lor\psi)[e]$ právě když $\A\models\varphi[e]$ nebo $\A\models\psi[e]$,
-    \item $\A\models(\varphi\limplies\psi)[e]$ právě když platí: jestliže $\A\models\varphi[e]$ potom $\A \models\psi[e]$,
-    \item $\A\models(\varphi\liff\psi)[e]$ právě když platí: $\A\models\varphi[e]$ právě když $\A\models\psi[e]
-    $,
-    \item $\A\models(\forall x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro všechna $a\in A$,
-    \item $\A\models(\exists x)\varphi[e]$ právě když $\A\models\varphi[e(x/a)]$ pro nějaké $a\in A$.
-    \item Je-li term $t$ substituovatelný za proměnnou $x$ do formule $\varphi$, potom
+    \item $\A\models\neg\varphi[e]$ if and only if $\A\not\models\varphi[e]$,
+    \item $\A\models(\varphi\land\psi)[e]$ if and only if $\A\models\varphi[e]$ and $\A\models\psi[e]$,
+    \item $\A\models(\varphi\lor\psi)[e]$ if and only if $\A\models\varphi[e]$ or $\A\models\psi[e]$,
+    \item $\A\models(\varphi\limplies\psi)[e]$ if and only if: if $\A\models\varphi[e]$ then $\A\models\psi[e]$,
+    \item $\A\models(\varphi\liff\psi)[e]$ if and only if: $\A\models\varphi[e]$ if and only if $\A\models\psi[e]$,
+    \item $\A\models(\forall x)\varphi[e]$ if and only if $\A\models\varphi[e(x/a)]$ for all $a\in A$,
+    \item $\A\models(\exists x)\varphi[e]$ if and only if $\A\models\varphi[e(x/a)]$ for some $a\in A$.
+    \item If a term $t$ is substitutable for the variable $x$ in the formula $\varphi$, then
     $$
-    \A\models\varphi(x/t)[e]\text{ právě když }\A\models\varphi[e(x/a)]\text{ pro }a=t^\A[e].
+    \A\models\varphi(x/t)[e]\text{ if and only if }\A\models\varphi[e(x/a)]\text{ for }a=t^\A[e].
     $$
-    \item Je-li $\psi$ varianta $\varphi$, potom $\A\models\varphi[e]$ právě když $\A\models\psi[e]$.
+    \item If $\psi$ is a variant of $\varphi$, then $\A\models\varphi[e]$ if and only if $\A\models\psi[e]$.
 \end{itemize}
 
 \begin{exercise}
-    Dokažte podrobně všechny uvedené vlastnosti platnosti při ohodnocení.
+    Prove all the listed properties of validity under an assignment in detail.
 \end{exercise}
 
-A jak je tomu s pojmem pravdivosti (platnosti) ve struktuře?
+And what about the notion of truth (validity) in a structure?
 \begin{itemize}
-    \item Pokud $\A\models\varphi$, potom $\A\not\models\neg\varphi$. Je-li $\varphi$ sentence, potom platí i opačná implikace (tj. platí `právě když').
-    \item $\A\models\varphi\land\psi$ právě když $\A\models\varphi$ a $\A\models\psi$,
-    \item Pokud $\A\models\varphi$ nebo $\A\models\psi$, potom $\A\models\varphi\lor\psi$. Je-li $\varphi$ sentence, potom platí i opačná implikace (tj. platí `právě když').
-    \item $\A\models\varphi$ právě když $\A\models
+    \item If $\A\models\varphi$, then $\A\not\models\neg\varphi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., it is `if and only if').
+    \item $\A\models\varphi\land\psi$ if and only if $\A\models\varphi$ and $\A\models\psi$,
+    \item If $\A\models\varphi$ or $\A\models\psi$, then $\A\models\varphi\lor\psi$. If $\varphi$ is a sentence, then the converse implication also holds (i.e., it is `if and only if').
+    \item $\A\models\varphi$ if and only if $\A\models
     (\forall x)\varphi$.
 \end{itemize}
-\emph{Generální uzávěr} formule $\varphi(x_1,\dots,x_n)$ (tj. $x_1,\dots,x_n$ jsou všechny volné proměnné formule $\varphi$) je sentence $(\forall x_1)\cdots(\forall x_n)\varphi$. Z posledního bodu plyne, že formule platí ve struktuře, právě když v ní platí její generální uzávěr.
+The \emph{general closure} of a formula $\varphi(x_1,\dots,x_n)$ (i.e., $x_1,\dots,x_n$ are all the free variables of the formula $\varphi$) is the sentence $(\forall x_1)\cdots(\forall x_n)\varphi$. From the last point, it follows that a formula is valid in a structure if and only if its general closure is valid in it.
 
 \begin{exercise}
-    Dokažte podrobně všechny uvedené vlastnosti platnosti ve struktuře.
+    Prove all the listed properties of validity in a structure in detail.
 \end{exercise}
 
 \begin{exercise}
-    Najděte příklad struktury $\A$ a formule $\varphi$ takových, že $\A\not\models\varphi$ a zároveň $\A\not\models\neg\varphi$.
+    Give an example of a structure $\A$ and a formula $\varphi$ such that $\A\not\models\varphi$ and yet $\A\not\models\neg\varphi$.
 \end{exercise}
 
 \begin{exercise}
-    Najděte příklad struktury $\A$ a formulí $\varphi,\psi$ takových, že $\A\models\varphi\lor\psi$ ale $\A\not\models\varphi$ ani $\A\not\models\psi$.
+    Give an example of a structure $\A$ and formulas $\varphi,\psi$ such that $\A\models\varphi\lor\psi$ but $\A\not\models\varphi$ and $\A\not\models\psi$.
 \end{exercise}
 
-\section{Vlastnosti teorií}
 
-Na základě pojmu \emph{platnosti} vybudujeme sémantickou terminologii obdobně jako ve výrokové logice. \emph{Teorie} jazyka $L$ je libovolná množina $T$ $L$-formulí, prvkům teorie říkáme \emph{axiomy}. \emph{Model} teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$, tj. $\A\models\varphi$ pro všechna $\varphi\in T$, což značíme $\A\models T$. \emph{Třída modelů}\footnote{Připomeňme, že nemůžeme říkat `množina'.} teorie $T$ je:
+\section{Properties of Theories}
+
+Based on the notion of \emph{validity}, we will build semantic terminology similar to that in propositional logic. A \emph{theory} of a language $L$ is any set $T$ of $L$-formulas, whose elements are called \emph{axioms}. A \emph{model} of the theory $T$ is an $L$-structure in which all axioms of the theory $T$ are valid, i.e., $\A\models\varphi$ for all $\varphi\in T$, which we denote by $\A\models T$. The \emph{class of models}\footnote{Recall that we cannot say `set'.} of the theory $T$ is:
 $$
 \M_L(T)=\{\A\in\M_L\mid\A\models T\}
 $$
-Stejně jako ve výrokové logice budeme často vynechávat jazyk $L$, bude-li zřejmý z kontextu, a budeme psát $M(\varphi_1,\dots,\varphi_n)$ místo $M(\{\varphi_1,\dots,\varphi_n\})$ a $M(T,\varphi)$ místo $M(T\cup\{\varphi\})$.
+As in propositional logic, we will often omit the language $L$ when it is clear from the context and write $M(\varphi_1,\dots,\varphi_n)$ instead of $M(\{\varphi_1,\dots,\varphi_n\})$ and $M(T,\varphi)$ instead of $M(T\cup\{\varphi\})$.
 
-\subsection{Platnost v teorii}
+\subsection{Validity in a Theory}
 
-Je-li $T$ teorie v jazyce $L$ a $\varphi$ $L$-formule, potom říkáme, že $\varphi$ je: 
+If $T$ is a theory in the language $L$ and $\varphi$ is an $L$-formula, then we say that $\varphi$ is: 
 \begin{itemize}
-    \item \emph{pravdivá (platí) v $T$}, značíme $T\models\varphi$, pokud $\A\models\varphi$ pro všechna $\A\in\M(T)$ (neboli: $\M(T)\subseteq\M(\varphi)$),
-    \item \emph{lživá v $T$}, pokud $T\models\neg\varphi$, tj. pokud je lživá v každém modelu $T$ (neboli: $\M(T)\cap\M(\varphi)=\emptyset$),
-    \item \emph{nezávislá v $T$}, pokud není pravdivá v $T$ ani lživá v $T$.
+    \item \emph{valid (true) in $T$}, denoted $T\models\varphi$, if $\A\models\varphi$ for all $\A\in\M(T)$ (in other words: $\M(T)\subseteq\M(\varphi)$),
+    \item \emph{contradictory in $T$}, if $T\models\neg\varphi$, i.e., if it is contradictory in every model of $T$ (in other words: $\M(T)\cap\M(\varphi)=\emptyset$),
+    \item \emph{independent in $T$}, if it is neither valid in $T$ nor contradictory in $T$.
 \end{itemize}
-Máme-li prázdnou teorii $T=\emptyset$ (tj. $\M(T)=\M_L$), potom teorii $T$ vynecháváme, píšeme $\models\varphi$, a říkáme, že $\varphi$ \emph{je pravdivá (v logice), (logicky) platí, je tautologie}; podobně pro ostatní pojmy.
+If we have an empty theory $T=\emptyset$ (i.e., $\M(T)=\M_L$), then we omit the theory $T$, write $\models\varphi$, and say that $\varphi$ \emph{is (universally) valid, (logically) valid, is a tautology}; similarly for other notions.
 
-Teorie je \emph{sporná}, jestliže v ní platí \emph{spor} $\bot$, který v predikátové logice můžeme definovat jako $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, kde $R$ je libovolný (třeba první) relační symbol z jazyka nebo rovnost (nemá-li jazyk relační symbol, musí být s rovností). Teorie je \emph{sporná}, právě když v ní platí každá formule, nebo, ekvivalentně, právě když nemá žádný model. Jinak říkáme, že je teorie \emph{bezesporná} (neplatí-li v ní spor, ekvivalentně má-li alespoň jeden model).
+A theory is \emph{inconsistent} if the \emph{contradiction} $\bot$ is valid in it; $\bot$ in predicate logic can be defined as $R(x_1,\dots,x_n)\land \neg R(x_1,\dots,x_n)$, where $R$ is any (say, the first) relation symbol from the language or the equality symbol (recall: if the language has no relation symbol, it must be with equality). A theory is \emph{inconsistent} if and only if every formula is valid in it, or equivalently, if and only if it has no model. Otherwise, we say that the theory is \emph{consistent} (if the contradiction is not valid in it, equivalently, if it has at least one model).
 
-\emph{Sentencím} pravdivým v $T$ říkáme \emph{důsledky} $T$; \emph{množina všech důsledků} $T$ v jazyce $L$ je:
+\emph{Sentences} valid in $T$ are called \emph{consequences} of $T$; the \emph{set of all consequences} of $T$ in the language $L$ is:
 $$
-\Conseq_L(T)=\{\varphi\mid\text{$\varphi$ je sentence a }T\models \varphi\}
+\Conseq_L(T)=\{\varphi\mid\text{$\varphi$ is a sentence and }T\models \varphi\}
 $$
 
-\subsubsection{Kompletnost v predikátové logice }
-Jak je tomu s pojmem \emph{kompletnosti} teorie?\footnote{Připomeňme, že \emph{výroková} teorie je kompletní, je-li bezesporná a každý výrok v ní buď platí, nebo platí jeho negace. Ekvivalentně, má právě 
-jeden model.}
+\subsubsection{Completeness in Predicate Logic}
+
+How about the notion of \emph{completeness} of a theory?\footnote{Recall that a \emph{propositional} theory is complete if it is consistent and every proposition is either valid in it or its negation is valid in it. Equivalently, it has exactly one model.}
 
 \begin{definition}
-    Teorie je \emph{kompletní}, je-li bezesporná a každá \emph{sentence} je v ní buď pravdivá, nebo lživá.
+    A theory $T$ is \emph{complete} if it is consistent and every \emph{sentence} is either valid in $T$ or contradictory in $T$.
 \end{definition}
 
-Nemůžeme ale říci, že je teorie kompletní, právě když má jediný model. Máme-li totiž jeden model, dostáváme z něj nekonečně mnoho jiných, ale \emph{izomorfních} modelů, tj. lišících se jen pojmenováním prvků univerza.\footnote{Formálně pojem \emph{izomorfismu} definujeme později v části o \emph{teorii modelů}, v Sekci \ref{section:isomorphism-of-structures}, jde ale o zobecnění izomorfismu který znáte z teorie grafů.} Uvažovat jediný model `až na izomorfismus' by ale nebylo dostatečné. Správným pojmem je tzv. \emph{elementární ekvivalence}:
+However, we cannot say that a theory is complete if and only if it has a single model. If we have one model, we derive infinitely many different, but \emph{isomorphic} models, i.e., differing only by the naming of the elements of the universe.\footnote{Formally, the notion of \emph{isomorphism} is defined later in the part on \emph{model theory}, in Section \ref{section:isomorphism-of-structures}, but it is a generalization of the isomorphism you know from graph theory.} Even considering a single model `up to isomorphism' would not be sufficient. The correct notion is called \emph{elementary equivalence}:
 
 \begin{definition}
-    Struktury $\A,\B$ (v témž jazyce) jsou \emph{elementárně ekvivalentní}, pokud v nich platí tytéž sentence. Značíme $\A\equiv\B$.
+    Structures $\A,\B$ (in the same language) are \emph{elementarily equivalent} if the same sentences are valid in both of them. We denote this by $\A\equiv\B$.
 \end{definition}
 
 \begin{example}\label{example:elementary-equivalence-of-orders-R-Q}
-    Příkladem struktur, které jsou elementárně ekvivalentní, ale ne izomorfní, jsou uspořádané množiny $\A=\langle\mathbb Q,\leq\rangle$ a $\B=\langle\mathbb R,\leq\rangle$. Izomorfní nejsou proto, že $\mathbb Q$ je spočetná zatímco $\mathbb R$ nespočetná množina, neexistuje tedy dokonce žádná \emph{bijekce} mezi jejich univerzy. Není těžké ukázat, že pro každou sentenci $\varphi$ platí $\A\models\varphi\Leftrightarrow\B\models\varphi$: indukcí podle struktury formule $\varphi$, jediný netriviální případ je existenční kvantifikátor, a klíčovou vlastností je \emph{hustota} obou uspořádání, tj. následující vlastnost:
+    An example of structures that are elementarily equivalent but not isomorphic are the ordered sets $\A=\langle\mathbb Q,\leq\rangle$ and $\B=\langle\mathbb R,\leq\rangle$. They are not isomorphic because $\mathbb Q$ is countable while $\mathbb R$ is uncountable, so there is not even a \emph{bijection} between their universes. It is not difficult to show that for any sentence $\varphi$, $\A\models\varphi\Leftrightarrow\B\models\varphi$ holds: by induction on the structure of the formula $\varphi$, the only non-trivial case is the existential quantifier, and the key property is the \emph{density} of both orders, i.e., the following property:
     $$
     (x\leq y\land \neg x=y)\limplies(\exists z)(x\leq z\land z\leq y\land \neg x=z\land\neg y=z)
     $$
 
 \end{example}
 \begin{observation}
-    Teorie je kompletní, právě když má právě jeden model až na elementární ekvivalenci.    
+    A theory is complete if and only if it has exactly one model up to elementary equivalence.    
 \end{observation}
 
+\subsubsection{Validity by Unsatisfiability}
 
-
-\subsubsection{Platnost pomocí nesplnitelnosti}
-
-Otázku pravdivosti (platnosti) v dané teorii lze převést na problém existence modelu:
-\begin{proposition}[O nesplnitelnosti a pravdivosti]
-    Je-li $T$ teorie a $\varphi$ \emph{sentence} (ve stejném jazyce), potom platí: $T\cup\{\neg\varphi\}$ nemá model, právě když $T\models\varphi$.
+The question of truth (validity) in a given theory can be reduced to the problem of the existence of a model:
+\begin{proposition}[On Unsatisfiability and Validity]
+    If $T$ is a theory and $\varphi$ is a \emph{sentence} (in the same language), then: $T\cup\{\neg\varphi\}$ has no model if and only if $T\models\varphi$.
 \end{proposition}
 \begin{proof}
-    Platí následující ekvivalence: $T\cup\{\neg\varphi\}$ nemá model, právě když $\neg\varphi$ neplatí v žádném modelu $T$, právě když (neboť je to sentence) $\varphi$ platí v každém modelu $T$. 
+    The following equivalences hold: $T\cup\{\neg\varphi\}$ has no model if and only if $\neg\varphi$ is not valid in any model of $T$, if and only if (since it is a sentence) $\varphi$ is valid in every model of $T$.
 \end{proof}
 
-Předpoklad, že $\varphi$ je sentence, je nutný: uvažte teorii $T=\{P(c)\}$ a formuli $\varphi=P(x)$ (což není sentence). Potom $\{P(c),\neg P(x)\}$ nemá model, ale $P(c)\not\models P(x)$. (Zde $P$ je unární relační, a $c$ konstantní symbol.)
+The assumption that $\varphi$ is a sentence is necessary: consider the theory $T=\{P(c)\}$ and the formula $\varphi=P(x)$ (which is not a sentence). Then $\{P(c),\neg P(x)\}$ has no model, but $P(c)\not\models P(x)$. (Here, $P$ is a unary relation symbol and $c$ is a constant symbol.)
 
+\subsection{Examples of Theories}
 
-\subsection{Příklady teorií}
+Here are some examples of important theories.
 
-Uveďme několik příkladů důležitých teorií.
+\subsubsection{Theory of Graphs}
 
-\subsubsection{Teorie grafů}
-\emph{Teorie grafů} je teorie v jazyce $L=\langle E\rangle$ s rovností, splňující axiomy \emph{ireflexivity} a \emph{symetrie}:
+The \emph{theory of graphs} is a theory in the language $L=\langle E\rangle$ with equality, satisfying the axioms of \emph{irreflexivity} and \emph{symmetry}:
 $$
 T_\text{graph}=\{\neg E(x, x),E(x,y)\limplies E(y,x)\}
 $$
-Modely $T_\text{graph}$ jsou struktury $\mathcal G=\langle G,E^\mathcal G\rangle$, kde $E^\mathcal G$ je symetrická ireflexivní relace, jde tedy o tzv. \emph{jednoduché} grafy, kde hranu $\{x,y\}$ reprezentuje dvojice uspořádaných hran $(x,y),(y,x)$.
+The models of $T_\text{graph}$ are structures $\mathcal G=\langle G,E^\mathcal G\rangle$, where $E^\mathcal G$ is a symmetric irreflexive relation, i.e., so-called \emph{simple} graphs, where the edge $\{x,y\}$ is represented by the ordered pairs $(x,y),(y,x)$.
 \begin{itemize}
-    \item Formule $\neg x=y\limplies E(x,y)$ platí v grafu, právě když jde o \emph{úplný graf}. Je tedy nezávislá v $T_\text{graph}$.
-    \item Formule $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2))$ vyjadřuje, že každý vrchol má stupeň právě 2. Platí tedy právě v grafech, které jsou disjunktní sjednocení kružnic, a je nezávislá v teorii $T_\text{graph}$.
+    \item The formula $\neg x=y\limplies E(x,y)$ holds in a graph if and only if the graph is a \emph{clique} (a \emph{complete} graph). The formula is thus independent in $T_\text{graph}$.
+    \item The formula $(\exists y_1)(\exists y_2)(\neg y_1=y_2\land E(x,y_1)\land E(x,y_2)\land (\forall z)(E(x,z)\limplies z=y_1\lor z=y_2))$ expresses that each vertex has degree exactly 2. It thus holds precisely in graphs that are disjoint unions of cycles and is independent in the theory $T_\text{graph}$.
 \end{itemize}
 
+\subsubsection{Theory of Order}
 
-\subsubsection{Teorie uspořádání}
-
-\emph{Teorie uspořádání} je teorie v jazyce uspořádání $L=\langle\leq\rangle$ s rovností, jejíž axiomy jsou:
+The \emph{theory of order} is a theory in the language of order $L=\langle\leq\rangle$ with equality, whose axioms are:
 \begin{align*}
     T=\{& x\leq x,\\
         & x\leq y\land y\leq x\limplies x=y,\\
         & x\leq y\land y\leq z\limplies x\leq z\}\\
 \end{align*}
-Těmto axiomům říkáme \emph{reflexivita}, \emph{antisymetrie}, \emph{tranzitivita}. Modely $T$ jsou $L$-struktury $\langle S,\leq^S\rangle$, ve kterých platí axiomy $T$, tzv. \emph{(částečně) uspořádané množiny}. Např: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ pro $X=\{0,1,2\}$.
+These axioms are called \emph{reflexivity}, \emph{antisymmetry}, and \emph{transitivity}. The models of $T$ are $L$-structures $\langle S,\leq^S\rangle$, in which the axioms $T$ are valid, so-called \emph{(partially) ordered sets}. For example: $\A=\langle\mathbb N,\leq\rangle$, $\B=\langle\mathcal P(X),\subseteq\rangle$ for $X=\{0,1,2\}$.
 \begin{itemize}
-    \item Formule $x\leq y\lor y\leq x$ (\emph{linearita}) platí v $\A$, ale neplatí v $\B$, neboť neplatí např. při ohodnocení kde $e(x)=\{0\}$, $e(y)=\{1\}$ (píšeme $\B\not\models\varphi[e]$). Je tedy nezávislá v $T$.
-    \item Sentence $(\exists x)(\forall y)(y\leq x)$ (označme ji $\psi$) je pravdivá v $\B$ a lživá v $\A$, píšeme $\B\models\psi$, $\A\models\neg\psi$. Je tedy také nezávislá v $T$.
-    \item Formule $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (označme ji $\chi$) je pravdivá v $T$, píšeme $T\models\chi$. Totéž platí pro její \emph{generální uzávěr} $(\forall x)(\forall y)(\forall z)\chi$.
+    \item The formula $x\leq y\lor y\leq x$ (\emph{linearity}) is valid in $\A$ but not in $\B$, because it is not valid, for example, under the assignment where $e(x)=\{0\}$, $e(y)=\{1\}$ (we write $\B\not\models\varphi[e]$). It is thus independent in $T$.
+    \item The sentence $(\exists x)(\forall y)(y\leq x)$ (denote it by $\psi$) is valid in $\B$ and contradictory in $\A$, we write $\B\models\psi$, $\A\models\neg\psi$. It is thus also independent in $T$.
+    \item The formula $(x\leq y\land y\leq z\land z\leq x)\limplies (x=y\land y=z)$ (denote it by $\chi$) is valid in $T$, we write $T\models\chi$. The same applies to its \emph{general closure} $(\forall x)(\forall y)(\forall z)\chi$.
 \end{itemize}
 
-\subsubsection{Algebraické teorie}
+\subsubsection{Algebraic Theories}
 
 \begin{itemize}
-    \item \emph{Teorie grup} je teorie v jazyce $L=\langle +,-,0\rangle$ s rovností, jejíž axiomy jsou:
+    \item The \emph{theory of groups} is a theory in the language $L=\langle +,-,0\rangle$ with equality, whose axioms are:
     \begin{align*}
         T_1=\{& x + (y + z) = (x + y) + z,\\
             & 0 + x = x,\ x + 0 = x,\\
             & x + (-x) = 0,\ (-x) + x = 0\}\\
     \end{align*}
-    Těmto vlastnostem říkáme \emph{asociativita $+$}, \emph{neutralita $0$ vůči $+$}, a \emph{$-x$ je inverzní prvek k $x$ (vůči $+$ a $0$)}.
-    \item \emph{Teorie komutativních grup} má navíc axiom $x+y=y+x$ (\emph{komutativita $+$}), je tedy: 
+    These properties are called \emph{associativity of $+$}, \emph{neutrality of $0$ with respect to $+$}, and \emph{$-x$ is the inverse element of $x$ (with respect to $+$ and $0$)}.
+    \item The \emph{theory of commutative groups} additionally contains the axiom $x+y=y+x$ (\emph{commutativity of $+$}), thus:
     $$
     T_2=T_1\cup\{x+y=y+x\}
     $$
-    \item \emph{Teorie okruhů} je v jazyce $L=\langle +,-,0,\cdot,1\rangle$ s rovností, má navíc axiomy:
+    \item The \emph{theory of rings} is in the language $L=\langle +,-,0,\cdot,1\rangle$ with equality and adds the following axioms:
     \begin{align*}
         T_3=T_2\cup\{   & 1 \cdot x = x \cdot 1,\\
         & x \cdot (y \cdot z) = (x \cdot y) \cdot z,\\
         & x \cdot (y + z) = x \cdot y + x \cdot z,\\
         & (x + y) \cdot z = x \cdot z + y \cdot z\}
     \end{align*}
-    Těmto vlastnostem říkáme \emph{neutralita $1$ vůči $\cdot$}, \emph{asociativita $\cdot$}, a \emph{(levá i pravá) distributivita $\cdot$ vůči $+$}.
-    \item \emph{Teorie komutativních okruhů} má navíc axiom \emph{komutativity $\cdot$}, máme tedy:
+    These properties are called \emph{neutrality of $1$ with respect to $\cdot$}, \emph{associativity of $\cdot$}, and \emph{(left and right) distributivity of $\cdot$ with respect to $+$}.
+    \item The \emph{theory of commutative rings} additionally has the axiom of \emph{commutativity of $\cdot$}, thus:
     $$
     T_4 = T_3 \cup \{x \cdot y = y \cdot x\}
     $$
-    \item \emph{Teorie těles} je ve stejném jazyce, ale má navíc axiomy \emph{existence inverzního prvku k $\cdot$} a \emph{netriviality}:
+    \item The \emph{theory of fields} is in the same language but additionally has the axioms of \emph{existence of an inverse element with respect to $\cdot$} and \emph{non-triviality}:
     $$
     T_5 = T_4 \cup \{\neg\,x=0 \limplies (\exists y)(x\cdot y = 1), \neg\,0=1\}
     $$
-    \item \emph{Teorie uspořádaných těles} je v jazyce $\langle +, -, 0,\cdot,1,\leq\rangle$ s rovností, sestává z axiomů teorie těles, teorie uspořádání spolu s axiomem linearity, a z následujících axiomů \emph{kompatibility uspořádání}: $x\leq y\limplies (x+z\leq y+z)$ a $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$. (Modely jsou tedy tělesa s \emph{lineárním (totálním)} uspořádáním, které je kompatibilní s tělesovými operacemi v tomto smyslu.)
+    \item The \emph{theory of ordered fields} is in the language $\langle +, -, 0,\cdot,1,\leq\rangle$ with equality, consisting of the axioms of the theory of fields, the theory of order along with the axiom of linearity, and the following axioms of \emph{compatibility of the order}: $x\leq y\limplies (x+z\leq y+z)$ and $(0\leq x\land 0\leq y)\limplies 0\leq x\cdot y$. (The models are thus fields with \emph{linear (total)} order compatible with the field operations in this sense.)
 \end{itemize}
 
 
-\section{Podstruktura, expanze, redukt}
+\section{Substructure, Expansion, Reduct}
 
-V této sekci se podíváme na způsoby, jak můžeme vytvářet nové struktury z existujících.
+In this section, we will look at ways to create new structures from existing ones.
 
-\subsubsection{Podstruktura}
+\subsubsection{Substructure}
 
-Pojem \emph{podstruktury} zobecňuje podgrupy, podprostory vektorového prostoru, a indukované podgrafy grafu: vybereme nějakou podmnožinu $B$ univerza struktury $\A$, a vytvoříme na ní strukturu $\B$ stejné signatury, která `zdědí' relace, funkce, a konstanty. Abychom to mohli provést, potřebujeme, aby byla množina $B$ \emph{uzavřená} na všechny funkce a obsahovala všechny konstanty.\footnote{Stejně jako ne každá množina vektorů je podprostor, k tomu musí obsahovat nulový vektor, ke každému vektoru obsahovat všechny jeho skalární násobky, a pro každou dvojici vektorů obsahovat jejich součet. Jinými slovy, jen (neprázdné) množiny uzavřené na \emph{lineární kombinace} vektorů dávají vzniknout podprostorům.}
+The notion of \emph{substructure} generalizes subgroups, subspaces of a vector space, and induced subgraphs of a graph: we select a subset $B$ of the universe of the structure $\A$ and create on it a structure $\B$ of the same signature, which `inherits' the relations, functions, and constants. To do this, we need the set $B$ to be \emph{closed} under all functions and contain all constants.\footnote{Just as not every set of vectors is a subspace, it must contain the zero vector, contain all scalar multiples of each vector, and for any pair of vectors, contain their sum. In other words, only (non-empty) sets closed under \emph{linear combinations} of vectors form subspaces.}
 
-\begin{definition}[Podstruktura]
-Mějme strukturu $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ v signatuře $\langle\mathcal R,\mathcal F\rangle$. Struktura $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ je \emph{(indukovaná) podstruktura $\A$}, značíme $\B\subseteq\A$, jestliže
+\begin{definition}[Substructure]
+Let $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ be a structure in the signature $\langle\mathcal R,\mathcal F\rangle$. A structure $\B=\langle B,\mathcal R^\mathcal B,\mathcal F^\mathcal B\rangle$ is an \emph{(induced) substructure of $\A$}, denoted $\B\subseteq\A$, if
 \begin{itemize}
     \item $\emptyset\neq B\subseteq A$,
-    \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ pro každý relační symbol $R\in \mathcal R$,
-    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ pro každý funkční symbol $f\in \mathcal F$ (tj. funkce $f^\B$ je restrikce $f^\A$ na množinu $B$, a její výstupy jsou všechny také z $B$),
-    \item speciálně, pro každý konstantní symbol $c\in\mathcal F$ máme $c^\B=c^\A\in B$.
+    \item $R^\B=R^\A\cap B^{\mathrm{ar(R)}}$ for each relation symbol $R\in \mathcal R$,
+    \item $f^\B=f^\A\cap (B^{\mathrm{ar(f)}}\times B)$ for each function symbol $f\in \mathcal F$ (i.e., the function $f^\B$ is the restriction of $f^\A$ to the set $B$, and also its outputs are all from $B$),
+    \item in particular, for each constant symbol $c\in\mathcal F$ we have $c^\B=c^\A\in B$.
 \end{itemize}
 \end{definition}
-Množina $C\subseteq A$ je \emph{uzavřená} na funkci $f:A^n\to A$, pokud $f(x_1,\dots,x_n)\in C$ pro všechna $x_i\in C$. Platí:
+A set $C\subseteq A$ is \emph{closed} under a function $f:A^n\to A$ if $f(x_1,\dots,x_n)\in C$ for all $x_i\in C$. We have:
 \begin{observation}
-    Množina $\emptyset\neq C\subseteq A$ je univerzem podstruktury struktury $\A$, právě když je $C$ uzavřená na všechny funkce struktury $\A$ (včetně konstant).
+    A set $\emptyset\neq C\subseteq A$ is the universe of a substructure of the structure $\A$ if and only if $C$ is closed under all functions of the structure $\A$ (including constants).
 \end{observation}
-V tom případě říkáme této podstruktuře \emph{restrikce} $\A$ na množinu $C$, a značíme ji $\A\restriction C$.
+In that case, we call this substructure the \emph{restriction} of $\A$ to the set $C$, and denote it by $\A\restriction C$.
 
 \begin{example}
-    $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$ je podstrukturou $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$, můžeme psát $\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$. Struktura $\underline{\mathbb N}=\langle \mathbb N,+,\cdot,0\rangle$ je podstrukturou obou těchto struktur, $\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$.
+    $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$ is a substructure of $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$, we can write $\underline{\mathbb Z}=\underline{\mathbb Q}\restriction\mathbb Z$. The structure $\underline{\mathbb N}=\langle \mathbb N,+,\cdot,0\rangle$ is a substructure of both these structures, $\underline{\mathbb N}=\underline{\mathbb Q}\restriction\mathbb N=\underline{\mathbb Z}\restriction\mathbb N$.
 \end{example}
 
-\subsubsection{Platnost v podstruktuře}
+\subsubsection{Validity in Substructure}
 
-Jak je tomu s platností formulí v podstruktuře? Uveďme několik jednoduchých pozorování o \emph{otevřených} formulích.
+How is it with validity of formulas in a substructure? Here are some simple observations about \emph{open} formulas.
 
 \begin{observation}
-    Je-li $\B\subseteq\A$, potom pro každou \emph{otevřenou} formuli $\varphi$ a ohodnocení proměnných $e\colon\Var\to B$ platí: $\B\models\varphi[e]$ právě když $\A\models\varphi[e]$.
+    If $\B\subseteq\A$, then for any \emph{open} formula $\varphi$ and variable assignment $e\colon\Var\to B$, we have that: $\B\models\varphi[e]$ if and only if $\A\models\varphi[e]$.
 \end{observation}
 \begin{proof}
-    Pro atomické formule je zřejmé, dále snadno dokážeme indukcí podle struktury formule.
+    For atomic formulas, this is obvious; further, it can be easily proved by induction on the structure of the formula.
 \end{proof}
 
 \begin{corollary}
-    \emph{Otevřená} formule platí ve struktuře $\A$, právě když platí v každé podstruktuře $\B\subseteq\A$.
+    An \emph{open} formula is valid in the structure $\A$ if and only if it is valid in every substructure $\B\subseteq\A$.
 \end{corollary}
 
-Říkáme, že teorie $T$ je \emph{otevřená}, jsou-li všechny její axiomy otevřené formule.
+We say that a theory $T$ is \emph{open} if all its axioms are open formulas.
 
 \begin{corollary}
-    Modely otevřené teorie jsou uzavřené na podstruktury, tj. každá podstruktura modelu otevřené teorie je také model této teorie.
+    The models of an open theory are closed under substructures, i.e., every substructure of a model of an open theory is also a model of this theory.
 \end{corollary}
 
 \begin{example}
-    Teorie grafů je otevřená. Každá podstruktura grafu (modelu teorie grafů) je také graf, říkáme mu (indukovaný) \emph{podgraf}.\footnote{Samotný pojem \emph{podgraf} v teorii grafů často znamená jen $E^\B\subseteq E^\A\cap (B\times B)$, nikoliv $E^\B=E^\A\cap (B\times B)$. My ale budeme používat slovo \emph{podgraf} ve striktnějším smyslu, jako indukovaný podgraf.} Podobně např. pro podgrupy nebo Booleovy podalgebry.
+    The theory of graphs is open. Every substructure of a graph (a model of the theory of graphs) is also a graph, called an (induced) \emph{subgraph}.\footnote{The notion of a \emph{subgraph} in graph theory often means just $E^\B\subseteq E^\A\cap (B\times B)$, not $E^\B=E^\A\cap (B\times B)$. However, we will use the term \emph{subgraph} in the stricter sense, as an induced subgraph.} Similarly, for subgroups or Boolean subalgebras.
 \end{example}
 
 \begin{example}
-    Teorie těles není otevřená. Jak si ukážeme později, není dokonce ani \emph{otevřeně axiomatizovatelná}, tj. neexistuje jí ekvivalentní otevřená teorie---kvantifikátoru v axiomu o existenci inverzního prvku se nelze nijak zbavit. Podstruktura tělesa reálných čísel $\mathbb Q$ na množině všech celých čísel $\mathbb Q\restriction\mathbb Z$ není těleso. (Je to tzv. \emph{okruh}, ale nenulové prvky kromě $1,-1$ nemají multiplikativní inverz, např. rovnice $2\cdot x=1$ nemá v $\mathbb Z$ řešení).
+    The theory of fields is not open. As we will show later, it is not even \emph{openly axiomatizable}, i.e., there is no equivalent open theory---there is no way to get rid of the quantifier in the axiom of the existence of an inverse element. The substructure of the field of real numbers $\mathbb Q$ on the set of all integers $\mathbb Q\restriction\mathbb Z$ is not a field. (It is a so-called \emph{ring}, but non-zero elements other than $1,-1$ do not have a multiplicative inverse, e.g., the equation $2\cdot x=1$ has no solution in $\mathbb Z$).
 \end{example}
 
-\subsubsection{Generovaná podstruktura}
+\subsubsection{Generated Substructure}
 
-Co dělat, máme-li podmnožinu univerza, která \emph{není} uzavřená na funkce struktury? V tom případě uvážíme \emph{uzávěr} této množiny na funkce.\footnote{Viz pojem \emph{lineárního obalu} množiny vektorů.}
+What to do if we have a subset of the universe that is \emph{not} closed under the functions of the structure? In that case, we consider the \emph{closure} of this set under the functions.\footnote{See the notion of \emph{linear span} of a set of vectors.}
 
 \begin{definition}
-    Mějme strukturu $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ a neprázdnou podmnožinu $X\subseteq A$. Označme jako $B$ nejmenší podmnožinu $A$, která obsahuje množinu $X$ a je uzavřená na všechny funkce struktury $\A$ (tj. také obsahuje všechny konstanty). Potom o podstruktuře $\A\restriction B$ říkáme, že je \emph{generovaná} množinou $X$, a značíme ji $\A\langle X\rangle$.
+    Let $\A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$ be a structure and a non-empty subset $X\subseteq A$. Let $B$ be the smallest subset of $A$ that contains the set $X$ and is closed under all functions of the structure $\A$ (i.e., it also contains all constants). Then the substructure $\A\restriction B$ is said to be \emph{generated} by the set $X$, and denoted by $\A\langle X\rangle$.
 \end{definition}
 
 \begin{example}
-    Uvažme struktury $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$, $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$, a $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$. Potom $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$, $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$, a $\underline{\mathbb Q}\langle\{2\}\rangle$ je podstruktura $\underline{\mathbb N}$ na množině všech sudých čísel.
+    Consider the structures $\underline{\mathbb Q}=\langle\mathbb Q,+,\cdot,0\rangle$, $\underline{\mathbb Z}=\langle\mathbb Z,+,\cdot,0\rangle$, and $\underline{\mathbb N}=\langle\mathbb N,+,\cdot,0\rangle$. Then $\underline{\mathbb Q}\langle\{1\}\rangle=\underline{\mathbb N}$, $\underline{\mathbb Q}\langle\{-1\}\rangle=\underline{\mathbb Z}$, and $\underline{\mathbb Q}\langle\{2\}\rangle$ is a substructure of $\underline{\mathbb N}$ on the set of all even numbers.
 \end{example}
 
 \begin{example}
-    Pokud $\A$ nemá žádné funkce (ani konstanty), např. je-li to graf či uspořádání, potom není čím generovat, a $\A\langle X\rangle=\A\restriction X$.
+    If $\A$ has no functions (not even constants), e.g., if it is a graph or an order, then there is nothing to generate, and $\A\langle X\rangle=\A\restriction X$.
 \end{example}
 
-\subsubsection{Expanze a redukt}
+\subsubsection{Expansion and Reduct}
 
-Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také nechat univerzum stejné, a přidat resp. odebrat relace, funkce, a konstanty. Výsledku takové operace říkáme \emph{expanze} resp. \emph{redukt}. Všimněte si, že jde o strukturu v jiné signatuře.
+So far, we have constructed new structures by changing the universe. However, we can also keep the universe the same and add or remove relations, functions, and constants. The result of such an operation is called an \emph{expansion} or a \emph{reduct}. Note that this is a structure in a different signature.
 
-\begin{definition}[Expanze a redukt]
-    Mějme jazyky $L\subseteq L'$, $L$-strukturu $\A$, a $L'$-strukturu $\A'$ na stejné doméně $A=A'$. Jestliže je interpretace každého symbolu z $L$ [relačního, funkčního, konstantního] stejná [relace, funkce, konstanta] v $\A$ i v $\A'$ potom říkáme, že struktura $\A'$ je \emph{expanzí} struktury $\A$ do jazyka $L'$ (také říkáme, že je \emph{$L'$-expanzí}) a že struktura $\A$ je \emph{reduktem} struktury $\A'$ na jazyk $L$ (také říkáme, že je \emph{$L$-reduktem}).    
+\begin{definition}[Expansion and Reduct]
+    Let $L\subseteq L'$ be languages, $\A$ an $L$-structure, and $\A'$ an $L'$-structure on the same domain $A=A'$. If the interpretation of each [relation, function, constant] symbol from $L$  is the same [relation, function, constant] in both $\A$ and $\A'$, then we say that the structure $\A'$ is an \emph{expansion} of the structure $\A$ to the language $L'$ (also called an \emph{$L'$-expansion}) and that the structure $\A$ is a \emph{reduct} of the structure $\A'$ to the language $L$ (also called an \emph{$L$-reduct}).    
 \end{definition}
 
 \begin{example}
-    Mějme grupu celých čísel $\langle\mathbb Z,+,-,0\rangle$. Potom struktura $\langle \mathbb Z,+\rangle$ je jejím reduktem, zatímco struktura $\langle\mathbb Z,+,-,0,\cdot,1\rangle$ (\emph{okruh} celých čísel) je její expanzí.
+    Consider the group of integers $\langle\mathbb Z,+,-,0\rangle$. Then the structure $\langle \mathbb Z,+\rangle$ is its reduct, while the structure $\langle\mathbb Z,+,-,0,\cdot,1\rangle$ (the \emph{ring} of integers) is its expansion.
 \end{example}
 
 \begin{example}
-    Mějme graf $\mathcal G=\langle G, E^\mathcal G\rangle$. Potom struktura $\langle G, E^G,c_v^\mathcal G\rangle_{v\in G}$ v jazyce $\langle E,c_v\rangle_{v\in G}$, kde $c_v^\mathcal G=v$ pro všechny vrcholy $v\in G$, je \emph{expanzí $\mathcal G$ o jména prvků (z množiny G)}.
+    Consider a graph $\mathcal G=\langle G, E^\mathcal G\rangle$. Then the structure $\langle G, E^G,c_v^\mathcal G\rangle_{v\in G}$ in the language $\langle E,c_v\rangle_{v\in G}$, where $c_v^\mathcal G=v$ for all vertices $v\in G$, is an \emph{expansion of $\mathcal G$ with names of elements (from the set G)}.
 \end{example}
 
 
-\subsection{Věta o konstantách}
+\subsection{Theorem on Constants}
 
-\emph{Věta o konstantách} říká (neformálně), že splnit formuli s jednou volnou proměnnou je totéž, co splnit sentenci, ve které je tato volná proměnná nahrazena (substituována) \emph{novým} konstantním symbolem (který není nijak svázaný žádnými axiomy). Klíčem je fakt, že tento nový symbol může být v modelech interpretován jako libovolný (tj. každý) prvek. Tento trik později využijeme v tablo metodě.
+The \emph{theorem on constants} states (informally) that satisfying a formula with a single free variable is equivalent to satisfying a sentence in which this free variable is replaced (substituted) by a \emph{new} constant symbol (which is not bound by any axioms). The key fact is that this new symbol can be interpreted as any (hence each) element in each of the models. We will later use this trick in the tableau method.
 
-\begin{theorem}[O konstantách]\label{theorem:on-constants}
-    Mějme formuli $\varphi$ v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$. Označme $L'$ rozšíření jazyka o nové konstantní symboly $c_1,\dots,c_n$ a buď $T'$ stejná teorie jako $T$ ale v jazyce $L'$. Potom platí:
+\begin{theorem}[Theorem on Constants]\label{theorem:on-constants}
+    Let $\varphi$ be a formula in the language $L$ with free variables $x_1,\dots,x_n$. Let $L'$ be the extension of the language with new constant symbols $c_1,\dots,c_n$ and let $T'$ be the same theory as $T$ but in the language $L'$. Then:
     $$
-    T\models\varphi\text{ právě když }T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
+    T\models\varphi\text{ if and only if }T'\models\varphi(x_1/c_1,\dots,x_n/c_n)
     $$
 \end{theorem}
 \begin{proof}
-    Tvrzení stačí dokázat pro jednu volnou proměnnou $x$ a jednu konstantu $c$, indukcí se snadno rozšíří na $n$ konstant.
+    It is sufficient to prove the statement for one free variable $x$ and one constant $c$; by induction, it can be easily extended to $n$ constants.
     
-    Předpokládejme nejprve, že $\varphi$ platí v každém modelu teorie $T$. Chceme ukázat, že $\varphi(x/c)$ platí v každém modelu $\A'$ teorie $T'$. Vezměme tedy takový model $\A'$ a libovolné ohodnocení $e\colon\Var\to A'$ a ukažme, že $\A'\models\varphi(x/c)[e]$.
+    First, suppose that $\varphi$ holds in every model of the theory $T$. We want to show that $\varphi(x/c)$ holds in every model $\A'$ of the theory $T'$. So take such a model $\A'$ and any assignment $e\colon\Var\to A'$ and show that $\A'\models\varphi(x/c)[e]$.
 
-    Označme jako $\A$ redukt $\A'$ na jazyk $L$ (`zapomeneme' konstantu $c^{\A'}$). Všimněte si, že $\A$ je model teorie $T$ (axiomy $T$ jsou tytéž jako $T'$, neobsahují symbol $c$) tedy v něm platí $\varphi$. Protože dle předpokladu platí $\A\models\varphi[e']$ pro \emph{libovolné} ohodnocení $e'$, platí i pro ohodnocení $e(x/c^{\A'})$ ve kterém ohodnotíme proměnnou $x$ interpretací konstantního symbolu $c$ ve struktuře $\A'$, máme tedy $\A\models\varphi[e(x/c^{\A'})]$. To ale znamená, že $\A'\models\varphi(x/c)[e]$, což jsme chtěli dokázat.
+    Let $\A$ be the reduct of $\A'$ to the language $L$ (`forget' the constant $c^{\A'}$). Note that $\A$ is a model of the theory $T$ (the axioms of $T$ are the same as $T'$, they do not contain the symbol $c$) and hence $\varphi$ holds in it. Since, by assumption, $\A\models\varphi[e']$ for \emph{any} assignment $e'$, it also holds for the assignment $e(x/c^{\A'})$ in which we evaluate the variable $x$ as the interpretation of the constant symbol $c$ in the structure $\A'$, so we have $\A\models\varphi[e(x/c^{\A'})]$. But this means that $\A'\models\varphi(x/c)[e]$, which is what we wanted to prove.
     
-    Naopak, předpokládejme, že $\varphi(x/c)$ platí v každém modelu teorie $T'$ a ukažme, že $\varphi$ platí v každém modelu $\A$ teorie $T$. Zvolme tedy takový model $\A$ a nějaké ohodnocení $e\colon\Var\to A$ a ukažme, že $\A\models\varphi[e]$.
+    Conversely, suppose that $\varphi(x/c)$ holds in every model of the theory $T'$ and show that $\varphi$ holds in every model $\A$ of the theory $T$. So take such a model $\A$ and some assignment $e\colon\Var\to A$ and show that $\A\models\varphi[e]$.
 
-    Označme jako $\A'$ expanzi $\A$ do jazyka $L'$, kde konstantní symbol $c$ interpretujeme jako prvek $c^{\A'}=e(x)$. Protože dle předpokladu platí $\A'\models\varphi(x/c)[e']$ pro všechna ohodnocení $e'$, platí i $\A'\models\varphi(x/c)[e]$, což ale znamená, že $\A'\models\varphi[e]$. (Neboť $e=e(x/c^{\A'})$ a $\A'\models\varphi(x/c)[e]$ platí právě když $\A'\models\varphi[e(x/c^{\A'})]$, což je $\A'\models\varphi[e]$.) Formule $\varphi$ ale neobsahuje $c$ (zde používáme, že $c$ je \emph{nový}), máme tedy i $\A\models\varphi[e]$.
+    Let $\A'$ be the expansion of $\A$ to the language $L'$, where the constant symbol $c$ is interpreted as the element $c^{\A'}=e(x)$. Since, by assumption, $\A'\models\varphi(x/c)[e']$ for all assignments $e'$, it also holds that $\A'\models\varphi(x/c)[e]$, which means that $\A'\models\varphi[e]$. (Since $e=e(x/c^{\A'})$ and $\A'\models\varphi(x/c)[e]$ if and only if $\A'\models\varphi[e(x/c^{\A'})]$, which is $\A'\models\varphi[e]$.) But the formula $\varphi$ does not contain $c$ (here we use that $c$ is \emph{new}), so we also have $\A\models\varphi[e]$.
 \end{proof}
 
 
-\section{Extenze teorií}
+\section{Extension of Theories}
 
-Pojem \emph{extenze} teorie definujeme stejně jako ve výrokové logice:
+The notion of \emph{extension} of a theory is defined similarly as in propositional logic:
 
-\begin{definition}[Extenze teorie]
-    Mějme teorii $T$ v jazyce $L$.
+\begin{definition}[Extension of a Theory]
+    Let $T$ be a theory in the language $L$.
     \begin{itemize}
-        \item \emph{Extenze} teorie $T$ je libovolná teorie $T'$ v jazyce $L'\supseteq L$ splňující $\Conseq_L(T)\subseteq\Conseq_{L'}(T')$,
-        \item je to \emph{jednoduchá extenze}, pokud $L'=L$,
-        \item je to \emph{konzervativní extenze}, pokud $\Conseq_L(T)=\Conseq_L(T')=\Conseq_{L'}(T')\cap \Fm_L$, kde $\Fm_L$ značí množinu všech formulí v jazyce $L$.
-        \item Teorie $T'$ (v jazyce $L$) je \emph{ekvivalentní} teorii $T$, pokud je $T'$ extenzí $T$ a $T$ extenzí $T'$.
+        \item An \emph{extension} of the theory $T$ is any theory $T'$ in the language $L'\supseteq L$ satisfying $\Conseq_L(T)\subseteq\Conseq_{L'}(T')$,
+        \item it is a \emph{simple extension} if $L'=L$,
+        \item it is a \emph{conservative extension} if $\Conseq_L(T)=\Conseq_L(T')=\Conseq_{L'}(T')\cap \Fm_L$, where $\Fm_L$ denotes the set of all formulas in the language $L$.
+        \item The theory $T'$ (in the language $L$) is \emph{equivalent} to the theory $T$ if $T'$ is an extension of $T$ and $T$ is an extension of $T'$.
     \end{itemize}
 \end{definition}
 
-Podobně jako ve výrokové logice, pro teorie ve stejném jazyce platí následující sémantický popis těchto pojmů:
+Similar to propositional logic, for theories in the same language, the following semantic description of these notions holds:
 
 \begin{observation}
-Mějme teorie $T,T'$ v jazyce $L$. Potom:
+Let $T,T'$ be theories in the language $L$. Then:
 \begin{itemize}
-    \item $T'$ je extenze $T$, právě když $\M_L(T')\subseteq\M_L(T)$.
-    \item $T'$ je ekvivalentní s $T$, právě když $\M_L(T')=\M_L(T)$.
+    \item $T'$ is an extension of $T$ if and only if $\M_L(T')\subseteq\M_L(T)$.
+    \item $T'$ is equivalent to $T$ if and only if $\M_L(T')=\M_L(T)$.
 \end{itemize}
 \end{observation}
 
-Jak je tomu v případě, kdy teorie $T'$ je nad větším jazykem než $T$? Připomeňme situaci ve výrokové logice, popsanou v Pozorování \ref{observation:extensions-semantic-description-propositional}. Zformulujeme a dokážeme analogické tvrzení: Zatímco ve výrokové logice jsme přidávali hodnoty pro nové prvovýroky, resp. je zapomínali, v predikátové logice budeme expandovat resp. redukovat struktury, tj. přidávat nebo zapomínat interpretace relačních, funkčních, a konstantních symbolů. Princip obou tvrzení (i jejich důkazů) je ale stejný.
+What about the case when the theory $T'$ is in a larger language than $T$? Recall the situation in propositional logic, described in Observation \ref{observation:extensions-semantic-description-propositional}. We will formulate and prove an analogous statement: While in propositional logic we were adding values for new atomic propositions or forgetting them, in predicate logic we will expand or reduce structures, i.e., add or forget interpretations of relation, function, and constant symbols. The principle behind the two statements (and their proofs) is the same.
 
 \begin{proposition}\label{proposition:semantic-conditions-for-extensions}
-    Mějme jazyky $L\subseteq L'$, teorii $T$ v jazyce $L$, a teorii $T'$ v jazyce $L'$.
+    Let $L\subseteq L'$ be languages, $T$ a theory in the language $L$, and $T'$ a theory in the language $L'$.
     \begin{enumerate}[(i)]
-        \item $T'$ je extenzí teorie $T$, právě když redukt každého modelu $T'$ na jazyk $L$ je modelem $T$.
-        \item Pokud je $T'$ extenzí teorie $T$, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$, potom je $T'$ konzervativní extenzí teorie $T$.
+        \item $T'$ is an extension of the theory $T$ if and only if the reduct of every model of $T'$ to the language $L$ is a model of $T$.
+        \item If $T'$ is an extension of the theory $T$, and every model of $T$ can be expanded to the language $L'$ into some model of the theory $T'$, then $T'$ is a conservative extension of the theory $T$.
     \end{enumerate}
 \end{proposition}
 \begin{remark}
-    V části (ii) platí i opačná implikace, důkaz ale není tak jednoduchý, jako ve výrokové logice, a proto ho neuvedeme. (Problémem je jak získat z modelu $T$ který nelze expandovat na model $T'$ $L$-sentenci, která platí v $T$ ale ne v $T'$.)
-\end{remark} 
-%todo ukázat i opačnou implikaci?
-%$T'$ je konzervativní extenzí teorie $T$, právě když je extenzí, a každý model $T$ lze expandovat do jazyka $L'$ na nějaký model teorie $T'$.
+    The reverse implication in part (ii) also holds, but the proof is not as simple as in propositional logic, so we will not present it. (The technical issue is how to obtain, from a model of $T$ that cannot be expanded to a model of $T'$, an $L$-sentence that holds in $T$ but not in $T'$.)
+\end{remark}
 \begin{proof}
-    Nejprve dokažme (i): Mějme model $\A'$ teorie $T'$ a označme jako $\A$ jeho redukt na jazyk $L$. Protože $T'$ je extenzí teorie $T$, platí v $T'$, a tedy i v $\A'$, každý axiom $\varphi\in T$. Potom ale i $\A\models\varphi$ ($\varphi$ obsahuje jen symboly z jazyka $L$), tedy $\A$ je modelem $T$.
+    First, let us prove (i): Let $\A'$ be a model of the theory $T'$ and denote by $\A$ its reduct to the language $L$. Since $T'$ is an extension of the theory $T$, every axiom $\varphi\in T$ holds in $T'$, and thus in $\A'$. But then $\A\models\varphi$ (since $\varphi$ contains only symbols from the language $L$), hence $\A$ is a model of $T$.
 
-    Na druhou stranu, mějme $L$-sentenci $\varphi$ takovou, že $T\models\varphi$. Chceme ukázat, že $T'\models\varphi$. Pro libovolný model $\A'\in\M_{L'}(T')$ víme, že jeho $L$-redukt $\A$ je modelem $T$, tedy $\A\models\varphi$. Z toho plyne i $\A'\models\varphi$ (opět proto, že $\varphi$ je v jazyce $L$).
+    Conversely, let $\varphi$ be an $L$-sentence such that $T\models\varphi$. We want to show that $T'\models\varphi$. For any model $\A'\in\M_{L'}(T')$ we know that its $L$-reduct $\A$ is a model of $T$, hence $\A\models\varphi$. Therefore, $\A'\models\varphi$ (again, since $\varphi$ is in the language $L$).
 
-    Nyní (ii): Vezměme libovolnou $L$-sentenci $\varphi$, která platí v teorii $T'$, a ukažme, že platí i v $T$. Každý model $\A$ teorie $T$ lze expandovat na nějaký model $\A'$ teorie $T'$. Víme, že $\A'\models\varphi$, takže i $\A\models\varphi$. Tím jsme dokázali, že $T\models\varphi$, tj. jde o konzervativní extenzi.
-    
+    Now (ii): Take any $L$-sentence $\varphi$ that holds in the theory $T'$, and show that it also holds in $T$. Every model $\A$ of the theory $T$ can be expanded to some model $\A'$ of the theory $T'$. We know that $\A'\models\varphi$, so $\A\models\varphi$. Thus, we have shown that $T\models\varphi$, i.e., it is a conservative extension.
 \end{proof}
 
 
-\subsection{Extenze o definice}\label{subsection:extension-by-definition}
+\subsection{Extension by Definitions}\label{subsection:extension-by-definition}
 
-Nyní si ukážeme speciální druh konzervativní extenze, tzv. \emph{extenzi o definice} nových (relačních, funkčních, konstantních) symbolů.
+Now we will introduce a special kind of conservative extension, namely the \emph{extension by definitions} of new (relation, function, constant) symbols.
 
+\subsubsection*{Definition of a Relation Symbol}
 
-\subsubsection*{Definice relačního symbolu}
-
-Nejjednodušším případem je definování nového relačního symbolu $R(x_1,\dots,x_n)$. Jako definice může sloužit libovolná formule s $n$ volnými proměnnými $\psi(x_1,\dots,x_n)$.
+The simplest case is defining a new relation symbol $R(x_1,\dots,x_n)$. Any formula with $n$ free variables $\psi(x_1,\dots,x_n)$ can serve as the definition.
 
 \begin{example}
-Uveďme nejprve několik příkladů:
+First, let us provide some examples:
 \begin{itemize}
-    \item Jakoukoliv teorii v jazyce s rovností můžeme rozšířit o binární relační symbol $\neq$, který \emph{definujeme} formulí $\neg x_1=x_2$. To znamená, že požadujeme, aby platilo: $x_1\neq x_2\liff\neg x_1=x_2$.
-    \item Teorii uspořádání můžeme rozšířit o symbol $<$ pro ostré uspořádání, který \emph{definujeme} formulí $x_1\leq x_2\land \neg x_1=x_2$. To znamená, že požadujeme, aby platilo $x_1<x_2 \liff x_1\leq x_2\land \neg x_1=x_2$.
-    \item V aritmetice můžeme zavést symbol $\leq$, pomocí $x_1\leq x_2\liff(\exists y)(x_1+y=x_2)$.
+    \item Any theory in a language with equality can be extended with the binary relation symbol $\neq$, which is \emph{defined} by the formula $\neg x_1=x_2$. This means that we require $x_1\neq x_2\liff\neg x_1=x_2$.
+    \item The theory of order can be extended with the symbol $<$ for strict order, which is \emph{defined} by the formula $x_1\leq x_2\land \neg x_1=x_2$. This means that we require $x_1<x_2 \liff x_1\leq x_2\land \neg x_1=x_2$.
+    \item In arithmetic, we can introduce the symbol $\leq$ using $x_1\leq x_2\liff(\exists y)(x_1+y=x_2)$.
 \end{itemize}
 \end{example}
-Nyní uvedeme definici:
-\begin{definition}[Definice relačního symbolu]
-    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n)$ v jazyce $L$. Označme jako $L'$ rozšíření jazyka $L$ o nový $n$-ární relační symbol $R$. \emph{Extenze teorie $T$ o definici $R$ formulí $\psi$} je $L'$-teorie:
+Now, we give the definition:
+\begin{definition}[Definition of a Relation Symbol]
+    Let $T$ be a theory and $\psi(x_1,\dots,x_n)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary relation symbol $R$. The \emph{extension of the theory $T$ by the definition of $R$ by the formula $\psi$} is the $L'$-theory:
     $$
     T'=T\cup\{R(x_1,\dots,x_n)\ \liff\ \psi(x_1,\dots,x_n)\}
     $$
 \end{definition}
-Všimněte si, že každý model $T$ lze \emph{jednoznačně} expandovat na model $T'$. Z Tvrzení \ref{proposition:semantic-conditions-for-extensions} potom ihned plyne následující:
+Note that every model of $T$ can be \emph{uniquely} expanded to a model of $T'$. From Proposition \ref{proposition:semantic-conditions-for-extensions}, it follows immediately:
 \begin{corollary}
-    $T'$ je konzervativní extenze $T$.
+    $T'$ is a conservative extension of $T$.
 \end{corollary}
 
-Ukážeme si ještě, že nový symbol lze ve formulích nahradit jeho definicí, a získat tak ($T'$-ekvivalentní) formuli v původním jazyce:
+We will also show that the new symbol can be replaced in formulas by its definition, thus obtaining a ($T'$-equivalent) formula in the original language:
 
 \begin{proposition}
-    Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
+    For every $L'$-formula $\varphi'$, there exists an $L$-formula $\varphi$ such that $T'\models\varphi'\liff\varphi$.
 \end{proposition}
 \begin{proof}
-    Je třeba nahradit atomické podformule s novým symbolem $R$, tj. tvaru $R(t_1,\dots,t_n)$. Takovou podformuli nahradíme formulí $\psi'(x_1/t_1,\dots,x_n/t_n)$, kde $\psi'$ je varianta $\psi$ zaručující substituovatelnost všech termů, tj. například přejmenujeme všechny vázané proměnné $\psi$ na zcela nové (nevyskytující se ve formuli $\varphi'$).
+    We need to replace atomic subformulas that use the new symbol $R$, i.e., of the form $R(t_1,\dots,t_n)$. Such a subformula is replaced by the formula $\psi'(x_1/t_1,\dots,x_n/t_n)$, where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms, i.e., for example, we rename all bound variables of $\psi$ to entirely new ones (not appearing in the formula $\varphi'$).
 \end{proof}
 
-\subsubsection*{Definice funkčního symbolu}
+\subsubsection*{Definition of a Function Symbol}
 
-Nový funkční symbol definujeme obdobným způsobem, musíme si ale být jisti, že definice dává jednoznačnou možnost, jak nový symbol interpretovat jako funkci.
+We define a new function symbol similarly, but we must ensure that the definition provides a unique way to interpret the new symbol as a function.
 
 \begin{example}
-    Opět začneme příklady:
+    Again, we start with examples:
     \begin{itemize}
-        \item V teorii grup můžeme zavést \emph{binární} funkční symbol $-_b$ pomocí $+$ a unárního $-$ takto:
+        \item In the theory of groups, we can introduce a \emph{binary} function symbol $-_b$ using $+$ and unary $-$ as follows:
         $$
         x_1 -_b x_2 = y\ \liff\ x_1 + (-x_2) = y
         $$
-        Je zřejmé, že pro každá $x,y$ \emph{existuje} \emph{jednoznačné} $z$ splňující definici.        
-        \item Uvažme teorii \emph{lineárních uspořádání}, tj. teorii uspořádání spolu s axiomem linearity $x\leq y\lor y\leq x$. Definujme binární funkční symbol $\min$ takto: 
+        It is clear that for every $x, y$, there \emph{exists} a \emph{unique} $z$ satisfying the definition.
+        \item Consider the theory of \emph{linear orders}, i.e., the theory of orders together with the linearity axiom $x\leq y\lor y\leq x$. Define the binary function symbol $\min$ as follows:
         $$
         \min(x_1,x_2)=y\ \liff\ y\leq x_1\land y\leq x_2\land (\forall z)(z\leq x_1\land z\leq x_2\limplies z\leq y)
         $$
-        Existence a jednoznačnost platí díky linearitě. Pokud bychom ale měli pouze teorii uspořádání, taková formule by nebyla dobrou definicí: v některých modelech by $\min(x_1,x_2)$ pro některé prvky neexistovalo, selhala by tedy požadovaná \emph{existence}.
+        Existence and uniqueness hold thanks to linearity. However, if we had only the theory of orders, such a formula would not be a good definition: in some models, $\min(x_1,x_2)$ would not exist for some elements, thus failing the required \emph{existence}.
     \end{itemize}
 \end{example}
 
-\begin{definition}[Definice funkčního symbolu]
-    Mějme teorii $T$ a formuli $\psi(x_1,\dots,x_n,y)$ v jazyce $L$. Označme jako $L'$ rozšíření jazyka $L$ o nový $n$-ární funkční symbol $f$. Nechť v teorii $T$ platí:
+\begin{definition}[Definition of a Function Symbol]
+    Let $T$ be a theory and $\psi(x_1,\dots,x_n,y)$ a formula in the language $L$. Let $L'$ be the extension of the language $L$ with a new $n$-ary function symbol $f$. Let the following hold in the theory $T$:
     \begin{itemize}
-        \item \emph{axiom existence} $(\exists y)\psi(x_1,\dots,x_n,y)$, 
-        \item \emph{axiom jednoznačnosti} $\psi(x_1,\dots,x_n,y)\land \psi(x_1,\dots,x_n,z)\limplies y=z$.
+        \item \emph{existence axiom} $(\exists y)\psi(x_1,\dots,x_n,y)$,
+        \item \emph{uniqueness axiom} $\psi(x_1,\dots,x_n,y)\land \psi(x_1,\dots,x_n,z)\limplies y=z$.
     \end{itemize}
-    Potom \emph{extenze teorie $T$ o definici $f$ formulí $\psi$} je $L'$-teorie: 
+    Then the \emph{extension of the theory $T$ by the definition of $f$ by the formula $\psi$} is the $L'$-theory:
     $$T'=T\cup\{f(x_1,\dots,x_n)=y\ \liff\ \psi(x_1,\dots,x_n,y)\}$$
 \end{definition}
 
-Formule $\psi$ tedy definuje v každém modelu $(n+1)$-ární relaci, a po této relaci požadujeme, aby byla funkcí, tj. aby pro každou $n$-tici prvků existovala jednoznačná možnost, jak ji rozšířit do $(n+1)$-tice, která je prvkem této relace. Všimněte si, že je-li definující formule $\psi$ tvaru $t(x_1,\dots,x_n)=y$, kde $x_1,\dots,x_n$ jsou proměnné $L$-termu $t$, potom axiomy existence a jednoznačnosti vždy platí.
+The formula $\psi$ thus defines in each model an $(n+1)$-ary relation, and we require that this relation be a function, i.e., that for each $n$-tuple of elements, there exists a unique way to extend it into an $(n+1)$-tuple that is an element of this relation. Note that if the defining formula $\psi$ is of the form $t(x_1,\dots,x_n)=y$, where $x_1,\dots,x_n$ are variables of the $L$-term $t$, then the existence and uniqueness axioms always hold.
 
-Opět platí, že každý model $T$ lze \emph{jednoznačně} expandovat na model $T'$, tedy:
+Again, we have that every model of $T$ can be \emph{uniquely} expanded to a model of $T'$, hence:
 \begin{corollary}
-    $T'$ je konzervativní extenze $T$.
+    $T'$ is a conservative extension of $T$.
 \end{corollary}
 
-A platí také stejné tvrzení o rozvádění definic:
+And the same statement about unwinding definitions holds:
 
 \begin{proposition}
-    Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
+    For every $L'$-formula $\varphi'$, there exists an $L$-formula $\varphi$ such that $T'\models\varphi'\liff\varphi$.
 \end{proposition}
 \begin{proof}
-    Stačí dokázat pro formuli $\varphi'$ s jediným výskytem symbolu $f$; je-li výskytů více, aplikujeme postup induktivně, v případě vnořených výskytů v jednom termu $f(\dots f(\dots)\dots)$ postupujeme od vnitřních k vnějším.
+    It suffices to prove for a formula $\varphi'$ with a single occurrence of the symbol $f$; if there are multiple occurrences, we apply the procedure inductively, in the case of nested occurrences in one term $f(\dots f(\dots)\dots)$, we proceed from inner to outer.
 
-    Označme $\varphi^*$ formuli vzniklou z $\varphi'$ nahrazením termu $f(t_1,\dots,t_n)$ \emph{novou} proměnnou $z$. Formuli $\varphi$ zkonstruujeme takto:
+    Denote by $\varphi^*$ the formula obtained from $\varphi'$ by replacing the term $f(t_1,\dots,t_n)$ with a \emph{new} variable $z$. Construct the formula $\varphi$ as follows:
     $$
     (\exists z)(\varphi^*\land \psi'(x_1/t_1,\dots,x_n/t_n,y/z))
     $$
-    kde $\psi'$ je varianta $\psi$ zaručující substituovatelnost všech termů.
+    where $\psi'$ is a variant of $\psi$ ensuring the substitutability of all terms.
 
-    Mějme model $\A$ teorie $T'$ a ohodnocení $e$. Označme $a=(f(t_1,\dots,t_n))^\A[e]$. Díky existenci a jednoznačnosti platí:
+    Let $\A$ be a model of the theory $T'$ and $e$ a variable assignment. Denote $a=(f(t_1,\dots,t_n))^\A[e]$. Due to existence and uniqueness, it holds:
     $$
-    \A\models\psi'(x_1/t_1,\dots,x_n/t_n,y/z)[e]\ \text{ právě když }\ e(z)=a 
+    \A\models\psi'(x_1/t_1,\dots,x_n/t_n,y/z)[e]\ \text{ if and only if }\ e(z)=a 
     $$
-    Máme tedy $\A\models\varphi[e]$, právě když $\A\models\varphi^*[e(z/a)]$, právě když $\A\models\varphi'[e]$. To platí pro libovolné ohodnocení $e$, tedy $\A\models\varphi'\liff\varphi$ pro každý model $T'$, tedy $T'\models\varphi'\liff\varphi$.
+    Thus, $\A\models\varphi[e]$ if and only if $\A\models\varphi^*[e(z/a)]$, if and only if $\A\models\varphi'[e]$. This holds for any variable assignment $e$, hence $\A\models\varphi'\liff\varphi$ for every model $T'$, thus $T'\models\varphi'\liff\varphi$.
 \end{proof}
 
-\subsubsection*{Definice konstantního symbolu}
+\subsubsection*{Definition of a Constant Symbol}
 
-Konstantní symbol je speciálním případem funkčního symbolu arity $0$. Platí tedy stejná tvrzení. Axiomy existence a jednoznačnosti jsou: $(\exists y)\psi(y)$ a $\psi(y)\land\psi(z)\limplies y=z$. A extenze o definici konstantního symbolu $c$ formulí $\psi(y)$ je teorie $T'=T\cup\{c=y\liff \psi(y)\}$.
+A constant symbol is a special case of a function symbol of arity 0. Thus, the same statements hold. The existence and uniqueness axioms are: $(\exists y)\psi(y)$ and $\psi(y)\land\psi(z)\limplies y=z$. The extension by definition of a constant symbol $c$ by the formula $\psi(y)$ is the theory $T'=T\cup\{c=y\liff \psi(y)\}$.
 
 \begin{example}
-    Ukážeme si dva příklady:
+    Let us show two examples:
     \begin{itemize}
-        \item Libovolnou teorii v jazyce aritmetiky můžeme rozšířit o definici konstantního symbolu $1$ formulí $\psi(y)$ tvaru $y=S(0)$, přidáme tedy axiom $1=y\ \liff\ y=S(0)$.
-        \item Uvažme teorii těles a nový symbol $\frac{1}{2}$, definovaný formulí $y\cdot (1+1)=1$, tj. přidáním axiomu: 
+        \item Any theory in the language of arithmetic can be extended by defining the constant symbol $1$ with the formula $\psi(y)$ of the form $y=S(0)$, thus adding the axiom $1=y\ \liff\ y=S(0)$.
+        \item Consider the theory of fields and a new symbol $\frac{1}{2}$, defined by the formula $y\cdot (1+1)=1$, i.e., adding the axiom:
         $$
         \frac{1}{2}=y\ \liff\ y\cdot (1+1)=1
         $$
-        Zde \emph{nejde} o korektní extenzi o definici, neboť neplatí axiom existence. Ve dvouprvkovém tělese $\mathbb Z_2$ (a v každém tělese \emph{charakteristiky 2}) nemá rovnice $y\cdot (1+1)=1$ řešení, neboť $1+1=0$.
+        This is \emph{not} a correct extension by definition because the existence axiom does not hold. In the two-element field $\mathbb Z_2$ (and in every field \emph{of characteristic 2}), the equation $y\cdot (1+1)=1$ has no solution because $1+1=0$.
         
         
-        Pokud ale vezmeme teorii těles charakteristiky různé od 2, tj. přidáme-li k teorii těles axiom $\neg (1+1=0)$, potom už půjde o korektní extenzi o definici. Například v tělese $\mathbb Z_3$ máme $\frac{1}{2}^{\mathbb Z_3}=2$.
+        However, if we take the theory of fields with characteristic not equal to 2, i.e., adding the axiom $\neg (1+1=0)$ to the theory of fields, it becomes a correct extension by definition. For example, in the field $\mathbb Z_3$, we have $\frac{1}{2}^{\mathbb Z_3}=2$.
     \end{itemize}
 \end{example}
 
 
-\subsubsection*{Extenze o definice}
+\subsubsection*{Extension by Definitions}
 
-Máme-li $L$-teorii $T$ a $L'$-teorii $T'$, potom řekneme, že $T'$ je  \emph{extenzí} $T$ \emph{o definice}, pokud vznikla z $T$ postupnou extenzí o definice relačních a funkčních (příp. konstantních) symbolů. Vlastnosti, které jsme dokázali o extenzích o jeden symbol (ať už relační nebo funkční), se snadno rozšíří indukcí na více symbolů:
+If we have an $L$-theory $T$ and an $L'$-theory $T'$, we say that $T'$ is an \emph{extension} of $T$ \emph{by definitions} if it is obtained from $T$ by a successive extension by definitions of relation and function (or possibly constant) symbols. The properties we proved about extensions by one symbol (whether relation or function) easily extend inductively to multiple symbols:
 
 \begin{corollary}
-   Je-li $T'$ extenze teorie $T$ o definice, potom platí:
+   If $T'$ is an extension of the theory $T$ by definitions, then:
    \begin{itemize}
-    \item Každý model teorie $T$ lze jednoznačně expandovat na model $T'$.
-    \item $T'$ je konzervativní extenze $T$.
-    \item Pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\liff\varphi$.
-   \end{itemize} 
+    \item Every model of the theory $T$ can be uniquely expanded to a model of $T'$.
+    \item $T'$ is a conservative extension of $T$.
+    \item For every $L'$-formula $\varphi'$, there exists an $L$-formula $\varphi$ such that $T'\models\varphi'\liff\varphi$.
+   \end{itemize}
 \end{corollary}
 
-Na závěr ještě jeden příklad, na kterém si ukážeme i rozvádění definic:
+Finally, let us show one more example, illustrating also the unwinding of definitions:
 \begin{example}
-    V teorii $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ jazyka $L=\langle +,0,\leq\rangle$ s rovností lze zavést $<$ a unární funkční symbol $-$ přidáním axiomů:
+    In the theory $T=\{(\exists y)(x+y=0),(x+y=0)\land(x+z=0)\limplies y=z\}$ of the language $L=\langle +,0,\leq\rangle$ with equality, we can introduce $<$ and a unary function symbol~$-$ by adding the following axioms:
     \begin{align*}
         -x=y\ &\liff\ x+y=0\\
         x<y\ &\liff\ x\leq y\land\neg(x=y)
     \end{align*}
-    Formule $-x<y$ (v jazyce $L'=\langle +,-,0,\leq,<\rangle$ s rovností) je v této extenzi o definice ekvivalentní následující formuli:
+    The formula $-x<y$ (in the language $L'=\langle +,-,0,\leq,<\rangle$ with equality) is in this extension by definitions equivalent to the following formula:
     $$
     (\exists z)((z\leq y\land\neg(z=y))\land x+z=0)
     $$
 \end{example}
 
 
-\section{Definovatelnost ve struktuře}\label{section:definability}
+\section{Definability in Structures}\label{section:definability}
 
-Formuli s jednou volnou proměnnou $x$ můžeme chápat jako \emph{vlastnost} prvků. V dané struktuře taková formule \emph{definuje} množinu prvků, které tuto vlastnost splňují, tj. takových, že formule platí při ohodnocení $e$, ve kterém $e(x)=a$. Máme-li formuli se dvěma volnými proměnnými, definuje binární relaci, atp. Nyní tento koncept formalizujeme. Připomeňme, že zápis $\varphi(x_1,\dots,x_n)$ znamená, že $x_1,\dots,x_n$ jsou právě všechny volné proměnné formule $\varphi$.
+A formula with one free variable $x$ can be understood as a \emph{property} of elements. In a given structure, such a formula \emph{defines} the set of elements that satisfy this property, i.e., those for which the formula is valid under an assignment $e$ where $e(x)=a$. If we have a formula with two free variables, it defines a binary relation, etc. We now formalize this concept. Recall that the notation $\varphi(x_1,\dots,x_n)$ means that $x_1,\dots,x_n$ are precisely all the free variables of the formula $\varphi$.
 
-\begin{definition}[Definovatelné množiny]
-    Mějme formuli $\varphi(x_1,\dots,x_n)$ a strukturu $\A$ v témž jazyce. \emph{Množina definovaná formulí $\varphi(x_1,\dots,x_n)$ ve struktuře $\A$}, značíme $\varphi^\A(x_1,\dots,x_n)$, je:
+\begin{definition}[Definable Sets]
+    Let $\varphi(x_1,\dots,x_n)$ be a formula and $\A$ a structure in the same language. The \emph{set defined by the formula $\varphi(x_1,\dots,x_n)$ in the structure $\A$}, denoted by $\varphi^\A(x_1,\dots,x_n)$, is:
     $$
     \varphi^\A(x_1,\dots,x_n)=\{(a_1,\dots,a_n)\in A^n\mid\A\models\varphi[e(x_1/a_1,\dots,x_n/a_n)]\}
     $$
 \end{definition}
-Zkráceně totéž zapíšeme také jako $\varphi^\A(\bar x)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a)]\}$.
+For brevity, we can also write $\varphi^\A(\bar x)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a)]\}$.
 
-\begin{example} Uveďme několik příkladů:
+\begin{example} Here are some examples:
     \begin{itemize}
-        \item Formule $\neg(\exists y)E(x,y)$ definuje množinu všech \emph{izolovaných} vrcholů v daném grafu.
-        \item Uvažme těleso reálných čísel $\underline{\mathbb R}$. Formule $(\exists y)(y\cdot y=x)\land\neg x=0$ definuje množinu všech kladných reálných čísel.
-        \item Formule $x\leq y\land \neg x=y$ definuje v dané uspořádané množině $\langle S,\leq^S\rangle$ relaci \emph{ostrého uspořádání} $<^S$. 
+        \item The formula $\neg(\exists y)E(x,y)$ defines the set of all \emph{isolated} vertices in a given simple graph.
+        \item Consider the field of real numbers $\underline{\mathbb R}$. The formula $(\exists y)(y\cdot y=x)\land\neg x=0$ defines the set of all positive real numbers.
+        \item The formula $x\leq y\land \neg x=y$ defines the relation of \emph{strict ordering} $<^S$ in a given ordered set $\langle S,\leq^S\rangle$.
     \end{itemize}
 \end{example}
 
-Často se také hodí mluvit o vlastnostech prvků relativně k jiným prvkům dané struktury. To nelze vyjádřit čistě syntakticky, ale můžeme za některé z volných proměnných dosadit prvky struktury jako \emph{parametry}. Zápisem $\varphi(\bar x,\bar y)$ myslíme, že formule $\varphi$ má volné proměnné $x_1,\dots,x_n,y_1,\dots,y_k$ (pro nějaká $n,k$).
+It is often useful to talk about properties of elements relative to other elements of a given structure. This cannot be expressed purely syntactically, but we can substitute elements of the structure as \emph{parameters} for some of the free variables. The notation $\varphi(\bar x,\bar y)$ means that the formula $\varphi$ has free variables $x_1,\dots,x_n,y_1,\dots,y_k$ (for some $n,k$).
 
 \begin{definition}
-    Mějme formuli $\varphi(\bar x,\bar y)$, kde $|\bar x|=n$ a $|\bar y|=k$, strukturu $\A$ v témž jazyce, a $k$-tici prvků $\bar b\in A^k$. \emph{Množina definovaná formulí $\varphi(\bar x,\bar y)$ s parametry $\bar b$ ve struktuře $\A$}, značíme $\varphi^{\A,\bar b}(\bar x,\bar y)$, je:
+    Let $\varphi(\bar x,\bar y)$ be a formula, where $|\bar x|=n$ and $|\bar y|=k$, $\A$ a structure in the same language, and $\bar b\in A^k$. The \emph{set defined by the formula $\varphi(\bar x,\bar y)$ with parameters $\bar b$ in the structure $\A$}, denoted by $\varphi^{\A,\bar b}(\bar x,\bar y)$, is:
     $$
     \varphi^{\A,\bar b}(\bar x,\bar y)=\{\bar a\in A^n\mid\A\models\varphi[e(\bar x/\bar a,\bar y/\bar b)]\}
     $$
-    Pro strukturu $\A$ a podmnožinu $B\subseteq A$ označíme $\mathrm{Df}^n(\A,B)$ množinu všech množin definovatelných ve struktuře $\A$ s parametry pocházejícími z $B$.
+    For a structure $\A$ and a subset $B\subseteq A$, let $\mathrm{Df}^n(\A,B)$ denote the set of all sets definable in the structure $\A$ with parameters from $B$.
 \end{definition}
 
 
 \begin{example}
-    Pro  $\varphi(x,y)=E(x,y)$ je $\varphi^{\mathcal G,v}(x,y)$ množina všech sousedů vrcholu $v$.
+    For $\varphi(x,y)=E(x,y)$, $\varphi^{\mathcal G,v}(x,y)$ is the set of all neighbors of vertex $v$.
 \end{example}
 
 \begin{observation}
-Množina $\mathrm{Df}^n(\A,B)$ je uzavřená na doplněk, průnik, sjednocení, a obsahuje $\emptyset$ a $A^n$. Jde tedy o podalgebru potenční algebry $\mathcal P(A^n)$.
+The set $\mathrm{Df}^n(\A,B)$ is closed under complement, intersection, and union, and contains $\emptyset$ and $A^n$. Therefore, it is a subalgebra of the power set algebra $\mathcal P(A^n)$.
 \end{observation}
 
-\subsection{Databázové dotazy}
+\subsection{Database Queries}
 
-Definovatelnost nachází přirozenou aplikaci v relačních databázích, např. ve známém dotazovacím jazyce SQL. \emph{Relační databáze} sestává z jedné nebo více \emph{tabulek}, někdy se jim říká \emph{relace}, řádky jedné tabulky jsou \emph{záznamy (records)}, nebo také \emph{tice (tuples)}. Jde tedy v principu o strukturu v čistě relačním jazyce. Představme si databázi obsahující dvě tabulky, Program a Movies, znázorněné na Obrázku \ref{figure:datbase}.
+Definability finds natural application in relational databases, such as in the well-known query language SQL. A \emph{relational database} consists of one or more \emph{tables}, sometimes called \emph{relations}, with rows of a table being \emph{records} or \emph{tuples}. Essentially, it is a structure in a purely relational language. Consider a database containing two tables, Program and Movies, as illustrated in Figure \ref{figure:database}.
 
 \begin{figure}[htbp]
 \begin{multicols}{2}
@@ -1025,71 +1008,69 @@ Definovatelnost nachází přirozenou aplikaci v relačních databázích, např
         \vdots         & \vdots      & \vdots
     \end{tabular}    
 \end{multicols}
-\caption{Tabulky Program a Movies}
-\label{figure:datbase}
+\caption{Tables Program and Movies}
+\label{figure:database}
 \end{figure}
 
-SQL dotaz ve své nejjednodušší formě (pomineme-li např. \emph{agregační funkce}) je v podstatě formule, a výsledkem dotazu je množina definovaná touto formulí (s parametry). Například, kdy a kde můžeme vidět film s Tomem Hanksem?
+An SQL query in its simplest form (ignoring, for example, \emph{aggregate functions}) is essentially a formula, and the result of the query is the set defined by this formula (with parameters). For instance, when and where can we see a movie starring Tom Hanks?
 
 \begin{quote}
-    \textbf{select} Program.cinema, Program.time \textbf{from} Program, Movies \textbf{where}\\ Program.title = Movies.title  \textbf{and} Movies.actor = `T. Hanks'   
+    \textbf{select} Program.cinema, Program.time \textbf{from} Program, Movies \textbf{where}\\ Program.title = Movies.title  \textbf{and} Movies.actor = 'T. Hanks'   
 \end{quote}
 
-Výsledkem bude množina $\varphi^{\text{Database},\text{`T. Hanks'}} (x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ definovaná ve struktuře $\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$, kde $D=\{\text{`Atlas'},\text{`Lucerna'},\dots,\text{`M. Keaton'}\}$, s parametrem `T. Hanks' následující formulí $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ :
+The result will be the set $\varphi^{\text{Database},\text{'T. Hanks'}} (x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ defined in the structure $\text{Database}=\langle D, \mathrm{Program}, \mathrm{Movies}\rangle$, where $D=\{\text{'Atlas'},\text{'Lucerna'},\dots,\text{'M. Keaton'}\}$, with the parameter 'T. Hanks' by the following formula $\varphi(x_\mathrm{cinema},x_\mathrm{time},y_\mathrm{actor})$ :
 $$
 (\exists z_\mathrm{title})(\exists z_\mathrm{director})(\mathrm{Program}(x_\mathrm{cinema},z_\mathrm{title},x_\mathrm{time}) \land \mathrm{Movies}(z_\mathrm{title},z_\mathrm{director},y_\mathrm{actor}))
 $$
 
 
-\section{Vztah výrokové a predikátové logiky}
+\section{Relationship Between Propositional and Predicate Logic}
 \label{section:relationship-propositional-predicate-logic}
 
-Nyní si ukážeme, jak lze výrokovou logiku `simulovat' v logice predikátové, a to v teorii Booleových algeber. Nejprve představíme axiomy této teorie:
+We will now look at how propositional logic can be `simulated' in predicate logic, in particular in the theory of Boolean algebras. First, we introduce the axioms of this theory:
 
-\begin{definition}[Booleovy algebry]
-    \emph{Teorie Booleových algeber} je teorie jazyka $L=\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ s rovností sestávající z následujících axiomů:\footnote{Všimněte si \emph{duality}: záměnou $\land$ s $\lor$ a $\bot$ s $\top$ získáme tytéž axiomy.}
+\begin{definition}[Boolean Algebras]
+    The \emph{theory of Boolean algebras} is the theory of the language $L=\langle -,\landsymb,\lorsymb,\bot,\top\rangle$ with equality consisting of the following axioms:\footnote{Note the \emph{duality}: by swapping $\land$ with $\lor$ and $\bot$ with $\top$, we obtain the same axioms.}
     \begin{multicols}{2}
         \begin{itemize}
-            \item \emph{asociativita} $\land$ a $\lor$:
+            \item \emph{associativity} of $\land$ and $\lor$:
             \begin{align*}
                 x\land(y\land z) &=(x\land y)\land z\\
                 x\lor(y\lor z) &=(x\lor y)\lor z
             \end{align*}
-            \item \emph{komutativita} $\land$ a $\lor$:
+            \item \emph{commutativity} of $\land$ and $\lor$:
             \begin{align*}
                 x\land y &= y\land x\\
                 x\lor y &= y\lor x
             \end{align*}
-            \item \emph{distributivita} $\land$ vůči $\lor$ a $\lor$ vůči $\land$:
+            \item \emph{distributivity} of $\land$ over $\lor$ and $\lor$ over $\land$:
             \begin{align*}
                 x\land(y\lor z) &= (x\land y)\lor (x\land z)\\
                 x\lor(y\land z) &= (x\lor y)\land (x\lor z)
             \end{align*}
-            \item \emph{absorpce}:
+            \item \emph{absorption}:
             \begin{align*}
                 x\land(x\lor y) &= x\\
                 x\lor(x\land y) &= x
             \end{align*}
-            \item \emph{komplementace}:
+            \item \emph{complementation}:
             \begin{align*}
                 x\land(-x) &= \bot \\
                 x\lor(-x) &= \top
             \end{align*}
-            \item \emph{netrivialita}:
+            \item \emph{non-triviality}:
             \begin{align*}
-                -(\bot &= \top)
+                - (\bot &= \top)
             \end{align*}
 
         \end{itemize}
-    \end{multicols}
+    \end{multicols}    
 \end{definition}
-    
-Nejmenším modelem je \emph{2-prvková Booleova algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Konečné Booleovy algebry jsou (až na \emph{izomorfismus}) právě $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, kde $f^n$ znamená, že funkci $f$ aplikujeme po složkách.\footnote{Tyto Booleovy algebry jsou izomorfní \emph{potenčním algebrám} $\mathcal P(\{1,\dots,n\})$, izomorfismus je daný bijekcí mezi podmnožinami a jejich charakteristickými vektory.}
 
-Výroky tedy můžeme chápat jako \emph{Booleovské termy} (a konstanty $\bot,\top$ představují pravdu a lež), pravdivostní hodnota výroku (při daném ohodnocení prvovýroků) je potom dána hodnotou odpovídajícího termu v 2-prvkové Booleově algebře. Kromě toho, \emph{algebra výroků} daného výrokového jazyka nebo teorie je Booleovou algebrou (to platí i pro nekonečné jazyky).
+The smallest model is the \emph{2-element Boolean algebra} $\langle \{0,1\},f_\neg,f_\land,f_\lor,0,1\rangle$. Finite Boolean algebras are (up to \emph{isomorphism}) precisely $\langle \{0,1\}^n,f_\neg^n,f_\land^n,f_\lor^n,(0,\dots,0),(1,\dots,1)\rangle$, where $f^n$ means that the function $f$ is applied component-wise.\footnote{These Boolean algebras are isomorphic to the \emph{power set algebras} $\mathcal P(\{1,\dots,n\})$; the isomorphism is the bijection between subsets and their characteristic vectors.}
 
-Na druhou stranu, máme-li \emph{otevřenou} formuli $\varphi$ (bez rovnosti), můžeme reprezentovat atomické výroky pomocí prvovýroků, a získat tak výrok, který platí, právě když platí $\varphi$. Více o tomto směru se dozvíme v Kapitole \ref{chapter:predicate-resolution} (o rezoluci v predikátové logice), kde se nejprve zbavíme kvantifikátorů pomocí tzv. \emph{Skolemizace}.
+Propositions can thus be understood as \emph{Boolean terms} (and the constants $\bot,\top$ represent falsity and truth). The truth value of a proposition (under a given assignment of propositional variables) is given by the value of the corresponding term in the 2-element Boolean algebra. Moreover, the \emph{algebra of propositions} of a given propositional language or theory is a Boolean algebra (this holds even for infinite languages).
 
-Výrokovou logiku bychom také mohli zavést jako fragment logiky predikátové, pokud bychom povolili \emph{nulární relace} (a nulární relační symboly v jazyce): $A^0=\{\emptyset\}$, tedy na libovolné množině jsou právě dvě nulární relace $R^A\subseteq A^0$: $R^A=\emptyset=0$ a $R^A=\{\emptyset\}=\{0\}=1$. To ale dělat nebudeme. 
- 
+On the other hand, if we have an \emph{open} formula $\varphi$ (without equality), we can represent atomic propositions using propositional variables and obtain a proposition that holds if and only if $\varphi$ holds. We will learn more about this direction in Chapter \ref{chapter:predicate-resolution} (on resolution in predicate logic), where we will first eliminate quantifiers using the so-called \emph{Skolemization}.
 
+Propositional logic could also be introduced as a fragment of predicate logic if we allowed \emph{nullary relations} (and nullary relation symbols in the language): $A^0=\{\emptyset\}$, thus on any set there are precisely two nullary relations $R^A\subseteq A^0$: $R^A=\emptyset=0$ and $R^A=\{\emptyset\}=\{0\}=1$. However, we will not do that.

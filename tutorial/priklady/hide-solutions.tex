@@ -1,0 +1,11 @@
+% hide solutions
+\newif\ifhidesolutions
+\hidesolutionstrue
+% \hidesolutionsfalse
+
+\ifhidesolutions
+    \usepackage{environ}
+    \NewEnviron{hide}{}
+    \let\solution\hide
+    \let\endsolution\endhide
+\fi

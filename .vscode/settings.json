@@ -28,4 +28,41 @@
         "nejob",
         "zákl"
     ]
+,
+    "latex-workshop.latex.clean.enabled": true,
+    "latex-workshop.latex.clean.fileTypes": [
+    ".aux",
+    ".log",
+    ".fls",
+    ".fdb_latexmk",
+    ".synctex.gz"
+    ]
+,
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk with cleanup",
+            "tools": ["latexmk", "cleanup"]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "cleanup",
+            "command": "bash",
+            "args": [
+                "-c",
+                "rm -f *.aux *.log *.fls *.fdb_latexmk *.synctex.gz"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "latexmk with cleanup"
 }

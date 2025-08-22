@@ -4,9 +4,9 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item understands the notions of propositional logic syntax (language, atomic proposition, proposition, tree of a proposition, subproposition, theory), formally define them and give examples
-        \item understands the notions of model, consequence of a theory, formally define them and give examples
-        \item can formalize a given system (word/computational problem, etc.) in propositional logic
+        \item understands the notions of propositional syntax (language, [atomic] proposition, tree of a proposition, subproposition, theory), can formally define them and give examples
+        \item understands the notions of model, consequence of a theory, can formally define them and give examples
+        \item can formalize given system (word/computational problem, etc.) in propositional logic
         \item can find models of a given theory
         \item can decide whether a given proposition is a consequence of a given theory
         \item has experience applying (with instructor assistance) the tableau method and resolution method to prove properties of a given system (e.g., to solve a word problem)
@@ -18,20 +18,20 @@
 
 \begin{problem}\label{problem:dragons}
     
-    We got lost in a labyrinth and in front of us are three doors: red, blue, and green. We know that behind exactly one of the doors there is the way out, behind the others there is a dragon. On the doors there are inscriptions:
+    Lost in a labyrinth, we face three doors---red, blue, and green. Exactly one leads out; the other two hide dragons. On the doors we read the following inscriptions:
     \begin{itemize}
         \item Red door: {\it ``The way out is behind this door.''}
         \item Blue door: {\it ``The way out is not behind this door.''}
         \item Green door: {\it ``The way out is not behind the blue door.''}
     \end{itemize}
-    We know that at least one of the inscriptions is true and at least one is false. Which way leads out?
+    We know that at least one inscription is true and at least one is false. Which way leads out?
     \begin{enumerate}[(a)]
         \item Choose a suitable language (a set of propositional variables) $\mathbb P$.
         \item Formalize all knowledge as a theory $T$ in the language $\mathbb P$. (Note: The axioms are not the inscriptions on the doors; those need not be true.)
         \item Find all models of the theory $T$.
         \item Formalize the statements ``The way out is behind the red/blue/green door'' as formulas $\varphi_1,\varphi_2,\varphi_3$ over $\mathbb P$. Is any of these formulas a consequence of $T$?
         \item Try using the tableau method: Construct a tableau from the theory $T$ with the item $F\varphi_i$ at the root. Will all branches be contradictory? (Try to come up with the correct steps for the construction of the tableau, take inspiration from the example in the lecture.)
-        \item Try using the resolution method: Convert the axioms of the theory $T$, as well as the formula $\neg\varphi_i$, into conjunctive normal form (CNF). Try to construct a resolution refutation and draw it in the form of a resolution tree. (Note: Don’t forget to negate the formula $\varphi_i$ you are proving.)
+        \item Try using the resolution method: Convert the axioms of $T$, as well as $\neg\varphi_i$, into conjunctive normal form (CNF). Try to construct a resolution refutation and draw it in the form of a resolution tree. (Note: Don’t forget to negate the formula $\varphi_i$ you are proving.)
     \end{enumerate}  
 
     \begin{solution}
@@ -252,7 +252,7 @@
 
     Consider the \emph{vertex cover} of the following graph:    
     \begin{center}
-        \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.5cm}]
+        \begin{tikzpicture}[every node/.style={circle,fill=blue!10,draw,minimum size=0.5cm,node distance=1.35cm}]
         \node (1) {$1$};
         \node[right of=1] (2) {$2$};
         \node[below of=2] (3) {$3$};
@@ -262,7 +262,7 @@
         \path[draw] (2) -- (5) -- (3);
         \end{tikzpicture}
     \end{center}
-    For a given $k>0$, we want to determine whether this graph has a vertex cover of size at most $k$.
+    For a given $k>0$, we want to determine if this graph has a vertex cover of size at most $k$.
 
     \begin{enumerate}[(a)]
         \item Choose a suitable language (a set of propositional variables) $\mathbb P$.
@@ -433,7 +433,7 @@
 
 \begin{problem}
 
-    We have three brothers; each of them either always tells the truth or always lies.
+    There are 3 brothers; each of them either always tells the truth or always lies.
     \begin{enumerate}[(i)]
         \item The eldest says: \emph{``Both my brothers are liars.''}
         \item The middle one says: \emph{``The youngest is a liar.''}
@@ -501,7 +501,7 @@
     Recall the definition of the \emph{formula tree}.
     \begin{enumerate}[(a)]
         \item Prove in detail that every formula has a uniquely determined tree.
-        \item Would this still be true if we replaced the symbols `(', `)' in the definition of a formula by the symbol `|'?
+        \item Is it still true if we replace the symbols `(', `)' in the definition of a formula by `|'?
         \item What would happen if we omitted parentheses entirely?
     \end{enumerate}
 

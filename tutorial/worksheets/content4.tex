@@ -6,13 +6,14 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item zná potřebné pojmy z tablo metody (položka, tablo, tablo důkaz/zamítnutí, dokončená/sporná větev, kanonický model), umí je formálně definovat, uvést příklady
-        \item zná všechna atomická tabla, a umí vytvořit vhodná atomická tabla pro libovolnou logickou spojku
-        \item umí sestrojit dokončené tablo pro danou položku z dané (i nekonečné) teorie
-        \item umí popsat kanonický model pro danou dokončenou bezespornou větev tabla
-        \item umí aplikovat tablo metodu k řešení daného problému (slovní úlohy, aj.)
-        \item zná větu o kompaktnosti, umí ji aplikovat
+        \item knows terminology of tableau method (entry, tableau, tableau proof/refutation, finished/contradictory branch, canonical model), can define them formally, give examples
+        \item knows all atomic tableaux and can create suitable atomic tableaux for any logical connective
+        \item can construct a finished tableau for a given formula from a given (even infinite) theory
+        \item can describe the canonical model for a given completed consistent branch of a tableau
+        \item can apply the tableau method to solve a given problem (word problems, etc.)
+        \item knows the compactness theorem and can apply it
     \end{itemize}
+
     
 
 \section*{In-class problems}
@@ -20,27 +21,27 @@
 
 \begin{problem}
     
-    Aladin našel v jeskyni dvě truhly, A a B. Ví, že každá truhla obsahuje buď poklad, nebo smrtonosnou past.
+    Aladdin found two chests, A and B, in a cave. He knows that each chest contains either a treasure or a deadly trap. The chests have the following inscriptions:
     \begin{itemize}
-    \item Na truhle A je nápis: {\it ``Alespoň jedna z těchto dvou truhel obsahuje poklad.''}
-    \item Na truhle B je nápis: {\it ``V truhle A je smrtonosná past.''}
+    \item On chest A: {\it ``At least one of these two chests contains a treasure.''}
+    \item On chest B: {\it ``Chest A contains a deadly trap.''}
     \end{itemize}
-    Aladin ví, že buď jsou oba nápisy pravdivé, nebo jsou oba lživé.
+    Aladdin knows that either both inscriptions are true, or both are false.
     \begin{enumerate}[(a)]
-        \item Vyjádřete Aladinovy informace jako teorii $T$ nad vhodně zvolenou množinou výrokových proměnných $\mathbb P$. (Vysvětlete význam jednotlivých výrokových proměnných v $\mathbb P$.)
-        \item Pokuste se sestrojit tablo důkazy, z teorie $T$, výroků o významu ``Poklad je v truhle A'' a ``Poklad je v truhle B''.
-        \item Je-li některé z těchto dokončených tabel bezesporné, sestrojte kanonický model pro některou z jeho bezesporných větví.
-        \item Jaký závěr z toho můžeme učinit?
+        \item Express Aladdin's information as a theory $T$ over a suitably chosen set of propositional variables $\mathbb P$. (Explain the meaning of each propositional variable in $\mathbb P$.)
+        \item Try to construct tableau proofs from the theory $T$ for the propositions ``The treasure is in chest A'' and ``The treasure is in chest B''.
+        \item If any of these completed tableaux are consistent, construct the canonical model for one of its consistent branches.
+        \item What conclusion can we draw from this?
     \end{enumerate}
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Z kontextu poznáme, že `buď, \dots nebo' je exkluzivní (truhla nemůže obsahovat zároveň poklad i smrtonosnou past). Zvolíme jazyk $\mathbb P=\{a,b\}$, kde $a$ znamená `truhla A obsahuje poklad', podobně pro $b$. Nápisy na truhlách formalizujeme jako výroky $a\lor b,\neg a$. Teorie $T$ vyjadřuje, že jsou oba pravdivé nebo oba lživé:
+            \item From the context, we recognize that `either...or' is exclusive (a chest cannot contain both a treasure and a deadly trap). We choose the language $\mathbb P=\{a,b\}$, where $a$ means `chest A contains a treasure', and similarly for $b$. The inscriptions on the chests are formalized as the formulas $a\lor b$ and $\neg a$. The theory $T$ expresses that both are true or both are false:
             $$
             T=\{((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)\}
             $$
-            (Alternativně bychom mohli formalizovat jako $T=\{(a\lor b)\liff \neg a\}$, tj. nahlédnout, že ``oba pravdivé nebo oba lživé'' znamená ekvivalenci. Tabla by byla trochu menší, ale jinak podobná---vyzkoušejte si!)
-            \item Tabla budou mít v kořeni položky $\mathrm{F}a$ resp. $\mathrm{F}b$ (dokazujeme `sporem'):
+            (Alternatively, we could formalize it as $T=\{(a\lor b)\liff \neg a\}$, i.e., noticing that ``both true or both false'' means equivalence. The tableau would be slightly smaller but otherwise similar—try it!)
+            \item The tableaux have at their root the formulas $\mathrm{F}a$ and $\mathrm{F}b$ (we prove by contradiction):
             %\begin{multicols}{2}
                 \begin{center}
                     \begin{forest}
@@ -104,8 +105,8 @@
                     \end{forest}
                 \end{center}
             %\end{multicols}
-            \item První tablo je dokončené, ale bezesporné. Bezesporná větev obsahuje položky $\mathrm{F}a$, $\mathrm{T}b$, kanonický model pro tuto větev je $v=(0,1)$. Je to model teorie $T$ (všechny jeho větve jsou sporné), ve kterém v truhle A není poklad, tedy protipříklad k tvrzení, že v truhle A je poklad.
-            \item Druhé tablo je sporné, jde tedy o tablo důkaz a víme, že v truhle B je poklad.
+            \item The first tableau is completed and consistent. The consistent branch contains the formulas $\mathrm{F}a$, $\mathrm{T}b$, and the canonical model for this branch is $v=(0,1)$. It is a model of the theory $T$ (all its branches are consistent), in which chest A does not contain a treasure, providing a counterexample to the statement that chest A contains a treasure.
+            \item The second tableau is contradictory, so it is a tableau proof and we know that chest B contains the treasure.
         \end{enumerate}
 
     \end{solution}
@@ -115,13 +116,13 @@
 
 \begin{problem}
 
-    Uvažme nekonečnou výrokovou teorii (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Pomocí tablo metody najděte všechny modely $T$. Je každý model $T$ kanonickým modelem pro některou z větví tohoto tabla? %(Můžete se pokusit sestrojit také \emph{systematické} tablo.)
+    Consider the infinite propositional theories (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Using the tableau method, find all models of $T$. Is every model of $T$ a canonical model for some branch of this tableau? %(You may also try to construct a \emph{systematic} tableau.)
 
     \begin{solution}
 
-        Sestrojíme tablo z teorie $T$, do kořene dáme položku $\mathrm{T}\alpha_0$, kde $\alpha_0$ je první axiom $T$. Ukážeme jen začátek konstrukce, potřebujete-li, zkonstruujte více.
+        Construct a tableau from the theory $T$, placing the formula $\mathrm{T}\alpha_0$ at the root, where $\alpha_0$ is the first axiom of $T$. We only show the beginning of the construction; if needed, construct more.
 
-        Nejprve vyřešme (a):
+        First, solve (a):
         
         \begin{center}
             \begin{forest}
@@ -156,7 +157,7 @@
                 ]
             \end{forest}
         \end{center}
-        Každý model $T$ se shoduje s některou (bezespornou) větví tohoto (dokončeného) tabla. (Zde dokonce platí, že každý model $T$ je \emph{kanonickým} modelem pro některou z větví. Obecně to ale neplatí.) Modely jsou: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$ kde $v_\text{all}(p_i)=1$ pro všechna $i\in\mathbb N$, a
+        Each model of $T$ corresponds to some (consistent) branch of this (completed) tableau. (Here, in fact, every model of $T$ is a \emph{canonical} model for some branch. In general, this does not necessarily hold.) The models are: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$, where $v_\text{all}(p_i)=1$ for all $i\in\mathbb N$, and
         $$
         v_{<k}(p_i)=\begin{cases}
             1 & \text{ if }i<k,\\
@@ -164,7 +165,7 @@
         \end{cases}
         $$
         
-        Nyní (b):
+        Now (b):
 
         \begin{center}
             \begin{forest}
@@ -190,7 +191,7 @@
                             [$\mathrm{F}p_1$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]         
                             [$\mathrm{T}p_2$
                                 [$\mathrm{T}p_2\to p_3$ 
-                                    [$\mathrm{F}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    [$\mathrm{F}p_2$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}] 
                                     [$\mathrm{T}p_3$, tikz={\node[fit to=tree,label=below:$\vdots$] {};}]         
                                 ]
                             ]              
@@ -200,7 +201,7 @@
             \end{forest}
         \end{center}
 
-        Opět není těžké nahlédnout, že každý model se shoduje s některou z větví. Máme $\M(T)=\{v_\text{none}\}\cap\{v_{\geq k}\mid k\in\mathbb N\}$ kde $v_\text{none}(p_i)=0$ pro všechna $i\in\mathbb N$, a
+        Again, it is easy to see that each model corresponds to some branch. We have $\M(T)=\{v_\text{none}\}\cup\{v_{\geq k}\mid k\in\mathbb N\}$, where $v_\text{none}(p_i)=0$ for all $i\in\mathbb N$, and
         $$
         v_{\geq k}(p_i)=\begin{cases}
             0 & \text{ if }i<k,\\
@@ -215,11 +216,11 @@
 
 \begin{problem}
 
-    Navrhněte vhodná atomická tabla pro logickou spojku $\oplus$ (XOR) a ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví.
+    Design suitable atomic tableaux for the logical connective $\oplus$ (XOR) and show that if a model satisfies the root of your atomic tableaux, it also satisfies some branch.
 
     \begin{solution}
 
-        Potřebujeme dvě atomická tabla, pro položky tvaru $\mathrm{T}\varphi\oplus\psi$ a $\mathrm{F}\varphi\oplus\psi$. Mohou vypadat například následovně, podmínku si ověřte sami (snadno sémanticky):
+        We need two atomic tableaux, for formulas of the form $\mathrm{T}\varphi\oplus\psi$ and $\mathrm{F}\varphi\oplus\psi$. They can look, for example, as follows; verify the condition yourself (easily semantically):
 
         \begin{multicols}{2}
 
@@ -254,27 +255,27 @@
 
 
 \begin{problem}
-    Pomocí věty o kompaktnosti ukažte, že každé spočetné částečné uspořádání lze rozšířit na úplné (lineární) uspořádání.
+    Using the compactness theorem, show that every countable partial order can be extended to a complete (linear) order.
 
     \begin{solution}
 
-        Pro konečná částečná uspořádání se dokáže snadno (podobně jako topologické uspořádání acyklického orientovaného grafu). 
+        For finite partial orders, this can be easily proven (similarly to topologically ordering an acyclic directed graph). 
         
-        Mějme spočetně nekonečnou částečně uspořádanou množinu $\langle X;\leq^X\rangle$. Sestrojíme výrokovou teorii $T$ takovou, aby její modely popisovaly lineární uspořádání na $X$ rozšiřující $\leq^X$. Bude sestávat z následujících množin výroků:
+        Let $\langle X;\leq^X\rangle$ be a countably infinite partially ordered set. Construct a propositional theory $T$ such that its models describe linear orders on $X$ extending $\leq^X$. It will consist of the following sets of formulas:
         \begin{itemize}
-            \item $p_{xx}$ pro všechna $x\in X$ \hfill (reflexivita)
-            \item $p_{xy}\limplies\neg p_{yx}$ pro všechna $x\neq y\in X$ \hfill (antisymetrie)
-            \item $p_{xy}\land p_{yz}\limplies p_{xz}$ pro všechna $x,y,z\in X$ \hfill (tranzitivita)
-            \item $p_{xy}\lor p_{yx}$ pro všechna $x,y\in X$ \hfill (linearita)
-            \item $p_{xy}$ pro všechna $x,y$ taková, že $x\leq^X y$\hfill (jde o rozšíření $\leq^X$)
+            \item $p_{xx}$ for all $x\in X$ \hfill (reflexivity)
+            \item $p_{xy}\limplies\neg p_{yx}$ for all $x\neq y\in X$ \hfill (antisymmetry)
+            \item $p_{xy}\land p_{yz}\limplies p_{xz}$ for all $x,y,z\in X$ \hfill (transitivity)
+            \item $p_{xy}\lor p_{yx}$ for all $x,y\in X$ \hfill (linearity)
+            \item $p_{xy}$ for all $x,y$ such that $x\leq^X y$\hfill (ensures extension of $\leq^X$)
         \end{itemize}
-        (Reflexivitu lze vynechat, plyne už z toho, že jde o rozšíření reflexivní relace $\leq^X$.)
+        (Reflexivity can be omitted, as it already follows from the fact that it extends the reflexive relation $\leq^X$.)
 
-        Dokazujme: $\langle X;\leq^X\rangle$ má lineární rozšíření, právě když $T$ má model, to je z věty o kompaktnosti právě když každá konečná část $T$ má model. Vezměme libovolnou konečnou $T'\subseteq T$. Stačí tedy ukázat, že $T'$ má model. Označme jako $X'$ množinu všech $x\in X$, \emph{o kterých mluví $T'$}, tj.:
+        Proof: $\langle X;\leq^X\rangle$ has a linear extension if and only if $T$ has a model, which by the compactness theorem holds if and only if every finite subset of $T$ has a model. Take any finite $T'\subseteq T$. It is sufficient to show that $T'$ has a model. Let $X'$ be the set of all $x\in X$ \emph{mentioned in $T'$}, i.e.:
         $$
-        X'=\{x\in X\mid p_{xy}\in\mathrm{Var}(T')\text{ nebo }p_{yx}\in\mathrm{Var}(T')\text{ pro nějaké }y\in X\}
+        X'=\{x\in X\mid p_{xy}\in\mathrm{Var}(T')\text{ or }p_{yx}\in\mathrm{Var}(T')\text{ for some }y\in X\}
         $$
-        Protože $T'$ je konečná, je i $X'$ konečná množina. Buď $\leq^{X'}$ restrikce $\leq^X$ na množinu $X'$, neboli $\leq^{X'}\,=\,\leq^X \mathbin{\cap}\, (X'\times X')$. Toto konečné částečné uspořádání lze rozšířit na lineární uspořádání $\leq^{X'}_L$, což nám dává model teorie $T'$ (kde $v(p_{xy})=1$ právě když $x\leq^{X'}_L y$).
+        Since $T'$ is finite, $X'$ is finite. Let $\leq^{X'}$ be the restriction of $\leq^X$ to $X'$, i.e., $\leq^{X'}\,=\,\leq^X \mathbin{\cap}\, (X'\times X')$. This finite partial order can be extended to a linear order $\leq^{X'}_L$, which gives us a model of the theory $T'$ (where $v(p_{xy})=1$ if and only if $x\leq^{X'}_L y$).
         
     \end{solution}
     
@@ -286,17 +287,17 @@
 
 \begin{problem}
 
-    Adam, Barbora a Cyril jsou vyslýcháni, při výslechu bylo zjištěno následující:
+    During the interrogation of Adam, Barbara, and Cyril, it was established that:
     \begin{enumerate}[(i)]\it
-        \item Alespoň jeden z vyslýchaných říká pravdu a alespoň jeden lže.
-        \item Adam říká: \emph{``Barbora nebo Cyril lžou''}
-        \item Barbora říká: \emph{``Cyril lže''}
-        \item Cyril říká: \emph{``Adam nebo Barbora lžou''}
+        \item At least one of the interrogated persons tells the truth, and at least one lies.
+        \item Adam says: \emph{``Barbara or Cyril lie.''}
+        \item Barbara says: \emph{``Cyril lies.''}
+        \item Cyril says: \emph{``Adam or Barbara lie.''}
     \end{enumerate}
     \begin{enumerate}[(a)]
-        \item Zapište tvrzení $(i)$ až $(iv)$ jako výroky $\varphi_1$ až $\varphi_4$ nad množinou prvovýroků $\mathbb{P}=\{a,b,c\}$, přičemž $a,b,c$ znamená (po řadě), že {\it ``Adam/Barbora/Cyril říká pravdu''}.
-        \item Pomocí tablo metody dokažte, že z teorie $T = \{\varphi_1, \dots, \varphi_4\}$ plyne, že Adam říká pravdu.
-        \item Je teorie $T$ ekvivalentní s teorií $T' = \{\varphi_2, \varphi_3, \varphi_4\}$? Zdůvodněte.    
+        \item Express statements (i)–(iv) as formulas $\varphi_1$–$\varphi_4$ over the set of propositional variables $\mathbb{P}=\{a,b,c\}$, where $a,b,c$ respectively mean {\it ``Adam/Barbara/Cyril tells the truth''}.
+        \item Using the tableau method, prove that $T = \{\varphi_1, \dots, \varphi_4\}$ implies that Adam tells the truth.
+        \item Is the theory $T$ equivalent to the theory $T' = \{\varphi_2, \varphi_3, \varphi_4\}$? Justify your answer.    
     \end{enumerate}
     
 \end{problem}
@@ -304,7 +305,7 @@
 
 \begin{problem}
 
-    Pomocí tablo metody dokažte, že následující výroky jsou tautologie:
+    Using the tableau method, prove that the following formulas are tautologies:
     \begin{enumerate}[(a)]
         \item $(p\to (q \to q))$
         \item $p \leftrightarrow \neg \neg  p$
@@ -317,7 +318,7 @@
 
 \begin{problem}
     
-    Pomocí tablo metody dokažte nebo najděte protipříklad ve formě \emph{kanonického} modelu pro bezespornou větev.
+    Using the tableau method, either prove or find a counterexample in the form of a \emph{canonical} model for a consistent branch.
     \begin{enumerate}[(a)]
         \item $\{ \neg q,\ p \vee q\} \models p$
         \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$
@@ -329,7 +330,7 @@
 
 \begin{problem}
 
-    Pomocí tablo metody určete všechny modely následujících teorií:
+    Using the tableau method, determine all models of the following theories:
     \begin{enumerate}[(a)]
         \item $\{(\neg p \vee q) \to (\neg q \wedge r)\}$
         \item $\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$
@@ -340,12 +341,12 @@
 
 
 \begin{problem} 
-    Navrhněte vhodná atomická tabla a ukažte, že souhlasí-li model s kořenem vašich atomických tabel, souhlasí i s některou větví:
+    Design suitable atomic tableaux and show that if a model satisfies the root of your atomic tableaux, it also satisfies some branch:
     \begin{itemize}
-        \item pro Peirceovu spojku $\downarrow$ (NOR),
-        \item pro Shefferovu spojku $\uparrow$ (NAND),
-        \item pro $\oplus$ (XOR),
-        \item pro ternární operátor ``if p then q else r'' (IFTE).
+        \item for Peirce's connective $\downarrow$ (NOR),
+        \item for Sheffer's connective $\uparrow$ (NAND),
+        \item for $\oplus$ (XOR),
+        \item for the ternary operator ``if p then q else r'' (IFTE).
     \end{itemize}  
     
 \end{problem}
@@ -353,15 +354,13 @@
 
 \begin{problem}
 
-    \emph{Half-adder circuit} je logický obvod se dvěma vstupními bity (bit 1, bit 2) a dvěma výstupními bity (carry, sum) znázorněný v následujícím diagramu:
+    A \emph{half-adder circuit} is a logic circuit with two input bits (bit 1, bit 2) and two output bits (carry, sum) illustrated in the following diagram:
     \begin{center}
         \includegraphics[width=0.5\textwidth]{files/half-adder.png}
     \end{center}
     \begin{enumerate}[(a)]
-            \item Formalizujte tento obvod ve výrokové logice. Konkrétně, vyjádřete jej jako teorii $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ v jazyce $\mathbb P=\{b_1,b_2,c,s\}$, kde výrokové proměnné znamenají po řadě ``bit 1'', ``bit 2'', ``carry'' a ``sum'', a formule $\varphi,\psi$ neobsahují proměnné $c,s$.
-            %\item Axiomatizujte teorii $T$ výrokem v CNF a také výrokem v DNF
-            \item Dokažte tablo metodou, že $T\models c\to\neg s$.
-            %\item Dokažte totéž rezoluční metodou (připomeňte si ji).
+            \item Formalize this circuit in propositional logic. Specifically, express it as a theory $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ in the language $\mathbb P=\{b_1,b_2,c,s\}$, where the propositional variables mean ``bit 1'', ``bit 2'', ``carry'', and ``sum'', and the formulas $\varphi,\psi$ do not contain the variables $c,s$.
+            \item Using the tableau method, prove that $T\models c\to\neg s$.
     \end{enumerate}
 
 \end{problem}
@@ -369,9 +368,10 @@
 
 \begin{problem}
 
-    Pomocí věty o kompaktnosti dokažte, že každý spočetný rovinný graf je obarvitelný čtyřmi barvami. Můžete využít Větu o čtyřech barvách (pro konečné grafy).
+    Using the compactness theorem, prove that every countable planar graph is four-colorable. You may use the Four Color Theorem (for finite graphs).
 
 \end{problem}
+
 
         
 \section*{For further thought}
@@ -379,14 +379,15 @@
         
 \begin{problem}
 
-    Dokažte přímo (transformací tabel) \emph{větu o dedukci}, tj. že pro každou teorii $T$ a výroky $\varphi$, $\psi$ platí:
+    Prove directly (by transforming tableaux) the \emph{deduction theorem}, i.e., that for any theory $T$ and formulas $\varphi$, $\psi$, we have:
     $$
-    T \proves \varphi\to\psi\text{\ \ právě když\ \ }T,\varphi\proves  \psi
+    T \proves \varphi\to\psi\text{\ \ if and only if\ \ }T,\varphi\proves  \psi
     $$
 
 \end{problem}
 
 
 \begin{problem}
-    Mějme dvě neprázdné teorie $A, B$ v témž jazyce. Nechť platí, že každý model teorie $A$ splňuje alespoň jeden axiom teorie $B$. Ukažte, že existují konečné množiny axiomů $\{\alpha_1,\dots,\alpha_k\}\subseteq A$ a $\{\beta_1,\dots,\beta_n\}\subseteq B$ takové, že $\alpha_1\wedge\dots\wedge\alpha_k\,\to\,\beta_1\vee\dots\vee\beta_n$ je tautologie.
+    Let $A$ and $B$ be two non-empty theories in the same language. Suppose that every model of theory $A$ satisfies at least one axiom of theory $B$. Show that there exist finite sets of axioms $\{\alpha_1,\dots,\alpha_k\}\subseteq A$ and $\{\beta_1,\dots,\beta_n\}\subseteq B$ such that $\alpha_1\wedge\dots\wedge\alpha_k\,\to\,\beta_1\vee\dots\vee\beta_n$ is a tautology.
 \end{problem}
+

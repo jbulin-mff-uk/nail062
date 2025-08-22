@@ -16,6 +16,7 @@
         "SÚNO"
     ],
     "cSpell.ignoreWords": [
+        "Fabio",
         "Fraenkel",
         "NTIN",
         "Presburger",
@@ -27,31 +28,31 @@
         "jedn",
         "nejob",
         "zákl"
-    ]
-,
+    ],
     "latex-workshop.latex.clean.enabled": true,
     "latex-workshop.latex.clean.fileTypes": [
-    ".aux",
-    ".log",
-    ".fls",
-    ".fdb_latexmk",
-    ".synctex.gz"
-    ]
-,
+        ".aux",
+        ".log",
+        ".fls",
+        ".fdb_latexmk",
+        ".synctex.gz"
+    ],
     "latex-workshop.latex.recipes": [
         {
-            "name": "latexmk with cleanup",
-            "tools": ["latexmk", "cleanup"]
+            "name": "pdflatex with cleanup",
+            "tools": [
+                "pdflatex",
+                "cleanup"
+            ]
         }
     ],
     "latex-workshop.latex.tools": [
         {
-            "name": "latexmk",
-            "command": "latexmk",
+            "name": "pdflatex",
+            "command": "pdflatex",
             "args": [
-                "-synctex=1",
                 "-interaction=nonstopmode",
-                "-file-line-error",
+                "-synctex=1",
                 "%DOC%"
             ]
         },
@@ -64,5 +65,5 @@
             ]
         }
     ],
-    "latex-workshop.latex.recipe.default": "latexmk with cleanup"
+    "latex-workshop.latex.recipe.default": "pdflatex with cleanup"
 }

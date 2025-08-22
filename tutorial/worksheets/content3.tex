@@ -3,41 +3,42 @@
 
 \subsection*{Teaching goals:} After completing, the student
 
-    \begin{itemize}\setlength{\itemsep}{0pt}
-        \item rozumí souvislosti výroků/teorií až na [$T$-]ekvivalenci a množin modelů (tzv. algebra výroků), umí aplikovat v konkrétních příkladech
-        \item umí zakódovat daný problém jako instanci problému SAT
-        \item získal praktickou zkušenost s použitím SAT solveru
-        \item rozumí algoritmu pro řešení 2-SAT pomocí implikačního grafu (včetně nalezení všech modelů), umí aplikovat na příkladě
-        \item rozumí algoritmu pro řešení Horn-SAT pomocí jednotkové propagace , umí aplikovat na příkladě
-        \item rozumí algoritmu DPLL a umí jej aplikovat na příkladě
-    \end{itemize}
+\begin{itemize}\setlength{\itemsep}{0pt}
+    \item understands the relationship between formulas/theories up to [$T$-]equivalence and sets of models (the so-called algebra of formulas), and can apply this in concrete examples
+    \item can encode a given problem as an instance of SAT
+    \item has gained practical experience with using a SAT solver
+    \item understands the algorithm for solving 2-SAT using the implication graph (including finding all models), and can apply it to an example
+    \item understands the algorithm for solving Horn-SAT using unit propagation, and can apply it to an example
+    \item understands the DPLL algorithm and can apply it to an example
+\end{itemize}
+
 
 \section*{In-class problems}
 
 
 \begin{problem}
-
-    Nechť $|\mathbb{P}|=n$ a mějme výrok $\varphi\in\mathrm{VF}_{\mathbb{P}}$ takový, že $|M(\varphi)|=k$. Určete počet až na ekvivalenci:
+    
+    Let $|\mathbb{P}|=n$ and let $\varphi\in\mathrm{VF}_{\mathbb{P}}$ be a formula such that $|M(\varphi)|=k$. Determine (up to equivalence):
     \begin{enumerate}[(a)]
-        \item výroků $\psi$ takových, že $\varphi \models \psi$ nebo $\psi \models \varphi$,
-        \item teorií nad $\mathbb{P}$, ve kterých platí $\varphi$,
-        \item kompletních teorií nad $\mathbb{P}$, ve kterých platí $\varphi$,
-        \item teorií $T$ nad $\mathbb{P}$ takových, že $T \cup \{\varphi\}$ je bezesporná.
+        \item the number of formulas $\psi$ such that $\varphi \models \psi$ or $\psi \models \varphi$,
+        \item the number of theories over $\mathbb{P}$ in which $\varphi$ holds,
+        \item the number of complete theories over $\mathbb{P}$ in which $\varphi$ holds,
+        \item the number of theories $T$ over $\mathbb{P}$ such that $T \cup \{\varphi\}$ is consistent.
     \end{enumerate}
-    Uvažme navíc spornou teorii $\{\varphi,\psi\}$ kde $|M(\psi)|=p$. Spočtěte až na ekvivalenci:
+    Now, consider a contradictory theory $\{\varphi,\psi\}$ where $|M(\psi)|=p$.  Compute (up to equivalence):
     \begin{enumerate}[(a)]\setcounter{enumi}{4}
-        \item výroky $\chi$ takové, že $\varphi \vee \psi \models \chi$, 
-        \item teorie, ve kterých platí $\varphi \vee \psi$.
+        \item the number of formulas $\chi$ such that $\varphi \vee \psi \models \chi$, 
+        \item the number of theories in which $\varphi \vee \psi$ holds.
     \end{enumerate}
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Podmínku vyjádříme pomocí množin modelů: $\M(\varphi)\subseteq\M(\psi)$ nebo $\M(\psi)\subseteq\M(\varphi)$. Víme, že všech modelů je $2^n$, a $|\M(\varphi)|=k$. Chceme spočítat, kolik je možných množin $\M(\psi)$. Podmínku $\M(\varphi)\subseteq\M(\psi)$ splňuje $2^{2^n-k}$ množin (tj. tolik je nadmnožin dané $k$-prvkové množiny uvnitř $2^n$-prvkové množiny), podmínku $\M(\psi)\subseteq\M(\varphi)$ splňuje $2^k$ množin. Musíme ale být opatrní, abychom případ $\M(\psi)=\M(\varphi)$ nezapočítali dvakrát. Celkem máme $2^{2^n-k}+2^k-1$ možných množin modelů, tedy výroků $\psi$ až na ekvivalenci.
-            \item $T\models\varphi$ právě když $\M(T)\subseteq\M(\varphi)$, takových množin $\M(T)$ je $2^k$
-            \item Navíc máme podmínku $|\M(T)|=1$, 1-prvkových podmnožin $k$-prvkové množiny je $k$.
-            \item Přeloženo do řeči modelů, podmínka říká, že $\M(T\cup\{\varphi\})\neq\emptyset$. Máme $\M(T\cup\{\varphi\})=\M(T,\varphi)=\M(T)\cap\M(\varphi)$ (jde o modely, ve kterých platí zároveň $T$ a $\varphi$). Počítáme tedy kolik možných množin $\M(T)$ má neprázdný průnik s $k$-prvkovou množinou $\M(\varphi)$. To lze vyjádřit např. jako $(2^k-1)\cdot(2^{2^n-k})$, kde $2^k-1$ je počet možných (neprázdných) ``průniků'' $\M(T)\cap\M(\varphi)$, a $2^{2^n-k}$ znamená, že pro modely, ve kterých neplatí $\varphi$, si můžeme libovolně zvolit, zda budou v naší množině.
-            \item Protože $\{\varphi,\psi\}$ je sporná, víme, že $\emptyset=\M(\varphi,\psi)=\M(\varphi)\cap\M(\psi)$. Počítáme množiny $\M(\chi)$ takové, že $\M(\varphi\lor\psi)\subseteq\M(\chi)$. Díky Lindenbaum-Tarského algebře víme, že $\M(\varphi\lor\psi)=\M(\varphi)\cup\M(\psi)$. Z disjunktnosti máme $|\M(\varphi)\cup\M(\psi)|=k+p$, snadno spočítáme, že množných množin modelů $\M(\chi)$ je $2^{2^n-(k+p)}$.
-            \item $\M(T)$ musí být podmnožinou $(k+p)$-prvkové $\M(\varphi\lor\psi)$, je jich tedy $2^{k+p}$.
+            \item The condition can be expressed in terms of model sets: $\M(\varphi)\subseteq\M(\psi)$ or $\M(\psi)\subseteq\M(\varphi)$. There are $2^n$ total models, and $|\M(\varphi)|=k$. We want to count possible sets $\M(\psi)$. The condition $\M(\varphi)\subseteq\M(\psi)$ holds for $2^{2^n-k}$ sets (i.e. the number of supersets of the given $k$-element set inside a $2^n$-element universe), and the condition $\M(\psi)\subseteq\M(\varphi)$ holds for $2^k$ sets. We must subtract one to avoid double-counting the case $\M(\psi)=\M(\varphi)$. Altogether there are $2^{2^n-k}+2^k-1$ possible model sets, hence that many formulas $\psi$ up to equivalence.
+            \item $T\models\varphi$ iff $\M(T)\subseteq\M(\varphi)$; the number of such model sets $\M(T)$ is $2^k$.
+            \item Additionally we require $|\M(T)|=1$; the number of $1$-element subsets of the $k$-element set is $k$.
+            \item In terms of models the condition says $\M(T\cup\{\varphi\})\neq\emptyset$. Since $\M(T\cup\{\varphi\})=\M(T)\cap\M(\varphi)$, we count how many possible sets $\M(T)$ have a nonempty intersection with the $k$-element set $\M(\varphi)$. One way to express this is $(2^k-1)\cdot 2^{2^n-k}$, where $2^k-1$ counts the nonempty possible intersections $\M(T)\cap\M(\varphi)$ and $2^{2^n-k}$ counts arbitrary choices for membership of models outside $\M(\varphi)$.
+            \item Since $\{\varphi,\psi\}$ is contradictory we have $\emptyset=\M(\varphi,\psi)=\M(\varphi)\cap\M(\psi)$. We count sets $\M(\chi)$ with $\M(\varphi\lor\psi)\subseteq\M(\chi)$. By the Lindenbaum–Tarski algebra $\M(\varphi\lor\psi)=\M(\varphi)\cup\M(\psi)$. Disjointness gives $|\M(\varphi)\cup\M(\psi)|=k+p$, so the number of choices for $\M(\chi)$ is $2^{2^n-(k+p)}$.
+            \item $\M(T)$ must be a subset of the $(k+p)$-element set $\M(\varphi\lor\psi)$, hence there are $2^{k+p}$ possibilities.
         \end{enumerate}
                 
     \end{solution}
@@ -47,17 +48,17 @@
 
 \begin{problem} \label{problem:2sat}
     
-    Sestrojte implikační graf daného 2-CNF výroku. Je splnitelný? Pokud ano, najděte nějaké řešení: (a) výrok $\varphi$ níže, (b) $\varphi\land\neg p_1$, (c) $\varphi\land\neg p_1\land(p_1\lor p_2)$.
+    Build the implication graph of the given 2-CNF formula. Is it satisfiable? If yes, find some solution: (a) the formula $\varphi$ below, (b) $\varphi\land\neg p_1$, (c) $\varphi\land\neg p_1\land(p_1\lor p_2)$.
     $$
     \varphi=(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee \neg p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee \neg p_1)
     $$
 
     \begin{solution}
-        (a) Sestrojíme implikační graf. Zjistíme, že má dvě komponenty silné souvislosti: $C=\{p_1,p_2,\neg p_3,p_4,\neg p_5\}$ a $\overline{C}=\{\neg p_1,\neg p_2,p_3,\neg p_4,p_5\}$, nevede mezi nimi žádná hrana. Po kontrakci komponent tedy máme dvouvrcholový graf $\mathcal G^*$ bez hran, ten má dvě topologická uspořádání: $(C,\overline{C})$ a $(\overline{C},C)$, která odpovídají modelům $(0,0,1,0,1)$ a $(1,1,0,1,0)$.
+        (a) Construct the implication graph. One finds two strongly connected components: $C=\{p_1,p_2,\neg p_3,p_4,\neg p_5\}$ and $\overline{C}=\{\neg p_1,\neg p_2,p_3,\neg p_4,p_5\}$, and there are no edges between them. After contracting SCCs we obtain a two-vertex DAG $\mathcal G^*$ with no edges; it has two topological orders $(C,\overline{C})$ and $(\overline{C},C)$, which correspond to the models $(0,0,1,0,1)$ and $(1,1,0,1,0)$ respectively.
         
-        (b) Komponenty jsou stejné, ale do $\mathcal G^*$ přibude hrana $C\to\overline{C}$, tedy jediné topologické uspořádání je $(C,\overline{C})$, což odpovídá modelu $(0,0,1,0,1)$.
+        (b) The SCCs are the same, but adding $\neg p_1$ forces an edge $C\to\overline{C}$ in $\mathcal G^*$, so the only topological order is $(C,\overline{C})$, yielding the model $(0,0,1,0,1)$.
 
-        (c) Implikační graf je nyní silně souvislý, tedy jeho jediná komponenta obsahuje (všechny) dvojice opačných literálů. To znamená, že výrok je nesplnitelný.
+        (c) With the extra clause the implication graph becomes strongly connected; its single SCC contains complementary literals, so the formula is unsatisfiable.
     \end{solution}
 
 \end{problem}
@@ -65,14 +66,14 @@
 
 \begin{problem}
 
-    Pomocí jednotkové propagace zjistěte, zda je následující Hornův výrok splnitelný. Pokud ano, najděte nějaké splňující ohodnocení.
+    Use unit propagation to decide whether the following Horn formula is satisfiable. If yes, find a satisfying assignment.
     \begin{align*}
         &(\neg p_1 \vee p_2 \vee \neg p_3)\wedge(\neg p_1 \vee p_2)\wedge p_1 \wedge (\neg p_1 \vee \neg p_2 \vee p_3)\wedge \\
         &(p_1\vee\neg p_2 \vee \neg p_4)\wedge(\neg p_2 \vee \neg p_3 \vee \neg p_4)\wedge(p_4\vee \neg p_5 \vee\neg p_6)
     \end{align*}
 
     \begin{solution}
-        Provádíme postupně jednotkovou propagaci přes literály $p_1,p_2,p_3,\neg p_4$, zbývá výrok $\neg p_5\lor\neg p_6$. Ten stačí ohodnotit tak, aby alespoň jedna z výrokových proměnných $p_5,p_6$ byla ohodnocená nulou. Modely výroku jsou tedy: $\{(1,1,1,0,0,1),(1,1,1,0,1,0),(1,1,1,0,1,1)\}$                
+        Perform unit propagation step by step starting from the unit $p_1$. Propagating units over the clauses yields assignments for $p_1,p_2,p_3,\neg p_4$; the remaining clause becomes $\neg p_5\lor\neg p_6$. Assigning either $p_5=0$ or $p_6=0$ makes the whole formula true. For instance the models include $\{(1,1,1,0,0,1),(1,1,1,0,1,0),(1,1,1,0,1,1)\}$.
     \end{solution}
     
 \end{problem}
@@ -80,20 +81,18 @@
 
 \begin{problem} \label{problem:dpll}
 
-    Pomocí algoritmu DPLL rozhodněte, zda je následující CNF formule splnitelná:
+    Use the DPLL algorithm to decide if the following CNF formula is satisfiable:
     $$ 
     (\neg p_1 \lor \neg p_2)\land( \neg p_1 \lor p_2)\land( p_1 \lor \neg p_2)\land( p_2 \lor \neg p_3)\land( p_1 \lor p_3)
     $$
 
     \begin{solution}
-        Výrok neobsahuje jednotkovou klauzuli ani literál s čistým výskytem, musíme tedy větvit, např. přes $p_1$:
+        The formula has no unit clauses and no pure literals, so we must branch, say on $p_1$:
         \begin{itemize}
-            \item Z $\varphi\land p_1$ dostáváme po jednotkové propagaci
-            $\neg p_2\land p_2\land( p_2 \lor \neg p_3)$, po jednotkové propagaci přes $\neg p_2$ dostáváme $\square\land\neg p_3$, což obsahuje prázdnou klauzuli $\square$, tedy je nesplnitelné.
-            \item Z $\varphi\land \neg p_1$ dostáváme po jednotkové propagaci
-            $\neg p_2\land( p_2 \lor \neg p_3)\land p_3$, po jednotkové propagaci přes $\neg p_2$ dostáváme $\neg p_3\land p_3$, po jednotkové propagaci přes $\neg p_3$ dostáváme prázdnou klauzuli $\square$, tedy opět je nesplnitelné.            
+            \item For $\varphi\land p_1$: unit propagation yields $\neg p_2\land p_2\land( p_2 \lor \neg p_3)$. Propagating $\neg p_2$ produces $\square\land\neg p_3$, hence a contradiction (empty clause), so this branch is unsatisfiable.
+            \item For $\varphi\land \neg p_1$: unit propagation yields $\neg p_2\land( p_2 \lor \neg p_3)\land p_3$. Propagating $\neg p_2$ gives $\neg p_3\land p_3$, again a contradiction, so this branch is also unsatisfiable.            
         \end{itemize}
-        V obou (všech) větvích výpočtu jsme dokázali nesplnitelnost, výrok je tedy nesplnitelný.                        
+        Both branches lead to contradiction, therefore the formula is unsatisfiable.                        
     \end{solution}
 
 \end{problem}
@@ -101,22 +100,22 @@
 
 \begin{problem}
 
-    Mějme daný orientovaný graf. Chceme zjistit, zda je acyklický, a pokud ano, nalézt nějaké jeho topologické uspořádání. Zakódujte tento problém do SAT.
+    Given a directed graph, we want to determine whether it is acyclic and, if so, find a topological ordering. Encode this problem as SAT.
 
     \begin{solution}
-        Řešení jen naznačíme. Jako jazyk zvolme $\mathbb P=\{p_{uv}\mid u,v\in V\}$, kde $p_{uv}$ bude znamenat, že vrchol $u$ je v topologickém uspořádání (ostře) před $v$. To, že jde o ostré uspořádání, vyjádříme pomocí následujících axiomů:
+        Sketch of a solution. Use the language $\mathbb P=\{p_{uv}\mid u,v\in V\}$ where $p_{uv}$ means “vertex $u$ appears strictly before $v$ in the ordering”. Enforce that this is a strict (irreflexive, antisymmetric, transitive) order by axioms:
         \begin{itemize}
-            \item $\neg p_{vv}$ pro všechna $v\in V$
-            \item $p_{uv}\limplies\neg p_{vu}$ pro všechna $u,v\in V$
-            \item $p_{uv}\land p_{vw}\limplies p_{uw}$ pro všechna $u,v,w\in V$
+            \item $\neg p_{vv}$ for all $v\in V$,
+            \item $p_{uv}\to\neg p_{vu}$ for all $u,v\in V$,
+            \item $(p_{uv}\land p_{vw})\to p_{uw}$ for all $u,v,w\in V$.
         \end{itemize}
-        Zbývá vyjádřit, že všechny grafové hrany vedou v topologickém uspořádání dopředu:
+        Ensure every graph edge goes forward in the order:
         \begin{itemize}
-            \item $p_{uv}$ pro všechny hrany $(u,v)\in E$
+            \item $p_{uv}$ for each edge $(u,v)\in E$.
         \end{itemize}
-        Nakonec axiomy výše převedeme do CNF, v množinovém zápisu dostáváme:
+        Convert the above axioms to CNF. In set notation one convenient CNF representation is
         $$
-        S=\{\{\neg p_{vv}\},\{\neg p_{uv},\neg p_{vu}\},\{\neg p_{uv},\neg p_{vw},\neg p_{uw}\} \mid u,v,w\in V\}\cup\{\{p_{uv}\}\mid(u,v)\in E\}
+        S=\{\{\neg p_{vv}\},\{\neg p_{uv},\neg p_{vu}\},\{\neg p_{uv},\neg p_{vw},\neg p_{uw}\} \mid u,v,w\in V\}\cup\{\{p_{uv}\}\mid(u,v)\in E\}.
         $$
     \end{solution}
 
@@ -128,15 +127,15 @@
 
 \begin{problem}
 
-    Uvažme následující výroky $\varphi$ a $\psi$ nad $\mathbb P=\{p, q, r, s\}$:
+    Consider the following formulas $\varphi$ and $\psi$ over $\mathbb P=\{p, q, r, s\}$:
     \begin{align*}
         \varphi &= (\neg p \vee  q)\to(p\wedge r)\\
         \psi &= s\to q
     \end{align*}
     \begin{enumerate}[(a)]
-        \item Určete počet (až na ekvivalenci) výroků $\chi$ nad $\mathbb P$ takových, že $\varphi\wedge\psi\models\chi$.
-        \item Určete počet (až na ekvivalenci) úplných teorií $T$ nad $\mathbb P$ takových, že $T\models\varphi\wedge\psi$.
-        \item Najděte nějakou axiomatizaci pro každou (až na ekvivalenci) kompletní teorii $T$ nad $\mathbb P$ takovou, že $T\models\varphi\wedge\psi$.
+        \item Determine the number (up to equivalence) of formulas $\chi$ over $\mathbb P$ such that $\varphi\wedge\psi\models\chi$.
+        \item Determine the number (up to equivalence) of complete theories $T$ over $\mathbb P$ such that $T\models\varphi\wedge\psi$.
+        \item Find an axiomatization for each (up to equivalence) complete theory $T$ over $\mathbb P$ such that $T\models\varphi\wedge\psi$.
     \end{enumerate}
 
 \end{problem}
@@ -144,7 +143,7 @@
 
 \begin{problem} 
     
-    Pomocí algoritmu jednotkové propagace najděte všechny modely:
+    Using unit propagation, find all models of:
 
     \begin{align*}
     &(\neg a \vee \neg b \vee c \vee \neg d)\wedge(\neg b \vee c)\wedge d \wedge (\neg a \vee \neg c \vee e)\wedge \\
@@ -156,7 +155,7 @@
     
 \begin{problem} 
     
-    Řešte pomocí implikačního grafu jako v Příkladu~\ref{problem:2sat}, a také pomocí algoritmu DPLL jako v Příkladu \ref{problem:dpll}:
+    Solve using the implication graph as in Example~\ref{problem:2sat}, and also using the DPLL algorithm as in Example~\ref{problem:dpll}:
     \begin{enumerate}[(a)]
         \item $(p_1\vee \neg p_2)\wedge (p_2\vee p_3)\wedge (\neg p_3\vee p_1)\wedge (\neg p_3\vee \neg p_4)\wedge (p_4\vee p_5)\wedge (\neg p_5\vee p_1)$
         \item $(p_0 \vee  p_2) \wedge  (p_0 \vee  \neg p_3) \wedge  (p_1 \vee  \neg p_3) 
@@ -170,23 +169,23 @@
 
 
 \begin{problem}
-    Lze obarvit čísla od 1 do $n$ dvěma barvami tak, že neexistuje monochromatické řešení rovnice
-    $a+b=c$ pro žádná $1\leq a<b<c\leq n$? Sestrojte výrokovou formuli $\varphi_n$ v CNF která je splnitelná, právě když to lze. Zkuste nejprve $n=8$.
+    Can the numbers $1$ to $n$ be colored with two colors so that there is no monochromatic solution of the equation
+    $a+b=c$ for any $1\leq a<b<c\leq n$? Construct a propositional CNF formula $\varphi_n$ that is satisfiable iff such a coloring exists. Try $n=8$ first.
     
-    Zkuste si doma: Napište skript generující $\varphi_n$ v DIMACS CNF formátu. Použijte SAT solver k nalezení nejmenšího $n$ pro které takové obarvení neexistuje (tj. každé 2-obarvení obsahuje monochromatickou trojici $a<b<c$ takovou, že $a+b=c$).
+    Try at home: Write a script that generates $\varphi_n$ in DIMACS CNF format. Use a SAT solver to find the smallest $n$ for which such a coloring does not exist (i.e., every 2-coloring contains a monochromatic triple $a<b<c$ with $a+b=c$).
 \end{problem}
 
     
 \begin{problem}
 
-    Věta o čtyřech barvách říká, že následující mapy lze obarvit 4 barvami tak, že žádné dva sousedící regiony nemají stejnou barvu. Najděte takové obarvení pomocí SAT solveru.
+    The four-color theorem states that the following maps can be colored with four colors so that no two adjacent regions share the same color. Find such a coloring using a SAT solver.
     \begin{multicols}{2}
     \begin{enumerate}[(a)]
-        \item Mapa krajů Česka  
+        \item Map of regions (krajů) of the Czech Republic  
         
         \vfill \includegraphics[width=0.5\textwidth]{files/map-coloring-czechia.png} \vfill
         
-        \item Těžší instance  
+        \item A harder instance  
         
         \vfill \includegraphics[width=0.33\textwidth]{files/map-coloring-hard.png} \vfill
     \end{enumerate}
@@ -201,15 +200,16 @@
     
 \begin{problem} 
     
-    Pro danou formuli $\varphi$ v CNF najděte a 3-CNF formuli $\varphi'$ takovou, že $\varphi'$ je splnitelná, právě když $\varphi$ je splnitelná. Popište efektivní algoritmus konstrukce $\varphi'$ je-li dána $\varphi$ (tj. \emph{redukci} z problému SAT do problému 3-SAT).
+    For a given formula $\varphi$ in CNF, find a 3-CNF formula $\varphi'$ such that $\varphi'$ is satisfiable if and only if $\varphi$ is satisfiable. Describe an efficient algorithm for constructing $\varphi'$ given $\varphi$ (i.e., a \emph{reduction} from the SAT problem to the 3-SAT problem).
 
 \end{problem}
 
 
 \begin{problem}
-    Zakódujte problém setřídění dané $n$-tice celých čísel do SAT.
+    Encode the problem of sorting a given $n$-tuple of integers into SAT.
 \end{problem}
 
 \begin{problem}
-    Zakódujte do SAT známou hádanku o farmáři, který potřebuje přepravit přes řeku vlka, kozu, a hlávku zelí.
+    Encode into SAT the well-known riddle about a farmer who needs to transport a wolf, a goat, and a cabbage across a river.
 \end{problem}
+

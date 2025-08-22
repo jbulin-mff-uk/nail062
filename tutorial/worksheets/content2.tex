@@ -4,14 +4,15 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item rozumí pojmům sémantiky výrokové logiky (pravdivostní hodnota, pravdivostní funkce, model, platnost, tautologie, spornost, nezávislost, splnitelnost, ekvivalence), umí je formálně definovat a uvést příklady
-        \item umí rozhodnout, zda je množina logických spojek univerzální
-        \item zná terminologii pro výroky v CNF a DNF %([pozitivní/negativní/opačný] literál, [prázdná/jednotková] klauzule, [prázdná/jednotková] elemntární konjunkce, prázdný výrok v CNF/DNF)
-        \item umí převést daný výrok resp. konečnou teorii do CNF a do DNF, a to pomocí množiny modelů i pomocí ekvivalentních úprav
-        \item rozumí terminologii týkající se vlastností teorií (sporná, bezesporná/splnitelná, kompletní, důsledky, $T$-ekvivalence), umí pojmy formálně definovat a uvést příklady
-        \item rozumí pojmu [jednoduchá, konzervativní] extenze, umí je formálně definovat, uvést příklady
-        \item umí v konkrétním případě rozhodnout, zda jde o [jednoduchou, konzervativní] extenzi, a zdůvodnit jak z definice, tak i pomocí sémantického kritéria
+        \item understands the concepts of propositional logic semantics (truth value, truth function, model, validity, tautology, inconsistency, independence, satisfiability, equivalence), can formally define them and provide examples
+        \item can decide whether a set of logical connectives is universal
+        \item knows the terminology for formulas in CNF and DNF %([positive/negative/complementary] literal, [empty/unit] clause, [empty/unit] elementary conjunction, empty formula in CNF/DNF)
+        \item can convert a given formula or a finite theory into CNF and DNF, both using the set of models and using equivalent transformations
+        \item understands the terminology of properties of theories (inconsistent, consistent/satisfiable, complete, consequences, $T$-equivalence), can define them formally and give examples
+        \item understands the notion of [simple, conservative] extension, can formally define them and provide examples
+        \item in a concrete case, can decide whether it is a [simple, conservative] extension, and justify it both from the definition and using the semantic criterion
     \end{itemize}
+
 
 
 \section*{In-class problems}
@@ -19,11 +20,12 @@
 
 \begin{problem}
 
-    Uveďte příklad výroku v jazyce $\mathbb P=\{p,q,r\}$, který je (a) pravdivý, (b) sporný, (c) nezávislý, (d) ekvivalentní s $(p\wedge q)\to\neg r$, (e) má za modely právě $\{(1,0,0),(1,0,1),(0,0,1)\}$.
+    Give an example of a formula in the language $\mathbb P=\{p,q,r\}$ that is (a) valid (b) contradictory, (c) independent, (d) equivalent to $(p\wedge q)\to\neg r$, (e) has exactly the models $\{(1,0,0),(1,0,1),(0,0,1)\}$.
 
 
     \begin{solution}
-        Například: (a) $p\lor\neg p$, (b) $p\land\neg p$, (c) $p$, (d) $\neg p\lor\neg q\lor\neg r$ (e) $(p\lor r)\land\neg q$            
+        For example: (a) $p\lor\neg p$, (b) $p\land\neg p$, (c) $p$, (d) $\neg p\lor\neg q\lor\neg r$, (e) $(p\lor r)\land\neg q$            
+    \begin{flushright}\qedsymbol\end{flushright}
     \end{solution}
 
 \end{problem}
@@ -31,12 +33,12 @@
 
 \begin{problem} 
     
-    Jsou tyto množiny logických spojek univerzální? (a) $\{\vee, \rightarrow, \leftrightarrow\}$, (b) $\{\downarrow\}$ kde $\downarrow$ je Peirce arrow (NOR)    
+    Are these sets of logical connectives universal? (a) $\{\vee, \rightarrow, \leftrightarrow\}$, (b) $\{\downarrow\}$ where $\downarrow$ is the Peirce arrow (NOR).    
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Ne, dokažte strukturální indukcí, že každá formule má za model $(1,\dots,1)$. 
-            \item Ano, využijeme faktu, že $\{\neg,\lor,\land\}$ je univerzální, a vyjádříme:
+            \item No; prove by structural induction that every formula has $(1,\dots,1)$ as a model. 
+            \item Yes; we use the fact that $\{\neg,\lor,\land\}$ is universal, and express:
             \begin{itemize}
                 \item $\neg x\sim x\downarrow x$
                 \item $x\lor y\sim\neg(x\downarrow y)\sim (x\downarrow y)\downarrow(x\downarrow y)$
@@ -50,20 +52,20 @@
 
 \begin{problem} 
     
-    Převeďte následující výrok do CNF a DNF. Proveďte to (a) sémanticky (pomocí pravdivostní tabulky), (b) ekvivalentními úpravami:
+    Convert the following formula to CNF and to DNF. Do this (a) semantically (using a truth table), (b) via equivalent transformations:
     $$
     (\neg p \vee q)\to (\neg q \wedge r)
     $$
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Nejprve najdeme modely výroku: $\{(0,0,1),(1,0,0),(1,0,1)\}$, každý model popíšeme jednou elementární konjunkcí:
+            \item First find the models of the formula: $\{(0,0,1),(1,0,0),(1,0,1)\}$. Describe each model by one elementary conjunction:
             $$
             (\neg p\land \neg q\land r)\lor
             (p\land \neg q\land \neg r)\lor
             (p\land \neg q\land r)
             $$
-            CNF získáme z množiny nemodelů, každá klauzule zakazuje jeden nemodel:
+            CNF is obtained from the set of non-models, where each clause forbids one non-model:
             \begin{gather*}
                 \{(0,0,0),(0,1,0),(0,1,1),(1,1,0),(1,1,1)\}\\
                 (p\lor q\lor r)\land
@@ -75,7 +77,7 @@
             
             \item $(\neg p \vee q)\to (\neg q \wedge r)\sim \neg (\neg p \vee q)\lor (\neg q \wedge r)
             \sim (p \wedge \neg q)\lor (\neg q \wedge r)
-            $ je DNF, CNF získáme distribucí, a dále zjednodušíme: $(p\lor \neg q)\land (p\lor r)\land (\neg q\lor\neg q)\land (\neg q\lor r)\sim (p\lor r)\land \neg q$
+            $ is a DNF; CNF is obtained by distribution, and then simplified: $(p\lor \neg q)\land (p\lor r)\land (\neg q\lor\neg q)\land (\neg q\lor r)\sim (p\lor r)\land \neg q$
         \end{enumerate}
             
     \end{solution}
@@ -85,34 +87,34 @@
 
 \begin{problem}\label{problem:properties-of-theories}
 
-    Mějme teorii $T=\{p\liff q,\neg p\to\neg q,q\lor r\}$ v jazyce $\mathbb P=\{p,q,r\}$.
+    Let $T=\{p\liff q,\neg p\to\neg q,q\lor r\}$ be a theory in the language $\mathbb P=\{p,q,r\}$.
     \begin{enumerate}[(a)]
-        \item Rozhodněte, zda je teorie $T$ [sporná/splnitelná/kompletní].
-        \item Uveďte příklad výroku $\varphi$, který je [pravdivý/lživý/nezávislý] v $T$
-        \item Uveďte příklad extenze $T'$ teorie $T$ (pokud existuje, a pokud možno neekvivalentní s $T$), která je [jednoduchá / konzervativní / kompletní / konzervativní jednoduchá / kompletní jednoduchá / kompletní konzervativní]. Uveďte také příklad extenze $T'$ teorie $T$, která není konzervativní, ani jednoduchá.
-        \item Na vašich příkladech extenzí ukažte, že platí sémantické kritérium (tj. tvrzení definující pojem [konzervativní] extenze pomocí expanzí/reduktů modelů).
+        \item Decide whether the theory $T$ is [inconsistent/satisfiable/complete].
+        \item Give an example of a formula $\varphi$ that is [true/false/independent] in $T$.
+        \item Give an example of an extension $T'$ of the theory $T$ (if it exists, and if possible not equivalent to $T$) that is [simple / conservative / complete / conservative simple / complete simple / complete conservative]. Also give an example of an extension $T'$ of the theory $T$ that is neither conservative nor simple.
+        \item Using your example extensions, show that the semantic criterion holds (i.e., the statement defining the notion of a [conservative] extension using expansions/reducts of models).
     \end{enumerate}
 
     \begin{solution}
-        Budeme potřebovat znát modely: $\M(T)=\{(0,0,1),(1,1,0),(1,1,1)\}$
+        We will need to know the models: $\M(T)=\{(0,0,1),(1,1,0),(1,1,1)\}$
         \begin{enumerate}[(a)]
-            \item Není sporná, je splnitelná, není kompletní.
-            \item V teorii $T$ je pravdivý např. $p\lor r$, lživý $\neg q\land\neg r$, nezávislý $p\lor q$.  
-            \item Uveďme příklady nebo zdůvodnění neexistence:
+            \item It is not inconsistent, it is satisfiable, it is not complete.
+            \item In the theory $T$, for example, $p\lor r$ is true, $\neg q\land\neg r$ is false, $p\lor q$ is independent.  
+            \item Let us give examples or justify non-existence:
             \begin{enumerate}[1.]
-                \item Jednoduchá: $\{p\land q\}$
-                \item Konzervativní: $T_2=\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r,p\lor s\}$ v jazyce $\mathbb P'=\{p,q,r,s\}$
-                \item Kompletní: $\{\neg p,\neg q,r,\neg s\}$ v jazyce $\mathbb P'=\{p,q,r,s\}$
-                \item Konzervativní jednoduchá: musí být ekvivalentní $T$, např. $\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r\}$
-                \item Kompletní jednoduchá: $\{p,q,\neg r\}$
-                \item Kompletní konzervativní: neexistuje, nekompletní teorie nemůže mít kompletní konzervativní extenzi (dokažte si).
-                \item Není konzervativní ani jednoduchá: $\{p\land q,r\lor s\}$ v jazyce $\mathbb P'=\{p,q,r,s\}$.
+                \item Simple: $\{p\land q\}$
+                \item Conservative: $T_2=\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r,p\lor s\}$ in the language $\mathbb P'=\{p,q,r,s\}$
+                \item Complete: $\{\neg p,\neg q,r,\neg s\}$ in the language $\mathbb P'=\{p,q,r,s\}$
+                \item Conservative simple: must be equivalent to $T$, e.g., $\{(p\land q)\lor(\neg p\land\neg q), p\lor q\lor r\}$
+                \item Complete simple: $\{p,q,\neg r\}$
+                \item Complete conservative: does not exist; a non-complete theory cannot have a complete conservative extension (prove this).
+                \item Neither conservative nor simple: $\{p\land q,r\lor s\}$ in the language $\mathbb P'=\{p,q,r,s\}$.
             \end{enumerate}
-            \item Zkonstruujte příslušné množiny modelů a ověřte podmínku, ukážeme jen pro 2.:
+            \item Construct the corresponding sets of models and verify the condition; we show it only for 2.:
             $$
             \M_{\mathbb P'}(T_2)=\{(0,0,1,1),(1,1,0,0),(1,1,0,1),(1,1,1,0),(1,1,1,1)\}
             $$
-            Vidíme, že zúžením modelů $T_2$ na jazyk $\mathbb P$ získáme jen modely $T$, tedy jde o extenzi, a každý model $T$ lze rozšířit na nějaký model $T_2$, tedy je extenze konzervativní.
+            We see that restricting the models of $T_2$ to the language $\mathbb P$ yields exactly the models of $T$, so it is an extension; and every model of $T$ can be expanded to some model of $T_2$, hence the extension is conservative.
         \end{enumerate}
             
     \end{solution}
@@ -122,25 +124,26 @@
 
 \begin{problem}
 
-    Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro každou teorii $T$ a výroky $\varphi$, $\psi$ v jazyce $\mathbb{P}$ platí:
+    Prove or refute (or state the correct relationship) that for every theory $T$ and formulas $\varphi$, $\psi$ in the language $\mathbb{P}$ the following hold:
     \begin{enumerate}[(a)]
-        \item $T \models \varphi$,\ \  právě když \ \ $T \not\models \neg \varphi$
-        \item $T \models \varphi$ a $T \models \psi$,\ \ právě když \ \ $T \models \varphi \wedge \psi$
-        \item $T \models \varphi$ nebo $T \models \psi$,\ \ právě když \ \ $T \models \varphi \vee \psi$
-        \item $T \models \varphi \to \psi$ a $T \models \psi \to \chi$,\ \ právě když \ \ $T \models \varphi \to \chi$
+        \item $T \models \varphi$ \ \ iff \ \ $T \not\models \neg \varphi$
+        \item $T \models \varphi$ and $T \models \psi$ \ \ iff \ \ $T \models \varphi \wedge \psi$
+        \item $T \models \varphi$ or $T \models \psi$ \ \ iff \ \ $T \models \varphi \vee \psi$
+        \item $T \models \varphi \to \psi$ and $T \models \psi \to \chi$ \ \ iff \ \ $T \models \varphi \to \chi$
     \end{enumerate}
 
     \begin{solution} 
-        Uvedeme jen správné odpovědi a protipříklady, dokažte si sami (z definic).      
+        We give only the correct answers and counterexamples; prove them yourself (from the definitions).      
         \begin{enumerate}[(a)]
-            \item Neplatí, např. pro $T=p\lor q,\varphi=p$. (Je-li $T$ bezesporná, platí $\Rightarrow$.)
-            \item Platí.
-            \item Neplatí, např. pro $T=p\lor q,\varphi=p,\psi=q$. Platí $\Rightarrow$.
-            \item Neplatí, např. pro $T=\{p\limplies r\},\varphi=p,\psi=q,\chi=r$. Platí $\Rightarrow$. 
+            \item False, e.g., for $T=p\lor q,\ \varphi=p$. (If $T$ is consistent, the direction $\Rightarrow$ holds.)
+            \item True.
+            \item False, e.g., for $T=p\lor q,\ \varphi=p,\ \psi=q$. The direction $\Rightarrow$ holds.
+            \item False, e.g., for $T=\{p\limplies r\},\ \varphi=p,\ \psi=q,\ \chi=r$. The direction $\Rightarrow$ holds. 
         \end{enumerate}              
     \end{solution}
     
 \end{problem}
+
 
 
 \section*{Extra practice}
@@ -148,10 +151,10 @@
 
 \begin{problem}
         
-    Mějme teorii $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ v jazyce $\{p, q, r\}$.
+    Let $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ be a theory in the language $\{p, q, r\}$.
     \begin{enumerate}[(a)]
-        \item Uveďte příklad následujícího: výrok pravdivý v $T$, lživý v $T$, nezávislý v $T$, splnitelný v $T$, a dvojice $T$-ekvivalentních výroků.
-        \item Které z následujících výroků jsou pravdivé, lživé, nezávislé, splnitelné v $T$? $T$-ekvivalentní? 
+        \item Give an example of the following: a formula true in $T$, false in $T$, independent in $T$, satisfiable in $T$, and a pair of $T$-equivalent formulas.
+        \item Which of these propositions are true, false, independent, satisfiable in $T$? $T$-equivalent? 
         $$
         p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r
         $$
@@ -162,18 +165,16 @@
 
 \begin{problem} 
     
-    Jsou následující množiny logických spojek univerzální? Zdůvodněte.
-    \begin{enumerate}[(a)]
-        \item $\{\vee, \wedge, \rightarrow\}$,
-        \item $\{\uparrow\}$ kde $\uparrow$ je Sheffer stroke (NAND),
-    \end{enumerate}
+    Are the following sets of logical connectives universal? Justify your answer.
+     
+    (a) $\{\vee, \wedge, \rightarrow\}$ \hfill (b) $\{\uparrow\}$ where $\uparrow$ is the Sheffer stroke (NAND)
 
 \end{problem}
 
 
 \begin{problem} 
         
-    Určete množinu modelů dané formule. Využijte toho, že je v DNF resp. v CNF.
+    Find the set of models of the given proposition. Use that it is in DNF or CNF.
     \begin{enumerate}[(a)]
         \item $(\neg p_1 \wedge \neg p_2)\vee( \neg p_1 \wedge p_2)\vee( p_1 \wedge \neg p_2)\vee( p_2 \wedge \neg p_3)$
         \item $(\neg p_1 \vee \neg p_2)\wedge( \neg p_1 \vee p_2)\wedge( p_1 \vee \neg p_2)\wedge( p_2 \vee \neg p_3)$
@@ -184,28 +185,28 @@
 
 \begin{problem} 
     
-    Převeďte do CNF a DNF oběma metodami: $(\neg p \to (\neg q \to r))\to p$
+    Convert to CNF and DNF by both methods: $(\neg p \to (\neg q \to r))\to p$
     
 \end{problem}
 
 
 \begin{problem} 
     
-    Najděte (co nejkratší) CNF a DNF reprezentace Booleovské funkce $\mathrm{maj}\colon\{0,1\}^3\to \{0,1\}$, která vrací převládající hodnotu mezi 3 vstupy.
+    Find the (shortest possible) CNF and DNF representations of the Boolean function $\mathrm{maj}\colon\{0,1\}^3\to \{0,1\}$ that returns the majority value among the 3 inputs.
 
 \end{problem}
 
 
 \begin{problem}
     
-    Stejné zadání, jako Příklad~\ref{problem:properties-of-theories}, ale pro teorii $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ v jazyce $\mathbb P=\{p,q,r\}$.
+    The same assignment as in Example~\ref{problem:properties-of-theories}, but for the theory $T=\{(p\wedge q)\to r, \neg r\vee(p\wedge q)\}$ in the language $\mathbb P=\{p,q,r\}$.
     
 \end{problem}
 
 
 \begin{problem}
     
-    Dokažte nebo vyvraťte (nebo uveďte správný vztah), že pro libovolné teorie $T$, $S$ nad~$\mathbb{P}$ platí:
+    Prove or refute (or state the correct relationship) that for arbitrary theories $T$, $S$ over $\mathbb{P}$ the following hold:
     \begin{enumerate}[(a)]
         \item $S\subseteq T \Rightarrow \Conseq(T) \subseteq \Conseq(S)$
         \item $\Conseq(S\cup T)=\Conseq(S) \cup \Conseq(T)$
@@ -220,17 +221,17 @@
 
 \begin{problem}
     
-    Ukažte, že $\wedge$ a $\vee$ nestačí k definování všech Booleovských operátorů, tj. že $\{\wedge,\vee\}$ není \emph{univerzální} množina logických spojek.
+    Show that $\wedge$ and $\vee$ are not sufficient to define all Boolean operators, i.e., that $\{\wedge,\vee\}$ is not a \emph{universal} set of logical connectives.
 
 \end{problem}
 
 
 \begin{problem}
     
-    Uvažte Booleovský operátor $\mathrm{IFTE}(p, q, r)$ definovaný jako `if $p$ then $q$ else $r$'. 
+    Consider the Boolean operator $\mathrm{IFTE}(p, q, r)$ defined as “if $p$ then $q$ else $r$”. 
     \begin{enumerate}[(a)]
-        \item Zkonstruujte pravdivostní tabulku.
-        \item Ukažte, že všechny základní Booleovské operátory ($\neg, \to, \wedge,\vee,\dots$) lze vyjádřit pomocí IFTE a konstant TRUE a FALSE.
+        \item Construct the truth table.
+        \item Show that all basic Boolean operators ($\neg, \to, \wedge,\vee,\dots$) can be expressed using IFTE and the constants TRUE and FALSE.
     \end{enumerate}
 
 \end{problem}
@@ -238,10 +239,10 @@
 
 \begin{problem} 
     
-    Buď $\mathbb P$ spočetně nekonečná množina prvovýroků.    
+    Let $\mathbb P$ be a countably infinite set of propositional variables.    
     \begin{enumerate}[(a)]
-        \item Ukažte, že již neplatí, že každou $K\subseteq \mathrm{M}_\mathbb P$ lze axiomatizovat výrokem v CNF i výrokem v DNF.
-        \item  Uveďte příklad množiny modelů $K$, kterou nelze axiomatizovat ani výrokem v CNF, ani výrokem v DNF.
+        \item Show that it is no longer true that every $K\subseteq \mathrm{M}_\mathbb P$ can be axiomatized by a formula in CNF and also by a formula in DNF.
+        \item Give an example of a set of models $K$ that cannot be axiomatized by a formula in CNF nor by a formula in DNF.
     \end{enumerate}
 
 \end{problem}
@@ -249,36 +250,20 @@
 
 \begin{problem} 
     
-    Najděte CNF a DNF reprezentaci $n$-ární parity, tj. Booleovské funkce $\mathrm{par}\colon\{0,1\}^n\to \{0,1\}$,
-    která vrací XOR všech vstupních hodnot:
+    Find CNF and DNF representations of $n$-ary parity, i.e., the Boolean function $\mathrm{par}\colon\{0,1\}^n\to \{0,1\}$,
+    which returns the XOR of all input values:
     $$
     \mathrm{par}(x_1,\dots,x_n)=(x_1+\dots+x_n)\bmod 2
     $$
-    Zkuste to pro malé hodnoty $n$.
+    Try it for small values of $n$.
 
 \end{problem}
 
 
 \begin{problem}
 
-    Uvažme nekonečnou výrokovou teorii $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ nad $\mathrm{var}(T)$. 
-    \begin{enumerate}[(a)]
-        \item Najděte všechny modely $T$.
-        \item Které výroky ve tvaru  $p_i \to p_j$ jsou důsledky $T$?        
-    \end{enumerate}
+    Consider the infinite propositional theory $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ over $\mathrm{var}(T)$. 
+    
+    (a) Find all models of $T$. \hfill (b) Which formulas of the form $p_i \to p_j$ are consequences of $T$?    
 
 \end{problem}
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,11 +5,11 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item zná potřebné pojmy z rezoluční metody (rezoluční pravidlo, rezolventa, rezoluční důkaz/zamítnutí, rezoluční strom), umí je formálně definovat, uvést příklady
-        \item umí pracovat s výroky v CNF a jejich modely v množinové reprezentaci
-        \item umí sestrojit rezoluční zamítnutí dané (i nekonečné) CNF formule (existuje-li), a také nakreslit příslušný rezoluční strom
-        \item zná pojem stromu dosazení, umí ho formálně definovat a pro konkrétní CNF formuli sestrojit
-        \item umí aplikovat rezoluční metodu k řešení daného problému (slovní úlohy, aj.)
+        \item knows the necessary concepts of the resolution method (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them and provide examples
+        \item can work with formulas in CNF and their models in set representation
+        \item can construct a resolution refutation of a given (even infinite) CNF formula (if it exists), and also draw the corresponding resolution tree
+        \item knows the notion of a substitution tree, can formally define it and construct it for a concrete CNF formula
+        \item can apply the resolution method to solve a given problem (word problem, etc.)
     \end{itemize}
     
 
@@ -18,20 +18,20 @@
 
 \begin{problem}
 
-    Označme jako $\varphi$ výrok $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Ukažte, že $\varphi$ je tautologie:
+    Let $\varphi$ denote the formula $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Show that $\varphi$ is a tautology:
     \begin{enumerate}[(a)]
-        \item Převeďte $\neg \varphi$ do CNF a zapište výsledný výrok jako formuli $S$ v množinové reprezentaci.
-        \item Najděte rezoluční zamítnutí $S$.
+        \item Convert $\neg \varphi$ to CNF and write the resulting formula as $S$ in set representation.
+        \item Find a resolution refutation of $S$.
     \end{enumerate}
 
     \begin{solution}
 
         \begin{enumerate}[(a)]
-            \item Pomocí ekvivalentních úprav: $\neg\varphi=\neg(\neg (p \vee q) \to (\neg p \wedge \neg q))\sim\neg(\neg \neg (p \vee q) \lor (\neg p \wedge \neg q))\sim\neg(p \vee q \vee (\neg p \wedge \neg q))\sim \neg p \land \neg q \land  \neg (\neg p \wedge \neg q)\sim\neg p \land \neg q \land  (p \lor q)$
+            \item Using equivalent transformations: $\neg\varphi=\neg(\neg (p \vee q) \to (\neg p \wedge \neg q))\sim\neg(\neg \neg (p \vee q) \lor (\neg p \wedge \neg q))\sim\neg(p \vee q \vee (\neg p \wedge \neg q))\sim \neg p \land \neg q \land  \neg (\neg p \wedge \neg q)\sim\neg p \land \neg q \land  (p \lor q)$
             $$
             S = \{\{\neg p\},\{\neg q\},\{p,q\}\}
             $$
-            \item Rezoluční zamítnutí: $\{\neg p\},\{p,q\},\{q\},\{\neg q\},\square$ (nakreslete si rezoluční strom).
+            \item Resolution refutation: $\{\neg p\},\{p,q\},\{q\},\{\neg q\},\square$ (draw the corresponding resolution tree).
         \end{enumerate}
                     
     \end{solution}
@@ -41,10 +41,10 @@
 
 \begin{problem}
 
-    Dokažte rezolucí, že v $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ platí výrok $s$.
+    Prove by resolution that in $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ the statement $s$ holds.
 
     \begin{solution}
-        Teorii  $T\cup\{\neg s\}$ převedeme do CNF:, a zapíšeme v množinové reprezentaci. Máme $(r\to p)\to s\sim \neg(\neg r\lor p)\lor s\sim (r\land\neg p)\lor s\sim (r\lor s)\land (\neg p\lor s)$, ostatní axiomy se převedou snadno. Dostaneme: $S=\{\{p,\neg q\},\{q,\neg r\},\{r,s\},\{\neg p,s\},\{\neg s\}\}$. Rezoluční zamítnutí znázorníme rezolučním stromem:
+        Convert the theory $T\cup\{\neg s\}$ to CNF and write it in set representation. We have $(r\to p)\to s\sim \neg(\neg r\lor p)\lor s\sim (r\land\neg p)\lor s\sim (r\lor s)\land (\neg p\lor s)$; the other axioms convert easily. We obtain $S=\{\{p,\neg q\},\{q,\neg r\},\{r,s\},\{\neg p,s\},\{\neg s\}\}$. We depict the resolution refutation by a resolution tree:
 
         \begin{center}
             \begin{forest}
@@ -75,23 +75,23 @@
 
 \begin{problem}
     
-    Nechť prvovýroky $r$, $s$, $t$  reprezentují (po řadě), že \emph{``Radka / Sára / Tom je ve škole''} a označme $\mathbb{P}=\{r,s,t\}$. Víme, že:
+    Let the propositional variables $r$, $s$, $t$ represent (respectively) that \emph{``Radka / Sára / Tom is at school''} and write $\mathbb{P}=\{r,s,t\}$. We know that:
     \begin{itemize}\it
-        \item Není-li Tom ve škole, není tam ani Sára.
-        \item Radka bez Sáry do školy nechodí.
-        \item Není-li Radka ve škole, je tam Tom.
+        \item If Tom is not at school, then Sára is not there either.
+        \item Radka does not go to school without Sára.
+        \item If Radka is not at school, then Tom is there.
     \end{itemize}
     \begin{enumerate}[(a)]
-        \item Formalizujte naše znalosti jako teorii $T$ v jazyce $\mathbb P$.
-        \item Rezoluční metodou dokažte, že z $T$ vyplývá, že \emph{Tom je ve škole}: Napište formuli $S$ v množinové reprezentaci, která je nesplnitelná, právě když to platí, a najděte rezoluční zamítnutí $S$. Nakreslete rezoluční strom.
-        \item Určete množinu modelů teorie $T$.
+        \item Formalize our knowledge as a theory $T$ in the language $\mathbb P$.
+        \item Using the resolution method, prove that $T$ entails that \emph{Tom is at school}: Write a formula $S$ in set representation that is unsatisfiable exactly when this holds, and find a resolution refutation of $S$. Draw the resolution tree.
+        \item Determine the set of models of the theory $T$.
     \end{enumerate}
 
     \begin{solution}
 
         \begin{enumerate}[(a)]
             \item $T=\{\neg t\limplies\neg s, \neg(r\land\neg s), \neg r\limplies t\}$
-            \item $S$ získáme z teorie $T\cup\{\neg t\}$ převodem do CNF: $S=\{\{t,\neg s\},\{\neg r,s\},\{r,t\},\{\neg t\}\}$
+            \item We obtain $S$ from the theory $T\cup\{\neg t\}$ by converting to CNF: $S=\{\{t,\neg s\},\{\neg r,s\},\{r,t\},\{\neg t\}\}$
             \begin{center}
                 \begin{forest}
                 for tree={grow=north}
@@ -110,7 +110,7 @@
                 ]
                 \end{forest}
             \end{center}
-            \item Využijeme toho, že $T\models t$ (dokázali jsme v (b)). První a třetí axiom jsou díky tomu splněny, $T\sim\{t,\neg(r\land\neg s)\}$. Z toho snadno $\M(T)=\{(0,0,1),(0,1,1),(1,1,1)\}$.            
+            \item We use that $T\models t$ (proved in (b)). Because of this, the first and third axioms are satisfied, $T\sim\{t,\neg(r\land\neg s)\}$. From this it follows easily that $\M(T)=\{(0,0,1),(0,1,1),(1,1,1)\}$.            
         \end{enumerate}
                     
     \end{solution}
@@ -120,36 +120,36 @@
 
 \begin{problem}
         
-    Zkonstruujte \emph{strom dosazení} pro následující formuli. Na základě tohoto stromu sestrojte rezoluční zamítnutí, dle postupu z důkazu Věty o úplnosti rezoluce.
+    Construct a \emph{substitution tree} for the following formula. Based on this tree, construct a resolution refutation according to the procedure from the proof of the Completeness Theorem for resolution.
     $$
     S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}
     $$
 
     \begin{solution}
-        Přednostně větvíme přes výrokové proměnné v jednotkových klauzulích. (Jakmile narazíme na prázdnou klauzuli, víme, že větev je sporná, zbytek formule nepotřebujeme, zde kvůli nedostatku místa nebudeme zapisovat.)
+        We branch preferentially on propositional variables in unit clauses. (Once we encounter the empty clause, we know the branch is contradictory; we do not need the rest of the formula; here, due to lack of space, we will not write it.)
         \begin{center}
             \begin{forest}    
             [{$S$}
-                [{$S^q=\{\{p,r\},\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                [{$S^q=\{\{p,r\},\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}] 
                 [{$S^{\bar q}=\{\{p,r\},\{\neg r\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$}
-                    [{$S^{\bar qr}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                    [{$S^{\bar qr}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}] 
                     [{$S^{\bar q\bar r}=\{\{p\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}$}
                         [{$S^{\bar q \bar r p}=\{\{t\},\{\neg s\},\{s,\neg t\}\}$}
-                            [{$S^{\bar q \bar r p s}=\{\{t\},\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                            [{$S^{\bar q \bar r p s}=\{\{t\},\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}] 
                             [{$S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$}
-                               [{$S^{\bar q \bar r p \bar s t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
-                               [{$S^{\bar q \bar r p \bar s \bar t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]                                
+                               [{$S^{\bar q \bar r p \bar s t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}] 
+                               [{$S^{\bar q \bar r p \bar s \bar t}=\{\square\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]                                 
                             ]
                         ]
-                        [{$S^{\bar q \bar r \bar p}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}]
+                        [{$S^{\bar q \bar r \bar p}=\{\square,\dots\}$}, tikz={\node[fit to=tree,label=below:{$\otimes$}] {};}] 
                     ]
                 ]
             ]
             \end{forest}
         \end{center}
-        Strom dosazení dává ``návod'', jak sestrojit rezoluční zamítnutí (to je klíčem k důkazu věty o úplnosti rezoluce). Postupujeme od listů ke kořeni, neboli podle počtu proměnných ve formulích. Pro formule na listech stromu dosazení máme jednoprvková rezoluční zamítnutí $\square$.
+        The substitution tree provides a “recipe” for constructing a resolution refutation (which is key to the proof of the completeness theorem for resolution). We proceed from leaves to root, i.e., by the number of variables in the formulas. For the formulas at the leaves of the substitution tree we have one-element resolution refutations $\square$.
 
-        Formule $S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$ má jednokrokové rezoluční zamítnutí:
+        The formula $S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$ has a one-step resolution refutation:
 
         \begin{center}
             \begin{forest}    
@@ -160,11 +160,11 @@
             \end{forest}
         \end{center}
 
-        Jak vzniklo? Z rezolučního zamítnutí $\square$ formule $S^{\bar q \bar r p \bar s t}$ vyrobíme rezoluční důkaz klauzule $\{\neg t\}$ z $S^{\bar q \bar r p \bar s}$, a to tak, že pro každý list, který vznikl odebráním literálu $\neg t$, vrátíme $\neg t$ do něj i do všech klauzulí nad ním. (Zde máme jen jeden list, což je zároveň kořen $\square$.)
+        How was this obtained? From the resolution refutation $\square$ of the formula $S^{\bar q \bar r p \bar s t}$ we produce a resolution proof of the clause $\{\neg t\}$ from $S^{\bar q \bar r p \bar s}$ by, for each leaf that arose by deleting the literal $\neg t$, putting $\neg t$ back into it and into all clauses above it. (Here we have only one leaf, which is also the root $\square$.)
 
-        Analogicky vyrobíme rezoluční důkaz $\{t\}$ z $S^{\bar q \bar r p \bar s \bar t}$ (přidáváme do vrcholů literál $t$). A nakonec přidáme jeden rezoluční krok, který z $\{\neg t\}$ a $\{t\}$ odvodí $\square$. (Pokud by žádný list nevznikl odebráním literálu z klauzule z $S^{\bar q \bar r p \bar s}$, znamená to, že rezoluční zamítnutí, které máme, je už i rezolučním zamítnutím $S^{\bar q \bar r p \bar s}$.)
+        Analogously, we produce a resolution proof of $\{t\}$ from $S^{\bar q \bar r p \bar s \bar t}$ (we add the literal $t$ to the nodes). And finally we add one resolution step that derives $\square$ from $\{\neg t\}$ and $\{t\}$. (If no leaf arose by deleting a literal from a clause of $S^{\bar q \bar r p \bar s}$, it means that the resolution refutation we have is already a resolution refutation of $S^{\bar q \bar r p \bar s}$ as well.)
 
-        Stejně postupujeme ve stromu výše, pro $S^{\bar q \bar r p}$, $S^{\bar q \bar r}$, $S^{\bar q}$, a nakonec pro $S$:
+        We proceed in the same way higher in the tree, for $S^{\bar q \bar r p}$, $S^{\bar q \bar r}$, $S^{\bar q}$, and finally for $S$:
 
             \begin{forest}    
                 [{$\square$}
@@ -223,7 +223,7 @@
         
         \medskip
 
-        Ověřte, že výsledný strom opravdu reprezentuje rezoluční zamítnutí $S$. Všimněte si, jak jeho tvar kopíruje tvar stromu dosazení. (V našem případě je strom ``chlupatá cesta'', což obecně být nemusí, ale konstrukce funguje stejně.)
+        Verify that the resulting tree indeed represents a resolution refutation of $S$. Notice how its shape mirrors the shape of the substitution tree. (In our case the tree is a “hairy path”, which need not be true in general, but the construction works the same way.)
                     
     \end{solution}
     
@@ -235,7 +235,7 @@
 
 \begin{problem}
     
-    Najděte rezoluční zamítnutí následujících výroků:
+    Find a resolution refutation of the following formulas:
     \begin{enumerate}[(a)]
         \item $\neg(((p\to q)\to \neg q)\to \neg q)$
         \item $(p\leftrightarrow (q\to r))\wedge((p\leftrightarrow q)\wedge(p\leftrightarrow \neg r))$        
@@ -245,18 +245,18 @@
 
 \begin{problem}
 
-    Tonia a Fabio nám popisují svůj nejnovější recept na nejlepší pizzu na světě.
+    Tonia and Fabio describe to us their latest recipe for the best pizza in the world.
     \begin{itemize}
-        \item Tonia řekla: ``Do receptu patří ančovičky nebo bazalka nebo česnek.''
-        \item Tonia také řekla: ``Jestli tam nepatří dušená šunka, nepatří tam ani bazalka.''
-        \item Fabio řekl: ``Do receptu patří dušená šunka.'' 
-        \item Fabio dále řekl: ``Nepatří tam ančovičky ani bazalka, ale patří tam česnek.''
+        \item Tonia said: ``The recipe includes anchovies or basil or garlic.''
+        \item Tonia also said: ``If cooked ham is not included, then basil is not included either.''
+        \item Fabio said: ``Cooked ham is included in the recipe.'' 
+        \item Fabio further said: ``Neither anchovies nor basil are included, but garlic is included.''
     \end{itemize}
-    Víme, že Tonia vždy mluví pravdu, zatímco Fabio vždy lže.
+    We know that Tonia always tells the truth, while Fabio always lies.
 
     \begin{enumerate}[(a)]
-        \item Vyjádřete naše znalosti jako výrokovou teorii $T$ v jazyce $\mathbb P=\{a,b,c,d\}$, kde výrokové proměnné mají po řadě význam ``do receptu patří ančovičky/bazalka/česnek/dušená šunka''.
-        \item Pomocí rezoluční metody dokažte, že z teorie $T$ vyplývá, že ``do receptu patří ančovičky''. Nakreslete rezoluční strom.
+        \item Express our knowledge as a propositional theory $T$ in the language $\mathbb P=\{a,b,c,d\}$, where the propositional variables mean (in order) ``anchovies / basil / garlic / cooked ham are included in the recipe''.
+        \item Using the resolution method, prove that $T$ entails that ``anchovies are included in the recipe''. Draw the resolution tree.
     \end{enumerate}
 
 \end{problem}
@@ -264,25 +264,27 @@
 
 \begin{problem}
 
-    Celá čísla postihla záhadná nemoc šířící se (v diskrétních krocích) dle následujících pravidel (platících pro všechna čísla ve všech krocích).
+    The integers are afflicted by a mysterious disease spreading (in discrete steps) according to the following rules (valid for all integers at all time steps).
     \begin{enumerate}[(i)]\it
-        \item Zdravé číslo onemocní, právě když je právě jedno sousední číslo nemocné (v předchozím čase).
-        \item Nemocné číslo se uzdraví, právě když je předchozí číslo nemocné (v předchozím čase).
-        \item V čase $0$ bylo nemocné číslo $0$, ostatní čísla byla zdravá.
+        \item A healthy number becomes ill exactly when precisely one neighboring number was ill (in the previous time).
+        \item An ill number recovers exactly when the previous number was ill (in the previous time).
+        \item At time $0$ the number $0$ was ill, all other numbers were healthy.
     \end{enumerate}
-        %(Sousedními čísly čísla $i$ myslíme $i-1$ a $i+1$, předchozím číslem myslíme $i-1$.)
+        %(By neighboring numbers of $i$ we mean $i-1$ and $i+1$, by the previous number we mean $i-1$.)
     \begin{enumerate}[(a)]
-        \item Napište teorie $T_1, T_2, T_3$ vyjadřující (po řadě) tvrzení $(i), (ii), (iii)$ nad množinou prvovýroků $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, kde prvovýrok $p_i^t$ vyjadřuje, že ``{\it číslo $i$ je v čase $t$ nemocné.}''
-        \item Převeďte axiomy z $T_1, T_2, T_3$ do CNF a napište teorii $S$ v množinové reprezentaci, která je nesplnitelná, právě když $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, tj.: ``{\it Číslo $1$ je zdravé v čase $2$.}'' (Stačí převést jen konkrétní axiomy z $T_1,T_2,T_3$, ze kterých plyne $\neg p_1^2$, a do $S$ uvést jen příslušné klauzule.)
-        \item Rezolucí dokažte, že $S$ je nesplnitelná. Zamítnutí znázorněte rezolučním stromem.
+        \item Write theories $T_1, T_2, T_3$ expressing (respectively) statements (i), (ii), (iii) over the set of propositional atoms $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, where the atom $p_i^t$ expresses that ``{\it number $i$ is ill at time $t$.}'' 
+        \item Convert the axioms from $T_1, T_2, T_3$ to CNF and write a theory $S$ in set representation that is unsatisfiable exactly when $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, i.e. when ``{\it Number $1$ is healthy at time $2$.}'' (It is enough to convert only the specific axioms from $T_1,T_2,T_3$ that entail $\neg p_1^2$, and include only the corresponding clauses in $S$.)
+        \item Prove by resolution that $S$ is unsatisfiable. Show the refutation as a resolution tree.
     \end{enumerate}
 
 \end{problem}
+
 
         
 \section*{For further thought}
 
 
 \begin{problem}
-    Dokažte podrobně, že je-li $S=\{C_1,C_2\}$ splnitelná a $C$ je rezolventa $C_1$ a $C_2$, potom je i $C$ splnitelná.
+    Prove in detail that if $S=\{C_1,C_2\}$ is satisfiable and $C$ is the resolvent of $C_1$ and $C_2$, then $C$ is satisfiable as well.
 \end{problem}
+

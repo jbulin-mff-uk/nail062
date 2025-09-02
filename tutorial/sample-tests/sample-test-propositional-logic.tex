@@ -1,0 +1,43 @@
+\documentclass[a4paper]{article}
+\usepackage{a4wide}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+
+\begin{center}
+    \large{Sample tutorial test: Propositional logic}    
+\end{center}
+
+Time limit: 45 minutes. Total points: 100.
+
+\bigskip
+
+\begin{enumerate}
+\item Consider three brothers, each of whom either always tells the truth or always lies.
+\begin{enumerate}
+\item[$(i)$] The eldest says: \emph{``Both my brothers are liars.''}
+\item[$(ii)$] The middle one says: \emph{``The youngest is a liar.''}
+\item[$(iii)$] The youngest says: \emph{``The eldest is a liar.''}
+\end{enumerate}
+Let the propositional variables $p_1$, $p_2$, $p_3$ represent (in order) that \emph{``the eldest / middle / youngest brother is truthful''} and denote $\mathbb{P}=\{p_1,p_2,p_3\}$.
+\begin{enumerate}
+\item Write formulas (in the form of equivalences) $\varphi_1$, $\varphi_2$, $\varphi_3$ over $\mathbb{P}$ representing the knowledge derived (in order) from $(i)$, $(ii)$, $(iii)$. {\it (15 points)}
+\item Write a theory $S$ in set notation obtained by converting $\varphi_1$, $\varphi_2$, $\varphi_3$, $p_3$ or their negations into CNF, which is unsatisfiable if and only if it follows from statements $(i)$, $(ii)$, $(iii)$ that \emph{``the youngest is truthful''}. {\it (15 points)}
+\item Prove by resolution that $S$ is unsatisfiable. Represent the resolution refutation with a resolution tree. {\it (20 points)}
+\end{enumerate}
+
+\item Let $T=\{(\neg p \wedge q) \to r,\ (q \to r) \leftrightarrow p\}$ be a theory over $\mathbb{P}=\{p,q,r\}$.
+\begin{enumerate}
+    \item Using the tableaux method, determine all models of theory $T$. {\it (20 points)}
+    \item Is $T$ an extension of the theory $S=\{q \to p\}$ over $\{p,q\}$? Is $T$ a conservative extension of $S$? Justify. {\it (15 points)}
+    \item Determine how many pairwise inequivalent propositions over $\mathbb{P}$ are there that are independent in both $S$ and $T$. Justify. {\it (15 points)}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

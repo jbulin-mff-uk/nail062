@@ -1,0 +1,56 @@
+\documentclass[a4paper]{article}
+\usepackage{a4wide}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+    \large{Sample tutorial test: Predicate logic}    
+\end{center}
+
+Time limit: 45 minutes. Total points: 100.
+
+\bigskip
+
+\begin{enumerate}
+
+\item We know that:
+\begin{enumerate}
+    \item[$(i)$] Aristotle is Greek, Caesar is Roman, and Dido is Carthaginian.
+    \item[$(ii)$] No Greek is a Roman.
+    \item[$(iii)$] No Carthaginian is Greek.
+    \item[$(iv)$] Only Carthaginians were born in Carthage.
+\end{enumerate}
+    
+We want to prove using resolution that:
+    
+\begin{enumerate}
+    \item[$(v)$] There exists someone who was not born in Carthage and is not a Roman.
+\end{enumerate}
+    
+Specifically:
+\begin{enumerate}
+\item Express the statements as \underline{sentences} $\varphi_1, \dots, \varphi_5$ in the language $L=\langle G, R, C, B, a, c, d \rangle$ without equality, where $G, R, C, B$ are unary relation symbols, $G(x), R(x), C(x)$ and $B(x)$ mean (in order) ``$x$ is Greek / Roman / Carthaginian'' and ``$x$ was born in Carthage'', and $a, c, d$ are constant symbols denoting Aristotle, Caesar, and Dido. {\it (15 points)}
+    \item Using Skolemization, find an open theory $T$ (possibly in a larger language) which is unsatisfiable if and only if $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$. Convert $T$ into CNF and write it in set notation. {\it (10 points)}
+    \item Prove by resolution that $T$ is unsatisfiable. Represent the resolution refutation with a resolution tree. For each step, indicate the unification used. {\it (20 points)}
+\end{enumerate}
+
+\smallskip
+
+\item Let $T=\{(\exists x)(P(x)\to Q(x)),\ (\exists x)(\neg R(x)\to \neg Q(x))\}$ be a theory in the language $L=\langle P,Q,R\rangle$ without equality, where $P,Q,R$ are unary relation symbols, and let $\varphi$ be the sentence $(\exists x)(P(x) \to R(x))$.
+\begin{enumerate}
+    \item Construct a finished tableau from the theory $T$ with $F\varphi$ at the root. {\it (25 points)}
+    \item Is $\varphi$ valid in $T$? Is it inconsistent with $T$? Is it independent in $T$? Justify all answers. {\it (10 points)}
+    \item Does the theory $T$ have a complete conservative extension? Provide an example or justify why not. {\it (10 points)}
+\end{enumerate}
+
+\smallskip
+
+\item Let $\mathcal{A}=\langle\mathbb{Z},\mathrm{abs}^A \rangle$ be a structure in the language $L=\langle \mathrm{abs} \rangle$ with equality, where $\mathrm{abs}$ is a unary function symbol and $\mathrm{abs}^A$ is the absolute value function on $\mathbb{Z}$. Give an example of a nontrivial (i.e., other than $\emptyset$ and $\mathbb{Z}$) set definable in $\mathcal{A}$ without parameters. Provide the defining formula. {\it (10 points)}
+\end{enumerate}
+
+\end{document}

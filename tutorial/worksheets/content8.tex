@@ -4,16 +4,17 @@
 
 \subsection*{Teaching goals:} After completing, the student
 
-    \begin{itemize}\setlength{\itemsep}{0pt}
-        \item rozumí tomu, jak se liší tablo metoda v predikátové logice od výrokové logiky, umí formálně definovat všechny potřebné pojmy
-        \item zná atomická tabla pro kvantifikátory, rozumí jejich použití
-        \item umí sestrojit dokončené tablo pro danou položku z dané (i nekonečné) teorie
-        \item umí popsat kanonický model pro danou dokončenou bezespornou větev tabla
-        \item zná axiomy rovnosti a rozumí jejich souvislosti s pojmy kongruence, faktorstruktura
-        \item umí aplikovat tablo metodu k řešení daného problému (slovní úlohy, aj.)
-        \item rozumí tablo metodě pro jazyky s rovností, umí aplikovat na jednoduchých příkladech
-        \item zná větu o kompaktnosti predikátové logiky, umí ji aplikovat
+  \begin{itemize}\setlength{\itemsep}{0pt}
+        \item understands how the tableau method in predicate logic differs from propositional logic, can formally define all necessary concepts
+        \item knows atomic tableaux for quantifiers, understands their use
+        \item can construct a finished tableau for a given formula from a given (even infinite) theory
+        \item can describe the canonical model for a given finished noncontradictory branch
+        \item understands the axioms of equality, their relation to congruences, quotient structures
+        \item can apply the tableau method to solve a given problem (word problem, etc.)
+        \item understands tableau method for languages with equality, can apply to simple examples
+        \item knows the compactness theorem of predicate logic, can apply it
     \end{itemize}
+
     
 
 \section*{In-class problems}
@@ -21,25 +22,25 @@
        
 \begin{problem}
 
-    Předpokládejme, že:
+    Assume that:
     \begin{itemize}\it
-        \item Všichni viníci jsou lháři.
-        \item Alespoň jeden z obviněných je také svědkem.
-        \item Žádný svědek nelže.
+        \item All guilty people are liars.
+        \item At least one of the accused is also a witness.
+        \item No witness lies.
     \end{itemize}
 
-    Dokažte tablo metodou, že: {\it Ne všichni obvinění jsou viníci.} Konkrétně:
+    Prove by the tableau method that: {\it Not all the accused are guilty.} Specifically:
     \begin{enumerate}[(a)]
-        \item Zvolte vhodný jazyk $\mathcal L$. Bude s rovností, nebo bez rovnosti?        
-        \item Formalizujte naše znalosti a dokazované tvrzení jako sentence $\alpha_1,\alpha_2,\alpha_3,\varphi$ v jazyce $\mathcal L$.
-        \item Sestrojte tablo důkaz sentence $\varphi$ z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$.
-        %, tj. sporné tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni.
+        \item Choose a suitable language $\mathcal L$. Will it be with equality, or without equality?        
+        \item Formalize our knowledge and the statement to be proved as sentences $\alpha_1,\alpha_2,\alpha_3,\varphi$ in $\mathcal L$.
+        \item Construct a tableau proof of the sentence $\varphi$ from the theory $T=\{\alpha_1,\alpha_2,\alpha_3\}$.
+        %, i.e. the refutation tableau from theory $T$ with the item $\mathrm{F}\varphi$ at the root.
     \end{enumerate}
 
     \begin{solution}
 
         \begin{enumerate}[(a)]
-            \item Zvolme jazyk $\mathcal L=\langle V,L,O,S\rangle$ bez rovnosti, kde $V$, $L$, $O$ a $S$ jsou unární relační symboly o významu ``být viníkem/lhářem/obviněným/svědkem''.
+            \item Let us choose the language $\mathcal L=\langle V,L,O,S\rangle$ without equality, where $V$, $L$, $O$ and $S$ are unary relation symbols meaning "to be a guilty person / a liar / an accused / a witness".
             \item 
             \begin{align*}
                 \alpha_1 & = (\forall x)(V(x)\to L(x)) \\
@@ -47,7 +48,7 @@
                 \alpha_3 & = \neg(\exists x)(S(x)\land L(x)) \\
                 \varphi & = \neg (\forall x)(O(x)\limplies V(x))
             \end{align*}
-            \item Sestrojíme dokončené tablo z teorie $T=\{\alpha_1,\alpha_2,\alpha_3\}$ s položkou $F\varphi$ v kořeni. Uvidíme, že všechny větve budou sporné, půjde tedy o tablo důkaz. (\textcolor{blue}{Modře} je vyznačeno připojení axiomů, \textcolor{red}{červeně} jsou kořeny atomických tabel položek typu `všichni', které bychom mohli nekreslit, kdyby nám to konvence dovolila.)
+            \item We construct a finished tableau from the theory $T=\{\alpha_1,\alpha_2,\alpha_3\}$ with the item $F\varphi$ at the root. We will see that all branches are closed, so this is a tableau proof. (\textcolor{blue}{In blue} the attachment of axioms is marked, \textcolor{red}{in red} are the roots of atomic tableau entries of the "for all" type, which we could avoid drawing if our conventions allowed it.)
             
             \begin{center}
                 \scalebox{1}{
@@ -102,20 +103,20 @@
 
 \begin{problem}
 
-    Uvažte následující tvrzení:
+    Consider the following statements:
     \begin{enumerate}[(i)] \it 
-        \item Nula je malé číslo.
-        \item Číslo je malé, právě když je blízko nuly.
-        \item Součet dvou malých čísel je malé číslo.
-        \item Je-li $x$ blízko $y$, potom $f(x)$ je blízko $f(y)$.
+        \item Zero is a small number.
+        \item A number is small iff it is close to zero.
+        \item The sum of two small numbers is a small number.
+        \item If $x$ is close to $y$, then $f(x)$ is close to $f(y)$.
     \end{enumerate}
 
-    Chceme dokázat, že platí: {\it (v) Jsou-li $x$ a $y$ malá čísla, potom $f(x+y)$ je blízko $f(0)$.}
+    We want to prove that: {\it (v) If $x$ and $y$ are small numbers, then $f(x+y)$ is close to $f(0)$.}
 
     \begin{enumerate}[(a)]
-        \item Formalizujte tvrzení jako sentence $\varphi_1,\dots,\varphi_5$ v jazyce $L=\langle M,B,f,+,0\rangle$ bez rovnosti.        
-        \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni. Rozhodněte, zda platí $T\models \varphi_5$.
-        \item Pokud existují, uveďte alespoň dvě kompletní jednoduché extenze teorie $T$.
+        \item Formalize the statements as sentences $\varphi_1,\dots,\varphi_5$ in $L=\langle M,B,f,+,0\rangle$ without equality.        
+        \item Construct a finished tableau from the theory $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ with the item $F\varphi_5$ at the root. Decide whether $T\models \varphi_5$.
+        \item If they exist, give at least two complete simple extensions of the theory $T$.
     \end{enumerate}
 
     \begin{solution}
@@ -129,7 +130,7 @@
                 \varphi_5 & = (\forall x)(\forall y)(M(x)\wedge M(y)\to B(f(x+y),f(0)))
             \end{align*}
 
-            \item Tablo vyjde sporné, máme tedy $T\proves \varphi_5$ a z úplnosti $T\models \varphi_5$. Všimněte si, že axiom $\varphi_1 = M(0)$ není potřeba:
+            \item The tableau is closed, so we have $T\proves \varphi_5$ and by completeness $T\models \varphi_5$. Note that the axiom $\varphi_1 = M(0)$ is not needed:
             
             \begin{center}
             \scalebox{0.95}{
@@ -193,12 +194,12 @@
             \end{forest}
             }
             \end{center} 
-            \item Najdeme dva elementárně neekvivalentní modely $T$:
+            \item We find two elementarily non-equivalent models of $T$:
             \begin{itemize}
-                \item $\mathcal A=\langle\{0\};M^\mathcal A,B^\mathcal A,f^\mathcal A,+^\mathcal A, 0^\mathcal A\rangle$ kde $M^\mathcal A=\{0\}$, $B^\mathcal A=\{(0,0)\}$, $f^\mathcal A=\{(0,0)\}$, $+^\mathcal A=\{((0,0),0)\}$, a $0^\mathcal A=0$
-                \item $\mathcal B=\langle\{0,1\};M^\mathcal B,B^\mathcal B,f^\mathcal B,+^\mathcal B, 0^\mathcal B\rangle$ kde $M^\mathcal B=\{0\}$, $B^\mathcal B=\{(0,0),(1,1)\}$, $f^\mathcal B=\{(0,0),(1,1)\}$, $+^\mathcal B=\{((0,0),0),((0,1),1),((1,0),1),((1,1),0)\}$, a $0^\mathcal B=0$
+                \item $\mathcal A=\langle\{0\};M^\mathcal A,B^\mathcal A,f^\mathcal A,+^\mathcal A, 0^\mathcal A\rangle$ where $M^\mathcal A=\{0\}$, $B^\mathcal A=\{(0,0)\}$, $f^\mathcal A=\{(0,0)\}$, $+^\mathcal A=\{((0,0),0)\}$, and $0^\mathcal A=0$
+                \item $\mathcal B=\langle\{0,1\};M^\mathcal B,B^\mathcal B,f^\mathcal B,+^\mathcal B, 0^\mathcal B\rangle$ where $M^\mathcal B=\{0\}$, $B^\mathcal B=\{(0,0),(1,1)\}$, $f^\mathcal B=\{(0,0),(1,1)\}$, $+^\mathcal B=\{((0,0),0),((0,1),1),((1,0),1),((1,1),0)\}$, and $0^\mathcal B=0$
             \end{itemize}
-            Kompletní jednoduché extenze jsou potom $\mathrm{Th}(\mathcal A)$ a $\mathrm{Th}(\mathcal B)$ (tj. všechny $L$-sentence, které platí v $\mathcal A$ resp. $\mathcal B$). Teorie struktury je vždy kompletní teorie. Nejsou ekvivalentní například proto, že $(\forall x)M(x)$ platí v $\mathcal A$ ale ne v $\mathcal B$. (Uvědomte si, že jazyk je bez rovnosti, potřebujeme tedy sentenci bez rovnosti.)
+            The complete simple extensions are then $\mathrm{Th}(\mathcal A)$ and $\mathrm{Th}(\mathcal B)$ (i.e. all $L$-sentences true in $\mathcal A$ respectively $\mathcal B$). The theory of a structure is always a complete theory. They are not equivalent for example because $(\forall x)M(x)$ holds in $\mathcal A$ but not in $\mathcal B$. (Keep in mind that the language is without equality, so we need a sentence without equality.)
         \end{enumerate}
                     
     \end{solution}
@@ -208,11 +209,11 @@
 
 \begin{problem}
 
-    Uvažme jazyk $L=\langle c\rangle$ s rovností, kde $c$ je konstantní symbol. Tablo metodou dokažte, že v teorii $T=\{(\exists x)(\forall y)x=y\}$ platí formule $x=c$.
+    Consider the language $L=\langle c\rangle$ with equality, where $c$ is a constant symbol. Using the tableau method prove that the formula $x=c$ is valid in $T=\{(\exists x)(\forall y)x=y\}$.
 
     \begin{solution}
 
-        Sestrojíme dokončené tablo z teorie $T$ s položkou $\F(\forall x)x=c$ v kořeni (formule v položkách tabla musí být sentence). Protože je jazyk s rovností, můžeme v tablu používat i axiomy rovnosti pro jazyk $L$, resp. jejich generální uzávěry: $(\forall x)x=x$ a $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))$.
+        We construct a finished tableau from the theory $T$ with the item $\F(\forall x)x=c$ at the root (formulae in tableau items must be sentences). Since the language has equality, we may also use the equality axioms for the language $L$, or rather their universal closures: $(\forall x)x=x$ and $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))$.
 
         \begin{center}
             \scalebox{0.95}{
@@ -278,26 +279,24 @@
 
 \begin{problem} 
     
-    Buď $L$ jazyk s rovností obsahující binární relační symbol $\le$ a $T$ teorie v tomto jazyce taková, že $T$ má nekončený model a platí v ní axiomy lineárního uspořádání. Pomocí věty o kompaktnosti ukažte, že $T$ má model $\mathcal{A}$ s \emph{nekonečným klesajícím řetězcem}; tj. že v $A$ existují prvky $c_i$ pro každé $i\in \mathbb{N}$ takové, že: $\dots < c_{n+1} < c_n< \dots <c_0$.
-    (Z toho plyne, že pojem \emph{dobrého uspořádání} není definovatelný v logice prvního řádu.)
+    Let $L$ be a language with equality containing a binary relational symbol $\le$ and let $T$ be an $L$-theory such that $T$ has an infinite model and the axioms of a linear order hold in $T$. Using the compactness theorem show that $T$ has a model $\mathcal{A}$ with an \emph{infinite descending chain}; that is, in $A$ there exist elements $c_i$ for every $i\in \mathbb{N}$ such that: $\dots < c_{n+1} < c_n< \dots <c_0$.
+    (This implies that the notion of a \emph{well-ordering} is not definable in first-order logic.)
 
     \begin{solution}
 
-        Z předpokladu víme, že $T$ má nekonečný model $\mathcal B$, tj. nekonečné lineární uspořádání. To by ale mohlo být např. $\langle \mathbb N;\leq^\mathbb N\rangle$, které žádný nekonečný řetězec nemá. Potřebujeme model s nekonečným klesajícím řetězcem, ten získáme z Věty o kompaktnosti (verze pro predikátovou logiku):
+        From the assumption we know that $T$ has an infinite model $\mathcal B$, i.e. an infinite linear order. This could, however, be for example $\langle \mathbb N;\leq^\mathbb N\rangle$, which has no infinite descending chain. We need a model with an infinite descending chain; we obtain it from the Compactness Theorem (version for predicate logic):
                 
-        Jazyk $L$ rozšíříme přidáním spočetně mnoha nových konstantních symbolů $c_i$ ($i\in\mathbb{N}$). Označme rozšířený jazyk $L'$. Uvažme následující $L'$teorii $T'$:
+        Expand the language $L$ by adding countably many new constant symbols $c_i$ ($i\in\mathbb{N}$). Denote the expanded language by $L'$. Consider the following $L'$-theory $T'$:
         $$
         T' = T \cup \{c_{i+1}\leq c_i\land\neg c_{i+1}=c_i\mid i\in\mathbb{N}\}
         $$
-        Stačí ukázat, že $T'$ má model. Ten zřejmě musí být nekonečný a jeho redukt na jazyk $L$ je hledaný model $\mathcal A$ teorie $T$, který má nekonečný klesající řetězec $\dots < c_{n+1}^\mathcal A < c_n^\mathcal A < \dots < c_0^\mathcal A$. 
+        It is enough to show that $T'$ has a model. Such a model must obviously be infinite and its reduct to the language $L$ is the desired model $\mathcal A$ of the theory $T$ which has an infinite descending chain $\dots < c_{n+1}^\mathcal A < c_n^\mathcal A < \dots < c_0^\mathcal A$. 
         
-        Z věty o kompaktnosti víme, že $T'$ má model, právě když každá konečná podmnožina $T'$ má model. Máme-li konečnou podteorii $S\subseteq T'$, ta obsahuje jen konečně mnoho formulí $c_{i+1}\leq c_i\land\neg c_{i+1}=c_i$, pro nějakou konečnou množinu indexů $I\subseteq\mathbb N$. Označme jako $\mathcal B$  nekonečný model $T$, který máme z přepokladu. (Tento model nemusí mít nekonečný klesající řetězec! Mohl by to být např. $\langle \mathbb N;\leq^\mathbb N\rangle$) V něm stačí vybrat libovolný konečný klesající řetězec délky $|I|$ jako interpretace konstantních symbolů $c_i$ pro $i\in I$ (symboly $c_j\notin I$ interpretujeme libovolně), a dostáváme model $S$.
+        By the compactness theorem we know that $T'$ has a model iff every finite subset of $T'$ has a model. If we take a finite subtheory $S\subseteq T'$, it contains only finitely many formulas $c_{i+1}\leq c_i\land\neg c_{i+1}=c_i$, for some finite set of indices $I\subseteq\mathbb N$. Let $\mathcal B$ be the infinite model of $T$ from the assumption. (This model need not have an infinite descending chain! It might be for example $\langle \mathbb N;\leq^\mathbb N\rangle$.) In it we can choose any finite descending chain of length $|I|$ to interpret the constant symbols $c_i$ for $i\in I$ (interpret the symbols $c_j\notin I$ arbitrarily), and thus obtain a model of $S$.
                     
     \end{solution}
 
 \end{problem}
-
-
 
 
 \section*{Extra practice}
@@ -305,21 +304,21 @@
 
 \begin{problem}
     
-    Uvažte následující tvrzení:
+    Consider the following statements:
     \begin{enumerate}[(i)]\it
-        \item Každý docent napsal alespoň jednu učebnici.
-        \item Každou učebnici napsal nějaký docent.
-        \item U každého docenta někdo studuje.
-        \item Každý, kdo studuje u nějakého docenta, přečetl všechny učebnice od tohoto docenta.
-        \item Každou učebnici někdo přečetl.
+        \item Every professor has written at least one textbook.
+        \item Every textbook was written by some professor.
+        \item For every professor, someone is studying with them.
+        \item Everyone who studies with some professor has read all textbooks by that professor.
+        \item Every textbook has been read by someone.
     \end{enumerate}    
     \begin{enumerate}[(a)]
-        \item Formalizujte {\it(i)--(v)} jako sentence $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ v $L=\langle N, S, P, D, U\rangle$ bez rovnosti.
-        %, kde $N,S,P$ jsou binární relační symboly ($N(x,y)$ znamená ``$x$ napsal $y$'', $S(x,y)$ znamená ``$x$ studuje u $y$'', $P(x,y)$ znamená ``$x$ přečetl $y$'') a $D,U$ jsou unární relační symboly (``být docentem'', ``být učebnicí'').
-        \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.
-        \item Je sentence $\varphi_5$ pravdivá v teorii $T$? Je lživá v $T$? Je nezávislá v $T$? Zdůvodněte.
-        \item Má teorie $T$ kompletní konzervativní extenzi? Zdůvodněte.
-        %\item Kolik má $T'=T\cup \{D(x),S(x,y),P(x,y)\}$ 2-prvkových modelů (až na izomorfismus)?
+        \item Formalize {\it(i)--(v)} as sentences $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ in $L=\langle N, S, P, D, U\rangle$ without equality.
+        %, where $N,S,P$ are binary relation symbols ($N(x,y)$ means ``$x$ wrote $y$'', $S(x,y)$ means ``$x$ studies with $y$'', $P(x,y)$ means ``$x$ read $y$'') and $D,U$ are unary relation symbols (``being an professor'', ``being a textbook'').
+        \item Construct a finished tableau from $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ with item $F\varphi_5$ at the root.
+        \item Is the sentence $\varphi_5$ true in the theory $T$? Is it false in $T$? Is it independent in $T$? Justify.
+        \item Does the theory $T$ have a complete conservative extension? Justify.
+        %\item How many 2-element models (up to isomorphism) does $T'=T\cup \{D(x),S(x,y),P(x,y)\}$ have?
     \end{enumerate}
 
 \end{problem}
@@ -327,7 +326,7 @@
 
 \begin{problem}
     
-    Tablo metodou dokažte následující pravidla `vytýkání' kvantifikátorů, kde $\varphi(x)$ je formule s jedinou volnou proměnnou $x$, a $\psi$ je sentence.
+    Using the tableau method, prove the following rules for `pulling out' quantifiers, where $\varphi(x)$ is a formula with a single free variable $x$, and $\psi$ is a sentence.
 
     \vspace{-6pt}
     \begin{multicols}{2}
@@ -345,13 +344,13 @@
 
 \begin{problem} 
     
-    Nechť $L(x,y)$ reprezentuje \emph{``existuje let z $x$ do $y$''} a $S(x,y)$ reprezentuje \emph{``existuje spojení z $x$ do $y$''}. Předpokládejme, že z Prahy lze letět do Bratislavy, Londýna a New Yorku, a z New Yorku do Paříže, a platí
+    Let $L(x,y)$ represent \emph{``there is a flight from $x$ to $y$''} and $S(x,y)$ represent \emph{``there is a connection from $x$ to $y$''}. Assume that from Prague one can fly to Bratislava, London, and New York, and from New York to Paris, and that
     \begin{itemize}  
         \item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
         \item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
         \item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
     \end{itemize}
-    Dokažte tablo metodou, že existuje spojení z Bratislavy do Paříže.
+    Prove using the tableau method that there is a connection from Bratislava to Paris.
 
 \end{problem}
 
@@ -359,20 +358,20 @@
 
 \begin{problem} 
 
-    Buď $T$ následující teorie v jazyce $L=\langle R,f,c,d\rangle$ s rovností, kde $R$ je binární relační symbol,  $f$ unární funkční symbol, a $c,d$ konstantní symboly:
+    Let $T$ be the following theory in the language $L=\langle R,f,c,d\rangle$ with equality, where $R$ is a binary relation symbol, $f$ a unary function symbol, and $c,d$ constant symbols:
     $$
     T=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y,R(f(x),x)\}
     $$
-    Označme jako $T'$ generální uzávěr $T$. Nechť $\varphi$ a $\psi$ jsou následující formule:
+    Denote by $T'$ the general closure of $T$. Let $\varphi$ and $\psi$ be the following formulas:
     $$
     \varphi = R(c,d) \wedge (\forall x)(x=c\vee x=d)\qquad\qquad
     \psi = (\exists x)R(x,f(x))
     $$
     \begin{enumerate}[(a)]
-        \item Sestrojte tablo důkaz formule $\psi$ z teorie $T'\cup\{\varphi\}$. (Pro zjednodušení můžete kromě axiomů rovnosti v tablu přímo používat axiom $(\forall x)(\forall y)(x=y\to y=x)$, což je jejich důsledek.)
-        \item Ukažte, že $\psi$ není důsledek teorie $T$, tím že najdete model $T$, ve kterém $\psi$ neplatí.
-        \item Kolik kompletních jednoduchých extenzí (až na $\sim$) má teorie $T\cup \{\varphi\}$? Uveďte dvě.
-        \item Nechť $S$ je následující teorie v jazyce $L'=\langle R\rangle$ s rovností. Je $T$ konzervativní extenzí $S$?
+        \item Construct a tableau proof of $\psi$ from $T'\cup\{\varphi\}$. (For simplicity, in the tableau you may directly use the axiom $(\forall x)(\forall y)(x=y\to y=x)$, a consequence of the equality axioms.)
+        \item Show that $\psi$ is not a consequence of $T$ by finding a model of $T$ in which $\psi$ is not valid.
+        \item How many complete simple extensions (up to $\sim$) does $T\cup \{\varphi\}$ have? Provide two examples.
+        \item Is the following theory $S$ in $L'=\langle R\rangle$ with equality a conservative extension of $T$?
         $$S=\{R(x,x),R(x,y)\wedge R(y,z)\to R(x,z),R(x,y)\wedge R(y,x)\to x=y\}$$     
     \end{enumerate}
 
@@ -384,11 +383,11 @@
 
 \begin{problem} 
     
-    Dokažte syntakticky, pomocí transformací tabel:
+    Prove syntactically, using tableau transformations:
     \begin{enumerate}[(a)]
-        \item \emph{Větu o konstantách}: Buď $\varphi$ formule v jazyce $L$ s volnými proměnnými $x_1,\dots,x_n$ a $T$ teorie v $L$. Označme $L'$ extenzi $L$ o nové konstantní symboly $c_1,\dots,c_n$ a $T'$ teorii $T$ v $L'$. Potom platí:
-        $T \vdash (\forall x_1)\dots(\forall x_n)\varphi$ právě když $T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n)$
-        \item \emph{Větu o dedukci}: Pro každou teorii $T$ (v uzavřené formě) a sentence $\varphi$, $\psi$ platí: $T\vdash \varphi\to\psi$ právě když $T,\varphi\vdash\psi$
+        \item \emph{Theorem on Constants}: Let $\varphi$ be a formula in the language $L$ with free variables $x_1,\dots,x_n$ and $T$ a theory in $L$. Let $L'$ be the extension of $L$ with new constant symbols $c_1,\dots,c_n$ and $T'$ the theory $T$ in $L'$. Then:
+        $T \vdash (\forall x_1)\dots(\forall x_n)\varphi$ if and only if $T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n)$
+        \item \emph{Deduction Theorem}: For any theory $T$ (in closed form) and sentences $\varphi$, $\psi$, we have: $T\vdash \varphi\to\psi$ if and only if $T,\varphi\vdash\psi$
     \end{enumerate}
 
 \end{problem}
@@ -396,15 +395,16 @@
 
 \begin{problem} 
     
-    Mějme teorii $T^*$ s axiomy rovnosti. Pomocí tablo metody ukažte, že:
+    Let $T^*$ be a theory with equality axioms. Show using the tableau method that:
     \begin{enumerate}[(a)]
-        \item $T^*\models x=y\ \to\ y=x$\hfill(symetrie)
-        \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(tranzitivita)
+        \item $T^*\models x=y\ \to\ y=x$\hfill(symmetry)
+        \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(transitivity)
     \end{enumerate}
-    {\it Hint:} Pro (a) použijte axiom rovnosti $(iii)$ pro $x_1=x$, $x_2=x$, $y_1=y$ a $y_2=x$, \newline
-        na (b) použijte $(iii)$ pro $x_1=x$, $x_2=y$, $y_1=x$ a $y_2=z$.
+    {\it Hint:} For (a) use the equality axiom $(iii)$ for $x_1=x$, $x_2=x$, $y_1=y$ and $y_2=x$, \newline
+        for (b) use $(iii)$ for $x_1=x$, $x_2=y$, $y_1=x$ and $y_2=z$.
         
 \end{problem}
+
   
 
 

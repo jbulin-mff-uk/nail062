@@ -5,13 +5,13 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item rozumí pojmu unifikace, umí provádět Unifikační algoritmus
-        \item zná potřebné pojmy z rezoluční metody v predikátové logice (rezoluční pravidlo, rezolventa, rezoluční důkaz/zamítnutí, rezoluční strom), umí je formálně definovat, uvést příklady, vysvětlit rozdíly oproti výrokové logice, 
-        \item umí aplikovat rezoluční metodu k řešení daného problému (slovní úlohy, aj.), provést všechny potřebné kroky (převod do PNF, skolemizace, převod do CNF)
-        \item umí sestrojit rezoluční zamítnutí dané (i nekonečné) CNF formule (existuje-li), a také nakreslit příslušný rezoluční strom, včetně uvedení použitých unifikací
-        \item z rezolučního stromu umí sestrojit nesplnitelnou konjunkci základních instancí axiomů
-        \item zná pojem LI-rezoluce, umí najít LI-zamítnutí dané teorie (existuje-li)
-        \item seznámil se s vybranými pojmy z teorie modelů
+        \item understands the concept of unification and can perform the Unification Algorithm
+        \item knows the necessary concepts from the resolution method in predicate logic (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them, give examples, and explain the differences compared to propositional logic
+        \item can apply the resolution method to solve a given problem (word problems, etc.), performing all necessary steps (conversion to PNF, Skolemization, conversion to CNF)
+        \item can construct a resolution refutation of a given (possibly infinite) CNF formula (if it exists), can draw the resolution tree including the unifications used
+        \item can extract an unsatisfiable conjunction of ground instances of axioms from a res. tree
+        \item knows the notion of LI-resolution, can find an LI-refutation of a given theory (if exists)
+        \item has become familiar with selected concepts from model theory
     \end{itemize}
     
 
@@ -20,49 +20,47 @@
 
 \begin{problem} 
     
-    \emph{Každý holič holí všechny, kdo neholí sami sebe. Žádný holič neholí nikoho, kdo holí sám sebe.} Formalizujte v predikátové logice a dokažte rezolucí, že: \emph{Neexistují žádní holiči.}
+    \emph{Every barber shaves all those who do not shave themselves. No barber shaves anyone who shaves themselves.} Formalize and prove by resolution that: \emph{There are no barbers.}
 
     \begin{solution}
 
-        Nejprve zvolíme vhodný jazyk. V textu identifikujeme vlastnost objektů ``$x$ je holič'' a vztah dvou objektů ``(kdo) $x$ holí (koho) $y$''. Použijeme jazyk $L=\langle B, S\rangle$ bez rovnosti, kde $B$ je unární relační symbol, $B(x)$ má význam ``$x$ je holič (barber)'', $S$ je binární relační symbol, $S(x,y)$ znamená ``$x$ holí (shaves) $y$''. 
+        First, we choose a suitable language. In the text we identify a property of objects ``$x$ is a barber'' and a relation between two objects ``$x$ shaves $y$''. We use the language $L=\langle B, S\rangle$ without equality, where $B$ is a unary relational symbol, $B(x)$ means ``$x$ is a barber'', $S$ is a binary relational symbol, $S(x,y)$ means ``$x$ shaves $y$''. 
         
-        V tomto jazyce formalizujeme tvrzení ze zadání:
+        In this language we formalize the statements from the problem:
         \begin{itemize}
-            \item Každý holič holí všechny, kdo neholí sami sebe: 
+            \item Every barber shaves all those who do not shave themselves: 
             $$
             \varphi_1\ =\ (\forall x)(B(x)\limplies (\forall y)(\neg S(y,y)\limplies S(x,y)))
             $$
-            \item Žádný holič neholí nikoho, kdo holí sám sebe: 
+            \item No barber shaves anyone who shaves themselves: 
             $$
             \varphi_2\ =\ \neg (\exists x)(B(x) \land (\exists y)(S(x,y)\land S(y,y)))
             $$
-            \item Neexistují žádní holiči:
+            \item There are no barbers:
             $$
             \psi\ =\ \neg (\exists x)B(x)
             $$
         \end{itemize}
-        Naším cílem je ukázat, že v teorii $T=\{\varphi_1,\varphi_2\}$ platí sentence $\psi$. Dokazujeme sporem, vyjdeme tedy z teorie $T\cup\{\neg\psi\}=\{\varphi_1,\varphi_2,\neg\psi\}$. Pomocí skolemizace k ní najdeme ekvisplnitelnou CNF formuli $S$. Najdeme rezoluční zamítnutí $S$, čímž ukážemem že $S$ a tedy i $T\cup\{\neg\psi\}$ je nesplnitelná.
+        Our goal is to show that in the theory $T=\{\varphi_1,\varphi_2\}$ the sentence $\psi$ holds. We prove this by contradiction, starting with the theory $T\cup\{\neg\psi\}=\{\varphi_1,\varphi_2,\neg\psi\}$. Using Skolemization we obtain an equisatisfiable CNF formula $S$, then find its resolution refutation, showing that $S$ and hence $T\cup\{\neg\psi\}$ is unsatisfiable.
 
-        Převedeme do PNF, skolemizujeme, odstraníme univerzální kvantifikátory, a převedeme do CNF:
+        Convert to PNF, Skolemize, remove universal quantifiers, and convert to CNF:
         \begin{itemize}
             \item $\varphi_1\ \rightsquigarrow\ B(x)\limplies (\neg S(y,y)\limplies S(x,y))\ \sim \ \neg B(x)\lor S(y,y)\lor S(x,y)$
             \item $\varphi_1\ \rightsquigarrow\ \neg(B(x)\land S(x,y)\land S(y,y))\ \sim\ \neg B(x)\lor \neg S(x,y)\lor \neg S(y,y)$
-            \item $\neg\psi\rightsquigarrow\ B(c)$ (kde $c$ je nový konstantní symbol)
+            \item $\neg\psi\rightsquigarrow\ B(c)$ (where $c$ is a new constant symbol)
         \end{itemize}
-        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule! Skolemizací $\neg\exists B(x)$ bychom dostali $\neg B(x)$, čehož negace je $B(x)$, tj. `všichni jsou holiči' zatímco správným postupem dostaneme `(svědek) $c$ je holič'.). 
-        
-        V množinovém zápisu tedy máme:
+        In set notation we have:
         $$
         S = \{\{\neg B(x), S(y,y), S(x,y)\},\{\neg B(x), \neg S(x,y), \neg S(y,y)\},\{B(c)\}\}
         $$
-        Rezoluční zamítnutí:
+        Resolution refutation:
         \begin{align*}
             &\{B(c)\},\{\neg B(x), S(y,y), S(x,y)\},\{S(y,y),S(c,y)\},\{\neg B(x), \neg S(x,y'), \neg S(y',y')\},\\
             &\{\neg S(c,y'), \neg S(y',y')\},\square    
         \end{align*}
-        První dvě klauzule jsou z $S$, třetí jejich rezolventa za použití unifikace $\{x/c\}$. Čtvrtá klauzule je variantou klauzule z $S$, proměnnou $y$ jsme přejmenovali na $y'$, abychom dodrželi technickou podmínku o disjunktních množinách proměnných v rezolvovaných klauzulích. Pátá klauzule je rezolventou první a čtvrté za použití unifikace $\{x/c\}$. Poslední, prázdná klauzule $\square$ je rezolventou z 3. a 5. klauzule, unifikace $\{y/c,y'/c\}$.
+        The first two clauses are from $S$, the third is their resolvent using the unification $\{x/c\}$. The fourth clause is a variant of a clause from $S$, variable $y$ renamed to $y'$ to satisfy the technical condition of disjoint variable sets in resolved clauses. The fifth clause is the resolvent of the first and fourth clauses using unification $\{x/c\}$. The last, empty clause $\square$ is the resolvent of clauses 3 and 5 with unification $\{y/c,y'/c\}$.
 
-        Typicky ale zamítnutí zakreslíme pouze rezolučním stromem, naznačíme i použité unifikace:
+        Typically, we represent the refutation as a resolution tree, indicating the unifications used:
 
         \begin{center}            
             \begin{forest}
@@ -87,29 +85,29 @@
 
 \begin{problem}
 
-    Jsou dána následující tvrzení o~proběhlém genetickém experimentu:
+    The following statements describe a genetic experiment:
     \begin{enumerate}[(i)]\it
-        \item Každá ovce byla buď porozena jinou ovcí, nebo naklonována (avšak nikoli oboje zároveň).
-        \item Žádná naklonovaná ovce neporodila.
+        \item Every sheep was either born from another sheep or cloned (but not both).
+        \item No cloned sheep gave birth.
     \end{enumerate}
-    Chceme ukázat rezolucí, že pak: {\it (iii) Pokud ovce porodila, byla sama porozena.} Konkrétně:
+    We want to show by resolution that: {\it (iii) If a sheep gave birth, it was itself born.} Specifically:
     \begin{enumerate}[(a)]
-        \item Vyjádřete sentencemi $\varphi_1$, $\varphi_2$, $\varphi_3$ v jazyce $L=\langle P,K\rangle$ bez rovnosti ($P$ je binární, $K$ unární relační symbol, $P(x,y)$ znamená `ovce $x$ porodila ovci $y$', $K(x)$ `ovce $x$ byla naklonována').
-        \item S využitím skolemizace těchto sentencí nebo jejich negací sestrojte množinu klauzulí $S$ (může být ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2\} \models \varphi_3$. %Zapište ji v množinové reprezentaci.
-        \item Najděte rezoluční zamítnutí $S$, nakreslete rezoluční strom s použitými unifikacemi.
-        \item Má $S$ LI-zamítnutí?
+        \item Express as sentences $\varphi_1$, $\varphi_2$, $\varphi_3$ in $L=\langle P,K\rangle$ without equality ($P$ is binary, $K$ unary rel. symbol, $P(x,y)$ means `sheep $x$ gave birth to sheep $y$', $K(x)$ `sheep $x$ was cloned').
+        \item Using Skolemization of these sentences or their negations, construct a set of clauses $S$ (possibly in an extended language) that is unsatisfiable exactly when $\{\varphi_1, \varphi_2\} \models \varphi_3$.
+        \item Find a resolution refutation of $S$, draw the resolution tree with unifications used.
+        \item Does $S$ have an LI-refutation?
     \end{enumerate}
 
     \begin{solution}
-        Všimněte si, že všechny objekty, o kterých mluvíme, jsou ovce, nepotřebujeme tedy predikát pro `býti ovcí'. Postup je stejný jako v předchozím příkladě:
+        Note that all objects are sheep, so no predicate for `being a sheep' is needed. The procedure is similar to the previous example:
         \begin{enumerate}[(a)]
-            \item Možností jak formulovat formule je více, pokud se snažíme co nejpřesněji držet textu, dostaneme např.:
+            \item There are several ways to formulate the formulas; following the text closely, we get:
             \begin{align*}
                 \varphi_1 &\ =\ (\forall x)(((\exists y)P(y,x)\lor K(x))\land \neg ((\exists z)P(z,x)\land K(x)))\\
                 \varphi_2 &\ =\ \neg(\exists x)(K(x)\land (\exists y)P(x,y))\\
                 \varphi_3 &\ =\ (\forall x)((\exists y)P(x,y)\limplies (\exists z)P(z,x))
             \end{align*}
-            \item Vyjdeme z teorie $\{\varphi_1,\varphi_2,\neg\varphi_3\}$ (dokazujeme sporem). Převedeme do PNF, skolemizujeme, odstraníme univerzální kvantifikátory, převedeme do CNF, a zapíšeme v množinovém zápisu:
+            \item Start from the theory $\{\varphi_1,\varphi_2,\neg\varphi_3\}$ (proof by contradiction). Convert to PNF, Skolemize, remove universal quantifiers, convert to CNF, and represent as sets:
             \begin{itemize}
                 \item $\varphi_1\ \sim\ (\forall x)(\exists y)(\forall z)((P(y,x)\lor K(x))\land \neg (P(z,x)\land K(x)))\ \rightsquigarrow\ (P(f(x),x)\lor K(x))\land \neg (P(z,x)\land K(x))\ \sim\ \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\}\}$
                 \item $\varphi_2\ \sim\ (\forall x)(\forall y)\neg (K(x)\land P(x,y))\ \sim\ \{\{\neg K(x),\neg P(x,y)\}\}$
@@ -118,7 +116,7 @@
             $$
             S = \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\},\{\neg K(x),\neg P(x,y)\},\{P(c,d)\},\{\neg P(z,c)\}\}
             $$
-            \item Rezoluční strom pro rezoluční zamítnutí $S\proves_R\square$:
+            \item Resolution tree for $S\proves_R\square$:
             \begin{center}            
                 \begin{forest}
                     for tree={l=1.5cm, grow=north}
@@ -134,7 +132,7 @@
                     ]                    
                 \end{forest}
             \end{center}
-            \item Ano, v (c) se nám podařilo sestrojit LI-zamítnutí. I kdyby ne, existence LI-zamítnutí plyne z Věty o úplnosti LI-rezoluce pro Hornovy formule, naše CNF formule $S$ je Hornova.
+            \item Yes, in (c) we constructed an LI-refutation. Even if we had not, existence of an LI-refutation follows from the completeness theorem of LI-resolution for Horn formulas; our CNF $S$ is Horn.
         \end{enumerate}
                     
     \end{solution}
@@ -144,28 +142,28 @@
 
 \begin{problem}
 
-    Nechť $T=\{\neg(\exists x) R(x),\ (\exists x)(\forall y)(P(x,y)\to P(y,x)),\ (\forall x)((\exists y)(P(x,y)\wedge P(y,x))\to R(x)),\ (\forall x)(\exists y)P(x,y)\}$ je teorie jazyka $L=\langle P,R\rangle$ bez rovnosti.
+    Let $T=\{\neg(\exists x) R(x),\ (\exists x)(\forall y)(P(x,y)\to P(y,x)),\ (\forall x)((\exists y)(P(x,y)\wedge P(y,x))\to R(x)),\ (\forall x)(\exists y)P(x,y)\}$ be a theory in the language $L=\langle P,R\rangle$ without equality.
 
     \begin{enumerate}[(a)]
-        \item Skolemizací nalezněte k $T$ otevřenou ekvisplnitelnou teorii $T'$.
-        \item Převeďte $T'$ na ekvivalentní teorii $S$ v CNF. Zapište $S$ v množinové reprezentaci.
-        \item Nalezněte rezoluční zamítnutí teorie $S$. U každého kroku uveďte použitou unifikaci.
-        \item Nalezněte nesplnitelnou konjunkci základních instancí klauzulí z $S$. {\it Nápověda: využijte unifikace z (c).}       
+        \item Find an open equisatisfiable theory $T'$ for $T$ by Skolemization.
+        \item Convert $T'$ to an equivalent theory $S$ in CNF. Represent $S$ as sets.
+        \item Find a resolution refutation of $S$. Indicate the unification used at each step.
+        \item Find an unsatisfiable conjunction of the ground instances of clauses from $S$. {\it Hint: use the unifications from (c).}       
     \end{enumerate}
 
     \begin{solution}
         
         \begin{enumerate}[(a)]
-            \item Skolemizací dostáváme: 
+            \item By Skolemization we get: 
             $$
             T'=\{\neg R(x),\ P(c,y)\to P(y,c),\ P(x,y)\land P(y,x)\to R(x),\ P(x,f(x))\}
             $$
-            (Pozor u třetího axiomu: $(\exists y)$ vytýkáme z antecedentu implikace, změní se na $(\forall y)$).
-            \item Snadno převedeme do CNF: 
+            (Note for the third axiom: $(\exists y)$ in the antecedent of the implication changes to $(\forall y)$.)
+            \item Easily convert to CNF: 
             $$
             S = \{\{\neg R(x)\},\{\neg P(c,y),P(y,c)\},\{\neg P(x,y),\neg P(y,x),R(x)\},\{P(x,f(x))\}\}
             $$
-            \item Rezoluční strom pro $S\proves_R\square$:
+            \item Resolution tree for $S\proves_R\square$:
             \begin{center}            
                 \begin{forest}
                     for tree={l=1.5cm, grow=north}
@@ -181,19 +179,19 @@
                     ]                    
                 \end{forest}
             \end{center}
-            (Všimněte si, kde potřebujeme přejmenovat proměnné, aby rezolvované klauzule měly disjunktní množiny proměnných.)
-            \item K nalezení konjunkce základních instancí axiomů můžeme použít sestrojené rezoluční zamítnutí. Pro každý list rezolučního stromu, který je označkovaný klauzulí $C$ (až na přejmenování je to klauzule z $S$), aplikujeme na $C$ postupně všechny unifikace na cestě od tohoto listu až ke kořeni:
+            (Note the variable renaming to ensure disjoint variable sets in resolved clauses.)
+            \item To find a conjunction of ground instances of the original theory, apply the unifications from the resolution tree to each leaf clause $C$:
             \begin{itemize}
                 \item $\neg R(x)\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg R(c)$
                 \item $\neg P(x',y)\lor\neg P(y,x')\lor R(x')\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)$
                 \item $\neg P(c,y')\lor P(y',c)\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor P(f(c),c)$
                 \item $P(x,f(x))\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=P(c,f(c))$
             \end{itemize}
-            Pokud by v některých klauzulích zůstaly proměnné, substituujeme za ně libovolný konstantní term. Dostáváme nesplnitelnou konjunkci základních instancí klauzulí z $S$:
+            If variables remain, substitute arbitrary constants. The resulting unsatisfiable conjunction of ground instances:
             $$
             \neg R(c)\land (\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)))\land (\neg P(c,f(c))\lor P(f(c),c))\land P(c,f(c))
             $$
-            Její rezoluční zamítnutí `na úrovni výrokové logiky' má stejnou strukturu jako rezoluční zamítnutí $S$:
+            Its resolution refutation at the propositional level has the same structure as that of $S$:
             
             \begin{minipage}{0.6\textwidth}
                 \scalebox{0.9}{
@@ -229,7 +227,7 @@
                 \end{forest}
                 }
             \end{minipage} 
-            Pokud bychom chtěli základní instance původní teorie $T$, musíme se podívat, ze kterých axiomů $T$ vznikly naše klauzle, a aplikovat stejné unifikace, výsledkem by bylo:
+            To get the ground instances of the original theory $T$, apply the same unifications to the axioms from which the clauses originated:
             $$
             \neg R(c)\land (P(c,f(c))\to P(f(c),c))\land (P(c,f(c))\land P(f(c),c)\to R(c))\land P(c,f(c))
             $$
@@ -246,7 +244,7 @@
 
 
 \begin{problem}
-    Najděte rezoluční zamítnutí: 
+    Find a resolution refutation: 
     \begin{align*}
         S=\{
             &\{P(a,x,f(y)),P(a,z,f(h(b))),\neg Q(y,z)\},\
@@ -256,37 +254,24 @@
             \{P(a,u,f(h(u))),H(u,a),Q(h(b),b)\}            
         \}
     \end{align*}
-   
-
 \end{problem}
 
 
 \begin{problem}
 
-    Mějme jazyk $L=\langle <, j, h, s\rangle$ bez rovnosti, kde $j,h,q$ jsou konstantní symboly (`jablka/hrušky/švestky') a $x < y$ vyjadřuje, že {\it ``ovoce $y$ je lepší než ovoce $x$''}. Víme, že:
+    Let $L=\langle <, j, h, s\rangle$ be without equality, where $j,h,q$ are constant symbols (`apples/pears/plums') and $x < y$ expresses {\it ``fruit $y$ is better than fruit $x$''}. We know that:
     \begin{enumerate}[(i)]\it
-        \item Relace ``být lepší'' je ostré částečné uspořádání (ireflexivní, asymetrická, tranzitivní).
-        \item Hrušky jsou lepší než jablka.
+        \item The relation ``being better'' is a strict partial order (irreflexive, asymmetric, transitive).
+        \item Pears are better than apples.
     \end{enumerate}
-    Dokažte rezolucí, že \emph{(iii) Jsou-li švestky lepší než hrušky, nejsou jablka lepší než švestky.}
+    Prove by resolution: \emph{(iii) If plums are better than pears, then apples aren't better than plums.}
 
     \begin{enumerate}[(a)]
-    \item Tvrzení $(i)$, $(ii)$, $(iii)$ vyjádřete jako otevřené formule v jazyce $L$.
-    \item Pomocí těchto formulí najděte CNF formuli $S$, která je nesplnitelná, právě když z $(i)$, $(ii)$ vyplývá $(iii)$. Napište $S$ v množinové reprezentaci.
-    \item Rezolucí dokažte, že $S$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci. {\it Nápověda: stačí čtyři rezoluční kroky.}
-    \item Nalezněte konjunkci základních instancí axiomů $S$, která je nesplnitelná.
-    \item Je $S$ zamítnutelná LI-rezolucí?
-    \end{enumerate}
-
-\end{problem}
-
-
-\begin{problem}
-
-    Buď $T=\{\varphi\}$ teorie jazyka $L=\langle U, c \rangle$ s rovností, kde $U$ je unární relační symbol, $c$ konstantní symbol, a axiom $\varphi$ vyjadřuje \emph{``Existuje alespoň $5$ prvků, pro které platí $U(x)$.''}
-    \begin{enumerate}[(a)]
-        \item Najděte dvě neekvivalentní jednoduché kompletní extenze $T$.
-        \item Je teorie $T$ otevřeně axiomatizovatelná? Uveďte zdůvodnění.
+    \item Express statements $(i)$, $(ii)$, $(iii)$ as open formulas in the language $L$.
+    \item Using these formulas, find a CNF formula $S$ that is unsatisfiable exactly when $(i)$, $(ii)$ imply $(iii)$. Write $S$ in set representation.
+    \item Prove by resolution that $S$ is unsatisfiable. Illustrate the refutation with a resolution tree, indicate the unification used at each step. {\it Hint: 4 resolution steps are enough.}
+    \item Find the conjunction of the basic instances of the axioms of $S$ that is unsatisfiable.
+    \item Is $S$ refutable by LI-resolution?
     \end{enumerate}
 
 \end{problem}
@@ -294,20 +279,31 @@
 
 \begin{problem}
 
-    Nechť $T = \{U(x) \to U(f(x)), (\exists x)U(x), \neg (f(x) = x), \varphi\}$ je teorie v jazyce $L = \langle U, f \rangle$ s rovností, kde $U$ je unární relační symbol, $f$ je unární funkční symbol a $\varphi$ vyjadřuje, že ``existují maximálně 4 prvky''.
+    Let $T=\{\varphi\}$ be in $L=\langle U, c \rangle$ with equality, where $U$ is unary relational and $c$ is a constant symbol, and $\varphi$ expresses \emph{``There are at least 5 elements for which $U(x)$ holds.''}
     \begin{enumerate}[(a)]
-        \item Je teorie $T$ extenzí teorie $S = \{ (\exists x)(\exists y)(\neg x = y \land U(x) \land U(y)), \varphi \}$ v jazyce $L' = \langle U \rangle$? Je konzervativní extenzí? Zdůvodněte.
-        \item Je teorie $T$ otevřeně axiomatizovatelná? Zdůvodněte.    
+        \item Find two non-equivalent simple complete extensions of $T$.
+        \item Is the theory $T$ openly axiomatizable? Give justification.
+    \end{enumerate}
+
+\end{problem}
+
+
+\begin{problem}
+
+    Let $T = \{U(x) \to U(f(x)), (\exists x)U(x), \neg (f(x) = x), \varphi\}$ be a theory in the language $L = \langle U, f \rangle$ with equality, where $U$ is a unary relational symbol, $f$ is a unary function symbol, and $\varphi$ expresses that ``there are at most 4 elements.''
+    \begin{enumerate}[(a)]
+        \item Is the theory $T$ an extension of the theory $S = \{ (\exists x)(\exists y)(\neg x = y \land U(x) \land U(y)), \varphi \}$ in the language $L' = \langle U \rangle$? Is it a conservative extension? Justify.
+        \item Is the theory $T$ openly axiomatizable? Justify.    
     \end{enumerate}
 \end{problem}
 
 
 \begin{problem}
 
-    Buď $T=\{(\forall x)(\exists y) S(y)=x,\ S(x)=S(y)\to x=y\}$ teorie v~jazyce $L=\langle S\rangle$ s~rovností, kde $S$ je unární funkční symbol.
+    Let $T=\{(\forall x)(\exists y) S(y)=x,\ S(x)=S(y)\to x=y\}$ be a theory in the language $L=\langle S\rangle$ with equality, where $S$ is a unary function symbol.
     \begin{enumerate}[(a)]
-        \item Nalezněte extenzi $T'$ teorie $T$ o definici nového unárního funkčního symbolu $P$ takovou, že $T' \models S(S(x))=y \leftrightarrow P(P(y))=x$.
-        \item Je teorie $T'$ otevřeně axiomatizovatelná? Uveďte zdůvodnění.
+        \item Find an extension $T'$ of the theory $T$ by defining a new unary function symbol $P$ such that $T' \models S(S(x))=y \leftrightarrow P(P(y))=x$.
+        \item Is the theory $T'$ openly axiomatizable? Give justification.
     \end{enumerate}
 
 \end{problem} 
@@ -315,10 +311,10 @@
 
 \begin{problem}
 
-    Nechť $T$ je extenze teorie $DeLO^-$ (tj. hustých lineárních uspořádání s minimálním prvkem a bez maximálního prvku) o nový axiom $c \le d$ v jazyce $L=\langle \le,c,d\rangle$ s rovností, kde $c$, $d$ jsou nové konstantní symboly.
+    Let $T$ be an extension of the theory $DeLO^-$ (i.e., dense linear orders with a minimal element and without a maximal element) by a new axiom $c \le d$ in the language $L=\langle \le,c,d\rangle$ with equality, where $c$, $d$ are new constant symbols.
     \begin{enumerate}[(a)]
-        \item Jsou sentence $(\exists x)(x\le d \wedge x \ne d)$ a $(\forall x)(x \le d)$ pravdivé / lživé / nezávislé v $T$?
-        \item Napište dvě neekvivalentní jednoduché kompletní extenze teorie $T$.
+        \item Are the sentences $(\exists x)(x\le d \wedge x \ne d)$ and $(\forall x)(x \le d)$ true / false / independent in $T$?
+        \item Write two non-equivalent simple complete extensions of the theory $T$.
     \end{enumerate}
     
 \end{problem}
@@ -326,14 +322,14 @@
 
 \begin{problem}
 
-    Mějme následující graf.
+    Consider the following graph.
     \smallskip
     
     \begin{minipage}{.72\textwidth}
         \begin{enumerate}[(a)]
-            \item Najděte všechny automorfismy.
-            \item Které podmnožiny množiny vrcholů $V$ jsou definovatelné? Uveďte definující formule. {\it (Nápověda: Využijte (a).)}
-            \item Které binární relace na $V$ jsou definovatelné?
+            \item Find all automorphisms.
+            \item Which subsets of the set of vertices $V$ are definable? Give the defining formulas. {\it (Hint: Use (a).)}
+            \item Which binary relations on $V$ are definable?
         \end{enumerate}
     \end{minipage}%
     \begin{minipage}{.28\textwidth}        
@@ -352,41 +348,22 @@
 \end{problem}
 
 
+
 \section*{For further thought}
 
 
 \begin{problem}
 
-    Buď $T=\{(\forall x)(\exists y) S(y)=x,\ S(x)=S(y)\to x=y\}$ teorie v~jazyce $L=\langle S\rangle$ s~rovností, kde $S$ je unární funkční symbol.
+    Let $T=\{(\forall x)(\exists y) S(y)=x,\ S(x)=S(y)\to x=y\}$ be a theory in the language $L=\langle S\rangle$ with equality, where $S$ is a unary function symbol.
     \begin{enumerate}[(a)]
-        \item Buď $\mathcal{R}=\langle\mathbb{R},S\rangle$, kde $S(r)=r+1$ pro $r\in\mathbb{R}$. Pro která $r\in\mathbb{R}$ je množina $\{r\}$ definovatelná v~$\mathcal{R}$ z~parametru $0$?
-        \item Je teorie $T$ otevřeně axiomatizovatelná? Uveďte zdůvodnění.
-        \item Je extenze $T'$ teorie $T$ o~axiom $S(x)=x$ $\omega$-kategorická teorie? Je $T'$ kompletní?
-        \item Pro která $0<n\in\mathbb{N}$ existuje $L$-struktura $\mathcal{B}$ velikosti $n$ elementárně ekvivalentní s~$\mathcal{R}$? Existuje spočetná struktura $\mathcal{B}$ elementárně ekvivalentní s~$\mathcal{R}$?
+        \item Let $\mathcal{R}=\langle\mathbb{R},S\rangle$, where $S(r)=r+1$ for $r\in\mathbb{R}$. For which $r\in\mathbb{R}$ is the set $\{r\}$ definable in $\mathcal{R}$ from the parameter $0$?
+        \item Is the theory $T$ openly axiomatizable? Give justification.
+        \item Is the extension $T'$ of $T$ by the axiom $S(x)=x$ an $\omega$-categorical theory? Is $T'$ complete?
+        \item For which $0<n\in\mathbb{N}$ does there exist an $L$-structure $\mathcal{B}$ of size $n$ elementarily equivalent to $\mathcal{R}$? Does there exist a countable structure $\mathcal{B}$ elementarily equivalent to $\mathcal{R}$?
     \end{enumerate}
 
 \end{problem}
 
-
-% \begin{problem}
-
-%     Známe následující informace o zadávání zakázek:
-%     \begin{enumerate}[(i)] \it
-%         \item Každý úředník, který je odpovědný za nějakou zakázku a vezme od nějaké společnosti úplatek, je kriminálník.
-%         \item Zakázku vyhraje pouze společnost, která podplatí všechny úředníky odpovědné za tuto zakázku.
-%         \item Pan Lubor je úředník.
-%         \item Nějaká společnost vyhrála nějakou zakázku, za kterou je pan Lubor odpovědný.
-%     \end{enumerate}
-%     Pomocí rezoluce dokažte, že: {\it (v) Pan Lubor je kriminálník.}
-%     \begin{enumerate}[(a)]
-%         \item Uvedená tvrzení vyjádřete \underline{sentencemi} $\varphi_1, \dots, \varphi_5$ v jazyce $L=\langle U, Z, S, K, P, V, O, l \rangle$ bez rovnosti, kde $U, Z, S$ a $K$ jsou unární relační symboly a $U(x), Z(x), S(x), K(x)$ znamenají (po řadě) ``$x$ je úředník / zakázka / společnost / kriminálník'', $P, V, O$ jsou binární relační symboly, kde $P(x,y), V(x,y), O(x,y)$ značí (po řadě) ``$x$ podplatil $y$'', ``$x$ vyhrál $y$'' a ``$x$ je odpovědný za $y$'' a $l$ je konstanta označující pana Lubora.
-%         \item Pomocí skolemizace předchozích formulí nalezněte otevřenou teorii $T$ (případně ve větším jazyce), která je nesplnitelná, právě když  $\{\varphi_1, \varphi_2, \varphi_3, \varphi_4\} \models \varphi_5$.
-%         \item Převedením axiomů $T$ do CNF nalezněte teorii $T'$ ekvivalentní $T$ a axiomatizovanou klauzulemi. Napište $T'$ v množinové reprezentaci.
-%         \item Rezolucí dokažte, že $T'$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci.
-%         \item Nalezněte konjunkci základních instancí axiomů $T'$, která je nesplnitelná.
-%     \end{enumerate}
-
-% \end{problem}
 
 \end{document}
 

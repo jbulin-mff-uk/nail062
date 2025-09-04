@@ -38,32 +38,43 @@
         ".synctex.gz"
     ],
     "latex-workshop.latex.recipes": [
-        {
-            "name": "pdflatex with cleanup",
-            "tools": [
-                "pdflatex",
-                "cleanup"
-            ]
-        }
+            {
+                "name": "pdflatex with cleanup",
+                "tools": [
+                    "pdflatex",
+                    "cleanup"
+                ]
+            },
+            {
+                "name": "pdflatex x2 + clean",
+                "tools": ["pdflatex", "pdflatex", "clean"]
+            }
     ],
     "latex-workshop.latex.tools": [
-        {
-            "name": "pdflatex",
-            "command": "pdflatex",
-            "args": [
-                "-interaction=nonstopmode",
-                "-synctex=1",
-                "%DOC%"
-            ]
-        },
-        {
-            "name": "cleanup",
-            "command": "bash",
-            "args": [
-                "-c",
-                "rm -f *.aux *.log *.fls *.fdb_latexmk *.synctex.gz"
-            ]
-        }
+            {
+                "name": "pdflatex",
+                "command": "pdflatex",
+                "args": [
+                    "-interaction=nonstopmode",
+                    "-file-line-error",
+                    "%DOCFILE%"
+                ]
+            },
+            {
+                "name": "cleanup",
+                "command": "bash",
+                "args": [
+                    "-c",
+                    "rm -f *.aux *.log *.fls *.fdb_latexmk *.synctex.gz"
+                ]
+            },
+            {
+                "name": "clean",
+                "command": "latexmk",
+                "args": [
+                    "-c"
+                ]
+            }
     ],
     "latex-workshop.latex.recipe.default": "pdflatex with cleanup"
 }

@@ -4,13 +4,13 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item understands the concepts of propositional logic semantics (truth value, truth function, model, validity, tautology, inconsistency, independence, satisfiability, equivalence), can formally define them and provide examples
+        \item understands the notions of propositional logic semantics (truth value, truth function, model, validity, tautology, inconsistency, independence, satisfiability, equivalence), can formally define them and provide examples
         \item can decide whether a set of logical connectives is universal
-        \item knows the terminology for formulas in CNF and DNF %([positive/negative/complementary] literal, [empty/unit] clause, [empty/unit] elementary conjunction, empty formula in CNF/DNF)
-        \item can convert a given formula or a finite theory into CNF and DNF, both using the set of models and using equivalent transformations
+        \item knows the terminology for propositions in CNF and DNF
+        \item can convert a given proposition or a finite theory into CNF and DNF, both using the set of models and using equivalent transformations
         \item understands the terminology of properties of theories (inconsistent, consistent/satisfiable, complete, consequences, $T$-equivalence), can define them formally and give examples
         \item understands the notion of [simple, conservative] extension, can formally define them and provide examples
-        \item in a concrete case, can decide whether it is a [simple, conservative] extension, and justify it both from the definition and using the semantic criterion
+        \item in a concrete case, can decide whether the case is a [simple, conservative] extension, and justify it both from the definition and using the semantic criterion
     \end{itemize}
 
 
@@ -20,7 +20,7 @@
 
 \begin{problem}
 
-    Give an example of a formula in the language $\mathbb P=\{p,q,r\}$ that is (a) valid (b) contradictory, (c) independent, (d) equivalent to $(p\wedge q)\to\neg r$, (e) has exactly the models $\{(1,0,0),(1,0,1),(0,0,1)\}$.
+    Give an example of a proposition in the language $\mathbb P=\{p,q,r\}$ that is (a) valid (b) contradictory, (c) independent, (d) equivalent to $(p\wedge q)\to\neg r$, (e) has exactly the models $\{(1,0,0),(1,0,1),(0,0,1)\}$.
 
 
     \begin{solution}
@@ -37,7 +37,7 @@
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item No; prove by structural induction that every formula has $(1,\dots,1)$ as a model. 
+            \item No; prove by structural induction that every proposition has $(1,\dots,1)$ as a model. 
             \item Yes; we use the fact that $\{\neg,\lor,\land\}$ is universal, and express:
             \begin{itemize}
                 \item $\neg x\sim x\downarrow x$
@@ -52,14 +52,14 @@
 
 \begin{problem} 
     
-    Convert the following formula to CNF and to DNF. Do this (a) semantically (using a truth table), (b) via equivalent transformations:
+    Convert the following proposition to CNF and to DNF. Do this (a) semantically (using a truth table), (b) via equivalent transformations:
     $$
     (\neg p \vee q)\to (\neg q \wedge r)
     $$
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item First find the models of the formula: $\{(0,0,1),(1,0,0),(1,0,1)\}$. Describe each model by one elementary conjunction:
+            \item First find the models of the proposition: $\{(0,0,1),(1,0,0),(1,0,1)\}$. Describe each model by one elementary conjunction:
             $$
             (\neg p\land \neg q\land r)\lor
             (p\land \neg q\land \neg r)\lor
@@ -90,7 +90,7 @@
     Let $T=\{p\liff q,\neg p\to\neg q,q\lor r\}$ be a theory in the language $\mathbb P=\{p,q,r\}$.
     \begin{enumerate}[(a)]
         \item Decide whether the theory $T$ is [inconsistent/satisfiable/complete].
-        \item Give an example of a formula $\varphi$ that is [true/false/independent] in $T$.
+        \item Give an example of a proposition $\varphi$ that is [true/false/independent] in $T$.
         \item Give an example of an extension $T'$ of the theory $T$ (if it exists, and if possible not equivalent to $T$) that is [simple / conservative / complete / conservative simple / complete simple / complete conservative]. Also give an example of an extension $T'$ of the theory $T$ that is neither conservative nor simple.
         \item Using your example extensions, show that the semantic criterion holds (i.e., the statement defining the notion of a [conservative] extension using expansions/reducts of models).
     \end{enumerate}
@@ -114,7 +114,7 @@
             $$
             \M_{\mathbb P'}(T_2)=\{(0,0,1,1),(1,1,0,0),(1,1,0,1),(1,1,1,0),(1,1,1,1)\}
             $$
-            We see that restricting the models of $T_2$ to the language $\mathbb P$ yields exactly the models of $T$, so it is an extension; and every model of $T$ can be expanded to some model of $T_2$, hence the extension is conservative.
+            We see that restricting the models of $T_2$ to the language $\mathbb P$ yields only models of $T$, so it is an extension; and every model of $T$ can be expanded to some model of $T_2$, hence the extension is conservative.
         \end{enumerate}
             
     \end{solution}
@@ -124,7 +124,7 @@
 
 \begin{problem}
 
-    Prove or refute (or state the correct relationship) that for every theory $T$ and formulas $\varphi$, $\psi$ in the language $\mathbb{P}$ the following hold:
+    Prove or refute (or state the correct relationship) that for every theory $T$ and propositions $\varphi$, $\psi$ in the language $\mathbb{P}$ the following hold:
     \begin{enumerate}[(a)]
         \item $T \models \varphi$ \ \ iff \ \ $T \not\models \neg \varphi$
         \item $T \models \varphi$ and $T \models \psi$ \ \ iff \ \ $T \models \varphi \wedge \psi$
@@ -153,8 +153,8 @@
         
     Let $T=\{\neg q \to (\neg p \vee q),\ \neg p \to q,\ r \to q\}$ be a theory in the language $\{p, q, r\}$.
     \begin{enumerate}[(a)]
-        \item Give an example of the following: a formula true in $T$, false in $T$, independent in $T$, satisfiable in $T$, and a pair of $T$-equivalent formulas.
-        \item Which of these propositions are true, false, independent, satisfiable in $T$? $T$-equivalent? 
+        \item Give an example of the following: a proposition valid in $T$, inconsistent with $T$, independent in $T$, satisfiable in $T$, and a pair of $T$-equivalent propositions.
+        \item Which of these are valid, contradictory, independent, satisfiable in $T$? $T$-equivalent? 
         $$
         p, \ \neg q, \ \neg p\vee q, \ p\to r,\ \neg q\to r, \ p\vee q\vee r
         $$
@@ -241,8 +241,8 @@
     
     Let $\mathbb P$ be a countably infinite set of propositional variables.    
     \begin{enumerate}[(a)]
-        \item Show that it is no longer true that every $K\subseteq \mathrm{M}_\mathbb P$ can be axiomatized by a formula in CNF and also by a formula in DNF.
-        \item Give an example of a set of models $K$ that cannot be axiomatized by a formula in CNF nor by a formula in DNF.
+        \item Show that it is no longer true that every $K\subseteq \mathrm{M}_\mathbb P$ can be axiomatized by a proposition in CNF and also by a proposition in DNF.
+        \item Give an example of a set of models $K$ that cannot be axiomatized by a proposition in CNF nor by a proposition in DNF.
     \end{enumerate}
 
 \end{problem}
@@ -264,6 +264,6 @@
 
     Consider the infinite propositional theory $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$ over $\mathrm{var}(T)$. 
     
-    (a) Find all models of $T$. \hfill (b) Which formulas of the form $p_i \to p_j$ are consequences of $T$?    
+    (a) Find all models of $T$. \hfill (b) Which propositions of the form $p_i \to p_j$ are consequences of $T$?    
 
 \end{problem}

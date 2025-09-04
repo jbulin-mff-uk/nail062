@@ -29,14 +29,15 @@
         \item Choose a suitable language (a set of propositional variables) $\mathbb P$.
         \item Formalize all knowledge as a theory $T$ in the language $\mathbb P$. (Note: The axioms are not the inscriptions on the doors; those need not be true.)
         \item Find all models of the theory $T$.
-        \item Formalize the statements ``The way out is behind the red/blue/green door'' as formulas $\varphi_1,\varphi_2,\varphi_3$ over $\mathbb P$. Is any of these formulas a consequence of $T$?
+        \item Formalize the statements ``The way out is behind the red/blue/green door'' as propositions $\varphi_1,\varphi_2,\varphi_3$ over $\mathbb P$. Is any of these propositions a consequence of $T$?
         \item Try using the tableau method: Construct a tableau from the theory $T$ with the item $F\varphi_i$ at the root. Will all branches be contradictory? (Try to come up with the correct steps for the construction of the tableau, take inspiration from the example in the lecture.)
-        \item Try using the resolution method: Convert the axioms of $T$, as well as $\neg\varphi_i$, into conjunctive normal form (CNF). Try to construct a resolution refutation and draw it in the form of a resolution tree. (Note: Don’t forget to negate the formula $\varphi_i$ you are proving.)
+        \item Try using the resolution method: Convert the axioms of $T$, as well as $\neg\varphi_i$, into conjunctive normal form (CNF). Try to construct a resolution refutation and draw it in the form of a resolution tree. (Note: Don’t forget to negate the proposition $\varphi_i$ you are proving.)
     \end{enumerate}  
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item A natural choice is the language $\mathbb P=\{p_1, p_2, p_3\}$, where $p_i$ means `the way out is behind the $i$-th door', with the doors ordered red, blue, green as in the assignment. (We could also have used `there is a dragon behind the $i$-th door' or `the inscription on the $i$-th door is true'. The important thing is that the chosen language is as small as possible. If we have $p_i$, we can for example express `there is a dragon behind the $i$-th door' as `$\neg p_i$', so we don’t need another propositional variable. Furthermore, we want the properties from the assignment to be as easy to formalize as possible.)
+            \item A natural choice is the language $\mathbb P=\{p_1, p_2, p_3\}$, where $p_i$ means `the way out is behind the $i$-th door', with the doors ordered red, blue, green as in the assignment. (We could also have used `there is a dragon behind the $i$-th door' or `the inscription on the $i$-th door is true'. An important thing is that the chosen language is as small as possible. If we have $p_i$, we can for example express `there is a dragon behind the $i$-th door' as `$\neg p_i$', so we don’t need another propositional variable. Furthermore, we want the properties from the assignment to be easy to formalize
+            .)
             \item From the assignment we understand that `there is a dragon' means the same as `there is no way out'. The fact that the way out is behind exactly one of the doors can be expressed by saying that it is behind at least one door, and for each pair of doors it is not behind both:
             $$
             \alpha_1=(p_1\lor p_2\lor p_3) \land (\neg p_1\lor\neg p_2) \land  (\neg p_1\lor\neg p_3) \land (\neg p_2\lor\neg p_3)
@@ -47,11 +48,11 @@
                 \item Blue door: ``$\neg p_2$''
                 \item Green door: ``$\neg p_2$''
             \end{itemize}
-            At least one of these inscriptions is true: $p_1\lor \neg p_2\lor\neg p_2$, which simplifies to
+            At least one of these inscriptions is true: $p_1\lor \neg p_2\lor\neg p_2$, which we can simplify to
             $$
             \alpha_2=p_1\lor \neg p_2
             $$
-            Similarly, the fact that at least one of the inscriptions is false can be formalized as $\neg p_1\lor \neg \neg p_2\lor\neg \neg p_2$, which after simplification (think about why this is equivalent) gives:
+            Similarly, the fact that at least one of the inscriptions is false can be formalized as $\neg p_1\lor \neg \neg p_2\lor\neg \neg p_2$, which after simplification (think about why this is an equivalent proposition) gives:
             $$
             \alpha_3=\neg p_1\lor p_2
             $$
@@ -63,7 +64,7 @@
             $$
             \M_\mathbb P(\alpha_2)=\{(0,0,0),(0,0,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)\}
             $$
-            Now we check in which of these models axiom $\alpha_3$ holds:
+            Now we check in which of these models axiom $\alpha_3$ is valid:
             $$
             \M_\mathbb P(\alpha_2,\alpha_3)=\{(0,0,0),(0,0,1),(1,1,0),(1,1,1)\}
             $$
@@ -71,12 +72,12 @@
             $$
             \M_\mathbb P(T)=\M_\mathbb P(\alpha_1,\alpha_2,\alpha_3)=\{(0,0,1)\}
             $$
-            \item With our choice of language $\mathbb P$ the formalization is simple: $\varphi_1=p_1$, $\varphi_2=p_2$, $\varphi_3=p_3$. Being a consequence of theory $T$ means holding in every model of $T$ (note: in every model, not just `in some model’---this is a common mistake). In our case, $T$ has only one model, and we immediately see that $\varphi_3$ holds in it while $\varphi_1$ and $\varphi_2$ do not. Thus, the only consequence of $T$ among these is $\varphi_3$.
-            \item When using the tableau method, we proceed as in the introductory chapter of the lecture notes (Section 1.1.5). To prove that $\varphi_3$ holds in $T$, we construct a tableau from the theory $T$, where we put the assumption $\mathrm{F}p_3$ at the root, since we are proving by contradiction ($\mathrm{F}$ means `False’, $\mathrm{T}$ means `True’). 
+            \item With our choice of language $\mathbb P$ the formalization is simple: $\varphi_1=p_1$, $\varphi_2=p_2$, $\varphi_3=p_3$. Being a consequence of theory $T$ means being valid in every model of $T$ (note: in every model, not just `in some model’---this is a common mistake). In our case, $T$ has only one model, and we immediately see that $\varphi_3$ is valid in it while $\varphi_1$ and $\varphi_2$ are not. Thus, the only consequence of $T$ among these is $\varphi_3$.
+            \item When using the tableau method, we proceed as in the introductory chapter of the lecture notes (Section 1.1.5). To prove that $\varphi_3$ is valid in $T$, we construct a tableau from the theory $T$, where we put the assumption $\mathrm{F}p_3$ at the root, since we are proving by contradiction ($\mathrm{F}$ means `False’, $\mathrm{T}$ means `True’). 
             
-            Recall that we expand a tableau by attaching assumptions about the validity of the axioms $\mathrm{T}\alpha_i$ ($i\in\{1,2,3\}$) and by reducing items (attaching the corresponding atomic tableaux). The order in which we do this can significantly affect the size of the resulting tableau proof. It is good first to reduce items whose atomic tableaux do not branch, or that do branch but one of the branches immediately becomes contradictory. We attach the axioms only when needed. It is often helpful to think through how we would proceed in the proof ourselves, and then build the tableau accordingly.
+            Recall that we expand a tableau by appending assumptions about the validity of the axioms $\mathrm{T}\alpha_i$ ($i\in\{1,2,3\}$) and by reducing entries (appending the corresponding atomic tableaux). The order in which we do this can significantly affect the size of the resulting tableau proof. It is good first to reduce entries whose atomic tableaux do not branch, or that do branch but one of the branches immediately becomes contradictory. We attach the axioms only when needed. It is often helpful to think through how we would proceed in the proof ourselves, and then build the tableau accordingly.
 
-            Note also that we do not define atomic tableaux for conjunctions or disjunctions of three or more formulas. (We want the algorithm steps to be as simple as possible.) For example, in $\mathrm{T}p_1\lor p_2\lor p_3$, we first imagine the omitted parentheses, $\mathrm{T}p_1\lor (p_2\lor p_3)$, and then reduce in two steps by attaching $\mathrm{T}p_1$ and $\mathrm{T}p_2\lor p_3$:
+            Note also that we do not define atomic tableaux for conjunctions or disjunctions of three or more propositions. (We want the algorithm steps to be as simple as possible.) For example, in $\mathrm{T}p_1\lor p_2\lor p_3$, we first imagine the omitted parentheses, $\mathrm{T}p_1\lor (p_2\lor p_3)$, and then reduce in two steps by appending $\mathrm{T}p_1$ and $\mathrm{T}p_2\lor p_3$:
             
             \begin{center}
                 \begin{forest}
@@ -90,9 +91,9 @@
                 \end{forest}
             \end{center}
 
-            (We also note that from the perspective of the tableau method it would be a bit better to have, instead of axiom $\alpha_1$, four separate formulas whose conjunction it is. This would shorten the tableau construction. But the algorithm can handle axioms of any complexity.)
+            (Let us also note that from the perspective of the tableau method it would be a bit better to have, instead of axiom $\alpha_1$, four separate propositions whose conjunction it is. This would shorten the tableau construction. But the algorithm can handle axioms of any complexity.)
 
-            Here is one possible tableau proof ($\oplus$ marks a contradictory branch, $\checkmark$ a completed consistent one). At first glance it may look complicated, but in fact we are just running a simple algorithm. Work out where each item came from and where we see atomic tableaux:
+            Here is one possible tableau proof ($\oplus$ marks a contradictory branch, $\checkmark$ a finished noncontradictory one). At first glance it may look complicated, but in fact we are just running a simple algorithm. Work out where each item came from and where we see atomic tableaux:
             
             \begin{center}
                 \begin{forest}
@@ -148,9 +149,9 @@
                 \end{forest}
             \end{center}
             
-            What if we tried to prove $p_1$ or $p_2$ from theory $T$? Let’s show it for $p_1$ (try $p_2$ yourself). We put $\mathrm{F}p_1$ at the root. We proceed analogously, but at least one branch will remain consistent even after completion (adding all axioms and reducing all items). From the consistent branches we can then read off a counterexample (a model of $T$ in which $p_1$ does not hold).
+            What if we tried to prove $p_1$ or $p_2$ from theory $T$? Let’s show it for $p_1$ (try $p_2$ yourself). We put $\mathrm{F}p_1$ at the root. We proceed analogously, but at least one branch will remain noncontradictory even after it is finished (by adding all axioms and reducing all entries). From the noncontradictory branches we can then read off a counterexample (a model of $T$ in which $p_1$ is not valid).
 
-            Below is a completed tableau. Verify that all axioms are used and all items reduced. We get two completed consistent branches. Looking at the assumptions about propositional variables on them: in both we have $\mathrm{F}p_1$, $\mathrm{F}p_2$, $\mathrm{T}p_3$. This corresponds to the model $(0,0,1)$, which is indeed a counterexample: a model of $T$ in which $p_1$ does not hold.
+            Below is a finished tableau. Verify that all axioms are used and all entries reduced. We get two finished noncontradictory branches. Looking at the assumptions about propositional variables on them: in both we have $\mathrm{F}p_1$, $\mathrm{F}p_2$, $\mathrm{T}p_3$. This corresponds to the model $(0,0,1)$, which is indeed a counterexample: a model of $T$ in which $p_1$ is not valid.
 
             \begin{center}
                 \begin{forest}
@@ -213,7 +214,7 @@
                 \end{forest}
             \end{center}
 
-            \item When using the resolution method, we proceed as in the introductory chapter of the lecture notes, in Section 1.1.6. To prove that $p_3$ holds in $T$, we add to the theory $T$ the formula $\neg p_3$ as an axiom. We thus have $T'=\{\alpha_1,\alpha_2,\alpha_3,\neg p_3\}$. Using equivalence transformations we convert into CNF (express as a conjunction of clauses, i.e., disjunctions of literals). In our case all axioms are already in CNF ($\alpha_1$ is a conjunction of three clauses, the others are clauses themselves). The resulting CNF formula, written in set notation (for clarity it is good to write the literals in a fixed order), is:
+            \item When using the resolution method, we proceed as in the introductory chapter of the lecture notes, in Section 1.1.6. To prove that $p_3$ is valid in $T$, we add to the theory $T$ the proposition $\neg p_3$ as an axiom. We thus have $T'=\{\alpha_1,\alpha_2,\alpha_3,\neg p_3\}$. Using equivalent transformations we convert into CNF (express as a conjunction of clauses, i.e., disjunctions of literals). In our case all axioms are already in CNF ($\alpha_1$ is a conjunction of three clauses, the others are clauses themselves). The resulting CNF proposition, written in set notation (for clarity it is good to write the literals in a fixed order), is:
             $$
             S=\{\{p_1,p_2,p_3\},\{\neg p_1,\neg p_2\},\{\neg p_1,\neg p_3\},\{\neg p_2,\neg p_3\},\{p_1,\neg p_2\},\{\neg p_1,p_2\},\{\neg p_3\}\}
             $$
@@ -238,7 +239,7 @@
                 \end{forest}
             \end{center}
 
-            Verify that all leaves are clauses from $S$ and all internal nodes are resolvents of their children. We define a resolution proof as a sequence of clauses (where clauses are either axioms or resolvents of previous ones). There are several such sequences corresponding to our tree; here is one possible:
+            Verify that all leaves are clauses from $S$ and all internal nodes are resolvents of their children. We define a resolution proof as a sequence of clauses (where clauses are either axioms or resolvents of previous ones). There are several such sequences corresponding to our tree; here is one possibility:
             $$
             \{\neg p_3\}, \{p_1,p_2,p_3\}, \{p_1,p_2\}, \{p_1, \neg p_2\}, \{p_1\}, \{\neg p_1,\neg p_2\}, \{\neg p_1, p_2\}, \{\neg p_1\}, \square
             $$
@@ -268,8 +269,8 @@
         \item Choose a suitable language (a set of propositional variables) $\mathbb P$.
         \item Formalize in propositional logic the problem of whether the graph in the picture has a vertex cover of size at most $k$, for a fixed $k$. Denote the resulting theory by ${VC}_k$.
         \item Show that ${VC}_2$ has no models, i.e., the graph does not have a 2-element vertex cover.
-        \item Could you use the tableau method for this? Think through the procedure.
-        \item Could you use the resolution method for this? Think through the procedure.
+        \item Would you be able to use the tableau method for this? Think through the procedure.
+        \item Would you be able to use the resolution method for this? Think through the procedure.
         \item Find all 3-element vertex covers.            
     \end{enumerate}
 
@@ -305,8 +306,8 @@
             $$
                 \{(0,0,1,1,1),(0,1,1,1,0),(1,1,0,1,1),(1,0,1,0,1),(1,1,1,0,0)\}
             $$
-            But none of these models satisfies the remaining axioms; for example, in the first one $\neg p_3\lor\neg p_4\lor\neg p_5$ does not hold.
-            \item We use the tableau method to prove that $VC_2$ entails a contradiction, i.e., the formula $p_1\land \neg p_1$. We put this into the root with the marker $\mathrm{F}$ (`False’), i.e., we prove inconsistency by contradiction. We show only part of the construction (the left branch).
+            But none of these models satisfies the remaining axioms; for example, in the first one the proposition $\neg p_3\lor\neg p_4\lor\neg p_5$ is not valid.
+            \item We use the tableau method to prove that $VC_2$ has contradiction as its consequence, i.e., the proposition $p_1\land \neg p_1$. We put this into the root with the marker $\mathrm{F}$ (`False’), i.e., we prove inconsistency by contradiction. We show only part of the construction (the left branch).
            
             \begin{center}
                 \begin{forest}
@@ -351,7 +352,7 @@
 
             (Alternatively, we could use a tableau method adapted directly to searching for models: put the validity of the first axiom at the root and expand the tableau while adding assumptions of the validity of the other axioms; every model must agree with some branch, but all of them will turn out contradictory.)
             
-            \item All axioms are already in CNF. It suffices to find a resolution refutation of the theory $VC_2$ (that is, a resolution proof of the empty clause $\square$); it then follows that $VC_2$ cannot have a model. We draw only one possible resolution tree:
+            \item All axioms are already in CNF. It suffices to find a resolution refutation of the theory $VC_2$ (that is, a resolution proof of the empty clause $\square$); it then follows that $VC_2$ cannot have a model. We draw the (one possible) resolution tree:
             
             \begin{center}
                 \scalebox{0.8}{
@@ -487,7 +488,7 @@
 
 \begin{problem} 
     
-    For the following formulas draw the formula tree, and find the set of models: \\(a) $(p \to q) \leftrightarrow \neg (p \wedge \neg q)$\qquad (b) $(p \leftrightarrow q) \leftrightarrow ((p \vee q) \to (p \wedge q))$
+    For the following propositions draw their trees, and find the set of models: \\(a) $(p \to q) \leftrightarrow \neg (p \wedge \neg q)$\qquad (b) $(p \leftrightarrow q) \leftrightarrow ((p \vee q) \to (p \wedge q))$
 
 \end{problem}
 
@@ -498,10 +499,10 @@
 
 \begin{problem}
 
-    Recall the definition of the \emph{formula tree}.
+    Recall the definition of the \emph{tree of a proposition}.
     \begin{enumerate}[(a)]
-        \item Prove in detail that every formula has a uniquely determined tree.
-        \item Is it still true if we replace the symbols `(', `)' in the definition of a formula by `|'?
+        \item Prove in detail that every proposition has a uniquely determined tree.
+        \item Is it still true if we replace the symbols `(', `)' in the definition of a proposition by `|'?
         \item What would happen if we omitted parentheses entirely?
     \end{enumerate}
 

@@ -6,7 +6,7 @@
 
     \begin{itemize}\setlength{\itemsep}{0pt}
         \item knows the necessary concepts of the resolution method (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them and provide examples
-        \item can work with formulas in CNF and their models in set representation
+        \item can work with propositions in CNF and their models in set representation
         \item can construct a resolution refutation of a given (even infinite) CNF formula (if it exists), and also draw the corresponding resolution tree
         \item knows the notion of a substitution tree, can formally define it and construct it for a concrete CNF formula
         \item can apply the resolution method to solve a given problem (word problem, etc.)
@@ -18,7 +18,7 @@
 
 \begin{problem}
 
-    Let $\varphi$ denote the formula $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Show that $\varphi$ is a tautology:
+    Let $\varphi$ denote the proposition $\neg (p \vee q) \to (\neg p \wedge \neg q)$. Show that $\varphi$ is a tautology:
     \begin{enumerate}[(a)]
         \item Convert $\neg \varphi$ to CNF and write the resulting formula as $S$ in set representation.
         \item Find a resolution refutation of $S$.
@@ -41,7 +41,7 @@
 
 \begin{problem}
 
-    Prove by resolution that in $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ the statement $s$ holds.
+    Prove by resolution that in $T=\{\neg p \to \neg q,\neg q \to \neg r, (r\to p)\to s\}$ the proposition $s$ is valid.
 
     \begin{solution}
         Convert the theory $T\cup\{\neg s\}$ to CNF and write it in set representation. We have $(r\to p)\to s\sim \neg(\neg r\lor p)\lor s\sim (r\land\neg p)\lor s\sim (r\lor s)\land (\neg p\lor s)$; the other axioms convert easily. We obtain $S=\{\{p,\neg q\},\{q,\neg r\},\{r,s\},\{\neg p,s\},\{\neg s\}\}$. We depict the resolution refutation by a resolution tree:

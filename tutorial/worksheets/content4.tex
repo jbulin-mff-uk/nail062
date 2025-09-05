@@ -8,7 +8,7 @@
     \begin{itemize}\setlength{\itemsep}{0pt}
         \item knows terminology of tableau method (entry, tableau, tableau proof/refutation, finished/contradictory branch, canonical model), can define them formally, give examples
         \item knows all atomic tableaux and can create suitable atomic tableaux for any logical connective
-        \item can construct a finished tableau for a given formula from a given (even infinite) theory
+        \item can construct a finished tableau for a given proposition from a given (even infinite) theory
         \item can describe the canonical model for a given completed consistent branch of a tableau
         \item can apply the tableau method to solve a given problem (word problems, etc.)
         \item knows the compactness theorem and can apply it
@@ -36,12 +36,12 @@
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item From the context, we recognize that `either...or' is exclusive (a chest cannot contain both a treasure and a deadly trap). We choose the language $\mathbb P=\{a,b\}$, where $a$ means `chest A contains a treasure', and similarly for $b$. The inscriptions on the chests are formalized as the formulas $a\lor b$ and $\neg a$. The theory $T$ expresses that both are true or both are false:
+            \item From the context, we recognize that `either...or' is exclusive (a chest cannot contain both a treasure and a deadly trap). We choose the language $\mathbb P=\{a,b\}$, where $a$ means `chest A contains a treasure', and similarly for $b$. The inscriptions on the chests are formalized as the propositions $a\lor b$ and $\neg a$. The theory $T$ expresses that both are true or both are false:
             $$
             T=\{((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)\}
             $$
             (Alternatively, we could formalize it as $T=\{(a\lor b)\liff \neg a\}$, i.e., noticing that ``both true or both false'' means equivalence. The tableau would be slightly smaller but otherwise similar—try it!)
-            \item The tableaux have at their root the formulas $\mathrm{F}a$ and $\mathrm{F}b$ (we prove by contradiction):
+            \item The tableaux have at their root the propositions $\mathrm{F}a$ and $\mathrm{F}b$ (we prove by contradiction):
             %\begin{multicols}{2}
                 \begin{center}
                     \begin{forest}
@@ -105,7 +105,7 @@
                     \end{forest}
                 \end{center}
             %\end{multicols}
-            \item The first tableau is completed and consistent. The consistent branch contains the formulas $\mathrm{F}a$, $\mathrm{T}b$, and the canonical model for this branch is $v=(0,1)$. It is a model of the theory $T$ (all its branches are consistent), in which chest A does not contain a treasure, providing a counterexample to the statement that chest A contains a treasure.
+            \item The first tableau is completed and consistent. The consistent branch contains the propositions $\mathrm{F}a$, $\mathrm{T}b$, and the canonical model for this branch is $v=(0,1)$. It is a model of the theory $T$ (all its branches are consistent), in which chest A does not contain a treasure, providing a counterexample to the statement that chest A contains a treasure.
             \item The second tableau is contradictory, so it is a tableau proof and we know that chest B contains the treasure.
         \end{enumerate}
 
@@ -120,7 +120,7 @@
 
     \begin{solution}
 
-        Construct a tableau from the theory $T$, placing the formula $\mathrm{T}\alpha_0$ at the root, where $\alpha_0$ is the first axiom of $T$. We only show the beginning of the construction; if needed, construct more.
+        Construct a tableau from the theory $T$, placing the proposition $\mathrm{T}\alpha_0$ at the root, where $\alpha_0$ is the first axiom of $T$. We only show the beginning of the construction; if needed, construct more.
 
         First, solve (a):
         
@@ -220,7 +220,7 @@
 
     \begin{solution}
 
-        We need two atomic tableaux, for formulas of the form $\mathrm{T}\varphi\oplus\psi$ and $\mathrm{F}\varphi\oplus\psi$. They can look, for example, as follows; verify the condition yourself (easily semantically):
+        We need two atomic tableaux, for propositions of the form $\mathrm{T}\varphi\oplus\psi$ and $\mathrm{F}\varphi\oplus\psi$. They can look, for example, as follows; verify the condition yourself (easily semantically):
 
         \begin{multicols}{2}
 
@@ -261,7 +261,7 @@
 
         For finite partial orders, this can be easily proven (similarly to topologically ordering an acyclic directed graph). 
         
-        Let $\langle X;\leq^X\rangle$ be a countably infinite partially ordered set. Construct a propositional theory $T$ such that its models describe linear orders on $X$ extending $\leq^X$. It will consist of the following sets of formulas:
+        Let $\langle X;\leq^X\rangle$ be a countably infinite partially ordered set. Construct a propositional theory $T$ such that its models describe linear orders on $X$ extending $\leq^X$. It will consist of the following sets of propositions:
         \begin{itemize}
             \item $p_{xx}$ for all $x\in X$ \hfill (reflexivity)
             \item $p_{xy}\limplies\neg p_{yx}$ for all $x\neq y\in X$ \hfill (antisymmetry)
@@ -295,7 +295,7 @@
         \item Cyril says: \emph{``Adam or Barbara lie.''}
     \end{enumerate}
     \begin{enumerate}[(a)]
-        \item Express statements (i)–(iv) as formulas $\varphi_1$–$\varphi_4$ over the set of propositional variables $\mathbb{P}=\{a,b,c\}$, where $a,b,c$ respectively mean {\it ``Adam/Barbara/Cyril tells the truth''}.
+        \item Express statements (i)–(iv) as propositions $\varphi_1$–$\varphi_4$ over the set of propositional variables $\mathbb{P}=\{a,b,c\}$, where $a,b,c$ respectively mean {\it ``Adam/Barbara/Cyril tells the truth''}.
         \item Using the tableau method, prove that $T = \{\varphi_1, \dots, \varphi_4\}$ implies that Adam tells the truth.
         \item Is the theory $T$ equivalent to the theory $T' = \{\varphi_2, \varphi_3, \varphi_4\}$? Justify your answer.    
     \end{enumerate}
@@ -305,7 +305,7 @@
 
 \begin{problem}
 
-    Using the tableau method, prove that the following formulas are tautologies:
+    Using the tableau method, prove that the following propositions are tautologies:
     \begin{enumerate}[(a)]
         \item $(p\to (q \to q))$
         \item $p \leftrightarrow \neg \neg  p$
@@ -359,7 +359,7 @@
         \includegraphics[width=0.5\textwidth]{files/half-adder.png}
     \end{center}
     \begin{enumerate}[(a)]
-            \item Formalize this circuit in propositional logic. Specifically, express it as a theory $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ in the language $\mathbb P=\{b_1,b_2,c,s\}$, where the propositional variables mean ``bit 1'', ``bit 2'', ``carry'', and ``sum'', and the formulas $\varphi,\psi$ do not contain the variables $c,s$.
+            \item Formalize this circuit in propositional logic. Specifically, express it as a theory $T=\{c\leftrightarrow \varphi,\ s\leftrightarrow \psi\}$ in the language $\mathbb P=\{b_1,b_2,c,s\}$, where the propositional variables mean ``bit 1'', ``bit 2'', ``carry'', and ``sum'', and the propositions $\varphi,\psi$ do not contain the variables $c,s$.
             \item Using the tableau method, prove that $T\models c\to\neg s$.
     \end{enumerate}
 
@@ -379,7 +379,7 @@
         
 \begin{problem}
 
-    Prove directly (by transforming tableaux) the \emph{deduction theorem}, i.e., that for any theory $T$ and formulas $\varphi$, $\psi$, we have:
+    Prove directly (by transforming tableaux) the \emph{deduction theorem}, i.e., that for any theory $T$ and propositions $\varphi$, $\psi$, we have:
     $$
     T \proves \varphi\to\psi\text{\ \ if and only if\ \ }T,\varphi\proves  \psi
     $$

@@ -37,7 +37,7 @@
             \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{the trivial group}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (the two-element group \emph{isomorphic} to a subgroup of $\underline{\mathbb Z_4}$).
             \item No — as soon as we have the element $1$ or $3$, the generated substructure is the whole $\underline{\mathbb Z_4}$.
             \item Yes, the theory of groups is \emph{universal} (closed under substructures), hence substructures of models (groups) are also models (i.e. \emph{subgroups}).
-            \item No, the language of group theory includes equality, and the finiteness of a model can be expressed by a sentence, so finite models of different sizes cannot be elementarily equivalent. It suffices to use “group properties’’ to distinguish them: e.g. the sentence $(\forall x)x=0$ distinguishes the trivial group $\underline{\mathbb Z_4}\restriction\{0\}$ from the two-element group $\underline{\mathbb Z_4}\restriction\{0,2\}$ and from $\underline{\mathbb Z_4}$; and e.g. $(\forall x)x+x=0$ holds in $\underline{\mathbb Z_4}\restriction\{0,2\}$ but not in $\underline{\mathbb Z_4}$.
+            \item No, the language of group theory includes equality, and the finiteness of a model can be expressed by a sentence, so finite models of different sizes cannot be elementarily equivalent. It suffices to use “group properties’’ to distinguish them: e.g. the sentence $(\forall x)x=0$ distinguishes the trivial group $\underline{\mathbb Z_4}\restriction\{0\}$ from the two-element group $\underline{\mathbb Z_4}\restriction\{0,2\}$ and from $\underline{\mathbb Z_4}$; and e.g. $(\forall x)x+x=0$ is valid in $\underline{\mathbb Z_4}\restriction\{0,2\}$ but not in $\underline{\mathbb Z_4}$.
         \end{enumerate}
                     
     \end{solution}
@@ -90,7 +90,7 @@
             \item $\mathcal A_5=\langle\{0,1,2\};0,1,2\rangle$ (three-element model, constants are distinct)
         \end{itemize}
         \begin{enumerate}[(a)]
-            \item It is not complete; for example the sentence $c_1=c_2$ is independent of $T$: it holds in $\mathcal A_1$ but not in $\mathcal A_3$. (Equivalently, by the semantic criterion, models $\mathcal A_1$ and $\mathcal A_3$ are not elementarily equivalent.)
+            \item It is not complete; for example the sentence $c_1=c_2$ is independent of $T$: it is valid in $\mathcal A_1$ but not in $\mathcal A_3$. (Equivalently, by the semantic criterion, models $\mathcal A_1$ and $\mathcal A_3$ are not elementarily equivalent.)
             \item Simple extensions correspond to subsets of $\{\mathcal A_1,\mathcal A_2,\mathcal A_3,\mathcal A_4,\mathcal A_5\}$, there are $2^5=32$ of them; complete ones correspond to singletons (complete theories of individual models), so there are 5.
             
             Simple extensions that are not complete:
@@ -123,7 +123,7 @@
             \end{itemize}
             The theory $T'$ is an extension of $T$ — it entails all consequences of $T$; semantically: the reducts of models of $T'$ to the original language $L$ are models of $T$ (e.g. the reduct of $\mathcal A_1'$ to $L$ is $\mathcal A_1$). It is not a simple extension, since we enlarged the language.
             
-            It is also not a conservative extension: for example the sentence $(\forall x)(\forall y)(\forall z)(x=y\lor x=z)$ is a sentence of the original language $L$, it holds in $T'$ but did not hold in $T$. Semantically: the three-element model $\mathcal A_5$ of $T$ cannot be expanded to an $L'$-structure that models $T'$, i.e. the reducts of models of $T'$ to $L$ do not yield all models of $T$.
+            It is also not a conservative extension: for example the sentence $(\forall x)(\forall y)(\forall z)(x=y\lor x=z)$ is a sentence of the original language $L$, it is valid in $T'$ but it was not valid in $T$. Semantically: the three-element model $\mathcal A_5$ of $T$ cannot be expanded to an $L'$-structure that models $T'$, i.e. the reducts of models of $T'$ to $L$ do not yield all models of $T$.
 
         \end{enumerate}
                     

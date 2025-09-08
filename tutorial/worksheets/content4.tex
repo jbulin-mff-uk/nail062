@@ -1,4 +1,4 @@
-\section*{NAIL062 P\&P Logic: Worksheet 4 -- The tableaux method}
+\section*{NAIL062 P\&P Logic: Worksheet 4 -- The tableau method}
 % after Lecture 4
 
 
@@ -7,10 +7,10 @@
 
     \begin{itemize}\setlength{\itemsep}{0pt}
         \item knows terminology of tableau method (entry, tableau, tableau proof/refutation, finished/contradictory branch, canonical model), can define them formally, give examples
-        \item knows all atomic tableaux and can create suitable atomic tableaux for any logical connective
-        \item can construct a finished tableau for a given proposition from a given (even infinite) theory
-        \item can describe the canonical model for a given completed consistent branch of a tableau
-        \item can apply the tableau method to solve a given problem (word problems, etc.)
+        \item knows atomic tableaux, can create suitable atomic tableaux for any logical connective
+        \item can construct finished tableau for given proposition from given (even infinite) theory
+        \item can describe the canonical model for a given finished noncontradictory branch of a tableau
+        \item can apply the tableau method to solve a given problem (word problem, etc.)
         \item knows the compactness theorem and can apply it
     \end{itemize}
 
@@ -21,7 +21,7 @@
 
 \begin{problem}
     
-    Aladdin found two chests, A and B, in a cave. He knows that each chest contains either a treasure or a deadly trap. The chests have the following inscriptions:
+    Aladdin found two chests in a cave, A and B. He knows that each chest contains either a treasure or a deadly trap. The chests have the following inscriptions:
     \begin{itemize}
     \item On chest A: {\it ``At least one of these two chests contains a treasure.''}
     \item On chest B: {\it ``Chest A contains a deadly trap.''}
@@ -30,7 +30,7 @@
     \begin{enumerate}[(a)]
         \item Express Aladdin's information as a theory $T$ over a suitably chosen set of propositional variables $\mathbb P$. (Explain the meaning of each propositional variable in $\mathbb P$.)
         \item Try to construct tableau proofs from the theory $T$ for the propositions ``The treasure is in chest A'' and ``The treasure is in chest B''.
-        \item If any of these completed tableaux are consistent, construct the canonical model for one of its consistent branches.
+        \item If any of these finished tableaux is noncontradictory, construct the canonical model for one of its noncontradictory branches.
         \item What conclusion can we draw from this?
     \end{enumerate}
 
@@ -41,7 +41,7 @@
             T=\{((a\lor b)\land \neg a)\lor(\neg (a\lor b)\land \neg\neg a)\}
             $$
             (Alternatively, we could formalize it as $T=\{(a\lor b)\liff \neg a\}$, i.e., noticing that ``both true or both false'' means equivalence. The tableau would be slightly smaller but otherwise similar—try it!)
-            \item The tableaux have at their root the propositions $\mathrm{F}a$ and $\mathrm{F}b$ (we prove by contradiction):
+            \item The tableaux have at their root the entries $\mathrm{F}a$ and $\mathrm{F}b$ (we prove by contradiction):
             %\begin{multicols}{2}
                 \begin{center}
                     \begin{forest}
@@ -105,7 +105,7 @@
                     \end{forest}
                 \end{center}
             %\end{multicols}
-            \item The first tableau is completed and consistent. The consistent branch contains the propositions $\mathrm{F}a$, $\mathrm{T}b$, and the canonical model for this branch is $v=(0,1)$. It is a model of the theory $T$ (all its branches are consistent), in which chest A does not contain a treasure, providing a counterexample to the statement that chest A contains a treasure.
+            \item The first tableau is finished but noncontradictory. The noncontradictory branch contains the entries $\mathrm{F}a$, $\mathrm{T}b$, and the canonical model for this branch is $v=(0,1)$. It is a model of the theory $T$, in which chest A does not contain a treasure, providing a counterexample to the statement that chest A contains a treasure.
             \item The second tableau is contradictory, so it is a tableau proof and we know that chest B contains the treasure.
         \end{enumerate}
 
@@ -116,13 +116,13 @@
 
 \begin{problem}
 
-    Consider the infinite propositional theories (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Using the tableau method, find all models of $T$. Is every model of $T$ a canonical model for some branch of this tableau? %(You may also try to construct a \emph{systematic} tableau.)
+    Consider the infinite propositional theory (a) $T=\{p_{i+1} \to p_i\mid i\in \mathbb{N}\}$ (b) $T=\{p_i \to p_{i+1}\mid i\in \mathbb{N}\}$. Using the tableau method, find all models of $T$. Is every model of $T$ a canonical model for some branch of this tableau?
 
     \begin{solution}
 
-        Construct a tableau from the theory $T$, placing the proposition $\mathrm{T}\alpha_0$ at the root, where $\alpha_0$ is the first axiom of $T$. We only show the beginning of the construction; if needed, construct more.
+        Construct a tableau from the theory $T$, placing the entry $\mathrm{T}\alpha_0$ at the root, where $\alpha_0$ is the first axiom of $T$. We only show the beginning of the construction; if you need to, construct more.
 
-        First, solve (a):
+        First, let us solve (a):
         
         \begin{center}
             \begin{forest}
@@ -157,7 +157,7 @@
                 ]
             \end{forest}
         \end{center}
-        Each model of $T$ corresponds to some (consistent) branch of this (completed) tableau. (Here, in fact, every model of $T$ is a \emph{canonical} model for some branch. In general, this does not necessarily hold.) The models are: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$, where $v_\text{all}(p_i)=1$ for all $i\in\mathbb N$, and
+        Each model of $T$ agrees with some (noncontradictory) branch of this (finished) tableau. (Here, in fact, every model of $T$ is a \emph{canonical} model for some branch. In general, this does not necessarily hold.) The models are: $\M(T)=\{v_{<k}\mid k\in\mathbb N\}\cup\{v_\text{all}\}$, where $v_\text{all}(p_i)=1$ for all $i\in\mathbb N$, and
         $$
         v_{<k}(p_i)=\begin{cases}
             1 & \text{ if }i<k,\\
@@ -201,7 +201,7 @@
             \end{forest}
         \end{center}
 
-        Again, it is easy to see that each model corresponds to some branch. We have $\M(T)=\{v_\text{none}\}\cup\{v_{\geq k}\mid k\in\mathbb N\}$, where $v_\text{none}(p_i)=0$ for all $i\in\mathbb N$, and
+        Again, it is not hard to see that each model agrees with some branch. We have $\M(T)=\{v_\text{none}\}\cup\{v_{\geq k}\mid k\in\mathbb N\}$, where $v_\text{none}(p_i)=0$ for all $i\in\mathbb N$, and
         $$
         v_{\geq k}(p_i)=\begin{cases}
             0 & \text{ if }i<k,\\
@@ -216,11 +216,11 @@
 
 \begin{problem}
 
-    Design suitable atomic tableaux for the logical connective $\oplus$ (XOR) and show that if a model satisfies the root of your atomic tableaux, it also satisfies some branch.
+    Design suitable atomic tableaux for the logical connective $\oplus$ (XOR) and show that if a model satisfies the root of your atomic tableau, it also satisfies some branch.
 
     \begin{solution}
 
-        We need two atomic tableaux, for propositions of the form $\mathrm{T}\varphi\oplus\psi$ and $\mathrm{F}\varphi\oplus\psi$. They can look, for example, as follows; verify the condition yourself (easily semantically):
+        We need two atomic tableaux, for entries of the form $\mathrm{T}\varphi\oplus\psi$ and $\mathrm{F}\varphi\oplus\psi$. They can look, for example, as follows; verify the condition yourself (easily semantically):
 
         \begin{multicols}{2}
 
@@ -255,11 +255,11 @@
 
 
 \begin{problem}
-    Using the compactness theorem, show that every countable partial order can be extended to a complete (linear) order.
+    Using the compactness theorem, show that every countable partial order can be extended to a total (linear) order.
 
     \begin{solution}
 
-        For finite partial orders, this can be easily proven (similarly to topologically ordering an acyclic directed graph). 
+        For finite partial orders, this can be easily proven (similarly to a topological ordering of an acyclic directed graph). 
         
         Let $\langle X;\leq^X\rangle$ be a countably infinite partially ordered set. Construct a propositional theory $T$ such that its models describe linear orders on $X$ extending $\leq^X$. It will consist of the following sets of propositions:
         \begin{itemize}
@@ -287,16 +287,16 @@
 
 \begin{problem}
 
-    During the interrogation of Adam, Barbara, and Cyril, it was established that:
+    During the interrogation of Alice, Bob, and Charlie, it was established that:
     \begin{enumerate}[(i)]\it
-        \item At least one of the interrogated persons tells the truth, and at least one lies.
-        \item Adam says: \emph{``Barbara or Cyril lie.''}
-        \item Barbara says: \emph{``Cyril lies.''}
-        \item Cyril says: \emph{``Adam or Barbara lie.''}
+        \item At least one of them tells the truth, and at least one lies.
+        \item Alice says: \emph{``Bob or Charlie lie.''}
+        \item Bob says: \emph{``Charlie lies.''}
+        \item Charlie says: \emph{``Alice or Bob lie.''}
     \end{enumerate}
     \begin{enumerate}[(a)]
-        \item Express statements (i)–(iv) as propositions $\varphi_1$–$\varphi_4$ over the set of propositional variables $\mathbb{P}=\{a,b,c\}$, where $a,b,c$ respectively mean {\it ``Adam/Barbara/Cyril tells the truth''}.
-        \item Using the tableau method, prove that $T = \{\varphi_1, \dots, \varphi_4\}$ implies that Adam tells the truth.
+        \item Express statements (i)–(iv) as propositions $\varphi_1$–$\varphi_4$ over the set of propositional variables $\mathbb{P}=\{a,b,c\}$, where $a,b,c$ respectively mean {\it ``Alice/Bob/Charlie tells the truth''}.
+        \item Using the tableau method, prove that $T = \{\varphi_1, \dots, \varphi_4\}$ implies that Alice tells the truth.
         \item Is the theory $T$ equivalent to the theory $T' = \{\varphi_2, \varphi_3, \varphi_4\}$? Justify your answer.    
     \end{enumerate}
     
@@ -318,7 +318,7 @@
 
 \begin{problem}
     
-    Using the tableau method, either prove or find a counterexample in the form of a \emph{canonical} model for a consistent branch.
+    Using the tableau method, either prove or find a counterexample in the form of a \emph{canonical} model for a noncontradictory branch.
     \begin{enumerate}[(a)]
         \item $\{ \neg q,\ p \vee q\} \models p$
         \item $\{ q \to p,\ r \to q,\ (r \to p) \to s\} \models s$
@@ -345,7 +345,7 @@
     \begin{itemize}
         \item for Peirce's connective $\downarrow$ (NOR),
         \item for Sheffer's connective $\uparrow$ (NAND),
-        \item for $\oplus$ (XOR),
+        %\item for $\oplus$ (XOR),
         \item for the ternary operator ``if p then q else r'' (IFTE).
     \end{itemize}  
     

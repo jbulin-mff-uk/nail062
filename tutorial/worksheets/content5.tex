@@ -5,10 +5,10 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item knows the necessary concepts of the resolution method (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them and provide examples
+        \item knows the necessary concepts of the resolution method (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define, provide examples
         \item can work with propositions in CNF and their models in set representation
         \item can construct a resolution refutation of a given (even infinite) CNF formula (if it exists), and also draw the corresponding resolution tree
-        \item knows the notion of a substitution tree, can formally define it and construct it for a concrete CNF formula
+        \item knows the notion of a tree of reductions, can formally define it and construct it for a concrete CNF formula
         \item can apply the resolution method to solve a given problem (word problem, etc.)
     \end{itemize}
     
@@ -75,15 +75,15 @@
 
 \begin{problem}
     
-    Let the propositional variables $r$, $s$, $t$ represent (respectively) that \emph{``Radka / Sára / Tom is at school''} and write $\mathbb{P}=\{r,s,t\}$. We know that:
+    Let the propositional variables $r$, $s$, $t$ represent (respectively) that \emph{``Robin / Sam / Tom is at school''} and write $\mathbb{P}=\{r,s,t\}$. We know that:
     \begin{itemize}\it
-        \item If Tom is not at school, then Sára is not there either.
-        \item Radka does not go to school without Sára.
-        \item If Radka is not at school, then Tom is there.
+        \item If Tom is not at school, then Sam is not there either.
+        \item Robin does not go to school without Sam.
+        \item If Robin is not at school, then Tom is there.
     \end{itemize}
     \begin{enumerate}[(a)]
         \item Formalize our knowledge as a theory $T$ in the language $\mathbb P$.
-        \item Using the resolution method, prove that $T$ entails that \emph{Tom is at school}: Write a formula $S$ in set representation that is unsatisfiable exactly when this holds, and find a resolution refutation of $S$. Draw the resolution tree.
+        \item Using the resolution method, prove that it is a consequence of $T$ that \emph{Tom is at school}: Write a formula $S$ in set representation that is unsatisfiable exactly when this holds, and find a resolution refutation of $S$. Draw the resolution tree.
         \item Determine the set of models of the theory $T$.
     \end{enumerate}
 
@@ -120,7 +120,7 @@
 
 \begin{problem}
         
-    Construct a \emph{substitution tree} for the following formula. Based on this tree, construct a resolution refutation according to the procedure from the proof of the Completeness Theorem for resolution.
+    Construct a \emph{tree of reductions} for the following formula. Based on this tree, construct a resolution refutation according to the procedure from the proof of the theorem on Completeness of Resolution.
     $$
     S=\{\{p,r\},\{q,\neg r\},\{\neg q\},\{\neg p,t\},\{\neg s\},\{s,\neg t\}\}
     $$
@@ -147,7 +147,7 @@
             ]
             \end{forest}
         \end{center}
-        The substitution tree provides a “recipe” for constructing a resolution refutation (which is key to the proof of the completeness theorem for resolution). We proceed from leaves to root, i.e., by the number of variables in the formulas. For the formulas at the leaves of the substitution tree we have one-element resolution refutations $\square$.
+        The tree of reductions provides a “recipe” for constructing a resolution refutation (which is key to the proof of the completeness theorem for resolution). We proceed from leaves to root, i.e., by the number of variables in the formulas. For the formulas at the leaves of the tree of reductions we have one-element resolution refutations $\square$.
 
         The formula $S^{\bar q \bar r p \bar s}=\{\{t\},\{\neg t\}\}$ has a one-step resolution refutation:
 
@@ -162,7 +162,7 @@
 
         How was this obtained? From the resolution refutation $\square$ of the formula $S^{\bar q \bar r p \bar s t}$ we produce a resolution proof of the clause $\{\neg t\}$ from $S^{\bar q \bar r p \bar s}$ by, for each leaf that arose by deleting the literal $\neg t$, putting $\neg t$ back into it and into all clauses above it. (Here we have only one leaf, which is also the root $\square$.)
 
-        Analogously, we produce a resolution proof of $\{t\}$ from $S^{\bar q \bar r p \bar s \bar t}$ (we add the literal $t$ to the nodes). And finally we add one resolution step that derives $\square$ from $\{\neg t\}$ and $\{t\}$. (If no leaf arose by deleting a literal from a clause of $S^{\bar q \bar r p \bar s}$, it means that the resolution refutation we have is already a resolution refutation of $S^{\bar q \bar r p \bar s}$ as well.)
+        Analogously, we produce a resolution proof of $\{t\}$ from $S^{\bar q \bar r p \bar s \bar t}$ (adding the literal $t$ to the nodes). And finally we add one resolution step that derives $\square$ from $\{\neg t\}$ and $\{t\}$. (If no leaf arose by deleting a literal from a clause of $S^{\bar q \bar r p \bar s}$, it means that the resolution refutation we have is already a resolution refutation of $S^{\bar q \bar r p \bar s}$ as well.)
 
         We proceed in the same way higher in the tree, for $S^{\bar q \bar r p}$, $S^{\bar q \bar r}$, $S^{\bar q}$, and finally for $S$:
 
@@ -223,7 +223,7 @@
         
         \medskip
 
-        Verify that the resulting tree indeed represents a resolution refutation of $S$. Notice how its shape mirrors the shape of the substitution tree. (In our case the tree is a “hairy path”, which need not be true in general, but the construction works the same way.)
+        Verify that the resulting tree indeed represents a resolution refutation of $S$. Notice how its shape mirrors the shape of the tree of reductions. (In our case the tree is a “hairy path”, which need not be true in general, but the construction works the same way.)
                     
     \end{solution}
     
@@ -247,16 +247,16 @@
 
     Tonia and Fabio describe to us their latest recipe for the best pizza in the world.
     \begin{itemize}
-        \item Tonia said: ``The recipe includes anchovies or basil or garlic.''
-        \item Tonia also said: ``If cooked ham is not included, then basil is not included either.''
-        \item Fabio said: ``Cooked ham is included in the recipe.'' 
-        \item Fabio further said: ``Neither anchovies nor basil are included, but garlic is included.''
+        \item Tonia said: ``The recipe includes anchovies or basil or capers.''
+        \item Tonia also said: ``If duck is not included, then basil is not included either.''
+        \item Fabio said: ``Duck is included in the recipe.'' 
+        \item Fabio further said: ``Neither anchovies nor basil are included, but capers are included.''
     \end{itemize}
     We know that Tonia always tells the truth, while Fabio always lies.
 
     \begin{enumerate}[(a)]
-        \item Express our knowledge as a propositional theory $T$ in the language $\mathbb P=\{a,b,c,d\}$, where the propositional variables mean (in order) ``anchovies / basil / garlic / cooked ham are included in the recipe''.
-        \item Using the resolution method, prove that $T$ entails that ``anchovies are included in the recipe''. Draw the resolution tree.
+        \item Express our knowledge as a propositional theory $T$ in the language $\mathbb P=\{a,b,c,d\}$, where the propositional variables mean (in order) ``anchovies / basil / capers / duck are included in the recipe''.
+        \item Using the resolution method, prove that $T$ implies that ``anchovies are included in the recipe''. Draw the resolution tree.
     \end{enumerate}
 
 \end{problem}
@@ -266,14 +266,14 @@
 
     The integers are afflicted by a mysterious disease spreading (in discrete steps) according to the following rules (valid for all integers at all time steps).
     \begin{enumerate}[(i)]\it
-        \item A healthy number becomes ill exactly when precisely one neighboring number was ill (in the previous time).
-        \item An ill number recovers exactly when the previous number was ill (in the previous time).
+        \item A healthy number becomes ill exactly when precisely one neighboring number was ill (in the previous time step).
+        \item An ill number recovers exactly when the previous number was ill (in the previous time step).
         \item At time $0$ the number $0$ was ill, all other numbers were healthy.
     \end{enumerate}
         %(By neighboring numbers of $i$ we mean $i-1$ and $i+1$, by the previous number we mean $i-1$.)
     \begin{enumerate}[(a)]
-        \item Write theories $T_1, T_2, T_3$ expressing (respectively) statements (i), (ii), (iii) over the set of propositional atoms $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, where the atom $p_i^t$ expresses that ``{\it number $i$ is ill at time $t$.}'' 
-        \item Convert the axioms from $T_1, T_2, T_3$ to CNF and write a theory $S$ in set representation that is unsatisfiable exactly when $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, i.e. when ``{\it Number $1$ is healthy at time $2$.}'' (It is enough to convert only the specific axioms from $T_1,T_2,T_3$ that entail $\neg p_1^2$, and include only the corresponding clauses in $S$.)
+        \item Write theories $T_1, T_2, T_3$ expressing (respectively) statements (i), (ii), (iii) over the set of propositional variables $\mathbb{P}=\{p_i^t \mid i\in\mathbb{Z}, t\in\mathbb{N}_0\}$, where $p_i^t$ expresses that ``{\it number $i$ is ill at time $t$.}'' 
+        \item Convert the axioms from $T_1, T_2, T_3$ to CNF and write a theory $S$ in set representation that is unsatisfiable exactly when $T_1 \cup T_2 \cup T_3 \models \neg p_1^2$, i.e. when ``{\it Number $1$ is healthy at time $2$.}'' (It is enough to convert only the specific axioms from $T_1,T_2,T_3$ that imply $\neg p_1^2$, and include only the corresponding clauses in $S$.)
         \item Prove by resolution that $S$ is unsatisfiable. Show the refutation as a resolution tree.
     \end{enumerate}
 

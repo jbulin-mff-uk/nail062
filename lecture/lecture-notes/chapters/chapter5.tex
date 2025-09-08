@@ -170,9 +170,9 @@ If a formula $S$ is resolution refutable, then $S$ is unsatisfiable.
     (Alternatively, we could proceed by induction on the depth of the resolution tree.)
 \end{proof}
 
-\subsection{Substitution Tree}
+\subsection{Tree of Reductions}
 
-In the completeness proof, we need to construct a resolution tree, whose construction is based on the so-called \emph{substitution tree}. By \emph{substituting} a literal into a formula, we mean simplifying the formula under the assumption that the given literal is true. Substitution was already encountered in Section \ref{section:horn-sat} during \emph{unit propagation}: we remove clauses containing this literal and remove the opposite literal from the remaining clauses.
+In the completeness proof, we need to construct a resolution tree, whose construction is based on the so-called \emph{tree of reductions}. By \emph{substituting} a literal into a formula, we mean simplifying the formula under the assumption that the given literal is true. Substitution was already encountered in Section \ref{section:horn-sat} during \emph{unit propagation}: we remove clauses containing this literal and remove the opposite literal from the remaining clauses.
 
 \begin{definition}[Literal Substitution]
     Given a formula $S$ and a literal $\ell$, the \emph{substitution} of $\ell$ into $S$ is the formula:
@@ -201,10 +201,10 @@ Let $\mathcal{V} \models S$, it cannot contain both $\ell$ and $\bar{\ell}$ (it 
 Conversely, suppose there exists an assignment $\mathcal{V}$ satisfying $S^\ell$ (again, without loss of generality). Since $\bar{\ell}$ (or $\ell$) does not appear in $S^\ell$, it holds that $\mathcal{V} \setminus \{\bar{\ell}\} \models S^\ell$. The assignment $\mathcal{V}' = (\mathcal{V} \setminus \{\bar{\ell}\}) \cup \{\ell\}$ then satisfies each clause $C \in S$: if $\ell \in C$, then $\ell \in C \cap \mathcal{V}'$ and $C \cap \mathcal{V}' \neq \emptyset$, otherwise $C \cap \mathcal{V}' = (C \setminus \{\bar{\ell}\}) \cap \mathcal{V}' \neq \emptyset$ because $\mathcal{V} \setminus \{\bar{\ell}\} \models C \setminus \{\bar{\ell}\} \in S^\ell$. We have verified that $\mathcal{V}' \models S$, so $S$ is satisfiable.
 \end{proof}
 
-Whether a given \emph{finite} formula is satisfiable can thus be determined recursively (using the \emph{divide and conquer} method) by substituting both possible literals for (some, say the first) propositional variable appearing in the formula and branching the computation. Essentially, this is a similar principle to the DPLL algorithm (see Section \ref{section:DPLL}). The resulting tree is called a \emph{substitution tree}. 
+Whether a given \emph{finite} formula is satisfiable can thus be determined recursively (using the \emph{divide and conquer} method) by substituting both possible literals for (some, say the first) propositional variable appearing in the formula and branching the computation. Essentially, this is a similar principle to the DPLL algorithm (see Section \ref{section:DPLL}). The resulting tree is called a \emph{tree of reductions}. 
 
 \begin{example}
-Let's illustrate this concept with an example by constructing a substitution tree for the formula $S = \{\{p\}, \{\neg q\}, \{\neg p, \neg q\}\}$:
+Let's illustrate this concept with an example by constructing a tree of reductions for the formula $S = \{\{p\}, \{\neg q\}, \{\neg p, \neg q\}\}$:
 \begin{center}
     \begin{forest}    
     [{$S$}
@@ -219,19 +219,19 @@ Let's illustrate this concept with an example by constructing a substitution tre
 Once a branch contains the empty clause $\square$, it is unsatisfiable, and we need not continue in that branch. In the leaves, there are either unsatisfiable theories or empty theories: in the latter case, the sequence of substitutions gives us a satisfying assignment.    
 \end{example}
 
-From the construction, it is evident how to proceed in the case of a finite formula. However, the substitution tree makes sense, and the following corollary holds, even for infinite formulas:
+From the construction, it is evident how to proceed in the case of a finite formula. However, the tree of reductions makes sense, and the following corollary holds, even for infinite formulas:
 
 \begin{corollary}
-    A formula $S$ (over a countable language) is unsatisfiable if and only if every branch of the substitution tree contains the empty clause $\square$.
+    A formula $S$ (over a countable language) is unsatisfiable if and only if every branch of the tree of reductions contains the empty clause $\square$.
 \end{corollary}
 
 \begin{proof}
     For a finite formula $S$, this follows from the above discussion; it can be easily proved by induction on the size of $\Var(S)$: 
     \begin{itemize}
-        \item If $|\Var(S)| = 0$, we have $S = \emptyset$ or $S = \{\square\}$, in both cases, the substitution tree is one node, and the statement holds. 
+        \item If $|\Var(S)| = 0$, we have $S = \emptyset$ or $S = \{\square\}$, in both cases, the tree of reductions is one node, and the statement holds. 
         \item In the inductive step, we choose any literal $\ell \in \Var(S)$ and apply Lemma \ref{lemma:tree-of-reductions}.
     \end{itemize} 
-If $S$ is infinite and satisfiable, it has a satisfying assignment, which `matches' the corresponding (infinite) branch in the substitution tree. If $S$ is infinite and unsatisfiable, then by the Compactness Theorem, there is a finite part $S' \subseteq S$ that is also unsatisfiable. Substitution for all variables from $\Var(S')$ will lead to $\square$ in each branch, which will happen after finitely many steps.
+If $S$ is infinite and satisfiable, it has a satisfying assignment, which `matches' the corresponding (infinite) branch in the tree of reductions. If $S$ is infinite and unsatisfiable, then by the Compactness Theorem, there is a finite part $S' \subseteq S$ that is also unsatisfiable. Substitution for all variables from $\Var(S')$ will lead to $\square$ in each branch, which will happen after finitely many steps.
 \end{proof}
 
 \subsection{Completeness of Resolution}

@@ -5,9 +5,9 @@
 \subsection*{Teaching goals:} After completing, the student
 
 \begin{itemize}\setlength{\itemsep}{0pt}
-    \item understands the notion of a structure and a signature, can formally define them and provide examples
+    \item understands the notions of structure and signature, can formally define them and provide examples
     \item understands the notions of the syntax of predicate logic (language, term, atomic formula, formula, theory, free variable, open formula, sentence, instance, variant), can formally define them and provide examples
-    \item understands the notions of the semantics of predicate logic (value of a term, truth value, validity [under an assignment], model, truth/falsity in a model/in a theory, independence [in a theory], consequence of a theory), can formally define them and provide examples
+    \item understands semantic notions of predicate logic (value of a term, truth value, validity [under assignment], model, being valid/contradictory in a model/theory, independence [in a theory], consequence of a theory), can formally define, give examples
     \item understands the notion of a complete theory and its relation to elementary equivalence of structures, can define both and apply them to examples
     \item knows basic examples of theories (graph theories, orders, algebraic theories)
     \item can describe models of a given theory    
@@ -19,7 +19,7 @@
 
 \begin{problem}
     
-    Are the following formulas variants of the formula $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
+    Are the following formulas variants of $(\forall x)(x<y \vee (\exists z)(z=y \wedge z\ne x))$?
     \begin{enumerate}[(a)]
         \item $(\forall z)(z<y \vee (\exists z)(z=y \wedge z\ne z))$
         \item $(\forall y)(y<y \vee (\exists z)(z=y \wedge z\ne y))$
@@ -32,7 +32,7 @@
         \begin{enumerate}[(a)]
             \item No, $z$ is not substitutable for $x$ into $\psi$: a new bound occurrence would be created.
             \item No, $y$ has a free occurrence in $\psi$.
-            \item Yes, $u$ is a fresh variable: in that case one can always form a variant.
+            \item Yes, $u$ is a new variable: in that case one can always form a variant.
         \end{enumerate}        
         
     \end{solution}
@@ -57,13 +57,13 @@
 
     \begin{solution}
 
-        We can visualize the structure as oriented edges.
+        We can visualize the structures as directed graphs.
         \begin{enumerate}[(a)]
-            \item I. No — intuitively the formula would state that the relation $\vartriangleright^\mathcal A$ contains all pairs (edges); from the definition $\mathrm{PH}^\mathcal A(x \vartriangleright y)[e]=0$ for example for $e(x)=a$, $e(y)=a$.\\            
+            \item I. No --- intuitively the formula would state that the relation $\vartriangleright^\mathcal A$ contains all pairs (edges); from the definition $\mathrm{PH}^\mathcal A(x \vartriangleright y)[e]=0$ for example for $e(x)=a$, $e(y)=a$.\\            
             II. For example $\mathcal B_0=(\{0\};\vartriangleright^{\mathcal B_0})$ with $\vartriangleright^{\mathcal B_0}=\{(0,0)\}$.
-            \item I. No — intuitively the graph has no sink; from the definition: $\mathrm{PH}^\mathcal A(\varphi)=\max_{u\in A}\mathrm{PH}^\mathcal A((\forall y)(y \vartriangleright x))[e(x/u)]=\max_{u\in A}\min_{v\in A}\mathrm{PH}^\mathcal A(y \vartriangleright x)[e(x/u,y/v)]=0$, e.g. for $u=a$ we may take $v=a$.\\
+            \item I. No --- intuitively the graph has no sink; from the definition: $\mathrm{PH}^\mathcal A(\varphi)=\max_{u\in A}\mathrm{PH}^\mathcal A((\forall y)(y \vartriangleright x))[e(x/u)]=\max_{u\in A}\min_{v\in A}\mathrm{PH}^\mathcal A(y \vartriangleright x)[e(x/u,y/v)]=0$, e.g. for $u=a$ we may take $v=a$.\\
             II. For example $\mathcal B_0$ as above.
-            \item I. Yes (evaluate $x$ for instance by the element $a$), the antecedent is not satisfied for any valuation of $y$, hence the implication is always true.\\
+            \item I. Yes (assign to $x$ for instance the element $a$), the antecedent is not satisfied for any assignment to $y$, hence the implication is always true.\\
             II. For example $\mathcal B_1=(\{0,1\};\vartriangleright^{\mathcal B_1})$ with $\vartriangleright^{\mathcal B_1}=\{(0,1)\}$.
             \item I. No. II: For example $\mathcal B_0$.
             \item I. No. II: For example $\mathcal B_0$.  
@@ -87,7 +87,7 @@
 
     \begin{solution}
 
-        (a) It would be simpler to use the tableau method, but we want to practice a semantic proof. Intuitively, since $\psi$ is a sentence, the valuation of $x$ does not play a role in computing the truth value of $\psi$, so the equivalence holds. Compute from the definitions: $\mathcal{A}\models (\psi \to (\exists x)\varphi)$ holds iff it holds under every valuation $e:\mathrm{Var}\to\mathcal A$. Compute the truth value. Use the fact that $f_\to(a,b)=\max(1-a,b)$:
+        (a) It would be simpler to use the tableau method, but we want to practice a semantic proof. Intuitively, since $\psi$ is a sentence, the variable assignment of $x$ does not play a role in computing the truth value of $\psi$, so the equivalence holds. Compute from the definitions: $\mathcal{A}\models (\psi \to (\exists x)\varphi)$ holds iff it holds under every variable assignment $e:\mathrm{Var}\to\mathcal A$. Compute the truth value. Use the fact that $f_\to(a,b)=\max(1-a,b)$:
             \begin{align*}
                 &\mathrm{PH}^\mathcal A(\psi \to (\exists x)\varphi)[e]\\
                 =&f_\to(\mathrm{PH}^\mathcal A(\psi)[e], \mathrm{PH}^\mathcal A((\exists x)\varphi)[e])\\
@@ -113,7 +113,7 @@
                 \item $\psi$ is $x=c$,
                 \item $\mathcal A=(\{0,1\};0)$ (i.e. $c^\mathcal A=0$).
             \end{itemize}
-            We have $\mathcal A\not\models (x=c\to (\exists x) \neg x=x)$, because it is not valid under the valuation $e(x)=0$. But $\mathcal A\models(\exists x)(x=c\to \neg x=x)$, because $x$ can be assigned the element $1$, and then the antecedent is not satisfied.
+            We have $\mathcal A\not\models (x=c\to (\exists x) \neg x=x)$, because it is not valid under the variable assignment $e(x)=0$. But $\mathcal A\models(\exists x)(x=c\to \neg x=x)$, because $x$ can be assigned the element $1$, and then the antecedent is not satisfied.
 
         (b), (c), (d) are solved similarly. 
                     
@@ -134,7 +134,7 @@
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Beware, this theory is inconsistent. Note that $\neg x=y$ is inconsistent: it is not true in any model, because it fails under the valuation $e(x)=a,e(y)=a$ for any element $a\in A$. (It is equivalent to its universal closure $(\forall x)(\forall y)\neg x=y$.) An inconsistent theory is not complete by definition, and all its extensions are also inconsistent, so it has no complete simple extension.
+            \item Beware, this theory is inconsistent. Note that $\neg x=y$ is inconsistent: it is not true in any model, because it fails under the variable assignment $e(x)=a,e(y)=a$ for any element $a\in A$. (It is equivalent to its universal closure $(\forall x)(\forall y)\neg x=y$.) An inconsistent theory is not complete by definition, and all its extensions are also inconsistent, so it has no complete simple extension.
             \item Not complete. Informally, $T$ says that the model has exactly two elements, and the outputs of $f^\mathcal A$ must lie inside $U^\mathcal A$. From this we know $U^\mathcal A\neq\emptyset$. If it is a one-element set, we have a single model (up to isomorphism); if it is two-element, we have in total three pairwise non-isomorphic (and thus elementarily non-equivalent) models (where $f^\mathcal A$ has no fixed point, has one fixed point, or has two fixed points, i.e. is the identity):
             \begin{itemize}
                 \item $\mathcal A_1=(\{0,1\};U^\mathcal A_1,f^\mathcal A_1)$ where $U^\mathcal A_1=\{0\}$ and $f^\mathcal A_1=\{(0,0),(1,0)\}$, i.e. $f^\mathcal A_1(0)=0$, $f^\mathcal A_1(1)=0$
@@ -166,7 +166,7 @@
 
 \begin{problem}
 
-    Determine the free and bound occurrences of variables in the following formulas. Then convert them to variants in which no variable occurs both free and bound at the same time.
+    Determine the free and bound occurrences of variables in the following formulas. Then convert them to variants in which no variable will have both free and bound occurence.
     \begin{enumerate}[(a)]
         \item $(\exists x)(\forall y)P(y,z) \vee (y=0)$
         \item $(\exists x)(P(x) \wedge (\forall x)Q(x)) \vee (x=0)$
@@ -190,7 +190,7 @@
 
 \begin{problem}
 
-    Are the following sentences true / false / independent (in logic)?
+    Are the following sentences valid / contradictory / independent (in logic)?
 
     \begin{enumerate}[(a)]
         \item $(\exists x)(\forall y)(P(x) \vee \neg P(y))$
@@ -227,7 +227,7 @@
     0+x&=x=x+0\\
     x+(-x)&=0=(-x)+x
     \end{align*}
-    Decide whether the following formulas are true / false / independent in $T$. Provide justification.
+    Decide whether the following formulas are true / false / independent in $T$. Justify.
     \begin{enumerate}[(a)]
         \item $x+y=y+x$
         \item $x+y=x\ \rightarrow\ y=0$

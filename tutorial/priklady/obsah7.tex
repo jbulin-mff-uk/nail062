@@ -5,7 +5,7 @@
 \subsection*{Cíle výuky:} Po absolvování cvičení student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item rozumí pojmu podstruktura, generovaná podstruktura, expanze, redukt umí je najít
+        \item rozumí pojmu podstruktura, generovaná podstruktura, umí je najít
         \item rozumí pojmu expanze a redukt struktury, umí je formálně definovat, uvést příklady
         \item rozumí pojmům [jednoduchá, konzervativní] extenze, umí zformulovat definice, i příslušné sémantické kritérium (jak pro expanze, tak i pro redukty), aplikovat na příkladě
         \item rozumí pojmu extenze o definice, umí ho formálně definovat, uvést příklady
@@ -33,7 +33,7 @@
 
         \begin{enumerate}[(a)]
             \item Ano, lze ověřit, že $\underline{\mathbb Z_4}$ splňuje všechny axiomy teorie grup ($+$ je asociativní, $0$ je neutrální vůči $+$, $-x$ je inverzní prvek k $x$ vůči $+$ a $0$).
-            \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{triviální grupa}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (dvouprvková grupa \emph{izomorfní} grupě $\underline{\mathbb Z_4}$).
+            \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{triviální grupa}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (dvouprvková grupa \emph{izomorfní} grupě $\underline{\mathbb Z_2}$).
             \item Ne, jakmile máme prvek $1$ nebo $3$, generovaná podstruktura už je celá $\underline{\mathbb Z_4}$.
             \item Ano, teorie grup je \emph{otevřená}, proto podstruktury modelů (grup) jsou také modely (\emph{podgrupy}).
             \item Ne, jazyk teorie grup je s rovností, konečná velikost modelu lze popsat sentencí, tedy různě velké konečné modely nemohou být elementárně ekvivalentní. Velikost ale nepotřebujeme, stačí nám ``grupové vlasnosti'', např. sentence $(\forall x)x=0$ odliší triviální grupu $\underline{\mathbb Z_4}\restriction\{0\}$ od dvouprvkové grupy $\underline{\mathbb Z_4}\restriction\{0,2\}$ i od $\underline{\mathbb Z_4}$, a např. $(\forall x)x+x=0$ platí v $\underline{\mathbb Z_4}\restriction\{0,2\}$ ale ne v $\underline{\mathbb Z_4}$.
@@ -104,7 +104,7 @@
                 \item $\{x=x\land\neg x=x\}$ \hfill sporná teorie, nemá model
             \end{itemize}
 
-            Jednoduché kompletní extenze:
+            Kompletní jednoduché extenze:
             \begin{itemize}
                 \item $\mathrm{Th}(\mathcal A_1)\sim\{x=y\}$
                 \item $\mathrm{Th}(\mathcal A_2)\sim\{(\exists x)(\exists y)\neg x=y,x=y\lor x=z,c_1=c_2,\neg c_2=c_3\}$
@@ -146,7 +146,7 @@
 
         Všimněte si, že axiomy teorie vyjadřují existenci a jednoznačnost pro definici funkčního symbolu $-$, jde tedy o korektní extenzi o definice. Postupujeme dle (důkazu) tvrzení z přednášky:
         \begin{enumerate}[(a)]
-            \item $(\exists z)(x+z=0\land z+x=0)$ (Podformule $x+z=0$ říká, že `$z$ je $-x$' a druhá, že `$(-x)+x=0$'.)
+            \item $(\exists z)(x+z=0\land z+x=0)$ (Podformule $x+z=0$ říká, že `$z$ je $-x$' a druhá podformule, že `$(-x)+x=0$'.)
             \item Nejprve nahradíme definicí term $-y$: 
             $$
             (\exists z)(y+z=0\land x+z<x)
@@ -169,7 +169,7 @@
     \begin{enumerate}[(a)]
         \item interval $(0,\infty)$ v $\mathcal A=\langle\mathbb R, \cdot\rangle$ kde $\cdot$ je násobení reálných čísel
         \item množina $\{(x, 1/x)\mid x\neq 0\}$ ve stejné struktuře $\mathcal A$
-        \item množina všech nejvýše jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$
+        \item množina všech jednoprvkových podmnožin $\mathbb N$ v $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$
         \item množina všech prvočísel v $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$
     \end{enumerate}
 
@@ -179,7 +179,7 @@
             \item $(\exists y)F(y,y)=x\land \neg (\forall y)F(x,y)=x$ (Číslo $x$ je čtverec, a není to nula.)
             \item $(\exists z)(F(x,y)=z\land(\forall u)F(z,u)=u)$ (Součin je roven jedné.)
             \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=y$ (Kdykoliv je množina sjednocením dvou množin, je rovna jedné z nich. A není prázdná.)
-            \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=x$ (Kdykoliv je součin dvou čísel roven prvočíslu, je jedno z nich rovno prvočíslu, a prvočíslo není nula.)
+            \item Stejně jako v (c), $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=x$ (Kdykoliv je součin dvou čísel roven prvočíslu, je jedno z nich rovno prvočíslu, a prvočíslo není nula.)
         \end{enumerate}
                     
     \end{solution}
@@ -205,8 +205,8 @@
 
     Nechť $T=\{x=f(f(x)),\varphi, \neg c_1 = c_2\}$ je teorie jazyka $L=\langle f,c_1,c_2\rangle$ s rovností, kde $f$ je unární funkční, $c_1,c_2$ jsou konstantní symboly a axiom $\varphi$ vyjadřuje, že ``existují právě $3$ prvky''.
     \begin{enumerate}[(a)]    
-        \item Určete, kolik má teorie $T$ navzájem neekvivalentních jednoduchých kompletních extenzí. Napište dvě z nich. {\it (3b)}
-        \item Nechť $T'=\{x=f(f(x)),\varphi,\neg f(c_1)=f(c_2)\}$ je teorie stejného jazyka, axiom $\varphi$ je stejný jako výše. Je $T'$ extenze $T$? Je $T$ extenze $T'$? Pokud ano, jde o konzervativní extenzi? Uveďte zdůvodnění. {\it (2b)}
+        \item Určete, kolik má teorie $T$ navzájem neekvivalentních kompletních jednoduchých extenzí. Napište dvě z nich.
+        \item Nechť $T'=\{x=f(f(x)),\varphi,\neg f(c_1)=f(c_2)\}$ je teorie stejného jazyka, axiom $\varphi$ je stejný jako výše. Je $T'$ extenze $T$? Je $T$ extenze $T'$? Pokud ano, jde o konzervativní extenzi? Uveďte zdůvodnění.
     \end{enumerate}
     
 \end{problem}

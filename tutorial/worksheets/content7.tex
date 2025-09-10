@@ -5,7 +5,7 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item understands the notion of substructure, generated substructure, expansion, reduct and can find them
+        \item understands the notion of substructure, generated substructure, can find them
         \item understands the notion of expansion and reduct of a structure, can define them formally and give examples
         \item understands the notions of [simple, conservative] extension, can formulate the definitions and the corresponding semantic criterion (for both expansions and reducts), and apply it to an example
         \item understands the notion of extension by definition, can define it formally and give examples
@@ -34,10 +34,10 @@
 
         \begin{enumerate}[(a)]
             \item Yes, one can check that $\underline{\mathbb Z_4}$ satisfies all axioms of the theory of groups ($+$ is associative, $0$ is neutral for $+$, $-x$ is the inverse of $x$ w.r.t.\ $+$ and $0$).
-            \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{the trivial group}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (the two-element group \emph{isomorphic} to a subgroup of $\underline{\mathbb Z_4}$).
-            \item No — as soon as we have the element $1$ or $3$, the generated substructure is the whole $\underline{\mathbb Z_4}$.
-            \item Yes, the theory of groups is \emph{universal} (closed under substructures), hence substructures of models (groups) are also models (i.e. \emph{subgroups}).
-            \item No, the language of group theory includes equality, and the finiteness of a model can be expressed by a sentence, so finite models of different sizes cannot be elementarily equivalent. It suffices to use “group properties’’ to distinguish them: e.g. the sentence $(\forall x)x=0$ distinguishes the trivial group $\underline{\mathbb Z_4}\restriction\{0\}$ from the two-element group $\underline{\mathbb Z_4}\restriction\{0,2\}$ and from $\underline{\mathbb Z_4}$; and e.g. $(\forall x)x+x=0$ is valid in $\underline{\mathbb Z_4}\restriction\{0,2\}$ but not in $\underline{\mathbb Z_4}$.
+            \item $\underline{\mathbb Z_4}\langle 0\rangle=\underline{\mathbb Z_4}\restriction\{0\}$ (\emph{the trivial group}), $\underline{\mathbb Z_4}\langle 1\rangle=\underline{\mathbb Z_4}\langle 3\rangle=\underline{\mathbb Z_4}$, $\underline{\mathbb Z_4}\langle 2\rangle=\underline{\mathbb Z_4}\restriction\{0,2\}$ (a two-element group \emph{isomorphic} to $\underline{\mathbb Z_2}$).
+            \item No, as soon as we have the element $1$ or $3$, the generated substructure is the whole $\underline{\mathbb Z_4}$.
+            \item Yes, the theory of groups is \emph{universal} (closed under substructures), hence substructures of models (groups) are also models (\emph{subgroups}).
+            \item No, the language of group theory is with equality, and any finite model size can be expressed by a sentence, so finite models of different sizes cannot be elementarily equivalent. However, we do not even need to express model size directly. It suffices to use ``group properties'' to distinguish them: e.g. the sentence $(\forall x)x=0$ distinguishes the trivial group $\underline{\mathbb Z_4}\restriction\{0\}$ from the two-element group $\underline{\mathbb Z_4}\restriction\{0,2\}$ and from $\underline{\mathbb Z_4}$; and e.g. $(\forall x)x+x=0$ is valid in $\underline{\mathbb Z_4}\restriction\{0,2\}$ but not in $\underline{\mathbb Z_4}$.
         \end{enumerate}
                     
     \end{solution}
@@ -59,8 +59,8 @@
 
         \begin{enumerate}[(a)]
             \item Yes, $\underline{\mathbb{Q}}=\langle\mathbb{Q};+,-,0\rangle$ (the additive group reduct).
-            \item No, the element $1$ (which would interpret the symbol $0$ of group language if we attempted that identification) is not a neutral element with respect to $\cdot$ (the intended interpretation of $+$), because $1\cdot 0=0\neq 1$.
-            \item Yes, for example $\underline{\mathbb{Q}}\restriction\mathbb Z =\langle\mathbb{Z};+,-,\cdot,0,1 \rangle$ (the ring of integers) — in it not every nonzero element has a multiplicative inverse, so the sentence $(\forall x)(\neg x=0\to (\exists y)x\cdot y=1)$ fails (e.g. $2$ has no inverse in $\mathbb Z$, while it does in $\mathbb Q$). (From this it follows that the theory of fields cannot be axiomatized by universal sentences only, otherwise substructures of fields would be fields.)
+            \item No, the element $1$ (interpretation of the symbol $0$ of the language of groups) is not a neutral element with respect to $\cdot$ (the interpretation of $+$), because $1\cdot 0=0\neq 1$.
+            \item Yes, for example $\underline{\mathbb{Q}}\restriction\mathbb Z =\langle\mathbb{Z};+,-,\cdot,0,1 \rangle$ (the ring of integers): in it not every nonzero element has a multiplicative inverse, so the sentence $(\forall x)(\neg x=0\to (\exists y)x\cdot y=1)$ fails (e.g. $2$ has no inverse in $\mathbb Z$, while it does in $\mathbb Q$). (From this it follows that the theory of fields is not openly axiomatizable, otherwise substructures of fields would be fields.)
             \item Yes, the so-called \emph{theory of a structure} is always complete: for every sentence $\psi$ either $\mathrm{Th}(\underline{\mathbb{Q}})\models\psi$ or $\mathrm{Th}(\underline{\mathbb{Q}})\models\neg\psi$, because $\underline{\mathbb{Q}}\models\psi$ or $\underline{\mathbb{Q}}\models\neg\psi$.
         \end{enumerate}
                     
@@ -81,7 +81,7 @@
 
     \begin{solution}
         
-        The theory says that every element is one of the three constants. These constants need not be distinct. First find all models up to isomorphism; there are five (draw them):
+        The theory says that every element is one of the three constants. But these constants need not be distinct. First find all models up to isomorphism; there are five (draw them):
         \begin{itemize}
             \item $\mathcal A_1=\langle\{0\};0,0,0\rangle$ (one-element model, $c_1^{\mathcal A_1}=c_2^{\mathcal A_1}=c_3^{\mathcal A_1}=0$)
             \item $\mathcal A_2=\langle\{0,1\};0,0,1\rangle$ (two-element model, $c_1^{\mathcal A_2}=c_2^{\mathcal A_2}\neq c_3^{\mathcal A_2}$)
@@ -90,7 +90,7 @@
             \item $\mathcal A_5=\langle\{0,1,2\};0,1,2\rangle$ (three-element model, constants are distinct)
         \end{itemize}
         \begin{enumerate}[(a)]
-            \item It is not complete; for example the sentence $c_1=c_2$ is independent of $T$: it is valid in $\mathcal A_1$ but not in $\mathcal A_3$. (Equivalently, by the semantic criterion, models $\mathcal A_1$ and $\mathcal A_3$ are not elementarily equivalent.)
+            \item It is not complete; for example the sentence $c_1=c_2$ is independent in $T$: it is valid in $\mathcal A_1$ but not in $\mathcal A_3$. (Equivalently, by the semantic criterion, models $\mathcal A_1$ and $\mathcal A_3$ are not elementarily equivalent.)
             \item Simple extensions correspond to subsets of $\{\mathcal A_1,\mathcal A_2,\mathcal A_3,\mathcal A_4,\mathcal A_5\}$, there are $2^5=32$ of them; complete ones correspond to singletons (complete theories of individual models), so there are 5.
             
             Simple extensions that are not complete:
@@ -105,7 +105,7 @@
                 \item $\{x=x\land\neg x=x\}$ \hfill the inconsistent theory, has no model
             \end{itemize}
 
-            Simple complete extensions:
+            Complete simple extensions:
             \begin{itemize}
                 \item $\mathrm{Th}(\mathcal A_1)\sim\{x=y\}$
                 \item $\mathrm{Th}(\mathcal A_2)\sim\{(\exists x)(\exists y)\neg x=y,x=y\lor x=z,c_1=c_2,\neg c_2=c_3\}$
@@ -114,16 +114,16 @@
                 \item $\mathrm{Th}(\mathcal A_5)\sim\{x=c_1 \vee x=c_2 \vee x=c_3,\neg (c_1=c_2\lor c_1=c_3\lor c_2=c_3)\}$
             \end{itemize}    
             
-            \item The extended theory additionally says that every element is either the interpretation of $c_1$ or $c_4$. Thus models have at most two elements; up to isomorphism they are:
+            \item The theory additionally says that every element is either the interpretation of $c_1$ or $c_4$. Thus models have at most two elements; up to isomorphism they are:
             \begin{itemize}
                 \item $\mathcal A_1'=\langle\{0\};0,0,0,0\rangle$
                 \item $\mathcal A_2'=\langle\{0,1\};0,0,1,1\rangle$
                 \item $\mathcal A_3'=\langle\{0,1\};0,1,1,1\rangle$
                 \item $\mathcal A_4'=\langle\{0,1\};0,1,0,1\rangle$                
             \end{itemize}
-            The theory $T'$ is an extension of $T$ — it entails all consequences of $T$; semantically: the reducts of models of $T'$ to the original language $L$ are models of $T$ (e.g. the reduct of $\mathcal A_1'$ to $L$ is $\mathcal A_1$). It is not a simple extension, since we enlarged the language.
+            The theory $T'$ is an extension of $T$. All consequences of $T$ are valid in $T'$; semantically: the reducts of models of $T'$ to the original language $L$ are models of $T$ (e.g. the reduct of $\mathcal A_1'$ to $L$ is $\mathcal A_1$). It is not a simple extension, since we enlarged the language.
             
-            It is also not a conservative extension: for example the sentence $(\forall x)(\forall y)(\forall z)(x=y\lor x=z)$ is a sentence of the original language $L$, it is valid in $T'$ but it was not valid in $T$. Semantically: the three-element model $\mathcal A_5$ of $T$ cannot be expanded to an $L'$-structure that models $T'$, i.e. the reducts of models of $T'$ to $L$ do not yield all models of $T$.
+            It is also not a conservative extension: for example the sentence $(\forall x)(\forall y)(\forall z)(x=y\lor x=z)$ is a sentence in the original language $L$, it is valid in $T'$ but it was not valid in $T$. Semantically: the three-element model $\mathcal A_5$ of $T$ cannot be expanded to an $L'$-structure that models $T'$, i.e. the reducts of models of $T'$ to $L$ do not yield all models of $T$.
 
         \end{enumerate}
                     
@@ -147,7 +147,7 @@
 
         Note that the axioms express existence and uniqueness for the definition of the function symbol $-$, so this is a proper extension by definition. We proceed according to the (proof of the) claim from the lecture:
         \begin{enumerate}[(a)]
-            \item $(\exists z)(x+z=0\land z+x=0)$ (The subformula $x+z=0$ says that `$z$ is $-x$' and the other that `$(-x)+x=0$'.)
+            \item $(\exists z)(x+z=0\land z+x=0)$ (The subformula $x+z=0$ says that `$z$ is $-x$' and the second subformula says that `$(-x)+x=0$'.)
             \item First replace the term $-y$ by its definition:
             $$
             (\exists z)(y+z=0\land x+z<x)
@@ -166,11 +166,11 @@
 
 \begin{problem}
 
-    Let the language $L=\langle F \rangle$ with equality, where $F$ is a binary function symbol. Find formulas defining the following sets (without parameters):
+    Consider the language $L=\langle F \rangle$ with equality, where $F$ is a binary function symbol. Find formulas defining the following sets (without parameters):
     \begin{enumerate}[(a)]
         \item the interval $(0,\infty)$ in $\mathcal A=\langle\mathbb R, \cdot\rangle$ where $\cdot$ is multiplication of real numbers
         \item the set $\{(x, 1/x)\mid x\neq 0\}$ in the same structure $\mathcal A$
-        \item the set of all at-most-singleton subsets of $\mathbb N$ in $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$
+        \item the set of all singleton subsets of $\mathbb N$ in $\mathcal B=\langle\mathcal P(\mathbb N),\cup\rangle$
         \item the set of all prime numbers in $\mathcal C=\langle \mathbb N\cup\{0\}, \cdot\rangle$
     \end{enumerate}
 
@@ -180,7 +180,7 @@
             \item $(\exists y)F(y,y)=x\land \neg (\forall y)F(x,y)=x$ (The number $x$ is a square, and it is not zero.)
             \item $(\exists z)(F(x,y)=z\land(\forall u)F(z,u)=u)$ (The product equals one.)
             \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=y$ (Whenever the set is the union of two sets, it equals one of them. And it is not empty.)
-            \item $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=x$ (Whenever the product of two numbers equals a prime, one of them equals the prime, and a prime is not zero.)
+            \item Same as (c), $(\forall y)(\forall z)(F(y,z)=x\to y=x\lor z=x)\land\neg(\forall y)F(x,y)=x$ (Whenever the product of two numbers equals a prime, one of them equals the prime, and a prime is not zero.)
         \end{enumerate}
                     
     \end{solution}
@@ -207,8 +207,8 @@
 
     Let $T=\{x=f(f(x)),\varphi, \neg c_1 = c_2\}$ be a theory in the language $L=\langle f,c_1,c_2\rangle$ with equality, where $f$ is a unary function symbol, $c_1,c_2$ are constant symbols, and the axiom $\varphi$ expresses that “there are exactly three elements.”
     \begin{enumerate}[(a)]    
-        \item Determine how many pairwise nonequivalent simple complete extensions the theory $T$ has. Write down two of them. {\it (3 points)}
-        \item Let $T'=\{x=f(f(x)),\varphi,\neg f(c_1)=f(c_2)\}$ be a theory in the same language, with $\varphi$ as above. Is $T'$ an extension of $T$? Is $T$ an extension of $T'$? If so, is it a conservative extension? Provide justification. {\it (2 points)}
+        \item Determine how many pairwise nonequivalent complete simple extensions the theory $T$ has. Write down two of them.
+        \item Let $T'=\{x=f(f(x)),\varphi,\neg f(c_1)=f(c_2)\}$ be a theory in the same language, with $\varphi$ same as above. Is $T'$ an extension of $T$? Is $T$ an extension of $T'$? If so, is it a conservative extension? Provide justification.
     \end{enumerate}
     
 \end{problem}
@@ -233,7 +233,7 @@
 
     \begin{enumerate}[(a)]
         \item Find an expansion of the structure $\langle \mathbb{Q},\le \rangle$ to the language $L$ that is a model of $T$.
-        \item Is the sentence $(\forall x)R(c,x)$ true/false/independent in $T$? Justify all three answers.
+        \item Is the sentence $(\forall x)R(c,x)$ valid/contradictory/independent in $T$? Justify all 3 answers.
         \item Find two nonequivalent complete simple extensions of $T$, or justify why they do not exist.
         \item Let $T'=T\setminus\{\varphi,\psi\}$ be a theory in the language $L'=\langle R,f,c,d\rangle$. Is the theory $T$ a conservative extension of the theory $T'$? Provide justification.
     \end{enumerate}
@@ -246,7 +246,7 @@
 
 \begin{problem}
 
-    Let $T_n = \{\neg c_i = c_j \mid 1 \leq i < j \leq n\}$ denote the theory of the language $L_n = \langle c_1, \dots, c_n \rangle$ with equality, where $c_1, \dots, c_n$ are constant symbols.
+    Let $T_n = \{\neg c_i = c_j \mid 1 \leq i < j \leq n\}$ be a theory in the language $L_n = \langle c_1, \dots, c_n \rangle$ with equality, where $c_1, \dots, c_n$ are constant symbols.
     \begin{enumerate}[(a)]   
         \item For a given finite $k \geq 1$, count $k$-element models of the theory $T_n$ up to isomorphism. 
         \item Determine the number of countable models of the theory $T_n$ up to isomorphism. 

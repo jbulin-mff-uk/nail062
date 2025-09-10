@@ -29,7 +29,7 @@
         \item No witness lies.
     \end{itemize}
 
-    Prove by the tableau method that: {\it Not all the accused are guilty.} Specifically:
+    Prove by the tableau method that: {\it Not all of the accused are guilty.} Specifically:
     \begin{enumerate}[(a)]
         \item Choose a suitable language $\mathcal L$. Will it be with equality, or without equality?        
         \item Formalize our knowledge and the statement to be proved as sentences $\alpha_1,\alpha_2,\alpha_3,\varphi$ in $\mathcal L$.
@@ -40,40 +40,40 @@
     \begin{solution}
 
         \begin{enumerate}[(a)]
-            \item Let us choose the language $\mathcal L=\langle V,L,O,S\rangle$ without equality, where $V$, $L$, $O$ and $S$ are unary relation symbols meaning "to be a guilty person / a liar / an accused / a witness".
+            \item Let us choose the language $\mathcal L=\langle G,L,A,W\rangle$ without equality, where $G$, $L$, $A$ and $W$ are unary relation symbols meaning ``to be a guilty person / a liar / an accused / a witness''.
             \item 
             \begin{align*}
-                \alpha_1 & = (\forall x)(V(x)\to L(x)) \\
-                \alpha_2 & = (\exists x)(O(x)\land S(x)) \\
-                \alpha_3 & = \neg(\exists x)(S(x)\land L(x)) \\
-                \varphi & = \neg (\forall x)(O(x)\limplies V(x))
+                \alpha_1 & = (\forall x)(G(x)\to L(x)) \\
+                \alpha_2 & = (\exists x)(A(x)\land W(x)) \\
+                \alpha_3 & = \neg(\exists x)(W(x)\land L(x)) \\
+                \varphi & = \neg (\forall x)(A(x)\limplies G(x))
             \end{align*}
-            \item We construct a finished tableau from the theory $T=\{\alpha_1,\alpha_2,\alpha_3\}$ with the item $F\varphi$ at the root. We will see that all branches are closed, so this is a tableau proof. (\textcolor{blue}{In blue} the attachment of axioms is marked, \textcolor{red}{in red} are the roots of atomic tableau entries of the "for all" type, which we could avoid drawing if our conventions allowed it.)
+            \item We construct a finished tableau from the theory $T=\{\alpha_1,\alpha_2,\alpha_3\}$ with the item $F\varphi$ at the root. We will see that all branches are contradictory, so this is a tableau proof. (The color \textcolor{blue}{blue} marks the attachment of axioms, \textcolor{red}{in red} are the roots of atomic tableau entries of the ``for all'' type, which we could avoid drawing if our conventions allowed it.)
             
             \begin{center}
                 \scalebox{1}{
                 \begin{forest}
                     for tree={math content}
-                    [\F\neg (\forall x)(O(x)\limplies V(x))
-                        [\T (\forall x)(O(x)\limplies V(x))
-                            [\textcolor{blue}{\T(\exists x)(O(x)\land S(x))}
-                                [\T O(c_0)\land S(c_0)
-                                    [\T O(c_0)
-                                        [\T S(c_0)
-                                            [\textcolor{red}{\T (\forall x)(O(x)\limplies V(x))}
-                                                [\T O(c_0)\limplies V(c_0)
-                                                    [\F O(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                                                    [\T V(c_0)
-                                                        [\textcolor{blue}{\T(\forall x)(V(x)\limplies L(x))}
-                                                            [\textcolor{red}{\T(\forall x)(V(x)\limplies L(x))}
-                                                                [\T V(c_0)\limplies L(c_0)
-                                                                    [\F V(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                    [\F\neg (\forall x)(A(x)\limplies G(x))
+                        [\T (\forall x)(A(x)\limplies G(x))
+                            [\textcolor{blue}{\T(\exists x)(A(x)\land W(x))}
+                                [\T A(c_0)\land W(c_0)
+                                    [\T A(c_0)
+                                        [\T W(c_0)
+                                            [\textcolor{red}{\T (\forall x)(A(x)\limplies G(x))}
+                                                [\T A(c_0)\limplies G(c_0)
+                                                    [\F A(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                    [\T G(c_0)
+                                                        [\textcolor{blue}{\T(\forall x)(G(x)\limplies L(x))}
+                                                            [\textcolor{red}{\T(\forall x)(G(x)\limplies L(x))}
+                                                                [\T G(c_0)\limplies L(c_0)
+                                                                    [\F G(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                                     [\T L(c_0)
-                                                                        [\textcolor{blue}{\T\neg(\exists x)(S(x)\land L(x))}
-                                                                            [\F(\exists x)(S(x)\land L(x))
-                                                                                [\textcolor{red}{\F(\exists x)(S(x)\land L(x))}
-                                                                                    [\F S(c_0)\land L(c_0)
-                                                                                        [\F S(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]           [\F L(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                                        [\textcolor{blue}{\T\neg(\exists x)(W(x)\land L(x))}
+                                                                            [\F(\exists x)(W(x)\land L(x))
+                                                                                [\textcolor{red}{\F(\exists x)(W(x)\land L(x))}
+                                                                                    [\F W(c_0)\land L(c_0)
+                                                                                        [\F W(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]           [\F L(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                                                     ]
                                                                                 ]
                                                                             ]
@@ -104,17 +104,21 @@
 \begin{problem}
 
     Consider the following statements:
-    \begin{enumerate}[(i)] \it 
+    \vspace{-9pt}
+    \begin{multicols}{2}
+      \begin{enumerate}[(i)] \it 
         \item Zero is a small number.
         \item A number is small iff it is close to zero.
-        \item The sum of two small numbers is a small number.
-        \item If $x$ is close to $y$, then $f(x)$ is close to $f(y)$.
-    \end{enumerate}
+        \item The sum of two small numbers is small.
+        \item If $x$ is close to $y$, so is $f(x)$ to $f(y)$.
+      \end{enumerate}  
+    \end{multicols}
+    \vspace{-9pt}
 
     We want to prove that: {\it (v) If $x$ and $y$ are small numbers, then $f(x+y)$ is close to $f(0)$.}
 
     \begin{enumerate}[(a)]
-        \item Formalize the statements as sentences $\varphi_1,\dots,\varphi_5$ in $L=\langle M,B,f,+,0\rangle$ without equality.        
+        \item Formalize the statements as sentences $\varphi_1,\dots,\varphi_5$ in $L=\langle S,C,f,+,0\rangle$ without equality.        
         \item Construct a finished tableau from the theory $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ with the item $F\varphi_5$ at the root. Decide whether $T\models \varphi_5$.
         \item If they exist, give at least two complete simple extensions of the theory $T$.
     \end{enumerate}
@@ -123,48 +127,48 @@
 
         \begin{enumerate}[(a)]
             \item \begin{align*}
-                \varphi_1 & = M(0) \\
-                \varphi_2 & = (\forall x)(M(x)\leftrightarrow B(x,0)) \\
-                \varphi_3 & = (\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y)) \\
-                \varphi_4 & = (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y))) \\
-                \varphi_5 & = (\forall x)(\forall y)(M(x)\wedge M(y)\to B(f(x+y),f(0)))
+                \varphi_1 & = S(0) \\
+                \varphi_2 & = (\forall x)(S(x)\leftrightarrow C(x,0)) \\
+                \varphi_3 & = (\forall x)(\forall y)(S(x)\wedge S(y)\to S(x+y)) \\
+                \varphi_4 & = (\forall x)(\forall y)(C(x,y)\to C(f(x),f(y))) \\
+                \varphi_5 & = (\forall x)(\forall y)(S(x)\wedge S(y)\to C(f(x+y),f(0)))
             \end{align*}
 
-            \item The tableau is closed, so we have $T\proves \varphi_5$ and by completeness $T\models \varphi_5$. Note that the axiom $\varphi_1 = M(0)$ is not needed:
+            \item The tableau is contradictory, so we have $T\proves \varphi_5$ and by completeness $T\models \varphi_5$. Note that the axiom $\varphi_1 = S(0)$ is not needed:
             
             \begin{center}
             \scalebox{0.95}{
             \begin{forest}
                 for tree={math content}
-                [{\F(\forall x)(\forall y)(M(x)\wedge M(y)\to B(f(x+y),f(0)))}
-                  [{\F(\forall y)(M(c_0)\wedge M(y)\to B(f(c_0+y),f(0)))}
-                    [{\F M(c_0)\wedge M(c_1)\to B(f(c_0+c_1),f(0))}
-                      [\T M(c_0)\wedge M(c_1)
-                        [{\F B(f(c_0+c_1),f(0))}
-                          [\T M(c_0)
-                            [\T M(c_1)
-                              [\textcolor{blue}{\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))}
-                                [\textcolor{red}{\T(\forall x)(\forall y)(M(x)\wedge M(y)\to M(x+y))}
-                                  [\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))
-                                    [\textcolor{red}{\T(\forall y)(M(c_0)\wedge M(y)\to M(c_0+y))}
-                                      [\T M(c_0)\wedge M(c_1)\to M(c_0+c_1)
-                                        [\F M(c_0)\wedge M(c_1)
-                                          [\F M(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                                          [\F M(c_1), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                [{\F(\forall x)(\forall y)(S(x)\wedge S(y)\to C(f(x+y),f(0)))}
+                  [{\F(\forall y)(S(c_0)\wedge S(y)\to C(f(c_0+y),f(0)))}
+                    [{\F S(c_0)\wedge S(c_1)\to C(f(c_0+c_1),f(0))}
+                      [\T S(c_0)\wedge S(c_1)
+                        [{\F C(f(c_0+c_1),f(0))}
+                          [\T S(c_0)
+                            [\T S(c_1)
+                              [\textcolor{blue}{\T(\forall x)(\forall y)(S(x)\wedge S(y)\to S(x+y))}
+                                [\textcolor{red}{\T(\forall x)(\forall y)(S(x)\wedge S(y)\to S(x+y))}
+                                  [\T(\forall y)(S(c_0)\wedge S(y)\to S(c_0+y))
+                                    [\textcolor{red}{\T(\forall y)(S(c_0)\wedge S(y)\to S(c_0+y))}
+                                      [\T S(c_0)\wedge S(c_1)\to S(c_0+c_1)
+                                        [\F S(c_0)\wedge S(c_1)
+                                          [\F S(c_0), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                          [\F S(c_1), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                         ]
-                                        [\T M(c_0+c_1)
-                                          [\textcolor{blue}{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
-                                            [\textcolor{red}{\T(\forall x)(M(x)\leftrightarrow B(x,0))}
-                                              [{\T M(c_0+c_1)\leftrightarrow B(c_0+c_1,0)}
-                                                [\T M(c_0+c_1)
-                                                  [{\T B(c_0+c_1,0)}
-                                                    [\textcolor{blue}{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
-                                                      [\textcolor{red}{\T (\forall x)(\forall y)(B(x,y)\to B(f(x),f(y)))}
-                                                        [{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
-                                                          [\textcolor{red}{\T (\forall y)(B(c_0+c_1,y)\to B(f(c_0+c_1),f(y)))}
-                                                            [{\T B(c_0+c_1,0)\to B(f(c_0+c_1),f(0))}
-                                                              [{\F B(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
-                                                              [{\T B(f(c_0+c_1),f(0))}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                        [\T S(c_0+c_1)
+                                          [\textcolor{blue}{\T(\forall x)(S(x)\leftrightarrow C(x,0))}
+                                            [\textcolor{red}{\T(\forall x)(S(x)\leftrightarrow C(x,0))}
+                                              [{\T S(c_0+c_1)\leftrightarrow C(c_0+c_1,0)}
+                                                [\T S(c_0+c_1)
+                                                  [{\T C(c_0+c_1,0)}
+                                                    [\textcolor{blue}{\T (\forall x)(\forall y)(C(x,y)\to C(f(x),f(y)))}
+                                                      [\textcolor{red}{\T (\forall x)(\forall y)(C(x,y)\to C(f(x),f(y)))}
+                                                        [{\T (\forall y)(C(c_0+c_1,y)\to C(f(c_0+c_1),f(y)))}
+                                                          [\textcolor{red}{\T (\forall y)(C(c_0+c_1,y)\to C(f(c_0+c_1),f(y)))}
+                                                            [{\T C(c_0+c_1,0)\to C(f(c_0+c_1),f(0))}
+                                                              [{\F C(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                              [{\T C(f(c_0+c_1),f(0))}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                             ]
                                                           ]
                                                         ]
@@ -172,8 +176,8 @@
                                                     ]
                                                   ]
                                                 ]
-                                                [\F M(c_0+c_1)
-                                                  [{\F B(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                                [\F S(c_0+c_1)
+                                                  [{\F C(c_0+c_1,0)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
                                                 ]
                                               ]
                                             ]
@@ -199,7 +203,7 @@
                 \item $\mathcal A=\langle\{0\};M^\mathcal A,B^\mathcal A,f^\mathcal A,+^\mathcal A, 0^\mathcal A\rangle$ where $M^\mathcal A=\{0\}$, $B^\mathcal A=\{(0,0)\}$, $f^\mathcal A=\{(0,0)\}$, $+^\mathcal A=\{((0,0),0)\}$, and $0^\mathcal A=0$
                 \item $\mathcal B=\langle\{0,1\};M^\mathcal B,B^\mathcal B,f^\mathcal B,+^\mathcal B, 0^\mathcal B\rangle$ where $M^\mathcal B=\{0\}$, $B^\mathcal B=\{(0,0),(1,1)\}$, $f^\mathcal B=\{(0,0),(1,1)\}$, $+^\mathcal B=\{((0,0),0),((0,1),1),((1,0),1),((1,1),0)\}$, and $0^\mathcal B=0$
             \end{itemize}
-            The complete simple extensions are then $\mathrm{Th}(\mathcal A)$ and $\mathrm{Th}(\mathcal B)$ (i.e. all $L$-sentences true in $\mathcal A$ respectively $\mathcal B$). The theory of a structure is always a complete theory. They are not equivalent for example because $(\forall x)M(x)$ is valid in $\mathcal A$ but not in $\mathcal B$. (Keep in mind that the language is without equality, so we need a sentence without equality.)
+            The complete simple extensions are then $\mathrm{Th}(\mathcal A)$ and $\mathrm{Th}(\mathcal B)$ (i.e. all $L$-sentences true in $\mathcal A$ respectively $\mathcal B$). The theory of a structure is always a complete theory. They are not equivalent for example because $(\forall x)S(x)$ is valid in $\mathcal A$ but not in $\mathcal B$. (Keep in mind that the language is without equality, so we need a sentence without equality.)
         \end{enumerate}
                     
     \end{solution}
@@ -213,7 +217,7 @@
 
     \begin{solution}
 
-        We construct a finished tableau from the theory $T$ with the item $\F(\forall x)x=c$ at the root (formulae in tableau items must be sentences). Since the language has equality, we may also use the equality axioms for the language $L$, or rather their universal closures: $(\forall x)x=x$ and $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))$.
+        We construct a finished tableau from the theory $T$ with the item $\F(\forall x)x=c$ at the root (do not forget that formulae in tableau entries must be sentences). Since the language is with equality, we can also use the axioms of equality for $L$, or rather their universal closures: $(\forall x)x=x$ and $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)(x_1=y_1\wedge x_2=y_2\to (x_1=x_2\to y_1=y_2))$.
 
         \begin{center}
             \scalebox{0.95}{
@@ -279,7 +283,7 @@
 
 \begin{problem} 
     
-    Let $L$ be a language with equality containing a binary relational symbol $\le$ and let $T$ be an $L$-theory such that $T$ has an infinite model and the axioms of a linear order are valid in $T$. Using the compactness theorem show that $T$ has a model $\mathcal{A}$ with an \emph{infinite descending chain}; that is, in $A$ there exist elements $c_i$ for every $i\in \mathbb{N}$ such that: $\dots < c_{n+1} < c_n< \dots <c_0$.
+    Let $L$ be a language with equality containing a binary relational symbol $\le$ and let $T$ be an $L$-theory such that $T$ has an infinite model and the axioms of linear order are valid in $T$. Using the compactness theorem show that $T$ has a model $\mathcal{A}$ with an \emph{infinite descending chain}; that is, in $A$ there exist elements $c_i$ for every $i\in \mathbb{N}$ such that: $\dots < c_{n+1} < c_n< \dots <c_0$.
     (This implies that the notion of a \emph{well-ordering} is not definable in first-order logic.)
 
     \begin{solution}
@@ -308,17 +312,15 @@
     \begin{enumerate}[(i)]\it
         \item Every professor has written at least one textbook.
         \item Every textbook was written by some professor.
-        \item For every professor, someone is studying with them.
+        \item Every professor has someone studying with them.
         \item Everyone who studies with some professor has read all textbooks by that professor.
         \item Every textbook has been read by someone.
     \end{enumerate}    
     \begin{enumerate}[(a)]
-        \item Formalize {\it(i)--(v)} as sentences $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ in $L=\langle N, S, P, D, U\rangle$ without equality.
-        %, where $N,S,P$ are binary relation symbols ($N(x,y)$ means ``$x$ wrote $y$'', $S(x,y)$ means ``$x$ studies with $y$'', $P(x,y)$ means ``$x$ read $y$'') and $D,U$ are unary relation symbols (``being an professor'', ``being a textbook'').
-        \item Construct a finished tableau from $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ with item $F\varphi_5$ at the root.
-        \item Is the sentence $\varphi_5$ true in the theory $T$? Is it false in $T$? Is it independent in $T$? Justify.
+        \item Formalize {\it(i)--(v)} as sentences $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ in $L=\langle W, S, R, P, T\rangle$ without equality, where $W,S,R$ are binary relation symbols (``$x$ wrote $y$'',``$x$ studies with $y$'', ``$x$ read $y$'') and $P,T$ are unary relation symbols (``being a professor'', ``being a textbook'').
+        \item Construct a finished tableau from $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ with entry $F\varphi_5$ at the root.
+        \item Is the sentence $\varphi_5$ valid in $T$? Is it contradictory in $T$? Is it independent in $T$? Justify.
         \item Does the theory $T$ have a complete conservative extension? Justify.
-        %\item How many 2-element models (up to isomorphism) does $T'=T\cup \{D(x),S(x,y),P(x,y)\}$ have?
     \end{enumerate}
 
 \end{problem}
@@ -328,7 +330,7 @@
     
     Using the tableau method, prove the following rules for `pulling out' quantifiers, where $\varphi(x)$ is a formula with a single free variable $x$, and $\psi$ is a sentence.
 
-    \vspace{-6pt}
+    \vspace{-9pt}
     \begin{multicols}{2}
         \begin{enumerate}[(a)]        
             \item $\neg(\exists x)\varphi(x)\to (\forall x)\neg \varphi(x)$
@@ -337,18 +339,18 @@
             \item $(\forall x)(\varphi(x)\to\psi)\to((\exists x)\varphi(x)\to \psi)$            
         \end{enumerate}
     \end{multicols}
-    \vspace{-6pt}
+    \vspace{-9pt}
     
 \end{problem}
 
 
 \begin{problem} 
     
-    Let $L(x,y)$ represent \emph{``there is a flight from $x$ to $y$''} and $S(x,y)$ represent \emph{``there is a connection from $x$ to $y$''}. Assume that from Prague one can fly to Bratislava, London, and New York, and from New York to Paris, and that
+    Let $F(x,y)$ represent \emph{``there is a flight from $x$ to $y$''} and $C(x,y)$ represent \emph{``there is a connection from $x$ to $y$''}. Assume that from Prague one can fly to Bratislava, London, and New York, and from New York to Paris, and that
     \begin{itemize}  
-        \item $(\forall x)(\forall y)(L(x,y) \to L(y,x))$,
-        \item $(\forall x)(\forall y)(L(x,y)\to S(x,y))$,
-        \item $(\forall x)(\forall y)(\forall z)(S(x,y)\wedge L(y,z)\to S(x,z))$.
+        \item $(\forall x)(\forall y)(F(x,y) \to F(y,x))$,
+        \item $(\forall x)(\forall y)(F(x,y)\to C(x,y))$,
+        \item $(\forall x)(\forall y)(\forall z)(C(x,y)\wedge F(y,z)\to C(x,z))$.
     \end{itemize}
     Prove using the tableau method that there is a connection from Bratislava to Paris.
 
@@ -368,7 +370,7 @@
     \psi = (\exists x)R(x,f(x))
     $$
     \begin{enumerate}[(a)]
-        \item Construct a tableau proof of $\psi$ from $T'\cup\{\varphi\}$. (For simplicity, in the tableau you may directly use the axiom $(\forall x)(\forall y)(x=y\to y=x)$, a consequence of the equality axioms.)
+        \item Construct a tableau proof of $\psi$ from $T'\cup\{\varphi\}$. (For simplicity, in the tableau you may directly use the axiom $(\forall x)(\forall y)(x=y\to y=x)$, a consequence of the axioms of equality.)
         \item Show that $\psi$ is not a consequence of $T$ by finding a model of $T$ in which $\psi$ is not valid.
         \item How many complete simple extensions (up to $\sim$) does $T\cup \{\varphi\}$ have? Provide two examples.
         \item Is the following theory $S$ in $L'=\langle R\rangle$ with equality a conservative extension of $T$?
@@ -383,7 +385,7 @@
 
 \begin{problem} 
     
-    Prove syntactically, using tableau transformations:
+    Prove syntactically, by transforming tableaux:
     \begin{enumerate}[(a)]
         \item \emph{Theorem on Constants}: Let $\varphi$ be a formula in the language $L$ with free variables $x_1,\dots,x_n$ and $T$ a theory in $L$. Let $L'$ be the extension of $L$ with new constant symbols $c_1,\dots,c_n$ and $T'$ the theory $T$ in $L'$. Then:
         $T \vdash (\forall x_1)\dots(\forall x_n)\varphi$ if and only if $T'\vdash\varphi(x_1/c_1,\dots,x_n/c_n)$
@@ -395,12 +397,12 @@
 
 \begin{problem} 
     
-    Let $T^*$ be a theory with equality axioms. Show using the tableau method that:
+    Let $T^*$ be a theory with axioms of equality. Show using the tableau method:
     \begin{enumerate}[(a)]
         \item $T^*\models x=y\ \to\ y=x$\hfill(symmetry)
         \item $T^*\models (x=y\ \wedge\ y=z)\ \to\ x=z$\hfill(transitivity)
     \end{enumerate}
-    {\it Hint:} For (a) use the equality axiom $(iii)$ for $x_1=x$, $x_2=x$, $y_1=y$ and $y_2=x$, \newline
+    {\it Hint:} For (a) use the axiom of equality $(iii)$ for $x_1=x$, $x_2=x$, $y_1=y$ and $y_2=x$, \newline
         for (b) use $(iii)$ for $x_1=x$, $x_2=y$, $y_1=x$ and $y_2=z$.
         
 \end{problem}

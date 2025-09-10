@@ -103,12 +103,17 @@
 \begin{problem}
 
     Uvažte následující tvrzení:
-    \begin{enumerate}[(i)] \it 
-        \item Nula je malé číslo.
-        \item Číslo je malé, právě když je blízko nuly.
-        \item Součet dvou malých čísel je malé číslo.
-        \item Je-li $x$ blízko $y$, potom $f(x)$ je blízko $f(y)$.
-    \end{enumerate}
+    
+    \vspace{-9pt}
+    \begin{multicols}{2}
+        \begin{enumerate}[(i)] \it 
+            \item Nula je malé číslo.
+            \item Číslo je malé, právě když je blízko nuly.
+            \item Součet dvou malých čísel je malé číslo.
+            \item Je-li $x$ blízko $y$, je i $f(x)$ blízko $f(y)$.
+        \end{enumerate}
+    \end{multicols}
+    \vspace{-9pt}
 
     Chceme dokázat, že platí: {\it (v) Jsou-li $x$ a $y$ malá čísla, potom $f(x+y)$ je blízko $f(0)$.}
 
@@ -306,20 +311,23 @@
 \begin{problem}
     
     Uvažte následující tvrzení:
-    \begin{enumerate}[(i)]\it
-        \item Každý docent napsal alespoň jednu učebnici.
-        \item Každou učebnici napsal nějaký docent.
-        \item U každého docenta někdo studuje.
-        \item Každý, kdo studuje u nějakého docenta, přečetl všechny učebnice od tohoto docenta.
-        \item Každou učebnici někdo přečetl.
-    \end{enumerate}    
+    
+    \vspace{-9pt}
+    \begin{multicols}{2}
+      \begin{enumerate}[(i)]\it
+          \item Každý docent napsal nějakou učebnici.
+          \item Každou učebnici napsal nějaký docent.
+          \item U každého docenta někdo studuje.
+          \item Každý, kdo studuje u nějakého docenta, přečetl všechny učebnice od něj.
+          \item Každou učebnici někdo přečetl.
+      \end{enumerate}
+    \end{multicols}  
+    \vspace{-9pt}  
     \begin{enumerate}[(a)]
-        \item Formalizujte {\it(i)--(v)} jako sentence $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ v $L=\langle N, S, P, D, U\rangle$ bez rovnosti.
-        %, kde $N,S,P$ jsou binární relační symboly ($N(x,y)$ znamená ``$x$ napsal $y$'', $S(x,y)$ znamená ``$x$ studuje u $y$'', $P(x,y)$ znamená ``$x$ přečetl $y$'') a $D,U$ jsou unární relační symboly (``být docentem'', ``být učebnicí'').
+        \item Formalizujte {\it(i)--(v)} jako sentence $\varphi_1,\varphi_2,\varphi_3,\varphi_4,\varphi_5$ v $L=\langle N, S, P, D, U\rangle$ bez rovnosti, kde $N,S,P$ jsou binární relační symboly ($N(x,y)$ znamená ``$x$ napsal $y$'', $S(x,y)$ znamená ``$x$ studuje u $y$'', $P(x,y)$ znamená ``$x$ přečetl $y$'') a $D,U$ jsou unární relační symboly (``být docentem'', ``být učebnicí'').
         \item Sestrojte dokončené tablo z teorie $T=\{\varphi_1,\varphi_2,\varphi_3,\varphi_4\}$ s položkou $F\varphi_5$ v kořeni.
         \item Je sentence $\varphi_5$ pravdivá v teorii $T$? Je lživá v $T$? Je nezávislá v $T$? Zdůvodněte.
         \item Má teorie $T$ kompletní konzervativní extenzi? Zdůvodněte.
-        %\item Kolik má $T'=T\cup \{D(x),S(x,y),P(x,y)\}$ 2-prvkových modelů (až na izomorfismus)?
     \end{enumerate}
 
 \end{problem}

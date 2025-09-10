@@ -5,13 +5,13 @@
 \subsection*{Teaching goals:} After completing, the student
 
     \begin{itemize}\setlength{\itemsep}{0pt}
-        \item understands the concept of unification and can perform the Unification Algorithm
-        \item knows the necessary concepts from the resolution method in predicate logic (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them, give examples, and explain the differences compared to propositional logic
-        \item can apply the resolution method to solve a given problem (word problems, etc.), performing all necessary steps (conversion to PNF, Skolemization, conversion to CNF)
+        \item understands the notion of unification and can perform the Unification Algorithm
+        \item knows the necessary notions from the resolution method in predicate logic (resolution rule, resolvent, resolution proof/refutation, resolution tree), can formally define them, give examples, and explain the differences compared to propositional logic
+        \item can apply the resolution method to solve a given problem (word problem, etc.), performing all necessary steps (conversion to PNF, Skolemization, conversion to CNF)
         \item can construct a resolution refutation of a given (possibly infinite) CNF formula (if it exists), can draw the resolution tree including the unifications used
         \item can extract an unsatisfiable conjunction of ground instances of axioms from a res. tree
         \item knows the notion of LI-resolution, can find an LI-refutation of a given theory (if exists)
-        \item has become familiar with selected concepts from model theory
+        \item has become familiar with selected notions from model theory
     \end{itemize}
     
 
@@ -49,6 +49,9 @@
             \item $\varphi_1\ \rightsquigarrow\ \neg(B(x)\land S(x,y)\land S(y,y))\ \sim\ \neg B(x)\lor \neg S(x,y)\lor \neg S(y,y)$
             \item $\neg\psi\rightsquigarrow\ B(c)$ (where $c$ is a new constant symbol)
         \end{itemize}
+        Before starting Skolemization make sure you have sentences. And remember that we must Skolemize the sentence $\neg\psi$, not $\psi$. (The negation of a Skolem variant is typically not equisatisfiable with the negation of the original formula! By Skolemizing $\neg(\exists x)B(x)$ we would get $\neg B(x)$, whose negation is equivalent to $B(x)$, i.e.\ ``everyone is a barber'', whereas the correct procedure yields ``(a witness) $c$ is a barber''.)
+
+
         In set notation we have:
         $$
         S = \{\{\neg B(x), S(y,y), S(x,y)\},\{\neg B(x), \neg S(x,y), \neg S(y,y)\},\{B(c)\}\}
@@ -92,7 +95,7 @@
     \end{enumerate}
     We want to show by resolution that: {\it (iii) If a sheep gave birth, it was itself born.} Specifically:
     \begin{enumerate}[(a)]
-        \item Express as sentences $\varphi_1$, $\varphi_2$, $\varphi_3$ in $L=\langle P,K\rangle$ without equality ($P$ is binary, $K$ unary rel. symbol, $P(x,y)$ means `sheep $x$ gave birth to sheep $y$', $K(x)$ `sheep $x$ was cloned').
+        \item Express as sentences $\varphi_1$, $\varphi_2$, $\varphi_3$ in $L=\langle B,C\rangle$ without equality ($B$ is binary, $C$ unary relation symbol, $B(x,y)$ means `sheep $x$ gave birth to sheep $y$', $C(x)$ `sheep $x$ was cloned').
         \item Using Skolemization of these sentences or their negations, construct a set of clauses $S$ (possibly in an extended language) that is unsatisfiable exactly when $\{\varphi_1, \varphi_2\} \models \varphi_3$.
         \item Find a resolution refutation of $S$, draw the resolution tree with unifications used.
         \item Does $S$ have an LI-refutation?
@@ -101,38 +104,38 @@
     \begin{solution}
         Note that all objects are sheep, so no predicate for `being a sheep' is needed. The procedure is similar to the previous example:
         \begin{enumerate}[(a)]
-            \item There are several ways to formulate the formulas; following the text closely, we get:
+            \item There are several ways to formulate the formulas; if we try to follow the text as closely as possible we get, for example:
             \begin{align*}
-                \varphi_1 &\ =\ (\forall x)(((\exists y)P(y,x)\lor K(x))\land \neg ((\exists z)P(z,x)\land K(x)))\\
-                \varphi_2 &\ =\ \neg(\exists x)(K(x)\land (\exists y)P(x,y))\\
-                \varphi_3 &\ =\ (\forall x)((\exists y)P(x,y)\limplies (\exists z)P(z,x))
+                \varphi_1 &\ =\ (\forall x)(((\exists y)B(y,x)\lor C(x))\land \neg ((\exists z)B(z,x)\land C(x)))\\
+                \varphi_2 &\ =\ \neg(\exists x)(C(x)\land (\exists y)B(x,y))\\
+                \varphi_3 &\ =\ (\forall x)((\exists y)B(x,y)\limplies (\exists z)B(z,x))
             \end{align*}
-            \item Start from the theory $\{\varphi_1,\varphi_2,\neg\varphi_3\}$ (proof by contradiction). Convert to PNF, Skolemize, remove universal quantifiers, convert to CNF, and represent as sets:
+            \item Start from the theory $\{\varphi_1,\varphi_2,\neg\varphi_3\}$ (proof by contradiction). Convert to PNF, Skolemize, remove universal quantifiers, convert to CNF, and write in set notation:
             \begin{itemize}
-                \item $\varphi_1\ \sim\ (\forall x)(\exists y)(\forall z)((P(y,x)\lor K(x))\land \neg (P(z,x)\land K(x)))\ \rightsquigarrow\ (P(f(x),x)\lor K(x))\land \neg (P(z,x)\land K(x))\ \sim\ \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\}\}$
-                \item $\varphi_2\ \sim\ (\forall x)(\forall y)\neg (K(x)\land P(x,y))\ \sim\ \{\{\neg K(x),\neg P(x,y)\}\}$
-                \item $\neg\varphi_3\ \sim\ (\exists x)(\exists y)(\forall z)\neg(P(x,y)\limplies P(z,x))\ \rightsquigarrow\ \neg(P(c,d)\limplies P(z,c))\ \sim\ \{\{P(c,d)\},\{\neg P(z,c)\}\}$
+                \item $\varphi_1\ \sim\ (\forall x)(\exists y)(\forall z)((B(y,x)\lor C(x))\land \neg (B(z,x)\land C(x)))\ \rightsquigarrow\ (B(f(x),x)\lor C(x))\land \neg (B(z,x)\land C(x))\ \sim\ \{\{B(f(x),x), C(x)\},\{\neg B(z,x), \neg C(x)\}\}$
+                \item $\varphi_2\ \sim\ (\forall x)(\forall y)\neg (C(x)\land B(x,y))\ \sim\ \{\{\neg C(x),\neg B(x,y)\}\}$
+                \item $\neg\varphi_3\ \sim\ (\exists x)(\exists y)(\forall z)\neg(B(x,y)\limplies B(z,x))\ \rightsquigarrow\ \neg(B(c,d)\limplies B(z,c))\ \sim\ \{\{B(c,d)\},\{\neg B(z,c)\}\}$
             \end{itemize}
             $$
-            S = \{\{P(f(x),x), K(x)\},\{\neg P(z,x), \neg K(x)\},\{\neg K(x),\neg P(x,y)\},\{P(c,d)\},\{\neg P(z,c)\}\}
+            S = \{\{B(f(x),x), C(x)\},\{\neg B(z,x), \neg C(x)\},\{\neg C(x),\neg B(x,y)\},\{B(c,d)\},\{\neg B(z,c)\}\}
             $$
             \item Resolution tree for $S\proves_R\square$:
             \begin{center}            
                 \begin{forest}
                     for tree={l=1.5cm, grow=north}
                     [{$ \square $}, label=left:{\footnotesize\textcolor{blue}{$\{y/d\}$}}
-                        [{$ \{P(c,d)\} $}]
-                        [{$ \{\neg P(c,y)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
-                            [{$ \{\neg K(x),\neg P(x,y)\} $}]
-                            [{$ \{K(c)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
-                                [{$ \{\neg P(z,c)\} $}]
-                                [{$ \{P(f(x),x), K(x)\} $}]
+                        [{$ \{B(c,d)\} $}]
+                        [{$ \{\neg B(c,y)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
+                            [{$ \{\neg C(x),\neg B(x,y)\} $}]
+                            [{$ \{C(c)\} $}, label=left:{\footnotesize\textcolor{blue}{$\{x/c,z/f(c)\}$}}
+                                [{$ \{\neg B(z,c)\} $}]
+                                [{$ \{B(f(x),x), C(x)\} $}]
                             ]
                         ]
                     ]                    
                 \end{forest}
             \end{center}
-            \item Yes, in (c) we constructed an LI-refutation. Even if we had not, existence of an LI-refutation follows from the completeness theorem of LI-resolution for Horn formulas; our CNF $S$ is Horn.
+            \item Yes, in (c) we managed to construct an LI-refutation. Even if we had not, existence of an LI-refutation follows from the completeness theorem of LI-resolution for Horn formulas; our CNF formula $S$ is Horn.
         \end{enumerate}
                     
     \end{solution}
@@ -145,10 +148,10 @@
     Let $T=\{\neg(\exists x) R(x),\ (\exists x)(\forall y)(P(x,y)\to P(y,x)),\ (\forall x)((\exists y)(P(x,y)\wedge P(y,x))\to R(x)),\ (\forall x)(\exists y)P(x,y)\}$ be a theory in the language $L=\langle P,R\rangle$ without equality.
 
     \begin{enumerate}[(a)]
-        \item Find an open equisatisfiable theory $T'$ for $T$ by Skolemization.
-        \item Convert $T'$ to an equivalent theory $S$ in CNF. Represent $S$ as sets.
+        \item Using Skolemization, find an open theory $T'$ equisatisfiable with $T$.
+        \item Convert $T'$ to an equivalent theory $S$ in CNF. Write $S$ in set representation.
         \item Find a resolution refutation of $S$. Indicate the unification used at each step.
-        \item Find an unsatisfiable conjunction of the ground instances of clauses from $S$. {\it Hint: use the unifications from (c).}       
+        \item Find an unsatisfiable conjunction of ground instances of clauses from $S$. {\it Hint: use the unifications from (c).}       
     \end{enumerate}
 
     \begin{solution}
@@ -158,7 +161,7 @@
             $$
             T'=\{\neg R(x),\ P(c,y)\to P(y,c),\ P(x,y)\land P(y,x)\to R(x),\ P(x,f(x))\}
             $$
-            (Note for the third axiom: $(\exists y)$ in the antecedent of the implication changes to $(\forall y)$.)
+            (Be careful with the third axiom: $(\exists y)$ in the antecedent of the implication changes to $(\forall y)$.)
             \item Easily convert to CNF: 
             $$
             S = \{\{\neg R(x)\},\{\neg P(c,y),P(y,c)\},\{\neg P(x,y),\neg P(y,x),R(x)\},\{P(x,f(x))\}\}
@@ -179,20 +182,21 @@
                     ]                    
                 \end{forest}
             \end{center}
-            (Note the variable renaming to ensure disjoint variable sets in resolved clauses.)
-            \item To find a conjunction of ground instances of the original theory, apply the unifications from the resolution tree to each leaf clause $C$:
+            (Note where we need to rename variables to ensure disjoint variable sets in resolved clauses.)
+            \item To obtain the conjunction of ground instances of axioms we can use the constructed resolution refutation. For each leaf of the resolution tree that is labelled by a clause $C$ (up to renaming it is a clause from $S$), we apply to $C$, in order, all the unifications that occur on the path from that leaf to the root:
             \begin{itemize}
                 \item $\neg R(x)\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg R(c)$
                 \item $\neg P(x',y)\lor\neg P(y,x')\lor R(x')\cdot \textcolor{blue}{\{x'/x\}}\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)$
                 \item $\neg P(c,y')\lor P(y',c)\cdot\textcolor{blue}{\{x/c,y'/y\}}\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=\neg P(c,f(c))\lor P(f(c),c)$
                 \item $P(x,f(x))\cdot\textcolor{blue}{\{x/c,y/f(c)\}}=P(c,f(c))$
             \end{itemize}
-            If variables remain, substitute arbitrary constants. The resulting unsatisfiable conjunction of ground instances:
+
+            If variables remain in some clauses, we substitute any constant term for them. Thus we obtain the unsatisfiable conjunction of ground instances of clauses from $S$:
             $$
-            \neg R(c)\land (\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c)))\land (\neg P(c,f(c))\lor P(f(c),c))\land P(c,f(c))
+            \neg R(c)\land (\neg P(c,f(c))\lor \neg P(f(c),c)\lor R(c))\land (\neg P(c,f(c))\lor P(f(c),c))\land P(c,f(c))
             $$
-            Its resolution refutation at the propositional level has the same structure as that of $S$:
-            
+            Its resolution refutation ``at the propositional level'' has the same structure as the resolution refutation of $S$:
+                              
             \begin{minipage}{0.6\textwidth}
                 \scalebox{0.9}{
                 \begin{forest}
@@ -227,7 +231,7 @@
                 \end{forest}
                 }
             \end{minipage} 
-            To get the ground instances of the original theory $T$, apply the same unifications to the axioms from which the clauses originated:
+            If we wanted to have ground instances of axioms of the original theory $T$, we would have to check which axiom was used to obtain each clause and apply the same unifications to it:
             $$
             \neg R(c)\land (P(c,f(c))\to P(f(c),c))\land (P(c,f(c))\land P(f(c),c)\to R(c))\land P(c,f(c))
             $$
@@ -259,18 +263,18 @@
 
 \begin{problem}
 
-    Let $L=\langle <, j, h, s\rangle$ be without equality, where $j,h,q$ are constant symbols (`apples/pears/plums') and $x < y$ expresses {\it ``fruit $y$ is better than fruit $x$''}. We know that:
+    Let $L=\langle <, a, b, c\rangle$ be without equality, where $a,b,c$ are constant symbols (`apples/bananas/cherries') and $x < y$ expresses {\it ``fruit $y$ is better than fruit $x$''}. We know:
     \begin{enumerate}[(i)]\it
         \item The relation ``being better'' is a strict partial order (irreflexive, asymmetric, transitive).
         \item Pears are better than apples.
     \end{enumerate}
-    Prove by resolution: \emph{(iii) If plums are better than pears, then apples aren't better than plums.}
+    Prove by resolution: \emph{(iii) If cherries are better than bananas, then apples aren't better than cherries.}
 
     \begin{enumerate}[(a)]
     \item Express statements $(i)$, $(ii)$, $(iii)$ as open formulas in the language $L$.
-    \item Using these formulas, find a CNF formula $S$ that is unsatisfiable exactly when $(i)$, $(ii)$ imply $(iii)$. Write $S$ in set representation.
+    \item Using these formulas, find a CNF formula $S$ that is unsatisfiable exactly when $(i)$ and $(ii)$ imply $(iii)$. Write $S$ in set representation.
     \item Prove by resolution that $S$ is unsatisfiable. Illustrate the refutation with a resolution tree, indicate the unification used at each step. {\it Hint: 4 resolution steps are enough.}
-    \item Find the conjunction of the basic instances of the axioms of $S$ that is unsatisfiable.
+    \item Find a conjunction of ground instances of axioms of $S$ that is unsatisfiable.
     \item Is $S$ refutable by LI-resolution?
     \end{enumerate}
 
@@ -281,7 +285,7 @@
 
     Let $T=\{\varphi\}$ be in $L=\langle U, c \rangle$ with equality, where $U$ is unary relational and $c$ is a constant symbol, and $\varphi$ expresses \emph{``There are at least 5 elements for which $U(x)$ holds.''}
     \begin{enumerate}[(a)]
-        \item Find two non-equivalent simple complete extensions of $T$.
+        \item Find two non-equivalent complete simple extensions of $T$.
         \item Is the theory $T$ openly axiomatizable? Give justification.
     \end{enumerate}
 
@@ -302,7 +306,7 @@
 
     Let $T=\{(\forall x)(\exists y) S(y)=x,\ S(x)=S(y)\to x=y\}$ be a theory in the language $L=\langle S\rangle$ with equality, where $S$ is a unary function symbol.
     \begin{enumerate}[(a)]
-        \item Find an extension $T'$ of the theory $T$ by defining a new unary function symbol $P$ such that $T' \models S(S(x))=y \leftrightarrow P(P(y))=x$.
+        \item Find an extension $T'$ of the theory $T$ by definition of a new unary function symbol $P$ such that $T' \models S(S(x))=y \leftrightarrow P(P(y))=x$.
         \item Is the theory $T'$ openly axiomatizable? Give justification.
     \end{enumerate}
 
@@ -313,8 +317,8 @@
 
     Let $T$ be an extension of the theory $DeLO^-$ (i.e., dense linear orders with a minimal element and without a maximal element) by a new axiom $c \le d$ in the language $L=\langle \le,c,d\rangle$ with equality, where $c$, $d$ are new constant symbols.
     \begin{enumerate}[(a)]
-        \item Are the sentences $(\exists x)(x\le d \wedge x \ne d)$ and $(\forall x)(x \le d)$ true / false / independent in $T$?
-        \item Write two non-equivalent simple complete extensions of the theory $T$.
+        \item Are $(\exists x)(x\le d \wedge x \ne d)$ and $(\forall x)(x \le d)$ valid / contradictory / independent in $T$?
+        \item Write two non-equivalent complete simple extensions of the theory $T$.
     \end{enumerate}
     
 \end{problem}

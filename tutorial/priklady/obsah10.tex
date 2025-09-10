@@ -49,7 +49,7 @@
             \item $\varphi_1\ \rightsquigarrow\ \neg(B(x)\land S(x,y)\land S(y,y))\ \sim\ \neg B(x)\lor \neg S(x,y)\lor \neg S(y,y)$
             \item $\neg\psi\rightsquigarrow\ B(c)$ (kde $c$ je nový konstantní symbol)
         \end{itemize}
-        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule! Skolemizací $\neg\exists B(x)$ bychom dostali $\neg B(x)$, čehož negace je $B(x)$, tj. `všichni jsou holiči' zatímco správným postupem dostaneme `(svědek) $c$ je holič'.). 
+        Před skolemizací se ujistěte, že máte sentence. A nezapomeňte, že musíme skolemizovat sentenci $\neg\psi$, ne $\psi$. (Negace skolemovy varianty není ekvisplnitelná s negací původní formule! Skolemizací $\neg(\exists x)B(x)$ bychom dostali $\neg B(x)$, čehož negace je ekvivalentní $B(x)$, tj. `všichni jsou holiči' zatímco správným postupem dostaneme `(svědek) $c$ je holič'.). 
         
         V množinovém zápisu tedy máme:
         $$
@@ -272,7 +272,7 @@
 
     \begin{enumerate}[(a)]
     \item Tvrzení $(i)$, $(ii)$, $(iii)$ vyjádřete jako otevřené formule v jazyce $L$.
-    \item Pomocí těchto formulí najděte CNF formuli $S$, která je nesplnitelná, právě když z $(i)$, $(ii)$ vyplývá $(iii)$. Napište $S$ v množinové reprezentaci.
+    \item Pomocí těchto formulí najděte CNF formuli $S$, která je nesplnitelná, právě když z $(i)$ a $(ii)$ vyplývá $(iii)$. Napište $S$ v množinové reprezentaci.
     \item Rezolucí dokažte, že $S$ není splnitelná. Rezoluční zamítnutí znázorněte rezolučním stromem. U každého kroku uveďte použitou unifikaci. {\it Nápověda: stačí čtyři rezoluční kroky.}
     \item Nalezněte konjunkci základních instancí axiomů $S$, která je nesplnitelná.
     \item Je $S$ zamítnutelná LI-rezolucí?
@@ -285,7 +285,7 @@
 
     Buď $T=\{\varphi\}$ teorie jazyka $L=\langle U, c \rangle$ s rovností, kde $U$ je unární relační symbol, $c$ konstantní symbol, a axiom $\varphi$ vyjadřuje \emph{``Existuje alespoň $5$ prvků, pro které platí $U(x)$.''}
     \begin{enumerate}[(a)]
-        \item Najděte dvě neekvivalentní jednoduché kompletní extenze $T$.
+        \item Najděte dvě neekvivalentní kompletní jednoduché extenze $T$.
         \item Je teorie $T$ otevřeně axiomatizovatelná? Uveďte zdůvodnění.
     \end{enumerate}
 
@@ -318,7 +318,7 @@
     Nechť $T$ je extenze teorie $DeLO^-$ (tj. hustých lineárních uspořádání s minimálním prvkem a bez maximálního prvku) o nový axiom $c \le d$ v jazyce $L=\langle \le,c,d\rangle$ s rovností, kde $c$, $d$ jsou nové konstantní symboly.
     \begin{enumerate}[(a)]
         \item Jsou sentence $(\exists x)(x\le d \wedge x \ne d)$ a $(\forall x)(x \le d)$ pravdivé / lživé / nezávislé v $T$?
-        \item Napište dvě neekvivalentní jednoduché kompletní extenze teorie $T$.
+        \item Napište dvě neekvivalentní kompletní jednoduché extenze teorie $T$.
     \end{enumerate}
     
 \end{problem}

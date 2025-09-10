@@ -28,27 +28,36 @@
     \begin{solution}
 
         \begin{enumerate}[(a)]
-            \item Free variables are $x,z$. (You may draw the formula tree.) First, rename bound variables to be distinct and different from free variables. We get the equivalent formula:
+            \item Free variables are $x,z$. (You can draw the tree of the formula.) First, we replace the formula with a variant where we rename bound variables to make them all distinct, and also distinct from the free variables. We get the equivalent formula:
             $$
             (\forall y_1)((\exists x_1)P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)((\forall x_2)R(x_2,y_2)\vee Q(x,y_2))
             $$
-            Then apply rules to convert into PNF by moving quantifiers up according to the formula tree. The order of pulling out quantifiers is chosen so that existential quantifiers come first in the prefix, followed by universal ones. We get:
+            Then we proceed by applying rules to convert into PNF, following the tree of the formula (moving quantifiers up). The order of pulling out quantifiers is chosen so that we first pull out those quantifiers that will in the end (when they are in the quantifier prefix, i.e., up near the root of the tree) become existential, and only then those that will become universal (so that we do not unnecessarily introduce `dependence' in the Skolem variant). We get:
             \begin{align*}
                 &(\forall y_1)((\exists x_1)P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)((\forall x_2)R(x_2,y_2)\vee Q(x,y_2))\\
                 \sim\ & (\forall y_1)(\forall x_1)(P(x_1,y_1)\to Q(y_1,z))\wedge (\exists y_2)(\forall x_2)(R(x_2,y_2)\vee Q(x,y_2))\\
                 \sim\ & (\exists y_2)((\forall y_1)(\forall x_1)(P(x_1,y_1)\to Q(y_1,z))\wedge (\forall x_2)(R(x_2,y_2)\vee Q(x,y_2)))\\
                 \sim\ & (\exists y_2)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,y_2)\vee Q(x,y_2)))
             \end{align*}
-            For Skolemization, take the sentence (general closure):
+            (Be careful with the rules for implication: when pulling a quantifier out of the antecedent, the quantifier changes; alternatively, one can first rewrite the implication $\varphi\limplies\psi$ as $\neg\varphi\lor\psi$. Also be careful that the variable in the extracted quantifier is not free in the second part of the formula; but here we have ensured this by renaming.)
+
+            Remember that for Skolemization we need a sentence, i.e. the universal closure of the formula:
             $$
             (\forall x)(\forall z)(\exists y_2)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,y_2)\vee Q(x,y_2)))
             $$
-            Skolem variant:
+            The Skolem variant is then:
             $$
             (\forall x)(\forall z)(\forall y_1)(\forall x_1)(\forall x_2)((P(x_1,y_1)\to Q(y_1,z))\wedge (R(x_2,f(x,z))\vee Q(x,f(x,z))))
             $$
-            where $f$ is a new binary function symbol.
+            Here $f$ is a new, binary function symbol. (Beware: when Skolemizing a theory, all function symbols introduced in the Skolemization of the axioms must be new and mutually distinct.)
             
+            The Skolem variant is by definition a sentence, but even its open core 
+            $$
+            (P(x_1,y_1)\to Q(y_1,z)) \wedge (R(x_2,f(x,z)) \vee Q(x,f(x,z)))
+            $$
+            is equisatisfiable (though typically not equivalent!) with the original formula.
+
+
             \item Proceed similarly, rewriting equivalence as two implications first:
             \begin{align*}
                 &(\exists x)R(x,y)\leftrightarrow (\forall y)P(x,y)\\
@@ -56,12 +65,12 @@
                 \sim\ &(\exists x_2)(\exists y_2)(\forall x_1)(\forall y_1)((R(x_1,y)\to P(x,y_1))\land(P(x,y_2)\to R(x_2,y)))\\
                 \sim\ &(\forall x)(\forall y)(\exists x_2)(\exists y_2)(\forall x_1)(\forall y_1)((R(x_1,y)\to P(x,y_1))\land(P(x,y_2)\to R(x_2,y)))
             \end{align*}
-            Skolem variant ($f,g$ new binary function symbols):
+            Skolem variant ($f,g$ are new binary function symbols):
             $$
             (\forall x)(\forall y)(\forall x_1)(\forall y_1)((R(x_1,y)\to P(x,y_1))\land(P(x,g(x,y))\to R(f(x,y),y)))
             $$
 
-            \item The formula is already a sentence. Similarly:
+            \item Note that the formula is already a sentence. Proceed similarly:
             \begin{align*}
             &\neg((\forall x)(\exists y)P(x,y)\to (\exists x)(\exists y)R(x,y))\wedge(\forall x)\neg(\exists y)Q(x,y)\\
             \sim\ & (\forall x)(\exists y)(\forall x')(\forall y')(\forall x'')(\forall y'')
@@ -79,7 +88,7 @@
 
 \begin{problem} 
     
-    Convert into an equisatisfiable CNF formula, written in set representation.
+    Convert into an equisatisfiable CNF formula, write in set representation.
 
     \begin{enumerate}[(a)]
         \item $(\forall y)(\exists x)P(x,y)$
@@ -89,17 +98,22 @@
     \end{enumerate}
 
     \begin{solution}
-        First, create the Skolem variant, then take the open core and convert to CNF using equivalent transformations:
+        First, we create a Skolem variant (see the previous example), then take its open core, and convert it into CNF using equivalent transformations (just as in propositional logic):
         \begin{enumerate}[(a)]
-            \item Skolem variant: $(\forall y)(P(f(y),y))$, open core: $P(f(y),y)$, CNF set representation: 
+            \item $(\forall y)(\exists x)P(x,y)$ is already a sentence in PNF. Skolem variant: $(\forall y)(P(f(y),y))$ ($f$ is a new unary function symbol). Open core: $P(f(y),y)$, CNF in set representation: 
             $$
             S=\{\{P(f(y),y)\}\}
             $$
-            \item $\neg (\forall y)(\exists x)P(x,y)\sim(\exists y)(\forall x)\neg P(x,y)$, Skolem variant: $(\forall x)\neg P(x,c)$, CNF: $S=\{\{\neg P(x,c)\}\}$
-            \item Already a sentence. PNF: $(\forall x)\neg((P(x)\to P(c))\wedge (P(x)\to P(d)))$, CNF: $S=\{\{P(x)\},\{\neg P(c),\neg P(d)\}\}$
-            \item Skolem variant: $(\forall y)(P(c,f(y))\wedge P(f(y),y) \to R(c,y))$, CNF: $S=\{\{\neg P(c,f(y)),\neg P(f(y),y), R(c,y)\}\}$
+            \item $\neg (\forall y)(\exists x)P(x,y)\sim(\exists y)(\forall x)\neg P(x,y)$, Skolem variant: $(\forall x)\neg P(x,c)$ ($c$ is a new constant symbol), CNF: $S=\{\{\neg P(x,c)\}\}$
+            \item The symbols $c,d$ should be understood as constant symbols, not variables (by convention), so this is already a sentence. The conversion to PNF is straightforward:
+            $$
+            \neg (\exists x)((P(x)\to P(c))\wedge (P(x)\to P(d)))\sim(\forall x)\neg((P(x)\to P(c))\wedge (P(x)\to P(d)))
+            $$
+            This is already a universal sentence, so Skolemization is not needed (it is its own Skolem variant). We remove $(\forall x)$ and convert to CNF: $(P(x)\lor P(x))\land (P(x)\lor \neg P(d))\land (\neg P(c)\lor P(x))\land (\neg P(c)\lor \neg P(d))$, which simplifies to $P(x)\land (\neg P(c)\lor \neg P(d))$, set representation: $S=\{\{P(x)\},\{\neg P(c),\neg P(d)\}\}$
+            \item Skolem variant: $(\forall y)(P(c,f(y))\wedge P(f(y),y) \to R(c,y))$, CNF in set representation: $S=\{\{\neg P(c,f(y)),\neg P(f(y),y), R(c,y)\}\}$.
         \end{enumerate}
     \end{solution}
+
 
 \end{problem}
 
@@ -109,19 +123,16 @@
     Let $T=\{(\exists x)R(x), (\exists y)\neg P(x,y), (\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$ be a theory in the language $L=\langle P,R\rangle$ without equality. Find an open theory $T'$ equisatisfiable with $T$. Convert $T'$ into CNF and write the resulting formula $S$ in set representation.
 
     \begin{solution}
-        Take general closures:
-        $T\sim\{(\exists x)R(x), (\forall x)(\exists y)\neg P(x,y), (\forall x)(\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$. Skolemize with new symbols:
-        $$\{R(c), (\forall x)\neg P(x,f(x)), (\forall x)(\forall z)(\neg R(x)\vee P(g(y),z))\}$$
-        Remove universal quantifiers:
+        The axioms are already in PNF, but for Skolemization we need sentences (universal closures): $T\sim\{(\exists x)R(x), (\forall x)(\exists y)\neg P(x,y), (\forall x)(\exists y)(\forall z)(\neg R(x)\vee P(y,z))\}$. We Skolemize (all symbols must be new):
+        $\{R(c), (\forall x)\neg P(x,f(x)), (\forall x)(\forall z)(\neg R(x)\vee P(g(y),z))\}$. We then remove the universal quantifiers:
         $$T'=\{R(c), \neg P(x,f(x)), \neg R(x)\vee P(g(y),z)\}$$
-        CNF set representation:
-        $$S=\{\{R(c)\},\{\neg P(x,f(x))\},\{\neg R(x),P(g(y),z)\}\}$$
+        This is already in CNF, set notation: $S=\{\{R(c)\},\{\neg P(x,f(x))\},\{\neg R(x),P(g(y),z)\}\}$
         
-        $S$ is unsatisfiable: substitute into the second and third clauses to get:
+        Notice that $S$ is unsatisfiable: we see this “at the level of propositional logic.” If we substitute $\{x/g(c)\}$ into the second clause and $\{x/c,y/c,z/f(g(c))\}$ into the third clause, we obtain the ground instances:
         $$
         S'=\{\{R(c)\},\{\neg P(g(c),f(g(c)))\},\{\neg R(c),P(g(c),f(g(c)))\}\}
         $$
-        By equisatisfiability, the original theory $T$ is also unsatisfiable.        
+        By equisatisfiability with $S$, the original theory $T$ is therefore also unsatisfiable.        
     \end{solution}
 
 \end{problem}
@@ -129,42 +140,49 @@
 
 \begin{problem}
 
-    Let $T=\{\varphi_1,\varphi_2\}$ be a theory in the language $L=\langle R\rangle$ with equality:
+    Let $T=\{\varphi_1,\varphi_2\}$ be a theory in the language $L=\langle R\rangle$ with equality, where:
     \begin{align*}
     \varphi_1=&\quad (\exists y)R(y,x)\\
     \varphi_2=&\quad (\exists z)(R(z,x)\wedge R(z,y)\wedge (\forall w)(R(w,x) \wedge R(w,y)\to R(w,z)))
     \end{align*}
     \begin{enumerate}[(a)]
-        \item Using Skolemization, construct an open axiomatized theory $T'$ equisatisfiable with $T$ (possibly in an extended language $L'$).
-        \item Let $\mathcal{A}=\langle\mathbb{N},R^A\rangle$, where $(n,m)\in R^A$ iff $n$ divides $m$. Find an expansion $\mathcal{A}'$ of $\mathcal{A}$ to $L'$ such that $\mathcal{A}'\models T'$.
+        \item Using Skolemization, construct an openly axiomatized theory $T'$ (possibly in the extended language $L'$) equisatisfiable with $T$.
+        \item Let $\mathcal{A}=\langle\mathbb{N},R^{\mathcal A}\rangle$, where $(n,m)\in R^{\mathcal A}$ iff $n$ divides $m$. Find an expansion $\mathcal{A}'$ of the $L$-structure $\mathcal{A}$ to the language $L'$ such that $\mathcal{A}'\models T'$. (The set of natural numbers $\mathbb N$ includes zero, see ISO 80000-2:2019.)
     \end{enumerate}
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item Skolemization:
+            \item First, we Skolemize:
             \begin{itemize}
-                \item $\varphi_1\sim (\forall x)(\exists y)R(y,x)$, Skolem variant: $(\forall x)R(f(x),x)$
-                \item $\varphi_2\sim (\forall x)(\forall y)(\exists z)(\forall w)(R(z,x)\wedge R(z,y)\wedge (R(w,x) \wedge R(w,y)\to R(w,z)))$, Skolem variant: $(\forall x)(\forall y)(\forall w)(R(g(x,y),x)\wedge R(g(x,y),y)\wedge (R(w,x) \wedge R(w,y)\to R(w,g(x,y))))$
+                \item $\varphi_1\sim (\forall x)(\exists y)R(y,x)$, Skolem variant: 
+                $(\forall x)R(f(x),x)$
+                \item $\varphi_2\sim (\forall x)(\forall y)(\exists z)(\forall w)(R(z,x)\wedge R(z,y)\wedge (R(w,x) \wedge R(w,y)\to R(w,z)))$, Skolem variant: 
+                $$
+                (\forall x)(\forall y)(\forall w)(R(g(x,y),x)\wedge R(g(x,y),y)\wedge (R(w,x)\wedge R(w,y)\to R(w,g(x,y))))
+                $$
             \end{itemize}
-            Remove quantifier prefixes:
+            Finally, we remove the quantifier prefixes, and for clarity split the third axiom which is in the form of a conjunction into its individual conjuncts:
             $$
-            T'=\{R(f(x),x), R(g(x,y),x), R(g(x,y),y), R(w,x) \wedge R(w,y)\to R(w,g(x,y))\}
+            T'=\{R(f(x),x),\; R(g(x,y),x),\; R(g(x,y),y),\; R(w,x)\wedge R(w,y)\to R(w,g(x,y))\}
             $$
-            \item Interpretation: $f$ and $g$ correspond to divisors and greatest common divisors:
+            \item Let us consider the meaning of the axioms: the first states that every number has some divisor, and the second expresses the existence of the greatest common divisor. We need to interpret the function symbols accordingly, for example:
             \begin{itemize}
-                \item $f^{\mathcal A'}(n)=n$ (or $1$)
-                \item $g^{\mathcal A'}(n,m)=\gcd(n,m)$
+                \item $f^{\mathcal A'}(n)=n$ (for all $n\in\mathbb N$)
+                \item $g^{\mathcal A'}(n,m)=\gcd(n,m)$ (for all $n,m\in\mathbb N$),
             \end{itemize}
-            So $\mathcal A'=\langle\mathbb N,R^\mathcal A,f^{\mathcal A'},g^{\mathcal A'}\rangle$ satisfies $T'$. This is one possible expansion; Skolemization ensures equisatisfiability but not uniqueness.
+            Thus we obtain the structure $\mathcal A'=\langle\mathbb N,\,R^{\mathcal A},\,f^{\mathcal A'},\,g^{\mathcal A'}\rangle$ in the language $L'=\langle R,f,g\rangle$ with equality, where $R^{\mathcal A}$ is the divisibility relation as above.
+
+            Note that this $\mathcal A'$ is not the only possible one. We could also choose $f^{\mathcal A'}(n)=1$. This illustrates why Skolemization produces an equisatisfiable, but typically not equivalent, theory.
         \end{enumerate}
     \end{solution}
 
 \end{problem}
 
 
+
 \begin{problem} 
     
-    Construct a Herbrand model for the given theory, or find an unsatisfiable conjunction of ground instances (where $c,d$ are constants in the language).    
+    Construct a Herbrand model of the given theory, or find an unsatisfiable conjunction of ground instances of its axioms ($c,d$ are constant symbols in the language).    
     \begin{enumerate}[(a)]
         \item $T=\{\neg P(x)\vee Q(f(x),y), \neg Q(x,d), P(c)\}$
         \item $T=\{\neg P(x)\vee Q(f(x),y), Q(x,d), P(c)\}$
@@ -174,23 +192,65 @@
 
     \begin{solution}
         \begin{enumerate}[(a)]
-            \item $T$ is inconsistent. Unsatisfiable conjunction of ground instances:
+            \item $T$ is inconsistent. An unsatisfiable conjunction of ground instances of the axioms is:
             $$
             (\neg P(c)\lor Q(f(c),d))\land \neg Q(f(c),d)\land P(c)
             $$
-            Treat atoms as propositional variables: $P(c)=p$, $Q(f(c),d)=q$, giving $(\neg p\lor q)\land \neg q\land p$.
-            \item $T$ is satisfiable; a Herbrand model can be constructed with universe of all constant terms and function application terms, e.g., $P^\mathcal H=H$, $Q^\mathcal H=H\times H$, $f^\mathcal H(t)=f(t)$.
-            \item $T$ is satisfiable; for example, choose $P^\mathcal H=H\times\{f(t)\mid t\in H\}$.
-            \item $T$ is inconsistent. Introduce a constant $c$ if needed. Unsatisfiable conjunction of ground instances:
+            This can be easily verified by resolution ``at the propositional level'', i.e., treating each atomic formula as a propositional variable: if we denote $P(c)$ by $p$ and $Q(f(c),d)$ by $q$, we have $(\neg p\lor q)\land \neg q\land p$.
+
+            How can we find these ground instances of axioms? Herbrand's theorem provides a method: we construct a (finite) tableau proof of contradiction from the theory $T_\mathrm{ground}$ consisting of all ground instances of the axioms of $T$. Alternatively, we can use the same approach as when constructing models: we build a \emph{tableau refutation} for some $\varphi_\mathrm{ground}\in T_\mathrm{ground}$, i.e., a contradictory tableau with $\mathrm{T}\varphi_\mathrm{ground}$ at the root. With a suitable choice of axioms, we can obtain a contradictory tableau easily:
+            \begin{center}
+                \scalebox{1}{
+                \begin{forest}
+                    for tree={math content}
+                    [\textcolor{blue}{\T P(c)}
+                        [\textcolor{blue}{\T \neg Q(f(c),d)}
+                            [{\F Q(f(c),d)}
+                                [\textcolor{blue}{\T\neg P(c)\lor Q(f(c),d)}
+                                    [\T\neg P(c)
+                                        [\F P(c), tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                    ]
+                                    [{\T Q(f(c),d)}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                                ]
+                            ]
+                        ]
+                    ]
+                \end{forest}
+                }
+            \end{center}  
+            The axioms of $T_\mathrm{ground}$ (ground instances of axioms of $T$) that we used in the tableau refutation (in blue) above form the unsatisfiable conjunction.
+
+            In the next set of examples, we will show a better approach: the unsatisfiable conjunction of ground instances can also be obtained from a \emph{resolution refutation} of $S$ (obtained by converting $T$ into CNF).
+
+            \item This theory is consistent, so it has a Herbrand model (a model whose universe consists of all constant terms of the language, and where the interpretation of function symbols corresponds to ``constructing a term'' by applying the symbol). 
+            
+            In such a simple case as this, we can construct the Herbrand model explicitly: 
+            $$
+            \mathcal H=\langle H;P^\mathcal H,Q^\mathcal H,f^\mathcal H,c^\mathcal H,d^\mathcal H\rangle
+            $$
+            \begin{itemize}
+                \item $H=\{\text{``c''},\text{``d''},\text{``f(c)''},\text{``f(d)''},\text{``f(f(c))''},\text{``f(f(d))''},\dots\}$
+                \item $c^\mathcal H=\text{``c''}$, $d^\mathcal H=\text{``d''}$
+                \item $f^\mathcal H(\text{``t''})=\text{``f(t)''}$
+                \item $P^\mathcal H=H$
+                \item $Q^\mathcal H=H\times H$
+            \end{itemize}
+            We have chosen the relations $P^\mathcal H=H$ and $Q^\mathcal H=H\times H$ as the total unary and binary relations, so that all axioms are satisfied. The rest follows from the definition of a Herbrand model.
+
+            Let us also explain the procedure given by the proof of Herbrand's theorem. As above, we could construct a finished tableau from $T_\mathrm{ground}$ for some $\T P(c)$, but this time the tableau will not be contradictory (the theory $T_\mathrm{ground}$ is consistent). A Herbrand model can be obtained from any finished noncontradictory branch, using the same method as for the canonical model, with the difference that no auxiliary constants $c_0,c_1,\dots$ are added to the language as in the tableau method. Notice that they are not needed: because $T$ is \emph{open}, it contains no quantifiers, and therefore $T_\mathrm{ground}$ contains none either, so no entries of the type ``witnes'' need to be reduced. (You may try to construct a small part of the tableau, but it becomes rather complicated.)
+            
+            \item The theory is consistent. In the Herbrand model, we can choose, for example, $P^\mathcal H=H\times\{\text{``f(t)''}\mid t\in H\}$, i.e., the relation contains pairs of terms where the second term begins with the function symbol $f$.
+            
+            \item The theory is inconsistent. The axioms contain no constant symbols, so we must add one to the language; let us use $L=\langle P,f,g,c\rangle$ (without equality). An unsatisfiable conjunction of ground instances of axioms is, for example:
             $$
             P(g(c),f(g(c)))\land \neg P(c,g(c))\land (P(g(c),f(g(c))) \to P(c,g(c)))
             $$
+        
         \end{enumerate}
 
     \end{solution}
 
 \end{problem}
-
 
         
 \section*{Extra practice}
@@ -198,17 +258,17 @@
 
 \begin{problem}
 
-    The theory of fields $T$ in the language $L=\langle +,-,\cdot,0,1\rangle$ contains a single axiom $\varphi$, which is not open: $x\neq 0\ \to\ (\exists y)(x\cdot y=1)$. We know that $T\models 0\cdot y=0$ and $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
+    The theory of fields $T$ in the language $L=\langle +,-,\cdot,0,1\rangle$ contains only one axiom $\varphi$ that is not open: $x\neq 0\ \to\ (\exists y)(x\cdot y=1)$. We know that $T\models 0\cdot y=0$ and $T\models\ (x\ne 0\ \wedge\ x\cdot y=1\ \wedge\ x\cdot z=1)\ \to\ y=z$.
     \begin{enumerate}[(a)]
         \item Find the Skolem form $\varphi_S$ of the formula $\varphi$ with a new function symbol $f$.
         \item Consider the theory $T'$ obtained from $T$ by replacing $\varphi$ with $\varphi_S$. Is $\varphi$ valid in $T'$?
-        \item Can every model of $T$ be \emph{uniquely} extended to a model of $T'$?
+        \item Can every model of $T$ be \emph{uniquely} expanded to a model of $T'$?
     \end{enumerate}
     Now consider the formula $\psi=x\cdot y=1\vee  (x=0 \wedge y=0)$.
     \begin{enumerate}[(a)]
         \setcounter{enumi}{3}
-        \item Are the axioms of existence and uniqueness valid in $T$ for $\psi(x,y)$ and the variable $y$?
-        \item Construct an extension $T''$ of the theory $T$ by defining a symbol $f$ using the formula $\psi$.
+        \item Are the axioms of existence and uniqueness for $\psi(x,y)$ and the variable $y$ valid in $T$?
+        \item Construct an extension $T''$ of the theory $T$ by definition of $f$ using the formula $\psi$.
         \item Is $T''$ equivalent to the theory $T'$?
         \item Find an $L$-formula that is $T''$-equivalent to the formula:
         $f(x\cdot y)=f(x)\cdot f(y)$
@@ -221,9 +281,9 @@
     \begin{itemize}\it
         \item If a brick is on (another) brick, then it is not on the ground.
         \item Every brick is on (another) brick or on the ground.
-        \item No brick is on a brick that is on (another) brick.
+        \item No brick is on a brick that is itself on (another) brick.
     \end{itemize}
-    We want to prove by resolution the following statement: {\it ``If a brick is on (another) brick, the lower brick is on the ground.''}. Construct the corresponding CNF formula $S$, and try to also find its resolution refutation.
+    We want to prove by resolution the following statement: {\it ``If a brick is on (another) brick, the lower brick is on the ground.''}. Construct the corresponding CNF formula $S$, and try to find its resolution refutation.
 \end{problem}
 
         

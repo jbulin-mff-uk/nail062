@@ -61,10 +61,10 @@
         \begin{enumerate}[(a)]
             \item I. No --- intuitively the formula would state that the relation $\vartriangleright^\mathcal A$ contains all pairs (edges); from the definition $\mathrm{PH}^\mathcal A(x \vartriangleright y)[e]=0$ for example for $e(x)=a$, $e(y)=a$.\\            
             II. For example $\mathcal B_0=(\{0\};\vartriangleright^{\mathcal B_0})$ with $\vartriangleright^{\mathcal B_0}=\{(0,0)\}$.
-            \item I. No --- intuitively the graph has no sink; from the definition: $\mathrm{PH}^\mathcal A(\varphi)=\max_{u\in A}\mathrm{PH}^\mathcal A((\forall y)(y \vartriangleright x))[e(x/u)]=\max_{u\in A}\min_{v\in A}\mathrm{PH}^\mathcal A(y \vartriangleright x)[e(x/u,y/v)]=0$, e.g. for $u=a$ we may take $v=a$.\\
+            \item I. No --- intuitively the graph has no vertex that would have arcs from all vertices; from the definition: $\mathrm{PH}^\mathcal A(\varphi)[e]=\max_{u\in A}\mathrm{PH}^\mathcal A((\forall y)(y \vartriangleright x))[e(x/u)]=\max_{u\in A}\min_{v\in A}\mathrm{PH}^\mathcal A(y \vartriangleright x)[e(x/u,y/v)]=0$, e.g. for $u=a$ we may take $v=a$.\\
             II. For example $\mathcal B_0$ as above.
-            \item I. Yes (assign to $x$ for instance the element $a$), the antecedent is not satisfied for any assignment to $y$, hence the implication is always true.\\
-            II. For example $\mathcal B_1=(\{0,1\};\vartriangleright^{\mathcal B_1})$ with $\vartriangleright^{\mathcal B_1}=\{(0,1)\}$.
+            \item I. Yes (assign to $x$ for instance the element $a$), the antecedent is not satisfied for any assignment to $y$, hence the implication is always true. (Intuitively, the formula states that there exists a vertex that either has a loop or no edge leads to it from any vertex.)\\
+            II. For example $\mathcal B_1=(\{0,1\};\vartriangleright^{\mathcal B_1})$ with $\vartriangleright^{\mathcal B_1}=\{(0,1),(1,0)\}$.
             \item I. No. II: For example $\mathcal B_0$.
             \item I. No. II: For example $\mathcal B_0$.  
         \end{enumerate}

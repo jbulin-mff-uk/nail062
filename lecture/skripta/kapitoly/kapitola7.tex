@@ -1,10 +1,10 @@
 \chapter{Tablo metoda v predikátové logice}
 
-V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z výrokové na predikátovou logiku.\footnote{Na tomto místě je dobré připomenout si tablo metodu ve výrokové logice, viz Kapitola \ref{chapter:tableau-method-propositional}.} Metoda funguje velmi podobně, musíme si ale poradit \emph{kvantifikátory}.
+V této kapitole ukážeme, jak lze zobecnit \emph{metodu analytického tabla} z výrokové na predikátovou logiku.\footnote{Na tomto místě je dobré připomenout si tablo metodu ve výrokové logice, viz Kapitola \ref{chapter:tableau-method-propositional}.} Metoda funguje velmi podobně, musíme si ale poradit s \emph{kvantifikátory}.
 
 \section{Neformální úvod}
 
-V této sekci tablo metodu v predikátové logice neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustruje, jak tablo metoda v predikátové logice funguje, a jak se vypořádá s kvantifikátory.
+V této sekci tablo metodu v predikátové logice neformálně představíme. K formálním definicím se vrátíme později. Začneme dvěma příklady, na kterých ilustrujeme, jak tablo metoda v predikátové logice funguje, a jak se vypořádává s kvantifikátory.
 
 \begin{example} Na Obrázku \ref{figure:predicate-tableau-intro-examples} jsou znázorněna dvě tabla. Jsou to tablo důkazy (v logice, tj. z prázdné teorie) \emph{sentencí} $(\exists x)\neg P(x)\limplies\neg(\forall x)P(x)$ (vpravo) a $\neg(\forall x)P(x)\limplies(\exists x)\neg P(x)$ (vlevo) jazyka $L=\langle P\rangle$ (bez rovnosti), kde $P$ je unární relační symbol. Symbol $c_0$ je \emph{pomocný konstantní symbol}, který do jazyka při konstrukci tabla přidáváme.
 \end{example}
@@ -75,7 +75,7 @@ Kvantifikátor nemůžeme pouze odstranit, neboť výsledná formule $\varphi(x)
 Jazyk $L$ teorie $T$, ve které dokazujeme, rozšíříme o spočetně mnoho \emph{nových (pomocných) konstantních symbolů} $C=\{c_0,c_1,c_2,\dots\}$ (ale budeme psát i $c,d,\dots$), výsledný rozšířený jazyk označíme $L_C$. Konstantní termy v jazyce $L_C$ tedy existují, i pokud původní jazyk $L$ nemá žádné konstanty. A vždy při konstrukci tabla máme k dispozici nějaký \emph{nový}, dosud \emph{nepoužitý} (ani v teorii, ani v konstruovaném tablu) pomocný konstantní symbol $c\in C$.
 
 \subsubsection{Svědci}
-Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Srovnej s Větou o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
+Při redukci položky typu ``svědek'' substituujeme za proměnnou jeden z těchto nových, pomocných symbolů, a to takový, který \emph{dosud nebyl na dané větvi použit}. V případě položky $\T(\exists x)\varphi(x)$ tedy máme $\T\varphi(x/c)$. Tento konstantní symbol $c$ bude hrát roli (nějakého) prvku, který danou formuli splňuje (resp. vyvrací, jde-li o položku tvaru $\F(\forall x)\varphi(x)$). Srovnejte s Větou o konstantách (Věta \ref{theorem:on-constants}). Je důležité, že symbol $c$ dosud nebyl na větvi ani v teorii nijak použit. Typicky ale poté použijeme položky typu ``všichni'', abychom se dozvěděli, co musí \emph{o tomto svědku platit}.
 
 Na Obrázku \ref{figure:predicate-tableau-intro-examples} vidíme příklad: položka $\T(\exists x)\neg P(x)$ v levém tablu je redukovaná, její redukcí vznikla položka $\T\neg P(c_0)$; $c_0\in C$ je pomocný symbol, na větvi se dosud nevyskytoval (a je první takový). Podobně pro položku $\F(\forall x)P(x)$ a $\F P(c_0)$ v pravém tablu.
 

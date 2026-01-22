@@ -278,7 +278,7 @@ V této podsekci shrneme celý postup popsaný v předchozích podsekcích. Klí
     Každá teorie má otevřenou konzervativní extenzi.
 \end{theorem}
 \begin{proof}
-    Mějme $L$-teorii $T$. Každý axiom nahradíme jeho generálním uzávěrem (není-li to už sentence) a převedeme do PNF, tím získáme ekvivalentní teorii $T'$. Nyní nahradíme každý axiom teorie $T'$ jeho Skolemovou variantou. Tím získáme teorii $T''$ v rozšířeném jazyce $L'$. Z Lemmatu \ref{lemma:skolem-variant-conservative-extension} plyne, že $L$-redukt každého modelu $T''$ je modelem $T'$, tedy $T''$ je extenzí $T'$, a že každý model $T'$ lze expandovat do jazyka $L'$ na model $T''$, tedy jde o konzervativní extenzi. Teorie $T''$ je axiomatizovaná univerzálními sentencemi, odstraníme-li kvantifikátorové prefixy (tj. vezmeme-li jádra axiomů), získáme otevřenou teorii $T'''$, která ekvivalentní s $T''$ a tedy je také konzervativní extenzí $T$.
+    Mějme $L$-teorii $T$. Každý axiom nahradíme jeho generálním uzávěrem (není-li to už sentence) a převedeme do PNF, tím získáme ekvivalentní teorii $T'$. Nyní nahradíme každý axiom teorie $T'$ jeho Skolemovou variantou. Tím získáme teorii $T''$ v rozšířeném jazyce $L'$. Z Lemmatu \ref{lemma:skolem-variant-conservative-extension} plyne, že $L$-redukt každého modelu $T''$ je modelem $T'$, tedy $T''$ je extenzí $T'$, a že každý model $T'$ lze expandovat do jazyka $L'$ na model $T''$, tedy jde o konzervativní extenzi. Teorie $T''$ je axiomatizovaná univerzálními sentencemi, odstraníme-li kvantifikátorové prefixy (tj. vezmeme-li jádra axiomů), získáme otevřenou teorii $T'''$, která je ekvivalentní s $T''$ a tedy je také konzervativní extenzí $T$.
 \end{proof}
 
 Ze sémantické charakterizace konzervativní extenze snadno plyne následující důsledek:
@@ -726,7 +726,7 @@ Větu o úplnosti rezoluce v predikátové logice, totiž že nesplnitelné form
 Klíčem je následující lemma, které zaručuje takové `zvednutí' v jednom rezolučním kroku. Jeho důkaz je poněkud technický. 
 
 \begin{lemma}[Lifting lemma]\label{lemma:lifting-lemma}
-Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných. Jsou-li $C^*_1$ a $C^*_2$ základní instance klauzulí $C_1$ a $C_2$ a je-li $C^*$ je rezolventou $C^*_1$ a $C^*_2$, potom existuje rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*$ je základní instancí $C$.
+Mějme klauzule $C_1$ a $C_2$ s disjunktními množinami proměnných. Jsou-li $C^*_1$ a $C^*_2$ základní instance klauzulí $C_1$ a $C_2$ a je-li $C^*$ rezolventou $C^*_1$ a $C^*_2$, potom existuje rezolventa $C$ klauzulí $C_1$ a $C_2$ taková, že $C^*$ je základní instancí $C$.
 \end{lemma}
 \begin{proof}
 Nechť $C^*_1=C_1\tau_1$ a $C^*_2=C_2\tau_2$, kde $\tau_1$ a $\tau_2$ jsou základní substituce, které nesdílejí žádnou proměnnou. Najdeme rezolventu $C$ takovou, že $C^*=C\tau_1\tau_2$.

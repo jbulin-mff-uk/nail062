@@ -332,7 +332,7 @@ Toho můžeme využít při hledání modelů hrubou silou.
     $$
     \M_\mathbb P(r)=\{(x,y,0)\mid x,y\in\{0,1\}\}=\{(0,0,0),(0,1,0),(1,0,0),(1,1,0)\},
     $$
-    poté určíme, ve který z těchto modelů platí výrok $q\limplies r$: 
+    poté určíme, ve kterých z těchto modelů platí výrok $q\limplies r$: 
     \begin{itemize}
         \item $(0,0,0)\models q\limplies r$,
         \item $(0,1,0)\not\models q\limplies r$,
@@ -488,7 +488,7 @@ Všimněte si, že výrok v CNF je tautologie, právě když každá jeho klauzu
 
 Všimněte si, že pokud ve výrokové logice zaměníme hodnoty pro pravdu a nepravdu, tj.\ 0 a 1, pravdivostní tabulka negace zůstává stejná, z konjunkce se stává disjunkce, a naopak. Tomuto konceptu se říká \emph{dualita}; v logice uvidíme mnoho příkladů. 
 
-Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Protože $p,q$ jsou výrokové proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí pokud $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
+Platí $\neg(p\land q)\sim (\neg p\lor \neg q)$ a \emph{z duality} víme také $\neg(\neg p\lor \neg q)\sim (\neg \neg p\land \neg \neg q)$, z čehož snadno odvodíme $\neg(p\lor q)\sim (\neg p\land \neg q)$.\footnote{Protože $p,q$ jsou výrokové proměnné, mohou za ně být dosazeny obě hodnoty 0 i 1, tedy je můžeme zaměnit za k nim opačné literály.} Obecněji, $n$-ární booleovské funkce $f,g$ jsou navzájem \emph{duální}, pokud platí $f(\neg x)=\neg g(x)$. Máme-li výrok $\varphi$ vybudovaný z $\{\neg,\landsymb,\lorsymb\}$ a zaměníme-li v něm $\landsymb$ a $\lorsymb$, a znegujeme-li výrokové proměnné (resp.\ zaměníme-li literály za opačné literály), dostáváme výrok $\psi\sim\neg\varphi$ (tj.\ modely $\varphi$ jsou nemodely $\psi$ a naopak), a funkce $f_{\varphi,\mathbb P},f_{\psi,\mathbb P}$ jsou navzájem duální.
 
 Pojem DNF je duální k pojmu CNF, `je tautologie' je duální k `není splnitelný', předchozí pozorování tedy můžeme chápat jako příklad duality. Ke každému tvrzení ve výrokové logice získáváme `zdarma' tvrzení \emph{duální}, vzniklé záměnou $\land$ a $\lor$, pravdy a nepravdy.
 

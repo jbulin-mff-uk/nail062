@@ -10,7 +10,7 @@ Nejprve se podíváme na několik vlastností souvisejících s pojmem \emph{ele
 V teorii modelů nás často zajímá, jaké vlastnosti (sentence) platí v dané, konkrétní struktuře:
 
 \begin{definition}[Teorie struktury]
-Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$ je množina všech $L$-sentencí platných v $\A$:
+Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$, je množina všech $L$-sentencí platných v $\A$:
 $$
 \Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
 $$
@@ -37,7 +37,7 @@ $$
 $$
 
 \begin{example}
-   Podívejme se standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
+   Podívejme se na standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
    $$
    \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z))
    $$

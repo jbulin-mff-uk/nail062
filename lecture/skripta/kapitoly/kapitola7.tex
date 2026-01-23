@@ -468,7 +468,7 @@ Všimněte si, že stačí expandovat $\A$ o nové konstanty $c^\A$ vyskytujíc�
             \item Je-li položka $P$ typu `svědek': Pokud je $P=\T(\exists x)\varphi(x)$, potom $\A_i\models(\exists x)\varphi(x)$, tedy existuje $a\in A$ takové, že $\A_i\models\varphi(x)[e(x/a)]$. Větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o nově přidanou položku $\T\varphi(x/c)$ a model $\A_{i+1}$ jako expanzi $\A_i$ o konstantu $c^A=a$. Případ $P=\F(\forall x)\varphi(x)$ je obdobný.
             \item Je-li položka $P$ typu `všichni', větev $V_{i+1}$ definujeme jako prodloužení $V_i$ o atomické tablo. Nově přidaná položka je $\T\varphi(x/t)$ nebo $\F\varphi(x/t)$ pro nějaký $L_C$-term $t$. Předpokládejme, že jde o první z těchto dvou možností, pro druhou je důkaz analogický. 
             Model $\A_{i+1}$ definujeme jako \emph{libovolnou} expanzi $\A_i$ o nové konstanty vyskytující se v $t$.    
-            Protože $\A_i\models(\forall x)\varphi(x)$, platí i $\A_{i+1}\models(\forall x)\varphi(x)$ a tedy i $\A_{i+1}\models\varphi(x/t)$; model $\A_{i+1}$ se tedy shoduje s větví $V_i$.
+            Protože $\A_i\models(\forall x)\varphi(x)$, platí i $\A_{i+1}\models(\forall x)\varphi(x)$ a tedy i $\A_{i+1}\models\varphi(x/t)$; model $\A_{i+1}$ se tedy shoduje s větví $V_{i+1}$.
         \end{itemize}       
     \end{itemize}
 \end{proof}

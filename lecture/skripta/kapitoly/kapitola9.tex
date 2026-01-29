@@ -10,7 +10,7 @@ Nejprve se podíváme na několik vlastností souvisejících s pojmem \emph{ele
 V teorii modelů nás často zajímá, jaké vlastnosti (sentence) platí v dané, konkrétní struktuře:
 
 \begin{definition}[Teorie struktury]
-Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$ je množina všech $L$-sentencí platných v $\A$:
+Mějme $L$-strukturu $\A$. \emph{Teorie struktury} $\A$, značíme $\Th(\A)$, je množina všech $L$-sentencí platných v $\A$:
 $$
 \Th(\A)=\{\varphi\mid\varphi\text{ je $L$-sentence a }\A\models\varphi\}
 $$
@@ -37,7 +37,7 @@ $$
 $$
 
 \begin{example}
-   Podívejme se standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
+   Podívejme se na standardní uspořádání reálných, racionálních, a celých čísel, tj. na struktury $\langle\mathbb R,\leq\rangle$, $\langle\mathbb Q,\leq\rangle$, $\langle\mathbb Z,\leq\rangle$. Jak jsme již zmínili v Příkladu \ref{example:elementary-equivalence-of-orders-R-Q}, není těžké ukázat, že $\langle\mathbb R,\leq\rangle\equiv\langle\mathbb Q,\leq\rangle$ (pomocí \emph{hustoty} těchto uspořádání). Struktury $\langle\mathbb Q,\leq\rangle$ a $\langle\mathbb Z,\leq\rangle$ ale elementárně ekvivalentní nejsou: V $\langle\mathbb Z,\leq\rangle$ má každý prvek bezprostředního následníka, což v $\langle\mathbb Q,\leq\rangle$ neplatí. Pro následující sentenci $\varphi$ tedy máme $\varphi\in\Th(\langle\mathbb Z,\leq\rangle)$ ale $\varphi\not\in\Th(\langle\mathbb Q,\leq\rangle)$:
    $$
    \varphi=(\forall x)(\exists y)(x\leq y\land \neg x=y\land(\forall z)(x\leq z\limplies z=x\lor y\leq z))
    $$
@@ -54,7 +54,7 @@ Máme-li teorii $T$, zajímá nás, jak vypadají její modely. Připomeňme, ž
 Kompletní jednoduché extenze $L$-teorie $T$ jsou tedy (až na ekvivalenci) tvaru $\Th(\A)$ pro $\A\in\M_L(T)$, a (jak jsme už zmínili výše) $\A\equiv\B$ právě když $\Th(\A)=\Th(\B)$. Místo hledání všech modelů tedy stačí najít všechny kompletní jednoduché extenze.
 
 \begin{remark}
-    Jednou z motivací, proč se zabývat kompletními jednoduchými extenzemi, je Tvrzení \ref{propositon:recursively-enumerable-completion} z následující kapitoly, které říká, že pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} \emph{efektivně dané} teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který postupně vygeneruje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
+    Jednou z motivací, proč se zabývat kompletními jednoduchými extenzemi, je Tvrzení \ref{propositon:recursively-enumerable-completion} z následující kapitoly, které říká, že pokud lze \emph{efektivně (algoritmicky) popsat} všechny kompletní jednoduché extenze\footnote{Představte si algoritmus, který pro daná vstupní $i,j$ odpoví $j$-tý axiom $i$-té kompletní jednoduché extenze (v nějakém pevném očíslování); takový algoritmus ne vždy existuje!} dané teorie $T$,\footnote{$T$ může být nekonečná, ale musí existovat algoritmus, který postupně vygeneruje všechny axiomy $T$.} potom je $T$ \emph{(algoritmicky) rozhodnutelná}.
 \end{remark}
 
 
@@ -211,7 +211,7 @@ Pro konečné modely ale platí, že izomorfismus je totéž co elementární ek
 \begin{proof}
     Jednu implikaci jsme dokázali v Důsledku \ref{corollary:isomorphic-implies-elementarily-equivalent}. Předpokládejme, že $\A\equiv\B$ a ukažme, že existuje izomorfismus $\A$ na $\B$. Protože je jazyk s rovností, můžeme vyjádřit sentencí, že `existuje právě $n$ prvků'. Z toho plyne, že $|A|=|B|$.
 
-    Označme jako $\A'$ expanzi $\A$ o jména prvků z $A$; jde o strukturu v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme, že $\B$ lze expandovat na $L'$-strukturu $\B$ tak, že $\A'\equiv \B'$. Potom, jak lze snadno ověřit, je zobrazení $h(a)= c_a^{\B'}$ izomorfismem $\A'$ na $\B'$, a tedy i izomorfismem jejich $L$-reduktů a $\A\simeq\B$.
+    Označme jako $\A'$ expanzi $\A$ o jména prvků z $A$; jde o strukturu v jazyce $L'=L\cup\{c_a\mid a\in A\}$. Ukážeme, že $\B$ lze expandovat na $L'$-strukturu $\B'$ tak, že $\A'\equiv \B'$. Potom, jak lze snadno ověřit, je zobrazení $h(a)= c_a^{\B'}$ izomorfismem $\A'$ na $\B'$, a tedy i izomorfismem jejich $L$-reduktů a $\A\simeq\B$.
 
     Stačí ukázat, že pro každé $c_a^{\A'}=a\in A$ existuje prvek $b\in B$ takový, že pro expanze o interpretaci konstantního symbolu $c_a$ platí $\langle  \A,a\rangle\equiv\langle\B,b\rangle$. Označme jako $\Omega$ množinu formulí $\varphi(x)$ takových, že $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná množina, existuje konečně mnoho formulí $\varphi_1(x),\dots,\varphi_m(x)$ takových, že pro každou formuli $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$ (neboť $\A\equiv\B$, stačí vzít generální uzávěr této formule, což je sentence).
     

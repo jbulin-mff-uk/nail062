@@ -274,7 +274,7 @@ U binárních relačních symbolů často používáme infixový zápis, např. 
 Význam formule\footnote{Přesněji, její \emph{pravdivostní hodnota}, kterou formálně definujeme níže v Sekci \ref{subsection:truth-value-of-formula}.} může, nebo nemusí záviset na proměnných, které se v ní vyskytují: srovnejte $x\leq 0$ a $(\exists x)(x\leq 0)$ (a co teprve $x\leq 0 \lor (\exists x)(x\leq 0)$). Nyní tento koncept upřesníme a zavedeme potřebnou terminologii.
 
 
-\emph{Výskytem} proměnné $x$ ve formuli $\varphi$ myslíme list $\Tree(\varphi)$ označený $x$. \footnote{Proměnná $x$ se tedy \emph{nevyskytuje} v symbolu pro kvantifikátor $(Qx)$.} Výskyt je \emph{vázaný}, je-li součástí nějaké podformule (podstromu) začínající $(Qx)$. Není-li výskyt vázaný, je \emph{volný}. Proměnná je \emph{volná} ve $\varphi$, pokud má ve $\varphi$ volný výskyt, a \emph{vázaná} ve $\varphi$, pokud má ve $\varphi$ vázaný výskyt. Zápis $\varphi(x_1,\dots,x_n)$ znamená, že $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$.
+\emph{Výskytem} proměnné $x$ ve formuli $\varphi$ myslíme list $\Tree(\varphi)$ označený $x$.\footnote{Proměnná $x$ se tedy \emph{nevyskytuje} v symbolu pro kvantifikátor $(Qx)$.} Výskyt je \emph{vázaný}, je-li součástí nějaké podformule (podstromu) začínající $(Qx)$. Není-li výskyt vázaný, je \emph{volný}. Proměnná je \emph{volná} ve $\varphi$, pokud má ve $\varphi$ volný výskyt, a \emph{vázaná} ve $\varphi$, pokud má ve $\varphi$ vázaný výskyt. Zápis $\varphi(x_1,\dots,x_n)$ znamená, že $x_1,\dots,x_n$ jsou všechny volné proměnné ve formuli $\varphi$.
 
 \begin{example}
     Proměnná může být volná i vázaná, např. ve formuli $\varphi=(\forall x)(\exists y)(x\leq y)\lor x\leq z$ je první výskyt $x$ vázaný a druhý výskyt volný. (Nakreslete si strom formule!) Proměnná $y$ je vázaná (její jediný výskyt je vázaný) a $z$ je volná. Můžeme tedy psát $\varphi(x,z)$.
@@ -447,7 +447,7 @@ Pravdivostní hodnota negace je definována takto:
 $$
 \mathrm{PH}^\A(\neg \varphi)[e]=f_\neg(\mathrm{PH}^\A(\varphi)[e])=1-\mathrm{PH}^\A(\varphi)[e]
 $$
-Obdobně pro binární logické spojky, jsou-li $\varphi,\psi$ a $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, potom:
+Obdobně pro binární logické spojky, jsou-li $\varphi,\psi$ formule a $\lbinsymb\in\{\landsymb,\lorsymb,\limpliessymb,\liffsymb\}$, potom:
 $$
 \mathrm{PH}^\A(\varphi\lbin\psi)[e]=f_\lbinsymb(\mathrm{PH}^\A(\varphi)[e],\mathrm{PH}^\A(\psi)[e])
 $$
@@ -456,7 +456,7 @@ Zbývá definovat pravdivostní hodnotu pro kvantifikátory, tj. formule tvaru $
     \mathrm{PH}^\A((\forall x)\varphi)[e]&=\min_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])\\ 
     \mathrm{PH}^\A((\exists x)\varphi)[e]&=\max_{a\in A}(\mathrm{PH}^\A(\varphi)[e(x/a)])
 \end{align*}
-Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp.`disjunkce' ($\exists$) přes všechny prvky struktury.}
+Tedy v ohodnocení $e$ nastavíme hodnotu proměnné $x$ postupně na všechny prvky $a\in A$ a požadujeme, aby PH byla rovna 1 vždy (v případě $\forall$) nebo alespoň jednou (v případě $\exists$).\footnote{Připomeňme, že $f_\landsymb(x,y)=\min(x,y)$ a $f_\lorsymb(x,y)=\max(x,y)$. Kvantifikátory tedy hrají roli `konjunkce' ($\forall$) resp. `disjunkce' ($\exists$) přes všechny prvky struktury.}
 \end{definition}
 
 \begin{remark}
@@ -734,7 +734,7 @@ Co dělat, máme-li podmnožinu univerza, která \emph{není} uzavřená na funk
 
 \subsubsection{Expanze a redukt}
 
-Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také nechat univerzum stejné, a přidat resp. odebrat relace, funkce, a konstanty. Výsledku takové operace říkáme \emph{expanze} resp. \emph{redukt}. Všimněte si, že jde o strukturu v jiné signatuře.
+Prozatím jsme konstruovali nové struktury změnou univerza. Můžeme ale také nechat univerzum stejné a přidat resp. odebrat relace, funkce, a konstanty. Výsledku takové operace říkáme \emph{expanze} resp. \emph{redukt}. Všimněte si, že jde o strukturu v jiné signatuře.
 
 \begin{definition}[Expanze a redukt]
     Mějme jazyky $L\subseteq L'$, $L$-strukturu $\A$, a $L'$-strukturu $\A'$ na stejné doméně $A=A'$. Jestliže je interpretace každého symbolu z $L$ [relačního, funkčního, konstantního] stejná [relace, funkce, konstanta] v $\A$ i v $\A'$ potom říkáme, že struktura $\A'$ je \emph{expanzí} struktury $\A$ do jazyka $L'$ (také říkáme, že je \emph{$L'$-expanzí}) a že struktura $\A$ je \emph{reduktem} struktury $\A'$ na jazyk $L$ (také říkáme, že je \emph{$L$-reduktem}).    

@@ -208,6 +208,7 @@ Pro konečné modely ale platí, že izomorfismus je totéž co elementární ek
     \A\simeq\B\ \text{ právě když }\ \A\equiv\B
     $$
 \end{proposition}
+Myšlenka důkazu je založena na tom, že prvek $a\in A$ lze zobrazit na prvek $b\in B$ právě tehdy, když mají `stejné vlastnosti', tj. platí o nich tytéž formule s jednou volnou proměnnou $\varphi(x)$. Díky konečnosti $A$ máme ale jen konečně mnoho `vlastností prvků', nejvýše $2^{|A|}$. Platí totiž $\A\models\varphi(x)\liff\psi(x)$ právě když $\varphi(x)$ a $\psi(x)$ definují stejnou podmnožinu prvků $A$. Lze tedy napsat jedinou sentenci, která říká ``Existuje prvek se všemi vlasnostmi prvku $a$''. Tato sentence musí platit i v $\B$.
 \begin{proof}
     Jednu implikaci jsme dokázali v Důsledku \ref{corollary:isomorphic-implies-elementarily-equivalent}. Předpokládejme, že $\A\equiv\B$ a ukažme, že existuje izomorfismus $\A$ na $\B$. Protože je jazyk s rovností, můžeme vyjádřit sentencí, že `existuje právě $n$ prvků'. Z toho plyne, že $|A|=|B|$.
 
@@ -216,6 +217,8 @@ Pro konečné modely ale platí, že izomorfismus je totéž co elementární ek
     Stačí ukázat, že pro každé $c_a^{\A'}=a\in A$ existuje prvek $b\in B$ takový, že pro expanze o interpretaci konstantního symbolu $c_a$ platí $\langle  \A,a\rangle\equiv\langle\B,b\rangle$. Označme jako $\Omega$ množinu formulí $\varphi(x)$ takových, že $\langle \A,a\rangle \models \varphi(x/c_a)$, neboli $\A\models \varphi[e(x/a)]$. Protože je $A$ konečná množina, existuje konečně mnoho formulí $\varphi_1(x),\dots,\varphi_m(x)$ takových, že pro každou formuli $\varphi \in \Omega$ existuje $i$ takové, že $\A\models \varphi\liff\varphi_i$. Potom i $\B\models\varphi\liff\varphi_i$ (neboť $\A\equiv\B$, stačí vzít generální uzávěr této formule, což je sentence).
     
     Protože v $\A$ platí sentence $(\exists x)\bigwedge_{i=1}^m\varphi_i$ (je splněna díky prvku $a\in A$) a $\B\equiv\A$, máme i $\B\models (\exists x)\bigwedge_{i=1}^m\varphi_i$. Jinými slovy, existuje $b\in B$ takové, že $\B\models\bigwedge_{i=1}^m\varphi_i[e(x/b)]$. Tedy pro každou $\varphi\in \Omega$ platí $\B\models \varphi[e(x/b)]$, tj. $\langle\mathcal{B},b\rangle\models \varphi(x/c_a)$, což jsme chtěli dokázat.
+
+    Zmiňme ještě, proč je takto definované zobrazení bijekce, k tomu stačí, že je prosté. Buď $a\neq a'\in A$, a nechť $h(a)$ jsme definovali dříve. Potom $\neg x=c_a$ byla jedna z vlasností prvku $a'$, tj. musela platit i o $h(a')=b'\in B$, a máme $h(a')=b'\neq c_a^{\B'}=b=h(a)$.
 \end{proof}
 
 \begin{corollary}

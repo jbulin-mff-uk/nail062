@@ -200,6 +200,7 @@ For finite models, however, isomorphism is the same as elementary equivalence if
     \A \simeq \B\ \text{ if and only if }\ \A \equiv \B
     $$
 \end{proposition}
+The idea of the proof is based on the fact that an element $a \in A$ can be mapped to an element $b \in B$ if and only if they have the ``same properties,'' that is, if they satisfy exactly the same formulas with one free variable $\varphi(x)$. However, due to the finiteness of $A$, there are only finitely many ``properties of elements,'' at most $2^{|A|}$. Indeed, we have $\mathcal A \models \varphi(x) \iff \psi(x)$ precisely when $\varphi(x)$ and $\psi(x)$ define the same subset of elements of $A$. Hence, one can write a single sentence stating ``There exists an element with all the properties of the element $a$.'' This sentence must also be valid in $\mathcal B$.
 \begin{proof}
     We proved one implication in Corollary \ref{corollary:isomorphic-implies-elementarily-equivalent}. Suppose $\A \equiv \B$ and show that there is an isomorphism from $\A$ to $\B$. Since the language includes equality, we can express by a sentence that `there are exactly $n$ elements'. This implies that $|A| = |B|$.
 
@@ -208,6 +209,8 @@ For finite models, however, isomorphism is the same as elementary equivalence if
     It suffices to show that for each $c_a^{\A'} = a \in A$, there exists an element $b \in B$ such that for expansions by the interpretation of the constant symbol $c_a$, it holds that $\langle \A, a \rangle \equiv \langle \B, b \rangle$. Let $\Omega$ be the set of formulas $\varphi(x)$ such that $\langle \A, a \rangle \models \varphi(x/c_a)$, i.e., $\A \models \varphi[e(x/a)]$. Since $A$ is a finite set, there are finitely many formulas $\varphi_1(x), \dots, \varphi_m(x)$ such that for each formula $\varphi \in \Omega$, there exists $i$ such that $\A \models \varphi \liff \varphi_i$. Then $\B \models \varphi \liff \varphi_i$ (this follows from $\A \equiv \B$, just take the general closure of this formula, which is a sentence).
     
     Since in $\A$ the sentence $(\exists x)\bigwedge_{i=1}^m \varphi_i$ holds (it is satisfied by the element $a \in A$), and $\B \equiv \A$, we also have $\B \models (\exists x)\bigwedge_{i=1}^m \varphi_i$. In other words, there exists $b \in B$ such that $\B \models \bigwedge_{i=1}^m \varphi_i[e(x/b)]$. Thus, for each $\varphi \in \Omega$, $\B \models \varphi[e(x/b)]$, i.e., $\langle \mathcal{B}, b \rangle \models \varphi(x/c_a)$, which is what we wanted to prove.
+
+    Let us also mention why the mapping defined in this way is a bijection; for this it suffices to show that it is injective. Let $a\neq a'\in A$, and assume that $h(a)$ was defined earlier. Then $\neg x = c_a$ was one of the properties of the element $a'$, that is, it had to hold also for $h(a') = b' \in B$. Thus we have $h(a') = b' \neq c_a^{\mathcal B'} = b = h(a)$.
 \end{proof}
 
 \begin{corollary}

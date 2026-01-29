@@ -376,7 +376,7 @@ Označme jako $T_\text{ground}$ množinu všech základních instancí axiomů t
 Pokud tablo obsahuje bezespornou větev, potom je kanonický model pro tuto větev (opět bez přidání pomocných konstantních symbolů) Herbrandovým modelem $T$. V opačném případě máme tablo důkaz sporu, tedy teorie $T_\text{ground}$, a tím pádem i $T$, je nesplnitelná. Protože je tablo důkaz konečný, použili jsme v něm jen konečně mnoho základních instancí axiomů $\alpha_\text{ground}\in T_\text{ground}$. Jejich konjunkce je tedy nesplnitelná.
 \end{proof}
 
-\begin{remark}
+\begin{remark}\label{remark:herbrand-theorem-equality}
 Máme-li jazyk s rovností, potom nejprve teorii $T$ rozšíříme o axiomy rovnosti na teorii $T^*$, a má-li $T^*$ Herbrandův model $\A$, faktorizujeme ho podle kongruence $=^A$, stejně jako v případě kanonického modelu.
 \end{remark}
 
@@ -601,6 +601,10 @@ Je-li $u\neq x$, potom $u\sigma_{i+1}=u$, tedy i $u\sigma_{i+1}\tau=u\tau$. V p�
 Chceme-li dokázat, že $T\models\varphi$, umíme díky Skolemizaci najít CNF formuli $S$, která je nesplnitelná, právě když je nesplnitelná teorie $T\cup\{\neg\varphi\}$, neboli právě když $T\models\varphi$. Stačí tedy najít rezoluční zamítnutí $S$.
 
 V této sekci popíšeme vlastní rezoluční metodu. Většina pojmů i tvrzení bude velmi podobná výrokové logice. Jediným podstatným rozdílem bude \emph{rezoluční pravidlo}.
+
+\begin{remark}
+    Ve zbytku kapitoly se budeme zabývat jen jazyky bez rovnosti. Pro jazyky s rovností by stačilo přidat do $T$ axiomy rovnosti, resp. do CNF formule $S$ jejich CNF ekvivalenty, a v důkazu úplnosti níže použít variantu Herbrandovy věty pro jazyk s rovností (viz Poznámka \ref{remark:herbrand-theorem-equality}). V praxi je ale efektivnější použít speciální inferenční pravidla pro rovnost, např. tzv. \emph{paramodulaci}, která umožňuje rovnou přepsat podterm na jemu rovný. Detaily zde neuvedeme.
+\end{remark}
 
 
 \subsection{Rezoluční pravidlo}

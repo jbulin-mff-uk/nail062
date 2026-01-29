@@ -368,7 +368,7 @@ Let $T_\text{ground}$ denote the set of all ground instances of the axioms of th
 If the tableau contains a non-contradictory branch, then the canonical model for this branch (again without adding auxiliary constant symbols) is a Herbrand model of $T$. Otherwise, we have a tableau proof of contradiction, so the theory $T_\text{ground}$, and therefore $T$, is unsatisfiable. Since the tableau proof is finite, we used only finitely many ground instances of the axioms $\alpha_\text{ground}\in T_\text{ground}$. Their conjunction is therefore unsatisfiable.
 \end{proof}
 
-\begin{remark}
+\begin{remark}\label{remark:herbrand-theorem-equality}
 If the language is with equality, we first extend the theory $T$ with the axioms of equality to obtain the theory $T^*$, and if $T^*$ has a Herbrand model $\A$, we factorize it by the congruence $=^A$, just as in the case of the canonical model.
 \end{remark}
 
@@ -587,9 +587,16 @@ If $u\neq x$, then $u\sigma_{i+1}=u$, so $u\sigma_{i+1}\tau=u\tau$. In the case 
 
 \section{Resolution Method}\label{section:predicate-resolution-method}
 
-If we want to prove that $T\models\varphi$, we find (using skolemization) a CNF formula $S$ that is unsatisfiable if and only if the theory $T\cup\{\neg\varphi\}$ is unsatisfiable, i.e., if and only if $T\models\varphi$. Then, all we need to do is to find a resolution refutation of $S$.
+If we want to prove that $T\models\varphi$, we find (using skolemization) a CNF formula $S$ that is unsatisfiable if and only if the theory $T\cup\{\neg\varphi\}$ is unsatisfiable, i.e., if and only if $T\models\varphi$. Then, all we need to do is to find a resolution refutation of $S$. (If we have a language with equality, we must, similarly to the tableau method, first add the equality axioms to $T$, and then Skolemize $T^* \cup \{\neg \varphi\}$.)
+)
 
 In this section, we describe the resolution method itself. Most notions and theorems will be very similar to their counterparts from propositional logic. The only significant difference will be the \emph{resolution rule}.
+
+\begin{remark}
+    In the remainder of this chapter, we will consider only languages without equality. For languages with equality, it would suffice to add the equality axioms to $T$, or, respectively, their CNF equivalents to the CNF formula $S$, and in the completeness proof below use the variant of Herbrand's theorem for a language with equality (see Remark \ref{remark:herbrand-theorem-equality}). In practice, however, it is more efficient to use special inference rules for equality, e.g., the so-called \emph{paramodulation}, which allows one to directly rewrite a subterm to an equal one. We will not give the details here.
+\end{remark}
+
+
 
 \subsection{Resolution Rule}
 

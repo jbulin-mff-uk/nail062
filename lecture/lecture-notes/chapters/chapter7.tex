@@ -468,7 +468,7 @@ Note that it suffices to expand $\A$ by those new constants $c^\A$ where $c$ app
             \item If the entry $E$ is of the type `witness': If $E=\T(\exists x)\varphi(x)$, then $\A_i\models(\exists x)\varphi(x)$, so there exists $a\in A$ such that $\A_i\models\varphi(x)[e(x/a)]$. We define the branch $B_{i+1}$ as the extension of $B_i$ by the newly added entry $\T\varphi(x/c)$ and the model $\A_{i+1}$ as the expansion of $\A_i$ by the constant $c^A=a$. The case $E=\F(\forall x)\varphi(x)$ is analogous.
             \item If the entry $E$ is of the type `everyone', we define the branch $B_{i+1}$ as the extension of $B_i$ by the atomic tableau. The newly added entry is $\T\varphi(x/t)$ or $\F\varphi(x/t)$ for some $L_C$-term $t$. Suppose it is the first of these two possibilities, for the second the proof is analogous. 
             We define the model $\A_{i+1}$ as \emph{any} expansion of $\A_i$ by the new constants appearing in $t$.    
-            Since $\A_i\models(\forall x)\varphi(x)$, it also holds $\A_{i+1}\models(\forall x)\varphi(x)$ and thus $\A_{i+1}\models\varphi(x/t)$; the model $\A_{i+1}$ thus agrees with the branch $B_i$.
+            Since $\A_i\models(\forall x)\varphi(x)$, it also holds $\A_{i+1}\models(\forall x)\varphi(x)$ and thus $\A_{i+1}\models\varphi(x/t)$; the model $\A_{i+1}$ thus agrees with the branch $B_{i+1}$.
         \end{itemize}       
     \end{itemize}
 \end{proof}

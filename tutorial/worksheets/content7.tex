@@ -59,7 +59,7 @@
 
         \begin{enumerate}[(a)]
             \item Yes, $\underline{\mathbb{Q}}=\langle\mathbb{Q};+,-,0\rangle$ (the additive group reduct).
-            \item No, the element $1$ (interpretation of the symbol $0$ of the language of groups) is not a neutral element with respect to $\cdot$ (the interpretation of $+$), because $1\cdot 0=0\neq 1$.
+            \item No, no matter how we interpret the function symbol $-$ as a function $f:\mathbb Q \to \mathbb Q$, the axiom $x + (-x) = 0$ would require that for every $q \in \mathbb Q$ we have $q \cdot f(q) = 1$, which is impossible due to $q = 0$.
             \item Yes, for example $\underline{\mathbb{Q}}\restriction\mathbb Z =\langle\mathbb{Z};+,-,\cdot,0,1 \rangle$ (the ring of integers): in it not every nonzero element has a multiplicative inverse, so the sentence $(\forall x)(\neg x=0\to (\exists y)x\cdot y=1)$ fails (e.g. $2$ has no inverse in $\mathbb Z$, while it does in $\mathbb Q$). (From this it follows that the theory of fields is not openly axiomatizable, otherwise substructures of fields would be fields.)
             \item Yes, the so-called \emph{theory of a structure} is always complete: for every sentence $\psi$ either $\mathrm{Th}(\underline{\mathbb{Q}})\models\psi$ or $\mathrm{Th}(\underline{\mathbb{Q}})\models\neg\psi$, because $\underline{\mathbb{Q}}\models\psi$ or $\underline{\mathbb{Q}}\models\neg\psi$.
         \end{enumerate}

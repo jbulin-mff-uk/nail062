@@ -165,7 +165,7 @@ Note that the relation of `being isomorphic' is an equivalence relation. Let us 
 
 Now we show that an isomorphism is a bijection that `preserves semantics':
 
-\begin{proposition}
+\begin{proposition}\label{proposition:isomorphism-preserves-semantics}
 Let $\A, \B$ be structures in a language $L = \langle\mathcal{R}, \mathcal{F}\rangle$. A bijection $h\colon A \to B$ is an isomorphism between $\A$ and $\B$ if and only if the following hold:
 \begin{enumerate}[(i)]
     \item For every $L$-term $t$ and variable assignment $e\colon \Var \to A$:
@@ -238,6 +238,7 @@ It should surprise no one that under an automorphism, an isolated vertex of a gi
 &\Leftrightarrow\ \A \models \varphi[e(\overline{x}/h(\overline{a}), \overline{y}/\overline{b})] \\
 &\Leftrightarrow\ h(\overline{a}) \in D.
 \end{align*}
+Here, the first equivalence follows from the definition of a definable set, the second from the properties of isomorphisms (Proposition~\ref{proposition:isomorphism-preserves-semantics}), the third expands the composition of functions (where $e \circ h$ means that we apply $e$ first and then $h$), in the fourth we use the assumption that $h$ fixes the parameters $\overline{b}$, and the fifth is again the definition of a definable set.
 \end{proof}
 
 \begin{example}

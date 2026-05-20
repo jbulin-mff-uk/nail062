@@ -401,7 +401,7 @@ In the model $\A$, the relation $=^\A$ will then be a congruence. But this is no
         \item \emph{a congruence for the function $f$} if for all $a_i,b_i\in A$ such that $a_i\sim b_i$ ($1\leq i\leq n$) it holds that $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$,
         \item \emph{a congruence for the relation $R$} if for all $a_i,b_i\in A$ such that $a_i\sim b_i$ ($1\leq i\leq n$) it holds that $(a_1,\dots,a_n)\in R$ if and only if $(b_1,\dots,b_n)\in R$.
     \end{itemize}    
-    \emph{A congruence of the structure} $\A$ is an equivalence $\sim$ on the set $A$ that is a congruence for all functions and relations of $\A$. 
+    \emph{A congruence of the structure} $\A$ is an equivalence $\sim$ on the set $A$ that is a congruence for all functions and relations of $\A$. We denote the equivalence class of an element $a\in A$ by $[a]_\sim=\{b\in A\mid a\sim b\}$.
 \end{definition}
 
 \begin{definition}[Quotient Structure]
@@ -418,7 +418,7 @@ In the model $\A$, the relation $=^\A$ will then be a congruence. But this is no
     The \emph{axioms of equality} for a language $L$ with equality are as follows:
     \begin{enumerate}[(i)]
         \item $x=x$,
-        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ for every $n$-ary function symbol $f$ of the language $L$,
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ for every $n$-ary (non-constant) function symbol $f$ of the language $L$,
         \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ for every $n$-ary relation symbol~$R$ of the language $L$ \emph{including the equality symbol}.
     \end{enumerate}
 \end{definition}

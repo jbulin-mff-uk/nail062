@@ -401,7 +401,7 @@ V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chcem
         \item \emph{kongruencí pro funkci $f$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$,
         \item \emph{kongruencí pro relaci $R$}, pokud pro všechna $a_i,b_i\in A$ taková, že $a_i\sim b_i$ ($1\leq i\leq n$) platí $(a_1,\dots,a_n)\in R$ právě když $(b_1,\dots,b_n)\in R$.
     \end{itemize}    
-    \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. 
+    \emph{Kongruence struktury} $\A$ je ekvivalence $\sim$ na množině $A$, která je kongruencí pro všechny funkce a relace $\A$. Třídu prvku $a\in A$ podle $\sim$ značíme $[a]_\sim=\{b\in A\mid a\sim b\}$.
 \end{definition}
 
 \begin{definition}[Faktorstruktura]
@@ -418,7 +418,7 @@ V modelu $\A$ potom bude relace $=^\A$ kongruencí. To nám ale nestačí, chcem
     \emph{Axiomy rovnosti} pro jazyk $L$ s rovností jsou následující:
     \begin{enumerate}[(i)]
         \item $x=x$,
-        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ pro každý $n$-ární funkční symbol $f$ jazyka $L$,
+        \item $x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)$ pro každý $n$-ární (nekonstantní) funkční symbol $f$ jazyka $L$,
         \item $x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))$ pro každý $n$-ární relační symbol $R$ jazyka $L$ \emph{včetně rovnosti}.
     \end{enumerate}
 \end{definition}

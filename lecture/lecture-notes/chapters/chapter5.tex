@@ -127,10 +127,6 @@ It is easy to prove the following observation, by induction on the depth of the 
 \begin{observation} A clause $C$ has a resolution tree from a CNF formula $S$ if and only if $S \proves_R C$.  
 \end{observation}
 
-
-%todo
-
-
 Each resolution proof corresponds to a unique resolution tree. Conversely, from a single resolution tree, we can derive multiple resolution proofs: they are given by any traversal of the tree nodes where an inner node is visited only after both of its children have been visited.
 
 We also introduce another concept, called the \emph{resolution closure}, which contains all clauses that can be `learned' by resolution from a given formula. It is a useful theoretical perspective on resolution; in applications, constructing the entire resolution closure would be impractical.
@@ -250,7 +246,7 @@ The proof is by induction on the number of variables in $S$. If $|\Var(S)| = 0$,
 
 We show how to construct the resolution tree $\widehat{T}$ for $S \proves_R \neg p$. Similarly, we construct $\widehat{T'}$ for $S \proves_R p$, and then easily construct the resolution tree for $S \proves_R \square$: we attach the roots of the trees $\widehat{T}$ and $\widehat{T'}$ as the left and right children of the root $\square$ (i.e., in the last step of the resolution proof, we obtain $\square$ by resolving $\{\neg p\}$ and $\{p\}$).
 
-It remains to show the construction of the tree $\widehat{T}$: the set of nodes and the order remain the same; we only change some clauses in the nodes by adding the literal $\neg p$. At each leaf of the tree $T$ is some clause $C \in S^p$, and either $C \in S$ or it is not, but $C \cup \{\neg p\} \in S$. In the first case, we leave the label unchanged. In the second case, we add the literal $\neg p$ to $C$ \emph{and to all clauses above this leaf}. In the leaves, there are now only clauses from $S$, in the root, we have changed $\square$ to $\neg p$. And each inner node remains the resolvent of its children.
+It remains to show the construction of the tree $\widehat{T}$: the set of nodes and the order remain the same; we only change some clauses in the nodes by adding the literal $\neg p$. At each leaf of the tree $T$ is some clause $C \in S^p$, and either $C \in S$ or it is not, but $C \cup \{\neg p\} \in S$. In the first case, we leave the label unchanged. In the second case, we add the literal $\neg p$ to $C$ \emph{and to all clauses above this leaf}. In the leaves, there are now only clauses from $S$, in the root, we have changed $\square$ to $\neg p$. And each inner node remains the resolvent of its children. (It could be the case that all clauses on the leaves of $T$ were already in $S$, then we cannot add the literal $\neg p$ anywhere. However, in this case the resolution tree $T$ already shows that $S\proves_R \square$.)
 \end{proof}
 
 \begin{exercise}

@@ -143,7 +143,11 @@ Zaveďme ještě jeden pojem, tzv. \emph{rezoluční uzávěr}, který obsahuje 
 \end{definition}
 
 \begin{example}
-    Spočtěme rezoluční uzávěr formule $S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{\neg p,\neg r\},\{q,r\}\}$. Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
+    Spočtěme rezoluční uzávěr CNF formule 
+    $$
+    S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}\}.
+    $$ 
+    Klauzule z $S$ jsou \textcolor{blue}{modře}, další klauzule získáváme postupným rezolvováním (první s první, druhá s první, druhá s druhou atd., přes všechny možné literály):
     \begin{align*}
         \mathcal R(S)=\{&\textcolor{blue}{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}},\\&\{p,\neg q\},\{\neg q,r\},\{r,\neg r\},\{p,\neg p\},\{r,s\},\{p,r\},\{p,q\},\{r\},\{p\}\}
     \end{align*}

@@ -144,9 +144,13 @@ The \emph{resolution closure} $\mathcal{R}(S)$ of the formula $S$ is defined ind
 \end{definition}
 
 \begin{example}
-    Let us compute the resolution closure of the formula $S = \{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}\}$. The clauses from $S$ are in \textcolor{blue}{blue}; additional clauses are obtained by resolving them in pairs (first with the first, second with the first, second with the second, etc., over all possible literals):
+    Let us compute the resolution closure of the CNF formula 
+    $$
+    S=\{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}\}.
+    $$ 
+    The clauses from $S$ are in \textcolor{blue}{blue}; additional clauses are obtained by resolving them in pairs (first with the first, second with the first, second with the second, etc., over all possible literals):
     \begin{align*}
-        \mathcal{R}(S) = \{&\textcolor{blue}{\{p, \neg q, r\}, \{p, \neg r\}, \{\neg p, r\}, \{\neg p, \neg r\}, \{q, r\}},\\ &\{p, \neg q\}, \{\neg q, r\}, \{r, \neg r\}, \{p, \neg p\}, \{r, \neg s\}, \{p, r\}, \{p, q\}, \{r\}, \{p\}\}
+        \mathcal R(S)=\{&\textcolor{blue}{\{p,\neg q,r\},\{p,\neg r\},\{\neg p,r\},\{p,s\},\{q,r\}},\\&\{p,\neg q\},\{\neg q,r\},\{r,\neg r\},\{p,\neg p\},\{r,s\},\{p,r\},\{p,q\},\{r\},\{p\}\}
     \end{align*}
 \end{example}
 

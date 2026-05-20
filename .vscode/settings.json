@@ -39,15 +39,20 @@
     ],
     "latex-workshop.latex.recipes": [
             {
-                "name": "pdflatex with cleanup",
+                "name": "pdflatex + bibtex + pdflatex + cleanup",
                 "tools": [
+                    "pdflatex",
+                    "bibtex",
                     "pdflatex",
                     "cleanup"
                 ]
             },
             {
-                "name": "pdflatex x2 + clean",
-                "tools": ["pdflatex", "pdflatex", "clean"]
+                "name": "pdflatex with cleanup",
+                "tools": [
+                    "pdflatex",
+                    "cleanup"
+                ]
             }
     ],
     "latex-workshop.latex.tools": [
@@ -57,6 +62,13 @@
                 "args": [
                     "-interaction=nonstopmode",
                     "-file-line-error",
+                    "%DOCFILE%"
+                ]
+            },
+            {
+                "name": "bibtex",
+                "command": "bibtex",
+                "args": [
                     "%DOCFILE%"
                 ]
             },
@@ -76,5 +88,5 @@
                 ]
             }
     ],
-    "latex-workshop.latex.recipe.default": "pdflatex with cleanup"
+    "latex-workshop.latex.recipe.default": "pdflatex + bibtex + pdflatex + cleanup"
 }

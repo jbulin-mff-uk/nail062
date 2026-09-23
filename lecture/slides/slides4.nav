@@ -71,8 +71,24 @@
 \headcommand {\beamer@framepages {146}{153}}
 \headcommand {\slideentry {5}{0}{4}{154/160}{}{0}}
 \headcommand {\beamer@framepages {154}{160}}
-\headcommand {\beamer@partpages {1}{160}}
-\headcommand {\beamer@subsectionpages {136}{160}}
 \headcommand {\beamer@sectionpages {136}{160}}
-\headcommand {\beamer@documentpages {160}}
-\headcommand {\gdef \inserttotalframenumber {23}}
+\headcommand {\beamer@subsectionpages {136}{160}}
+\headcommand {\sectionentry {6}{\sc Kapitola 5: Rezoluční metoda}{161}{\sc Kapitola 5: Rezoluční metoda}{0}}
+\headcommand {\slideentry {6}{0}{1}{161/161}{}{0}}
+\headcommand {\beamer@framepages {161}{161}}
+\headcommand {\slideentry {6}{0}{2}{162/167}{}{0}}
+\headcommand {\beamer@framepages {162}{167}}
+\headcommand {\beamer@sectionpages {161}{167}}
+\headcommand {\beamer@subsectionpages {161}{167}}
+\headcommand {\sectionentry {7}{5.1 Množinová reprezentace}{168}{5.1 Množinová reprezentace}{0}}
+\headcommand {\slideentry {7}{0}{1}{168/168}{}{0}}
+\headcommand {\beamer@framepages {168}{168}}
+\headcommand {\slideentry {7}{0}{2}{169/179}{}{0}}
+\headcommand {\beamer@framepages {169}{179}}
+\headcommand {\slideentry {7}{0}{3}{180/186}{}{0}}
+\headcommand {\beamer@framepages {180}{186}}
+\headcommand {\beamer@partpages {1}{186}}
+\headcommand {\beamer@subsectionpages {168}{186}}
+\headcommand {\beamer@sectionpages {168}{186}}
+\headcommand {\beamer@documentpages {186}}
+\headcommand {\gdef \inserttotalframenumber {26}}

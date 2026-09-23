@@ -1,4 +1,5 @@
 {
+    "editor.wordWrap": "on",
     "cSpell.words": [
         "beamer",
         "BÚNO",
@@ -88,5 +89,5 @@
                 ]
             }
     ],
-    "latex-workshop.latex.recipe.default": "pdflatex + bibtex + pdflatex + cleanup"
+    "latex-workshop.latex.recipe.default": "pdflatex with cleanup"
 }

@@ -6,7 +6,7 @@
 \subtitle{NAIL062 Výroková a predikátová logika}
 \author{Jakub Bulín (KTIML MFF UK)}
 % \institute{KTIML MFF UK}
-\date{Zimní semestr 2025}
+\date{Zimní semestr 2026}
 
 
 \begin{document}
@@ -22,12 +22,13 @@
             \item tablo důkaz
             \item korektnost a úplnost
             \item věta o kompaktnosti
+            \item úvod do rezoluce
             %\item hilbertovský kalkulus
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 4.3-4.7 z Kapitoly 4 (Sekci 4.8 zatím přeskočíme)
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 4.3-4.7 z Kapitoly 4 (Sekci 4.8 zatím přeskočíme), Sekce 5.1 z Kapitoly 5
 
 \end{frame}
 
@@ -683,6 +684,87 @@
 
     Důkaz vynecháme.
     
+\end{frame}
+
+
+
+\section{\sc Kapitola 5: Rezoluční metoda}
+
+
+\begin{frame}{Rezoluční metoda}
+    
+    \begin{itemize}[<+->]
+        \item jiný důkazový systém než tablo metoda
+        \item mnohem efektivnější implementace
+        \item logické programování, automatické dokazování, SAT solvery (důkaz jako \alert{certifikát} nesplnitelnosti)
+        \item pracuje s CNF (každý výrok/teorii lze převést do CNF)
+        \item jediné inferenční pravidlo: \alert{rezoluční pravidlo}
+        $$
+        \frac{\{p\}\disjointunion C_1,\{\neg p\}\disjointunion C_2}{C_1\cup C_2}
+        $$
+        \item platí obecnější \alert{pravidlo řezu}:
+        $$
+        \frac{\varphi\lor\psi,\neg\varphi\lor\chi}{\psi\lor\chi}
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\section{5.1 Množinová reprezentace}
+
+
+\begin{frame}{Množinová reprezentace}
+
+    \begin{itemize}
+        \item \alert{literál} $\ell$ je $p$ nebo $\neg p$ (pro $p\in\mathbb P$), $\bar \ell$ je \alert{opačný literál} k $\ell$\pause
+        \item \alert{klauzule} $C$ je konečná množina literálů\pause
+        \item \alert{prázdná klauzule} $\square$ je nesplnitelná\pause
+        \item \alert{CNF formule} $S$ je množina klauzulí\pause (může být i \alert{nekonečná}!)\pause
+        \item \alert{prázdná formule} $\emptyset$ je vždy splněna
+    \end{itemize}\pause
+    Modely reprezentujeme jako množiny literálů:\pause
+    \begin{itemize}
+        \item \alert{(částečné) ohodnocení} je libovolná \alert{konzistentní} množina literálů (tj. nesmí obsahovat dvojici opačných literálů) \pause
+        \item\alert{úplné ohodnocení} obsahuje $p$ nebo $\neg p$ pro každý prvovýrok\pause
+        \item ohodnocení $\mathcal V$ \alert{splňuje} formuli $S$, píšeme \alert{$\mathcal V\models S$}, pokud $\mathcal V$ obsahuje nějaký literál z každé klauzule v $S$:\pause
+        $$
+        \mathcal V\cap C\neq\emptyset\text{ pro každou }C\in S
+        $$
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Množinová reprezentace: příklad}
+    
+    $\varphi=(\neg p_1\lor p_2)\land(\neg p_1\lor\neg p_2\lor p_3)\land(\neg p_3\lor\neg p_4)\land(\neg p_4\lor \neg p_5)\land p_4$ 
+    
+    \pause
+
+    \begin{itemize}
+        \item v množinové reprezentaci:
+        \myexampleamsmath{
+        $$
+        S=\{\{\neg p_1,p_2\},\{\neg p_1,\neg p_2,p_3\},\{\neg p_3,\neg p_4\},\{\neg p_4,\neg p_5\},\{p_4\}\}
+        $$
+        }\pause
+        \item ohodnocení \myexampleinline{
+            $\mathcal V=\{\neg p_1,\neg p_3,p_4,\neg p_5\}$
+        } 
+        splňuje $S$, \alert{$\mathcal V\models S$}\pause
+        \item není úplné, můžeme rozšířit libovolným literálem pro $p_2$: \pause
+        \begin{itemize}
+            \item \alert{$\mathcal V\union\{p_2\}\models S$}\pause
+            \item \alert{$\mathcal V\union\{\neg p_2\}\models S$}\pause
+        \end{itemize}        
+        \item tato dvě úplná ohodnocení odpovídají modelům
+         \begin{itemize}
+            \item $(0,1,0,1,0)$
+            \item $(0,0,0,1,0)$
+         \end{itemize}
+    \end{itemize}
+
 \end{frame}
 
 

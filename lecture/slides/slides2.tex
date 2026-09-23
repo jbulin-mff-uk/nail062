@@ -7,7 +7,7 @@
 \subtitle{NAIL062 Výroková a predikátová logika}
 \author{Jakub Bulín (KTIML MFF UK)}
 % \institute{KTIML MFF UK}
-\date{Zimní semestr 2025}
+\date{Zimní semestr 2026}
 
 
 \begin{document}
@@ -20,7 +20,7 @@
 
     \textbf{Program}
         \begin{itemize}
-            \item sémantika výrokové logiky (pokračování)
+            \item univerzálnost logických spojek
             \item normální formy
             \item vlastnosti a důsledky teorií
             \item extenze teorií
@@ -29,69 +29,7 @@
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.5-2.5 z Kapitoly 2
-
-\end{frame}
-
-
-\begin{frame}{Další sémantické pojmy}
-
-    \begin{itemize}
-        \item výrok $\varphi$ (nad $\mathbb P$) je \alert{pravdivý}, \alert{tautologie}, \alert{platí (v~logice)}, \alert{$\models \varphi$}, pokud platí v každém modelu, $\M_\mathbb P(\varphi)=\M_\mathbb P$\pause
-        \item \alert{lživý}, \alert{sporný}, pokud nemá žádný model, $\M_\mathbb P(\varphi)=\emptyset$\pause
-        
-        \myalertinline{\it (Být \alert{lživý} není totéž, co nebýt \alert{pravdivý}!)}
-        \pause
-
-        \item \alert{nezávislý}, pokud platí v nějakém modelu a neplatí v nějakém jiném modelu, tj.\ není pravdivý ani lživý, $\emptyset\subsetneq\M_\mathbb P(\varphi)\subsetneq\M_\mathbb P$\pause
-        \item \alert{splnitelný}, pokud má nějaký model, tj.\ není lživý, $\M_\mathbb P(\varphi)\neq\emptyset$
-    \end{itemize}
-    \pause
-    výroky $\varphi,\psi$ (ve stejném jazyce) jsou \alert{(logicky) ekvivalentní}, \alert{$\varphi\sim\psi$}, pokud mají stejné modely, tj.\
-    \myalertinline{
-    $
-    \varphi\sim\psi\ \Leftrightarrow\ \M_\mathbb P(\varphi)=\M_\mathbb P(\psi)
-    $
-    }
-
-    \pause
-    \medskip
-    \myexample{
-    \begin{itemize}
-        \item pravdivé: $\top$, $p\lor q\liff q\lor p$
-        \item lživé: $\bot$, $(p\lor q)\land (p\lor \neg q)\land \neg p$
-        \item nezávislé, splnitelné: $p$, $p\land q$
-        \item ekvivalentní: $p\limplies q\sim \neg p\lor q$, $\neg p \limplies (p\limplies q) \sim \top $
-    \end{itemize}
-    }
-    
-\end{frame}
-
-
-\begin{frame}{Sémantické pojmy vzhledem k teorii}
-
-    \textbf{relativně k dané teorii $T$} (omezíme se na její modely):
-    \begin{itemize}
-        \item \alert{pravdivý/platí v $T$}, \alert{důsledek $T$}, \alert{$T \models \varphi$} je-li \myalertinline{$\M_\mathbb P(T)\subseteq \M_\mathbb P(\varphi)$}
-        \item \alert{lživý/sporný v $T$} pokud $\M_\mathbb P(\varphi)\cap\M_\mathbb P(T)=\M_\mathbb P(T,\varphi)=\emptyset$.
-        \item \alert{nezávislý v $T$} pokud $\emptyset\subsetneq\M_\mathbb P(T,\varphi)\subsetneq\M_\mathbb P(T)$,
-        \item \alert{splnitelný v $T$}, \alert{konzistentní s $T$} pokud $\M_\mathbb P(T,\varphi)\neq\emptyset$ %(platí v alespoň jednom modelu $T$)
-        \pause
-        \item $\varphi$ a $\psi$ jsou \alert{ekvivalentní v $T$}, \alert{$T$-ekvivalentní}, \alert{$\varphi\sim_T\psi$} platí-li v~týchž modelech $T$, tj. \myalertinline{
-    $
-    \varphi\sim_T\psi\ \Leftrightarrow\ \M_\mathbb P(T,\varphi)=\M_\mathbb P(T,\psi)
-    $}
-    \end{itemize}
-
-    \pause
-    \myexample{např. $T=\{p\lor q,\neg r\}$:
-        \begin{itemize}
-            \item $\neg p\lor\neg q\lor \neg r$ je v $T$ pravdivý
-            \item $(\neg p\land\neg q)\lor r$ je v $T$ lživý
-            \item $p\liff q, p\land q$ jsou v $T$ nezávislé, splnitelné
-            \item platí $p\sim_T p\lor r$ (ale $p\not\sim p\lor r$)
-        \end{itemize}      
-    }
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.6-2.5 z Kapitoly 2
 
 \end{frame}
 

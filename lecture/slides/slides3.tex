@@ -18,76 +18,18 @@
 \begin{frame}{Třetí přednáška}
 
     \textbf{Program}
-        \begin{itemize}
-            \item problém splnitelnosti, SAT solvery
+        \begin{itemize}            
             \item 2-SAT a implikační graf
             \item Horn-SAT a jednotková propagace
             \item algoritmus DPLL
             \item úvod do tablo metody
+            \item pojem tablo důkazu
         \end{itemize}
 
     \textbf{Materiály}
 
         \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Kapitola 3, Sekce 4.1-4.2 z Kapitoly 4
 
-\end{frame}
-
-
-\section{\sc Kapitola 3: Problém splnitelnosti}
-
-
-\begin{frame}{Problém splnitelnosti Booleovských formulí}
-   
-    \textbf{Problém SAT:}
-    \begin{itemize}
-        \item vstup: výrok $\varphi$ v CNF
-        \item otázka: je $\varphi$ splnitelný? 
-    \end{itemize}
-
-    \pause
-    \alert{univerzální problém}: každou teorii nad konečným jazykem lze převést do CNF
-
-    \pause
-    \alert{Cook-Levinova věta}: SAT je NP-úplný (důkaz: formalizuj výpočet nedeterministického Turingova stroje ve výrokové logice)
-
-    \pause
-    ale některé \emph{fragmenty} jsou v P, efektivně řešitelné, např. 2-SAT a Horn-SAT (viz Sekce 3.2 a 3.3)
-
-    \pause
-    \alert{praktický problém}: moderní \emph{SAT solvery} (viz Sekce 3.1) se používají v řadě odvětví aplikované informatiky, poradí si s obrovskými instancemi
-    
-\end{frame}
-
-
-\section{3.1 SAT solvery}
-
-
-\begin{frame}{SAT solvery}
-
-    \begin{itemize}
-        \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.\pause
-        \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)\pause
-        \item různá rozšíření, zejména \href{https://en.wikipedia.org/wiki/Conflict-driven_clause_learning}{\alert{Conflict-driven clause learning (CDCL)}}\pause
-        \item řada technologií pro efektivnější řešení instancí pocházejících z různých aplikačních domén, heuristiky pro řízení prohledávání (za použití ML, NN) --- desítky tisíc řádků kódu
-    \end{itemize}
-    
-    \pause
-    \textbf{Praktická ukázka: boardomino}
-
-    \smallskip
-
-    \myexample{
-    Lze pokrýt šachovnici s chybějícími dvěma protilehlými rohy perfektně pokrýt kostkami domina?
-    }
-
-    \smallskip
-
-    \pause
-    těžká instance SATu (proč?), jak zakódovat? 
-    
-    \pause
-    řešič \href{http://www.labri.fr/perso/lsimon/glucose/}{\alert{Glucose}}, formát vstupu: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\alert{DIMACS CNF}}
-    
 \end{frame}
 
 
@@ -707,6 +649,132 @@
 
     \pause
     \myblock{\textbf{Königovo lemma:} Nekonečný, konečně větvící strom má nekonečnou větev.}
+
+\end{frame}
+
+
+\section{4.3 Tablo důkaz}
+
+
+\begin{frame}{Formální definice tabla}
+
+    \begin{itemize}[<+->]
+        \item \alert{položka} je nápis $\mathrm{T}\varphi$ nebo $\mathrm{F}\varphi$, kde $\varphi$ je nějaký výrok
+        \item \alert{konečné tablo z teorie $T$} je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+        \begin{itemize}[<+->]
+            \item jednoprvkový strom s libovolnou položkou je tablo z teorie $T$
+            \item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme na konec větve $V$ připojit atomické tablo pro položku $P$
+            \item na konec libovolné větve můžeme připojit položku $\mathrm{T}\alpha$ pro libovolný axiom $\alpha\in T$
+        \end{itemize}
+        \item \alert{tablo z teorie $T$} je buď konečné, nebo i nekonečné: v tom případě je spočetné a definujeme ho jako $\tau=\bigcup_{i\geq 0}\tau_i$, kde:
+        \begin{itemize}[<+->]
+            \item $\tau_i$ jsou konečná tabla z $T$
+            \item $\tau_0$ je jednoprvkové tablo
+            \item $\tau_{i+1}$ vzniklo z $\tau_i$ v jednom kroku
+        \end{itemize}
+        \item \alert{tablo pro položku $P$} je tablo, které má položku $P$ v kořeni
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Dokončené a sporné tablo}
+
+    \begin{itemize}[<+->]
+        \item Tablo je \alert{sporné}, pokud je každá jeho větev sporná.
+        \item Větev je \alert{sporná}, pokud obsahuje položky $\mathrm{T}\psi$ a $\mathrm{F}\psi$ pro nějaký výrok $\psi$, jinak je \alert{bezesporná}.
+        \item Tablo je \alert{dokončené}, pokud je každá jeho větev dokončená.
+        \item Větev je \alert{dokončená}, pokud je sporná, nebo
+        \begin{itemize}[<+->]
+            \item každá její položka je na této větvi \alert{redukovaná},
+            \item a zároveň obsahuje položku $\mathrm{T}\alpha$ pro každý axiom $\alpha\in T$.
+        \end{itemize}
+         
+        \item Položka $P$ je \alert{redukovaná} na větvi $V$ procházející touto položkou, pokud 
+        \begin{itemize}[<+->]
+            \item je tvaru $\mathrm{T}p$ resp. $\mathrm{F}p$ pro nějaký prvovýrok $p\in\mathbb P$, 
+            \item nebo se vyskytuje na $V$ jako kořen atomického tabla (byť ho podle konvence nezakreslujeme), tj., typicky, při konstrukci tabla již došlo k jejímu rozvoji na $V$.
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Tablo důkaz a tablo zamítnutí}
+
+    \begin{itemize}[<+->]
+        \item \alert{tablo důkaz} výroku $\varphi$ z teorie $T$ je \alert{sporné} tablo z teorie $T$ s položkou $\mathrm{F}\varphi$ v kořeni
+        \item pokud existuje, je $\varphi$ \alert{(tablo) dokazatelný} z $T$, píšeme \alert{$T\proves\varphi$}
+        \item podobně, \alert{tablo zamítnutí} je sporné tablo s $\mathrm{T}\varphi$ v kořeni
+        \item existuje-li, je $\varphi$ \alert{(tablo) zamítnutelný} z $T$, tj. platí \alert{$T\proves\neg\varphi$}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: tablo důkaz}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+        \begin{forest}
+            [$\mathrm{F}\psi$
+                [\textcolor{blue}{$\mathrm{T}\varphi\limplies \psi$}
+                    [$\mathrm{F}\varphi$
+                        [\textcolor{blue}{$\mathrm{T}\varphi$}, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                    ]                
+                    [$\mathrm{T}\psi$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]
+            ]
+        \end{forest}
+
+        \column{0.68\textwidth}
+
+        \begin{itemize}[<+->]
+            \item tablo důkaz výroku \alert{$\psi$} z \alert{$T=\{\varphi,\varphi\limplies\psi\}$}
+            \item položky vycházející z axiomů jsou \textcolor{blue}{modře}
+            \item ukázali jsme tedy \alert{$T\proves\psi$}
+            \item $\varphi,\psi$ jsou libovolné pevně dané výroky \item tím jsme dokázali tzv. \alert{větu o dedukci}
+        \end{itemize}
+    
+    \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Příklad: dokončené tablo, které není sporné}
+
+    \begin{columns}
+    
+        \column{0.32\textwidth}
+
+        \centering
+        \begin{forest}
+            [$\mathrm{F}p_0$
+                [\textcolor{blue}{$\mathrm{T}p_1\limplies p_0$}
+                    [$\mathrm{F}p_1$                
+                        [\textcolor{blue}{$\mathrm{T}p_2\limplies p_1$}
+                            [$\mathrm{F}p_2$ [$\vdots$]] 
+                            [$\mathrm{T}p_1$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]                    
+                        ]                
+                    ]
+                    [$\mathrm{T}p_0$, tikz={\node[fit to=tree,label=below:$\otimes$] {};}]
+                ]
+            ]
+        \end{forest}   
+        
+        \column{0.68\textwidth}
+
+        \begin{itemize}[<+->]
+            \item dokončené tablo pro výrok \alert{$p_0$} z teorie \alert{$T=\{p_{n+1}\limplies p_n\mid n\in\mathbb N\}$}. \item nejlevější větev je \alert{dokončená} a \alert{bezesporná}
+            \item sestává z položek \alert{$\mathrm{T}p_{i+1}\limplies p_i$} a \alert{$\mathrm{F}p_i$} pro všechna $i\in\mathbb N$
+            \item shoduje se s modelem \alert{$v=(0,0,\dots)$}, tj. $v:\mathbb P\to\{0,1\}$ kde $v(p_i)=0$ pro vš. $i$
+            \item máme protipříklad ukazující, že \alert{$T\not\models p_0$}
+        \end{itemize}
+
+    \end{columns}
 
 \end{frame}
 

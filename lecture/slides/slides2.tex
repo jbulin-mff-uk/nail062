@@ -25,11 +25,12 @@
             \item vlastnosti a důsledky teorií
             \item extenze teorií
             \item algebra výroků
+            \item problém splnitelnosti, SAT solvery
         \end{itemize}   
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.6-2.5 z Kapitoly 2
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 2.2.6-2.5 z Kapitoly 2, 
 
 \end{frame}
 
@@ -555,6 +556,64 @@
 
     \textbf{Důkaz:} stačí spočítat možné množiny modelů\hfill\qedsymbol
         
+\end{frame}
+
+
+\section{\sc Kapitola 3: Problém splnitelnosti}
+
+
+\begin{frame}{Problém splnitelnosti Booleovských formulí}
+   
+    \textbf{Problém SAT:}
+    \begin{itemize}
+        \item vstup: výrok $\varphi$ v CNF
+        \item otázka: je $\varphi$ splnitelný? 
+    \end{itemize}
+
+    \pause
+    \alert{univerzální problém}: každou teorii nad konečným jazykem lze převést do CNF
+
+    \pause
+    \alert{Cook-Levinova věta}: SAT je NP-úplný (důkaz: formalizuj výpočet nedeterministického Turingova stroje ve výrokové logice)
+
+    \pause
+    ale některé \emph{fragmenty} jsou v P, efektivně řešitelné, např. 2-SAT a Horn-SAT (viz Sekce 3.2 a 3.3)
+
+    \pause
+    \alert{praktický problém}: moderní \emph{SAT solvery} (viz Sekce 3.1) se používají v řadě odvětví aplikované informatiky, poradí si s obrovskými instancemi
+    
+\end{frame}
+
+
+\section{3.1 SAT solvery}
+
+
+\begin{frame}{SAT solvery}
+
+    \begin{itemize}
+        \item existují od 60. let 20. století, v 21. století dramatický rozvoj dnes až $~10^8$ proměnných, viz \href{http://www.satcompetition.org}{\alert{www.satcompetition.org}}.\pause
+        \item nejčastěji založeny na jednoduchém \alert{algoritmu DPLL} (viz Sekce 3.4), umí i najít řešení (model)\pause
+        \item různá rozšíření, zejména \href{https://en.wikipedia.org/wiki/Conflict-driven_clause_learning}{\alert{Conflict-driven clause learning (CDCL)}}\pause
+        \item řada technologií pro efektivnější řešení instancí pocházejících z různých aplikačních domén, heuristiky pro řízení prohledávání (za použití ML, NN) --- desítky tisíc řádků kódu
+    \end{itemize}
+    
+    \pause
+    \textbf{Praktická ukázka: boardomino}
+
+    \smallskip
+
+    \myexample{
+    Lze pokrýt šachovnici s chybějícími dvěma protilehlými rohy perfektně pokrýt kostkami domina?
+    }
+
+    \smallskip
+
+    \pause
+    těžká instance SATu (proč?), jak zakódovat? 
+    
+    \pause
+    řešič \href{http://www.labri.fr/perso/lsimon/glucose/}{\alert{Glucose}}, formát vstupu: \href{http://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html}{\alert{DIMACS CNF}}
+    
 \end{frame}
 
 

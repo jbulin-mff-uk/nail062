@@ -18,16 +18,17 @@
 \begin{frame}{Desátá přednáška}
 
     \textbf{Program}
-        \begin{itemize}            
+        \begin{itemize}
             \item unifikace, unifikační algoritmus
             \item rezoluční pravidlo, rezoluční důkaz
             \item korektnost rezoluce
             \item lifting lemma a úplnost rezoluce
+            \item LI-rezoluce a Prolog
         \end{itemize}    
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 8.4-8.6 z Kapitoly 8
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 8.4-8.7 z Kapitoly 8 (+ Sekce 5.4)
 
 \end{frame}
 
@@ -594,6 +595,207 @@
     
     Ale protože prázdná klauzule $\square$ je instancí $C$, musí být $C=\square$. Tím jsme našli rezoluční zamítnutí $S\proves_R \square$.        
     \hfill\qedsymbol
+
+\end{frame}
+
+
+\section{8.7 LI-rezoluce (více podrobností ve skriptech, VL v Sekci 5.4)}
+
+
+\begin{frame}{Lineární důkaz a LI-důkaz}
+
+    \begin{itemize}[<+->]
+        \item \alert{Lineární důkaz} klauzule $C$ z formule $S$ je konečná posloupnost
+        $$
+        \begin{bmatrix}
+            C_0 \\
+            B_0
+        \end{bmatrix},
+        \begin{bmatrix}
+            C_1 \\
+            B_1
+        \end{bmatrix},\dots,
+        \begin{bmatrix}
+            C_n \\
+            B_n
+        \end{bmatrix},
+        C_{n+1}
+        $$
+        kde: $B_0$ a $C_0$ jsou \myalertinline{varianty} klauzulí z $S$, $C_{n+1}=C$,
+        \begin{itemize}
+            \item $C_{i+1}$ je rezolventa $C_i$ a $B_i$
+            \item $B_i$ \alert{varianta} klauzule z $S$ nebo $B_i=C_j$ pro nějaké $j<i$.
+        \end{itemize}
+        \item \alert{Lineární zamítnutí} $S$ je lineární důkaz $\square$ z $S$
+        
+        \item \alert{LI-důkaz} je lin. důkaz, kde vš. $B_i$ jsou varianty klauzulí z $S$
+        \item $C$ \alert{LI-dokazatelná} z $S$, \alert{$S\proves_{LI}C$}, pokud existuje LI-důkaz
+        \item $S$ je \alert{LI-zamítnutelná}, pokud $S\proves_{LI}\square$    
+        \item korektnost (lineární i LI-rezoluce) je zřejmá
+    \end{itemize}
+
+    
+\end{frame}
+
+
+\begin{frame}{Úplnost LI-rezoluce pro Hornovy formule}
+
+    \medskip
+
+    \pause
+    \myblock{
+    \textbf{Věta (O úplnosti lineární rezoluce):}
+        $C$ má lineární důkaz z $S$, právě když má rezoluční důkaz z $S$ (tj. $S\proves_R C$).
+    }
+
+    \pause
+    \textbf{Důkaz:} \pause převodem na VL (Lifting lemma zachovává linearitu) \hfill\qedsymbol
+
+    \bigskip
+
+    \pause
+    \myblock{
+    \textbf{Věta (O úplnosti LI-rezoluce pro Hornovy formule):}
+        Je-li Hornova formule $T$ splnitelná, a $T\cup\{G\}$ je nesplnitelná pro cíl $G$, potom $T\cup\{G\}\proves_{LI}\square$, a to LI-zamítnutím, které začíná cílem $G$.
+    }
+        
+    \pause
+    \textbf{Důkaz:} \pause úplnost ve VL + Herbrandova věta + Lifting lemma\hfill\qedsymbol
+
+    \smallskip
+    
+    \pause
+    \begin{itemize}[<+->]\small
+        \item \alert{Hornova formule:} množina Hornových klauzulí
+        \item \alert{Hornova klauzule:} nejvýše jeden pozitivní literál   
+        \item \alert{Pravidlo:} klauzule s 1 pozitivním a alespoň 1 negativním literálem  
+         
+        \item \alert{Fakt:} pozitivní jednotková klauzule    
+        \item \alert{Cíl:} neprázdná klauzule bez pozitivního literálu 
+        \item \alert{Programové klauzule:} pravidla a fakta  
+        \item \alert{Program}: Hornova formule obsahující jen programové klauzule
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Program v Prologu}
+
+    \texttt{\small\setlength\tabcolsep{3pt}
+    \begin{tabular}{lr}
+        son(X,Y):-father(Y,X),man(X). 
+        & 
+       \alert{$\{son(X,Y),\neg father(Y,X),\neg man(X)\}$} 
+        \\
+        son(X,Y):-mother(Y,X),man(X).
+        &
+        \alert{$\{son(X,Y),\neg mother(Y,X),\neg man(X)\}$}
+        \\
+        man(charlie). 
+        &
+        \alert{$\{man(charlie)\}$}
+        \\
+        father(bob,charlie). 
+        &
+        \alert{$\{father(bob,charlie)\}$}
+        \\
+        mother(alice,charlie). 
+        &
+        \alert{$\{mother(alice,charlie)\}$}
+        \\
+        \\
+        ?-son(charlie,X). 
+        &
+        \alert{$\{\neg son(charlie,X)\}$}
+    \end{tabular}   
+    }    
+
+\end{frame}
+
+
+\begin{frame}{LI-rezoluce v Prologu}
+
+    \pause
+    Platí v programu daný \alert{existenční dotaz},  \textcolor{blue}{$P\models(\exists X)son(charlie,X)$}?
+
+    \medskip
+
+    \pause
+    \myblock{
+        \textbf{Důsledek:}
+        Pro program $P$ a cíl $G=\{\neg A_1,\dots,\neg A_k\}$ v proměnných $X_1,\dots,X_n$ jsou následující ekvivalentní:\pause
+        \begin{itemize}
+            \item $P\models(\exists X_1)\dots(\exists X_n)(A_1\wedge\dots\wedge A_k)$\pause
+            \item $P\cup\{G\}$ má LI-zamítnutí začínající $G$
+        \end{itemize}
+    }
+
+    \pause
+    \vspace{-2pt}
+    \textbf{Důkaz:} \pause Plyne z Důkazu sporem a Úplnosti LI-rezoluce pro Hornovy formule (Program je vždy splnitelný).\hfill\qedsymbol
+
+    \bigskip
+
+    \pause
+    Je-li odpověď na dotaz kladná, chceme znát i \alert{výstupní substituci} $\sigma$, tj. složení unifikací z rez. kroků, zúžené na proměnné v $G$. Platí:
+    $$
+    P\models(A_1\wedge\dots\wedge A_k)\sigma
+    $$
+
+\end{frame}
+
+
+\begin{frame}{Příklady}
+
+    \pause
+    \myexampleinline{\texttt{?-son(charlie,X).}}\pause
+
+    \bigskip
+
+    \hspace*{-1.13cm}\scalebox{0.82}{\begin{forest}
+        for tree={math content,grow=west,l sep=5pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg father(X,c)\}}
+                [,phantom]
+                [{\{\neg father(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\alert{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg father(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{father(b,c)\}}, label=below:{\textcolor{blue}{$\{X/b\}$}}]
+        ]
+    \end{forest}
+    }
+
+    \pause
+    \myexampleinline{\texttt{X=bob}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/b\}$}\pause
+
+    \bigskip
+
+    \hspace*{-1.23cm}\scalebox{0.82}{
+    \begin{forest}
+        for tree={math content,grow=west,l sep=3pt}
+        [{\square}
+            [,phantom]
+            [{\{\neg mother(X,c)\}}
+                [,phantom]
+                [{\{\neg mother(X,c),\neg man(c)\}}
+                    [,phantom]
+                    [{\alert{\{\neg son(c,X)\}}}]
+                    [{\{son(X',Y'),\neg mother(Y',X'),\neg man(X')\}}, label=below:{\textcolor{blue}{$\{X'/c,Y'/X\}$}}]
+                ]
+                [{\{man(c)\}}, label=below:{\textcolor{blue}{$\emptyset$}}]                    
+            ]
+            [{\{mother(a,c)\}}, label=below:{\textcolor{blue}{$\{X/a\}$}}]
+        ]
+    \end{forest}
+    }
+
+    \pause
+    \myexampleinline{\texttt{X=alice}} \qquad výstupní substituce \textcolor{blue}{$\sigma=\{X/a\}$}
 
 \end{frame}
 

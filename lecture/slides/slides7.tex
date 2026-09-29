@@ -22,12 +22,12 @@
             \item extenze teorií, extenze o definice
             \item definovatelnost a databázové dotazy
             \item vztah výrokové a predikátové logiky
-            \item tablo metoda v predikátové logice, jazyky s rovností
+            \item tablo metoda v predikátové logice
         \end{itemize}
 
     \textbf{Materiály}
 
-        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.7-6.9 z Kapitoly 6, Sekce 7.1-7.3 z Kapitoly 7
+        \href{https://github.com/jbulin-mff-uk/nail062/raw/main/lecture/lecture-notes/lecture-notes.pdf}{\alert{\textbf{Zápisky z přednášky}}}, Sekce 6.7-6.9 z Kapitoly 6, Sekce 7.1-7.2 z Kapitoly 7
 
 \end{frame}
 
@@ -1101,121 +1101,6 @@
         Pokud $T\proves\varphi$, potom systematické tablo je (konečným) tablo důkazem $\varphi$ z $T$.
     }
     
-\end{frame}
-
-
-\section{7.3 Jazyky s rovností}
-
-
-\begin{frame}{Rovnost}
-
-    \pause
-    $1+0=0+1$? identita celých čísel, výrazů, množin, unifikovatelnost termů (v Prologu), \dots
-
-    \pause
-    Tablo je čistě \alert{syntaktický} objekt, ale \alert{$=^\A$} má být \alert{identita} na $A$. Jak toho docílit?
-
-    \pause
-    Mějme dokončenou bezespornou větev tabla s položkou \alert{$\T c_1=c_2$}. V \alert{kanonickém modelu} musí platit nejen \alert{$(c_1^\A,c_2^\A)\in {=^\A}$}, ale také:
-
-    \pause
-    \begin{itemize}
-        \item $c_2^\A =^\A c_1^\A$\pause
-        \item $f^\A(c_1^\A) =^\A f^\A(c_2^\A)$\pause
-        \item $c_1^\A\in P^\A$ právě když $c_2^\A\in P^\A$
-    \end{itemize}
-
-    \pause
-    To vynutíme přidáním \alert{axiomů rovnosti}, $=^\A$ bude \alert{kongruence}~$\A$ (ekvivalence, která se chová dobře k funkcím a relacím). 
-    
-    \pause
-    Poté vezmeme \alert{faktorstrukturu} $\B=\A/_{=^\A}$, v ní už je $=^\B$ \alert{identita}.
-
-\end{frame}
-
-
-\begin{frame}{Kongruence a faktorstruktura}
-    
-    \pause    
-    Buď $\sim$ ekvivalence na $A$, $f\colon A^n\to A$, $R\subseteq A^n$. Říkáme, že $\sim$ je:\pause
-    \begin{itemize}
-        \item \alert{kongruence pro $f$}, pokud pro všechna $a_i,b_i\in A$ taková, že \myalertinline{
-            $a_i\sim b_i$ ($1\leq i\leq n$)
-         }, platí \myalertinline{
-            $f(a_1,\dots,a_n)\sim f(b_1,\dots,b_n)$
-        }\pause
-        \item \alert{kongruence pro $R$}, pokud pro všechna $a_i,b_i\in A$ taková, že \myalertinline{
-            $a_i\sim b_i$ ($1\leq i\leq n$)
-         }, platí \myalertinline{
-            $R(a_1,\dots,a_n)$ $\Leftrightarrow$ $R(b_1,\dots,b_n)$
-        }\pause
-    \end{itemize}    
-    \alert{Kongruence} struktury $\A$ je ekvivalence na $A$, která je kongruencí pro všechny funkce a relace $\A$. \pause
-
-    \alert{Faktorstruktura (podílová struktura)} $\A$ podle $\sim$ je struktura \alert{$\A/_\sim$ } v témž jazyce, doména $A/_\sim$ je množina všech rozkladových tříd $A$ podle $\sim$, funkce a relace definujeme \alert{pomocí reprezentantů}:\pause
-    
-    \myalert{
-    \begin{itemize}
-        \item $f^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)=[f^\A(a_1,\dots,a_n)]_\sim$\pause
-        \item $R^{\A/_\sim}([a_1]_\sim,\dots,[a_n]_\sim)$ $\Leftrightarrow$ $R^\A(a_1,\dots,a_n)$
-    \end{itemize}
-    }
-        
-\end{frame}
-
-
-\begin{frame}{Axiomy rovnosti}
-
-    \myblock{
-    \alert{Axiomy rovnosti} pro jazyk $L$ s rovností:\pause
-    \begin{enumerate}[(i)]
-        \item $x=x$\pause
-        \item pro každý $n$-ární (nekonstantní) funkční symbol $f$ jazyka $L$:
-        $$
-        x_1=y_1\land\cdots\land x_n=y_n\limplies f(x_1,\dots,x_n)=f(y_1,\dots,y_n)
-        $$
-
-        \pause
-        \item pro každý $n$-ární relační symbol $R$ jazyka $L$ \alert{včetně rovnosti}:
-        $$
-        x_1=y_1\land\cdots\land x_n=y_n\limplies (R(x_1,\dots,x_n)\limplies R(y_1,\dots,y_n))
-        $$ 
-    \end{enumerate}
-    }
-
-    \pause
-    \begin{itemize}
-        \item symetrie a tranzitivita plynou z (iii) pro $=$ (dokažte si)\pause
-        \item z axiomů $(i)$ a $(iii)$ tedy plyne, že relace $=^\A$ je ekvivalence\pause
-        \item axiomy $(ii)$ a $(iii)$ vyjadřují, že $=^\A$ je kongruence\pause
-    \end{itemize}
-
-    V tablo metodě pro jazyk s rovností implicitně přidáme axiomy rovnosti (přesněji jejich generální uzávěry, potřebujeme sentence).
-
-\end{frame}
-
-
-\begin{frame}{Tablo důkaz s rovností}
-
-    \pause
-    Je-li $T$ teorie v jazyce $L$ s rovností, označme jako $T^*$ rozšíření $T$ o generální uzávěry axiomů rovnosti pro $L$. 
-
-    \pause
-    \begin{itemize}
-        \item \alert{tablo důkaz} z teorie $T$ je \alert{tablo důkaz} z $T^*$\pause
-        \item podobně pro tablo zamítnutí, a obecně jakékoliv tablo z $T$
-    \end{itemize}
- 
-    \pause
-    \textbf{Pozorování:}\pause
-    \begin{itemize}
-        \item Je-li $\A\models T^*$, potom i $\A/_{=^\A}\models T^*$, a ve struktuře $\A/_{=^\A}$ je symbol rovnosti interpretován jako identita.\pause
-        \item Na druhou stranu, v každém modelu, ve kterém je symbol rovnosti interpretován jako identita, platí axiomy rovnosti.
-    \end{itemize}
-     
-    \pause
-    (Použijeme při konstrukci \alert{kanonického modelu} v důkazu úplnosti.)
-
 \end{frame}
 
 

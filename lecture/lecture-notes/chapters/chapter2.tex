@@ -346,10 +346,10 @@ Following the notion of validity, we will use several other notions. For some pr
 \begin{definition}[Semantic notions]\label{definition:semantic-notions}
 We say that a proposition $\varphi$ (in a language $\mathbb P$) is
 \begin{itemize}
-    \item \emph{true}, \emph{tautology}, \emph{valid (in logic/logically)}, and we write $\models \varphi$, if it is valid in every model (of the language $\mathbb P$), $\M_\mathbb P(\varphi) = \M_\mathbb P$,
-    \item \emph{false}, \emph{contradictory}, if it has no model, $\M_\mathbb P(\varphi) = \emptyset$,\footnote{Note that being \emph{false} is not the same as not being \emph{true}!}
-    \item \emph{independent}, if it is valid in some model, and it is not valid in some other model, i.e., it is neither true nor false, $\emptyset \subsetneq \M_\mathbb P(\varphi) \subsetneq \M_\mathbb P$,
-    \item \emph{satisfiable}, if it has some model, i.e., it is not false, $\M_\mathbb P(\varphi) \neq \emptyset$.
+    \item \emph{true}, a \emph{tautology}, \emph{valid (in logic/logically)}, and we write $\models \varphi$, if it is valid in every model (of the language $\mathbb P$), $\M_\mathbb P(\varphi) = \M_\mathbb P$,
+    \item \emph{unsatisfiable}, a \emph{contradiction}, if it has no model, $\M_\mathbb P(\varphi) = \emptyset$,\footnote{Note that being a \emph{contradiction} is not the same as not being \emph{true}!}
+    \item \emph{independent}, if it is valid in some model, and it is not valid in some other model, i.e., it is neither true nor a contradiction, $\emptyset \subsetneq \M_\mathbb P(\varphi) \subsetneq \M_\mathbb P$,
+    \item \emph{satisfiable}, if it has some model, i.e., it is not a contradiction, $\M_\mathbb P(\varphi) \neq \emptyset$.
 \end{itemize}
 Furthermore, we say that propositions $\varphi, \psi$ (in the same language $\mathbb P$) are \emph{(logically) equivalent}, we write $\varphi \sim \psi$, if they have the same models, i.e.,
 $$
@@ -360,7 +360,7 @@ $$
 \begin{example} For example, the following hold:
     \begin{itemize}
         \item propositions $\top$, $p \lor q \liff q \lor p$ are true,
-        \item propositions $\bot$, $(p \lor q) \land (p \lor \neg q) \land \neg p$ are false,
+        \item propositions $\bot$, $(p \lor q) \land (p \lor \neg q) \land \neg p$ are unsatisfiable,
         \item propositions $p, p \land q$ are independent, and also satisfiable, and
         \item the following propositions are equivalent: 
         \begin{itemize}
@@ -376,10 +376,10 @@ The notions from Definition \ref{definition:semantic-notions} can also be relati
 \begin{definition}[Semantic Notions Relative to a Theory]
     Let $T$ be a theory in a language $\mathbb P$. We say that a proposition $\varphi$ in the language $\mathbb P$ is
     \begin{itemize}
-        \item \emph{true in $T$}, a \emph{consequence of $T$}, \emph{valid in $T$}, and we write $T \models \varphi$, if $\varphi$ is valid in every model of the theory $T$, i.e., $\M_\mathbb P(T) \subseteq \M_\mathbb P(\varphi)$,
-        \item \emph{false in $T$}, \emph{contradictory in $T$}, if it is not valid in any model of $T$, i.e., $\M_\mathbb P(\varphi) \cap \M_\mathbb P(T) = \M_\mathbb P(T,\varphi) = \emptyset$.
-        \item \emph{independent in $T$}, if it is valid in some model of $T$, and not valid in some other model of $T$, i.e., it is neither true in $T$ nor false in $T$, $\emptyset \subsetneq \M_\mathbb P(T,\varphi) \subsetneq \M_\mathbb P(T)$,
-        \item \emph{satisfiable in $T$}, \emph{consistent with $T$}, if it is valid in some model of $T$, i.e., it is not false in $T$, $\M_\mathbb P(T,\varphi) \neq \emptyset$.
+        \item \emph{valid in $T$}, \emph{true in $T$}, a \emph{consequence of $T$}, and we write $T \models \varphi$, if $\varphi$ is valid in every model of the theory $T$, i.e., $\M_\mathbb P(T) \subseteq \M_\mathbb P(\varphi)$,
+        \item \emph{unsatisfiable in $T$}, \emph{contradictory in $T$}, \emph{inconsistent with $T$}, if it is not valid in any model of $T$, i.e., $\M_\mathbb P(\varphi) \cap \M_\mathbb P(T) = \M_\mathbb P(T,\varphi) = \emptyset$.
+        \item \emph{independent in $T$}, if it is valid in some model of $T$, and not valid in some other model of $T$, i.e., it is neither valid in $T$ nor contradictory in $T$, $\emptyset \subsetneq \M_\mathbb P(T,\varphi) \subsetneq \M_\mathbb P(T)$,
+        \item \emph{satisfiable in $T$}, \emph{consistent with $T$}, if it is valid in some model of $T$, i.e., it is not contradictory in $T$, $\M_\mathbb P(T,\varphi) \neq \emptyset$.
     \end{itemize}
     And we say that propositions $\varphi, \psi$ (in the same language $\mathbb P$) are \emph{equivalent in $T$}, \emph{$T$-equivalent}, we write $\varphi \sim_T \psi$ if they hold in the same models of $T$, i.e.,
     $$
@@ -391,8 +391,8 @@ Note that for the empty theory $T = \emptyset$, we have $\M_\mathbb P(T) = \M_\m
 
 \begin{example} Let $T = \{p \lor q, \neg r\}$. The following hold:
     \begin{itemize}
-        \item propositions $q \lor p$, $\neg p \lor \neg q \lor \neg r$ are true in $T$,
-        \item the proposition $(\neg p \land \neg q) \lor r$ is false in $T$,
+        \item propositions $q \lor p$, $\neg p \lor \neg q \lor \neg r$ are valid in $T$,
+        \item the proposition $(\neg p \land \neg q) \lor r$ is contradictory in $T$,
         \item propositions $p \liff q, p \land q$ are independent in $T$, and also satisfiable, and
         \item $p$ and $p\lor r$ are $T$-equivalent, $p \sim_T p \lor r$ (but $p \not\sim p \lor r$).
     \end{itemize}      
@@ -604,18 +604,18 @@ These are theories expressing the same properties of models, just formulated (\e
 \begin{definition}[Properties of Theories]
 We say that a theory $T$ in the language $\mathbb P$ is
 \begin{itemize}
-    \item \emph{inconsistent} (\emph{unsatisfiable}), if it includes $\bot$ (a contradiction), equivalently, if it has no model, equivalently, if it includes all propositions,
+    \item \emph{inconsistent} (\emph{unsatisfiable}), if the contradiction $\bot$ is valid in $T$, equivalently, if it has no model, equivalently, if all propositions are valid in $T$,
     \item \emph{consistent} (\emph{satisfiable}) if it is not inconsistent, i.e., it has some model,
-    \item \emph{complete} if it is not inconsistent and every proposition in it is either true or false (i.e., it has no independent propositions), equivalently, if it has exactly one model.
+    \item \emph{complete} if it is not inconsistent and every proposition in it is either valid or contradictory (i.e., it has no independent propositions), equivalently, if it has exactly one model.
 \end{itemize}    
 \end{definition}
 
 Let us verify that the equivalence of properties in the definition holds. Notice that in an inconsistent theory, all propositions are indeed valid! A proposition is valid in $T$ if it is valid in every model of $T$, but there are none. Conversely, if the theory has at least one model, $\bot = p \land \neg p$ cannot be valid in this model.
 
-If a theory is complete, it cannot have two different models $v \neq v'$. The proposition $\varphi_{v} = \bigwedge_{p \in \mathbb P} p^{v(p)}$ (which we encountered in the proof of Proposition \ref{proposition:not-and-or-is-universal}) would be independent in $T$ because it is valid in the model $v$ but not in $v'$. Conversely, if $T$ has a single model $v$, then every proposition is either valid in $v$ and thus in $T$, or it is not valid in $v$ and therefore false in $T$.
+If a theory is complete, it cannot have two different models $v \neq v'$. The proposition $\varphi_{v} = \bigwedge_{p \in \mathbb P} p^{v(p)}$ (which we encountered in the proof of Proposition \ref{proposition:not-and-or-is-universal}) would be independent in $T$ because it is valid in the model $v$ but not in $v'$. Conversely, if $T$ has a single model $v$, then every proposition is either valid in $v$ and thus in $T$, or it is not valid in $v$ and therefore it must be contradictory in $T$.
 
 \begin{example} 
-    An example of an inconsistent theory is $T_1 = \{p, p \limplies q, \neg q\}$. The theory $T_2 = \{p \lor q, r\}$ is consistent but not complete, for instance, the proposition $p \land q$ is neither true (it does not hold in the model $(1,0,1)$) nor false (it holds in the model $(1,1,1)$). The theory $T_2 \cup \{\neg p\}$ is complete, with its only model being $(0,1,1)$.
+    An example of an inconsistent theory is $T_1 = \{p, p \limplies q, \neg q\}$. The theory $T_2 = \{p \lor q, r\}$ is consistent but not complete, for instance, the proposition $p \land q$ is neither valid (it does not hold in the model $(1,0,1)$) nor a contradiction (it holds in the model $(1,1,1)$). The theory $T_2 \cup \{\neg p\}$ is complete, with its only model being $(0,1,1)$.
 \end{example}
 
 
@@ -788,7 +788,7 @@ Thus, we know that negation, conjunction, and disjunction correspond to compleme
 Let $\mathbb{P}$ be a language of size $n$ and $T$ a consistent theory in $\mathbb P$ with exactly $k$ models. Then in $\mathbb{P}$ there are, \emph{up to equivalence}:
 \begin{itemize}
     \item $2^{2^n}$ propositions (or theories),
-    \item $2^{2^n - k}$ propositions true (or false) in $T$,
+    \item $2^{2^n - k}$ propositions valid (or contradictory) in $T$,
     \item $2^{2^n} - 2 \cdot 2^{2^n - k}$ propositions independent in $T$,
     \item $2^k$ simple extensions of the theory $T$ (of which 1 is inconsistent),
     \item $k$ complete simple extensions of $T$.
@@ -796,7 +796,7 @@ Let $\mathbb{P}$ be a language of size $n$ and $T$ a consistent theory in $\math
 Furthermore, \emph{up to $T$-equivalence}, there are:
 \begin{itemize}
     \item $2^k$ propositions,
-    \item $1$ proposition true in $T$, $1$ false in $T$,
+    \item $1$ proposition valid in $T$, $1$ contradictory in $T$,
     \item $2^k - 2$ propositions independent in $T$.
 \end{itemize}
 \end{proposition}
